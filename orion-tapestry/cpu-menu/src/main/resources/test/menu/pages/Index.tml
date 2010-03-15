@@ -1,0 +1,19 @@
+<t:menu.layout t:title="message:project.name"
+          t:menudata="CpuMenu"
+          mode="activationContext"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter">
+<!--
+    t:sidebarTitle="Current Time"
+
+ -->
+ !!!!
+<p>${message:greeting}</p>
+
+<t:menu.menudropdown menudata="getContextMenu(1)"/>
+<t:menu.menudropdown menudata="getContextMenu(2)"/>
+<t:menu.menudropdown menudata="getContextMenu(3)"/>
+<t:menu.menudropdown menudata="getContextMenu(4)"/>
+<t:menu.menudropdown menudata="getContextMenu(5)"/>
+
+</t:menu.layout>

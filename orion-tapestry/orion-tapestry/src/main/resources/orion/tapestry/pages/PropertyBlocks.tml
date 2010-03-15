@@ -1,0 +1,23 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <t:block id="displayBooleanText">
+        <t:if test="prop:outputContext.propertyValue">
+            ${message:true}
+            <t:parameter name="else">
+                ${message:false}
+            </t:parameter>
+        </t:if>
+    </t:block>
+
+    <t:block id="displayBooleanCheckBox">
+        <t:form>
+            <t:checkbox disabled="true" value="prop:outputContext.propertyValue"/>
+        </t:form>
+    </t:block>
+
+    <t:block id="editBooleanSelect">
+        <t:label for="boleanSelectField"/>
+        <input t:id="booleanSelectField"/>
+    </t:block>
+
+</div>
