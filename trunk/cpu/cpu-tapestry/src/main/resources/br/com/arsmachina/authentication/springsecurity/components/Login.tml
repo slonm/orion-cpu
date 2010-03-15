@@ -1,0 +1,16 @@
+<form 
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd"
+	action="${loginCheckUrl}" 
+	method="post"
+	class="tssga-login-form">
+	
+	<label for="j_username">${message:tssga.username}</label>
+	<input name="j_username" type="text" />
+	<br />
+	<label for="j_password">${message:tssga.password}</label>
+	<input name="j_password" type="password" />
+	<br />
+	<input id="submit" class="submit" type="submit"
+		value="${message:tssga.login}" />
+		
+</form>
