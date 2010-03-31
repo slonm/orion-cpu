@@ -4,7 +4,7 @@
     </span>
     <span   class="menuitems context">
         <div t:type="loop" t:source="items" t:value="Item">
-            <t:menu.menulink t:linkobject="Item.itemLink">${Localize(Item.Label)}</t:menu.menulink>
+            <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Label)}</t:menu.menulink>
         </div>
     </span>
 </span>

@@ -7,146 +7,222 @@ package orion.tapestry.menu.services;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.SortedSet;
+import java.util.Set;
+import java.util.SortedMap;
 
 import java.util.TreeMap;
 import java.util.TreeSet;
-import org.apache.tapestry5.EventContext;
-import orion.tapestry.menu.lib.EventContextEncoder;
-import orion.tapestry.menu.lib.LinkCreator;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+import orion.tapestry.menu.lib.DefaultMenuLink;
+import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.lib.MenuItem;
+import orion.tapestry.menu.lib.MenuItemPosition;
 import orion.tapestry.menu.lib.MenuItemSource;
 
 /**
+ * Класс представляет структуру данных для отображения навигационного меню
  * @author Gennadiy Dobrovolsky
  */
 public class CpuMenuImpl implements CpuMenu {
 
-    TreeMap<String, MenuItemSource> configuration;
-    private final DefaultLinkCreatorFactory linkFactory;
+    //private Logger logger;
+    public SortedMap<MenuItemPosition, MenuItemSource> fullMenu;
 
-    public CpuMenuImpl(Map<String, LinkCreator> config, DefaultLinkCreatorFactory linkFactory) {
-        this.configuration = new TreeMap<String, MenuItemSource>();
-        this.linkFactory = linkFactory;
+    public CpuMenuImpl(Map<String, IMenuLink> config) {
+
+        //logger=LoggerFactory.getLogger(CpuMenuModule.class);
+
+        ArrayList<MenuItemSource> tmp = new ArrayList<MenuItemSource>();
+
+        // ---------- create items  - begin ------------------------------------
+        // create MenuItemSource() list
         for (String path : config.keySet()) {
-            this.configuration.put(path, new MenuItemSource(path, config.get(path)));
+            //logger.debug(">>>>>>>>>>>>"+path+"  "+config.get(path));
+            //System.out.println(">>>>>>>>>>>>"+path+"  "+config.get(path));
+            tmp.add(new MenuItemSource(path, config.get(path)));
         }
+        // ---------- create items  - end --------------------------------------
+
+        // ---------- get existing positions - begin ---------------------------
+        Set<String> existing_positions = new TreeSet<String>();
+        for (String path : config.keySet()) {
+            MenuItemPosition mp = new MenuItemPosition(path);
+            existing_positions.add(mp.uid);
+            //System.out.println("Existing:"+mp.uid);
+        }
+        // ---------- get existing positions - end -----------------------------
+
+
+        // ---------- add missing items - begin --------------------------------
+        //parents;
+        Set<String> missing_positions = new TreeSet<String>();
+        for (MenuItemSource mis : tmp) {
+            ArrayList<MenuItemPosition> parents = mis.position.getParents();
+            for (MenuItemPosition mp : parents) {
+                if (!existing_positions.contains(mp.uid) && !missing_positions.contains(mp.uid)) {
+                    missing_positions.add(mp.uid);
+                }
+            }
+        }
+        //System.out.println("Size:"+missing_positions.size());
+        for (String mp : missing_positions) {
+            tmp.add(new MenuItemSource(mp, new DefaultMenuLink(mp)));
+            //System.out.println("Creating:"+mp);
+        }
+        // ---------- add missing items - end ----------------------------------
+
+        // ---------- update positions - begin ---------------------------------
+        int w, cnt;
+        for (MenuItemSource mis : tmp) {
+            //System.out.println("Checking:"+mis.position.uid);
+            w = mis.position.getLastWeight();
+            cnt = mis.position.positionSplitted.length;
+            if (w > 0) {
+                // ---------- update weights - begin ---------------------------
+                for (MenuItemSource upd : tmp) {
+                    if (upd != mis && upd.position.isChildOf(mis.position)) {
+                        //System.out.println("Updating:"+upd.position.position);
+                        upd.position.updatePositionWeight(cnt - 1, w);
+                        //System.out.println("Updating:"+upd.position.position);
+                        //System.out.println("-------------");
+                    }
+                }
+                // ---------- update weights - end -----------------------------
+            }
+        }
+        // ---------- update positions - end -----------------------------------
+
+        // ---------- create full menu tree - begin ----------------------------
+        this.fullMenu = new TreeMap<MenuItemPosition, MenuItemSource>();
+        for (MenuItemSource mis : tmp) {
+            this.fullMenu.put(mis.position, mis);
+        }
+        // ---------- create full menu tree - end ------------------------------
+
+    }
+
+    /**
+     * @param mp position to search for
+     * @return true if the menu position mp exists in the menu tree
+     */
+    public boolean containsKey(MenuItemPosition mp) {
+        for (MenuItemPosition tmp : this.fullMenu.keySet()) {
+            if (mp.equals(tmp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param mp position to search for
+     * @return menu item source at given position
+     */
+    public MenuItemSource get(MenuItemPosition mp) {
+        for (MenuItemPosition tmp : this.fullMenu.keySet()) {
+            if (mp.equals(tmp)) {
+                return this.fullMenu.get(tmp);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Create one menu (i.e. orion.tapestry.menu.lib.MenuData object )
+     * @param path position ot the menu
+     * @param context additional paremeters
+     * @param parameters
+     * @param anchor 
+     * @return one menu
+     * @see orion.tapestry.menu.lib.MenuData
+     */
+    // ComponentResources LinkSource,
+    public MenuData getOneMenu(MenuItemPosition path, Object[] context, Map<String, String> parameters, String anchor) {
+
+        if (!containsKey(path)) {
+            return null;
+        }
+
+        MenuItemSource mis;
+        mis = this.get(path);
+        MenuData menu = new MenuData(mis.createMenuItem(context, parameters, anchor), new PriorityQueue<MenuItem>());
+
+        // --------------- create subitems - begin -----------------------------
+        int deep = path.positionSplitted.length;
+        for (MenuItemPosition tmp : this.fullMenu.keySet()) {
+            if (tmp.isChildOf(path) && tmp.positionSplitted.length - 1 == deep) {
+                mis = this.fullMenu.get(tmp);
+                menu.addItem(mis.createMenuItem(context, parameters, anchor));
+            }
+        }
+        // --------------- create subitems - end -------------------------------
+        return menu;
     }
 
     @Override
-    public ArrayList<MenuData> getMenu(String path, Object... context) {
+    public MenuData getOneMenu(String path, Object[] context, Map<String, String> parameters, String anchor) {
+        return getOneMenu(new MenuItemPosition(path), context, parameters, anchor);
+    }
+
+    /**
+     * Get menu bar for current position
+     * @param path position ot the last menu item ( orion.tapestry.menu.lib.MenuItemPosition )
+     * @param context additional link parameters
+     * @return collection of the menus
+     * @see orion.tapestry.menu.lib.MenuItemPosition
+     */
+    public ArrayList<MenuData> getMenu(MenuItemPosition path, Object[] context, Map<String, String> parameters, String anchor) {
 
         ArrayList<MenuData> menuList = new ArrayList<MenuData>();
 
-        // path as array
-        String[] a = path.split(MenuItem.token);
-        int deep = a.length;
+        ArrayList<MenuItemPosition> parents = path.getParents();
 
-        // temporary variables
-        StringBuffer sb = new StringBuffer("");
-        String key1, token = "", key3;
-        int i, j, k;
-        MenuData menu;
-        MenuItemSource mi;
-
-        SortedSet<String> subitems;
-        for (i = 0; i < deep; i++) {
-
-            // next path
-            sb.append(token);
-            sb.append(a[i]);
-            token = MenuItem.token;
-            key1 = sb.toString();
-            k = key1.length();
-
-            // menu start
-            if (configuration.containsKey(key1)) {
-                mi = configuration.get(key1);
-            } else {
-                mi = new MenuItemSource(key1, linkFactory.create(key1));
+        MenuData med;
+        for (MenuItemPosition _mp : parents) {
+            med = getOneMenu(_mp, context, parameters, anchor);
+            if (med != null) {
+                menuList.add(med);
             }
-            menu = new MenuData(mi.createMenuItem(context), new PriorityQueue<MenuItem>());
-
-            // --------------- get keys of subitems - begin --------------------
-            subitems = new TreeSet<String>();
-            key3 = key1;
-            while ((key3 = configuration.higherKey(key3)) != null) {
-                // if start of the path
-                if (!key3.startsWith(key1 + MenuItem.token)) {
-                    break;
-                }
-                j = key3.indexOf(MenuItem.token, k + 1);
-                subitems.add(key3.substring(0, (j > 0) ? j : key3.length()));
-            }
-            // --------------- get keys of subitems - end ----------------------
-
-            // --------------- create subitems - begin -------------------------
-            for (String it : subitems) {
-                if (configuration.containsKey(it)) {
-                    mi = configuration.get(it);
-                } else {
-                    mi = new MenuItemSource(it, linkFactory.create(it));
-                }
-                menu.addItem(mi.createMenuItem(context));
-            }
-            // --------------- create subitems - end ---------------------------
-
-            // add item to menu
-            menuList.add(menu);
+        }
+        med = getOneMenu(path, context, parameters, anchor);
+        if (med != null) {
+            menuList.add(med);
         }
         return menuList;
     }
 
     @Override
-    public ArrayList<MenuData> getMenu(String path, EventContext context) {
-        return this.getMenu(path, EventContextEncoder.toObjectArray(context));
+    public ArrayList<MenuData> getMenu(String path, Object[] context, Map<String, String> parameters, String anchor) {
+        return getMenu(new MenuItemPosition(path), context, parameters, anchor);
     }
-
-    @Override
-    public MenuData getOneMenu(String path, EventContext context) {
-        return this.getOneMenu(path, EventContextEncoder.toObjectArray(context));
-    }
-
-    @Override
-    public MenuData getOneMenu(String path, Object... context) {
-        MenuItemSource mi;
-        // menu start
-        if (configuration.containsKey(path)) {
-            mi = configuration.get(path);
-        } else {
-            mi = new MenuItemSource(path, linkFactory.create(path));
-        }
-        MenuData menu = new MenuData(mi.createMenuItem(context), new PriorityQueue<MenuItem>());
-
-
-        String key3;
-        int i, j, k;
-        SortedSet<String> subitems;
-        // --------------- get keys of subitems - begin ------------------------
-        subitems = new TreeSet<String>();
-        key3 = path;
-        k = path.length();
-        while ((key3 = configuration.higherKey(key3)) != null) {
-            // if start of the path
-            if (!key3.startsWith(path + MenuItem.token)) {
-                break;
-            }
-            j = key3.indexOf(MenuItem.token, k + 1);
-            subitems.add(key3.substring(0, (j > 0) ? j : key3.length()));
-        }
-        // --------------- get keys of subitems - end --------------------------
-
-        // --------------- create subitems - begin -----------------------------
-        for (String it : subitems) {
-            if (configuration.containsKey(it)) {
-                mi = configuration.get(it);
-            } else {
-                mi = new MenuItemSource(it, linkFactory.create(it));
-            }
-            menu.addItem(mi.createMenuItem(context));
-        }
-        // --------------- create subitems - end -------------------------------
-        return menu;
-    }
+//    @Override
+//    public ArrayList<MenuData> getMenu(String uid, ComponentResources LinkSource, Object... context) {
+//        return this.getMenu(new MenuItemPosition(uid), LinkSource, context);
+//    }
+//
+//    @Override
+//    public ArrayList<MenuData> getMenu(String path, ComponentResources LinkSource, EventContext context) {
+//        return this.getMenu(path, LinkSource, EventContextEncoder.toObjectArray(context));
+//    }
+//
+//    @Override
+//    public MenuData getOneMenu(String path, ComponentResources LinkSource, EventContext context) {
+//        return this.getOneMenu(path, LinkSource, EventContextEncoder.toObjectArray(context));
+//    }
+//
+//    @Override
+//    public MenuData getOneMenu(String path, ComponentResources LinkSource, Object... context) {
+//        return this.getOneMenu(new MenuItemPosition(path), LinkSource, context);
+//    }
+//
+//    @Override
+//    public ArrayList<MenuData> getMenu(String path, EventContext context) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+//    @Override
+//    public MenuData getOneMenu(String path, EventContext context) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
 }
