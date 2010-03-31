@@ -1,7 +1,6 @@
 package orion.tapestry.menu.lib;
 
 import java.util.PriorityQueue;
-import org.apache.tapestry5.Link;
 
 /**
  * @author Gennadiy Dobrovolsky
@@ -10,28 +9,22 @@ import org.apache.tapestry5.Link;
 public class MenuData {
 
     /**
-     * Заголовок меню по умолчанию
-     */
-    static final private String detaultMenuTitle = "new menu";
-    /**
-     * Заголовок меню
-     */
-    private String title;
-    /**
      * Пункты меню, упорядоченные по весу
      */
     private PriorityQueue<MenuItem> items;
+
     /**
-     * Ссылка, привязанная к заголовку меню.
+     * Пункт, привязанный к заголовку меню.
      */
-    private Link pageLink;
+    private MenuItem header;
 
     /**
      * Конструктор класса
+     * @param mi Заголовок меню. Часть, видимая на линейке меню.
+     * @param _items Список выпадающих пунктов
      */
-    public MenuData(MenuItem mi, PriorityQueue<MenuItem> _items) {
-        this.title = mi.getLabel();
-        this.pageLink = mi.getItemLink();
+    public MenuData(MenuItem mi, PriorityQueue<MenuItem> _items){
+        this.header = mi;
         this.items = _items;
     }
 
@@ -60,33 +53,36 @@ public class MenuData {
         this.items = t;
     }
 
+
     /**
      * @return Возвращает заголовок меню
      */
     public String getTitle() {
-        return this.title;
+        //return this.header.getLabel();
+        return this.header.getUid();
     }
 
     /**
      * Устанавливает новый заголовок меню
-     * @param t новвй заголовок
+     * @param t новый заголовок
      */
     public void setTitle(String t) {
-        this.title = t;
+        this.header.setLabel(t);
     }
+
 
     /**
      * @return Возвращает ссылку в заголовке меню
      */
-    public Link getPageLink() {
-        return this.pageLink;
+    public IMenuLink getPageLink() {
+        return this.header.getItemLink();
     }
 
     /**
      * Устанавливает новую ссылку в заголовок меню
      * @param t новая ссылка
      */
-    public void setPageLink(Link t) {
-        this.pageLink = t;
+    public void setPageLink(IMenuLink t) {
+        this.header.setItemLink(t);
     }
 }

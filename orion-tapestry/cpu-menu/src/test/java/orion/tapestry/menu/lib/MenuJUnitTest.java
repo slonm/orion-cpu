@@ -1,14 +1,15 @@
 package orion.tapestry.menu.lib;
 
-import orion.tapestry.menu.lib.LinkCreator;
+import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.lib.MenuItem;
 import orion.tapestry.menu.lib.MenuItemSource;
-import orion.tapestry.menu.lib.PageLinkCreator;
+import orion.tapestry.menu.lib.PageMenuLink;
 import orion.tapestry.menu.services.CpuMenuImpl;
 import orion.tapestry.menu.services.CpuMenu;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -33,8 +34,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
-import orion.tapestry.menu.pages.Navigator;
-import orion.tapestry.menu.services.DefaultLinkCreatorFactory;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
@@ -44,13 +43,14 @@ import orion.tapestry.menu.services.DefaultLinkCreatorFactory;
  */
 public class MenuJUnitTest {
 
+    TreeMap<String, IMenuLink> config;
+
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(MenuJUnitTest.class);
     }
 
     public MenuJUnitTest() {
     }
-    MenuItemSource mi1, mi2;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -62,8 +62,23 @@ public class MenuJUnitTest {
 
     @Before
     public void setUp() {
-        mi1 = new MenuItemSource("Start>fin1>moe1", null);
-        mi2 = new MenuItemSource("Start>fin2>moe2", null);
+        // --------------------- create configuration - begin ------------------
+        config = new TreeMap<String, IMenuLink>();
+        String[] path = {
+            "Start>fin2>esche1",
+            "Start>fin2>esche2",
+            "Start>fin2>esche3",
+            "Start>fin1>30moe1",
+            "Start>fin1>20moe2",
+            "Start>fin1>10moe3",
+            "Start>fin1>moe1>e-moe1",
+            "Start>fin1>moe1>e-moe2"
+        };
+        for (String s : path) {
+            config.put(s, new PageMenuLink(this.getClass()));
+        }
+        // --------------------- create configuration - end --------------------
+
     }
 
     @After
@@ -74,131 +89,182 @@ public class MenuJUnitTest {
     // The methods must be annotated with annotation @Test
     //
     @Test
-    public void compare() {
-        Assert.assertEquals(-1, mi1.compareTo(mi2));
-        Assert.assertEquals(1, mi2.compareTo(mi1));
+    public void testMenuItemPosition_1() {
+        MenuItemPosition mip = new MenuItemPosition("Start>ok>100staff");
+        Assert.assertEquals(3, mip.positionSplitted.length);
+
+        // testing label and weight
+        Assert.assertEquals("Start", mip.positionSplitted[0].label);
+        Assert.assertEquals(0, mip.positionSplitted[0].weight);
+
+        Assert.assertEquals("ok", mip.positionSplitted[1].label);
+        Assert.assertEquals(0, mip.positionSplitted[1].weight);
+
+        Assert.assertEquals("staff", mip.positionSplitted[2].label);
+        Assert.assertEquals(100, mip.positionSplitted[2].weight);
+
+        // testing uid
+        Assert.assertEquals("Start>ok>staff", mip.uid);
+
+        // testing position
+        Assert.assertEquals("Start>ok>100staff", mip.position);
+
+
+        // testing updatePositionWeight()
+        mip.updatePositionWeight(1, 23);
+        Assert.assertEquals(23, mip.positionSplitted[1].weight);
+        Assert.assertEquals("Start>23ok>100staff", mip.position);
+
+
+        // testing getLastWeight()
+        Assert.assertEquals(100, mip.getLastWeight());
+
+
+        // testing getLastLabel()
+        Assert.assertEquals("staff", mip.getLastLabel());
+
+        // testing isChildOf()
+        MenuItemPosition mip2 = new MenuItemPosition("Start>ok");
+        Assert.assertTrue(mip.isChildOf(mip2));
+        Assert.assertFalse(mip2.isChildOf(mip));
+
+        MenuItemPosition mip3 = new MenuItemPosition("Start>abo");
+        Assert.assertFalse(mip.isChildOf(mip3));
+        Assert.assertFalse(mip2.isChildOf(mip3));
+        Assert.assertFalse(mip3.isChildOf(mip));
+        Assert.assertFalse(mip3.isChildOf(mip2));
+
+
+        // testing compareTo()
+        mip2.updatePositionWeight(1, 23);
+        Assert.assertTrue(mip.compareTo(mip2) > 0);
+
+        // testing getParents()
+        ArrayList<MenuItemPosition> pa = mip.getParents();
+        Assert.assertEquals(pa.get(0).uid, "Start");
+        Assert.assertEquals(pa.get(1).uid, "Start>ok");
+        Assert.assertEquals(pa.size(), 2);
+
+
+        // testing equals();
+        Assert.assertTrue(mip2.equals(new String("Start>ok")));
+        Assert.assertTrue(mip2.equals(new MenuItemPosition("Start>ok")));
     }
 
     @Test
-    public void getPathSplitted() {
-        String[] a = mi1.getPathSplitted();
-        Assert.assertEquals("Start", a[0]);
-        Assert.assertEquals("fin1", a[1]);
-        Assert.assertEquals("moe1", a[2]);
-        Assert.assertEquals("moe1", mi1.getLabel());
+    public void testMenuItemSource_1() {
+
+        MenuItemSource mi1 = new MenuItemSource("Start>fin1>30moe1", null);
+        Assert.assertEquals(mi1.position.uid, "Start>fin1>moe1");
+
+        MenuItemSource mi2 = new MenuItemSource("Start>fin1>30moe2", null);
+        Assert.assertEquals(mi2.position.uid, "Start>fin1>moe2");
+
+        Assert.assertFalse(mi1.compareTo(mi2) > 0);
+        Assert.assertTrue(mi2.compareTo(mi1) > 0);
     }
 
     @Test
-    public void getPath() {
-        String a = mi1.getPath();
-        Assert.assertEquals("Start>fin1>moe1", a);
+    public void testCpuMenuImpl_1() {
+
+        CpuMenuImpl menu = new CpuMenuImpl(this.config);
+
+        //SortedMap<MenuItemPosition, MenuItemSource> fullMenu;
+        // test if items exists
+        MenuItemPosition mp = new MenuItemPosition("Start>fin1>moe1");
+        Assert.assertTrue(menu.containsKey(mp));
+
     }
 
     @Test
-    public void setPathSplitted() {
-        String[] s = {"Start", "fin1", "123moe"};
-        mi1.setPathSplitted(s);
-        String[] a = mi1.getPathSplitted();
-        Assert.assertEquals("Start", a[0]);
-        Assert.assertEquals("fin1", a[1]);
-        Assert.assertEquals("123moe", a[2]);
-        Assert.assertEquals("moe", mi1.getLabel());
-    }
-
-    @Test
-    public void setPath() {
-        String s = "Start>fin1>233moe5";
-        mi1.setPath(s);
-
-        String[] a = mi1.getPathSplitted();
-        Assert.assertEquals("Start", a[0]);
-        Assert.assertEquals("fin1", a[1]);
-        Assert.assertEquals("233moe5", a[2]);
-        Assert.assertEquals("moe5", mi1.getLabel());
-    }
-//TODO переделать тест
-//    @Test
-//    public void getMenu() {
-//        // --------------------- create configuration - begin ------------------
-//        TreeMap<String, LinkCreator> config = new TreeMap<String, LinkCreator>();
-//        String[] path = {
-//            "Start>fin2>esche1",
-//            "Start>fin2>esche2",
-//            "Start>fin2>esche3",
-//            "Start>fin1>moe1",
-//            "Start>fin1>moe2",
-//            "Start>fin1>moe3",
-//            "Start>fin1>moe1>e-moe1",
-//            "Start>fin1>moe1>e-moe2"
-//        };
-//        for (String s : path) {
-//            config.put(s, new PageLinkCreator(this.getClass()));
-//        }
-//        // --------------------- create configuration - end --------------------
-//
-//
-//        MenuData md;
-//        Object[] items;
-//        ArrayList<MenuData> m1;
+    public void testCpuMenuImpl_2() {
+        CpuMenuImpl mnu = new CpuMenuImpl(this.config);
+        MenuData md;
+        Object[] items;
+        ArrayList<MenuData> m1;
 //        ComponentResources linksource=new cr();
 //
-//        CpuMenu mnu = new CpuMenuImpl(config);
-//
-//        m1 = mnu.getMenu("Start",linksource);
-//        md = m1.get(0);
-//        Assert.assertEquals("Start", md.getTitle());
-//
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).getPath());
-//
-//        m1 = mnu.getMenu("Start>fin1",linksource);
-//        md = m1.get(0);
-//        Assert.assertEquals("Start", md.getTitle());
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).getPath());
-//
-//        md = m1.get(1);
-//        Assert.assertEquals("fin1", md.getTitle());
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1>moe1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin1>moe2", ((MenuItem) items[1]).getPath());
-//        Assert.assertEquals("Start>fin1>moe3", ((MenuItem) items[2]).getPath());
-//
-//
-//        m1 = mnu.getMenu("Start>fin1>moe1",linksource);
-//        md = m1.get(0);
-//        Assert.assertEquals("Start", md.getTitle());
-//
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).getPath());
-//
-//        md = m1.get(1);
-//        Assert.assertEquals("fin1", md.getTitle());
-//
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1>moe1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin1>moe2", ((MenuItem) items[1]).getPath());
-//        Assert.assertEquals("Start>fin1>moe3", ((MenuItem) items[2]).getPath());
-//
-//        md = m1.get(2);
-//        Assert.assertEquals("moe1", md.getTitle());
-//
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin1>moe1>e-moe1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin1>moe1>e-moe2", ((MenuItem) items[1]).getPath());
-//
-//
-//        md = mnu.getOneMenu("Start>fin2", linksource, items);
-//        Assert.assertEquals("fin2", md.getTitle());
-//
-//        items = md.getItems().toArray();
-//        Assert.assertEquals("Start>fin2>esche1", ((MenuItem) items[0]).getPath());
-//        Assert.assertEquals("Start>fin2>esche2", ((MenuItem) items[1]).getPath());
-//        Assert.assertEquals("Start>fin2>esche3", ((MenuItem) items[2]).getPath());
-//    }
+        m1 = mnu.getMenu("Start", null, null, null);
+        md = m1.get(0);
+        Assert.assertEquals("Start", md.getTitle());
+
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).position.uid);
+
+
+        m1 = mnu.getMenu("Start>fin1", null, null, null);
+        md = m1.get(0);
+        Assert.assertEquals("Start", md.getTitle());
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).position.uid);
+
+        md = m1.get(1);
+        Assert.assertEquals("Start>fin1", md.getTitle());
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1>moe3", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin1>moe2", ((MenuItem) items[1]).position.uid);
+        Assert.assertEquals("Start>fin1>moe1", ((MenuItem) items[2]).position.uid);
+
+        m1 = mnu.getMenu("Start>fin1>moe1", null, null, null);
+        md = m1.get(0);
+        Assert.assertEquals("Start", md.getTitle());
+
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin2", ((MenuItem) items[1]).position.uid);
+
+
+
+        md = m1.get(1);
+        Assert.assertEquals("Start>fin1", md.getTitle());
+
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1>moe3", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin1>moe2", ((MenuItem) items[1]).position.uid);
+        Assert.assertEquals("Start>fin1>moe1", ((MenuItem) items[2]).position.uid);
+
+        md = m1.get(2);
+        Assert.assertEquals("Start>fin1>moe1", md.getTitle());
+
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin1>moe1>e-moe1", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin1>moe1>e-moe2", ((MenuItem) items[1]).position.uid);
+
+
+        md = mnu.getOneMenu("Start>fin2", null, null, null);
+        Assert.assertEquals("Start>fin2", md.getTitle());
+
+        items = md.getItems().toArray();
+        Assert.assertEquals("Start>fin2>esche1", ((MenuItem) items[0]).position.uid);
+        Assert.assertEquals("Start>fin2>esche2", ((MenuItem) items[1]).position.uid);
+        Assert.assertEquals("Start>fin2>esche3", ((MenuItem) items[2]).position.uid);
+    }
+
+    @Test
+    public void testCpuMenuImpl_3() {
+        CpuMenuImpl mnu = new CpuMenuImpl(this.config);
+        MenuData md;
+        Object[] items;
+        ArrayList<MenuData> m1;
+
+        m1 = mnu.getMenu("Start>fin1>moe4", null, null, null);
+
+        Assert.assertEquals(2, m1.size());
+
+        md = m1.get(0);
+        Assert.assertEquals("Start", md.getTitle());
+
+        md = m1.get(1);
+        Assert.assertEquals("Start>fin1", md.getTitle());
+    }
+
+    public static void main(String[] a) {
+        MenuJUnitTest t = new MenuJUnitTest();
+        t.setUp();
+        t.testCpuMenuImpl_3();
+    }
 }
 
 class EmptyLink implements Link {
@@ -250,7 +316,7 @@ class EmptyLink implements Link {
     }
 }
 
-class cr implements ComponentResources{
+class cr implements ComponentResources {
 
     @Override
     public Resource getBaseResource() {

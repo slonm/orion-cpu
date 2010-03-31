@@ -6,6 +6,7 @@ package orion.tapestry.menu.pages;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -26,6 +27,7 @@ public class Navigator {
     private MenuData lastMenu;
     @Inject
     private CpuMenu cpuMenu;
+
     @Property
     private MenuItem _Item;
 
@@ -36,7 +38,7 @@ public class Navigator {
     private Messages messages;
 
     public String getTitle() {
-        return messages.get(lastMenu.getTitle());
+        return messages.get("cpumenu>"+lastMenu.getTitle());
     }
 
     public PriorityQueue<MenuItem> getItems() {
@@ -52,7 +54,7 @@ public class Navigator {
      * @return message in current language
      */
     public String Localize(String msg) {
-        return messages.get(msg);
+        return messages.get("cpumenu>"+msg);
     }
 
     void onActivate(String position) {
@@ -60,7 +62,7 @@ public class Navigator {
         Object[] context = null;
         //Logger logger = LoggerFactory.getLogger(Navigator.class);
         //logger.info(path);
-        this.menu = cpuMenu.getMenu(path, context);
+        this.menu = cpuMenu.getMenu(path, null,null,null);
         lastMenu = menu.get(menu.size() - 1);
     }
 

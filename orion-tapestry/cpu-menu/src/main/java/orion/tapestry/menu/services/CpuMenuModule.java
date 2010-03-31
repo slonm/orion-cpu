@@ -4,14 +4,17 @@
  */
 package orion.tapestry.menu.services;
 
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
-import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.annotations.ServiceId;
+import org.apache.tapestry5.ioc.services.SymbolSource;
 import org.apache.tapestry5.services.LibraryMapping;
-import org.apache.tapestry5.services.PageRenderLinkSource;
-import orion.tapestry.menu.lib.LinkCreator;
+import orion.tapestry.menu.lib.DefaultMenuLink;
+import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.pages.Navigator;
 
 /**
@@ -20,42 +23,38 @@ import orion.tapestry.menu.pages.Navigator;
  */
 public class CpuMenuModule {
 
-    public static final String MENU_NAVIGATOR="menu.navigator";
-    public static final String LIB_NAME="menu";
-
     /**
      * CpuMenu Service builder
-     * @param binder 
+     * @param configuration  registry of menu items
+     * @param ss symbol source to get navigator page
+     * @return CpuMenu object
      */
-    public static void bind(ServiceBinder binder) {
-        binder.bind(CpuMenu.class, CpuMenuImpl.class);
-        binder.bind(PageLinkCreatorFactory.class);
-    }
-
-    public DefaultLinkCreatorFactory buildDefaultLinkFactory(@Inject @Symbol(MENU_NAVIGATOR) String pageName,
-            PageRenderLinkSource linkSource){
-        return new DefaultLinkCreatorFactory(pageName, linkSource);
+    @ServiceId("CpuMenu")
+    public static CpuMenu buildCpuMenu(Map<String, IMenuLink> configuration,  @Inject SymbolSource ss ) {
+        String navigatorPageClass = ss.valueForSymbol("cpumenu.navigatorpage");
+        Logger logger = LoggerFactory.getLogger(CpuMenuModule.class);
+        logger.info("buildCpuMenu::cpu-menu-navigator-page="+navigatorPageClass);
+        try {
+            DefaultMenuLink.setNavigatorPageClass(Class.forName(navigatorPageClass));
+            //DefaultMenuLink.setNavigatorPageClass(Class.forName(Navigator.class.getName()));
+        } catch (ClassNotFoundException ex) {
+            //Logger logger = LoggerFactory.getLogger(CpuMenuModule.class);
+            logger.info(navigatorPageClass + " - class not found ");
+        }
+        return new CpuMenuImpl(configuration);
     }
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
-        configuration.add(new LibraryMapping(LIB_NAME, "orion.tapestry.menu"));
+        configuration.add(new LibraryMapping("menu", "orion.tapestry.menu"));
     }
 
     public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
         configuration.add("menu/1.0", "orion/tapestry/menu");
     }
 
-    public static void contributeFactoryDefaults(MappedConfiguration<String, String> configuration) {
-        configuration.add(MENU_NAVIGATOR, LIB_NAME+"/"+Navigator.class.getSimpleName());
-    }
-
-    /**
-     * Add menu item to configuration
-     * @param configuration
-     * @param linkFactory 
-     */
-    public static void contributeCpuMenu(MappedConfiguration<String, LinkCreator> configuration,
-            DefaultLinkCreatorFactory linkFactory) {
-        configuration.add("Start", linkFactory.create("Start"));
+    public void contributeFactoryDefaults(MappedConfiguration<String, String> configuration) {
+        //Logger logger = LoggerFactory.getLogger(CpuMenuModule.class);
+        //logger.info("contributeFactoryDefaults::cpumenu.navigatorpage="+Navigator.class.getName());
+        configuration.add("cpumenu.navigatorpage", Navigator.class.getName());
     }
 }
