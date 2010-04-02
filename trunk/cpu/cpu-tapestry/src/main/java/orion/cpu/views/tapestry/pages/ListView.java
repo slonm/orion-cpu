@@ -5,16 +5,14 @@ import br.com.arsmachina.tapestrycrud.base.BaseListPage;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.ApplicationStateManager;
-import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.annotation.Secured;
 import orion.cpu.baseentities.BaseEntity;
 import orion.tapestry.menu.lib.IMenuLink;
 
@@ -43,8 +41,8 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
     private ErrorReport errorReport;
     @InjectPage
     private Login login;
-    @Inject
-    private ApplicationStateManager applicationStateManager;
+    @SessionState(create = false)
+    private User user;
 
     /**
      * При закрытии страницы
@@ -80,7 +78,7 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
         }
         setEntityClass(beanClass);
         if (!getAuthorizer().canSearch(getEntityClass())) {
-            if (applicationStateManager.exists(User.class)) {
+            if (user!=null) {
                 return errorReport.getErrorReportLink(ErrorReport.ACCESS_DENIED);
             } else {
                 return login.setRedirectURL();

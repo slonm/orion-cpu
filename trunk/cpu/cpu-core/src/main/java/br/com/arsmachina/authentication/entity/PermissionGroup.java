@@ -33,7 +33,7 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
      * @param permissions
      * @throws IllegalArgumentException if <code>name</code> is null.
      */
-    public PermissionGroup(String name, Permission permission, Permission ... permissions) {
+    public PermissionGroup(String name, Permission permission, Permission... permissions) {
         setName(Defense.notNull(name, "name"));
         add(permission, permissions);
     }
@@ -54,7 +54,7 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
      * @param permission a {@link Permission}.
      * @param permissions
      */
-    public void add(Permission permission, Permission ... permissions) {
+    public void add(Permission permission, Permission... permissions) {
         this.permissions.add(permission);
         this.permissions.addAll(Arrays.asList(permissions));
     }
@@ -64,7 +64,7 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
      * @param permission a {@link Permission}.
      * @param permissions 
      */
-    public void remove(Permission permission, Permission ... permissions) {
+    public void remove(Permission permission, Permission... permissions) {
         this.permissions.remove(permission);
         this.permissions.removeAll(Arrays.asList(permissions));
     }
@@ -102,8 +102,10 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
      */
     public boolean hasPermission(Permission... permissions) {
         for (Permission permission : permissions) {
-            if (this.permissions.contains(permission)) {
-                return true;
+            for (Permission prm : this.permissions) {
+                if (permission.getName().equals(prm.getName())) {
+                    return true;
+                }
             }
         }
         return false;

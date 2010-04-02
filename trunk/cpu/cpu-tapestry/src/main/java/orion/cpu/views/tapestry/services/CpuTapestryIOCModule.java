@@ -2,6 +2,7 @@ package orion.cpu.views.tapestry.services;
 
 import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
+import br.com.arsmachina.authorization.Authorizer;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
@@ -213,6 +214,18 @@ public class CpuTapestryIOCModule {
     public static Coercion<IMenuLink, BaseEntity> buildMetaLinkCoercion(Collection<Coercion> configuration,
             ChainBuilder chainBuilder){
         return chainBuilder.build(Coercion.class, new ArrayList<Coercion>(configuration));
+    }
+
+    /**
+     * Скрещиваем меню с системой безопасности
+     * @param receiver приемник событий CpuMenu
+     * @param fieldLabelSource сервис {@link FieldLabelSource}
+     */
+    @Match("CpuMenu")
+    public static void adviseCpuMenu(MethodAdviceReceiver receiver, ExtendedAuthorizer authorizer,
+            TypeCoercer coercer) {
+        MethodAdvice advice = new CpuMenuMethodAdvice(authorizer, coercer);
+        receiver.adviseAllMethods(advice);
     }
 
 }
