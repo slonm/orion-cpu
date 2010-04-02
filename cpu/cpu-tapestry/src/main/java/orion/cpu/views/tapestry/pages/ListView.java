@@ -8,10 +8,15 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.ApplicationStateManager;
+import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.annotation.Secured;
 import orion.cpu.baseentities.BaseEntity;
+import orion.tapestry.menu.lib.IMenuLink;
 
 /**
  * Универсальная страница со списком {@link BaseEntity}
@@ -78,7 +83,7 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
             if (applicationStateManager.exists(User.class)) {
                 return errorReport.getErrorReportLink(ErrorReport.ACCESS_DENIED);
             } else {
-                return login;
+                return login.setRedirectURL();
             }
         }
         setObject(getActivationContextEncoder(getEntityClass()).toObject(context));
@@ -100,5 +105,27 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
 
     public boolean getCreate() {
         return getAuthorizer().canStore(getEntityClass());
+    }
+
+    public static class MetaLinkCoercion implements Coercion<IMenuLink, Class<BaseEntity<?>>> {
+
+        @Inject
+        @Symbol("orion.root-package")
+        private String rootPackage;
+        @Inject
+        @Symbol("orion.entities-package")
+        private String entitiesPackage;
+
+        @Override
+        public Class<BaseEntity<?>> coerce(IMenuLink input) {
+            try {
+                assert input.getPageClass().equals(ListView.class);
+                assert input.getContext().length > 0;
+                return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s",
+                        rootPackage, entitiesPackage, input.getContext()[0]));
+            } catch (Exception ex) {
+                return null;
+            }
+        }
     }
 }

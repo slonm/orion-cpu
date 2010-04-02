@@ -100,6 +100,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
                     EFPermissions.get(STORE_OP), EQLPermissions.get(STORE_OP),
                     KAOTPermissions.get(STORE_OP), TDOSPermissions.get(STORE_OP));
 
+            //Права просмотра справочников для системы лицензий
+            PermissionGroup pgReadLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр справочников",
+                    EFPermissions.get(READ_OP), EQLPermissions.get(READ_OP),
+                    KAOTPermissions.get(READ_OP), TDOSPermissions.get(READ_OP));
+
             //---------Роли----------
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
                     "Просмотр записей о лицензиях", pgReadLicenseRecords);
@@ -110,16 +115,23 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             Role roleLM = iDBSpt.saveOrUpdateRole("LicenseManager",
                     "Менеджер управления записями о лицензиях",
-                    pgReadLicenseRecords, pgManageLicenseRecords, pgManageLicenseRecordsReference);
+                    pgReadLicenseRecords, pgManageLicenseRecords, pgManageLicenseRecordsReference,
+                    pgReadLicenseRecordsReference);
 
             //---------Пользователи----------
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleLO);
+            for(PermissionGroup pg: roleLO.getPermissionGroups()){
+                user.add(pg);
+            }
             uCnt.saveOrUpdate(user);
 
             user = uCnt.findByLogin("TII");
             user.add(roleLM);
+            for(PermissionGroup pg: roleLM.getPermissionGroups()){
+                user.add(pg);
+            }
             uCnt.saveOrUpdate(user);
         }
     }

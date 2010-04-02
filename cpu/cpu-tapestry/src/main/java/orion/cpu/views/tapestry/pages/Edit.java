@@ -6,10 +6,12 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.Coercion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import orion.cpu.baseentities.BaseEntity;
+import orion.tapestry.menu.lib.IMenuLink;
 
 /**
  * Универсальная страница редактирования {@link BaseEntity}
@@ -109,5 +111,27 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
 
     public boolean getListView() {
         return getAuthorizer().canRead(getEntityClass());
+    }
+
+    public static class MetaLinkCoercion implements Coercion<IMenuLink, Class<BaseEntity<?>>> {
+
+        @Inject
+        @Symbol("orion.root-package")
+        private String rootPackage;
+        @Inject
+        @Symbol("orion.entities-package")
+        private String entitiesPackage;
+
+        @Override
+        public Class<BaseEntity<?>> coerce(IMenuLink input) {
+            try {
+                assert input.getPageClass().equals(Edit.class);
+                assert input.getContext().length > 0;
+                return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s",
+                        rootPackage, entitiesPackage, input.getContext()[0]));
+            } catch (Exception ex) {
+                return null;
+            }
+        }
     }
 }

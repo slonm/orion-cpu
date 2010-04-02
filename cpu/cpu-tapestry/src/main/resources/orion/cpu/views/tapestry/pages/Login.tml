@@ -6,7 +6,29 @@
         <title>Login</title>
     </head>
     <body>
-        <br/><br/><br/>
-    <t:tssga.login/>
-</body>
+        <br/>
+        <br/>
+        <br/>
+        <form
+            action="${loginCheckUrl}"
+            method="post"
+            class="tssga-login-form">
+
+            <table>
+            <tr>
+            <td><label for="j_username">${message:username}</label></td>
+            <td><input name="j_username" type="text" /></td>
+            </tr>
+            <tr>
+            <td><label for="j_password">${message:password}</label></td>
+            <td><input name="j_password" type="password" /></td>
+            </tr>
+            <tr>
+            <td><input id="submit" class="submit" type="submit"
+                   value="${message:login}" /></td>
+            </tr>
+                   </table>
+            <input type="hidden" name="spring-security-redirect" value="${prop:redirectUrl}" />
+        </form>
+    </body>
 </html>
