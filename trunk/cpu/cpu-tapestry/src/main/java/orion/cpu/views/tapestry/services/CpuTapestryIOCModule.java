@@ -6,18 +6,19 @@ import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
 import java.io.IOException;
-import org.apache.tapestry5.Link;
+import java.util.*;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
-import org.apache.tapestry5.ioc.services.Coercion;
-import org.apache.tapestry5.ioc.services.CoercionTuple;
+import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.security.services.ExtendedAuthorizer;
+import orion.cpu.views.tapestry.pages.Edit;
 import orion.cpu.views.tapestry.pages.ErrorReport;
+import orion.cpu.views.tapestry.pages.ListView;
 import orion.cpu.views.tapestry.pages.MenuNavigator;
-import orion.tapestry.menu.services.CpuMenuModule;
+import orion.tapestry.menu.lib.IMenuLink;
 
 /**
  * Модуль конфигурирования IOC
@@ -38,7 +39,7 @@ public class CpuTapestryIOCModule {
         configuration.override("spring-security.loginform.url", "/login");
         configuration.override("spring-security.failure.url", errorPageUrl + "/" + ErrorReport.LOGIN_FAILED);
         configuration.override("spring-security.accessDenied.url", errorPageUrl + "/" + ErrorReport.ACCESS_DENIED);
-        configuration.override(CpuMenuModule.MENU_NAVIGATOR, LIB_NAME + "/" + MenuNavigator.class.getSimpleName());
+        //configuration.override("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
     }
 
     /**
@@ -199,20 +200,19 @@ public class CpuTapestryIOCModule {
         configuration.add("CpuTapestry", "classpath:CpuTapestry.properties");
     }
 
-    public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration) {
-        add(configuration, Link.class, BaseEntity.class,
-                new Coercion<Link, BaseEntity>() {
-
-                    @Override
-                    public BaseEntity coerce(Link input) {
-                        return new PropertyOverridesImpl(input);
-                    }
-                });
+    public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
+            @InjectService("MetaLinkCoercion") Coercion coercion) {
+        configuration.add(new CoercionTuple(IMenuLink.class, Class.class, coercion));
     }
 
-    private static <S, T> void add(Configuration<CoercionTuple> configuration, Class<S> sourceType, Class<T> targetType,
-            Coercion<S, T> coercion) {
-        CoercionTuple<S, T> tuple = new CoercionTuple<S, T>(sourceType, targetType, coercion);
-        configuration.add(tuple);
+    public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration) {
+        configuration.addInstance(ListView.MetaLinkCoercion.class);
+        configuration.addInstance(Edit.MetaLinkCoercion.class);
     }
+
+    public static Coercion<IMenuLink, BaseEntity> buildMetaLinkCoercion(Collection<Coercion> configuration,
+            ChainBuilder chainBuilder){
+        return chainBuilder.build(Coercion.class, new ArrayList<Coercion>(configuration));
+    }
+
 }

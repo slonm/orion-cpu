@@ -1,6 +1,5 @@
 package orion.cpu.views.tapestry.services;
 
-import orion.tapestry.menu.lib.LinkCreator;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.services.*;
 import orion.cpu.baseentities.BaseEntity;
@@ -12,7 +11,8 @@ import orion.cpu.entities.uch.License;
 import orion.cpu.entities.uch.LicenseRecord;
 import orion.cpu.entities.uch.LicenseRecordView;
 import orion.cpu.views.tapestry.pages.ListView;
-import orion.tapestry.menu.services.PageLinkCreatorFactory;
+import orion.tapestry.menu.lib.IMenuLink;
+import orion.tapestry.menu.lib.PageMenuLink;
 
 /**
  * Модуль конфигурирования IOC
@@ -38,31 +38,29 @@ public class LicenseTapestryIOCModule {
      * @param configuration
      * @param pageLinkCreatorFactory 
      */
-    public static void contributeCpuMenu(MappedConfiguration<String, LinkCreator> configuration,
-            PageLinkCreatorFactory pageLinkCreatorFactory) {
+    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration) {
         String path;
 
-        String listViewPage=ListView.class.getSimpleName();
         path = "Start>License";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(License.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(License.class)));
 
         path = "Start>LicenseRecord";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(LicenseRecord.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(LicenseRecord.class)));
 
         path = "Start>LicenseRecordView";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(LicenseRecordView.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(LicenseRecordView.class)));
 
         path = "Start>LicenseRecordView>EducationForm";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(EducationForm.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(EducationForm.class)));
 
         path = "Start>LicenseRecordView>EducationalQualificationLevel";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(EducationalQualificationLevel.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(EducationalQualificationLevel.class)));
 
         path = "Start>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(KnowledgeAreaOrTrainingDirection.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(KnowledgeAreaOrTrainingDirection.class)));
 
         path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
-        configuration.add(path, pageLinkCreatorFactory.create(listViewPage, BaseEntity.getFullClassName(TrainingDirectionOrSpeciality.class)));
+        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(TrainingDirectionOrSpeciality.class)));
     }
 
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration){
