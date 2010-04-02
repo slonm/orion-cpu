@@ -23,6 +23,13 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
             <div id="logo"><h1><t:pagelink page="index">orion:cpu</t:pagelink></h1></div>
             <span id="menu"><t:menu.menubar menudata="menudata" /></span>
         </div>
+        <br/>
+        <t:security.IfLoggedIn>
+            User: ${user.name} <t:ActionLink t:id="logout">Logout</t:ActionLink>
+            <p:else>
+            <t:pagelink page="login">Login</t:pagelink>
+            </p:else>
+        </t:security.IfLoggedIn>
         <!-- end header -->
         <!-- start page -->
         <div id="page">

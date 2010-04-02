@@ -80,7 +80,8 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
-                    LPermissions.get(READ_OP), LRPermissions.get(READ_OP), LRVPermissions.get(READ_OP));
+                    LPermissions.get(READ_OP), LRPermissions.get(READ_OP), LRVPermissions.get(READ_OP),
+                    LPermissions.get(MENU_OP));
 
             //Права изменения записей о лицензиях
             PermissionGroup pgManageLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление лицензиями",

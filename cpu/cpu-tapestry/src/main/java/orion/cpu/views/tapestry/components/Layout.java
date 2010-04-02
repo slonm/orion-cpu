@@ -1,9 +1,13 @@
 package orion.cpu.views.tapestry.components;
 
+import br.com.arsmachina.authentication.entity.User;
 import java.util.ArrayList;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
+import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Session;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.services.CpuMenu;
 
@@ -28,8 +32,24 @@ public class Layout {
     @Parameter(required = true)
     @Property(write = false)
     private ArrayList<MenuData> menudata;
+    @SessionState(create = false)
+    @Property
+    private User user;
+    @Inject
+    private Request request;
 
     ArrayList<MenuData> defaultMenudata() {
         return cpuMenu.getMenu("Start", null, null, null);
+    }
+
+    /**
+     * Invalidates the session.
+     */
+    @OnEvent(component = "logout", value = EventConstants.ACTION)
+    public void logout() {
+        final Session session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
 }
