@@ -154,7 +154,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @return the license
      */
 //    @NonVisual
-    @JoinColumn(nullable = true)
+    @JoinColumn(nullable = false)
     @ManyToOne
     public License getLicense() {
         return license;
