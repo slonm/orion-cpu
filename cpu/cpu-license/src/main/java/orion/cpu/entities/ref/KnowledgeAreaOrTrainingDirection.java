@@ -20,7 +20,7 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeAreaOrTrainingDirection> {
 
     private static final long serialVersionUID = 1L;
-    @Validate("regexp=([0-9]{2}|[0-9]{4})")
+    @Validate("regexp=[0-9]{4}")
     private String code;
     @DataType("KnowledgeAreaOrTrainingDirection")
     private Boolean isKnowledgeArea;
