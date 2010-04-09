@@ -2,9 +2,7 @@ package orion.cpu.entities.uch;
 
 import java.util.Date;
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.NonVisual;
 import orion.cpu.baseentities.BaseEntity;
-import orion.cpu.entities.org.FuncStructureUnit;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationForm;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
@@ -24,7 +22,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     private EducationForm educationForm;
     private Integer studentLicenseQuantity;
     private Date terminationDate;
-    private FuncStructureUnit funcStructure;
+    private OrgUnit orgUnit;
     private License license;
 
 
@@ -131,23 +129,12 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      */
     @JoinColumn(nullable = false)
     @ManyToOne
-    public FuncStructureUnit getFuncStructureUnit() {
-        return funcStructure;
-    }
-
-    /**
-     * @param funcStructureUnit the Unit to set
-     */
-    public void setFuncStructureUnit(FuncStructureUnit funcStructureUnit) {
-        this.funcStructure = funcStructureUnit;
-    }
-
-    /**
-     * @return the Unit
-     */
-    @Transient
     public OrgUnit getOrgUnit() {
-        return funcStructure.getOrgUnit();
+        return orgUnit;
+    }
+
+    public void setOrgUnit(OrgUnit orgUnit) {
+        this.orgUnit = orgUnit;
     }
 
     /**
@@ -175,7 +162,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     @Override
     protected boolean entityEquals(LicenseRecord obj) {
         return aEqualsField(trainingDirectionOrSpeciality, obj.trainingDirectionOrSpeciality)
-                && aEqualsField(funcStructure, obj.funcStructure);
+                && aEqualsField(orgUnit, obj.orgUnit);
     }
 
     @Override

@@ -4,7 +4,6 @@ import br.com.arsmachina.dao.DAO;
 import br.com.arsmachina.dao.SortCriterion;
 import br.com.arsmachina.module.service.DAOSource;
 import java.util.*;
-import org.apache.tapestry5.ioc.ObjectLocator;
 import orion.cpu.entities.ref.EducationForm;
 import orion.cpu.entities.uch.LicenseRecord;
 import orion.cpu.entities.uch.LicenseRecordView;
@@ -133,7 +132,7 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
                     EqualForExample(o1.getStationaryStudentLicenseQuantity(), example.getStationaryStudentLicenseQuantity()) &&
                     EqualForExample(o1.getTerminationDate(), example.getTerminationDate()) &&
                     EqualForExample(o1.getTrainingDirectionOrSpeciality(), example.getTrainingDirectionOrSpeciality()) &&
-                    EqualForExample(o1.getFuncStructureUnit(), example.getFuncStructureUnit())) {
+                    EqualForExample(o1.getOrgUnit(), example.getOrgUnit())) {
                 lst.add(o1);
 
             }
