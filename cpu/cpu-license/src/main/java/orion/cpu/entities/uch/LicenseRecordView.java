@@ -2,7 +2,7 @@ package orion.cpu.entities.uch;
 
 import java.util.Date;
 import orion.cpu.baseentities.BaseEntity;
-import orion.cpu.entities.org.FuncStructureUnit;
+import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
@@ -133,16 +133,16 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @return the Unit
      */
-    public FuncStructureUnit getFuncStructureUnit() {
-        return stationaryLicenseRecord.getFuncStructureUnit();
+    public OrgUnit getOrgUnit() {
+        return stationaryLicenseRecord.getOrgUnit();
     }
 
     /**
      * @param funcStructureUnit the Unit to set
      */
-    public void setFuncStructure(FuncStructureUnit funcStructureUnit) {
-        stationaryLicenseRecord.setFuncStructureUnit(funcStructureUnit);
-        correspondenseLicenseRecord.setFuncStructureUnit(funcStructureUnit);
+    public void setOrgUnit(OrgUnit orgUnit) {
+        stationaryLicenseRecord.setOrgUnit(orgUnit);
+        correspondenseLicenseRecord.setOrgUnit(orgUnit);
     }
 
     /**
