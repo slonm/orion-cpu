@@ -40,8 +40,6 @@ import br.com.arsmachina.authentication.springsecurity.SpringSecurityMD5Password
 import br.com.arsmachina.authentication.springsecurity.UserDetailsServiceImpl;
 import br.com.arsmachina.authentication.springsecurity.internal.UserASORequestFilter;
 import orion.cpu.security.RoleSSORequestFilter;
-import orion.cpu.security.services.ExtendedAuthorizer;
-import orion.cpu.security.services.impl.ExtendedAuthorizerImpl;
 
 /**
  * Tapestry-IoC module for generic-authentication-spring-security. It binds
@@ -70,7 +68,6 @@ public class TapestrySpringSecurityGenericAuthenticationModule {
      */
     public static void bind(ServiceBinder binder) {
         binder.bind(UserASORequestFilter.class);
-        binder.bind(ExtendedAuthorizer.class, ExtendedAuthorizerImpl.class).withId("Authorizer");
     }
 
     /**
