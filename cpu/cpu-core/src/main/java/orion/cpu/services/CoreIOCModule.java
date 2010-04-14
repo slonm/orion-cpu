@@ -197,8 +197,7 @@ public class CoreIOCModule {
      * @param configuration
      * @param objectLocatorInstance
      */
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            @Autobuild ObjectLocatorInstance objectLocatorInstance) {
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("InitializeDatabase", InitializeDatabase.class);
     }
 
