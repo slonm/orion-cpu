@@ -19,8 +19,7 @@ public class UnitsIOCModule {
      * @param configuration
      * @param objectLocatorInstance
      */
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            @Autobuild ObjectLocatorInstance objectLocatorInstance) {
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("UnitsInitializeDatabase", UnitsInitializeDatabase.class, "after:InitializeDatabase");
     }
 }
