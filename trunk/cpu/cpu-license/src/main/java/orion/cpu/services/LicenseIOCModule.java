@@ -19,8 +19,7 @@ public class LicenseIOCModule {
      * @param configuration
      * @param objectLocatorInstance
      */
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            @Autobuild ObjectLocatorInstance objectLocatorInstance) {
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("LicenseInitializeDatabase", LicenseInitializeDatabase.class, "after:InitializeDatabase");
     }
 }
