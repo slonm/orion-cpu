@@ -1,5 +1,6 @@
 package orion.cpu.services;
 
+import br.com.arsmachina.authentication.entity.User;
 import orion.cpu.services.factory.*;
 import orion.cpu.security.services.SecModule;
 import br.com.arsmachina.module.Module;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import orion.cpu.controllers.listeners.CommitTransactionListener;
 import orion.cpu.controllers.listenersupport.ControllerEventsListener;
+import orion.cpu.security.services.ExtendedAuthorizer;
 import orion.cpu.utils.HibernateSessionWrapper;
 
 /*
@@ -27,8 +29,8 @@ public class CoreIOCModule {
 
     @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(CoreIOCModule.class);
+    public static final String FILL_TEST_DATA = "tapestry.hibernate.fill-test-data";
 
-    public static final String FILL_TEST_DATA="tapestry.hibernate.fill-test-data";
     /**
      * Регистрация сервисов и привязка к ним реализаций
      * @param binder
@@ -193,12 +195,33 @@ public class CoreIOCModule {
 
     /**
      * Начальная инициализация базы данных
-     * Создание сервиса ObjectLocatorInstance
+     * Установка текущего пользователя для обхода авторизации
+     * Удаление текущего пользователя после инициализации.
      * @param configuration
      * @param objectLocatorInstance
      */
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
+    }
+
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
+            final ExtendedAuthorizer authorizer) {
+        configuration.add("SetSSOUserSYSTEM", new Runnable() {
+
+            @Override
+            public void run() {
+                authorizer.storeUserAndRole(User.SYSTEM_USER, null);
+            }
+        }, "before:*");
+
         configuration.addInstance("InitializeDatabase", InitializeDatabase.class);
+
+        configuration.add("UnSetSSOUser", new Runnable() {
+
+            @Override
+            public void run() {
+                authorizer.storeUserAndRole(null, null);
+            }
+        }, "after:*");
     }
 
     /**
