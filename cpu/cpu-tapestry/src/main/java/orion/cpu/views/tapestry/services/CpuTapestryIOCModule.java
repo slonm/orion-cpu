@@ -166,32 +166,6 @@ public class CpuTapestryIOCModule {
     }
 
     /**
-     * Начальная инициализация базы данных.
-     * Установка текущего пользователя для обхода авторизации
-     * Удаление текущего пользователя после инициализации.
-     * @param configuration
-     * @param authorizer 
-     */
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            final ExtendedAuthorizer authorizer) {
-        configuration.add("SetSSOUserSYSTEM", new Runnable() {
-
-            @Override
-            public void run() {
-                authorizer.storeUserAndRole(User.SYSTEM_USER, null);
-            }
-        }, "before:*");
-
-        configuration.add("UnSetSSOUser", new Runnable() {
-
-            @Override
-            public void run() {
-                authorizer.storeUserAndRole(null, null);
-            }
-        }, "after:*");
-    }
-
-    /**
      * Регистрация ресурса из библиотеки cpu-core происходит тут, что-бы не вводить
      * зависимость от сервиса в cpu-core
      * @param configuration
