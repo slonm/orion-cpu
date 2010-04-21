@@ -42,6 +42,11 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
         return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
     }
 
+    @Transient
+    public String getKnowledgeAreaOrTrainingDirectionCode() {
+        return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection().getCode();
+    }
+
     /**
      * @return the educationalQualificationLevel
      */
@@ -125,7 +130,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     }
 
     /**
-     * @return the Unit
+     * @return the orgUnit
      */
     @JoinColumn(nullable = false)
     @ManyToOne

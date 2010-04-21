@@ -12,9 +12,8 @@ import org.apache.tapestry5.beaneditor.Validate;
  */
 @Entity
 @Table(schema = "ref", uniqueConstraints = {
-    @UniqueConstraint(columnNames={"name", "isTrainingDirection"}),
-    @UniqueConstraint(columnNames={"shortName", "isTrainingDirection"}),
-    @UniqueConstraint(columnNames={"code", "isTrainingDirection"})
+    @UniqueConstraint(columnNames={"name", "code", "isTrainingDirection"}),
+    @UniqueConstraint(columnNames={"shortName", "code", "isTrainingDirection"})
 })
 @ReorderProperties("name, shortName, code, isTrainingDirection, knowledgeAreaOrTrainingDirection, isObsolete")
 public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirectionOrSpeciality> {

@@ -18,7 +18,7 @@ public class License extends Document<License> {
      * @return the LicenseSeria
      */
     @Column(length = 2, nullable = false)
-    @Validate("regexp=([A-Z]{2})")
+    @Validate("regexp=([А-Я]{2})")
     public String getSerial() {
         return super.getSerial();
     }

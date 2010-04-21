@@ -4,8 +4,12 @@ import br.com.arsmachina.authentication.controller.UserController;
 import br.com.arsmachina.authentication.entity.*;
 import br.com.arsmachina.controller.Controller;
 import java.util.*;
+import org.slf4j.*;
+import orion.cpu.controllers.NamedEntityController;
 import orion.cpu.entities.ref.*;
 import orion.cpu.entities.uch.*;
+import orion.cpu.entities.pub.*;
+import orion.cpu.entities.org.*;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.services.impl.InitializeDatabaseSupport;
 import ua.mihailslobodyanuk.utils.Defense;
@@ -16,12 +20,11 @@ import ua.mihailslobodyanuk.utils.Defense;
  */
 public class LicenseInitializeDatabase extends OperationTypes implements Runnable {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LicenseInitializeDatabase.class);
     private final InitializeDatabaseSupport iDBSpt;
-    private final Controller<EducationForm, Integer> eduFormController;
 
     public LicenseInitializeDatabase(InitializeDatabaseSupport initializeDatabaseSupport) {
         this.iDBSpt = Defense.notNull(initializeDatabaseSupport, "initializeDatabaseSupport");
-        eduFormController = iDBSpt.getControllerSource().get(EducationForm.class);
     }
 
     @Override
@@ -81,7 +84,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Права просмотра записей о лицензиях
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
                     LPermissions.get(READ_OP), LRPermissions.get(READ_OP), LRVPermissions.get(READ_OP),
-                    LPermissions.get(MENU_OP));
+                    LRVPermissions.get(MENU_OP));
 
             //Права изменения записей о лицензиях
             PermissionGroup pgManageLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление лицензиями",
@@ -123,17 +126,257 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleLO);
-            for(PermissionGroup pg: roleLO.getPermissionGroups()){
+            for (PermissionGroup pg : roleLO.getPermissionGroups()) {
                 user.add(pg);
             }
             uCnt.saveOrUpdate(user);
 
             user = uCnt.findByLogin("TII");
             user.add(roleLM);
-            for(PermissionGroup pg: roleLM.getPermissionGroups()){
+            for (PermissionGroup pg : roleLM.getPermissionGroups()) {
                 user.add(pg);
             }
             uCnt.saveOrUpdate(user);
+
+            //---------Области знаний или направления подготовки----------
+            KnowledgeAreaOrTrainingDirection kaotdCompSci = saveOrUpdateKAOTD("Комп'ютерні науки", null, "0804", false, false);
+            KnowledgeAreaOrTrainingDirection kaotdInfComp = saveOrUpdateKAOTD("Інформатика та обчислювальна техніка", null, "0501", true, false);
+            KnowledgeAreaOrTrainingDirection kaotdSpecCateg = saveOrUpdateKAOTD("Специфічні категорії", null, "0000", false, false);
+
+            //---Направления подготовки или специальности суффиксы _С, _B, _SM обозначают квалификационные уровни младшего специалиста, бакалавра, специалиста/магистра, соответственно----------
+            TrainingDirectionOrSpeciality tdosPZAS_B = saveOrUpdateTDOS("Програмне забезпечення автоматизованих систем", "ПЗАС", "00", false, kaotdCompSci, false);
+            TrainingDirectionOrSpeciality tdosPZAS_SM = saveOrUpdateTDOS("Програмне забезпечення автоматизованих систем", "ПЗАС", "03", false, kaotdCompSci, false);
+            TrainingDirectionOrSpeciality tdosPECTAS_JS = saveOrUpdateTDOS("Програмування для електронно-обчислювальної техніки і автоматизованих систем", "ПЗАС", "05", false, kaotdCompSci, false);
+            TrainingDirectionOrSpeciality tdosPI_B = saveOrUpdateTDOS("Програмна інженерія", "ПІ", "03", true, kaotdInfComp, false);
+            TrainingDirectionOrSpeciality tdosRPZ_JS = saveOrUpdateTDOS("Розробка порграмного забезпечення", "РПЗ", "0301", true, kaotdInfComp, false);
+            TrainingDirectionOrSpeciality tdosPVSH_SM = saveOrUpdateTDOS("Педагогіка вищої школи", "ПВШ", "05", false, kaotdSpecCateg, false);
+
+            //---Серия, номер и дата выдачи лицензии----------
+            Calendar licCal = Calendar.getInstance();
+            licCal.set(Calendar.YEAR, 2008);
+            licCal.set(Calendar.MONTH, Calendar.OCTOBER);
+            licCal.set(Calendar.DAY_OF_MONTH, 21);
+            License licenseCPU = saveOrUpdateLicense("АВ", "420720", licCal.getTime(), "", null);
+
+
+//            Kafedra kafPIT = new Kafedra();
+//            Kafedra kafEICPHS = new Kafedra();
+//            //---Кафедры, выполняющие обучение по лицензиям----------
+            NamedEntityController<OrgUnit> ouCnt = (NamedEntityController<OrgUnit>) (Object) iDBSpt.getControllerSource().get(OrgUnit.class);
+            OrgUnit kafPIT = ouCnt.findByNameFirst("кафедра програмування та інформаційних технологій");
+            OrgUnit kafEICPHS = ouCnt.findByNameFirst("кафедра управління навчальними закладами та педагогіки вищої школи");
+            //Термін закінчення ліцензій ПЗАС та ПІ
+            Calendar lrPZAS_Cal = Calendar.getInstance();
+
+            lrPZAS_Cal.set(Calendar.YEAR, 2010);
+
+            lrPZAS_Cal.set(Calendar.MONTH, Calendar.JULY);
+
+            lrPZAS_Cal.set(Calendar.DAY_OF_MONTH, 1);
+            //Термін закінчення ліцензій ПЗАС та ПІ
+            Calendar lrPVSH_Cal = Calendar.getInstance();
+
+            lrPZAS_Cal.set(Calendar.YEAR, 2009);
+
+            lrPZAS_Cal.set(Calendar.MONTH, Calendar.JULY);
+
+            lrPZAS_Cal.set(Calendar.DAY_OF_MONTH, 1);
+            //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
+            //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
+            //суффиксы _D, _Z обозначают дневную и заочн формы обучения----------
+            //Програмне забезпечення автоматизованих систем - молодші спеціалісти, денна
+            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, null, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - молодші спеціалісти, заочна
+            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - бакалаври, денна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - бакалаври, заочна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, corr_EF, 60, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - специалісти, денна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - специалісти, заочна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - магістри, денна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмне забезпечення автоматизованих систем - магістри, заочна
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, corr_EF, 10, lrPZAS_Cal.getTime(), kafPIT);
+            //Розробка програмного забезпечення - молодші спеціалісти, денна
+            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, null, lrPZAS_Cal.getTime(), kafPIT);
+            //Розробка програмного забезпечення - молодші спеціалісти, заочна
+            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмна інженерія- бакалаври, денна
+            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, lrPZAS_Cal.getTime(), kafPIT);
+            //Програмна інженерія- бакалаври, заочна
+            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, corr_EF, 60, lrPZAS_Cal.getTime(), kafPIT);
+            //Педагогіка вищої школи- магістри, денна
+            saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, stat_EF, 30, lrPVSH_Cal.getTime(), kafEICPHS);
+            ////Педагогіка вищої школи- магістри, заочна
+            saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, corr_EF, 30, lrPVSH_Cal.getTime(), kafEICPHS);
+            //TODO Добавить лицензионные записи
         }
+
+    }
+
+    //---------Метод сохранения/обновления областей знаний или направлений подготовки ----------
+    private KnowledgeAreaOrTrainingDirection saveOrUpdateKAOTD(String name, String shortName, String code, Boolean isKnowledgeArea, Boolean isObsolete) {
+
+        //--Создание контроллера, работающего с экземплярами областей знаний или направлений подготовки
+        Controller<KnowledgeAreaOrTrainingDirection, Integer> kaotdController = iDBSpt.getControllerSource().get(KnowledgeAreaOrTrainingDirection.class);
+
+        //---Создание образца области знаний или направления подготовки
+        KnowledgeAreaOrTrainingDirection kaotdSample = new KnowledgeAreaOrTrainingDirection();
+        kaotdSample.setName(name);
+        kaotdSample.setCode(code);
+        kaotdSample.setIsKnowledgeArea(isKnowledgeArea);
+
+        //--Выборка списка областей знаний или направлений подготовки
+        List<KnowledgeAreaOrTrainingDirection> kaotd = kaotdController.findByExample(kaotdSample);
+        //--Переменная для работы с экземпляром элемента спискка
+        KnowledgeAreaOrTrainingDirection p;
+        //--Инициализация элемента списка
+        if (kaotd.size() == 0) {
+            p = new KnowledgeAreaOrTrainingDirection();
+            p.setName(name);
+            p.setShortName(shortName);
+            p.setCode(code);
+            p.setIsKnowledgeArea(isKnowledgeArea);
+            p.setIsObsolete(isObsolete);
+
+        } else {
+            p = kaotd.get(0);
+        }
+        return kaotdController.saveOrUpdate(p);
+    }
+
+//---------Метод сохранения/обновления направлений подготовки или специальности----------
+    private TrainingDirectionOrSpeciality saveOrUpdateTDOS(
+            String name,
+            String shortName,
+            String code,
+            Boolean isTrainingDirection,
+            KnowledgeAreaOrTrainingDirection knowledgeAreaOrTrainingDirection,
+            Boolean isObsolete) {
+
+        //--Создание контроллера, работающего с экземплярами направлений подготовки или специальности
+        Controller<TrainingDirectionOrSpeciality, Integer> tdosController = iDBSpt.getControllerSource().get(TrainingDirectionOrSpeciality.class);
+
+        //---Создание образца направления подготовки или специальности
+        TrainingDirectionOrSpeciality tdosSample = new TrainingDirectionOrSpeciality();
+        tdosSample.setName(name);
+        tdosSample.setShortName(shortName);
+        tdosSample.setCode(code);
+        tdosSample.setIsTrainingDirection(isTrainingDirection);
+        tdosSample.setKnowledgeAreaOrTrainingDirection(knowledgeAreaOrTrainingDirection);
+
+        //--Выборка списка направлений подготовки или специальности
+        List<TrainingDirectionOrSpeciality> tdos = tdosController.findByExample(tdosSample);
+        //--Переменная для работы с экземпляром элемента спискка
+        TrainingDirectionOrSpeciality p;
+        //--Инициализация элемента списка
+        if (tdos.size() == 0) {
+            p = new TrainingDirectionOrSpeciality();
+            p.setName(name);
+            p.setShortName(shortName);
+            p.setCode(code);
+            p.setIsTrainingDirection(isTrainingDirection);
+            p.setKnowledgeAreaOrTrainingDirection(knowledgeAreaOrTrainingDirection);
+            p.setIsObsolete(isObsolete);
+
+        } else {
+            p = tdos.get(0);
+        }
+        return tdosController.saveOrUpdate(p);
+    }
+
+//---------Метод сохранения/обновления серии и номера лицензии----------
+    private License saveOrUpdateLicense(
+            String serial,
+            String number,
+            Date issue,
+            String body,
+            Map<String, DocumentImage> images) {
+
+        //--Создание контроллера, работающего с экземплярами шапки лицензии
+        Controller<License, Integer> licenseController = iDBSpt.getControllerSource().get(License.class);
+
+        //---Создание образца шапки лицензии
+        License licenseSample = new License();
+        licenseSample.setSerial(serial);
+        licenseSample.setNumber(number);
+        licenseSample.setIssue(issue);
+        licenseSample.setBody(body);
+        licenseSample.setImages(images);
+
+        //--Выборка списка данных шапок лицензий
+        List<License> license = licenseController.findByExample(licenseSample);
+        //--Переменная для работы с экземпляром элемента спискка
+        License p;
+        //--Инициализация элемента списка
+        if (license.size() == 0) {
+            p = new License();
+            p.setSerial(serial);
+            p.setNumber(number);
+            p.setIssue(issue);
+            p.setBody(body);
+            p.setImages(images);
+        } else {
+            p = license.get(0);
+        }
+        return licenseController.saveOrUpdate(p);
+    }
+
+//---------Метод сохранения/обновления записи лицензии----------
+    private LicenseRecord saveOrUpdateLR(
+            License license,
+            TrainingDirectionOrSpeciality trainingDirectionOrSpeciality,
+            EducationalQualificationLevel educationalQualificationLevel,
+            EducationForm educationForm,
+            Integer studentLicenseQuantity,
+            Date terminationDate,
+            OrgUnit orgUnit) {
+
+        //--Создание контроллера, работающего с экземплярами записи лицензии
+        Controller<LicenseRecord, Integer> lrController = iDBSpt.getControllerSource().get(LicenseRecord.class);
+
+        //---Создание образца записи лицензии
+        LicenseRecord lrSample = new LicenseRecord();
+        lrSample.setLicense(license);
+        lrSample.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
+        lrSample.setEducationalQualificationLevel(educationalQualificationLevel);
+        lrSample.setEducationForm(educationForm);
+        lrSample.setStudentLicenseQuantity(studentLicenseQuantity);
+        lrSample.setTerminationDate(terminationDate);
+        lrSample.setOrgUnit(orgUnit);
+
+        //--Выборка списка данных записи лицензии
+        List<LicenseRecord> lr = lrController.findByExample(lrSample);
+        //--Переменная для работы с экземпляром элемента спискка
+        LicenseRecord p;
+        //--Инициализация элемента списка
+
+
+
+
+
+
+
+
+
+
+
+
+        if (lr.size() == 0) {
+            p = new LicenseRecord();
+            p.setLicense(license);
+            p.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
+            p.setEducationalQualificationLevel(educationalQualificationLevel);
+            p.setEducationForm(educationForm);
+            p.setStudentLicenseQuantity(studentLicenseQuantity);
+            p.setTerminationDate(terminationDate);
+            p.setOrgUnit(orgUnit);
+        } else {
+            p = lr.get(0);
+        }
+        return lrController.saveOrUpdate(p);
     }
 }
