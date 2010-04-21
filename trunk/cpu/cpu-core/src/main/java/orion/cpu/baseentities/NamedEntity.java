@@ -20,7 +20,7 @@ public abstract class NamedEntity<T extends NamedEntity<?>> extends BaseEntity<T
      */
     @Column(nullable = false)
     @NotNull
-    @Length(min = 2, max = 50)
+    @Length(min = 2)
     public String getName() {
         return name;
     }

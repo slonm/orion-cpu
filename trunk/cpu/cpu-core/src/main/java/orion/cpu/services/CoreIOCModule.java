@@ -89,7 +89,8 @@ public class CoreIOCModule {
      */
     public static void contributeDAOFactory(
             OrderedConfiguration<DAOFactory> configuration) {
-        configuration.addInstance("ref", HibernateReferenceDAOFactory.class, "before:hibernate");
+        configuration.addInstance("named", HibernateNamedEntityDAOFactory.class, "before:hibernate");
+        configuration.addInstance("ref", HibernateReferenceDAOFactory.class, "before:named");
         configuration.overrideInstance("hibernate", SecuredDAOFactory.class, "after:*");
     }
 
@@ -102,7 +103,8 @@ public class CoreIOCModule {
     public static void contributeControllerFactory(
             OrderedConfiguration<ControllerFactory> configuration) {
 
-        configuration.addInstance("ref", ReferenceControllerFactory.class, "before:default");
+        configuration.addInstance("named", NamedEntityControllerFactory.class, "before:default");
+        configuration.addInstance("ref", ReferenceControllerFactory.class, "before:named");
         configuration.overrideInstance("default", BaseControllerFactory.class);
     }
 

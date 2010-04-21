@@ -41,15 +41,16 @@ public class OrionHibernateGenericDAO<T, K extends Serializable> extends Concret
      * Добавляет к criteria ограничения для
      * ассоциации вида один-один, один-много
      * @param criteria модифициремый объект Criteria
-     * @param obj образец
+     * @param example образец
      * @author sl
      */
-    protected void addOneToConstraints(Criteria criteria, Object obj) {
-        ClassMetadata cm = getSessionFactory().getClassMetadata(obj.getClass());
+    //TODO Протестировать рекурсию
+    protected void addOneToConstraints(Criteria criteria, Object example) {
+        ClassMetadata cm = getSessionFactory().getClassMetadata(example.getClass());
         for (String name : cm.getPropertyNames()) {
             Type t = cm.getPropertyType(name);
             if (t.isAssociationType() && !t.isCollectionType()) {
-                Object subObj = cm.getPropertyValue(obj, name, getSession().getEntityMode());
+                Object subObj = cm.getPropertyValue(example, name, getSession().getEntityMode());
                 if (subObj != null) {
                     ClassMetadata subCm = getSessionFactory().getClassMetadata(subObj.getClass());
                     criteria.createCriteria(name).add(Restrictions.eq(subCm.getIdentifierPropertyName(), subCm.getIdentifier(subObj, getSession().getEntityMode())));
