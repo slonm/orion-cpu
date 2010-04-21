@@ -42,6 +42,6 @@ public class NamedEntityControllerImpl<T extends NamedEntity<?>> extends BaseCon
         if (l.size() == 0) {
             return null;
         }
-        return l.get(1);
+        return l.get(0);
     }
 }
