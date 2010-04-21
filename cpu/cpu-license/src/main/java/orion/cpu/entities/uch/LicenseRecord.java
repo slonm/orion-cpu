@@ -20,7 +20,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     private EducationalQualificationLevel educationalQualificationLevel;
     private TrainingDirectionOrSpeciality trainingDirectionOrSpeciality;
     private EducationForm educationForm;
-    private Integer studentLicenseQuantity;
+    private Integer studentLicenseQuantity = 0;
     private Date terminationDate;
     private OrgUnit orgUnit;
     private License license;
