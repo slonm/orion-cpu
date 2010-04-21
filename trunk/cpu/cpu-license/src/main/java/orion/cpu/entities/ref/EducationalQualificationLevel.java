@@ -35,7 +35,7 @@ public class EducationalQualificationLevel extends ReferenceEntity<EducationalQu
      */
     public final static String MASTER_KEY = "MASTER";
 
-    @Validate("regexp=([0-9]{1})")
+    @Validate("regexp=([5-8]{1})")
     private String code;
 
     public EducationalQualificationLevel() {

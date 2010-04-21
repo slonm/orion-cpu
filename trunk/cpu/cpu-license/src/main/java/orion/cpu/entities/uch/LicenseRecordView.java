@@ -1,6 +1,7 @@
 package orion.cpu.entities.uch;
 
 import java.util.Date;
+import org.apache.tapestry5.beaneditor.NonVisual;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
@@ -11,14 +12,21 @@ import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
  * Сущность подситемы учета лицензий
  * @author kgp
  */
+
 public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
-    private LicenseRecord stationaryLicenseRecord;
-    private LicenseRecord correspondenseLicenseRecord;
+    private LicenseRecord stationaryLicenseRecord = new LicenseRecord();
+    private LicenseRecord correspondenseLicenseRecord = new LicenseRecord();
 
     public LicenseRecordView() {
     }
 
+    @Override
+    public Integer getId(){
+        return stationaryLicenseRecord.getId();
+    }
+
+    @NonVisual
     public LicenseRecord getCorrespondenseLicenseRecord() {
         return correspondenseLicenseRecord;
     }
@@ -27,6 +35,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
         this.correspondenseLicenseRecord = correspondenseLicenseRecord;
     }
 
+    @NonVisual
     public LicenseRecord getStationaryLicenseRecord() {
         return stationaryLicenseRecord;
     }
@@ -49,6 +58,10 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
         return stationaryLicenseRecord.getLicense().getIssue();
     }
 
+    public String getKnowledgeAreaOrTrainingDirectionCode() {
+        return stationaryLicenseRecord.getKnowledgeAreaOrTrainingDirection().getCode();
+    }
+
     public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
         return stationaryLicenseRecord.getKnowledgeAreaOrTrainingDirection();
     }
@@ -56,6 +69,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @return the educationalQualificationLevel
      */
+//    @NonVisual
     public EducationalQualificationLevel getEducationalQualificationLevel() {
         return stationaryLicenseRecord.getEducationalQualificationLevel();
     }
@@ -138,7 +152,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     /**
-     * @param funcStructureUnit the Unit to set
+     * @param orgUnit to set
      */
     public void setOrgUnit(OrgUnit orgUnit) {
         stationaryLicenseRecord.setOrgUnit(orgUnit);
@@ -148,6 +162,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @return the license
      */
+//    @NonVisual
     public License getLicense() {
         return stationaryLicenseRecord.getLicense();
     }

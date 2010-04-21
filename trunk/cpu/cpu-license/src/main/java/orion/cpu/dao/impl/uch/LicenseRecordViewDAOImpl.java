@@ -190,8 +190,12 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
 
     @Override
     public void delete(LicenseRecordView object) {
-        getLrDAO().delete(object.getStationaryLicenseRecord());
-        getLrDAO().delete(object.getCorrespondenseLicenseRecord());
+        if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
+            getLrDAO().delete(object.getStationaryLicenseRecord());
+        }
+        if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
+            getLrDAO().delete(object.getCorrespondenseLicenseRecord());
+        }
     }
 
     @Override
@@ -202,14 +206,23 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
 
     @Override
     public void save(LicenseRecordView object) {
-        getLrDAO().save(object.getStationaryLicenseRecord());
-        getLrDAO().save(object.getCorrespondenseLicenseRecord());
+        object.getStationaryLicenseRecord().setEducationForm(getSTATIONARY_EF());
+        object.getCorrespondenseLicenseRecord().setEducationForm(getCORRESPONDENCE_EF());
+        if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
+            getLrDAO().update(object.getStationaryLicenseRecord());
+        } else {
+            getLrDAO().save (object.getStationaryLicenseRecord());
+        }
+        if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
+            getLrDAO().update(object.getCorrespondenseLicenseRecord());
+        } else {
+            getLrDAO().save(object.getCorrespondenseLicenseRecord());
+        }
     }
 
     @Override
     public LicenseRecordView update(LicenseRecordView object) {
-        object.setStationaryLicenseRecord(getLrDAO().update(object.getStationaryLicenseRecord()));
-        object.setCorrespondenseLicenseRecord(getLrDAO().update(object.getCorrespondenseLicenseRecord()));
+        save(object);
         return object;
     }
 
