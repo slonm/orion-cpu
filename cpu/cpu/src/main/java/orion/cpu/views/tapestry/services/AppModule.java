@@ -22,7 +22,7 @@ public class AppModule {
         // the first locale name is the default when there's no reasonable match).
 
 //FIXME app_ua.properties не читает
-        configuration.add(SymbolConstants.SUPPORTED_LOCALES, "uk");
+        configuration.add(SymbolConstants.SUPPORTED_LOCALES, "uk,ru,en");
 
         // The factory default is true but during the early stages of an application
         // overriding to false is a good idea. In addition, this is often overridden
@@ -39,7 +39,7 @@ public class AppModule {
         configuration.add("tapestry.compress-whitespace", "false");
         //Заполнение базы данных тестовыми данными
         configuration.add(CoreIOCModule.FILL_TEST_DATA, "true");
-
+        configuration.add("tapestry.default-stylesheet", "classpath:/default.css");
     }
 
 }
