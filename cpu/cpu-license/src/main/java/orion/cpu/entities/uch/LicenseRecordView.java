@@ -2,6 +2,7 @@ package orion.cpu.entities.uch;
 
 import java.util.Date;
 import org.apache.tapestry5.beaneditor.NonVisual;
+import org.apache.tapestry5.beaneditor.Validate;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
@@ -77,6 +78,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param educationalQualificationLevel the educationalQualificationLevel to set
      */
+    @Validate("required")
     public void setEducationalQualificationLevel(EducationalQualificationLevel educationalQualificationLevel) {
         stationaryLicenseRecord.setEducationalQualificationLevel(educationalQualificationLevel);
         correspondenseLicenseRecord.setEducationalQualificationLevel(educationalQualificationLevel);
@@ -96,6 +98,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param trainingDirectionOrSpeciality the TrainingDirectionOrSpeciality to set
      */
+    @Validate("required")
     public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality) {
         stationaryLicenseRecord.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
         correspondenseLicenseRecord.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
@@ -111,6 +114,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param stationaryStudentLicenseQuantity the stationaryStudentLicenseQuantity to set
      */
+    @Validate("required")
     public void setStationaryStudentLicenseQuantity(Integer stationaryStudentLicenseQuantity) {
         stationaryLicenseRecord.setStudentLicenseQuantity(stationaryStudentLicenseQuantity);
     }
@@ -125,6 +129,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param correspondenseStudentLicenseQuantity the correspondenseStudentLicenseQuantity to set
      */
+    @Validate("required")
     public void setCorrespondenseStudentLicenseQuantity(Integer correspondenseStudentLicenseQuantity) {
         correspondenseLicenseRecord.setStudentLicenseQuantity(correspondenseStudentLicenseQuantity);
     }
@@ -139,6 +144,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param terminationDate the terminationDate to set
      */
+    @Validate("required")
     public void setTerminationDate(Date terminationDate) {
         stationaryLicenseRecord.setTerminationDate(terminationDate);
         correspondenseLicenseRecord.setTerminationDate(terminationDate);
@@ -154,6 +160,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param orgUnit to set
      */
+    @Validate("required")
     public void setOrgUnit(OrgUnit orgUnit) {
         stationaryLicenseRecord.setOrgUnit(orgUnit);
         correspondenseLicenseRecord.setOrgUnit(orgUnit);
@@ -170,6 +177,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     /**
      * @param license the license to set
      */
+    @Validate("required")
     public void setLicense(License license) {
         stationaryLicenseRecord.setLicense(license);
         correspondenseLicenseRecord.setLicense(license);
