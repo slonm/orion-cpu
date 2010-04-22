@@ -8,6 +8,9 @@ import org.apache.tapestry5.ioc.services.SymbolSource;
 import org.slf4j.*;
 import orion.cpu.security.services.ExtendedAuthorizer;
 
+/**
+ * Статический класс для связи между IOC и сервлетом или аплетом ReportViewer
+ */
 public class BirtConnection {
 
     static final private Logger LOG = LoggerFactory.getLogger(BirtConnection.class);
@@ -17,6 +20,9 @@ public class BirtConnection {
     public static boolean isServlet = false;
     public static ObjectLocator locator = null;
 
+    /**
+     * Добавляет в карту параметров основные сервисы для работы с данными и текущего пользователя
+     */
     private static void createParams(Map<String, Object> params) {
         params.clear();
         for (Class<?> clasz : services) {
@@ -25,6 +31,10 @@ public class BirtConnection {
         params.put(User.class.getSimpleName(), locator.getService(ExtendedAuthorizer.class).getUser());
     }
 
+    /**
+     * Возвращает карту параметров генератору отчетов
+     * Если запуск произошел в режиме аплета, то создает реестр
+     */
     public static Map<String, Object> params() {
         if (!isServlet) {
             if (registry == null) {
@@ -40,11 +50,19 @@ public class BirtConnection {
         return params;
     }
 
+    /**
+     * Возвращает карту параметров генератору отчетов, добавляя при этом параметры
+     * полученные в _params
+     * Если запуск произошел в режиме аплета, то создает реестр
+     */
     public static Map<String, Object> params(Map<String, Object> _params) {
         params().putAll(_params);
         return params;
     }
 
+    /**
+     * Должен вызыватся при завершении работы генератора отчетов
+     */
     public static void shutdown() {
         if (!isServlet) {
             //for operations done from this thread
