@@ -183,8 +183,12 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
 
     @Override
     public LicenseRecordView reattach(LicenseRecordView object) {
-        getLrDAO().reattach(object.getStationaryLicenseRecord());
-        getLrDAO().reattach(object.getCorrespondenseLicenseRecord());
+        if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
+            getLrDAO().reattach(object.getStationaryLicenseRecord());
+        }
+        if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
+            getLrDAO().reattach(object.getCorrespondenseLicenseRecord());
+        }
         return object;
     }
 
@@ -228,8 +232,12 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
 
     @Override
     public void evict(LicenseRecordView object) {
-        getLrDAO().evict(object.getStationaryLicenseRecord());
-        getLrDAO().evict(object.getCorrespondenseLicenseRecord());
+        if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
+            getLrDAO().evict(object.getStationaryLicenseRecord());
+        }
+        if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
+            getLrDAO().evict(object.getCorrespondenseLicenseRecord());
+        }
     }
 
     @Override
@@ -240,8 +248,12 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
 
     @Override
     public void refresh(LicenseRecordView object) {
-        getLrDAO().refresh(object.getStationaryLicenseRecord());
-        getLrDAO().refresh(object.getCorrespondenseLicenseRecord());
+        if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
+            getLrDAO().refresh(object.getStationaryLicenseRecord());
+        }
+        if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
+            getLrDAO().refresh(object.getCorrespondenseLicenseRecord());
+        }
     }
 
     @Override
