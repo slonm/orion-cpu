@@ -1,5 +1,6 @@
 package orion.cpu.views.tapestry.services;
 
+import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.services.*;
 import orion.cpu.baseentities.BaseEntity;
@@ -38,31 +39,34 @@ public class LicenseTapestryIOCModule {
      * @param configuration
      * @param pageLinkCreatorFactory 
      */
-    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration) {
+    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
+            TapestryCrudModuleService tcms) {
         String path;
 
         path = "Start>License";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(License.class)));
+        configuration.add(path, createPageMenuLink(tcms, License.class));
 
         path = "Start>LicenseRecord";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(LicenseRecord.class)));
+        configuration.add(path, createPageMenuLink(tcms, LicenseRecord.class));
 
         path = "Start>LicenseRecordView";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(LicenseRecordView.class)));
+        configuration.add(path, createPageMenuLink(tcms, LicenseRecordView.class));
 
         path = "Start>LicenseRecordView>EducationForm";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(EducationForm.class)));
+        configuration.add(path, createPageMenuLink(tcms, EducationForm.class));
 
         path = "Start>LicenseRecordView>EducationalQualificationLevel";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(EducationalQualificationLevel.class)));
+        configuration.add(path, createPageMenuLink(tcms, EducationalQualificationLevel.class));
 
         path = "Start>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(KnowledgeAreaOrTrainingDirection.class)));
+        configuration.add(path, createPageMenuLink(tcms, KnowledgeAreaOrTrainingDirection.class));
 
         path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
-        configuration.add(path, new PageMenuLink(ListView.class, BaseEntity.getFullClassName(TrainingDirectionOrSpeciality.class)));
+        configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class));
     }
-
+    private static PageMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity){
+        return new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+    }
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration){
         configuration.add("License", "classpath:License.properties");
     }
