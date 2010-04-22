@@ -276,7 +276,7 @@ public class TapestryCrudModuleImpl extends DefaultTapestryCrudModule {
 
     /**
      * Возвращает имя класса страницы с указанным префиксом.
-     * Например root.web.pages.sec.user.ListUser
+     * Например root.web.pages.sec.ListUser
      * где root.web - пакет tapestry
      *     pages    - константа
      *     sec      - схема
@@ -288,7 +288,7 @@ public class TapestryCrudModuleImpl extends DefaultTapestryCrudModule {
      */
     protected String getPageClassName(Class<?> entityClass, String prefix) {
         return String.format("%s.pages.%s.%s%s", getTapestryPackage(),
-                BaseEntity.getFullClassName(entityClass).toLowerCase(),
+                BaseEntity.getSchema(entityClass).toLowerCase(),
                 prefix, entityClass.getSimpleName());
     }
 }

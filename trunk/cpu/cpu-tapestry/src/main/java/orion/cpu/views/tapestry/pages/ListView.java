@@ -84,7 +84,6 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
                 return login.setRedirectURL();
             }
         }
-        setObject(getActivationContextEncoder(getEntityClass()).toObject(context));
         title = messages.get("reflect." + beanClass.getName());
         return null;
     }
@@ -99,10 +98,6 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
 
     public String getEditPageURLContext() {
         return BaseEntity.getFullClassName(getEntityClass());
-    }
-
-    public boolean getCreate() {
-        return getAuthorizer().canStore(getEntityClass());
     }
 
     public static class MetaLinkCoercion implements Coercion<IMenuLink, Class<BaseEntity<?>>> {
