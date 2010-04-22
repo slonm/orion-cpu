@@ -1,6 +1,9 @@
 package orion.cpu.baseentities;
 
+import br.com.arsmachina.authentication.entity.User;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import ua.mihailslobodyanuk.base.AClonable;
@@ -20,14 +23,18 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
     @NonVisual
     private Integer id;
     @NonVisual
-    private EntityAudit audit;
+    private User filler;
+    @NonVisual
+    private Timestamp fillDateTime;
+    @NonVisual
+    private Timestamp modifyDateTime;
 
     public BaseEntity() {
         super(13, 76);
     }
 
     protected void auditRecord() {
-        getAudit().record();
+        modifyDateTime = new Timestamp(Calendar.getInstance().getTime().getTime());
     }
 
     protected <O> void auditRecord(O obj1, O obj2) {
@@ -51,15 +58,29 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         this.id = id;
     }
 
-    public EntityAudit getAudit() {
-        if (audit == null) {
-            audit = EntityAudit.create();
-        }
-        return audit;
+    public Timestamp getFillDateTime() {
+        return fillDateTime;
     }
 
-    public void setAudit(EntityAudit audit) {
-        this.audit = audit;
+    public User getFiller() {
+        return filler;
+    }
+
+    @Version
+    public Timestamp getModifyDateTime() {
+        return modifyDateTime;
+    }
+
+    public void setFillDateTime(Timestamp fillDateTime) {
+        this.fillDateTime = fillDateTime;
+    }
+
+    public void setFiller(User filler) {
+        this.filler = filler;
+    }
+
+    public void setModifyDateTime(Timestamp modifyDateTime) {
+        this.modifyDateTime = modifyDateTime;
     }
 
     //1) Эквивалентность id
@@ -68,7 +89,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
     final public boolean aEquals(Object obj) {
         BaseEntity<?> cast = (BaseEntity<?>) obj;
         if (id == null && cast.id == null) {
-            return entityEquals((T)obj);
+            return entityEquals((T) obj);
         }
         return aEqualsField(id, cast.id);
     }
@@ -93,7 +114,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
             return (T) super.clone();
         } catch (CloneNotSupportedException ex) {
         }
-        throw new RuntimeException("Clone Not Supported on "+getClass().getName());
+        throw new RuntimeException("Clone Not Supported on " + getClass().getName());
     }
 
     public static String getSchema(Class<?> entityClass) {
@@ -110,5 +131,4 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         String schema = getSchema(entityClass);
         return (schema.length() != 0 ? schema + "." : "") + entityClass.getSimpleName();
     }
-
 }

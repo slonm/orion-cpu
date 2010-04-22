@@ -1,5 +1,6 @@
 package orion.cpu.dao.hibernate;
 
+import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.dao.hibernate.ConcreteDAOImpl;
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
+import orion.cpu.baseentities.BaseEntity;
 
 /**
  * Расширяет ConcreteDAOImpl для поддержки сложного поиска по образцу
@@ -31,6 +33,12 @@ public class OrionHibernateGenericDAO<T, K extends Serializable> extends Concret
         Criteria criteria = createCriteria();
         addSortCriteria(criteria);
         if (example != null) {
+            if(example instanceof BaseEntity<?>){
+                BaseEntity<?> be=((BaseEntity<?>)example).clone();
+                be.setFillDateTime(null);
+                be.setFiller(null);
+                example=(T) be;
+            }
             criteria.add(createExample(example));
         }
         addOneToConstraints(criteria, example);
