@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import orion.cpu.controllers.listeners.AuditorListener;
 import orion.cpu.controllers.listeners.CommitTransactionListener;
 import orion.cpu.controllers.listenersupport.ControllerEventsListener;
 import orion.cpu.security.services.ExtendedAuthorizer;
@@ -152,6 +153,8 @@ public class CoreIOCModule {
             ObjectLocator locator) {
         configuration.add(new Orderable("CommitTransaction",
                 locator.autobuild(CommitTransactionListener.class)));
+        configuration.add(new Orderable("AuditorListener",
+                locator.autobuild(AuditorListener.class)));
     }
 
     /**
