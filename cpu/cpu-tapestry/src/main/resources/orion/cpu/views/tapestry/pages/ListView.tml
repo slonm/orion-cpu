@@ -30,7 +30,7 @@
         </t:grid>
     </t:zone>
     <br/>
-    <t:if test="create">
+    <t:if test="authorizer.canStore(entityClass)">
         <t:PageLink page="prop:editpageurl" context="prop:editPageURLContext">
 	${message:link.new.object}
         </t:PageLink>
