@@ -1,0 +1,94 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building cpu
+[INFO]    task-segment: [jetty:run]
+[INFO] ------------------------------------------------------------------------
+[INFO] Preparing jetty:run
+[INFO] [resources:resources {execution: default-resources}]
+[INFO] Using encoding: 'UTF-8' to copy filtered resources.
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Compiling 1 source file to /home/UNI/sl/project/cpu/target/cpu/WEB-INF/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[INFO] Using encoding: 'UTF-8' to copy filtered resources.
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] Nothing to compile - all classes are up to date
+[INFO] [jetty:run {execution: default-cli}]
+[INFO] Configuring Jetty for project: cpu
+[INFO] Webapp source directory = /home/UNI/sl/project/cpu/src/main/webapp
+[INFO] Reload Mechanic: automatic
+[INFO] Classes = /home/UNI/sl/project/cpu/target/cpu/WEB-INF/classes
+2009-10-24 19:43:00.568::INFO:  Logging to STDERR via org.mortbay.log.StdErrLog
+[INFO] Context path = /cpu
+[INFO] Tmp directory =  determined at runtime
+[INFO] Web defaults = org/mortbay/jetty/webapp/webdefault.xml
+[INFO] Web overrides =  none
+[INFO] web.xml file = /home/UNI/sl/project/cpu/src/main/webapp/WEB-INF/web.xml
+[INFO] Webapp directory = /home/UNI/sl/project/cpu/src/main/webapp
+[INFO] Starting jetty 6.1.19 ...
+2009-10-24 19:43:00.711::INFO:  jetty-6.1.19
+2009-10-24 19:43:01.026::INFO:  No Transaction manager found - if your webapp requires one, please configure one.
+24.10.2009 19:43:02 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'TapestryCrudModuleService'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToUnorderedConfiguration
+FINE: Invoking method br.com.arsmachina.tapestrycrud.ioc.TapestryCrudIoCModule.contributeTapestryCrudModuleService(Configuration, ModuleService, ClassNameLocator, String, String, TapestryCrudModuleFactory) (at TapestryCrudIoCModule.java:361).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'ModuleService'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'TapestryCrudModuleFactory'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToUnorderedConfiguration
+FINE: Invoking method br.com.arsmachina.tapestrycrud.ioc.TapestryCrudIoCModule.contributeModuleService(Configuration, ClassNameLocator, String, String) (at TapestryCrudIoCModule.java:559).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToUnorderedConfiguration
+FINE: Invoking method orion.cpu.services.CommonIOCModule.contributeModuleService(Configuration, ClassNameLocator, SymbolSource) (at CommonIOCModule.java:92).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceResourcesImpl logConfiguration
+FINE: Constructed configuration: [null module (orion.cpu.views)]
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceBuilderMethodInvoker createObject
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleModule.buildModuleService(Collection) (at ApplicationModuleModule.java:85).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.AbstractMethodInvokingInstrumenter invoke
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleHibernateModule.decorateToSolveJavassistProxyProblem(Class, Object, String, AspectDecorator, JavassistMethodAdvice) (at ApplicationModuleHibernateModule.java:62)
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'JavassistMethodAdvice'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ConstructorServiceCreator createObject
+FINE: Invoking constructor br.com.arsmachina.module.service.internal.JavassistMethodAdvice() (at JavassistMethodAdvice.java:25) via br.com.arsmachina.module.ioc.ApplicationModuleHibernateModule.bind(ServiceBinder) (at ApplicationModuleHibernateModule.java:46).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceResourcesImpl logConfiguration
+FINE: Constructed configuration: []
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceBuilderMethodInvoker createObject
+FINE: Invoking method br.com.arsmachina.tapestrycrud.ioc.TapestryCrudIoCModule.buildTapestryCrudModuleFactory(List, ChainBuilder) (at TapestryCrudIoCModule.java:845).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToUnorderedConfiguration
+FINE: Invoking method orion.cpu.services.CommonIOCModule.contributeTapestryCrudModuleService(Configuration, ModuleService, ClassNameLocator, SymbolSource) (at CommonIOCModule.java:103).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceResourcesImpl logConfiguration
+FINE: Constructed configuration: [TapestryCrudModule null (orion.cpu.views)]
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceBuilderMethodInvoker createObject
+FINE: Invoking method br.com.arsmachina.tapestrycrud.ioc.TapestryCrudIoCModule.buildTapestryCrudModuleService(Collection) (at TapestryCrudIoCModule.java:379).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'ControllerSource'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToMappedConfiguration
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleModule.contributeControllerSource(MappedConfiguration, EntitySource, ModuleService, ObjectLocator) (at ApplicationModuleModule.java:151).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'EntitySource'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.RegistryImpl addToUnorderedConfiguration
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleModule.contributeEntitySource(Configuration, ModuleService) (at ApplicationModuleModule.java:135).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceResourcesImpl logConfiguration
+FINE: Constructed configuration: []
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceBuilderMethodInvoker createObject
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleModule.buildEntitySource(Collection) (at ApplicationModuleModule.java:123).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceResourcesImpl getMappedConfiguration
+FINE: Constructed configuration: {}
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ModuleImpl create
+FINE: Creating service 'ControllerFactory'.
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.ServiceBuilderMethodInvoker createObject
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleModule.buildControllerSource(Map, ControllerFactory) (at ApplicationModuleModule.java:98).
+24.10.2009 19:43:03 org.apache.tapestry5.ioc.internal.AbstractMethodInvokingInstrumenter invoke
+FINE: Invoking method br.com.arsmachina.module.ioc.ApplicationModuleHibernateModule.decorateToSolveJavassistProxyProblem(Class, Object, String, AspectDecorator, JavassistMethodAdvice) (at ApplicationModuleHibernateModule.java:62)
+2009-10-24 19:43:03.431::INFO:  Started SelectChannelConnector@0.0.0.0:8080
+[INFO] Started Jetty Server
+[INFO] Starting scanner at interval of 5 seconds.
+2009-10-24 19:43:46.876::INFO:  Shutdown hook executing
+2009-10-24 19:43:47.477::INFO:  Shutdown hook complete
+[INFO] Jetty server exiting.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 51 seconds
+[INFO] Finished at: Sat Oct 24 19:43:47 EEST 2009
+[INFO] Final Memory: 37M/302M
+[INFO] ------------------------------------------------------------------------

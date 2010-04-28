@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: thiagohp
+Build-Jdk: 1.6.0_02
+Tapestry-Module-Classes: br.com.arsmachina.module.ioc.ApplicationModuleHibernateModule
