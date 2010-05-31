@@ -1,0 +1,98 @@
+#labels Phase-Implementation
+*Для настройки среды программирования на языке Java необходимо:*
+Установить Java Development Kit (загрузить его можно с [http://java.sun.com/javase/downloads/index.jsp http://java.sun.com/javase/downloads/index.jsp])
+
+Установить переменную JAVA_HOME в
+ Пуск-Настройка-Панель управления-Система-Дополнительно-Переменные среды
+Например, <code>C:\Program Files\Java\jdk1.6.0_16</code> для Windows.
+
+В <code>Fedora Linux</code> переменную <code>JAVA_HOME</code> можно установить дописав в файл <code>.bash_profile</code> в Вашем профиле команды <code>JAVA_HOME=/usr/java/jdk1.6.0_16</code> (в указанном каталоге должен находиться JDK) и <code>export JAVA_HOME</code>.
+
+В <code>Ubuntu</code> <code>bash.bashrc</code>  в Вашем профиле или  <code>/etc/bash.bashrc</code> для всех пользователей.  Проверить установку переменной окружения можно командой <code>echo $JAVA_HOME</code> после выхода и повторного входа в систему.
+ 
+В Windows установить переменную <code>JRE_HOME</code> (например, <code>C:\Program Files\Java\jdk1.6.0_16\jre</code>). 
+В переменную среды <code>PATH</code> добавить <code>C:\Program Files\Java\jdk1.6.0_16\bin\</code>.
+
+Установить NetBeans из дистрибутива с любой конфигурацией, включающей сервер Apache TomCat (Java или Все) с [http://www.netbeans.org/downloads/index.html http://www.netbeans.org/downloads] 
+(на момент написания инструкции актуальной была версия 6.7.1).
+
+При установке NetBeans отметить галочкой установку сервера Apache TomCat. и JavaWeb и J2EE
+В файле конфигурации NetBeans C:\Program Files\NetBeans 6.7.1\etc\netbeans.conf (В Linux /usr/local/netbeans-x.x/etc/netbeans.conf) добавить netbeans_default_options= -J-Dfile.encoding=UTF-8 --fontsize 16 
+(все это добавить в строку, которая в кавычках, размер шрифта можно устанавливать по желанию).
+
+== Установка Maven ==
+
+=== Устанвки из репозитория ===
+
+В последних версиях ОС Ubuntu появилась возможность автоматической установки Maven из центра приложений (apt-get). Но после такой установки глобальная переменная $M2_HOME не устанавливается, вместо этого прописывается дамашняя папка для каждого пользователя $HOME/m2 в файле
+ /etc/maven2/m2.conf
+здесь же лежит основной файл настроек
+ /etc/maven2/settings.xml
+при этом сам maven находиться в
+ /usr/share/maven2
+ /usr/share/maven2/bin
+а директория ''/usr/share/maven2/conf'' является симлинком на указнную выше ''/etc/maven2/''
+
+=== Устанвка в ручную ===
+
+Загрузить Maven с http://maven.apache.org/download.html и распаковать его в C:\apache-maven.
+Положить в   C:\apache-maven\conf\  файл настроек Maven settings.xml
+
+Выбрать ''Tools > Plugins'' (''NetBeans Preferences'' для Mac). Вкладка Installed.
+Выбрать ''Maven Project Support'' модуль и нажать кнопку активировать.
+
+Запустить NetBeans, выполнить Tools-Options-Miscellaneous-Maven. В поле External Maven Home указать местонахождение Maven (C:\apache-maven).
+В поле Global Execution Options добавить --fail-fast -Djava.util.logging.config.file="logging.properties"
+В поле Local Repository можно указать путь к локальному репозиторию Maven (например, C:\maven-repo\m2), который смогут использовать все пользователи на данном компьютере. В этом случае также в C:\apache-maven\conf\settings.xml в разделе <localRepository> нужно указать такой же путь (например, <localRepository>C:\maven-repo\m2</localRepository>). Настройка, описанная в данном пункте не является обязательной, по умолчанию локальный репозитарий создается в C:\Documents and Settings\<user-login>\.m2\, но он не доступен всем пользователям компьютера.
+
+Выбрать Tools-Plugins-Downloaded. Нажать Add Plugin и установить плагины: 
+org-netbeans-modules-tapestry.nbm 
+org-netbeans-modules-tapestry-codetemplates.nbm 
+org-netbeans-modules-web-tapestry-templates.nbm 
+(версии файлов актуальны на 18.09.2009, новые версии смотреть на  nbtapestrysupport.dev.java.net . 
+Перегрузить NetBeans. Установленные модули будут перечислены в
+ Tools-Plugins-Installed-User Installed Plugins
+Включить подсказки javadoc - Tools-Options-Editord-Hints. Поставить галки возле Javadoc, Create Javadoc, Error in Javadoc.
+Добавить окно Javadoc в NetBeans: Windows-Other-Javadoc. В появившемся окне будет отображаться документация на элементы, выделенные в основном окне (или находящиеся в строке с курсором, кроме того, если элемент является комментируемым с точки зрения Javadoc после его выделения слева появится подсказка с действиями Javadoc, можно использовать команду Tools-Analyze Javadoc для автоматического генерирования комментариев (курсор должен быть в основном окне)).
+Для корректного отображения русских букв в файле проекта в файле pom.xml (в папке Project Files) в разделе plugins должен быть подключен плагин Javadoc:
+{{{
+<plugin> 
+          <artifactId>maven-javadoc-plugin</artifactId> 
+          <version>2.6</version> 
+          <configuration> 
+             <encoding>UTF-8</encoding> 
+          </configuration> 
+</plugin>
+}}}
+Javadoc для текущего проекта генерируется командой Run-Generate Javadoc, страницы документации располагаются в папке target/site/apidocs проекта (файловая структура проекта отображается на вкладке Files навигатора (слева)).
+Выполнить настройку клиента Subversion в NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию. В случае доступа из Интернета путь: https://212.8.40.76:12443/svn/cpu, Вход возможен под именем пользователя домена UNI (домена локальной сети КПУ). 
+Необходимо или отключить прокси сервер, или настроить исключение по указанным адресам.
+При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
+После нажатия Next можно выбрать ту часть репозитория с которой необходимо работать.
+Реализованная стратегия использования svn ресурсов основана на первом варианте из [http://www.gnuman.ru/stuff/svn_strateg/ http://www.gnuman.ru/stuff/svn_strateg/] 
+Структура ресурса следующая:
+{{{
+/ 
+    /repo1 
+        /trunk 
+        /tags 
+        /branches 
+            /user1 
+            /user2 
+            /user3 
+    /repo2 
+        /trunk 
+        /tags 
+        /branches 
+            /user1 
+            /user2 
+            /user3
+}}}
+Стратегия использования различается от описанной только в ветке branches. Пользователи создают совместно разрабатываемые бранчи в каталоге branches, а индивидуально разрабатываемые в каталогах, которые соответствуют их имени (user1, user2). 
+Права доступа. В каталог tags могут записывать только члены группы committers, в trunk и branches члены группы developers в каталоги конкретных разработчиков только сами разработчики.
+
+Настройка среды завершена.
+
+== Ссылки ==
+
+* [http://m.habrahabr.ru/post/77382/ Apache Maven — основы]
