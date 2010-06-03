@@ -13,7 +13,6 @@ import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
  * Сущность подситемы учета лицензий
  * @author kgp
  */
-
 public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
     private LicenseRecord stationaryLicenseRecord = new LicenseRecord();
@@ -23,7 +22,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     @Override
-    public Integer getId(){
+    public Integer getId() {
         return stationaryLicenseRecord.getId();
     }
 
@@ -51,16 +50,28 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     public String getLicenseSerialNumber() {
-        return (stationaryLicenseRecord.getLicense().getSerial() + "  " +
-                stationaryLicenseRecord.getLicense().getNumber());
+        try {
+            return (stationaryLicenseRecord.getLicense().getSerial() + "  " +
+                    stationaryLicenseRecord.getLicense().getNumber());
+        } catch (Throwable th) {
+            return null;
+        }
     }
 
     public Date getLicenseIssueDate() {
-        return stationaryLicenseRecord.getLicense().getIssue();
+        try {
+            return stationaryLicenseRecord.getLicense().getIssue();
+        } catch (Throwable th) {
+            return null;
+        }
     }
 
     public String getKnowledgeAreaOrTrainingDirectionCode() {
-        return stationaryLicenseRecord.getKnowledgeAreaOrTrainingDirection().getCode();
+        try {
+            return stationaryLicenseRecord.getKnowledgeAreaOrTrainingDirection().getCode();
+        } catch (Throwable th) {
+            return null;
+        }
     }
 
     public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
@@ -85,7 +96,11 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     public String getCode() {
-        return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
+        try {
+            return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
+        } catch (Throwable th) {
+            return null;
+        }
     }
 
     /**
@@ -186,9 +201,13 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     @Override
     public int compareTo(LicenseRecordView o) {
         int c = stationaryLicenseRecord.compareTo(o.stationaryLicenseRecord);
-        if(c!=0) return c;
+        if (c != 0) {
+            return c;
+        }
         c = correspondenseLicenseRecord.compareTo(o.stationaryLicenseRecord);
-        if(c!=0) return c;
+        if (c != 0) {
+            return c;
+        }
         return 0;
     }
 
@@ -199,7 +218,6 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
     @Override
     protected boolean entityEquals(LicenseRecordView obj) {
-        return aEqualsField(stationaryLicenseRecord, obj.stationaryLicenseRecord)
-                && aEqualsField(correspondenseLicenseRecord, obj.correspondenseLicenseRecord);
+        return aEqualsField(stationaryLicenseRecord, obj.stationaryLicenseRecord) && aEqualsField(correspondenseLicenseRecord, obj.correspondenseLicenseRecord);
     }
 }
