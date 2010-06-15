@@ -97,6 +97,9 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
     public String getCode() {
         try {
+            if(getEducationalQualificationLevel().getCode()==null||
+               getKnowledgeAreaOrTrainingDirection().getCode()==null||
+               getTrainingDirectionOrSpeciality().getCode()==null) return null;
             return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
         } catch (Throwable th) {
             return null;
