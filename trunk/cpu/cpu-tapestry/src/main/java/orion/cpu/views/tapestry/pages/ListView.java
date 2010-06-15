@@ -37,12 +37,6 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
     @Inject
     @Symbol("orion.entities-package")
     private String entitiesPackage;
-    @InjectPage
-    private ErrorReport errorReport;
-    @InjectPage
-    private Login login;
-    @SessionState(create = false)
-    private User user;
 
     /**
      * При закрытии страницы
@@ -77,13 +71,7 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
             return "";
         }
         setEntityClass(beanClass);
-        if (!getAuthorizer().canSearch(getEntityClass())) {
-            if (user!=null) {
-                return errorReport.getErrorReportLink(ErrorReport.ACCESS_DENIED);
-            } else {
-                return login.setRedirectURL();
-            }
-        }
+        getAuthorizer().checkSearch(getEntityClass());
         title = messages.get("reflect." + beanClass.getName());
         return null;
     }

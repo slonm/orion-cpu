@@ -202,4 +202,9 @@ public class CpuTapestryIOCModule {
         receiver.adviseAllMethods(advice);
     }
 
+    @Match("RequestExceptionHandler")
+    public static void adviseRequestExceptionHandler(MethodAdviceReceiver receiver, ObjectLocator locator) {
+        MethodAdvice advice = locator.autobuild(RequestExceptionHandlerAdvice.class);
+        receiver.adviseAllMethods(advice);
+    }
 }

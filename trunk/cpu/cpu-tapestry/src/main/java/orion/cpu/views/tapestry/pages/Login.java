@@ -1,5 +1,6 @@
 package orion.cpu.views.tapestry.pages;
 
+import orion.cpu.views.tapestry.services.ILogin;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
@@ -13,7 +14,7 @@ import org.apache.tapestry5.services.Request;
  */
 @SuppressWarnings("unused")
 //@Secure
-public class Login {
+public class Login implements ILogin{
 
     @Inject
     @Value("${spring-security.check.url}")
@@ -42,8 +43,8 @@ public class Login {
         }
     }
 
-    public Login setRedirectURL() {
+    @Override
+    public void popCurrentURL() {
         redirectUrl = request.getPath();
-        return this;
     }
 }
