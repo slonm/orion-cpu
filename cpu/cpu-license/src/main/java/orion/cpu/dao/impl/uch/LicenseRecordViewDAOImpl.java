@@ -141,8 +141,14 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
         return lst;
     }
 
+    /** Сравнение o1.toString()==null сделано для полей, которые тоже,
+     * в свою очередь являются образцами и не имеют установленных значений
+     * атрибутов кроме ссылочных. Например KnowledgeAreaOrTrainingDirection указывается
+     * посредством TrainingDirectionOrSpeciality
+     */
     private <X> boolean EqualForExample(X o1, X o2) {
-        return o1 == null || o2 == null || o1.equals(o2);
+        return o1 == null || o2 == null || o1.toString() == null ||
+                o2.toString() == null || o1.equals(o2);
     }
 
     @Override
@@ -215,7 +221,7 @@ public class LicenseRecordViewDAOImpl implements DAO<LicenseRecordView, Integer>
         if (getLrDAO().isPersistent(object.getStationaryLicenseRecord())) {
             getLrDAO().update(object.getStationaryLicenseRecord());
         } else {
-            getLrDAO().save (object.getStationaryLicenseRecord());
+            getLrDAO().save(object.getStationaryLicenseRecord());
         }
         if (getLrDAO().isPersistent(object.getCorrespondenseLicenseRecord())) {
             getLrDAO().update(object.getCorrespondenseLicenseRecord());
