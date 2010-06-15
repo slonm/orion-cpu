@@ -1,0 +1,4 @@
+06.05.2010 18:28:47 org.eclipse.birt.report.engine.executor.ExecutionContext loadScript
+SEVERE: loading external script file debugWindow.js failed.
+06.05.2010 18:28:48 org.eclipse.birt.report.data.adapter.impl.ModelAdapter adaptDataSet
+WARNING: handle type: org.eclipse.birt.report.model.api.ScriptDataSetHandle
