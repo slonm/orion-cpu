@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>orion</groupId>
     <artifactId>cpu-birt</artifactId>
-    <name>Ядро КИС - Birt</name>
+    <name>Ядро КИС - Генератор отчетов</name>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <dependencies>
@@ -93,6 +93,19 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <!--Причины следующей строки тут: http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html-->
         <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>
+                            orion.cpu.views.birt.BirtTapestryIOCModule
+                            </Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
