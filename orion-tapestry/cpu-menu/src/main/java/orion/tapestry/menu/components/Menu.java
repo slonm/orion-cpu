@@ -16,8 +16,6 @@ import org.apache.tapestry5.ioc.services.TypeCoercer;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.lib.MenuItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -56,9 +54,13 @@ public class Menu {
         }
 
         //Пример: foo.Bar где foo.Bar - имя класса сущности, с которой работает страница
-        String clazzName = "reflect." + coercer.coerce(_Item.getItemLink(), Class.class).getName();
-        if (messages.contains(clazzName)) {
-            return messages.get(clazzName);
+        String clazzName;
+        try {
+            clazzName = "reflect." + coercer.coerce(_Item.getItemLink(), Class.class).getName();
+            if (messages.contains(clazzName)) {
+                return messages.get(clazzName);
+            }
+        } catch (Throwable t) {
         }
 
         //Пример: foo.Bar где foo.Bar - имя класса страницы
@@ -70,6 +72,7 @@ public class Menu {
         }
         return messages.get(key);
     }
+
     /**
      * @param msg - unique message name
      * @return message in current language
