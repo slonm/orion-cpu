@@ -5,6 +5,7 @@ import br.com.arsmachina.module.service.ControllerSource;
 import java.util.*;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.services.SymbolSource;
+import org.hibernate.Session;
 import org.slf4j.*;
 import orion.cpu.security.services.ExtendedAuthorizer;
 
@@ -14,7 +15,7 @@ import orion.cpu.security.services.ExtendedAuthorizer;
 public class BirtConnection {
 
     static final private Logger LOG = LoggerFactory.getLogger(BirtConnection.class);
-    private static Class[] services = new Class[]{ControllerSource.class, SymbolSource.class, ExtendedAuthorizer.class};
+    private static Class[] services = new Class[]{ControllerSource.class, SymbolSource.class, ExtendedAuthorizer.class, Session.class};
     private static Registry registry = null;
     private static Map<String, Object> params = new HashMap<String, Object>();
     public static boolean isServlet = false;
