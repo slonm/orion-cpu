@@ -1,10 +1,14 @@
 package orion.cpu.views.tapestry.pages;
 
+import br.com.arsmachina.authentication.entity.User;
 import java.util.*;
 import org.apache.tapestry5.*;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.ExceptionReporter;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 
 /**
@@ -15,7 +19,7 @@ import org.apache.tapestry5.services.PageRenderLinkSource;
  * @author sl
  */
 @SuppressWarnings("unused")
-public class ErrorReport {
+public class ErrorReport implements ExceptionReporter {
 
     /**
      * Префикс имени сообщения об ошибке
@@ -34,30 +38,27 @@ public class ErrorReport {
      */
     public static final String ACCESS_DENIED = "accessdenied";
     @Property(write = false)
+    @Persist(PersistenceConstants.FLASH)
     private String errorMessage;
     @Inject
     private Messages messages;
-    @Inject
-    private PageRenderLinkSource pageRenderLinkSource;
 
-    public Object onActivate(EventContext ec) {
+    public void onActivate(EventContext ec) {
         if (ec.getCount() == 0) {
-            return "";
+            return;
         }
         String errorType = ec.get(String.class, 0);
         if (messages.contains(MESSAGE_ERROR_PREFIX + errorType)) {
             errorMessage = messages.get(MESSAGE_ERROR_PREFIX + errorType);
         } else {
-            errorMessage = String.format(messages.get(MESSAGE_ERROR_PREFIX +
-                    ERROR_MESSAGE_NOT_FOUND), errorType);
+            errorMessage = String.format(messages.get(MESSAGE_ERROR_PREFIX
+                    + ERROR_MESSAGE_NOT_FOUND), errorType);
         }
-        return null;
     }
 
-    public Link getErrorReportLink(String errorType, Object... ac) {
-        List<Object> list = new ArrayList<Object>();
-        list.add(errorType);
-        list.addAll(Arrays.asList(ac));
-        return pageRenderLinkSource.createPageRenderLinkWithContext(ErrorReport.class, list.toArray());
+    @Override
+    public void reportException(Throwable exception) {
+        errorMessage = messages.get(MESSAGE_ERROR_PREFIX + ACCESS_DENIED)  
+                + exception.getMessage();
     }
 }
