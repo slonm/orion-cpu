@@ -22,6 +22,7 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
 
     @Override
     public void run() {
+        iDBSpt.getPermissionsMap(Chair.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
 //        //Заполнение тестовых данных
         if (iDBSpt.isFillTestData()) {
 //        //---Кафедры, выполняющие обучение по лицензиям----------
