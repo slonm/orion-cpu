@@ -15,7 +15,6 @@ public class LicenseIOCModule {
 
     /**
      * Начальная инициализация базы данных
-     * Создание сервиса ObjectLocatorInstance
      * @param configuration
      * @param objectLocatorInstance
      */
