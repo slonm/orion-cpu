@@ -62,6 +62,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         return fillDateTime;
     }
 
+    @ManyToOne
     public User getFiller() {
         return filler;
     }
