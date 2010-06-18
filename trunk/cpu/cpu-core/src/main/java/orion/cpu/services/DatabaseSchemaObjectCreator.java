@@ -42,8 +42,6 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         for (String packageName : packageManager.getPackageNames()) {
             for (String className : classNameLocator.locateClassNames(packageName)) {
-//FIXME Сообщение об ошибке создания существующей схемы попадает к логер раньше,
-//чем ловится исключение
                 try {
                     Class entityClass = contextClassLoader.loadClass(className);
                     Table JPATable = (Table) entityClass.getAnnotation(Table.class);
@@ -58,8 +56,16 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
         if (schemas.size() > 0) {
             SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            List<String> list=session.createSQLQuery("select schema_name from information_schema.schemata where catalog_name='cpu'").list();
+            for(String schemaName: list){
+                if(schemas.contains(schemaName)){
+                    schemas.remove(schemaName);
+                }
+            }
+            transaction.rollback();
             for (final String schema : schemas) {
-                Transaction transaction = session.beginTransaction();
+                transaction = session.beginTransaction();
                 try {
                     session.createSQLQuery(String.format("CREATE SCHEMA %s", schema)).executeUpdate();
                     transaction.commit();
