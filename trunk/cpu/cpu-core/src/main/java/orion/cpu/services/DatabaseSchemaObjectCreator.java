@@ -1,5 +1,7 @@
 package orion.cpu.services;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import javax.persistence.Table;
 import org.apache.tapestry5.hibernate.HibernateConfigurer;
@@ -8,10 +10,11 @@ import org.apache.tapestry5.ioc.services.ClassNameLocator;
 import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.Work;
 import org.slf4j.*;
 
 /**
- * Создатель схем базы данных. Имена схем берутся из аннотаций javax.persistence.Table
+ * Создатель схем базы данных. Только для PostgreSQL. Имена схем берутся из аннотаций javax.persistence.Table
  * всех Hibernate сущностей.
  * Класс является реализацией интерфейса HibernateConfigurer только для того что-бы
  * создать схемы до создания SessionFactory.
@@ -24,6 +27,8 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseSchemaObjectCreator.class);
     private final HibernateEntityPackageManager packageManager;
     private final ClassNameLocator classNameLocator;
+    private String dbmsName = null;
+    private String dbName = null;
 
     public DatabaseSchemaObjectCreator(HibernateEntityPackageManager packageManager,
             ClassNameLocator classNameLocator) {
@@ -56,22 +61,34 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
         if (schemas.size() > 0) {
             SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
-            Transaction transaction = session.beginTransaction();
-            List<String> list=session.createSQLQuery("select schema_name from information_schema.schemata where catalog_name='cpu'").list();
-            for(String schemaName: list){
-                if(schemas.contains(schemaName)){
-                    schemas.remove(schemaName);
+            session.doWork(new Work() {
+
+                @Override
+                public void execute(Connection connection) throws SQLException {
+                    dbmsName = connection.getMetaData().getDatabaseProductName();
+                    dbName = connection.getMetaData().getURL();
+                    dbName = dbName.substring(dbName.lastIndexOf("/") + 1);
                 }
-            }
-            transaction.rollback();
-            for (final String schema : schemas) {
-                transaction = session.beginTransaction();
-                try {
-                    session.createSQLQuery(String.format("CREATE SCHEMA %s", schema)).executeUpdate();
-                    transaction.commit();
-                    LOG.debug("Created schema {}", schema);
-                } catch (HibernateException ex) {
-                    transaction.rollback();
+            });
+            //создаем схемы только для postgresql
+            if ("PostgreSQL".equalsIgnoreCase(dbmsName)) {
+                Transaction transaction = session.beginTransaction();
+                List<String> list = session.createSQLQuery("select schema_name from information_schema.schemata where catalog_name='" + dbName + "'").list();
+                for (String schemaName : list) {
+                    if (schemas.contains(schemaName)) {
+                        schemas.remove(schemaName);
+                    }
+                }
+                transaction.rollback();
+                for (final String schema : schemas) {
+                    transaction = session.beginTransaction();
+                    try {
+                        session.createSQLQuery(String.format("CREATE SCHEMA %s", schema)).executeUpdate();
+                        transaction.commit();
+                        LOG.debug("Created schema {}", schema);
+                    } catch (HibernateException ex) {
+                        transaction.rollback();
+                    }
                 }
             }
             session.close();
