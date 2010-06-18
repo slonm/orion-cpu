@@ -157,9 +157,6 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
 
     @Override
     public boolean can(Permission permission) {
-        if (permission == null) {
-            return false;
-        }
         if (user != null) {
             if (User.SYSTEM_USER.getLogin().equals(user.getLogin())) {
                 return true;
