@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package orion.cpu.views.tapestry.services;
+package orion.cpu.views.tapestry.utils;
 
 /**
  *

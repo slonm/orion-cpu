@@ -1,12 +1,15 @@
 package orion.cpu.views.tapestry.services;
 
-import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
-import br.com.arsmachina.authorization.Authorizer;
+import br.com.arsmachina.module.service.ControllerSource;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
+import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 import java.util.*;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
@@ -14,12 +17,16 @@ import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
 import orion.cpu.baseentities.BaseEntity;
+import orion.cpu.controllers.NamedEntityController;
+import orion.cpu.entities.sys.PageTemplate;
 import orion.cpu.security.services.ExtendedAuthorizer;
 import orion.cpu.views.tapestry.pages.Edit;
 import orion.cpu.views.tapestry.pages.ErrorReport;
 import orion.cpu.views.tapestry.pages.ListView;
-import orion.cpu.views.tapestry.pages.MenuNavigator;
+import orion.cpu.views.tapestry.utils.TMLURLStreamHandler;
 import orion.tapestry.menu.lib.IMenuLink;
+import orion.tapestry.menu.lib.PageMenuLink;
+import orion.tapestry.services.FieldLabelSource;
 
 /**
  * Модуль конфигурирования IOC
@@ -206,5 +213,44 @@ public class CpuTapestryIOCModule {
     public static void adviseRequestExceptionHandler(MethodAdviceReceiver receiver, ObjectLocator locator) {
         MethodAdvice advice = locator.autobuild(RequestExceptionHandlerAdvice.class);
         receiver.adviseAllMethods(advice);
+    }
+
+    @Match("PageTemplateLocator")
+    public static void advisePageTemplateLocator(MethodAdviceReceiver receiver, ObjectLocator locator) {
+        MethodAdvice advice = locator.autobuild(PageTemplateLocatorAdvice.class);
+        receiver.adviseAllMethods(advice);
+    }
+
+    /**
+     * Add menu item to configuration
+     * @param configuration
+     * @param pageLinkCreatorFactory
+     */
+    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
+            TapestryCrudModuleService tcms) {
+        String path;
+
+        path = "Start>Admin>TML";
+        configuration.add(path, new PageMenuLink(tcms.getListPageClass(PageTemplate.class),
+                BaseEntity.getFullClassName(PageTemplate.class)));
+    }
+    
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
+            @Local URLStreamHandlerFactory _URLStreamHandlerFactory) {
+        //Вызывается что-бы явно построить фабрику перед регистрацией ее
+        //иначе возникает ошибка циклической зависимоси
+        _URLStreamHandlerFactory.createURLStreamHandler("ff");
+        URL.setURLStreamHandlerFactory(_URLStreamHandlerFactory);
+        configuration.addInstance("CpuTapestryInitializeDatabase", CpuTapestryInitializeDatabase.class, "after:InitializeDatabase");
+    }
+
+    public static void bind(ServiceBinder binder) {
+        binder.bind(URLStreamHandlerFactory.class, URLStreamHandlerFactoryImpl.class);
+    }
+
+    public static void contributeURLStreamHandlerFactory(MappedConfiguration<String, URLStreamHandler> configuration,
+            ControllerSource controllerSource){
+        NamedEntityController<PageTemplate> controller = (NamedEntityController<PageTemplate>) (Object) controllerSource.get(PageTemplate.class);
+        configuration.add("tml", new TMLURLStreamHandler(controller));
     }
 }
