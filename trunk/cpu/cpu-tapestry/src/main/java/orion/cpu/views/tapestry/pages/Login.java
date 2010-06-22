@@ -1,6 +1,6 @@
 package orion.cpu.views.tapestry.pages;
 
-import orion.cpu.views.tapestry.services.ILogin;
+import orion.cpu.views.tapestry.utils.ILogin;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;

@@ -4,6 +4,7 @@
  */
 package orion.cpu.views.tapestry.services;
 
+import orion.cpu.views.tapestry.utils.ILogin;
 import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authorization.AuthorizationException;
 import java.io.IOException;
