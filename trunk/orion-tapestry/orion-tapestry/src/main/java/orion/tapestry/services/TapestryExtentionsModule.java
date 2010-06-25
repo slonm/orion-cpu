@@ -1,8 +1,12 @@
 package orion.tapestry.services;
 
+import java.net.URLStreamHandlerFactory;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.Translator;
 import org.apache.tapestry5.internal.InternalSymbols;
+import org.apache.tapestry5.internal.services.ComponentTemplateSource;
+import org.apache.tapestry5.internal.services.PageTemplateLocator;
+import org.apache.tapestry5.internal.services.TemplateParser;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.services.BeanBlockContribution;
@@ -10,7 +14,10 @@ import org.apache.tapestry5.services.LibraryMapping;
 import orion.tapestry.services.impl.*;
 import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
+import org.apache.tapestry5.services.UpdateListenerHub;
 import org.apache.tapestry5.services.ValidationConstraintGenerator;
 import orion.tapestry.beaneditor.HibernateAnnotationsConstraintGenerator;
 import orion.tapestry.utils.ByteArrayTranslator;
@@ -22,6 +29,7 @@ import orion.tapestry.utils.ByteArrayTranslator;
 public class TapestryExtentionsModule {
 
     public static void bind(ServiceBinder binder) {
+        binder.bind(URLStreamHandlerFactory.class, URLStreamHandlerFactoryImpl.class);
         binder.bind(FieldLabelSource.class, FieldLabelSourceImpl.class);
         binder.bind(GlobalMessageAppender.class);
     }
@@ -85,5 +93,25 @@ public class TapestryExtentionsModule {
     public static void contributeTranslatorSource(Configuration<Translator> configuration) {
 
         configuration.add(new ByteArrayTranslator());
+    }
+    public ComponentTemplateSource buildOrionComponentTemplateSourceImpl(TemplateParser parser,
+                                                                PageTemplateLocator locator,
+                                                                ClasspathURLConverter classpathURLConverter,
+                                                                UpdateListenerHub updateListenerHub)
+    {
+        OrionComponentTemplateSourceImpl service = new OrionComponentTemplateSourceImpl(parser, locator, classpathURLConverter);
+
+        updateListenerHub.addUpdateListener(service);
+
+        return service;
+    }
+
+    public void contributeServiceOverride(
+            MappedConfiguration<Class, Object> configuration,
+
+            @Local
+            ComponentTemplateSource componentTemplateSource)
+    {
+        configuration.add(ComponentTemplateSource.class, componentTemplateSource);
     }
 }
