@@ -1,7 +1,7 @@
 package orion.cpu.views.tapestry.services;
 
+import orion.tapestry.services.impl.PageTemplateLocatorAdvice;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
-import br.com.arsmachina.module.service.ControllerSource;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
@@ -17,13 +17,12 @@ import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
 import orion.cpu.baseentities.BaseEntity;
-import orion.cpu.controllers.NamedEntityController;
 import orion.cpu.entities.sys.PageTemplate;
 import orion.cpu.security.services.ExtendedAuthorizer;
 import orion.cpu.views.tapestry.pages.Edit;
 import orion.cpu.views.tapestry.pages.ErrorReport;
 import orion.cpu.views.tapestry.pages.ListView;
-import orion.cpu.views.tapestry.utils.TMLURLStreamHandler;
+import orion.cpu.views.tapestry.utils.DataTMLURLConnection;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.PageMenuLink;
 import orion.tapestry.services.FieldLabelSource;
@@ -236,7 +235,7 @@ public class CpuTapestryIOCModule {
     }
     
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            @Local URLStreamHandlerFactory _URLStreamHandlerFactory) {
+            URLStreamHandlerFactory _URLStreamHandlerFactory) {
         //Вызывается что-бы явно построить фабрику перед регистрацией ее
         //иначе возникает ошибка циклической зависимоси
         _URLStreamHandlerFactory.createURLStreamHandler("ff");
@@ -245,12 +244,16 @@ public class CpuTapestryIOCModule {
     }
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(URLStreamHandlerFactory.class, URLStreamHandlerFactoryImpl.class);
+        binder.bind(DataURLStreamHandler.class);
     }
 
     public static void contributeURLStreamHandlerFactory(MappedConfiguration<String, URLStreamHandler> configuration,
-            ControllerSource controllerSource){
-        NamedEntityController<PageTemplate> controller = (NamedEntityController<PageTemplate>) (Object) controllerSource.get(PageTemplate.class);
-        configuration.add("tml", new TMLURLStreamHandler(controller));
+            DataURLStreamHandler dataURLStreamHandler){
+        configuration.add("data", dataURLStreamHandler);
     }
+
+    public static void contributeDataURLStreamHandler(MappedConfiguration<String, Class<?>> configuration){
+        configuration.add("tml", DataTMLURLConnection.class);
+    }
+
 }
