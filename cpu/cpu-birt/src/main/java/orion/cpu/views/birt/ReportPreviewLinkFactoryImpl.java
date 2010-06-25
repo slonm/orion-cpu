@@ -12,7 +12,7 @@ import ua.mihailslobodyanuk.utils.Defense;
  */
 public class ReportPreviewLinkFactoryImpl implements ReportPreviewLinkFactory {
 
-    private static String PROTOCOL = "rptdesign:";
+    private static String PROTOCOL = "data://rptdesign/";
     private static String P_REPORT = "__report";
     private static String P_DOCUMENT = "__document";
     private static String P_LOCALE = "__locale";
