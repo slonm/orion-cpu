@@ -64,11 +64,12 @@ public class Menu {
         }
 
         //Пример: foo.Bar где foo.Bar - имя класса страницы
-        if (_Item.getItemLink().getPageClass() != null) {
+        try {
             clazzName = "reflect." + _Item.getItemLink().getPageClass().getName();
             if (messages.contains(clazzName)) {
                 return messages.get(clazzName);
             }
+        } catch (Throwable t) {
         }
         return messages.get(key);
     }
