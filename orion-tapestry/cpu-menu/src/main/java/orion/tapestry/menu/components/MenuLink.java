@@ -57,7 +57,7 @@ public class MenuLink extends AbstractLink {
         Link linkObject;
         Object[] context = menuLink.getContext();
         //System.out.println("menuLink.getContext()------"+menuLink.getPageClass());
-        if (context == null) {
+        if (context == null || context.length==0) {
             linkObject = LinkSource.createPageRenderLink(menuLink.getPageClass());
         } else {
             linkObject = LinkSource.createPageRenderLinkWithContext(menuLink.getPageClass(), context);
