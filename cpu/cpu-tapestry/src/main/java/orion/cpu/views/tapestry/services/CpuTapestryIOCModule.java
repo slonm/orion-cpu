@@ -192,7 +192,7 @@ public class CpuTapestryIOCModule {
     }
 
     public static Coercion<IMenuLink, BaseEntity> buildMetaLinkCoercion(Collection<Coercion> configuration,
-            ChainBuilder chainBuilder){
+            ChainBuilder chainBuilder) {
         return chainBuilder.build(Coercion.class, new ArrayList<Coercion>(configuration));
     }
 
@@ -232,9 +232,9 @@ public class CpuTapestryIOCModule {
         path = "Start>Admin>TML";
         configuration.add(path, createPageMenuLink(tcms, PageTemplate.class, path));
     }
-    
-    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
-        IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+
+    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
+        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
         lnk.setParameterPersistent("menupath", path);
         return lnk;
     }
@@ -253,12 +253,26 @@ public class CpuTapestryIOCModule {
     }
 
     public static void contributeURLStreamHandlerFactory(MappedConfiguration<String, URLStreamHandler> configuration,
-            DataURLStreamHandler dataURLStreamHandler){
+            DataURLStreamHandler dataURLStreamHandler) {
         configuration.add("data", dataURLStreamHandler);
     }
 
-    public static void contributeDataURLStreamHandler(MappedConfiguration<String, Class<?>> configuration){
+    public static void contributeDataURLStreamHandler(MappedConfiguration<String, Class<?>> configuration) {
         configuration.add("tml", DataTMLURLConnection.class);
     }
 
+    //Для регистрации слушателя приходится переопределять сервис LinkCreationHub
+    //Может это можно сделать как-то проще?
+    public LinkCreationHub buildCpuLinkCreationHub(
+            @Core final LinkCreationHub hub,
+            @Autobuild MenupathLinkCreationListener menupathLinkCreationListener) {
+        hub.addListener(menupathLinkCreationListener);
+        return hub;
+    }
+
+    public void contributeServiceOverride(
+            MappedConfiguration<Class, Object> configuration,
+            @Local LinkCreationHub handler) {
+        configuration.add(LinkCreationHub.class, handler);
+    }
 }
