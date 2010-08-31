@@ -1,7 +1,9 @@
 package orion.cpu.services;
 
 import br.com.arsmachina.authentication.entity.*;
-import orion.cpu.security.services.ExtendedAuthorizer;
+import java.util.*;
+import org.slf4j.*;
+import orion.cpu.security.OperationTypes;
 import orion.cpu.services.impl.InitializeDatabaseSupport;
 import ua.mihailslobodyanuk.utils.Defense;
 
@@ -9,8 +11,9 @@ import ua.mihailslobodyanuk.utils.Defense;
  * Начальная инициализация данных.
  * @author sl
  */
-public class InitializeDatabase implements Runnable {
+public class InitializeDatabase extends OperationTypes implements Runnable {
 
+    private static final Logger LOG = LoggerFactory.getLogger(InitializeDatabase.class);
     private final InitializeDatabaseSupport initDBSupport;
 
     public InitializeDatabase(InitializeDatabaseSupport initDBSupport) {
@@ -28,6 +31,7 @@ public class InitializeDatabase implements Runnable {
             //---------Пользователи----------
             saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net");
             saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net");
+            saveOrUpdateUser("guest", "", "Гость информационной системы КПУ", "guest@cpu.edu");
         }
     }
 

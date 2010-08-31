@@ -7,15 +7,15 @@ package orion.cpu.security;
 public class OperationTypes {
 
     /**
-     * Сохранение
+     * Добавление с сохранением
      */
     public static final String STORE_OP = "STORE";
     /**
-     * Обновление
+     * Обновление с сохранением
      */
     public static final String UPDATE_OP = "UPDATE";
     /**
-     * Удаление
+     * Удаление с сохранением
      */
     public static final String REMOVE_OP = "REMOVE";
     /**
