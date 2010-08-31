@@ -1,17 +1,21 @@
 package orion.cpu.views.tapestry.pages;
 
 import br.com.arsmachina.tapestrycrud.hibernatevalidator.base.HibernateValidatorBaseEditPage;
+import java.util.List;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import orion.cpu.baseentities.BaseEntity;
 import orion.tapestry.menu.lib.IMenuLink;
+import orion.tapestry.menu.services.CpuMenu;
 
 /**
  * Универсальная страница редактирования {@link BaseEntity}
@@ -39,6 +43,10 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     @Inject
     @Symbol("orion.entities-package")
     private String entitiesPackage;
+    @Property
+    private Object menudata;
+    @Inject
+    private Request request;
 
     @Override
     public Object onPassivate() {
@@ -89,7 +97,7 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
         setObject(activationContextObject);
         title = messages.get("reflect." + beanClass.getName());
         action = getObject() == null ? action : messages.get("button.save");
-
+        menudata = request.getParameter("menupath");
         return null;
     }
 

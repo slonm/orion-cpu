@@ -1,20 +1,20 @@
 package orion.cpu.views.tapestry.pages;
 
-import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.tapestrycrud.base.BaseListPage;
+import java.util.List;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.Coercion;
-import org.apache.tapestry5.services.ApplicationStateManager;
+import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import orion.cpu.baseentities.BaseEntity;
 import orion.tapestry.menu.lib.IMenuLink;
+import orion.tapestry.menu.services.CpuMenu;
 
 /**
  * Универсальная страница со списком {@link BaseEntity}
@@ -37,6 +37,10 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
     @Inject
     @Symbol("orion.entities-package")
     private String entitiesPackage;
+    @Property
+    private Object menudata;
+    @Inject
+    private Request request;
 
     /**
      * При закрытии страницы
@@ -73,6 +77,7 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
         setEntityClass(beanClass);
         getAuthorizer().checkSearch(getEntityClass());
         title = messages.get("reflect." + beanClass.getName());
+        menudata = request.getParameter("menupath");
         return null;
     }
 
