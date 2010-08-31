@@ -83,31 +83,23 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
-                    LPermissions.get(READ_OP), LRPermissions.get(READ_OP), LRVPermissions.get(READ_OP),
-                    LRVPermissions.get(MENU_OP));
+                    LRVPermissions.get(READ_OP), LRVPermissions.get(MENU_OP));
 
-            //Права изменения записей о лицензиях
+            //Права изменения, добавления, удаления с сохранением записей о лицензиях
             PermissionGroup pgManageLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление лицензиями",
-                    LPermissions.get(STORE_OP), LPermissions.get(UPDATE_OP), LPermissions.get(REMOVE_OP),
-                    LRPermissions.get(STORE_OP), LRPermissions.get(UPDATE_OP), LRPermissions.get(REMOVE_OP),
-                    LRVPermissions.get(STORE_OP), LRVPermissions.get(UPDATE_OP), LRVPermissions.get(REMOVE_OP));
+                    LRVPermissions.get(UPDATE_OP), LRVPermissions.get(STORE_OP), LRVPermissions.get(REMOVE_OP));
 
-            //Права изменения справочников для системы лицензий
-            PermissionGroup pgManageLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление справочниками",
-                    EFPermissions.get(STORE_OP), EFPermissions.get(UPDATE_OP), EFPermissions.get(REMOVE_OP),
-                    EQLPermissions.get(STORE_OP), EQLPermissions.get(UPDATE_OP), EQLPermissions.get(REMOVE_OP),
-                    KAOTPermissions.get(STORE_OP), KAOTPermissions.get(UPDATE_OP), KAOTPermissions.get(REMOVE_OP),
-                    TDOSPermissions.get(STORE_OP), TDOSPermissions.get(UPDATE_OP), TDOSPermissions.get(REMOVE_OP));
-
-            //Права добавления справочников для системы лицензий
-            PermissionGroup pgStoreLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Пополнение справочников",
-                    EFPermissions.get(STORE_OP), EQLPermissions.get(STORE_OP),
-                    KAOTPermissions.get(STORE_OP), TDOSPermissions.get(STORE_OP));
-
-            //Права просмотра справочников для системы лицензий
+            //Права просмотра справочников для подсистемы лицензий
             PermissionGroup pgReadLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр справочников",
-                    EFPermissions.get(READ_OP), EQLPermissions.get(READ_OP),
-                    KAOTPermissions.get(READ_OP), TDOSPermissions.get(READ_OP));
+                    LPermissions.get(READ_OP), LPermissions.get(MENU_OP),
+                    KAOTPermissions.get(READ_OP), KAOTPermissions.get(MENU_OP),
+                    TDOSPermissions.get(READ_OP), TDOSPermissions.get(MENU_OP));
+
+            //Права изменения, добавления, удаления с сохранением записей справочников для подсистемы лицензий
+            PermissionGroup pgManageLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление справочниками",
+                    LPermissions.get(UPDATE_OP), LPermissions.get(STORE_OP), LPermissions.get(REMOVE_OP),
+                    KAOTPermissions.get(UPDATE_OP), KAOTPermissions.get(STORE_OP), KAOTPermissions.get(REMOVE_OP),
+                    TDOSPermissions.get(UPDATE_OP), TDOSPermissions.get(STORE_OP), TDOSPermissions.get(REMOVE_OP));
 
             //---------Роли----------
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
@@ -115,25 +107,32 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             Role roleLO = iDBSpt.saveOrUpdateRole("LicenseOperator",
                     "Оператор управления записями о лицензиях",
-                    pgReadLicenseRecords, pgManageLicenseRecords, pgStoreLicenseRecordsReference);
+                    pgReadLicenseRecords, pgManageLicenseRecords);
 
             Role roleLM = iDBSpt.saveOrUpdateRole("LicenseManager",
                     "Менеджер управления записями о лицензиях",
-                    pgReadLicenseRecords, pgManageLicenseRecords, pgManageLicenseRecordsReference,
-                    pgReadLicenseRecordsReference);
+                    pgReadLicenseRecords, pgManageLicenseRecords,
+                    pgReadLicenseRecordsReference, pgManageLicenseRecordsReference);
 
             //---------Пользователи----------
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
+            user.add(roleLM);
+            for (PermissionGroup pg : roleLM.getPermissionGroups()) {
+                user.add(pg);
+            }
+            uCnt.saveOrUpdate(user);
+
+            user = uCnt.findByLogin("TII");
             user.add(roleLO);
             for (PermissionGroup pg : roleLO.getPermissionGroups()) {
                 user.add(pg);
             }
             uCnt.saveOrUpdate(user);
 
-            user = uCnt.findByLogin("TII");
-            user.add(roleLM);
-            for (PermissionGroup pg : roleLM.getPermissionGroups()) {
+            user = uCnt.findByLogin("guest");
+            user.add(roleLG);
+            for (PermissionGroup pg : roleLG.getPermissionGroups()) {
                 user.add(pg);
             }
             uCnt.saveOrUpdate(user);
@@ -185,7 +184,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
             //суффиксы _D, _Z обозначают дневную и заочн формы обучения----------
             //Програмне забезпечення автоматизованих систем - молодші спеціалісти, денна
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, null, lrPZAS_Cal.getTime(), kafPIT);
+            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 0, lrPZAS_Cal.getTime(), kafPIT);
             //Програмне забезпечення автоматизованих систем - молодші спеціалісти, заочна
             saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
             //Програмне забезпечення автоматизованих систем - бакалаври, денна
@@ -201,7 +200,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Програмне забезпечення автоматизованих систем - магістри, заочна
             saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, corr_EF, 10, lrPZAS_Cal.getTime(), kafPIT);
             //Розробка програмного забезпечення - молодші спеціалісти, денна
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, null, lrPZAS_Cal.getTime(), kafPIT);
+            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 0, lrPZAS_Cal.getTime(), kafPIT);
             //Розробка програмного забезпечення - молодші спеціалісти, заочна
             saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT);
             //Програмна інженерія- бакалаври, денна
