@@ -5,6 +5,7 @@
 package orion.tapestry.menu.lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,12 +40,12 @@ public class PageMenuLink implements IMenuLink {
     /**
      * Persistent parameters part of the URL
      */
-    protected Map<String, String> parameterPersistent;
+    protected Map<String, String> parameterPersistent=new HashMap<String, String>();
 
     /**
      * Variablepersistent parameters part of the URL
      */
-    protected Map<String, String> parameterVariable;
+    protected Map<String, String> parameterVariable=new HashMap<String, String>();
 
     /**
      * Конструктор класса.
@@ -75,7 +76,7 @@ public class PageMenuLink implements IMenuLink {
             return parameterVariable.get(name);
         }
         if (parameterPersistent.containsKey(name)) {
-            return parameterVariable.get(name);
+            return parameterPersistent.get(name);
         }
         return null;
     }

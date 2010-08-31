@@ -43,7 +43,6 @@ public class MenuLink extends AbstractLink {
     @Inject
     private PageRenderLinkSource LinkSource;
 
-
     void beginRender(MarkupWriter writer) {
         if (isDisabled()) {
             return;
@@ -62,6 +61,11 @@ public class MenuLink extends AbstractLink {
             linkObject = LinkSource.createPageRenderLink(menuLink.getPageClass());
         } else {
             linkObject = LinkSource.createPageRenderLinkWithContext(menuLink.getPageClass(), context);
+        }
+        if (menuLink.getParameters() != null) {
+            for (String pname : menuLink.getParameters().keySet()) {
+                linkObject.addParameter(pname, menuLink.getParameter(pname));
+            }
         }
         //linkObject = LinkSource.createPageRenderLink(Index.class);
         writeLink(writer, linkObject);
