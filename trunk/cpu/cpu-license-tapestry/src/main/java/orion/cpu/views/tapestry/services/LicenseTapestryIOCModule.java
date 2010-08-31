@@ -12,7 +12,6 @@ import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 import orion.cpu.entities.uch.License;
 import orion.cpu.entities.uch.LicenseRecord;
 import orion.cpu.entities.uch.LicenseRecordView;
-import orion.cpu.views.tapestry.pages.ListView;
 import orion.cpu.views.tapestry.pages.uch.ListLicenseRecordView;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.PageMenuLink;
@@ -54,10 +53,10 @@ public class LicenseTapestryIOCModule {
         path = ListLicenseRecordView.MENU_PATH;
         configuration.add(path, new PageMenuLink(ListLicenseRecordView.class));
 
-        path = "Start>LicenseRecordView>EducationForm";
+        path = "Start>Admin>Reference>EducationForm";
         configuration.add(path, createPageMenuLink(tcms, EducationForm.class, path));
 
-        path = "Start>LicenseRecordView>EducationalQualificationLevel";
+        path = "Start>Admin>Reference>EducationalQualificationLevel";
         configuration.add(path, createPageMenuLink(tcms, EducationalQualificationLevel.class, path));
 
         path = "Start>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
@@ -66,6 +65,7 @@ public class LicenseTapestryIOCModule {
         path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
         configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class, path));
     }
+
     private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
         IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
         lnk.setParameterPersistent("menupath", path);
