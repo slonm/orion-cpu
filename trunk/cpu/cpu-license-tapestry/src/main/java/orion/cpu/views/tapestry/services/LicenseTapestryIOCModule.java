@@ -44,30 +44,32 @@ public class LicenseTapestryIOCModule {
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
             TapestryCrudModuleService tcms) {
         String path;
-
+        
         path = "Start>License";
-        configuration.add(path, createPageMenuLink(tcms, License.class));
+        configuration.add(path, createPageMenuLink(tcms, License.class, path));
 
         path = "Start>LicenseRecord";
-        configuration.add(path, createPageMenuLink(tcms, LicenseRecord.class));
+        configuration.add(path, createPageMenuLink(tcms, LicenseRecord.class, path));
 
-        path = "Start>LicenseRecordView";
-        configuration.add(path, new PageMenuLink(tcms.getListPageClass(LicenseRecordView.class)));
+        path = ListLicenseRecordView.MENU_PATH;
+        configuration.add(path, new PageMenuLink(ListLicenseRecordView.class));
 
         path = "Start>LicenseRecordView>EducationForm";
-        configuration.add(path, createPageMenuLink(tcms, EducationForm.class));
+        configuration.add(path, createPageMenuLink(tcms, EducationForm.class, path));
 
         path = "Start>LicenseRecordView>EducationalQualificationLevel";
-        configuration.add(path, createPageMenuLink(tcms, EducationalQualificationLevel.class));
+        configuration.add(path, createPageMenuLink(tcms, EducationalQualificationLevel.class, path));
 
         path = "Start>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
-        configuration.add(path, createPageMenuLink(tcms, KnowledgeAreaOrTrainingDirection.class));
+        configuration.add(path, createPageMenuLink(tcms, KnowledgeAreaOrTrainingDirection.class, path));
 
         path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
-        configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class));
+        configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class, path));
     }
-    private static PageMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity){
-        return new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
+        IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+        lnk.setParameterPersistent("menupath", path);
+        return lnk;
     }
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration){
         configuration.add("License", "classpath:License.properties");

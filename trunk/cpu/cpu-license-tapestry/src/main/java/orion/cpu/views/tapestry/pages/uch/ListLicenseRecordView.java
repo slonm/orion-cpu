@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
 import orion.cpu.baseentities.BaseEntity;
 
 /**
@@ -15,11 +16,18 @@ import orion.cpu.baseentities.BaseEntity;
  */
 public class ListLicenseRecordView extends BaseListPage<LicenseRecordView, Integer> {
 
+    public static final String MENU_PATH = "Start>LicenseRecordView";
     @Inject
     private ControllerSource controllerSource;
     @Property
     private String license;
+    @Inject
+    @Property
+    private Request request;
 
+    public String getMENU_PATH(){
+        return MENU_PATH;
+    }
     /**
      * При закрытии страницы
      * @return
