@@ -1,6 +1,7 @@
 package orion.tapestry.services;
 
 import java.net.URLStreamHandlerFactory;
+import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.Translator;
 import org.apache.tapestry5.internal.InternalSymbols;
@@ -17,6 +18,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
+import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.services.UpdateListenerHub;
 import org.apache.tapestry5.services.ValidationConstraintGenerator;
 import orion.tapestry.beaneditor.HibernateAnnotationsConstraintGenerator;
@@ -94,11 +97,11 @@ public class TapestryExtentionsModule {
 
         configuration.add(new ByteArrayTranslator());
     }
+
     public ComponentTemplateSource buildOrionComponentTemplateSourceImpl(TemplateParser parser,
-                                                                PageTemplateLocator locator,
-                                                                ClasspathURLConverter classpathURLConverter,
-                                                                UpdateListenerHub updateListenerHub)
-    {
+            PageTemplateLocator locator,
+            ClasspathURLConverter classpathURLConverter,
+            UpdateListenerHub updateListenerHub) {
         OrionComponentTemplateSourceImpl service = new OrionComponentTemplateSourceImpl(parser, locator, classpathURLConverter);
 
         updateListenerHub.addUpdateListener(service);
@@ -108,10 +111,31 @@ public class TapestryExtentionsModule {
 
     public void contributeServiceOverride(
             MappedConfiguration<Class, Object> configuration,
-
-            @Local
-            ComponentTemplateSource componentTemplateSource)
-    {
+            @Local ComponentTemplateSource componentTemplateSource) {
         configuration.add(ComponentTemplateSource.class, componentTemplateSource);
+    }
+
+    /**
+     * Coertion from EventContext to Object[]
+     */
+    public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration) {
+        add(configuration, EventContext.class, Object[].class,
+                new Coercion<EventContext, Object[]>() {
+
+                    public Object[] coerce(EventContext context) {
+                        int count = context.getCount();
+                        Object[] result = new Object[count];
+                        for (int i = 0; i < count; i++) {
+                            result[i] = context.get(Object.class, i);
+                        }
+                        return result;
+                    }
+                });
+    }
+
+    private static <S, T> void add(Configuration<CoercionTuple> configuration, Class<S> sourceType, Class<T> targetType,
+            Coercion<S, T> coercion) {
+        CoercionTuple<S, T> tuple = new CoercionTuple<S, T>(sourceType, targetType, coercion);
+        configuration.add(tuple);
     }
 }
