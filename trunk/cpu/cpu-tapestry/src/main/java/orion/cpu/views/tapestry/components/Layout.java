@@ -24,22 +24,20 @@ public class Layout {
     @Property
     @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
     private String title;
-    @Inject
-    private CpuMenu cpuMenu;
     /**
      * Page navigation menu
      */
     @Parameter(required = true)
     @Property(write = false)
-    private ArrayList<MenuData> menudata;
+    private Object menudata;
     @SessionState(create = false)
     @Property
     private User user;
     @Inject
     private Request request;
 
-    ArrayList<MenuData> defaultMenudata() {
-        return cpuMenu.getMenu("Start", null, null, null);
+    Object defaultMenudata() {
+        return "Start";
     }
 
     /**

@@ -230,10 +230,15 @@ public class CpuTapestryIOCModule {
         String path;
 
         path = "Start>Admin>TML";
-        configuration.add(path, new PageMenuLink(tcms.getListPageClass(PageTemplate.class),
-                BaseEntity.getFullClassName(PageTemplate.class)));
+        configuration.add(path, createPageMenuLink(tcms, PageTemplate.class, path));
     }
     
+    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
+        IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+        lnk.setParameterPersistent("menupath", path);
+        return lnk;
+    }
+
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
             URLStreamHandlerFactory _URLStreamHandlerFactory) {
         //Вызывается что-бы явно построить фабрику перед регистрацией ее
