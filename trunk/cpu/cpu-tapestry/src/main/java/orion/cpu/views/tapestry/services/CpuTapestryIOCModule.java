@@ -202,9 +202,7 @@ public class CpuTapestryIOCModule {
      * @param fieldLabelSource сервис {@link FieldLabelSource}
      */
     @Match("CpuMenu")
-    public static void adviseCpuMenu(MethodAdviceReceiver receiver, ExtendedAuthorizer authorizer,
-            TypeCoercer coercer) {
-        MethodAdvice advice = new CpuMenuMethodAdvice(authorizer, coercer);
+    public static void adviseCpuMenu(MethodAdviceReceiver receiver, @Autobuild CpuMenuMethodAdvice advice) {
         receiver.adviseAllMethods(advice);
     }
 
