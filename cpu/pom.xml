@@ -13,6 +13,7 @@
  <module>cpu-core</module>
  <module>cpu-tapestry</module>
  <module>cpu-units</module>
+ <module>cpu-units-tapestry</module>
  <module>cpu-license</module>
  <module>cpu-license-tapestry</module>
  <module>cpu</module>
