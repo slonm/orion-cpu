@@ -5,7 +5,7 @@
     <method name="initialize"><![CDATA[//reportContext.setGlobalVariable("HideT", false);
 reportContext.setGlobalVariable("OldCode", "?");
 LOG = Packages.org.slf4j.LoggerFactory.getLogger("Report");
-]]></method>
+//Packages.java.net.URL.setURLStreamHandlerFactory(new Packages.orion.cpu.views.tapestry.services.URLStreamHandlerFactoryImpl(new Packages.java.util.HashMap()));]]></method>
     <method name="beforeFactory"><![CDATA[params=Packages.orion.cpu.views.birt.BirtConnection.params();
 var controllerSource=params.get("ControllerSource");
 controller=controllerSource.get(java.lang.Class.forName("orion.cpu.entities.uch.LicenseRecordView"));
