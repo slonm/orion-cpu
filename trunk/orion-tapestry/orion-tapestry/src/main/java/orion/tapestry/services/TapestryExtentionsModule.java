@@ -116,7 +116,8 @@ public class TapestryExtentionsModule {
     }
 
     /**
-     * Coertion from EventContext to Object[]
+     * from EventContext to Object[]
+     * from String to Class
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration) {
         add(configuration, EventContext.class, Object[].class,
@@ -129,6 +130,17 @@ public class TapestryExtentionsModule {
                             result[i] = context.get(Object.class, i);
                         }
                         return result;
+                    }
+                });
+        add(configuration, String.class, Class.class,
+                new Coercion<String, Class>() {
+
+                    public Class coerce(String className) {
+                        try {
+                            return Class.forName(className);
+                        } catch (ClassNotFoundException ex) {
+                            return null;
+                        }
                     }
                 });
     }
