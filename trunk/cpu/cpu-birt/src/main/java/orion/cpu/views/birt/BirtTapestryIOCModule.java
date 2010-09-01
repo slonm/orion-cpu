@@ -16,7 +16,7 @@ public class BirtTapestryIOCModule {
 //	      configuration.add("/extract*"); 
 //	      configuration.add("/run*");
         configuration.add("/preview*");
-//	      configuration.add("/output*");      
+	configuration.add("/output*");      
 
     }
 
