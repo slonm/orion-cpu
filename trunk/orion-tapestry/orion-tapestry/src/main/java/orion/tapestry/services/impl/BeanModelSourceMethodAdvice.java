@@ -27,12 +27,18 @@ public class BeanModelSourceMethodAdvice implements MethodAdvice {
             String label = fieldLabelSource.get(model.getBeanType(), name, messages);
             if (label != null) {
                 //Если имя свойства где-то явно определено как <propName-label> то не заменяем его!
-                String defaultLabel = TapestryInternalUtils.defaultLabel(model.get(name).getId(), messages, name);
-                if (label.equals(defaultLabel)) {
+                String defaultLabel = defaultLabel(model.get(name).getId(), name);
+                if (model.get(name).getLabel().equals(defaultLabel)) {
                     model.get(name).label(label);
                 }
             }
         }
+    }
+
+//Сдублироан алгоритм вычисления надписи из TapestryInternalUtils.defaultLabel
+    public static String defaultLabel(String id, String propertyExpression)
+    {
+        return TapestryInternalUtils.toUserPresentable(TapestryInternalUtils.extractIdFromPropertyExpression(TapestryInternalUtils.lastTerm(propertyExpression)));
     }
 
     @Override
