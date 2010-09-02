@@ -24,18 +24,18 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
     public void run() {
         //Сохранение в базе пользователя SYSTEM
         User SYS = saveOrUpdateUser(User.SYSTEM_USER.getName(), User.SYSTEM_USER.getPassword(),
-                User.SYSTEM_USER.getName(), User.SYSTEM_USER.getEmail());
+                User.SYSTEM_USER.getName(), User.SYSTEM_USER.getEmail(), null);
         SYS.setEnabled(User.SYSTEM_USER.isEnabled());
         initDBSupport.getUserController().update(SYS);
         if (initDBSupport.isFillTestData()) {
             //---------Пользователи----------
-            saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net");
-            saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net");
-            saveOrUpdateUser("guest", "", "Гость информационной системы КПУ", "guest@cpu.edu");
+            saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
+            saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net", "ru");
+            saveOrUpdateUser("guest", "", "Гость информационной системы КПУ", "guest@cpu.edu", null);
         }
     }
 
-    private User saveOrUpdateUser(String login, String password, String name, String email) {
+    private User saveOrUpdateUser(String login, String password, String name, String email, String locale) {
         User p = initDBSupport.getUserController().findByLogin(login);
         if (p == null) {
             p = new User(login, password, name, email);
@@ -44,6 +44,7 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
             p.setPassword(password);
             p.setEmail(email);
         }
+        p.setLocale(locale);
         return initDBSupport.getUserController().saveOrUpdate(p);
     }
 }

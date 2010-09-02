@@ -27,6 +27,7 @@ public class User extends AbstractRole<User> {
     private Boolean locked = false;
     private Boolean loggedIn = false;
     private String password;
+    private String locale;
     private Set<Role> roles = new HashSet<Role>();
 
     static {
@@ -192,6 +193,14 @@ public class User extends AbstractRole<User> {
     @Deprecated
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     /**
