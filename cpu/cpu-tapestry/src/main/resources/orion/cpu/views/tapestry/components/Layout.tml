@@ -20,7 +20,6 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
     <body>
         <!-- start header -->
         <div id="header">
-            <div id="logo"><h1><t:pagelink page="index">orion:cpu</t:pagelink></h1></div>
             <span id="menu"><t:menu.menubar menudata="menudata" /></span>
         </div>
         <br/>

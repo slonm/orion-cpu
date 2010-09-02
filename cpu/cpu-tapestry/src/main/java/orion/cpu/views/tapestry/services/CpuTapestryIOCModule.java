@@ -18,10 +18,11 @@ import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.sys.PageTemplate;
-import orion.cpu.security.services.ExtendedAuthorizer;
 import orion.cpu.views.tapestry.pages.Edit;
 import orion.cpu.views.tapestry.pages.ErrorReport;
+import orion.cpu.views.tapestry.pages.Index;
 import orion.cpu.views.tapestry.pages.ListView;
+import orion.cpu.views.tapestry.pages.MenuNavigator;
 import orion.cpu.views.tapestry.utils.DataTMLURLConnection;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.PageMenuLink;
@@ -46,7 +47,8 @@ public class CpuTapestryIOCModule {
         configuration.override("spring-security.loginform.url", "/login");
         configuration.override("spring-security.failure.url", errorPageUrl + "/" + ErrorReport.LOGIN_FAILED);
         configuration.override("spring-security.accessDenied.url", errorPageUrl + "/" + ErrorReport.ACCESS_DENIED);
-        //configuration.override("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
+        //Это страница может и не понадобится, еслт шаблоны tml будут браться их базы
+        configuration.override("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
     }
 
     /**
@@ -227,6 +229,8 @@ public class CpuTapestryIOCModule {
             TapestryCrudModuleService tcms) {
         String path;
 
+        path = "Start";
+        configuration.add(path, new PageMenuLink(Index.class).setParameterPersistent("menupath", path));
         path = "Start>Admin>TML";
         configuration.add(path, createPageMenuLink(tcms, PageTemplate.class, path));
     }

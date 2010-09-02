@@ -42,7 +42,7 @@ public class MenuNavigator {
     private Messages messages;
 
     public String getTitle() {
-        return messages.get(lastMenu.getTitle());
+        return messages.get("menu>"+lastMenu.getTitle());
     }
 
     public PriorityQueue<MenuItem> getItems() {
@@ -66,7 +66,7 @@ public class MenuNavigator {
         Object[] context = null;
         //Logger logger = LoggerFactory.getLogger(MenuNavigator.class);
         //logger.info(path);
-        this.menu = cpuMenu.getMenu(path, context, null, null);
+        this.menu = cpuMenu.getMenu(path, null, null, null);
         lastMenu = menu.get(menu.size() - 1);
     }
 
