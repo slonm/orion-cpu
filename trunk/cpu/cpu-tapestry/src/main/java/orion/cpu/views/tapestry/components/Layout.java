@@ -8,6 +8,7 @@ import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Session;
+import orion.cpu.views.tapestry.pages.Index;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.services.CpuMenu;
 
@@ -35,6 +36,8 @@ public class Layout {
     private User user;
     @Inject
     private Request request;
+    @InjectPage
+    private Index index;
 
     Object defaultMenudata() {
         return "Start";
@@ -44,10 +47,11 @@ public class Layout {
      * Invalidates the session.
      */
     @OnEvent(component = "logout", value = EventConstants.ACTION)
-    public void logout() {
+    public Object logout() {
         final Session session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
+        return index;
     }
 }
