@@ -51,7 +51,7 @@ public class LicenseTapestryIOCModule {
         configuration.add(path, createPageMenuLink(tcms, LicenseRecord.class, path));
 
         path = ListLicenseRecordView.MENU_PATH;
-        configuration.add(path, new PageMenuLink(ListLicenseRecordView.class));
+        configuration.add(path, new PageMenuLink(ListLicenseRecordView.class).setParameterPersistent("menupath", path));
 
         path = "Start>Admin>Reference>EducationForm";
         configuration.add(path, createPageMenuLink(tcms, EducationForm.class, path));
