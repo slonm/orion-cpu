@@ -72,11 +72,11 @@ public class PageMenuLink implements IMenuLink {
 
     @Override
     public String getParameter(String name) {
-        if (parameterVariable.containsKey(name)) {
-            return parameterVariable.get(name);
-        }
         if (parameterPersistent.containsKey(name)) {
             return parameterPersistent.get(name);
+        }
+        if (parameterVariable.containsKey(name)) {
+            return parameterVariable.get(name);
         }
         return null;
     }
@@ -164,8 +164,8 @@ public class PageMenuLink implements IMenuLink {
     public Map<String, String> getParameters() {
         @SuppressWarnings("unchecked")
         Map<String, String> m = new TreeMap<String, String>();
-        m.putAll(parameterPersistent);
         m.putAll(parameterVariable);
+        m.putAll(parameterPersistent);
         return m;
     }
 
