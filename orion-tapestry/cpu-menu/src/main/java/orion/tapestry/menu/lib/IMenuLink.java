@@ -44,7 +44,7 @@ public interface IMenuLink {
      * Set named parameter of the URL
      * Parameters in the URL are grouped in two classes
      * i.e. persistent and variable ones.
-     * Persistent parameters are not changed.
+     * Persistent parameters are not changed and have biggest priority vs variable
      * @param name parameter name
      * @param value parameter value
      * @return current object
@@ -55,7 +55,7 @@ public interface IMenuLink {
      * Set named parameter of the URL
      * Parameters in the URL are grouped in two classes
      * i.e. persistent and variable ones.
-     * Persistent parameters are not changed.
+     * Persistent parameters are not changed and have biggest priority vs variable
      * @param _paramеters list of key-value pairs
      * @return current object
      */
@@ -65,7 +65,7 @@ public interface IMenuLink {
      * Set named parameter of the URL
      * Parameters in the URL are grouped in two classes
      * i.e. persistent and variable ones.
-     * Persistent parameters are not changed.
+     * Persistent parameters are not changed and have biggest priority vs variable
      * @param name parameter name
      * @param value parameter value
      * @return current object
@@ -76,7 +76,7 @@ public interface IMenuLink {
      * Set named parameter of the URL
      * Parameters in the URL are grouped in two classes
      * i.e. persistent and variable ones.
-     * Persistent parameters are not changed.
+     * Persistent parameters are not changed and have biggest priority vs variable
      * @param _paramеters list of key-value pairs
      * @return current object
      */
