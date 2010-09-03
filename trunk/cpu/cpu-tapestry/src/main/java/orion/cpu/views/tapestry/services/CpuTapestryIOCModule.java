@@ -1,6 +1,6 @@
 package orion.cpu.views.tapestry.services;
 
-import orion.tapestry.services.impl.PageTemplateLocatorAdvice;
+import orion.tapestry.internal.services.impl.PageTemplateLocatorAdvice;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
@@ -49,6 +49,7 @@ public class CpuTapestryIOCModule {
         configuration.override("spring-security.accessDenied.url", errorPageUrl + "/" + ErrorReport.ACCESS_DENIED);
         //Это страница может и не понадобится, еслт шаблоны tml будут браться их базы
         configuration.override("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
+        configuration.override("orion.tapestry.useTMLinDatabase", "true");
     }
 
     /**
@@ -211,12 +212,6 @@ public class CpuTapestryIOCModule {
     @Match("RequestExceptionHandler")
     public static void adviseRequestExceptionHandler(MethodAdviceReceiver receiver, ObjectLocator locator) {
         MethodAdvice advice = locator.autobuild(RequestExceptionHandlerAdvice.class);
-        receiver.adviseAllMethods(advice);
-    }
-
-    @Match("PageTemplateLocator")
-    public static void advisePageTemplateLocator(MethodAdviceReceiver receiver, ObjectLocator locator) {
-        MethodAdvice advice = locator.autobuild(PageTemplateLocatorAdvice.class);
         receiver.adviseAllMethods(advice);
     }
 
