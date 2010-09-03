@@ -3,14 +3,14 @@
 
     <span class="menuheader">
     <span class="menutitle">
-        <t:menu.menulink t:menuLink="MenuLink">${Localize(title)} </t:menu.menulink>
+        <t:menu.menulink t:menuLink="MenuLink">${Localize(title, menuLink)} </t:menu.menulink>
     </span>
     <t:if test="subitems"><span class="menuarrow">V</span></t:if>
     </span>
 
     <span   class="menuitems">
         <div t:type="loop" t:source="items" t:value="Item">
-            <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Uid)}</t:menu.menulink>
+            <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Uid, Item.ItemLink)}</t:menu.menulink>
         </div>
     </span>
 
