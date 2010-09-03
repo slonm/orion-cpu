@@ -46,7 +46,7 @@ public class Menu {
     private Messages messages;
 
     //TODO Debug it
-    public static String Localize(String msg, MenuItem _Item, Messages messages, TypeCoercer coercer) {
+    public static String Localize(String msg, IMenuLink lnk, Messages messages, TypeCoercer coercer) {
         //Пример: menu>Start где Start - подпись пункта
         String key = "menu>" + msg;
         if (messages.contains(key)) {
@@ -56,7 +56,7 @@ public class Menu {
         //Пример: foo.Bar где foo.Bar - имя класса сущности, с которой работает страница
         String clazzName;
         try {
-            clazzName = "reflect." + coercer.coerce(_Item.getItemLink(), Class.class).getName();
+            clazzName = "reflect." + coercer.coerce(lnk, Class.class).getName();
             if (messages.contains(clazzName)) {
                 return messages.get(clazzName);
             }
@@ -65,7 +65,7 @@ public class Menu {
 
         //Пример: foo.Bar где foo.Bar - имя класса страницы
         try {
-            clazzName = "reflect." + _Item.getItemLink().getPageClass().getName();
+            clazzName = "reflect." + lnk.getPageClass().getName();
             if (messages.contains(clazzName)) {
                 return messages.get(clazzName);
             }
@@ -78,8 +78,8 @@ public class Menu {
      * @param msg - unique message name
      * @return message in current language
      */
-    public String Localize(String msg) {
-        return Localize(msg, _Item, messages, coercer);
+    public String Localize(String msg, IMenuLink lnk) {
+        return Localize(msg, lnk, messages, coercer);
     }
 
     /**
