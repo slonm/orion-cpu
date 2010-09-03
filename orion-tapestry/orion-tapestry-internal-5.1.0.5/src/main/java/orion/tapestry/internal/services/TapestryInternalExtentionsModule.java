@@ -15,15 +15,18 @@ import orion.tapestry.internal.services.impl.*;
  */
 public class TapestryInternalExtentionsModule {
 
-    public static GlobalMessageAppender build(@Autobuild GlobalMessageAppender appender){
+    private static final String TMLinDatabase = "orion.tapestry.useTMLinDatabase";
+
+    public static GlobalMessageAppender build(@Autobuild GlobalMessageAppender appender) {
         return appender;
     }
-    
+
     public static void contributeFactoryDefaults(
             MappedConfiguration<String, String> configuration) {
         //Запретим использовать глобальные ресурсы стандартными средствами
         //вместо этого модифицируем работу сервиса ComponentMessagesSourceImpl
         configuration.override(SymbolConstants.APPLICATION_CATALOG, "*");
+        configuration.add(TMLinDatabase, "false");
     }
 
     @Match("ComponentMessagesSource")
@@ -55,4 +58,12 @@ public class TapestryInternalExtentionsModule {
         configuration.add(ComponentTemplateSource.class, componentTemplateSource);
     }
 
+    @Match("PageTemplateLocator")
+    public static void advisePageTemplateLocator(MethodAdviceReceiver receiver, ObjectLocator locator,
+            @Inject @Symbol(TMLinDatabase) Boolean isUse) {
+        if (isUse) {
+            MethodAdvice advice = locator.autobuild(PageTemplateLocatorAdvice.class);
+            receiver.adviseAllMethods(advice);
+        }
+    }
 }

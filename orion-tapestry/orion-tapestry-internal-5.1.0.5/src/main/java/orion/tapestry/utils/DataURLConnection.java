@@ -1,4 +1,4 @@
-package orion.tapestry.internal.utils;
+package orion.tapestry.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package orion.tapestry.internal.utils;
 
+import orion.tapestry.utils.DataURLConnection;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
 
