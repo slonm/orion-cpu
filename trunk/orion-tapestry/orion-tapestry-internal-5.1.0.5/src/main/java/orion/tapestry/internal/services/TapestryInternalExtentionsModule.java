@@ -60,7 +60,7 @@ public class TapestryInternalExtentionsModule {
 
     @Match("PageTemplateLocator")
     public static void advisePageTemplateLocator(MethodAdviceReceiver receiver, ObjectLocator locator,
-            @Inject @Symbol(TMLinDatabase) Boolean isUse) {
+            @Inject @Value("${"+TMLinDatabase+"}") Boolean isUse) {
         if (isUse) {
             MethodAdvice advice = locator.autobuild(PageTemplateLocatorAdvice.class);
             receiver.adviseAllMethods(advice);
