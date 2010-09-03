@@ -2,10 +2,11 @@ package orion.tapestry.services.impl;
 
 import java.util.List;
 import org.apache.tapestry5.beaneditor.BeanModel;
-import org.apache.tapestry5.internal.TapestryInternalUtils;
 import org.apache.tapestry5.ioc.Invocation;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.MethodAdvice;
+import org.apache.tapestry5.services.BeanModelSource;
+import orion.tapestry.internal.utils.TapestryInternalUtilsWrapper;
 import orion.tapestry.services.FieldLabelSource;
 
 /**
@@ -27,7 +28,7 @@ public class BeanModelSourceMethodAdvice implements MethodAdvice {
             String label = fieldLabelSource.get(model.getBeanType(), name, messages);
             if (label != null) {
                 //Если имя свойства где-то явно определено как <propName-label> то не заменяем его!
-                String defaultLabel = defaultLabel(model.get(name).getId(), name);
+                String defaultLabel = TapestryInternalUtilsWrapper.defaultLabel(model.get(name).getId(), name);
                 if (model.get(name).getLabel().equals(defaultLabel)) {
                     model.get(name).label(label);
                 }
@@ -35,11 +36,6 @@ public class BeanModelSourceMethodAdvice implements MethodAdvice {
         }
     }
 
-//Сдублироан алгоритм вычисления надписи из TapestryInternalUtils.defaultLabel
-    public static String defaultLabel(String id, String propertyExpression)
-    {
-        return TapestryInternalUtils.toUserPresentable(TapestryInternalUtils.extractIdFromPropertyExpression(TapestryInternalUtils.lastTerm(propertyExpression)));
-    }
 
     @Override
     public void advise(Invocation invocation) {

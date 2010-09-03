@@ -1,15 +1,7 @@
 package orion.tapestry.components;
 
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.ClientElement;
-import org.apache.tapestry5.Field;
-import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SupportsInformalParameters;
+import org.apache.tapestry5.*;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
