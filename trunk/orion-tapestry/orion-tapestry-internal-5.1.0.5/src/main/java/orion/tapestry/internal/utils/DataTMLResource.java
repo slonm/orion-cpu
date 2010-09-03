@@ -1,5 +1,6 @@
 package orion.tapestry.internal.utils;
 
+import orion.tapestry.utils.DataURLConnection;
 import java.io.IOException;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.internal.util.AbstractResource;
