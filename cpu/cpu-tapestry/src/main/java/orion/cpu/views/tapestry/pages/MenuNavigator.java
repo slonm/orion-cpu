@@ -58,7 +58,7 @@ public class MenuNavigator {
      * @return message in current language
      */
     public String Localize(String msg) {
-        return Menu.Localize(msg, _Item, messages, coercer);
+        return Menu.Localize(msg, _Item.getItemLink(), messages, coercer);
     }
 
     void onActivate(String position) {
