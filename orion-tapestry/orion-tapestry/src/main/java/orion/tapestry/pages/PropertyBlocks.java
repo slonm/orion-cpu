@@ -2,11 +2,8 @@ package orion.tapestry.pages;
 
 import javax.naming.event.EventContext;
 import org.apache.tapestry5.FieldValidator;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.Environmental;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.services.PropertyEditContext;
-import org.apache.tapestry5.services.PropertyOutputContext;
+import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.services.*;
 import orion.tapestry.components.BooleanSelectField;
 
 /**
