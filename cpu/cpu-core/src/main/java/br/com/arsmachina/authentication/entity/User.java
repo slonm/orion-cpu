@@ -19,6 +19,7 @@ public class User extends AbstractRole<User> {
      * Пользователь - система
      */
     public final static User SYSTEM_USER;
+    public final static User GUEST_USER;
 
     private static final long serialVersionUID = 1L;
     private String email;
@@ -33,6 +34,7 @@ public class User extends AbstractRole<User> {
     static {
     SYSTEM_USER = new User("SYSTEM", "******", "SYSTEM", "SYS@SYS.SYS");
     SYSTEM_USER.setEnabled(false);
+    GUEST_USER = new User("GUEST", "******", "GUEST", "GUEST@GUEST.GUEST");
     }
 
     public User() {
