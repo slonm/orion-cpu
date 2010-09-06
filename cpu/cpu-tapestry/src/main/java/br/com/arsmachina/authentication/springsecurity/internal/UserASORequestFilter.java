@@ -36,7 +36,7 @@ import ua.mihailslobodyanuk.utils.Defense;
 /**
  * {@link RequestFilter} that sets the {@link User} application state object if Spring Security has
  * an authenticated user in a session.
- * 
+ * Если аутентификация не выполнена, то устанавливается пользователь GUEST и у него не изменяется флаг isLoggedIn
  * @author Thiago H. de Paula Figueiredo
  */
 public class UserASORequestFilter implements RequestFilter {
@@ -66,7 +66,7 @@ public class UserASORequestFilter implements RequestFilter {
 
         User user = applicationStateManager.getIfExists(User.class);
 
-        if (user == null) {
+        if (user == null || User.GUEST_USER.getLogin().equalsIgnoreCase(user.getLogin())) {
 
             final SecurityContext context = SecurityContextHolder.getContext();
             final Authentication authentication = context.getAuthentication();
@@ -80,21 +80,32 @@ public class UserASORequestFilter implements RequestFilter {
                     throw new RuntimeException("Unknown logged user: " + login);
                 }
 
+                if (user.isEnabled()) {
+                    applicationStateManager.set(User.class, user);
+                    try {
+                        persistentLocale.set(new Locale(user.getLocale()));
+                    } catch (Throwable t) {
+                    }
+                    UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
+                    request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
+
+                    if (user.isLoggedIn() == false) {
+
+                        user.setLoggedIn(true);
+                        userController.update(user);
+
+                    }
+                }
+
+            }
+            if (user == null) {
+                user = userController.loadEverything(User.GUEST_USER.getLogin());
+
+                if (user == null) {
+                    throw new RuntimeException(String.format("User '%s' not exists!", User.GUEST_USER.getLogin()));
+                }
+
                 applicationStateManager.set(User.class, user);
-                try {
-                    persistentLocale.set(new Locale(user.getLocale()));
-                } catch (Throwable t) {
-                }
-                UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
-                request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
-
-                if (user.isLoggedIn() == false) {
-
-                    user.setLoggedIn(true);
-                    userController.update(user);
-
-                }
-
             }
 
         }
