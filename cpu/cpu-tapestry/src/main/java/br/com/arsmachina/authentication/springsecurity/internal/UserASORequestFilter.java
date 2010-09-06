@@ -80,22 +80,21 @@ public class UserASORequestFilter implements RequestFilter {
                     throw new RuntimeException("Unknown logged user: " + login);
                 }
 
-                if (user.isEnabled()) {
-                    applicationStateManager.set(User.class, user);
-                    try {
-                        persistentLocale.set(new Locale(user.getLocale()));
-                    } catch (Throwable t) {
-                    }
-                    UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
-                    request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
-
-                    if (user.isLoggedIn() == false) {
-
-                        user.setLoggedIn(true);
-                        userController.update(user);
-
-                    }
+                applicationStateManager.set(User.class, user);
+                try {
+                    persistentLocale.set(new Locale(user.getLocale()));
+                } catch (Throwable t) {
                 }
+                UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
+                request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
+
+                if (user.isLoggedIn() == false) {
+
+                    user.setLoggedIn(true);
+                    userController.update(user);
+
+                }
+
 
             }
             if (user == null) {
