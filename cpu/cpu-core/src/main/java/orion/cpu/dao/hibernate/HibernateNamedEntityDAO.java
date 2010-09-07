@@ -12,7 +12,7 @@ import orion.cpu.security.services.ExtendedAuthorizer;
 /**
  * Hibernate реализация DAO для NamedEntity
  * @param <T> тип справочника
- * @author sl
+ * @author sl 
  */
 @SuppressWarnings("unchecked")
 public class HibernateNamedEntityDAO<T extends NamedEntity<?>> extends SecuredHibernateDAOImpl<T, Integer>
