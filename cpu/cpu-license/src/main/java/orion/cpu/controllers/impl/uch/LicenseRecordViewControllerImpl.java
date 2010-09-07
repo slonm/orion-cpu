@@ -9,7 +9,7 @@ import orion.cpu.services.DefaultControllerListeners;
 
 /**
  * Контроллер для LicenseRecordView
- * @author sl
+ * @author sl 
  */
 public class LicenseRecordViewControllerImpl extends BaseController<LicenseRecordView, Integer> {
 
