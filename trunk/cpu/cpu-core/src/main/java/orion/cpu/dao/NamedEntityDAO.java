@@ -7,7 +7,7 @@ import orion.cpu.baseentities.NamedEntity;
 /**
  * Базовый интерфейс DAO для NamedEntity
  * @param <T> тип сущности
- * @author sl
+ * @author sl 
  */
 public interface NamedEntityDAO<T extends NamedEntity<?>> extends DAO<T, Integer> {
 
