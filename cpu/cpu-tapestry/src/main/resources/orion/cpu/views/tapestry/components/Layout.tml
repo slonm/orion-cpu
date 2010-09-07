@@ -24,9 +24,9 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         </div>
         <br/>
         <t:security.IfLoggedIn>
-            User: ${user.name} <t:ActionLink t:id="logout">Logout</t:ActionLink>
+            ${message:label.user}: ${user.name} <t:ActionLink t:id="logout"> ${message:link.logout}</t:ActionLink>
             <p:else>
-            <t:pagelink page="login">Login</t:pagelink>
+            <t:pagelink page="login">${message:link.login}</t:pagelink>
             </p:else>
         </t:security.IfLoggedIn>
         <!-- end header -->

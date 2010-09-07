@@ -7,6 +7,7 @@ import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
+import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 
 /**
@@ -97,9 +98,11 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
     public String getCode() {
         try {
-            if(getEducationalQualificationLevel().getCode()==null||
-               getKnowledgeAreaOrTrainingDirection().getCode()==null||
-               getTrainingDirectionOrSpeciality().getCode()==null) return null;
+            if (getEducationalQualificationLevel().getCode() == null ||
+                    getKnowledgeAreaOrTrainingDirection().getCode() == null ||
+                    getTrainingDirectionOrSpeciality().getCode() == null) {
+                return null;
+            }
             return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
         } catch (Throwable th) {
             return null;
@@ -199,6 +202,17 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     public void setLicense(License license) {
         stationaryLicenseRecord.setLicense(license);
         correspondenseLicenseRecord.setLicense(license);
+    }
+
+    @Validate("required")
+    public LicenseRecordGroup getLicenseRecordGroup() {
+        return stationaryLicenseRecord.getLicenseRecordGroup();
+    }
+
+    @Validate("required")
+    public void setLicenseRecordGroup(LicenseRecordGroup licenseRecordGroup) {
+        stationaryLicenseRecord.setLicenseRecordGroup(licenseRecordGroup);
+        correspondenseLicenseRecord.setLicenseRecordGroup(licenseRecordGroup);
     }
 
     @Override

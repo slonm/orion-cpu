@@ -6,4 +6,12 @@ package orion.cpu.views.tapestry.pages;
  */
 public class Index {
 
+
+//    @Inject
+//    private PersistentLocale persistentLocale;
+//
+//    {
+//        persistentLocale.set(new Locale("uk"));
+//    }
+
 }

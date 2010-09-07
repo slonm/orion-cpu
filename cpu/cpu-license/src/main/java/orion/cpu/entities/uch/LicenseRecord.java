@@ -7,6 +7,7 @@ import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationForm;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
+import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 
 /**
@@ -24,10 +25,9 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     private Date terminationDate;
     private OrgUnit orgUnit;
     private License license;
+    private LicenseRecordGroup licenseRecordGroup;
 
-
-    
-    @Transient
+   @Transient
     public String getLicenseSerialNumber() {
         return (license.getSerial()+"  "+license.getNumber());
     }
@@ -157,6 +157,16 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      */
     public void setLicense(License license) {
         this.license = license;
+    }
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    public LicenseRecordGroup getLicenseRecordGroup() {
+        return licenseRecordGroup;
+    }
+
+    public void setLicenseRecordGroup(LicenseRecordGroup licenseRecordGroup) {
+        this.licenseRecordGroup = licenseRecordGroup;
     }
 
     @Override
