@@ -8,6 +8,7 @@ import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.ref.EducationForm;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
+import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 import orion.cpu.entities.uch.License;
 import orion.cpu.entities.uch.LicenseRecord;
@@ -43,7 +44,7 @@ public class LicenseTapestryIOCModule {
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
             TapestryCrudModuleService tcms) {
         String path;
-        
+
         path = "Start>License";
         configuration.add(path, createPageMenuLink(tcms, License.class, path));
 
@@ -64,24 +65,29 @@ public class LicenseTapestryIOCModule {
 
         path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
         configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class, path));
+
+        path = "Start>LicenseRecordView>LicenseRecordGroup";
+        configuration.add(path, createPageMenuLink(tcms, LicenseRecordGroup.class, path));
     }
 
-    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
-        IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
+        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
         lnk.setParameterPersistent("menupath", path);
         return lnk;
     }
-    public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration){
+
+    public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration) {
         configuration.add("License", "classpath:License.properties");
     }
 
     public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration) {
-        configuration.add(new Coercion<IMenuLink, Class<LicenseRecordView>>(){
+        configuration.add(new Coercion<IMenuLink, Class<LicenseRecordView>>() {
 
             @Override
             public Class<LicenseRecordView> coerce(IMenuLink input) {
-                if(input.getPageClass().equals(ListLicenseRecordView.class))
+                if (input.getPageClass().equals(ListLicenseRecordView.class)) {
                     return LicenseRecordView.class;
+                }
                 return null;
             }
         });
