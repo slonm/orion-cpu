@@ -74,28 +74,31 @@ public class UserASORequestFilter implements RequestFilter {
             if (authentication != null && authentication instanceof AnonymousAuthenticationToken == false) {
 
                 final String login = authentication.getName();
-                user = userController.loadEverything(login);
+                if (login.equalsIgnoreCase(User.GUEST_USER.getLogin())) {
+                    //TODO Добавить запрет входа гостя в SecurityContext
+                } else {
+                    user = userController.loadEverything(login);
 
-                if (user == null) {
-                    throw new RuntimeException("Unknown logged user: " + login);
+                    if (user == null) {
+                        throw new RuntimeException("Unknown logged user: " + login);
+                    }
+
+                    applicationStateManager.set(User.class, user);
+                    try {
+                        persistentLocale.set(new Locale(user.getLocale()));
+                    } catch (Throwable t) {
+                    }
+                    UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
+                    request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
+
+                    if (user.isLoggedIn() == false) {
+
+                        user.setLoggedIn(true);
+                        userController.update(user);
+
+                    }
+
                 }
-
-                applicationStateManager.set(User.class, user);
-                try {
-                    persistentLocale.set(new Locale(user.getLocale()));
-                } catch (Throwable t) {
-                }
-                UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
-                request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
-
-                if (user.isLoggedIn() == false) {
-
-                    user.setLoggedIn(true);
-                    userController.update(user);
-
-                }
-
-
             }
             if (user == null) {
                 user = userController.loadEverything(User.GUEST_USER.getLogin());

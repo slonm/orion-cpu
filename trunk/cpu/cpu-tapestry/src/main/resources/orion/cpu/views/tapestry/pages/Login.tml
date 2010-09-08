@@ -25,7 +25,7 @@
             </tr>
             <tr>
             <td><input id="submit" class="submit" type="submit"
-                   value="${message:button:login}"/></td>
+                   value="${message:button.login}"/></td>
             </tr>
                    </table>
             <input type="hidden" name="spring-security-redirect" value="${prop:redirectUrl}" />
