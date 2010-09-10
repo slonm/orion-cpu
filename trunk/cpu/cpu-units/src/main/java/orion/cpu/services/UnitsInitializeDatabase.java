@@ -12,6 +12,7 @@ import ua.mihailslobodyanuk.utils.Defense;
 import orion.cpu.entities.org.*;
 import java.util.*;
 import org.slf4j.*;
+import orion.cpu.entities.sys.SubSystem;
 
 /**
  * Начальная инициализация данных.
@@ -28,6 +29,7 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
 
     @Override
     public void run() {
+        SubSystem subSystem=iDBSpt.saveOrUpdateSubSystem("Units");
         //---------Права----------
         Map<String, Permission> CPermissions = iDBSpt.getPermissionsMap(Chair.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> OUPermissions = iDBSpt.getPermissionsMap(OrgUnit.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
@@ -47,26 +49,20 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
 
             //---------Роли----------
             Role roleOUG = iDBSpt.saveOrUpdateRole("OrgUnitGuest",
-                    "Просмотр записей об оргподразделениях", pgReadOrgUnits);
+                    "Перегляд записів про оргпідрозділи", subSystem, pgReadOrgUnits);
 
             Role roleOUM = iDBSpt.saveOrUpdateRole("OrgUnitOperator",
-                    "Оператор управления записями о подразделениях",
+                    "Оператор управління записами про оргпідрозділи", subSystem,
                     pgReadOrgUnits, pgManageOrgUnits);
 
             //---------Пользователи----------
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleOUM);
-            for (PermissionGroup pg : roleOUM.getPermissionGroups()) {
-                user.add(pg);
-            }
             uCnt.saveOrUpdate(user);
 
             user = uCnt.findByLogin("TII");
             user.add(roleOUG);
-            for (PermissionGroup pg : roleOUG.getPermissionGroups()) {
-                user.add(pg);
-            }
             uCnt.saveOrUpdate(user);
 
 //        //---Кафедры, выполняющие обучение по лицензиям----------
