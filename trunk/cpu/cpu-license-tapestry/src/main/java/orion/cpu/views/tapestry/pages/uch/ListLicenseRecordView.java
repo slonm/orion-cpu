@@ -16,7 +16,7 @@ import orion.cpu.baseentities.BaseEntity;
  */
 public class ListLicenseRecordView extends BaseListPage<LicenseRecordView, Integer> {
 
-    public static final String MENU_PATH = "Start>LicenseRecordView";
+    public static final String MENU_PATH = "Start>License>LicenseRecordView";
     @Inject
     private ControllerSource controllerSource;
     @Property
