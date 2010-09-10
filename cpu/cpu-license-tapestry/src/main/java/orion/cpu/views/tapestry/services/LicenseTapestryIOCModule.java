@@ -1,21 +1,12 @@
 package orion.cpu.views.tapestry.services;
 
-import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.*;
-import orion.cpu.baseentities.BaseEntity;
-import orion.cpu.entities.ref.EducationForm;
-import orion.cpu.entities.ref.EducationalQualificationLevel;
-import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
-import orion.cpu.entities.ref.LicenseRecordGroup;
-import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
-import orion.cpu.entities.uch.License;
-import orion.cpu.entities.uch.LicenseRecord;
-import orion.cpu.entities.uch.LicenseRecordView;
+import orion.cpu.entities.ref.*;
+import orion.cpu.entities.uch.*;
 import orion.cpu.views.tapestry.pages.uch.ListLicenseRecordView;
 import orion.tapestry.menu.lib.IMenuLink;
-import orion.tapestry.menu.lib.PageMenuLink;
 
 /**
  * Модуль конфигурирования IOC
@@ -42,42 +33,40 @@ public class LicenseTapestryIOCModule {
      * @param pageLinkCreatorFactory 
      */
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
-            TapestryCrudModuleService tcms) {
+            MenuLinkBuilder mlb) {
         String path;
 
         path = "Start>License";
-        configuration.add(path, createPageMenuLink(tcms, License.class, path));
+        configuration.add(path, mlb.buildDefaultMenuLink(path));
 
-        path = "Start>LicenseRecord";
-        configuration.add(path, createPageMenuLink(tcms, LicenseRecord.class, path));
+        path = "Start>License>License";
+        configuration.add(path, mlb.buildListPageMenuLink(License.class, path));
+
+        path = "Start>License>LicenseRecord";
+        configuration.add(path, mlb.buildListPageMenuLink(LicenseRecord.class, path));
 
         path = ListLicenseRecordView.MENU_PATH;
-        configuration.add(path, new PageMenuLink(ListLicenseRecordView.class).setParameterPersistent("menupath", path));
+        configuration.add(path, mlb.buildListPageMenuLink(LicenseRecordView.class, path));
 
         path = "Start>Admin>Reference>EducationForm";
-        configuration.add(path, createPageMenuLink(tcms, EducationForm.class, path));
+        configuration.add(path, mlb.buildListPageMenuLink(EducationForm.class, path));
 
         path = "Start>Admin>Reference>EducationalQualificationLevel";
-        configuration.add(path, createPageMenuLink(tcms, EducationalQualificationLevel.class, path));
+        configuration.add(path, mlb.buildListPageMenuLink(EducationalQualificationLevel.class, path));
 
-        path = "Start>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
-        configuration.add(path, createPageMenuLink(tcms, KnowledgeAreaOrTrainingDirection.class, path));
+        path = "Start>License>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
+        configuration.add(path, mlb.buildListPageMenuLink(KnowledgeAreaOrTrainingDirection.class, path));
 
-        path = "Start>LicenseRecordView>TrainingDirectionOrSpeciality";
-        configuration.add(path, createPageMenuLink(tcms, TrainingDirectionOrSpeciality.class, path));
+        path = "Start>License>LicenseRecordView>TrainingDirectionOrSpeciality";
+        configuration.add(path, mlb.buildListPageMenuLink(TrainingDirectionOrSpeciality.class, path));
 
-        path = "Start>LicenseRecordView>LicenseRecordGroup";
-        configuration.add(path, createPageMenuLink(tcms, LicenseRecordGroup.class, path));
-    }
-
-    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
-        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
-        lnk.setParameterPersistent("menupath", path);
-        return lnk;
+        path = "Start>License>LicenseRecordView>LicenseRecordGroup";
+        configuration.add(path, mlb.buildListPageMenuLink(LicenseRecordGroup.class, path));
     }
 
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration) {
         configuration.add("License", "classpath:License.properties");
+        configuration.add("LicenseTapestry", "classpath:LicenseTapestry.properties");
     }
 
     public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration) {
