@@ -20,7 +20,6 @@ public class User extends AbstractRole<User> {
      */
     public final static User SYSTEM_USER;
     public final static User GUEST_USER;
-
     private static final long serialVersionUID = 1L;
     private String email;
     private Boolean credentialsExpired = false;
@@ -32,9 +31,9 @@ public class User extends AbstractRole<User> {
     private Set<Role> roles = new HashSet<Role>();
 
     static {
-    SYSTEM_USER = new User("SYSTEM", "******", "SYSTEM", "SYS@SYS.SYS");
-    SYSTEM_USER.setEnabled(false);
-    GUEST_USER = new User("GUEST", "******", "GUEST", "GUEST@GUEST.GUEST");
+        SYSTEM_USER = new User("SYSTEM", "******", "SYSTEM", "SYS@SYS.SYS");
+        SYSTEM_USER.setEnabled(false);
+        GUEST_USER = new User("GUEST", "******", "GUEST", "GUEST@GUEST.GUEST");
     }
 
     public User() {
@@ -53,6 +52,7 @@ public class User extends AbstractRole<User> {
      * @param roles
      */
     public void add(Role role, Role... roles) {
+        checkExistsSubSystemRole(role, roles);
         this.roles.add(role);
         this.roles.addAll(Arrays.asList(roles));
     }
@@ -81,7 +81,9 @@ public class User extends AbstractRole<User> {
      * @return a {@link Set<Role>}.
      */
     @ManyToMany
-    @JoinTable(schema = "sec", name = "user_role", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+    @JoinTable(schema = "sec", name = "user_role", joinColumns =
+    @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns =
+    @JoinColumn(name = "role_id", nullable = false))
     public Set<Role> getRoles() {
         return roles;
     }
@@ -219,9 +221,39 @@ public class User extends AbstractRole<User> {
      * @return a {@link Set<PermissionGroup>}.
      */
     @ManyToMany
-    @JoinTable(schema = "sec", name = "user_permissiongroup", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false))
+    @JoinTable(schema = "sec", name = "user_permissiongroup", joinColumns =
+    @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns =
+    @JoinColumn(name = "permissiongroup_id", nullable = false))
     //FIXME разобратся как переопределять @JoinTable и заменить эти костыли на нормальное объявление
     public Set<PermissionGroup> getPermissionGroups() {
         return super.permissionGroups();
+    }
+
+    private void checkExistsSubSystemRole(Role role, Role[] roles) {
+        checkExistsSubSystemRole(role);
+        for (Role rol : roles) {
+            checkExistsSubSystemRole(role);
+        }
+    }
+
+    private void checkExistsSubSystemRole(Role role) {
+        if (hasRole(role)) {
+            return;
+        }
+        for (Role rol : roles) {
+            if (rol.getSubSystem().equals(role.getSubSystem())) {
+                throw new RuntimeException(String.format("At add role '%s'. User '%s' already have role '%s' with subsystem '%s' : '%s'",
+                        role.getLogin(), getLogin(), rol.getLogin(), rol.getSubSystem().getName()));
+            }
+        }
+    }
+
+    public Role roleBySubSystemName(String name) {
+        for (Role rol : roles) {
+            if (rol.getSubSystem().getName().equalsIgnoreCase(name)) {
+                return rol;
+            }
+        }
+        return null;
     }
 }
