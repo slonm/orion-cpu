@@ -2,11 +2,16 @@ package br.com.arsmachina.authentication.entity;
 
 import java.util.*;
 import javax.persistence.*;
+import org.hibernate.validator.NotNull;
 import orion.cpu.baseentities.AbstractRole;
+import orion.cpu.entities.sys.SubSystem;
 
 /**
  * Class that represents a role an user can have in the application.
  * Класс представляет собой роль с которой работает пользователь в программе.
+ * Каждая роль существует для определенной подсистемы. Другими словами
+ * роль является гранью должностных обязанностей. Совокупность ролей и будет давать
+ * все должностные обязанности.
  * @author Mihail Slobodyanuk
  */
 @Entity
@@ -14,15 +19,27 @@ import orion.cpu.baseentities.AbstractRole;
     @UniqueConstraint(columnNames = {"login"})})
 public class Role extends AbstractRole<Role> {
 
-    private Set<User> users = new HashSet<User>();
     private static final long serialVersionUID = 1L;
+    private SubSystem subSystem;
+    private Set<User> users = new HashSet<User>();
 
     public Role() {
     }
 
-    public Role(String login, String name) {
+    public Role(String login, String name, SubSystem subSystem) {
         setLogin(login);
         setName(name);
+        setSubSystem(subSystem);
+    }
+
+    @ManyToOne
+    @NotNull
+    public SubSystem getSubSystem() {
+        return subSystem;
+    }
+
+    public void setSubSystem(SubSystem subSystem) {
+        this.subSystem = subSystem;
     }
 
     /**
@@ -85,4 +102,10 @@ public class Role extends AbstractRole<Role> {
     public Set<PermissionGroup> getPermissionGroups() {
         return permissionGroups();
     }
+
+    @Override
+    public String toString() {
+        return subSystem.getName()+". "+getLogin();
+    }
+
 }

@@ -5,6 +5,8 @@ import br.com.arsmachina.authentication.entity.*;
 import br.com.arsmachina.module.service.ControllerSource;
 import java.util.*;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import orion.cpu.controllers.NamedEntityController;
+import orion.cpu.entities.sys.SubSystem;
 import orion.cpu.services.CoreIOCModule;
 import orion.cpu.services.StoredConstantsSource;
 import ua.mihailslobodyanuk.utils.Defense;
@@ -21,6 +23,7 @@ public class InitializeDatabaseSupport {
     private final PermissionGroupController permissionGroupController;
     private final RoleController roleController;
     private final UserController userController;
+    private final NamedEntityController<SubSystem> subSystemController;
     private final boolean fillTestData;
 
     public InitializeDatabaseSupport(StoredConstantsSource storedConstantsSource,
@@ -31,6 +34,7 @@ public class InitializeDatabaseSupport {
         this.permissionGroupController = (PermissionGroupController) (Object) controllerSource.get(PermissionGroup.class);
         this.roleController = (RoleController) (Object) controllerSource.get(Role.class);
         this.userController = (UserController) (Object) controllerSource.get(User.class);
+        this.subSystemController = (NamedEntityController<SubSystem>) (Object)controllerSource.get(SubSystem.class);
         this.fillTestData = fillTestData;
     }
 
@@ -88,23 +92,30 @@ public class InitializeDatabaseSupport {
         if (p == null) {
             p = new PermissionGroup(name, permission, permissions);
         } else {
-            p.getPermissions().clear();
             p.add(permission, permissions);
         }
         return permissionGroupController.saveOrUpdate(p);
     }
 
-    public Role saveOrUpdateRole(String login, String name, PermissionGroup group, PermissionGroup ... groups) {
+    public Role saveOrUpdateRole(String login, String name, SubSystem subSystem, PermissionGroup group, PermissionGroup ... groups) {
         Role p = roleController.findByLogin(login);
         if (p == null) {
-            p = new Role(login, name);
+            p = new Role(login, name, subSystem);
             p.add(group, groups);
         } else {
-            p.getPermissionGroups().clear();
-            p.getUsers().clear();
             p.setName(name);
             p.add(group, groups);
         }
         return roleController.saveOrUpdate(p);
+    }
+
+    public SubSystem saveOrUpdateSubSystem(String name) {
+        SubSystem p = subSystemController.findByNameFirst(name);
+        if (p == null) {
+            p = new SubSystem(name);
+        } else {
+            p.setName(name);
+        }
+        return subSystemController.saveOrUpdate(p);
     }
 }

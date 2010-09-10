@@ -2,7 +2,7 @@ package orion.cpu.services.impl;
 
 import br.com.arsmachina.module.service.ControllerSource;
 import java.io.Serializable;
-import orion.cpu.controllers.sys.StoredConstantController;
+import orion.cpu.controllers.NamedEntityController;
 import orion.cpu.entities.sys.StoredConstant;
 import orion.cpu.services.StoredConstantsSource;
 import ua.mihailslobodyanuk.utils.Defense;
@@ -13,10 +13,10 @@ import ua.mihailslobodyanuk.utils.Defense;
  */
 public class DefaultConstantsSource implements StoredConstantsSource {
 
-    private final StoredConstantController сonstantController;
+    private final NamedEntityController<StoredConstant> сonstantController;
 
     public DefaultConstantsSource(ControllerSource controllerSource) {
-        this.сonstantController = (StoredConstantController) (Object) controllerSource.get(StoredConstant.class);
+        this.сonstantController = (NamedEntityController<StoredConstant>) (Object) controllerSource.get(StoredConstant.class);
     }
 
     @Override
