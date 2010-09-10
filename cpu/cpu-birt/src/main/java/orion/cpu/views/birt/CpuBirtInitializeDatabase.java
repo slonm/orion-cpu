@@ -33,16 +33,10 @@ public class CpuBirtInitializeDatabase extends OperationTypes implements Runnabl
                     permissions.get(STORE_OP), permissions.get(UPDATE_OP), permissions.get(REMOVE_OP),
                     permissions.get(READ_OP), permissions.get(MENU_OP));
             //---------Роли----------
-            Role role = iDBSpt.saveOrUpdateRole("RPTDesignAdmin",
-                    "Администратор макетов отчетов", pg);
-            //---------Пользователи----------
-            UserController uCnt = iDBSpt.getUserController();
-            User user = uCnt.findByLogin("sl");
-            user.add(role);
-            for (PermissionGroup pg1 : role.getPermissionGroups()) {
-                user.add(pg1);
-            }
-            uCnt.saveOrUpdate(user);
+
+            Role role = iDBSpt.getRoleController().findByLogin("Developer");
+            role.add(pg);
+            iDBSpt.getRoleController().update(role);
         }
     }
 }
