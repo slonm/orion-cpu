@@ -10,6 +10,7 @@ import orion.cpu.entities.ref.*;
 import orion.cpu.entities.uch.*;
 import orion.cpu.entities.pub.*;
 import orion.cpu.entities.org.*;
+import orion.cpu.entities.sys.SubSystem;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.services.impl.InitializeDatabaseSupport;
 import ua.mihailslobodyanuk.utils.Defense;
@@ -29,6 +30,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
     @Override
     public void run() {
+        SubSystem subSystem = iDBSpt.saveOrUpdateSubSystem("License");
         //---------Константы---------
         //---------Формы обучения---------
         EducationForm stat_EF = iDBSpt.getStoredConstantsSource().get(EducationForm.class, EducationForm.STATIONARY_KEY);
@@ -137,14 +139,14 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //---------Роли----------
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
-                    "Просмотр записей о лицензиях", pgReadLicenseRecords);
+                    "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords);
 
             Role roleLO = iDBSpt.saveOrUpdateRole("LicenseOperator",
-                    "Оператор управления записями о лицензиях",
+                    "Оператор управління записами про ліцензії", subSystem,
                     pgReadLicenseRecords, pgManageLicenseRecords);
 
             Role roleLM = iDBSpt.saveOrUpdateRole("LicenseManager",
-                    "Менеджер управления записями о лицензиях",
+                    "Менеджер управління записами про ліцензії", subSystem,
                     pgReadLicenseRecords, pgManageLicenseRecords,
                     pgReadLicenseRecordsReference, pgManageLicenseRecordsReference);
 
@@ -152,23 +154,14 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleLM);
-            for (PermissionGroup pg : roleLM.getPermissionGroups()) {
-                user.add(pg);
-            }
             uCnt.saveOrUpdate(user);
 
             user = uCnt.findByLogin("TII");
             user.add(roleLO);
-            for (PermissionGroup pg : roleLO.getPermissionGroups()) {
-                user.add(pg);
-            }
             uCnt.saveOrUpdate(user);
 
             user = uCnt.findByLogin("guest");
             user.add(roleLG);
-            for (PermissionGroup pg : roleLG.getPermissionGroups()) {
-                user.add(pg);
-            }
             uCnt.saveOrUpdate(user);
 
             //---------Области знаний или направления подготовки----------

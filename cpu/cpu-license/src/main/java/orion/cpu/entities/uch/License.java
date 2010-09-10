@@ -1,6 +1,8 @@
 package orion.cpu.entities.uch;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.hibernate.validator.Size;
@@ -13,6 +15,8 @@ import orion.cpu.entities.pub.Document;
 @Entity
 @Table(schema = "uch")
 public class License extends Document<License> {
+
+    private Set<LicenseRecord> licenseRecords=new HashSet<LicenseRecord>();
 
     /**
      * @return the LicenseSeria
@@ -32,4 +36,14 @@ public class License extends Document<License> {
     public String getNumber() {
         return super.getNumber();
     }
+
+    @OneToMany
+    public Set<LicenseRecord> getLicenseRecords(){
+        return licenseRecords;
+    }
+
+    public void setLicenseRecords(Set<LicenseRecord> licenseRecords) {
+        this.licenseRecords = licenseRecords;
+    }
+
 }
