@@ -1,16 +1,14 @@
 package orion.cpu.views.tapestry.components;
 
 import br.com.arsmachina.authentication.entity.User;
-import java.util.ArrayList;
+import java.io.IOException;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.Session;
-import orion.cpu.views.tapestry.pages.Index;
-import orion.tapestry.menu.lib.MenuData;
-import orion.tapestry.menu.services.CpuMenu;
 
 /**
  * Layout component for pages of application mavenproject1.
@@ -36,8 +34,8 @@ public class Layout {
     private User user;
     @Inject
     private Request request;
-    @InjectPage
-    private Index index;
+    @Inject
+    private Response response;
 
     Object defaultMenudata() {
         return "Start";
@@ -47,11 +45,12 @@ public class Layout {
      * Invalidates the session.
      */
     @OnEvent(component = "logout", value = EventConstants.ACTION)
-    public Object logout() {
+    public Object logout() throws IOException {
         final Session session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-        return index;
+        response.sendRedirect(request.getContextPath());
+        return false;
     }
 }

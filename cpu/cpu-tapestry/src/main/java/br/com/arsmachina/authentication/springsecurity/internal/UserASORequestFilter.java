@@ -29,8 +29,6 @@ import org.springframework.security.providers.anonymous.AnonymousAuthenticationT
 
 import br.com.arsmachina.authentication.controller.UserController;
 import br.com.arsmachina.authentication.entity.User;
-import java.util.Locale;
-import org.apache.tapestry5.services.PersistentLocale;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
@@ -42,25 +40,22 @@ import ua.mihailslobodyanuk.utils.Defense;
 public class UserASORequestFilter implements RequestFilter {
 
     final private static String USER_LOGOUT_LISTENER_ATTRIBUTE = "USER_LOGOUT_LISTENER";
-    private UserController userController;
-    private ApplicationStateManager applicationStateManager;
-    private final PersistentLocale persistentLocale;
+    private final UserController userController;
+    private final ApplicationStateManager applicationStateManager;
 
     /**
      * Single constructor of this class.
      *
      * @param userController an {@link UserController}. It cannot be null.
      * @param applicationStateManager an {@link ApplicationStateManager}. It cannot be null.
-     * @param request an {@link HttpServletRequest}. It cannot be null.
      */
     public UserASORequestFilter(UserController userController,
-            ApplicationStateManager applicationStateManager,
-            PersistentLocale persistentLocale) {
+            ApplicationStateManager applicationStateManager) {
         this.userController = Defense.notNull(userController, "userController");
         this.applicationStateManager = Defense.notNull(applicationStateManager, "applicationStateManager");
-        this.persistentLocale = Defense.notNull(persistentLocale, "persistentLocale");
     }
 
+    @Override
     public boolean service(Request request, Response response, RequestHandler handler)
             throws IOException {
 
@@ -84,10 +79,6 @@ public class UserASORequestFilter implements RequestFilter {
                     }
 
                     applicationStateManager.set(User.class, user);
-                    try {
-                        persistentLocale.set(new Locale(user.getLocale()));
-                    } catch (Throwable t) {
-                    }
                     UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
                     request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
 

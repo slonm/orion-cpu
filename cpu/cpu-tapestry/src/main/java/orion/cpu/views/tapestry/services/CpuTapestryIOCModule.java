@@ -1,11 +1,9 @@
 package orion.cpu.views.tapestry.services;
 
-import orion.tapestry.internal.services.impl.PageTemplateLocatorAdvice;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
-import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLStreamHandler;
@@ -15,6 +13,10 @@ import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
+import org.apache.tapestry5.urlrewriter.RewriteRuleApplicability;
+import org.apache.tapestry5.urlrewriter.SimpleRequestWrapper;
+import org.apache.tapestry5.urlrewriter.URLRewriteContext;
+import org.apache.tapestry5.urlrewriter.URLRewriterRule;
 import org.slf4j.Logger;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.sys.PageTemplate;
@@ -25,7 +27,6 @@ import orion.cpu.views.tapestry.pages.ListView;
 import orion.cpu.views.tapestry.pages.MenuNavigator;
 import orion.cpu.views.tapestry.utils.DataTMLURLConnection;
 import orion.tapestry.menu.lib.IMenuLink;
-import orion.tapestry.menu.lib.PageMenuLink;
 import orion.tapestry.services.FieldLabelSource;
 
 /**
@@ -47,17 +48,10 @@ public class CpuTapestryIOCModule {
         configuration.override("spring-security.loginform.url", "/login");
         configuration.override("spring-security.failure.url", errorPageUrl + "/" + ErrorReport.LOGIN_FAILED);
         configuration.override("spring-security.accessDenied.url", errorPageUrl + "/" + ErrorReport.ACCESS_DENIED);
-        //Это страница может и не понадобится, еслт шаблоны tml будут браться их базы
-        configuration.override("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
+        //Это страница может и не понадобится, если шаблоны tml будут браться их базы
+        configuration.add("cpumenu.navigatorpage", MenuNavigator.class.getCanonicalName());
+        configuration.add("security.logout.url", "/index.layout.logout");
         configuration.override("orion.tapestry.useTMLinDatabase", "true");
-    }
-
-    /**
-     * Регистрация библиотеки компонентов
-     * @param configuration конфигурация
-     */
-    public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
-        configuration.add(new LibraryMapping(LIB_NAME, "orion.cpu.views.tapestry"));
     }
 
     /**
@@ -215,25 +209,26 @@ public class CpuTapestryIOCModule {
         receiver.adviseAllMethods(advice);
     }
 
+    @Match("LocalizationSetter")
+    public static void adviseLocalizationSetter(MethodAdviceReceiver receiver,
+            @Autobuild LocalizationSetterAdvice advice) {
+        receiver.adviseAllMethods(advice);
+    }
+
     /**
      * Add menu item to configuration
      * @param configuration
      * @param pageLinkCreatorFactory
      */
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
-            TapestryCrudModuleService tcms) {
+            MenuLinkBuilder mlb) {
         String path;
-
         path = "Start";
-        configuration.add(path, new PageMenuLink(Index.class).setParameterPersistent("menupath", path));
+        configuration.add(path, mlb.buildPageMenuLink(Index.class, path));
+        path = "Start>Admin";
+        configuration.add(path, mlb.buildDefaultMenuLink(path));
         path = "Start>Admin>TML";
-        configuration.add(path, createPageMenuLink(tcms, PageTemplate.class, path));
-    }
-
-    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
-        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
-        lnk.setParameterPersistent("menupath", path);
-        return lnk;
+        configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
     }
 
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
@@ -247,6 +242,7 @@ public class CpuTapestryIOCModule {
 
     public static void bind(ServiceBinder binder) {
         binder.bind(DataURLStreamHandler.class);
+        binder.bind(MenuLinkBuilder.class);
     }
 
     public static void contributeURLStreamHandlerFactory(MappedConfiguration<String, URLStreamHandler> configuration,
@@ -256,20 +252,5 @@ public class CpuTapestryIOCModule {
 
     public static void contributeDataURLStreamHandler(MappedConfiguration<String, Class<?>> configuration) {
         configuration.add("tml", DataTMLURLConnection.class);
-    }
-
-    //Для регистрации слушателя приходится переопределять сервис LinkCreationHub
-    //Может это можно сделать как-то проще?
-    public LinkCreationHub buildCpuLinkCreationHub(
-            @Core final LinkCreationHub hub,
-            @Autobuild MenupathLinkCreationListener menupathLinkCreationListener) {
-        hub.addListener(menupathLinkCreationListener);
-        return hub;
-    }
-
-    public void contributeServiceOverride(
-            MappedConfiguration<Class, Object> configuration,
-            @Local LinkCreationHub handler) {
-        configuration.add(LinkCreationHub.class, handler);
     }
 }

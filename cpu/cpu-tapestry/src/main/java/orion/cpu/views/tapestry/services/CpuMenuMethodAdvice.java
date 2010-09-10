@@ -1,14 +1,19 @@
 package orion.cpu.views.tapestry.services;
 
 import br.com.arsmachina.authentication.entity.Permission;
+import br.com.arsmachina.authentication.entity.Role;
+import br.com.arsmachina.authentication.entity.User;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.tapestry5.ioc.Invocation;
 import org.apache.tapestry5.ioc.MethodAdvice;
+import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.PostInjection;
 import org.apache.tapestry5.ioc.annotations.Value;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.BeanModelSource;
+import org.apache.tapestry5.services.LinkCreationHub;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.security.services.ExtendedAuthorizer;
 import orion.tapestry.menu.lib.MenuData;
@@ -37,6 +42,12 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
         this.cpuMenu = cpuMenu;
     }
 
+    @PostInjection
+    public void registerAsListener(LinkCreationHub hub,
+            @Autobuild MenupathLinkCreationListener menupathLinkCreationListener) {
+        hub.addListener(menupathLinkCreationListener);
+    }
+
     //TODO RLS
     //Если невозможно получить класс с которым работает страница, то разрешаем
     //размещение пункта
@@ -46,7 +57,7 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
         if (clasz == null) {
             ret = true;
         } else {
-            ret = authorizer.can(new Permission(clasz, OperationTypes.MENU_OP));
+            ret = can(clasz);
         }
         if (!ret) {
             return false;
@@ -64,12 +75,32 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
                     ret = true;
                 }
             } else {
-                if (!authorizer.can(new Permission(clasz, OperationTypes.MENU_OP))) {
+                if (!can(clasz)) {
                     iter.remove();
                 } else {
                     ret = true;
                 }
             }
+        }
+        return ret;
+    }
+
+    //вычисляет по результирующим правам доступа для всех ролей пользователя
+    private boolean can(Class<?> clasz) {
+        Role role = authorizer.getRole();
+        User user = authorizer.getUser();
+        boolean ret = false;
+        try {
+            for (Role r : user.getRoles()) {
+                authorizer.storeUserAndRole(user, r);
+                if (authorizer.can(new Permission(clasz, OperationTypes.MENU_OP))) {
+                    ret = true;
+                    throw new RuntimeException();
+                }
+            }
+        } catch (Throwable t) {
+        } finally {
+            authorizer.storeUserAndRole(user, role);
         }
         return ret;
     }
