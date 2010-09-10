@@ -2,7 +2,6 @@ package orion.cpu.views.tapestry.services;
 
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.*;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.*;
 import orion.tapestry.menu.lib.IMenuLink;
@@ -18,11 +17,14 @@ public class UnitsTapestryIOCModule {
      * @param pageLinkCreatorFactory
      */
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
-            TapestryCrudModuleService tcms) {
+            MenuLinkBuilder mlb) {
         String path;
 
-        path = "Start>Chair";
-        configuration.add(path, createPageMenuLink(tcms, Chair.class, path));
+        path = "Start>Units";
+        configuration.add(path, mlb.buildDefaultMenuLink(path));
+
+        path = "Start>Units>Chair";
+        configuration.add(path, mlb.buildListPageMenuLink(Chair.class, path));
     }
     private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
         IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
@@ -30,6 +32,7 @@ public class UnitsTapestryIOCModule {
         return lnk;
     }
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration){
+        configuration.add("Units", "classpath:Units.properties");
         configuration.add("UnitsTapestry", "classpath:UnitsTapestry.properties");
     }
 
