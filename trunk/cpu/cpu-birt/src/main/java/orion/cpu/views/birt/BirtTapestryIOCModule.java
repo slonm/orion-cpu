@@ -21,7 +21,7 @@ public class BirtTapestryIOCModule {
     }
 
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
-        configuration.addInstance("CpuBirtInitializeDatabase", CpuBirtInitializeDatabase.class, "after:InitializeDatabase");
+        configuration.addInstance("CpuBirtInitializeDatabase", CpuBirtInitializeDatabase.class, "after:CpuTapestryInitializeDatabase");
     }
 
     public static void bind(ServiceBinder binder) {
