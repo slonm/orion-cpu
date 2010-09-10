@@ -39,7 +39,7 @@ public class Login implements ILogin{
 
     public void onActivate() {
         if (redirectUrl == null) {
-            redirectUrl = request.getContextPath() + defaultRedirectUrl;
+            redirectUrl = defaultRedirectUrl;
         }
     }
 
