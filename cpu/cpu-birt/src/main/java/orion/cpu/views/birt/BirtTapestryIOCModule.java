@@ -5,6 +5,9 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.services.LibraryMapping;
+import orion.cpu.entities.sys.ReportTemplate;
+import orion.cpu.views.tapestry.services.MenuLinkBuilder;
+import orion.tapestry.menu.lib.IMenuLink;
 
 public class BirtTapestryIOCModule {
 
@@ -36,9 +39,19 @@ public class BirtTapestryIOCModule {
         configuration.add(new LibraryMapping("birt", "orion.cpu.views.birt"));
     }
 
-    //FIXME Этот сервис объявлен в cpu-tapestry и вводит зависимость от этой библиотеки
     public static void contributeDataURLStreamHandler(MappedConfiguration<String, Class<?>> configuration){
         configuration.add("rptdesign", DataRptDesignURLConnection.class);
+    }
+
+    public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration) {
+        configuration.add("BirtTapestry", "classpath:BirtTapestry.properties");
+    }
+
+    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
+            MenuLinkBuilder mlb) {
+        String path;
+        path = "Start>Admin>Report";
+        configuration.add(path, mlb.buildListPageMenuLink(ReportTemplate.class, path));
     }
 
 
