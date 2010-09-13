@@ -69,7 +69,7 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
             clasz = coercer.coerce(item.getItemLink(), Class.class);
             if (clasz == null) {
                 if (cpuMenu.getOneMenu(item.getUid(), data.getPageLink().getContext(),
-                        data.getPageLink().getParameters(), data.getPageLink().getAnchor()) == null) {
+                        null, null) == null) {
                     iter.remove();
                 } else {
                     ret = true;
