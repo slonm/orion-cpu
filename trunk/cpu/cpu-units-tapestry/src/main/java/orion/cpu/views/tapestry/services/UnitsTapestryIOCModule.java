@@ -20,9 +20,6 @@ public class UnitsTapestryIOCModule {
             MenuLinkBuilder mlb) {
         String path;
 
-        path = "Start>Units";
-        configuration.add(path, mlb.buildDefaultMenuLink(path));
-
         path = "Start>Units>Chair";
         configuration.add(path, mlb.buildListPageMenuLink(Chair.class, path));
     }
