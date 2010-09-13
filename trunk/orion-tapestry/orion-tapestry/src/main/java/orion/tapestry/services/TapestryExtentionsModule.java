@@ -17,7 +17,6 @@ import orion.tapestry.utils.ByteArrayTranslator;
 public class TapestryExtentionsModule {
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(URLStreamHandlerFactory.class, URLStreamHandlerFactoryImpl.class);
         binder.bind(FieldLabelSource.class, FieldLabelSourceImpl.class);
     }
 
