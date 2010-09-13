@@ -31,12 +31,9 @@ public class MenuLinkBuilder {
 
     /**
      * Создает ссылку меню на навигатор
-     * К ссылке добавляется параметр menupath с путем в меню и
-     * параметр sys с прикладной подсистемой (для дальнейшего вычисления роли)
      */
     public DefaultMenuLink buildDefaultMenuLink(String menupath) {
         DefaultMenuLink lnk = new DefaultMenuLink(menupath);
-        addParameters(lnk, menupath);
         return lnk;
     }
 

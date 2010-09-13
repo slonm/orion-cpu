@@ -24,6 +24,7 @@ import orion.cpu.views.tapestry.pages.MenuNavigator;
 import orion.cpu.views.tapestry.utils.DataTMLURLConnection;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.services.FieldLabelSource;
+import orion.tapestry.services.impl.URLStreamHandlerFactoryImpl;
 
 /**
  * Модуль конфигурирования IOC
@@ -221,19 +222,18 @@ public class CpuTapestryIOCModule {
         String path;
         path = "Start";
         configuration.add(path, mlb.buildPageMenuLink(Index.class, path));
-        path = "Start>Admin";
-        configuration.add(path, mlb.buildDefaultMenuLink(path));
         path = "Start>Admin>TML";
         configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
     }
 
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            URLStreamHandlerFactory _URLStreamHandlerFactory) {
-        //Вызывается что-бы явно построить фабрику перед регистрацией ее
-        //иначе возникает ошибка циклической зависимоси
-        _URLStreamHandlerFactory.createURLStreamHandler("ff");
-        URL.setURLStreamHandlerFactory(_URLStreamHandlerFactory);
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("CpuTapestryInitializeDatabase", CpuTapestryInitializeDatabase.class, "after:InitializeDatabase");
+    }
+
+    public static URLStreamHandlerFactory buildURLStreamHandlerFactory(
+            @Autobuild URLStreamHandlerFactoryImpl factory) {
+        URL.setURLStreamHandlerFactory(factory);
+        return factory;
     }
 
     public static void bind(ServiceBinder binder) {

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import orion.cpu.security.services.ExtendedAuthorizer;
 import ua.mihailslobodyanuk.utils.Defense;
 import static orion.cpu.views.tapestry.utils.CpuTapestryUtils.subSystemNameByMenupath;
+
 /**
  * Фильтр http запросов.
  * Сохраняет в SSO типа Role значение роли, вычисленное на основании знацения параметра
@@ -23,7 +24,8 @@ import static orion.cpu.views.tapestry.utils.CpuTapestryUtils.subSystemNameByMen
  * @author sl
  */
 public class RoleSSORequestFilter implements RequestFilter {
-    private final Logger LOG=LoggerFactory.getLogger(RoleSSORequestFilter.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(RoleSSORequestFilter.class);
     private final ApplicationStateManager applicationStateManager;
     private final ExtendedAuthorizer authorizer;
 
@@ -39,13 +41,17 @@ public class RoleSSORequestFilter implements RequestFilter {
         User user = applicationStateManager.getIfExists(User.class);
         String menupath = request.getParameter("menupath");
         String subSystemName = subSystemNameByMenupath(menupath);
-        if (user != null && subSystemName!=null) {
+        if (user != null && subSystemName != null) {
             role = user.roleBySubSystemName(subSystemName);
         }
-        role = authorizer.storeUserAndRole(user, role);
-        applicationStateManager.set(Role.class, role);
-        LOG.debug("Role now: {}", role==null?"<none>":role.toString());
+        if (role != null) {
+            role = authorizer.storeUserAndRole(user, role);
+            applicationStateManager.set(Role.class, role);
+        } else {
+            role = applicationStateManager.getIfExists(Role.class);
+            authorizer.storeUserAndRole(user, role);
+        }
+        LOG.debug("Role now: {}", role == null ? "<none>" : role.toString());
         return handler.service(request, response);
     }
-
 }
