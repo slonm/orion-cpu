@@ -36,9 +36,6 @@ public class LicenseTapestryIOCModule {
             MenuLinkBuilder mlb) {
         String path;
 
-        path = "Start>License";
-        configuration.add(path, mlb.buildDefaultMenuLink(path));
-
         path = "Start>License>License";
         configuration.add(path, mlb.buildListPageMenuLink(License.class, path));
 
