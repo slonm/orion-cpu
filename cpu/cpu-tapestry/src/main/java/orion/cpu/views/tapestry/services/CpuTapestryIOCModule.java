@@ -226,7 +226,9 @@ public class CpuTapestryIOCModule {
         configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
     }
 
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
+            URLStreamHandlerFactory factory) {
+        factory.createURLStreamHandler("dd");
         configuration.addInstance("CpuTapestryInitializeDatabase", CpuTapestryInitializeDatabase.class, "after:InitializeDatabase");
     }
 
