@@ -4,7 +4,7 @@ import br.com.arsmachina.authentication.controller.*;
 import br.com.arsmachina.authentication.entity.*;
 import br.com.arsmachina.authorization.*;
 import br.com.arsmachina.module.service.ControllerSource;
-import java.util.List;
+import java.util.Stack;
 import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.annotations.Scope;
 import org.hibernate.Criteria;
@@ -23,6 +23,8 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     private final ControllerSource controllerSource;
     private User user;
     private Role role;
+    private Stack<User> userStack=new Stack<User>();
+    private Stack<Role> roleStack=new Stack<Role>();
 
     /**
      * Single constructor of this class.
@@ -49,49 +51,49 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
 
     @Override
     public boolean canStore(Class<?> clasz) {
-        return can(getPermissionController().findBySubjectAndType(clasz, OperationTypes.STORE_OP));
+        return can(new Permission(clasz, OperationTypes.STORE_OP), null);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean canUpdate(Class<?> clasz) {
-        return can(getPermissionController().findBySubjectAndType(clasz, OperationTypes.UPDATE_OP));
+        return can(new Permission(clasz, OperationTypes.UPDATE_OP), null);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean canUpdate(Object object) {
         Defense.notNull(object, "object");
-        return can(getPermissionController().findBySubjectAndType(object.getClass(), OperationTypes.UPDATE_OP), object);
+        return can(new Permission(object.getClass(), OperationTypes.UPDATE_OP), object);
     }
 
     @Override
     public boolean canRemove(Class<?> clasz) {
-        return can(getPermissionController().findBySubjectAndType(clasz, OperationTypes.REMOVE_OP));
+        return can(new Permission(clasz, OperationTypes.REMOVE_OP), null);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean canRemove(Object object) {
         Defense.notNull(object, "object");
-        return can(getPermissionController().findBySubjectAndType(object.getClass(), OperationTypes.REMOVE_OP), object);
+        return can(new Permission(object.getClass(), OperationTypes.REMOVE_OP), object);
     }
 
     @Override
     public boolean canSearch(Class<?> clasz) {
-        return can(getPermissionController().findBySubjectAndType(clasz, OperationTypes.READ_OP));
+        return can(new Permission(clasz, OperationTypes.READ_OP), null);
     }
 
     @Override
     public boolean canRead(Class<?> clasz) {
-        return can(getPermissionController().findBySubjectAndType(clasz, OperationTypes.READ_OP));
+        return can(new Permission(clasz, OperationTypes.READ_OP), null);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean canRead(Object object) {
         Defense.notNull(object, "object");
-        return can(getPermissionController().findBySubjectAndType(object.getClass(), OperationTypes.READ_OP), object);
+        return can(new Permission(object.getClass(), OperationTypes.READ_OP), object);
     }
 
     @Override
@@ -155,28 +157,60 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     public void addConstraintsToCriteria(Criteria criteria) {
     }
 
-    @Override
-    public boolean can(Permission permission) {
-        if (user != null) {
-            if (User.SYSTEM_USER.getLogin().equals(user.getLogin())) {
-                return true;
-            }
-            if (role != null) {
-                return user.hasPermission(permission) || role.hasPermission(permission);
-            } else {
-                return user.hasPermission(permission);
-            }
+//FIXME рассматриваются только аннотации!
+    private boolean canReadBySchema(Class<?> subject) {
+        javax.persistence.Table t = subject.getAnnotation(javax.persistence.Table.class);
+        if (t == null) {
+            return false;
+        }
+        if ("sys".equals(t.schema()) || "sec".equals(t.schema()) || "ref".equals(t.schema())) {
+            return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean can(Permission permission) {
+        return can(permission, null);
     }
 
     //TODO Row Level Security
     @Override
     public boolean can(Permission permission, Object object) {
-        if (User.SYSTEM_USER.getLogin().equals(user.getLogin())) {
+        Defense.notNull(permission, "permission");
+        //rule: by schema in (sys, sec, ref)
+        if (permission.getPermissionType().equals(OperationTypes.READ_OP)
+                && canReadBySchema(permission.getSubject())) {
             return true;
         }
-        return can(permission);
+        //rule: by SYSTEM_USER
+        if (user != null && User.SYSTEM_USER.getLogin().equals(user.getLogin())) {
+            return true;
+        }
+        //подготовка к проверке по ACL
+        //если permission не persistent то извлечем его из базы
+        if (!getPermissionController().isPersistent(permission)) {
+            Permission persistentPermission = getPermissionController().
+                    findBySubjectAndType(permission.getSubject(), permission.getPermissionType());
+            if (persistentPermission != null) {
+                permission = persistentPermission;
+            }
+        }
+        //rule: by user ACL
+        if (user != null && user.hasPermission(permission)) {
+            return true;
+        }
+        //rule: by role ACL
+        if (role != null && role.hasPermission(permission)) {
+            return true;
+        }
+        //rule: by subject parent
+        Class<?> s = permission.getSubject().getSuperclass();
+        if (!s.equals(Object.class)) {
+            return can(new Permission(s, permission.getPermissionType()), object);
+        }
+        //rule: default
+        return false;
     }
 
     @Override
@@ -215,13 +249,6 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     }
 
     @Override
-    public List<Class<?>> listPermitted(String permissionType) {
-        List<Class<?>> lst = getUserController().findPermittedTypes(user, permissionType);
-        lst.addAll(getRoleController().findPermittedTypes(role, permissionType));
-        return lst;
-    }
-
-    @Override
     public Role storeUserAndRole(User user, Role role) {
         if (role != null) {
             if (user == null || !user.hasRole(role)) {
@@ -241,5 +268,19 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     @Override
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public void popUserAndRole() {
+        user=userStack.pop();
+        role=roleStack.pop();
+    }
+
+    @Override
+    public void pushUserAndRole() {
+        userStack.push(user);
+        roleStack.push(role);
+        user=null;
+        role=null;
     }
 }

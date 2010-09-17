@@ -46,7 +46,6 @@ public abstract class ReferenceEntity<T extends ReferenceEntity<?>> extends Name
             }
             this.aliasTo = aliasTo;
         }
-        auditRecord(aliasToOld, aliasTo);
     }
 
     public Boolean getIsObsolete() {
@@ -54,7 +53,6 @@ public abstract class ReferenceEntity<T extends ReferenceEntity<?>> extends Name
     }
 
     public void setIsObsolete(Boolean isObsolete) {
-        auditRecord(this.isObsolete, isObsolete);
         this.isObsolete = isObsolete;
     }
 
@@ -63,7 +61,6 @@ public abstract class ReferenceEntity<T extends ReferenceEntity<?>> extends Name
     }
 
     public void setShortName(String shortName) {
-        auditRecord(this.shortName, shortName);
         this.shortName = shortName;
     }
 

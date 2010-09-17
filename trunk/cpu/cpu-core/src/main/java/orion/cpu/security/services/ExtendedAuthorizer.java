@@ -4,7 +4,6 @@ import br.com.arsmachina.authentication.entity.Permission;
 import br.com.arsmachina.authentication.entity.Role;
 import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authorization.Authorizer;
-import java.util.List;
 import org.hibernate.Criteria;
 
 /**
@@ -57,14 +56,6 @@ public interface ExtendedAuthorizer extends Authorizer {
     public void check(Permission permission, Object object);
 
     /**
-     * Возвращает список типов объектов на которые есть право у текущего пользователя
-     * с текущей ролью
-     * @param permissionType тип права
-     * @return список типов
-     */
-    public List<Class<?>> listPermitted(String permissionType);
-
-    /**
      * Сохраняет текущего пользователя и роль в потоке
      * @param user
      * @param role
@@ -75,4 +66,15 @@ public interface ExtendedAuthorizer extends Authorizer {
     public Role getRole();
 
     public User getUser();
+
+    /**
+     * Сохраняет в стеке пользователя и роль и обнуляет их
+     */
+    public void pushUserAndRole();
+
+    /**
+     * Извлекает из стека пользователя и роль
+     */
+    public void popUserAndRole();
+
 }
