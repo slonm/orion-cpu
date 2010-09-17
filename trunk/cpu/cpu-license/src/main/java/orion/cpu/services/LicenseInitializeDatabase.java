@@ -117,38 +117,42 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
+                    LPermissions.get(READ_OP),
+                    LRPermissions.get(READ_OP),
                     LRVPermissions.get(READ_OP), LRVPermissions.get(MENU_OP));
 
             //Права изменения, добавления, удаления с сохранением записей о лицензиях
             PermissionGroup pgManageLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление лицензиями",
+                    LPermissions.get(UPDATE_OP), LPermissions.get(STORE_OP), LPermissions.get(REMOVE_OP),
+                    LRPermissions.get(UPDATE_OP), LRPermissions.get(STORE_OP), LRPermissions.get(REMOVE_OP),
                     LRVPermissions.get(UPDATE_OP), LRVPermissions.get(STORE_OP), LRVPermissions.get(REMOVE_OP));
 
             //Права просмотра справочников для подсистемы лицензий
             PermissionGroup pgReadLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр справочников",
-                    LPermissions.get(READ_OP), LPermissions.get(MENU_OP),
                     KAOTPermissions.get(READ_OP), KAOTPermissions.get(MENU_OP),
                     TDOSPermissions.get(READ_OP), TDOSPermissions.get(MENU_OP),
                     LRGPermissions.get(READ_OP), LRGPermissions.get(MENU_OP));
 
             //Права изменения, добавления, удаления с сохранением записей справочников для подсистемы лицензий
             PermissionGroup pgManageLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление справочниками",
-                    LPermissions.get(UPDATE_OP), LPermissions.get(STORE_OP), LPermissions.get(REMOVE_OP),
                     KAOTPermissions.get(UPDATE_OP), KAOTPermissions.get(STORE_OP), KAOTPermissions.get(REMOVE_OP),
                     TDOSPermissions.get(UPDATE_OP), TDOSPermissions.get(STORE_OP), TDOSPermissions.get(REMOVE_OP),
                     LRGPermissions.get(UPDATE_OP), LRGPermissions.get(STORE_OP), LRGPermissions.get(REMOVE_OP));
 
+            //Права просмотра записей о подразделениях
+            PermissionGroup pgReadOrgUnits = iDBSpt.getPermissionGroupController().findByName("Подсистема административно-организационной структуры. Просмотр записей о подразделениях");
             //---------Роли----------
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
-                    "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords);
+                    "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords, pgReadOrgUnits);
 
             Role roleLO = iDBSpt.saveOrUpdateRole("LicenseOperator",
                     "Оператор управління записами про ліцензії", subSystem,
-                    pgReadLicenseRecords, pgManageLicenseRecords);
+                    pgReadLicenseRecords, pgManageLicenseRecords, pgReadOrgUnits);
 
             Role roleLM = iDBSpt.saveOrUpdateRole("LicenseManager",
                     "Менеджер управління записами про ліцензії", subSystem,
                     pgReadLicenseRecords, pgManageLicenseRecords,
-                    pgReadLicenseRecordsReference, pgManageLicenseRecordsReference);
+                    pgReadLicenseRecordsReference, pgManageLicenseRecordsReference, pgReadOrgUnits);
 
             //---------Пользователи----------
             UserController uCnt = iDBSpt.getUserController();

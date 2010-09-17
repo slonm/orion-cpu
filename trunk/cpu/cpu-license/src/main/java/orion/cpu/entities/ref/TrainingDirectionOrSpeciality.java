@@ -31,7 +31,6 @@ public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirec
     }
 
     public void setIsTrainingDirection(Boolean isTrainingDirection) {
-        auditRecord(this.isTrainingDirection,isTrainingDirection);
         this.isTrainingDirection = isTrainingDirection;
     }
 
@@ -41,7 +40,6 @@ public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirec
     }
 
     public void setCode(String code) {
-        auditRecord(this.code, code);
         this.code = code;
     }
 
@@ -52,7 +50,6 @@ public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirec
     }
 
     public void setKnowledgeAreaOrTrainingDirection(KnowledgeAreaOrTrainingDirection knowledgeAreaOrTrainingDirection) {
-        auditRecord(this.knowledgeAreaOrTrainingDirection, knowledgeAreaOrTrainingDirection);
         this.knowledgeAreaOrTrainingDirection = knowledgeAreaOrTrainingDirection;
     }
 

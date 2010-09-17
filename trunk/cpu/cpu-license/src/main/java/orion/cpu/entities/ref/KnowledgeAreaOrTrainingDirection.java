@@ -31,7 +31,6 @@ public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeA
     }
 
     public void setIsKnowledgeArea(Boolean isKnowledgeArea) {
-        auditRecord(this.isKnowledgeArea,isKnowledgeArea);
         this.isKnowledgeArea = isKnowledgeArea;
     }
 
@@ -41,7 +40,6 @@ public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeA
     }
 
     public void setCode(String code) {
-        auditRecord(this.code, code);
         this.code = code;
     }
 
