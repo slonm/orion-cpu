@@ -38,14 +38,12 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
             //---------Группы прав----------
             //Права просмотра записей о подразделениях
             PermissionGroup pgReadOrgUnits = iDBSpt.saveOrUpdatePermissionGroup("Подсистема административно-организационной структуры. Просмотр записей о подразделениях",
-                    CPermissions.get(READ_OP), OUPermissions.get(READ_OP),
-                    CPermissions.get(MENU_OP));
+                    OUPermissions.get(READ_OP), OUPermissions.get(MENU_OP));
 
             //Права изменения записей о подразделениях
             PermissionGroup pgManageOrgUnits = iDBSpt.saveOrUpdatePermissionGroup("Подсистема административно-организационной структуры. Управление записями о кафедрах",
-                    CPermissions.get(STORE_OP), CPermissions.get(UPDATE_OP), CPermissions.get(REMOVE_OP),
                     OUPermissions.get(STORE_OP), OUPermissions.get(UPDATE_OP), OUPermissions.get(REMOVE_OP),
-                    CPermissions.get(MENU_OP));
+                    OUPermissions.get(MENU_OP));
 
             //---------Роли----------
             Role roleOUG = iDBSpt.saveOrUpdateRole("OrgUnitGuest",
