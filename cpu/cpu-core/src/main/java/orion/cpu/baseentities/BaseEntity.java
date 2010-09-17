@@ -9,6 +9,8 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 import ua.mihailslobodyanuk.base.AClonable;
 import ua.mihailslobodyanuk.base.AObject;
 import ua.mihailslobodyanuk.utils.Defense;
+import orion.cpu.security.OperationTypes;
+import orion.cpu.utils.PossibleOperations;
 
 /**
  * Базовая абстрактная сущность.
@@ -16,6 +18,8 @@ import ua.mihailslobodyanuk.utils.Defense;
  * @author sl
  */
 @MappedSuperclass
+@PossibleOperations({OperationTypes.READ_OP, OperationTypes.STORE_OP,
+OperationTypes.UPDATE_OP, OperationTypes.REMOVE_OP, OperationTypes.MENU_OP})
 public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         implements Serializable, Comparable<T>, AClonable<T> {
 
@@ -33,16 +37,6 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         super(13, 76);
     }
 
-    protected void auditRecord() {
-        modifyDateTime = new Timestamp(Calendar.getInstance().getTime().getTime());
-    }
-
-    protected <O> void auditRecord(O obj1, O obj2) {
-        if (!aEqualsField(obj1, obj2)) {
-            auditRecord();
-        }
-    }
-
     /**
      * Returns the value of the <code>id</code> property.
      * @return a {@link Integer}.
@@ -50,7 +44,6 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
-        auditRecord(this.id, id);
         return id;
     }
 

@@ -1,7 +1,5 @@
 package br.com.arsmachina.authentication.entity;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.*;
 import orion.cpu.baseentities.NamedEntity;
 import ua.mihailslobodyanuk.utils.Defense;

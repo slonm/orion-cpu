@@ -5,10 +5,12 @@ import br.com.arsmachina.authentication.controller.impl.*;
 import br.com.arsmachina.module.DefaultModule;
 import br.com.arsmachina.module.Module;
 import br.com.arsmachina.module.ioc.ApplicationModuleModule;
+import org.apache.tapestry5.hibernate.HibernateConfigurer;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ClassNameLocator;
+import orion.cpu.security.HibernateAuthorityEventListener;
 
 /**
  * Конфигурация IOC для подсистемы безопасности
@@ -25,6 +27,15 @@ public class GenericAuthenticationIOCModule {
         binder.bind(PermissionController.class, PermissionControllerImpl.class);
         binder.bind(PermissionGroupController.class, PermissionGroupControllerImpl.class);
         binder.bind(RoleController.class, RoleControllerImpl.class);
+    }
+
+    /**
+     * Регистрация OrionHibernateConfigurer для включения ImprovedNamingStrategy
+     * именования объектов базы данных
+     * @param config
+     */
+    public static void contributeHibernateSessionSource(OrderedConfiguration<HibernateConfigurer> config) {
+        config.addInstance("AuthorityInterceptor", HibernateAuthorityEventListener.class);
     }
 
     /**
