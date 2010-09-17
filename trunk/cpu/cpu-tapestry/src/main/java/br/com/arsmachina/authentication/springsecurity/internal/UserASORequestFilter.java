@@ -15,8 +15,6 @@ package br.com.arsmachina.authentication.springsecurity.internal;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.tapestry5.services.ApplicationStateManager;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
@@ -29,6 +27,7 @@ import org.springframework.security.providers.anonymous.AnonymousAuthenticationT
 
 import br.com.arsmachina.authentication.controller.UserController;
 import br.com.arsmachina.authentication.entity.User;
+import orion.cpu.security.services.ExtendedAuthorizer;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
@@ -42,6 +41,7 @@ public class UserASORequestFilter implements RequestFilter {
     final private static String USER_LOGOUT_LISTENER_ATTRIBUTE = "USER_LOGOUT_LISTENER";
     private final UserController userController;
     private final ApplicationStateManager applicationStateManager;
+    private final ExtendedAuthorizer authorizer;
 
     /**
      * Single constructor of this class.
@@ -50,9 +50,11 @@ public class UserASORequestFilter implements RequestFilter {
      * @param applicationStateManager an {@link ApplicationStateManager}. It cannot be null.
      */
     public UserASORequestFilter(UserController userController,
-            ApplicationStateManager applicationStateManager) {
+            ApplicationStateManager applicationStateManager,
+            ExtendedAuthorizer authorizer) {
         this.userController = Defense.notNull(userController, "userController");
         this.applicationStateManager = Defense.notNull(applicationStateManager, "applicationStateManager");
+        this.authorizer = Defense.notNull(authorizer, "authorizer");
     }
 
     @Override
@@ -79,14 +81,15 @@ public class UserASORequestFilter implements RequestFilter {
                     }
 
                     applicationStateManager.set(User.class, user);
-                    UserLoggedOutListener listener = new UserLoggedOutListener(user, userController);
+                    UserLoggedOutListener listener = new UserLoggedOutListener(user, userController, authorizer);
                     request.getSession(false).setAttribute(USER_LOGOUT_LISTENER_ATTRIBUTE, listener);
 
                     if (user.isLoggedIn() == false) {
-
+                        authorizer.pushUserAndRole();
+                        authorizer.storeUserAndRole(User.SYSTEM_USER, null);
                         user.setLoggedIn(true);
                         userController.update(user);
-
+                        authorizer.popUserAndRole();
                     }
 
                 }

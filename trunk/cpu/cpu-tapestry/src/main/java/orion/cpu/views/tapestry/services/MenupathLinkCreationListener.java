@@ -32,7 +32,7 @@ public class MenupathLinkCreationListener implements LinkCreationListener {
     public void createdPageRenderLink(Link link) {
         String linkMenupath = link.getParameterValue(MENUPATH);
         String newMenupath = null;
-        //Если нет параметра menudata, то предположим что это страница
+        //Если нет параметра menupath, то предположим что это страница
         //навигатора и у нее в activation context хранится путь меню
         if (linkMenupath == null) {
             String[] ac = link.toURI().split("/");

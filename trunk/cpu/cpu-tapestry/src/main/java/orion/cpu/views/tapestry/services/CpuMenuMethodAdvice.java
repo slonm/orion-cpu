@@ -16,10 +16,12 @@ import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.services.LinkCreationHub;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.security.services.ExtendedAuthorizer;
+import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.lib.MenuItem;
 import orion.tapestry.menu.services.CpuMenu;
 import orion.tapestry.services.FieldLabelSource;
+import static orion.cpu.views.tapestry.utils.CpuTapestryUtils.subSystemNameByMenupath;
 
 /**
  * Консультант {@link BeanModelSource} для поддержки сервиса
@@ -48,10 +50,16 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
         hub.addListener(menupathLinkCreationListener);
     }
 
-    //TODO RLS
-    //Если невозможно получить класс с которым работает страница, то разрешаем
-    //размещение пункта
+    /**
+     * 1.Можно видеть только ветки тех подсистем, на которые есть роли
+     * 2.Если невозможно получить класс с которым работает страница, то разрешаем
+     * размещение пункта
+     * TODO RLS
+     */
     private boolean isPermitted(MenuData data) {
+        if (!can(data)) {
+            return false;
+        }
         Boolean ret = false;
         Class<?> clasz = coercer.coerce(data.getPageLink(), Class.class);
         if (clasz == null) {
@@ -85,10 +93,34 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
         return ret;
     }
 
-    //вычисляет по результирующим правам доступа для всех ролей пользователя
-    private boolean can(Class<?> clasz) {
-        Role role = authorizer.getRole();
+    /**
+     * вычисляет по всем ролям пользователя доступ к ветке
+     *
+     * @param clasz
+     * @return
+     */
+    private boolean can(MenuData data) {
+        String subSystemName = subSystemNameByMenupath(data.getTitle());
+        if(subSystemName==null)return true;
         User user = authorizer.getUser();
+        for (Role r : user.getRoles()) {
+            authorizer.storeUserAndRole(user, r);
+            if (r.getSubSystem().getName().equalsIgnoreCase(subSystemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * вычисляет по результирующим правам доступа для всех ролей пользователя
+     *
+     * @param clasz
+     * @return
+     */
+    private boolean can(Class<?> clasz) {
+        User user = authorizer.getUser();
+        authorizer.pushUserAndRole();
         boolean ret = false;
         try {
             for (Role r : user.getRoles()) {
@@ -100,7 +132,7 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
             }
         } catch (Throwable t) {
         } finally {
-            authorizer.storeUserAndRole(user, role);
+            authorizer.popUserAndRole();
         }
         return ret;
     }
@@ -124,3 +156,4 @@ public class CpuMenuMethodAdvice implements MethodAdvice {
         }
     }
 }
+
