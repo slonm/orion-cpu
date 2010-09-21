@@ -4,7 +4,7 @@
  */
 package orion;
 
-import org.hibernate.SessionFactory;
+import  org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
