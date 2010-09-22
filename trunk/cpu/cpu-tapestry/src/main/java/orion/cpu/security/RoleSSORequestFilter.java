@@ -50,7 +50,7 @@ public class RoleSSORequestFilter implements RequestFilter {
         } else {
             //Сделаем "залипание" роли. Если menupath не указан, то оставим роль прежнего запроса
             role = applicationStateManager.getIfExists(Role.class);
-            if(subSystemName!=null&&!role.getSubSystem().getName().equalsIgnoreCase(subSystemName)){
+            if(role != null&&subSystemName!=null&&!role.getSubSystem().getName().equalsIgnoreCase(subSystemName)){
                 role=null;
             }
             authorizer.storeUserAndRole(user, role);
