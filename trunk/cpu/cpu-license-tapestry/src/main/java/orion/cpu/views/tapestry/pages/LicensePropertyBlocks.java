@@ -14,7 +14,7 @@ import orion.tapestry.components.BooleanSelectField;
  * @author sl
  */
 @SuppressWarnings("unused")
-public class PropertyBlocks {
+public class LicensePropertyBlocks {
 
     @Environmental
     @Property(write = false)

@@ -20,11 +20,11 @@ public class LicenseTapestryIOCModule {
      */
     public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
         //Edit
-        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "cpu/PropertyBlocks", "EditTrainingDirectionOrSpeciality", true));
-        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "cpu/PropertyBlocks", "EditKnowledgeAreaOrTrainingDirection", true));
+        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "EditTrainingDirectionOrSpeciality", true));
+        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "EditKnowledgeAreaOrTrainingDirection", true));
         //Display
-        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "cpu/PropertyBlocks", "DisplayTrainingDirectionOrSpeciality", false));
-        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "cpu/PropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection", false));
+        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "DisplayTrainingDirectionOrSpeciality", false));
+        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection", false));
     }
 
     /**
