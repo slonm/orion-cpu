@@ -1,6 +1,7 @@
 package orion.cpu.views.tapestry.services;
 
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
+import br.com.arsmachina.module.service.EntitySource;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.factory.PrimaryKeyEncoderFactory;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleFactory;
@@ -218,12 +219,20 @@ public class CpuTapestryIOCModule {
      * @param pageLinkCreatorFactory
      */
     public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
-            MenuLinkBuilder mlb) {
+            MenuLinkBuilder mlb, EntitySource esource) {
         String path;
         path = "Start";
         configuration.add(path, mlb.buildPageMenuLink(Index.class, path));
         path = "Start>Admin>TML";
         configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
+        //add All Reference Book
+        for(Class<?> e:esource.getEntityClasses()){
+            javax.persistence.Table a=e.getAnnotation(javax.persistence.Table.class);
+            if(a!=null&&"ref".equals(a.schema())){
+                path = "Start>Admin>Reference>"+e.getSimpleName();
+                configuration.add(path, mlb.buildListPageMenuLink(e, path));
+            }
+        }
     }
 
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,

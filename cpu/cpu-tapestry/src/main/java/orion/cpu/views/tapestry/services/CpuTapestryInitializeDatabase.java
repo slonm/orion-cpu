@@ -24,23 +24,18 @@ public class CpuTapestryInitializeDatabase extends OperationTypes implements Run
 
     @Override
     public void run() {
-        SubSystem subSystem=iDBSpt.saveOrUpdateSubSystem("Admin");
-        //---------Права----------
-        Map<String, Permission> permissions = iDBSpt.getPermissionsMap(PageTemplate.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         if (iDBSpt.isFillTestData()) {
+            //---------Права----------
+            Map<String, Permission> permissions = iDBSpt.getPermissionsMap(PageTemplate.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
             //---------Группы прав----------
             //Права изменения шаблонов
             PermissionGroup pg = iDBSpt.saveOrUpdatePermissionGroup("Управление шаблонами страниц",
                     permissions.get(STORE_OP), permissions.get(UPDATE_OP), permissions.get(REMOVE_OP),
                     permissions.get(READ_OP), permissions.get(MENU_OP));
             //---------Роли----------
-            Role role = iDBSpt.saveOrUpdateRole("Developer",
-                    "Розробник", subSystem, pg);
-            //---------Пользователи----------
-            UserController uCnt = iDBSpt.getUserController();
-            User user = uCnt.findByLogin("sl");
-            user.add(role);
-            uCnt.saveOrUpdate(user);
+            Role role = iDBSpt.getRoleController().findByLogin("Developer");
+            role.add(pg);
+            iDBSpt.getRoleController().save(role);
         }
     }
 }
