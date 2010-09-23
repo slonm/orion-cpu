@@ -2,7 +2,11 @@ package orion.cpu.services;
 
 import br.com.arsmachina.authentication.entity.*;
 import br.com.arsmachina.module.service.EntitySource;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import org.slf4j.*;
+import orion.cpu.entities.sys.SubSystem;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.services.impl.InitializeDatabaseSupport;
 import orion.cpu.utils.PossibleOperations;
@@ -41,16 +45,36 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
                 c = c.getSuperclass();
             }
         }
+        SubSystem subSystem = initDBSupport.saveOrUpdateSubSystem("Admin");
         //Сохранение в базе пользователя SYSTEM
         User SYS = saveOrUpdateUser(User.SYSTEM_USER.getName(), User.SYSTEM_USER.getPassword(),
                 User.SYSTEM_USER.getName(), User.SYSTEM_USER.getEmail(), null);
-        SYS.setEnabled(User.SYSTEM_USER.isEnabled());
+        //SYS.setEnabled(User.SYSTEM_USER.isEnabled());
         initDBSupport.getUserController().update(SYS);
         if (initDBSupport.isFillTestData()) {
+            //---------Группы прав----------
+            //Права управления всеми справочниками
+            Set<Permission> allReference = new HashSet<Permission>();
+            for (Class<?> e : entitySource.getEntityClasses()) {
+                javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
+                if (a != null && "ref".equals(a.schema())) {
+                    Map<String, Permission> permissions = initDBSupport.getPermissionsMap(e, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+                    allReference.addAll(permissions.values());
+                }
+            }
+            PermissionGroup pg=null;
+            for (Permission p : allReference) {
+                pg = initDBSupport.saveOrUpdatePermissionGroup("Управління довідниками", p);
+            }
+            //---------Роли----------
+            Role role = initDBSupport.saveOrUpdateRole("Developer",
+                    "Розробник", subSystem, pg);
             //---------Пользователи----------
-            saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
+            User user = saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
             saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net", "ru");
             saveOrUpdateUser("guest", "", "Гость информационной системы КПУ", "guest@cpu.edu", null);
+            user.add(role);
+            initDBSupport.getUserController().saveOrUpdate(user);
         }
     }
 
