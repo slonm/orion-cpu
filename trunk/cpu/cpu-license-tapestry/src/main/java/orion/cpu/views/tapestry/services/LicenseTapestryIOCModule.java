@@ -45,12 +45,6 @@ public class LicenseTapestryIOCModule {
         path = ListLicenseRecordView.MENU_PATH;
         configuration.add(path, mlb.buildListPageMenuLink(LicenseRecordView.class, path));
 
-        path = "Start>Admin>Reference>EducationForm";
-        configuration.add(path, mlb.buildListPageMenuLink(EducationForm.class, path));
-
-        path = "Start>Admin>Reference>EducationalQualificationLevel";
-        configuration.add(path, mlb.buildListPageMenuLink(EducationalQualificationLevel.class, path));
-
         path = "Start>License>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
         configuration.add(path, mlb.buildListPageMenuLink(KnowledgeAreaOrTrainingDirection.class, path));
 
