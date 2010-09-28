@@ -1,22 +1,24 @@
 package orion.cpu.views.desktoptest;
 
 import br.com.arsmachina.authentication.entity.User;
-import br.com.arsmachina.controller.Controller;
 import br.com.arsmachina.module.service.ControllerSource;
+import org.apache.tapestry5.internal.TapestryAppInitializer;
 import org.apache.tapestry5.ioc.IOCUtilities;
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.RegistryBuilder;
+import org.apache.tapestry5.services.TapestryModule;
 import org.slf4j.*;
-import orion.cpu.entities.pub.B;
 import orion.cpu.security.services.ExtendedAuthorizer;
 
-public class Main {
+public class RunAll {
 
-    private final static Logger LOG = LoggerFactory.getLogger(Main.class);
+    private final static Logger LOG = LoggerFactory.getLogger(RunAll.class);
 
     public static Registry startup() {
+//        TapestryAppInitializer tai=new TapestryAppInitializer
         RegistryBuilder builder = new RegistryBuilder();
-        IOCUtilities.addDefaultModules(builder);
+//        IOCUtilities.addDefaultModules(builder);
+        builder.add(TapestryModule.class);
         builder.add(AppModule.class);
         Registry registry = builder.build();
         registry.performRegistryStartup();
@@ -28,16 +30,7 @@ public class Main {
     public static void main(String[] args) {
         Registry registry = startup();
         ControllerSource cs = registry.getService(ControllerSource.class);
-        Controller<B, Integer> cB = cs.get(B.class);
 
-        B bX = new B("XX");
-        cB.save(bX);
-
-//        B bY = new B("YY").alias(bX);
-//        cB.save(bY);
-
-//        new TestDAOFindByExample(registry);
-//        new TestController(registry);
         shutdown(registry);
     }
 

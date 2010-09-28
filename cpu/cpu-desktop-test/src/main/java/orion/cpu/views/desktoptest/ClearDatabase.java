@@ -1,4 +1,4 @@
-package orion;
+package orion.cpu.views.desktoptest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
