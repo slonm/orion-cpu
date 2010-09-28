@@ -105,7 +105,7 @@ public class Role extends AbstractRole<Role> {
 
     @Override
     public String toString() {
-        return subSystem.getName()+". "+getLogin();
+        return (subSystem!=null?subSystem.getName()+". ":"")+getLogin()+"("+getName()+")";
     }
 
 }
