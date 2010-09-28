@@ -65,7 +65,9 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
 
     @Transient
     public String getCode() {
-        return (educationalQualificationLevel.getCode() + "." + trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection().getCode() + trainingDirectionOrSpeciality.getCode());
+        return ((educationalQualificationLevel==null?"-":educationalQualificationLevel.getCode()) + "." +
+                (trainingDirectionOrSpeciality==null?"-":trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection().getCode()) +
+                (trainingDirectionOrSpeciality==null?"-":trainingDirectionOrSpeciality.getCode()));
     }
 
     /**
