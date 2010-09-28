@@ -49,7 +49,7 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
         //Сохранение в базе пользователя SYSTEM
         User SYS = saveOrUpdateUser(User.SYSTEM_USER.getName(), User.SYSTEM_USER.getPassword(),
                 User.SYSTEM_USER.getName(), User.SYSTEM_USER.getEmail(), null);
-        //SYS.setEnabled(User.SYSTEM_USER.isEnabled());
+        SYS.setEnabled(User.SYSTEM_USER.isEnabled());
         initDBSupport.getUserController().update(SYS);
         if (initDBSupport.isFillTestData()) {
             //---------Группы прав----------
@@ -72,7 +72,7 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
             //---------Пользователи----------
             User user = saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
             saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net", "ru");
-            saveOrUpdateUser("guest", "", "Гость информационной системы КПУ", "guest@cpu.edu", null);
+            saveOrUpdateUser("guest", "123456", "Гость информационной системы КПУ", "guest@cpu.edu", null);
             user.add(role);
             initDBSupport.getUserController().saveOrUpdate(user);
         }
