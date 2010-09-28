@@ -9,38 +9,15 @@
     <dependencies>
         <dependency>
             <groupId>orion</groupId>
-            <artifactId>cpu-core</artifactId>
+            <artifactId>cpu</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>orion</groupId>
-            <artifactId>cpu-license</artifactId>
+            <artifactId>cpu</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-core</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-ioc</artifactId>
-            <version>${tapestry-release-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
+            <type>warpath</type>
         </dependency>
 <!--
 -->
@@ -91,10 +68,23 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
     </dependencies>
     <build>
-        <finalName>cpu</finalName>
+        <finalName>cpu-test</finalName>
         <!--Причины следующей строки тут: http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html-->
         <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
         <plugins>
+    <plugin>
+      <groupId>org.appfuse</groupId>
+      <artifactId>maven-warpath-plugin</artifactId>
+      <version>2.0</version>
+      <extensions>true</extensions>
+      <executions>
+        <execution>
+          <goals>
+            <goal>add-classes</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
