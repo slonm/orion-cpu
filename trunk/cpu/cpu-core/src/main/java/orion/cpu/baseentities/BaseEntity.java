@@ -3,7 +3,6 @@ package orion.cpu.baseentities;
 import br.com.arsmachina.authentication.entity.User;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import ua.mihailslobodyanuk.base.AClonable;
@@ -42,7 +41,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
      * @return a {@link Integer}.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package orion.cpu.services;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import javax.persistence.Table;
@@ -11,6 +12,7 @@ import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
+import org.hibernate.mapping.PersistentClass;
 import org.slf4j.*;
 
 /**
@@ -27,8 +29,7 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseSchemaObjectCreator.class);
     private final HibernateEntityPackageManager packageManager;
     private final ClassNameLocator classNameLocator;
-    private String dbmsName = null;
-    private String dbName = null;
+    final boolean[] canUseSchema = new boolean[1];
 
     public DatabaseSchemaObjectCreator(HibernateEntityPackageManager packageManager,
             ClassNameLocator classNameLocator) {
@@ -36,6 +37,10 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
         this.classNameLocator = classNameLocator;
     }
 
+    public boolean getCanUseSchema(){
+        return canUseSchema[0];
+    }
+    
     /**
      * Метод не использует переданную конфигурацию, а создает новую, соединяется с базой
      * и создает недостающие схемы.
@@ -43,7 +48,7 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
      */
     @Override
     public void configure(Configuration configuration) {
-        Set<String> schemas = new TreeSet<String>();
+        final Set<String> schemas = new TreeSet<String>();
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         for (String packageName : packageManager.getPackageNames()) {
             for (String className : classNameLocator.locateClassNames(packageName)) {
@@ -65,21 +70,18 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
 
                 @Override
                 public void execute(Connection connection) throws SQLException {
-                    dbmsName = connection.getMetaData().getDatabaseProductName();
-                    dbName = connection.getMetaData().getURL();
-                    dbName = dbName.substring(dbName.lastIndexOf("/") + 1);
-                }
-            });
-            //создаем схемы только для postgresql
-            if ("PostgreSQL".equalsIgnoreCase(dbmsName)) {
-                Transaction transaction = session.beginTransaction();
-                List<String> list = session.createSQLQuery("select schema_name from information_schema.schemata where catalog_name='" + dbName + "'").list();
-                for (String schemaName : list) {
-                    if (schemas.contains(schemaName)) {
-                        schemas.remove(schemaName);
+                    canUseSchema[0] = connection.getMetaData().supportsSchemasInTableDefinitions();
+                    if (canUseSchema[0]) {
+                        ResultSet rs = connection.getMetaData().getSchemas();
+                        while (rs.next()) {
+                            schemas.remove(rs.getString("TABLE_SCHEM"));
+                        }
+                        rs.close();
                     }
                 }
-                transaction.rollback();
+            });
+            if (canUseSchema[0]) {
+                Transaction transaction;
                 for (final String schema : schemas) {
                     transaction = session.beginTransaction();
                     try {

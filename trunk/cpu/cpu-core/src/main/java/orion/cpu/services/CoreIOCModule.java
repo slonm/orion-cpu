@@ -39,6 +39,7 @@ public class CoreIOCModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(DefaultControllerListeners.class, DefaultControllerListenersImpl.class);
         binder.bind(InitializeDatabaseSupport.class);
+        binder.bind(DatabaseSchemaObjectCreator.class).withId("DatabaseSchemaObjectCreator");
     }
 
     /**
@@ -124,7 +125,7 @@ public class CoreIOCModule {
     /**
      * Конфигуратор Hibernate. Включает ImprovedNamingStrategy для имен объектов
      */
-    public static class OrionHibernateConfigurer implements HibernateConfigurer {
+    public static class NamingStrategyConfigurer implements HibernateConfigurer {
 
         @Override
         public void configure(org.hibernate.cfg.Configuration configuration) {
@@ -133,13 +134,15 @@ public class CoreIOCModule {
     }
 
     /**
-     * Регистрация OrionHibernateConfigurer для включения ImprovedNamingStrategy
+     * Регистрация NamingStrategyConfigurer для включения ImprovedNamingStrategy
      * именования объектов базы данных
      * @param config
      */
-    public static void contributeHibernateSessionSource(OrderedConfiguration<HibernateConfigurer> config) {
-        config.addInstance("SchemaCreator", DatabaseSchemaObjectCreator.class, "before:*");
-        config.addInstance("Orion", OrionHibernateConfigurer.class, "before:PackageName");
+    public static void contributeHibernateSessionSource(OrderedConfiguration<HibernateConfigurer> config,
+            @Local DatabaseSchemaObjectCreator databaseSchemaObjectCreator) {
+        config.add("SchemaCreator", databaseSchemaObjectCreator, "before:PackageName");
+        config.addInstance("NamingStrategy", NamingStrategyConfigurer.class, "before:PackageName");
+        config.addInstance("SchemaDisable", SchemaDisableConfigurer.class, "after:PackageName");
     }
 
     /**
