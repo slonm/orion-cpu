@@ -37,7 +37,7 @@ public class License extends Document<License> {
         return super.getNumber();
     }
 
-    @OneToMany
+    @OneToMany(mappedBy="license")
     public Set<LicenseRecord> getLicenseRecords(){
         return licenseRecords;
     }
