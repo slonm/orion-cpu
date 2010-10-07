@@ -1,5 +1,6 @@
 package orion.tapestry.services;
 
+import java.util.Locale;
 import org.apache.tapestry5.ioc.Messages;
 
 /**
@@ -12,9 +13,11 @@ public interface FieldLabelSource {
     /**
      * Возвращает подпись поля бина
      * @param bean класс бина
-     * @param propertyName имя свойства бина. Если CLASS_NAME_KEY, то вернет подпись самого бина
+     * @param propertyName имя свойства бина.
      * @param messages текущий каталог сообщений. Если null, то игнорируется
      * @return подпись поля бина. null если подпись не найдена
      */
     String get(Class<?> bean, String propertyName, Messages messages);
+
+    String get(Class<?> bean, String propertyName, Locale locale);
 }
