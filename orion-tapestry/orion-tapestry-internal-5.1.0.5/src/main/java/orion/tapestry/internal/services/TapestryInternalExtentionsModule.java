@@ -17,7 +17,7 @@ public class TapestryInternalExtentionsModule {
 
     private static final String TMLinDatabase = "orion.tapestry.useTMLinDatabase";
 
-    public static GlobalMessageAppender build(@Autobuild GlobalMessageAppender appender) {
+    public static GlobalMessages buildGlobalMessageAppender(@Autobuild GlobalMessages appender) {
         return appender;
     }
 
@@ -31,7 +31,7 @@ public class TapestryInternalExtentionsModule {
 
     @Match("ComponentMessagesSource")
     public static void adviseComponentMessagesSource(MethodAdviceReceiver receiver,
-            GlobalMessageAppender globalMessageAppender) {
+            GlobalMessages globalMessageAppender) {
         receiver.adviseAllMethods(globalMessageAppender);
     }
 

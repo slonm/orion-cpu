@@ -11,6 +11,7 @@ import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
 import org.apache.tapestry5.services.AssetSource;
 
 /**
+ * Глобальный каталог сообщений и
  * Консультант {@link ComponentMessagesSource}
  * Сервис получает вклад в виде упорядоченного списка имен ресурсов (файлов .properties).
  * При вызове метода ComponentMessagesSource.getMessages делает постобработку возвращаемого
@@ -21,7 +22,7 @@ import org.apache.tapestry5.services.AssetSource;
  * Внимание! Сервис использует internal ресурсы tapestry
  * @author sl
  */
-public class GlobalMessageAppender implements MethodAdvice {
+public class GlobalMessages implements MethodAdvice {
     //Нелокализованные ресурсы
 
     private final List<Resource> resources = new LinkedList<Resource>();
@@ -102,7 +103,7 @@ public class GlobalMessageAppender implements MethodAdvice {
         }
     }
 
-    public GlobalMessageAppender(List<String> configuration,
+    public GlobalMessages(List<String> configuration,
             ClasspathURLConverter classpathURLConverter,
             final AssetSource assetSource) {
         for (String name : configuration) {
@@ -122,6 +123,32 @@ public class GlobalMessageAppender implements MethodAdvice {
         return locResources.get(locale);
     }
 
+     /**
+     * Returns true if the bundle contains the named key.
+     */
+    public boolean contains(String key, Locale locale){
+        for(Messages m:getMessagesList(locale)){
+            if(m.contains(key))return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Returns the localized message for the given key. If catalog does not contain such a key, then a modified version
+     * of the key is returned (converted to upper case and enclosed in brackets).
+     *
+     * @param key
+     * @return localized message for key, or placeholder
+     */
+    public String get(String key, Locale locale){
+        for(Messages m:getMessagesList(locale)){
+            if(m.contains(key))return m.get(key);
+        }
+        return null;
+    }
+
+
     @Override
     public void advise(Invocation invocation) {
         invocation.proceed();
@@ -130,4 +157,5 @@ public class GlobalMessageAppender implements MethodAdvice {
                     (Locale) invocation.getParameter(1)));
         }
     }
-}
+    
+ }
