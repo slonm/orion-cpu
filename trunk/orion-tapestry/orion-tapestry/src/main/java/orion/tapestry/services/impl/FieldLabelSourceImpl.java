@@ -2,9 +2,13 @@ package orion.tapestry.services.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import org.apache.tapestry5.ioc.Messages;
+import org.apache.tapestry5.ioc.ScopeConstants;
+import org.apache.tapestry5.ioc.annotations.Scope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import orion.tapestry.internal.services.impl.GlobalMessages;
 import orion.tapestry.services.FieldLabelSource;
 import ua.mihailslobodyanuk.utils.Defense;
 import ua.mihailslobodyanuk.utils.reflect.generics.PropertyInfo;
@@ -19,6 +23,16 @@ public class FieldLabelSourceImpl implements FieldLabelSource {
 
     private static final Logger LOG = LoggerFactory.getLogger(FieldLabelSourceImpl.class);
     private static final String PREFIX = "reflect.";
+    private final GlobalMessages gMessages;
+
+    public FieldLabelSourceImpl(GlobalMessages messages) {
+        this.gMessages = messages;
+    }
+
+    @Override
+    public String get(Class<?> bean, String propertyName, Locale locale) {
+        return get(bean, propertyName, null, locale);
+    }
 
     private static class PropertyClassName extends PropertyInfo<String> {
 
@@ -51,27 +65,47 @@ public class FieldLabelSourceImpl implements FieldLabelSource {
         if (messages == null) {
             return null;
         }
+        return get(bean, propertyName, messages, null);
+    }
+
+    private String get(final Class<?> bean, String propertyName, Messages messages, Locale locale) {
         Defense.notNull(bean, "bean");
         Defense.notBlank(propertyName, "propertyName");
         LOG.debug("processing '{}' property", propertyName);
         Class<?> pView = bean;
         while (pView != null) {
             String fullName = PREFIX + pView.getName() + "." + propertyName;
-            if (messages.contains(fullName)) {
+            if (contains(fullName, messages, locale)) {
                 LOG.debug("get property by full name value: {}", fullName);
-                return messages.get(fullName);
+                return get(fullName, messages, locale);
             }
             pView = pView.getSuperclass();
         }
-        if (messages.contains(propertyName)) {
+        if (contains(propertyName, messages, locale)) {
             LOG.debug("get property by as-is name value: {}", propertyName);
-            return messages.get(propertyName);
+            return get(propertyName, messages, locale);
         }
         String typeName = PREFIX + new PropertyClassName(bean).get(propertyName);
-        if (typeName != null && messages.contains(typeName)) {
+        if (typeName != null && contains(typeName, messages, locale)) {
             LOG.debug("get property by type name value: {}", typeName);
-            return messages.get(typeName);
+            return get(typeName, messages, locale);
         }
         return null;
+    }
+
+    private String get(String property, Messages messages, Locale locale) {
+        if (messages == null) {
+            return gMessages.get(property, locale);
+        } else {
+            return messages.get(property);
+        }
+    }
+
+    private boolean contains(String property, Messages messages, Locale locale) {
+        if (messages == null) {
+            return gMessages.contains(property, locale);
+        } else {
+            return messages.contains(property);
+        }
     }
 }
