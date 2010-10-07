@@ -194,7 +194,6 @@ public class CpuTapestryIOCModule {
     /**
      * Скрещиваем меню с системой безопасности
      * @param receiver приемник событий CpuMenu
-     * @param fieldLabelSource сервис {@link FieldLabelSource}
      */
     @Match("CpuMenu")
     public static void adviseCpuMenu(MethodAdviceReceiver receiver, @Autobuild CpuMenuMethodAdvice advice) {

@@ -16,16 +16,13 @@ import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.services.LinkCreationHub;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.security.services.ExtendedAuthorizer;
-import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.MenuData;
 import orion.tapestry.menu.lib.MenuItem;
 import orion.tapestry.menu.services.CpuMenu;
-import orion.tapestry.services.FieldLabelSource;
 import static orion.cpu.views.tapestry.utils.CpuTapestryUtils.subSystemNameByMenupath;
 
 /**
- * Консультант {@link BeanModelSource} для поддержки сервиса
- * {@link FieldLabelSource}
+ * Консультант {@link BeanModelSource} для удаления неразрешенных пунктов
  * @author sl
  */
 public class CpuMenuMethodAdvice implements MethodAdvice {
