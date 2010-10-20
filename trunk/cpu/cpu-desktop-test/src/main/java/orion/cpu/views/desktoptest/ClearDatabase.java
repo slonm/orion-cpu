@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Удаление всез таблиц базы данных
+ * Удаление всех таблиц базы данных
  * @author sl
  */
 public class ClearDatabase {
