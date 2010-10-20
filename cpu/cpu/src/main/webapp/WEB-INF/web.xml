@@ -83,7 +83,7 @@ of where to look for pages, components and mixins. -->
     </context-param>
     <context-param>
     	<param-name>BIRT_VIEWER_LOG_LEVEL</param-name>
-    	<param-value>WARNING</param-value>
+    	<param-value>OFF</param-value>
     	<description>Report engine log level. (ALL|SEVERE|WARNING|INFO|CONFIG|FINE|FINER|FINEST|OFF)</description>
     </context-param>
  
