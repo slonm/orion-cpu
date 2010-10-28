@@ -1,11 +1,9 @@
 package orion.cpu.entities.uch;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.Validate;
-import org.hibernate.validator.Size;
 import orion.cpu.entities.pub.Document;
 
 /**
@@ -23,6 +21,7 @@ public class License extends Document<License> {
      */
     @Column(length = 2, nullable = false)
     @Validate("regexp=([А-Я]{2})")
+    @Override
     public String getSerial() {
         return super.getSerial();
     }
@@ -33,6 +32,7 @@ public class License extends Document<License> {
     @Column(nullable = false)
    // @Validate("regexp=([0-9]{6})")
     //@Size(min = 2, max = 6, message="Number must be from 2 to 6 letters length")
+    @Override
     public String getNumber() {
         return super.getNumber();
     }
