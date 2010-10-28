@@ -16,6 +16,8 @@
  <module>cpu-units-tapestry</module>
  <module>cpu-license</module>
  <module>cpu-license-tapestry</module>
+ <module>cpu-eduprocess</module>
+ <module>cpu-eduprocess-tapestry</module>
  <module>cpu</module>
   <module>cpu-desktop-test</module>
  <module>cpu-birt</module>
