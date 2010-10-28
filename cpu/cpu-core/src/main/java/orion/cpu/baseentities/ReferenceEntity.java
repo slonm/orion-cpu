@@ -25,20 +25,20 @@ public abstract class ReferenceEntity<T extends ReferenceEntity<?>> extends Name
     @NonVisual
     private String key;
 
-    public Boolean getIsObsolete() {
-        return isObsolete;
-    }
-
-    public void setIsObsolete(Boolean isObsolete) {
-        this.isObsolete = isObsolete;
-    }
-
     public String getShortName() {
         return shortName;
     }
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    public Boolean getIsObsolete() {
+        return isObsolete;
+    }
+
+    public void setIsObsolete(Boolean isObsolete) {
+        this.isObsolete = isObsolete;
     }
 
     @Column(unique = true)
