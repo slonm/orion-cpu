@@ -9,6 +9,7 @@ import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
 import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
+import ua.mihailslobodyanuk.utils.Defense;
 
 /**
  * Сущность подситемы учета лицензий
@@ -29,22 +30,38 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
 
    @Transient
     public String getLicenseSerialNumber() {
-        return (license.getSerial()+"  "+license.getNumber());
+       try {
+            return (license.getSerial()+"  "+license.getNumber());
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Transient
     public Date getLicenseIssueDate() {
-        return license.getIssue();
+        try {
+            return license.getIssue();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Transient
     public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
-        return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
+         try {
+            return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Transient
     public String getKnowledgeAreaOrTrainingDirectionCode() {
-        return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection().getCode();
+         try {
+            return (getKnowledgeAreaOrTrainingDirection().getCode());
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     /**
@@ -60,14 +77,21 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @param educationalQualificationLevel the educationalQualificationLevel to set
      */
     public void setEducationalQualificationLevel(EducationalQualificationLevel educationalQualificationLevel) {
-        this.educationalQualificationLevel = educationalQualificationLevel;
+        this.educationalQualificationLevel = Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel");
     }
 
     @Transient
     public String getCode() {
-        return ((educationalQualificationLevel==null?"-":educationalQualificationLevel.getCode()) + "." +
-                (trainingDirectionOrSpeciality==null?"-":trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection().getCode()) +
-                (trainingDirectionOrSpeciality==null?"-":trainingDirectionOrSpeciality.getCode()));
+        try {
+            if (getEducationalQualificationLevel().getCode() == null ||
+                    getKnowledgeAreaOrTrainingDirection().getCode() == null ||
+                    getTrainingDirectionOrSpeciality().getCode() == null) {
+                return null;
+            }
+            return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     /**
@@ -83,7 +107,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @param TrainingDirectionOrSpeciality the TrainingDirectionOrSpeciality to set
      */
     public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality TrainingDirectionOrSpeciality) {
-        this.trainingDirectionOrSpeciality = TrainingDirectionOrSpeciality;
+        this.trainingDirectionOrSpeciality = Defense.notNull(TrainingDirectionOrSpeciality, "TrainingDirectionOrSpeciality");
     }
 
     /**
@@ -99,7 +123,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @param EducationForm the EducationForm to set
      */
     public void setEducationForm(EducationForm EducationForm) {
-        this.educationForm = EducationForm;
+        this.educationForm = Defense.notNull(EducationForm, "EducationForm");
     }
 
     /**
@@ -128,7 +152,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @param terminationDate the terminationDate to set
      */
     public void setTerminationDate(Date terminationDate) {
-        this.terminationDate = terminationDate;
+        this.terminationDate = Defense.notNull(terminationDate, "terminationDate");
     }
 
     /**
@@ -141,7 +165,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     }
 
     public void setOrgUnit(OrgUnit orgUnit) {
-        this.orgUnit = orgUnit;
+        this.orgUnit = Defense.notNull(orgUnit, "orgUnit");
     }
 
     /**
@@ -158,7 +182,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @param license the license to set
      */
     public void setLicense(License license) {
-        this.license = license;
+        this.license = Defense.notNull(license, "license");
     }
 
     @JoinColumn(nullable = false)
@@ -168,18 +192,18 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     }
 
     public void setLicenseRecordGroup(LicenseRecordGroup licenseRecordGroup) {
-        this.licenseRecordGroup = licenseRecordGroup;
+        this.licenseRecordGroup = Defense.notNull(licenseRecordGroup, "licenseRecordGroup");
     }
 
     @Override
     public String toString() {
-        return getCode();
+        return getCode()+" - "+educationForm;
     }
 
     @Override
     protected boolean entityEquals(LicenseRecord obj) {
         return aEqualsField(trainingDirectionOrSpeciality, obj.trainingDirectionOrSpeciality)
-                && aEqualsField(orgUnit, obj.orgUnit);
+                && aEqualsField(educationalQualificationLevel, obj.educationalQualificationLevel);
     }
 
     @Override

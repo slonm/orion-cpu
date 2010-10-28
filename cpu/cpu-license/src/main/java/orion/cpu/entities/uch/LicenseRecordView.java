@@ -9,6 +9,7 @@ import orion.cpu.entities.ref.EducationalQualificationLevel;
 import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
 import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
+import ua.mihailslobodyanuk.utils.Defense;
 
 /**
  * Сущность подситемы учета лицензий
@@ -33,7 +34,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     public void setCorrespondenseLicenseRecord(LicenseRecord correspondenseLicenseRecord) {
-        this.correspondenseLicenseRecord = correspondenseLicenseRecord;
+        this.correspondenseLicenseRecord = Defense.notNull(correspondenseLicenseRecord, "correspondenseLicenseRecord");
     }
 
     @NonVisual
@@ -42,19 +43,19 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     }
 
     public void setStationaryLicenseRecord(LicenseRecord stationaryLicenseRecord) {
-        this.stationaryLicenseRecord = stationaryLicenseRecord;
+        this.stationaryLicenseRecord = Defense.notNull(stationaryLicenseRecord, "stationaryLicenseRecord");
     }
 
     public LicenseRecordView(LicenseRecord stationaryLicenseRecord, LicenseRecord correspondenseLicenseRecord) {
-        this.stationaryLicenseRecord = stationaryLicenseRecord;
-        this.correspondenseLicenseRecord = correspondenseLicenseRecord;
+        this.stationaryLicenseRecord = Defense.notNull(stationaryLicenseRecord, "stationaryLicenseRecord");
+        this.correspondenseLicenseRecord = Defense.notNull(correspondenseLicenseRecord, "correspondenseLicenseRecord");
     }
 
     public String getLicenseSerialNumber() {
         try {
-            return (stationaryLicenseRecord.getLicense().getSerial() + "  " +
-                    stationaryLicenseRecord.getLicense().getNumber());
-        } catch (Throwable th) {
+            return (stationaryLicenseRecord.getLicense().getSerial() + "  "
+                    + stationaryLicenseRecord.getLicense().getNumber());
+        } catch (NullPointerException e) {
             return null;
         }
     }
@@ -62,7 +63,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     public Date getLicenseIssueDate() {
         try {
             return stationaryLicenseRecord.getLicense().getIssue();
-        } catch (Throwable th) {
+        } catch (NullPointerException e) {
             return null;
         }
     }
@@ -70,7 +71,7 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
     public String getKnowledgeAreaOrTrainingDirectionCode() {
         try {
             return stationaryLicenseRecord.getKnowledgeAreaOrTrainingDirection().getCode();
-        } catch (Throwable th) {
+        } catch (NullPointerException e) {
             return null;
         }
     }
@@ -92,21 +93,12 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
      */
     @Validate("required")
     public void setEducationalQualificationLevel(EducationalQualificationLevel educationalQualificationLevel) {
-        stationaryLicenseRecord.setEducationalQualificationLevel(educationalQualificationLevel);
-        correspondenseLicenseRecord.setEducationalQualificationLevel(educationalQualificationLevel);
+        stationaryLicenseRecord.setEducationalQualificationLevel(Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel"));
+        correspondenseLicenseRecord.setEducationalQualificationLevel(Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel"));
     }
 
     public String getCode() {
-        try {
-            if (getEducationalQualificationLevel().getCode() == null ||
-                    getKnowledgeAreaOrTrainingDirection().getCode() == null ||
-                    getTrainingDirectionOrSpeciality().getCode() == null) {
-                return null;
-            }
-            return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
-        } catch (Throwable th) {
-            return null;
-        }
+        return stationaryLicenseRecord.getCode();
     }
 
     /**
@@ -121,8 +113,8 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
      */
     @Validate("required")
     public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality) {
-        stationaryLicenseRecord.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
-        correspondenseLicenseRecord.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
+        stationaryLicenseRecord.setTrainingDirectionOrSpeciality(Defense.notNull(trainingDirectionOrSpeciality, "trainingDirectionOrSpeciality"));
+        correspondenseLicenseRecord.setTrainingDirectionOrSpeciality(Defense.notNull(trainingDirectionOrSpeciality, "trainingDirectionOrSpeciality"));
     }
 
     /**
@@ -167,8 +159,8 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
      */
     @Validate("required")
     public void setTerminationDate(Date terminationDate) {
-        stationaryLicenseRecord.setTerminationDate(terminationDate);
-        correspondenseLicenseRecord.setTerminationDate(terminationDate);
+        stationaryLicenseRecord.setTerminationDate(Defense.notNull(terminationDate, "terminationDate"));
+        correspondenseLicenseRecord.setTerminationDate(Defense.notNull(terminationDate, "terminationDate"));
     }
 
     /**
@@ -183,8 +175,8 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
      */
     @Validate("required")
     public void setOrgUnit(OrgUnit orgUnit) {
-        stationaryLicenseRecord.setOrgUnit(orgUnit);
-        correspondenseLicenseRecord.setOrgUnit(orgUnit);
+        stationaryLicenseRecord.setOrgUnit(Defense.notNull(orgUnit, "orgUnit"));
+        correspondenseLicenseRecord.setOrgUnit(Defense.notNull(orgUnit, "orgUnit"));
     }
 
     /**
@@ -200,8 +192,8 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
      */
     @Validate("required")
     public void setLicense(License license) {
-        stationaryLicenseRecord.setLicense(license);
-        correspondenseLicenseRecord.setLicense(license);
+        stationaryLicenseRecord.setLicense(Defense.notNull(license, "license"));
+        correspondenseLicenseRecord.setLicense(Defense.notNull(license, "license"));
     }
 
     @Validate("required")
@@ -211,8 +203,8 @@ public class LicenseRecordView extends BaseEntity<LicenseRecordView> {
 
     @Validate("required")
     public void setLicenseRecordGroup(LicenseRecordGroup licenseRecordGroup) {
-        stationaryLicenseRecord.setLicenseRecordGroup(licenseRecordGroup);
-        correspondenseLicenseRecord.setLicenseRecordGroup(licenseRecordGroup);
+        stationaryLicenseRecord.setLicenseRecordGroup(Defense.notNull(licenseRecordGroup, "licenseRecordGroup"));
+        correspondenseLicenseRecord.setLicenseRecordGroup(Defense.notNull(licenseRecordGroup, "licenseRecordGroup"));
     }
 
     @Override
