@@ -63,9 +63,14 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
             user.add(roleOUG);
             uCnt.saveOrUpdate(user);
 
+            user = uCnt.findByLogin("guest");
+            user.add(roleOUG);
+            uCnt.saveOrUpdate(user);
+
 //        //---Кафедры, выполняющие обучение по лицензиям----------
             Chair kafPIT = saveOrUpdateChair("кафедра програмування та інформаційних технологій", "КПІТ");
             Chair kafEICPHS = saveOrUpdateChair("кафедра управління навчальними закладами та педагогіки вищої школи", "КУНЗПВШ");
+            Chair kafSAVM = saveOrUpdateChair("кафедра системного аналізу та вищої математики", "КСАВМ");
         }
     }
 
