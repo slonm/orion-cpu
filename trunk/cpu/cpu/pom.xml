@@ -48,6 +48,16 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu-eduprocess</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu-eduprocess-tapestry</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>8.3-603.jdbc3</version>
