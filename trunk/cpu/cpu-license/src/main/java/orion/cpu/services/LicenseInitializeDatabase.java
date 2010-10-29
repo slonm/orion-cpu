@@ -36,13 +36,13 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         EducationForm stat_EF = iDBSpt.getStoredConstantsSource().get(EducationForm.class, EducationForm.STATIONARY_KEY);
         if (stat_EF == null) {
             stat_EF = new EducationForm("Денна");
-            stat_EF.setShortName("Д");
+            stat_EF.setShortName("Ден.");
             iDBSpt.getStoredConstantsSource().put(EducationForm.class, EducationForm.STATIONARY_KEY, stat_EF);
         }
         EducationForm corr_EF = iDBSpt.getStoredConstantsSource().get(EducationForm.class, EducationForm.CORRESPONDENCE_KEY);
         if (corr_EF == null) {
             corr_EF = new EducationForm("Заочна");
-            corr_EF.setShortName("З");
+            corr_EF.setShortName("Заоч.");
             iDBSpt.getStoredConstantsSource().put(EducationForm.class, EducationForm.CORRESPONDENCE_KEY, corr_EF);
         }
 
@@ -50,25 +50,25 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         EducationalQualificationLevel jSpec_EQL = iDBSpt.getStoredConstantsSource().get(EducationalQualificationLevel.class, EducationalQualificationLevel.JUNIOR_SPECIALIST_KEY);
         if (jSpec_EQL == null) {
             jSpec_EQL = new EducationalQualificationLevel("Молодший спеціаліст", "5");
-            jSpec_EQL.setShortName("Мл");
+            jSpec_EQL.setShortName("мол.сп.");
             iDBSpt.getStoredConstantsSource().put(EducationalQualificationLevel.class, EducationalQualificationLevel.JUNIOR_SPECIALIST_KEY, jSpec_EQL);
         }
         EducationalQualificationLevel bach_EQL = iDBSpt.getStoredConstantsSource().get(EducationalQualificationLevel.class, EducationalQualificationLevel.BACHELOR_KEY);
         if (bach_EQL == null) {
             bach_EQL = new EducationalQualificationLevel("Бакалавр", "6");
-            bach_EQL.setShortName("Б");
+            bach_EQL.setShortName("бак.");
             iDBSpt.getStoredConstantsSource().put(EducationalQualificationLevel.class, EducationalQualificationLevel.BACHELOR_KEY, bach_EQL);
         }
         EducationalQualificationLevel spec_EQL = iDBSpt.getStoredConstantsSource().get(EducationalQualificationLevel.class, EducationalQualificationLevel.SPECIALIST_KEY);
         if (spec_EQL == null) {
             spec_EQL = new EducationalQualificationLevel("Спеціаліст", "7");
-            spec_EQL.setShortName("С");
+            spec_EQL.setShortName("спец.");
             iDBSpt.getStoredConstantsSource().put(EducationalQualificationLevel.class, EducationalQualificationLevel.SPECIALIST_KEY, spec_EQL);
         }
         EducationalQualificationLevel master_EQL = iDBSpt.getStoredConstantsSource().get(EducationalQualificationLevel.class, EducationalQualificationLevel.MASTER_KEY);
         if (master_EQL == null) {
             master_EQL = new EducationalQualificationLevel("Магістр", "8");
-            master_EQL.setShortName("М");
+            master_EQL.setShortName("маг.");
             iDBSpt.getStoredConstantsSource().put(EducationalQualificationLevel.class, EducationalQualificationLevel.MASTER_KEY, master_EQL);
         }
 
@@ -117,7 +117,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
-                    LPermissions.get(READ_OP),
+                    LPermissions.get(READ_OP), LPermissions.get(MENU_OP),
                     LRPermissions.get(READ_OP),
                     LRVPermissions.get(READ_OP), LRVPermissions.get(MENU_OP));
 
@@ -129,25 +129,31 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Права просмотра справочников для подсистемы лицензий
             PermissionGroup pgReadLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр справочников",
+                    EFPermissions.get(READ_OP), EFPermissions.get(MENU_OP),
+                    EQLPermissions.get(READ_OP), EQLPermissions.get(MENU_OP),
                     KAOTPermissions.get(READ_OP), KAOTPermissions.get(MENU_OP),
                     TDOSPermissions.get(READ_OP), TDOSPermissions.get(MENU_OP),
                     LRGPermissions.get(READ_OP), LRGPermissions.get(MENU_OP));
 
             //Права изменения, добавления, удаления с сохранением записей справочников для подсистемы лицензий
             PermissionGroup pgManageLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление справочниками",
+//                    EFPermissions.get(UPDATE_OP), EFPermissions.get(STORE_OP), EFPermissions.get(REMOVE_OP),
+//                    EQLPermissions.get(UPDATE_OP), EQLPermissions.get(STORE_OP), EQLPermissions.get(REMOVE_OP),
                     KAOTPermissions.get(UPDATE_OP), KAOTPermissions.get(STORE_OP), KAOTPermissions.get(REMOVE_OP),
                     TDOSPermissions.get(UPDATE_OP), TDOSPermissions.get(STORE_OP), TDOSPermissions.get(REMOVE_OP),
                     LRGPermissions.get(UPDATE_OP), LRGPermissions.get(STORE_OP), LRGPermissions.get(REMOVE_OP));
 
             //Права просмотра записей о подразделениях
             PermissionGroup pgReadOrgUnits = iDBSpt.getPermissionGroupController().findByName("Подсистема административно-организационной структуры. Просмотр записей о подразделениях");
+
             //---------Роли----------
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
-                    "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords, pgReadOrgUnits);
+                    "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords,pgReadOrgUnits);
 
             Role roleLO = iDBSpt.saveOrUpdateRole("LicenseOperator",
                     "Оператор управління записами про ліцензії", subSystem,
-                    pgReadLicenseRecords, pgManageLicenseRecords, pgReadOrgUnits);
+                    pgReadLicenseRecords, pgManageLicenseRecords,
+                    pgReadLicenseRecordsReference, pgReadOrgUnits);
 
             Role roleLM = iDBSpt.saveOrUpdateRole("LicenseManager",
                     "Менеджер управління записами про ліцензії", subSystem,
@@ -172,6 +178,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             KnowledgeAreaOrTrainingDirection kaotdCompSci = saveOrUpdateKAOTD("Комп'ютерні науки", null, "0804", false, false);
             KnowledgeAreaOrTrainingDirection kaotdInfComp = saveOrUpdateKAOTD("Інформатика та обчислювальна техніка", null, "0501", true, false);
             KnowledgeAreaOrTrainingDirection kaotdSpecCateg = saveOrUpdateKAOTD("Специфічні категорії", null, "0000", false, false);
+            KnowledgeAreaOrTrainingDirection kaotdSysSciCyber = saveOrUpdateKAOTD("Системні науки та кібернетика", null, "0403", true, false);
 
             //---Направления подготовки или специальности суффиксы _С, _B, _SM обозначают квалификационные уровни младшего специалиста, бакалавра, специалиста/магистра, соответственно----------
             TrainingDirectionOrSpeciality tdosPZAS_B = saveOrUpdateTDOS("Програмне забезпечення автоматизованих систем", "ПЗАС", "00", false, kaotdCompSci, false);
@@ -180,6 +187,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             TrainingDirectionOrSpeciality tdosPI_B = saveOrUpdateTDOS("Програмна інженерія", "ПІ", "03", true, kaotdInfComp, false);
             TrainingDirectionOrSpeciality tdosRPZ_JS = saveOrUpdateTDOS("Розробка програмного забезпечення", "РПЗ", "0301", true, kaotdInfComp, false);
             TrainingDirectionOrSpeciality tdosPVSH_SM = saveOrUpdateTDOS("Педагогіка вищої школи", "ПВШ", "05", false, kaotdSpecCateg, false);
+            TrainingDirectionOrSpeciality tdosSA_B = saveOrUpdateTDOS("Системний аналіз", "СА", "03", true, kaotdSysSciCyber, false);
 
             //---Серия, номер и дата выдачи лицензии----------
             Calendar licCal = Calendar.getInstance();
@@ -192,56 +200,54 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             NamedEntityController<OrgUnit> ouCnt = (NamedEntityController<OrgUnit>) (Object) iDBSpt.getControllerSource().get(OrgUnit.class);
             OrgUnit kafPIT = ouCnt.findByNameFirst("кафедра програмування та інформаційних технологій");
             OrgUnit kafEICPHS = ouCnt.findByNameFirst("кафедра управління навчальними закладами та педагогіки вищої школи");
+            OrgUnit kafSAVM = ouCnt.findByNameFirst("кафедра системного аналізу та вищої математики");
             //Термін закінчення ліцензій ПЗАС та ПІ
-            Calendar lrPZAS_Cal = Calendar.getInstance();
-
-            lrPZAS_Cal.set(Calendar.YEAR, 2010);
-
-            lrPZAS_Cal.set(Calendar.MONTH, Calendar.JULY);
-
-            lrPZAS_Cal.set(Calendar.DAY_OF_MONTH, 1);
-            //Термін закінчення ліцензій ПЗАС та ПІ
-            Calendar lrPVSH_Cal = Calendar.getInstance();
-
-            lrPZAS_Cal.set(Calendar.YEAR, 2009);
-
-            lrPZAS_Cal.set(Calendar.MONTH, Calendar.JULY);
-
-            lrPZAS_Cal.set(Calendar.DAY_OF_MONTH, 1);
+            Calendar lrCal20100701 = Calendar.getInstance();
+            lrCal20100701.set(Calendar.YEAR, 2010);
+            lrCal20100701.set(Calendar.MONTH, Calendar.JULY);
+            lrCal20100701.set(Calendar.DAY_OF_MONTH, 1);
+            //Термін закінчення ліцензій ПВШ
+            Calendar lrCal20090701 = Calendar.getInstance();
+            lrCal20090701.set(Calendar.YEAR, 2009);
+            lrCal20090701.set(Calendar.MONTH, Calendar.JULY);
+            lrCal20090701.set(Calendar.DAY_OF_MONTH, 1);
             //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
-            //суффиксы _D, _Z обозначают дневную и заочн формы обучения----------
+            //stat_EF, corr_EF обозначают дневную и заочн формы обучения----------
             //Програмне забезпечення автоматизованих систем - молодші спеціалісти, денна
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 0, lrPZAS_Cal.getTime(), kafPIT, forcol_LRG);
+            LicenseRecord pZASJSpecStat = saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 0, lrCal20100701.getTime(), kafPIT, forcol_LRG);
             //Програмне забезпечення автоматизованих систем - молодші спеціалісти, заочна
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT, forcol_LRG);
+            LicenseRecord pZASJSpecCorr = saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, corr_EF, 30, lrCal20100701.getTime(), kafPIT, forcol_LRG);
             //Програмне забезпечення автоматизованих систем - бакалаври, денна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, lrPZAS_Cal.getTime(), kafPIT, btrain_LRG);
+            LicenseRecord pZASBachStat = saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Програмне забезпечення автоматизованих систем - бакалаври, заочна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, corr_EF, 60, lrPZAS_Cal.getTime(), kafPIT, btrain_LRG);
+            LicenseRecord pZASBachCorr = saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, corr_EF, 60, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Програмне забезпечення автоматизованих систем - специалісти, денна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, lrPZAS_Cal.getTime(), kafPIT, bsmtrain_LRG);
+            LicenseRecord pZASSpecStat = saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Програмне забезпечення автоматизованих систем - специалісти, заочна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT, bsmtrain_LRG);
+            LicenseRecord pZASSpecCorr = saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, corr_EF, 30, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Програмне забезпечення автоматизованих систем - магістри, денна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, lrPZAS_Cal.getTime(), kafPIT, bsmtrain_LRG);
+            LicenseRecord pZASMasterStat = saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Програмне забезпечення автоматизованих систем - магістри, заочна
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, corr_EF, 10, lrPZAS_Cal.getTime(), kafPIT, bsmtrain_LRG);
+            LicenseRecord pZASMasterCorr = saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, corr_EF, 10, lrCal20100701.getTime(), kafPIT, bsmtrain_LRG);
             //Розробка програмного забезпечення - молодші спеціалісти, денна
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 0, lrPZAS_Cal.getTime(), kafPIT, jstrain_LRG);
+            LicenseRecord rPZJSpecStat = saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 0, lrCal20100701.getTime(), kafPIT, jstrain_LRG);
             //Розробка програмного забезпечення - молодші спеціалісти, заочна
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, corr_EF, 30, lrPZAS_Cal.getTime(), kafPIT, jstrain_LRG);
+            LicenseRecord rPZJSpecCorr = saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, corr_EF, 30, lrCal20100701.getTime(), kafPIT, jstrain_LRG);
             //Програмна інженерія- бакалаври, денна
-            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, lrPZAS_Cal.getTime(), kafPIT, btrain_LRG);
+            LicenseRecord pIBachStat = saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, lrCal20100701.getTime(), kafPIT, btrain_LRG);
             //Програмна інженерія- бакалаври, заочна
-            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, corr_EF, 60, lrPZAS_Cal.getTime(), kafPIT, btrain_LRG);
+            LicenseRecord pIBachCorr = saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, corr_EF, 60, lrCal20100701.getTime(), kafPIT, btrain_LRG);
             //Педагогіка вищої школи- магістри, денна
-            saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, stat_EF, 30, lrPVSH_Cal.getTime(), kafEICPHS, bsmtrain_LRG);
+            LicenseRecord pVSHMasterStat = saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, stat_EF, 30, lrCal20090701.getTime(), kafEICPHS, bsmtrain_LRG);
             ////Педагогіка вищої школи- магістри, заочна
-            saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, corr_EF, 30, lrPVSH_Cal.getTime(), kafEICPHS, bsmtrain_LRG);
+            LicenseRecord pVSHMasterCorr = saveOrUpdateLR(licenseCPU, tdosPVSH_SM, master_EQL, corr_EF, 30, lrCal20090701.getTime(), kafEICPHS, bsmtrain_LRG);
+            //Програмна інженерія- бакалаври, денна
+            LicenseRecord sABachStat = saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, lrCal20090701.getTime(), kafSAVM, btrain_LRG);
+            //Програмна інженерія- бакалаври, заочна
+            LicenseRecord sABachCorr = saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, corr_EF, 30, lrCal20090701.getTime(), kafSAVM, btrain_LRG);
             //TODO Добавить лицензионные записи
         }
-
     }
 
     //---------Метод сохранения/обновления областей знаний или направлений подготовки ----------

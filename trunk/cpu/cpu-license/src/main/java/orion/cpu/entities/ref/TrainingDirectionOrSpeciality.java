@@ -3,7 +3,6 @@ package orion.cpu.entities.ref;
 import orion.cpu.baseentities.ReferenceEntity;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.apache.tapestry5.beaneditor.ReorderProperties;
 import org.apache.tapestry5.beaneditor.Validate;
 
 /**
@@ -15,7 +14,6 @@ import org.apache.tapestry5.beaneditor.Validate;
     @UniqueConstraint(columnNames={"name", "code", "isTrainingDirection"}),
     @UniqueConstraint(columnNames={"shortName", "code", "isTrainingDirection"})
 })
-@ReorderProperties("name, shortName, code, isTrainingDirection, knowledgeAreaOrTrainingDirection, isObsolete")
 public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirectionOrSpeciality> {
 
     private static final long serialVersionUID = 1L;
@@ -26,21 +24,21 @@ public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirec
     private Boolean isTrainingDirection;
 
     @Column(nullable=false)
-    public Boolean getIsTrainingDirection() {
-        return isTrainingDirection;
-    }
-
-    public void setIsTrainingDirection(Boolean isTrainingDirection) {
-        this.isTrainingDirection = isTrainingDirection;
-    }
-
-    @Column(nullable=false)
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Column(nullable=false)
+    public Boolean getIsTrainingDirection() {
+        return isTrainingDirection;
+    }
+
+    public void setIsTrainingDirection(Boolean isTrainingDirection) {
+        this.isTrainingDirection = isTrainingDirection;
     }
 
     @JoinColumn(nullable=false)

@@ -3,7 +3,6 @@ package orion.cpu.entities.ref;
 import orion.cpu.baseentities.ReferenceEntity;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.apache.tapestry5.beaneditor.ReorderProperties;
 import org.apache.tapestry5.beaneditor.Validate;
 
 /**
@@ -16,7 +15,6 @@ import org.apache.tapestry5.beaneditor.Validate;
     @UniqueConstraint(columnNames={"shortName", "isKnowledgeArea"}),
     @UniqueConstraint(columnNames={"code", "isKnowledgeArea"})
 })
-@ReorderProperties("name, shortName, code, isKnowledgeArea, isObsolete")
 public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeAreaOrTrainingDirection> {
 
     private static final long serialVersionUID = 1L;
@@ -26,15 +24,6 @@ public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeA
     private Boolean isKnowledgeArea;
 
     @Column(nullable=false)
-    public Boolean getIsKnowledgeArea() {
-        return isKnowledgeArea;
-    }
-
-    public void setIsKnowledgeArea(Boolean isKnowledgeArea) {
-        this.isKnowledgeArea = isKnowledgeArea;
-    }
-
-    @Column(nullable=false)
     public String getCode() {
         return code;
     }
@@ -42,6 +31,15 @@ public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeA
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Column(nullable=false)
+    public Boolean getIsKnowledgeArea() {
+        return isKnowledgeArea;
+    }
+
+    public void setIsKnowledgeArea(Boolean isKnowledgeArea) {
+        this.isKnowledgeArea = isKnowledgeArea;
+    }   
 
     @Override
     public boolean entityEquals(KnowledgeAreaOrTrainingDirection obj) {
