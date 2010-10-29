@@ -6,7 +6,6 @@
 package orion.cpu.entities.ref;
 
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.ReorderProperties;
 import orion.cpu.baseentities.ReferenceEntity;
 
 /**
@@ -18,7 +17,6 @@ import orion.cpu.baseentities.ReferenceEntity;
     @UniqueConstraint(columnNames = {"name"}),
     @UniqueConstraint(columnNames = {"shortName"})
 })
-@ReorderProperties("name, shortName, isObsolete")
 public class LicenseRecordGroup extends ReferenceEntity<LicenseRecordGroup>{
     private static final long serialVersionUID = 1L;
     /**

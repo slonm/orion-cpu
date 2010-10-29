@@ -1,7 +1,6 @@
 package orion.cpu.entities.ref;
 
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.ReorderProperties;
 import org.apache.tapestry5.beaneditor.Validate;
 import orion.cpu.baseentities.ReferenceEntity;
 
@@ -14,7 +13,6 @@ import orion.cpu.baseentities.ReferenceEntity;
     @UniqueConstraint(columnNames = {"name"}),
     @UniqueConstraint(columnNames = {"shortName"})
 })
-@ReorderProperties("code, name, shortName, isObsolete")
 public class EducationalQualificationLevel extends ReferenceEntity<EducationalQualificationLevel> {
 
     private static final long serialVersionUID = 1L;
