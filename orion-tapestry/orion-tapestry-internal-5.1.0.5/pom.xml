@@ -188,7 +188,6 @@ of a Tapestry Maven plugin is not required.   -->
         <slf4j-release-version>1.5.2</slf4j-release-version>
         <tapestry-release-version>5.1.0.5</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     </properties>
     <groupId>orion</groupId>
     <artifactId>orion-tapestry-internal-${tapestry-release-version}</artifactId>
