@@ -30,9 +30,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
     @Override
     public void run() {
+        LOG.debug("Add subsystem...");
         SubSystem subSystem = iDBSpt.saveOrUpdateSubSystem("License");
         //---------Константы---------
         //---------Формы обучения---------
+        LOG.debug("Add EducationForms...");
         EducationForm stat_EF = iDBSpt.getStoredConstantsSource().get(EducationForm.class, EducationForm.STATIONARY_KEY);
         if (stat_EF == null) {
             stat_EF = new EducationForm("Денна");
@@ -47,6 +49,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         }
 
         //---------Квалификационные уровни---------
+        LOG.debug("Add EducationalQualificationLevels...");
         EducationalQualificationLevel jSpec_EQL = iDBSpt.getStoredConstantsSource().get(EducationalQualificationLevel.class, EducationalQualificationLevel.JUNIOR_SPECIALIST_KEY);
         if (jSpec_EQL == null) {
             jSpec_EQL = new EducationalQualificationLevel("Молодший спеціаліст", "5");
@@ -73,6 +76,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         }
 
         //---------Группы лицензионных записей (область действия) ---------
+        LOG.debug("Add LicenseRecordGroups...");
         LicenseRecordGroup bsmtrain_LRG = iDBSpt.getStoredConstantsSource().get(LicenseRecordGroup.class, LicenseRecordGroup.BSMTRAINING_KEY);
         if (bsmtrain_LRG == null) {
             bsmtrain_LRG = new LicenseRecordGroup("Підготовка бакалаврів, спеціалістів. магістрів");
@@ -104,6 +108,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         }
 
         //---------Права----------
+        LOG.debug("Add Permissions Maps...");
         Map<String, Permission> EFPermissions = iDBSpt.getPermissionsMap(EducationForm.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> EQLPermissions = iDBSpt.getPermissionsMap(EducationalQualificationLevel.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> KAOTPermissions = iDBSpt.getPermissionsMap(KnowledgeAreaOrTrainingDirection.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
@@ -116,6 +121,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         if (iDBSpt.isFillTestData()) {
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
+            LOG.debug("Add Test PermissionGroups...");
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
                     LPermissions.get(READ_OP), LPermissions.get(MENU_OP),
                     LRPermissions.get(READ_OP),
@@ -147,6 +153,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             PermissionGroup pgReadOrgUnits = iDBSpt.getPermissionGroupController().findByName("Подсистема административно-организационной структуры. Просмотр записей о подразделениях");
 
             //---------Роли----------
+            LOG.debug("Add Test Roles...");
             Role roleLG = iDBSpt.saveOrUpdateRole("LicenseGuest",
                     "Перегляд записів про ліцензії", subSystem, pgReadLicenseRecords,pgReadOrgUnits);
 
@@ -161,6 +168,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
                     pgReadLicenseRecordsReference, pgManageLicenseRecordsReference, pgReadOrgUnits);
 
             //---------Пользователи----------
+            LOG.debug("Add Test Roles to Users...");
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleLM);
@@ -175,21 +183,24 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             uCnt.saveOrUpdate(user);
 
             //---------Области знаний или направления подготовки----------
+            LOG.debug("Add Test KnowledgeAreaOrTrainingDirections...");
             KnowledgeAreaOrTrainingDirection kaotdCompSci = saveOrUpdateKAOTD("Комп'ютерні науки", null, "0804", false, false);
             KnowledgeAreaOrTrainingDirection kaotdInfComp = saveOrUpdateKAOTD("Інформатика та обчислювальна техніка", null, "0501", true, false);
             KnowledgeAreaOrTrainingDirection kaotdSpecCateg = saveOrUpdateKAOTD("Специфічні категорії", null, "0000", false, false);
             KnowledgeAreaOrTrainingDirection kaotdSysSciCyber = saveOrUpdateKAOTD("Системні науки та кібернетика", null, "0403", true, false);
 
             //---Направления подготовки или специальности суффиксы _С, _B, _SM обозначают квалификационные уровни младшего специалиста, бакалавра, специалиста/магистра, соответственно----------
+            LOG.debug("Add Test TrainingDirectionOrSpecialitys...");
             TrainingDirectionOrSpeciality tdosPZAS_B = saveOrUpdateTDOS("Програмне забезпечення автоматизованих систем", "ПЗАС", "00", false, kaotdCompSci, false);
             TrainingDirectionOrSpeciality tdosPZAS_SM = saveOrUpdateTDOS("Програмне забезпечення автоматизованих систем", "ПЗАС", "03", false, kaotdCompSci, false);
             TrainingDirectionOrSpeciality tdosPECTAS_JS = saveOrUpdateTDOS("Програмування для електронно-обчислювальної техніки і автоматизованих систем", "ПЗАС", "05", false, kaotdCompSci, false);
             TrainingDirectionOrSpeciality tdosPI_B = saveOrUpdateTDOS("Програмна інженерія", "ПІ", "03", true, kaotdInfComp, false);
             TrainingDirectionOrSpeciality tdosRPZ_JS = saveOrUpdateTDOS("Розробка програмного забезпечення", "РПЗ", "0301", true, kaotdInfComp, false);
             TrainingDirectionOrSpeciality tdosPVSH_SM = saveOrUpdateTDOS("Педагогіка вищої школи", "ПВШ", "05", false, kaotdSpecCateg, false);
-            TrainingDirectionOrSpeciality tdosSA_B = saveOrUpdateTDOS("Системний аналіз", "СА", "03", true, kaotdSysSciCyber, false);
+            TrainingDirectionOrSpeciality tdosSA_B = saveOrUpdateTDOS("Системний аналіз та управління", "СА", "03", true, kaotdSysSciCyber, false);
 
             //---Серия, номер и дата выдачи лицензии----------
+            LOG.debug("Add Test License...");
             Calendar licCal = Calendar.getInstance();
             licCal.set(Calendar.YEAR, 2008);
             licCal.set(Calendar.MONTH, Calendar.OCTOBER);
@@ -211,6 +222,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             lrCal20090701.set(Calendar.YEAR, 2009);
             lrCal20090701.set(Calendar.MONTH, Calendar.JULY);
             lrCal20090701.set(Calendar.DAY_OF_MONTH, 1);
+            LOG.debug("Add Test LicenseRecords...");
             //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
             //stat_EF, corr_EF обозначают дневную и заочн формы обучения----------
