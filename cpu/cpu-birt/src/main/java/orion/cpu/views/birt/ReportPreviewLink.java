@@ -115,4 +115,21 @@ public class ReportPreviewLink implements Link {
 
         return builder.toString();
     }
+
+    public void removeParameter(String parameterName) {
+        Defense.notBlank(parameterName, "parameterName");
+        if (parameters != null) {
+            parameters.remove(parameterName);
+        }
+    }
+
+    public String getBasePath() {
+        return absoluteURI;
+    }
+
+    public Link copyWithBasePath(String basePath) {
+        ReportPreviewLink copy = new ReportPreviewLink(basePath, parameters, response);
+        copy.anchor = anchor;
+        return copy;
+    }
 }
