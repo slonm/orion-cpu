@@ -28,9 +28,11 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
 
     @Override
     public void run() {
+        LOG.debug("Add SubSystem...");
         SubSystem subSystem = iDBSpt.saveOrUpdateSubSystem("EduProcess");
         //---------Константы
         //---------Циклы дисциплин в ОПП "Программная инженерия" (в других могут отличаться!!!)---------
+        LOG.debug("Add EPPCycle...");
         EPPCycle humsocecon_DC = iDBSpt.getStoredConstantsSource().get(EPPCycle.class, EPPCycle.SOCIALHUMANITARY_KEY);
         if (humsocecon_DC == null) {
             humsocecon_DC = new EPPCycle("Цикл гуманітарної та соціально-економічної підготовки", "ЦГСЭП");
@@ -64,6 +66,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
         }
 
         //---------Права----------
+        LOG.debug("Add Permissions Maps...");
         Map<String, Permission> DPermissions = iDBSpt.getPermissionsMap(Discipline.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> EPPCPermissions = iDBSpt.getPermissionsMap(EPPCycle.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> QPermissions = iDBSpt.getPermissionsMap(Qualification.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
@@ -78,6 +81,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
         if (iDBSpt.isFillTestData()) {
             //---------Группы прав----------
             //Права просмотра записей учебного плана
+            LOG.debug("Add Test PermissionGroups...");
             PermissionGroup pgReadEduPlanRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема организации учебного процесса. Просмотр учебных планов",
                     EPPermissions.get(READ_OP), EPDPermissions.get(READ_OP), EPDCPermissions.get(READ_OP),
                     EPRPermissions.get(READ_OP), EPSPermissions.get(READ_OP),
@@ -114,6 +118,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             PermissionGroup pgReadOrgUnits = iDBSpt.getPermissionGroupController().findByName("Подсистема административно-организационной структуры. Просмотр записей о подразделениях");
 
             //---------Роли----------
+            LOG.debug("Add Test Roles...");
             Role roleEPG = iDBSpt.saveOrUpdateRole("EduPlanGuest",
                     "Просмотр записей учебных планов", subSystem, pgReadEduPlanRecords);
 
@@ -129,6 +134,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
                     pgReadLicenseRecordsReference, pgReadOrgUnits);
 
             //---------Пользователи----------
+            LOG.debug("Add Test Users Roles...");
             UserController uCnt = iDBSpt.getUserController();
             User user = uCnt.findByLogin("sl");
             user.add(roleEPM);
@@ -143,6 +149,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
 //            uCnt.saveOrUpdate(user);
 
             //---------Квалификации----------
+            LOG.debug("Add Test Qualifications...");
             Qualification fRTPZ = saveOrUpdateQ("фахівець з розробки та тестування програмного забезпечення", "", "");
             Qualification SoftwareEng = saveOrUpdateQ("інженер-програміст", "", "");
             Qualification SoftwareMaster = saveOrUpdateQ("магістр з програмного забезпечення автоматизованих систем,  інженер-програміст", "", "");
@@ -191,10 +198,12 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             List<LicenseRecord> sABachList = (List<LicenseRecord>)lrCnt.findByExample(lrSampleSA);
             LicenseRecord sABach=sABachList.get(0);
 
+            LOG.debug("Add Test EduPlans...");
             //--Заполнение экземпляра учебных планов (для бакалавров ПИ 2009г утверждения)
             EduPlan pIBach2009 = saveOrUpdateEP(pIBach, 4.0, fRTPZ, ePCal20090901.getTime());
             EduPlan sABach2009 = saveOrUpdateEP(sABach, 4.0, tFGPNT, ePCal20090901.getTime());
 
+            LOG.debug("Add Test EduPlanDisciplineCycles...");
             //--Заполнение циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения)
             EduPlanDisciplineCycle pIBach2009HumSocEconom = saveOrUpdateEPDC(humsocecon_DC, "1", pIBach2009, true, 864);
             EduPlanDisciplineCycle pIBach2009MathNatSci = saveOrUpdateEPDC(mathnatsci_DC, "2", pIBach2009, true, 846);
@@ -206,6 +215,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             EduPlanDisciplineCycle sABach2009ProfND = saveOrUpdateEPDC(profnd_DC, "3", sABach2009, true, 2070);
 
             //--Заполнение номеров семестров учебных планов с количество недель теоретических занятий
+            LOG.debug("Add Test EduPlanSemesters...");
             EduPlanSemester firstSem16 = saveOrUpdateEPS("1","",16.0);
             EduPlanSemester secondSem16 = saveOrUpdateEPS("2","",16.0);
             EduPlanSemester thirdSem16 = saveOrUpdateEPS("3","",16.0);
@@ -217,6 +227,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             EduPlanSemester eighthSem12 = saveOrUpdateEPS("8","",12.0);
 
             //--Заполнение названий дисциплин
+            LOG.debug("Add Test Disciplines...");
             Discipline foreignLang = saveOrUpdateDiscName("Іноземна мова", "Ін.мова");
             Discipline pravoznavstvo = saveOrUpdateDiscName("Правознавство", "Правозн.");
             Discipline mathAnalysis = saveOrUpdateDiscName("Математичний аналіз", "Мат.аналіз");
@@ -233,6 +244,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             Discipline model = saveOrUpdateDiscName("Моделювання економічних, екологічних та соціальних процесів", "МЕЕСП");
 
             //--Заполнение дисциплин учебных планов
+            LOG.debug("Add Test EduPlanDisciplines...");
             EduPlanDiscipline foreignLangPI2009 = saveOrUpdateEPDisc(foreignLang, pIBach2009HumSocEconom, 180, true);
             EduPlanDiscipline pravoznavstvoPI2009 = saveOrUpdateEPDisc(pravoznavstvo, pIBach2009HumSocEconom, 54, true);
             EduPlanDiscipline mathAnalysisPI2009 = saveOrUpdateEPDisc(mathAnalysis, pIBach2009MathNatSci, 360, true);
@@ -249,6 +261,7 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             EduPlanDiscipline modelSA2009 = saveOrUpdateEPDisc(model, sABach2009ProfND, 144, true);
 
             //--Заполнение записей учебных планов
+            LOG.debug("Add Test EduPlanRecords...");
             EduPlanRecord foreignLangPI2009_1 = saveOrUpdateEPRecord("01", foreignLangPI2009, firstSem16, false, true, false, false, 72, 0, 0, 24);
             EduPlanRecord foreignLangPI2009_2 = saveOrUpdateEPRecord("01", foreignLangPI2009, secondSem16, false, true, false, false, 72, 0, 0, 24);
             EduPlanRecord foreignLangPI2009_3 = saveOrUpdateEPRecord("01", foreignLangPI2009, thirdSem16, false, true, false, false, 63, 0, 0, 24);
