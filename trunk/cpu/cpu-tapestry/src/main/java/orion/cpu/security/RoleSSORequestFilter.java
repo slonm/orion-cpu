@@ -23,6 +23,7 @@ import static orion.cpu.views.tapestry.utils.CpuTapestryUtils.subSystemNameByMen
  * переключение между ролями осуществляется уже после входа пользователя в систему
  * @author sl
  */
+//TODO Объеденить с UserASORequestFilter
 public class RoleSSORequestFilter implements RequestFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleSSORequestFilter.class);

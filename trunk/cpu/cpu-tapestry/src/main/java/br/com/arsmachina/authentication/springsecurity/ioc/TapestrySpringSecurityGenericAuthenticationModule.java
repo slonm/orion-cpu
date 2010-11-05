@@ -21,7 +21,6 @@ import java.util.Properties;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
-import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -39,6 +38,8 @@ import br.com.arsmachina.authentication.controller.UserController;
 import br.com.arsmachina.authentication.springsecurity.SpringSecurityMD5PasswordEncrypter;
 import br.com.arsmachina.authentication.springsecurity.UserDetailsServiceImpl;
 import br.com.arsmachina.authentication.springsecurity.internal.UserASORequestFilter;
+import org.apache.tapestry5.services.HttpServletRequestFilter;
+import orion.cpu.security.AuthorizerUserAndRoleRequestFilter;
 import orion.cpu.security.RoleSSORequestFilter;
 
 /**
@@ -62,15 +63,6 @@ public class TapestrySpringSecurityGenericAuthenticationModule {
     private static final String COMPONENT_PREFIX = "tssga";
 
     /**
-     * Declares some objects to IoC.
-     *
-     * @param binder a {@link ServiceBinder}.
-     */
-    public static void bind(ServiceBinder binder) {
-        binder.bind(UserASORequestFilter.class);
-    }
-
-    /**
      * Creates the {@link UserDetailsService} instantiating {@link UserDetailsServiceImpl}.
      *
      * @param controller an {@link UserController}.
@@ -87,11 +79,15 @@ public class TapestrySpringSecurityGenericAuthenticationModule {
      * @param configuration
      * @param filter an {@link UserASORequestFilter}.
      */
-    public static void contributeRequestHandler(OrderedConfiguration<RequestFilter> configuration,
-            UserASORequestFilter filter) {
+    public static void contributeRequestHandler(OrderedConfiguration<RequestFilter> configuration) {
 
-        configuration.add("useraso", filter);
+        configuration.addInstance("useraso", UserASORequestFilter.class);
         configuration.addInstance("rolesso", RoleSSORequestFilter.class, "after:useraso");
+
+    }
+
+    public static void contributeHttpServletRequestHandler(OrderedConfiguration<HttpServletRequestFilter> configuration) {
+        configuration.addInstance("authorizerUserAndRole", AuthorizerUserAndRoleRequestFilter.class,"after:springSecurity*");
 
     }
 
