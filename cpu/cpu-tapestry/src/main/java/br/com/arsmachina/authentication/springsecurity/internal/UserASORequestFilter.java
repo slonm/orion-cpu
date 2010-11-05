@@ -36,6 +36,7 @@ import ua.mihailslobodyanuk.utils.Defense;
  * Если аутентификация не выполнена, то устанавливается пользователь GUEST и у него не изменяется флаг isLoggedIn
  * @author Thiago H. de Paula Figueiredo
  */
+//TODO Брать текущего пользователя и роль из autorizer
 public class UserASORequestFilter implements RequestFilter {
 
     final private static String USER_LOGOUT_LISTENER_ATTRIBUTE = "USER_LOGOUT_LISTENER";
