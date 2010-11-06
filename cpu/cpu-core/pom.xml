@@ -21,12 +21,8 @@
             <artifactId>tapestry5-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>ejb3-persistence</artifactId>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -44,10 +40,6 @@
         <dependency>
             <groupId>ua.mihailslobodyanuk</groupId>
             <artifactId>mihailslobodyanukutils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>br.com.arsmachina</groupId>
-            <artifactId>generic-dao</artifactId>
         </dependency>
         <dependency>
             <groupId>br.com.arsmachina</groupId>

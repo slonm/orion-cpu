@@ -407,4 +407,74 @@ public class HibernateSessionWrapper implements org.hibernate.classic.Session{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public boolean isDefaultReadOnly() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void setDefaultReadOnly(boolean readOnly) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object load(Class theClass, Serializable id, LockOptions lockOptions) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object load(String entityName, Serializable id, LockOptions lockOptions) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public LockRequest buildLockRequest(LockOptions lockOptions) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void refresh(Object object, LockOptions lockOptions) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object get(Class clazz, Serializable id, LockOptions lockOptions) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object get(String entityName, Serializable id, LockOptions lockOptions) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isReadOnly(Object entityOrProxy) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isFetchProfileEnabled(String name) throws UnknownProfileException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void enableFetchProfile(String name) throws UnknownProfileException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void disableFetchProfile(String name) throws UnknownProfileException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public TypeHelper getTypeHelper() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public LobHelper getLobHelper() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

@@ -2,7 +2,7 @@ package br.com.arsmachina.authentication.entity;
 
 import java.util.*;
 import javax.persistence.*;
-import org.hibernate.validator.NotNull;
+import javax.validation.constraints.NotNull;
 import orion.cpu.baseentities.AbstractRole;
 import orion.cpu.entities.sys.SubSystem;
 
