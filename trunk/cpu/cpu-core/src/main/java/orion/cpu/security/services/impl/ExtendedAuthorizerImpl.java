@@ -17,6 +17,7 @@ import ua.mihailslobodyanuk.utils.Defense;
  * Сервис авторизации
  * @author sl
  */
+//TODO Убрать все обращения к БД
 @Scope(ScopeConstants.PERTHREAD)
 public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
 

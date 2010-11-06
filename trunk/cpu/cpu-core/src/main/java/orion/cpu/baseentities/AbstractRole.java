@@ -3,7 +3,8 @@ package orion.cpu.baseentities;
 import br.com.arsmachina.authentication.entity.*;
 import java.util.*;
 import javax.persistence.*;
-import org.hibernate.validator.*;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * Class that represents a role an user can have in the application.

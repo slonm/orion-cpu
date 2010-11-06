@@ -2,7 +2,9 @@ package orion.cpu.baseentities;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.*;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *

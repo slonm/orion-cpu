@@ -2,7 +2,7 @@ package br.com.arsmachina.authentication.entity;
 
 import java.util.*;
 import javax.persistence.*;
-import org.hibernate.validator.*;
+import javax.validation.constraints.Size;
 import orion.cpu.baseentities.NamedEntity;
 import ua.mihailslobodyanuk.utils.Defense;
 
