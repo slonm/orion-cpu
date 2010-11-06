@@ -1,13 +1,10 @@
 package orion.cpu.views.desktoptest;
 
 import br.com.arsmachina.authentication.controller.PasswordEncrypter;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.services.LoggingAdvisor;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import orion.cpu.services.CoreIOCModule;
 
 /**
