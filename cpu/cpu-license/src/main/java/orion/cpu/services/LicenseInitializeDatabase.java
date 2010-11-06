@@ -205,7 +205,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             licCal.set(Calendar.YEAR, 2008);
             licCal.set(Calendar.MONTH, Calendar.OCTOBER);
             licCal.set(Calendar.DAY_OF_MONTH, 21);
-            License licenseCPU = saveOrUpdateLicense("АВ", "420720", licCal.getTime(), "", null);
+            License licenseCPU = saveOrUpdateLicense("АВ", "420720", licCal.getTime(), null);
 
             //---Кафедры, выполняющие обучение по лицензиям----------
             NamedEntityController<OrgUnit> ouCnt = (NamedEntityController<OrgUnit>) (Object) iDBSpt.getControllerSource().get(OrgUnit.class);
@@ -279,7 +279,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         //--Переменная для работы с экземпляром элемента спискка
         KnowledgeAreaOrTrainingDirection p;
         //--Инициализация элемента списка
-        if (kaotd.size() == 0) {
+        if (kaotd.isEmpty()) {
             p = new KnowledgeAreaOrTrainingDirection();
             p.setName(name);
             p.setShortName(shortName);
@@ -318,7 +318,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         //--Переменная для работы с экземпляром элемента спискка
         TrainingDirectionOrSpeciality p;
         //--Инициализация элемента списка
-        if (tdos.size() == 0) {
+        if (tdos.isEmpty()) {
             p = new TrainingDirectionOrSpeciality();
             p.setName(name);
             p.setShortName(shortName);
@@ -338,7 +338,6 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             String serial,
             String number,
             Date issue,
-            String body,
             Map<String, DocumentImage> images) {
 
         //--Создание контроллера, работающего с экземплярами шапки лицензии
@@ -349,7 +348,6 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         licenseSample.setSerial(serial);
         licenseSample.setNumber(number);
         licenseSample.setIssue(issue);
-        licenseSample.setBody(body);
         licenseSample.setImages(images);
 
         //--Выборка списка данных шапок лицензий
@@ -357,12 +355,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         //--Переменная для работы с экземпляром элемента спискка
         License p;
         //--Инициализация элемента списка
-        if (license.size() == 0) {
+        if (license.isEmpty()) {
             p = new License();
             p.setSerial(serial);
             p.setNumber(number);
             p.setIssue(issue);
-            p.setBody(body);
             p.setImages(images);
         } else {
             p = license.get(0);
@@ -401,18 +398,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         LicenseRecord p;
         //--Инициализация элемента списка
 
-
-
-
-
-
-
-
-
-
-
-
-        if (lr.size() == 0) {
+        if (lr.isEmpty()) {
             p = new LicenseRecord();
             p.setLicense(license);
             p.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
