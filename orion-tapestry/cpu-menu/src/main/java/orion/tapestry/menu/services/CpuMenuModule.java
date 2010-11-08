@@ -33,9 +33,7 @@ public class CpuMenuModule {
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
         configuration.add(new LibraryMapping("menu", "orion.tapestry.menu"));
     }
-
-    public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
-        configuration.add("menu/1.0", "orion/tapestry/menu");
-    }
-
+//contribution do automaticaly in Tapestry 5.2.2
+//    public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
+//        configuration.add("menu/1.0", "orion/tapestry/menu");
 }
