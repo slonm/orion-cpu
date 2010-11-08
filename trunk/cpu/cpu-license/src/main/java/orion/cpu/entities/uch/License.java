@@ -3,7 +3,7 @@ package orion.cpu.entities.uch;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.Validate;
+import javax.validation.constraints.Pattern;
 import orion.cpu.entities.pub.Document;
 
 /**
@@ -20,7 +20,7 @@ public class License extends Document<License> {
      * @return the LicenseSeria
      */
     @Column(length = 2, nullable = false)
-    @Validate("regexp=([А-Я]{2})")
+    @Pattern(regexp="([А-Я]{2})")
     @Override
     public String getSerial() {
         return super.getSerial();
