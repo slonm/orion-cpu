@@ -12,8 +12,8 @@ import org.slf4j.*;
 import orion.cpu.entities.sys.*;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.services.impl.InitializeDatabaseSupport;
-import orion.tapestry.internal.services.impl.GlobalMessages;
 import orion.tapestry.services.FieldLabelSource;
+import orion.tapestry.services.GlobalMessages;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
