@@ -1,8 +1,7 @@
 package orion.cpu.entities.org;
 
-import orion.cpu.entities.*;
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.Validate;
+import javax.validation.constraints.Size;
 import orion.cpu.baseentities.NamedEntity;
 
 /**
@@ -12,12 +11,13 @@ import orion.cpu.baseentities.NamedEntity;
  * @author sl
  */
 @Entity
-@Table(schema="org", uniqueConstraints=@UniqueConstraint(columnNames="name"))
-@Inheritance(strategy=InheritanceType.JOINED)
+@Table(schema = "org", uniqueConstraints =
+@UniqueConstraint(columnNames = "name"))
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class OrgUnit extends NamedEntity<OrgUnit> {
 
     private static final long serialVersionUID = 1L;
-    @Validate("minlength=1")
+    @Size(min = 1)
     private String shortName;
 
     @Column(unique = true)
