@@ -11,7 +11,8 @@
   <url>http://www.zhu.edu.ua/devforum</url>
 <modules>
  <module>orion-tapestry</module>
- <module>orion-tapestry-internal-${tapestry-release-version}</module>
+ <module>orion-tapestry-internal-5.1.0.5</module>
+ <module>orion-tapestry-internal-5.2.2</module>
  <module>cpu-menu</module>
 </modules>
    <build>
@@ -25,7 +26,4 @@
       </plugin>
     </plugins>
   </build>
-    <properties>
-        <tapestry-release-version>5.1.0.5</tapestry-release-version>
-    </properties>
 </project>
