@@ -1,7 +1,6 @@
 package orion.tapestry.services;
 
 import java.util.*;
-import org.apache.tapestry5.internal.services.ComponentMessagesSource;
 
 /**
  * Глобальный каталог сообщений и
