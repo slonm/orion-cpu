@@ -39,11 +39,6 @@
             </dependency>
             <dependency>
                 <groupId>orion</groupId>
-                <artifactId>orion-tapestry</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>orion</groupId>
                 <artifactId>cpu-core</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
@@ -192,8 +187,7 @@
                         <artifactId>persistence-api</artifactId>
                     </exclusion>
                 </exclusions>
-                <version>5.2.2</version>
-                <!--version>${tapestry-release-version}</version-->
+                <version>${tapestry-release-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -288,11 +282,16 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>orion-tapestry-internal-${tapestry-release-version}</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         </dependencies>
     </dependencyManagement>
     <properties>
         <slf4j-release-version>1.5.2</slf4j-release-version>
-        <tapestry-release-version>5.1.0.5</tapestry-release-version>
+        <tapestry-release-version>5.2.2</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.javaDocEncoding>UTF-8</project.build.javaDocEncoding>
         <project.build.sourceJavaVersion>1.6</project.build.sourceJavaVersion>
