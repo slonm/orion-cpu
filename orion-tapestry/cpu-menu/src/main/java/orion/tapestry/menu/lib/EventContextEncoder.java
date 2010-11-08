@@ -43,6 +43,14 @@ public class EventContextEncoder {
         public <T> T get(Class<T> desiredType, int index) {
             return (T) items[index];
         }
+
+        public String[] toStrings() {
+            String[] ret = new String[items.length];
+            for(int i=0;i<items.length;i++){
+                ret[i]=items[i].toString();
+            }
+            return ret;
+        }
     }
 
     /**

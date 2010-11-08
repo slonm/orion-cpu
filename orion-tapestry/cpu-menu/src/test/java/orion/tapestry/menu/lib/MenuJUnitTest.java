@@ -314,6 +314,31 @@ class EmptyLink implements Link {
     public String toAbsoluteURI() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Link addParameterValue(String parameterName, Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeParameter(String parameterName) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getBasePath() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Link copyWithBasePath(String basePath) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String toAbsoluteURI(boolean secure) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
 
 class cr implements ComponentResources {
@@ -525,6 +550,16 @@ class cr implements ComponentResources {
 
     @Override
     public Location getLocation() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removePageLifecycleListener(PageLifecycleListener listener) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isMixin() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
