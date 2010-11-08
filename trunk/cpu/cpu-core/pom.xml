@@ -50,7 +50,7 @@
             <artifactId>generic-controller</artifactId>
         </dependency>
         <dependency>
-            <groupId>orion</groupId>
+            <groupId>br.com.arsmachina</groupId>
             <artifactId>application-module</artifactId>
         </dependency>
         <dependency>
