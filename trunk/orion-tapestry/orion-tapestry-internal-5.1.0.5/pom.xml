@@ -29,6 +29,11 @@
             <artifactId>tapestry5-annotations</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>orion-tapestry</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 <!--
 -->
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
