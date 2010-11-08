@@ -29,7 +29,7 @@
             <artifactId>tapestry-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>orion</groupId>
+            <groupId>br.com.arsmachina</groupId>
             <artifactId>tapestry-crud</artifactId>
         </dependency>
         <dependency>
