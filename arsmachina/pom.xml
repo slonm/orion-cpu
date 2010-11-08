@@ -12,6 +12,7 @@
 <modules>
  <module>tapestry-crud</module>
  <module>application-module</module>
+ <module>generic-dao-hibernate</module>
 </modules>
    <build>
     <plugins>
