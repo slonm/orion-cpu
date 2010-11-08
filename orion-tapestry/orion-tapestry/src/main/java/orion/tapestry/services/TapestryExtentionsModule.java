@@ -1,6 +1,5 @@
 package orion.tapestry.services;
 
-import java.net.URLStreamHandlerFactory;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
@@ -52,8 +51,8 @@ public class TapestryExtentionsModule {
      * @param fieldLabelSource сервис {@link FieldLabelSource}
      */
     @Match("BeanModelSource")
-    public static void adviseBeanModelSource(MethodAdviceReceiver receiver, FieldLabelSource fieldLabelSource) {
-        MethodAdvice advice = new BeanModelSourceMethodAdvice(fieldLabelSource);
+    public static void adviseBeanModelSource(MethodAdviceReceiver receiver,
+            @Autobuild BeanModelSourceMethodAdvice advice) {
         receiver.adviseAllMethods(advice);
     }
 

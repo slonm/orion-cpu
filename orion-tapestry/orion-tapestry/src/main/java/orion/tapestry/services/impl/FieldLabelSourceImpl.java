@@ -4,12 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Locale;
 import org.apache.tapestry5.ioc.Messages;
-import org.apache.tapestry5.ioc.ScopeConstants;
-import org.apache.tapestry5.ioc.annotations.Scope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import orion.tapestry.internal.services.impl.GlobalMessages;
 import orion.tapestry.services.FieldLabelSource;
+import orion.tapestry.services.GlobalMessages;
 import ua.mihailslobodyanuk.utils.Defense;
 import ua.mihailslobodyanuk.utils.reflect.generics.PropertyInfo;
 
