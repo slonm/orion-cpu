@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>orion</groupId>
+            <artifactId>orion-tapestry-internal-${tapestry-release-version}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>orion</groupId>
             <artifactId>cpu-core</artifactId>
         </dependency>
         <dependency>
