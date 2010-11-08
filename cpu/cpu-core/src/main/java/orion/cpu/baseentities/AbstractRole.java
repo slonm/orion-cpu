@@ -3,8 +3,7 @@ package orion.cpu.baseentities;
 import br.com.arsmachina.authentication.entity.*;
 import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.*;
 
 /**
  * Class that represents a role an user can have in the application.
@@ -103,7 +102,7 @@ public abstract class AbstractRole<T extends AbstractRole<?>> extends NamedEntit
      */
     @Column(nullable = false, unique = true)
     @NotNull
-    @Length(min = 2, max = 50)
+    @Size(min = 2, max = 50)
     public String getLogin() {
         return login;
     }
