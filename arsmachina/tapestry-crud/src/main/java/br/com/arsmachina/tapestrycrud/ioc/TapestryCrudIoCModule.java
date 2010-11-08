@@ -494,9 +494,10 @@ public class TapestryCrudIoCModule {
 	 * 
 	 * @param contributions a {@link Map<Class, SingleTypeSelectModelFactory>}.
 	 * @return a {@link SelectModelFactory}.
+         * Tapestry 5.2.2 have own SelectModelFactory
 	 */
 	@SuppressWarnings("unchecked")
-	public static SelectModelFactory buildSelectModelFactory(
+	public static SelectModelFactory buildArsSelectModelFactory(
 			Map<Class, SingleTypeSelectModelFactory> contributions) {
 		return new SelectModelFactoryImpl(contributions);
 	}
@@ -534,11 +535,12 @@ public class TapestryCrudIoCModule {
 
 	}
 
-	public static void contributeClasspathAssetAliasManager(
-			MappedConfiguration<String, String> configuration) {
-		configuration.add(TAPESTRY_CRUD_ASSET_PREFIX,
-				"br/com/arsmachina/tapestrycrud/components");
-	}
+//contribution do automaticaly in Tapestry 5.2.2
+//	public static void contributeClasspathAssetAliasManager(
+//			MappedConfiguration<String, String> configuration) {
+//		configuration.add(TAPESTRY_CRUD_ASSET_PREFIX,
+//				"br/com/arsmachina/tapestrycrud/components");
+//	}
 
 	/**
 	 * Contributes the main (default module) to the {@link ModuleService}
@@ -572,7 +574,7 @@ public class TapestryCrudIoCModule {
 	 * @param contributions a {@link MappedConfiguration}.
 	 */
 	@SuppressWarnings("unchecked")
-	public static void contributeSelectModelFactory(
+	public static void contributeArsSelectModelFactory(
 			MappedConfiguration<Class, SingleTypeSelectModelFactory> contributions,
 			ControllerSource controllerSource, EntitySource entitySource,
 			LabelEncoderSource labelEncoderSource) {
