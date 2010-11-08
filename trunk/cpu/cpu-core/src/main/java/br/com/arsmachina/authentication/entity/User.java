@@ -2,8 +2,8 @@ package br.com.arsmachina.authentication.entity;
 
 import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.*;
+import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.Email;
 import orion.cpu.baseentities.AbstractRole;
 
 /**
@@ -94,7 +94,7 @@ public class User extends AbstractRole<User> {
      * @return a {@link String}.
      */
     @Email
-    @Length(min = 5, max = 50)
+    @Size(min = 5, max = 50)
     public String getEmail() {
         return email;
     }
@@ -105,7 +105,7 @@ public class User extends AbstractRole<User> {
      */
     @Column(nullable = false, length = 40)
     @NotNull
-    @Length(min = 6, max = 40)
+    @Size(min = 6, max = 40)
     public String getPassword() {
         return password;
     }
