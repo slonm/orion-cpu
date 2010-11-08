@@ -9,6 +9,7 @@ import org.apache.tapestry5.internal.util.URLChangeTracker;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
 import org.apache.tapestry5.services.AssetSource;
+import orion.tapestry.services.GlobalMessages;
 
 /**
  * Глобальный каталог сообщений и
@@ -22,7 +23,7 @@ import org.apache.tapestry5.services.AssetSource;
  * Внимание! Сервис использует internal ресурсы tapestry
  * @author sl
  */
-public class GlobalMessages implements MethodAdvice {
+public class GlobalMessagesImpl implements MethodAdvice, GlobalMessages {
     //Нелокализованные ресурсы
 
     private final List<Resource> resources = new LinkedList<Resource>();
@@ -103,7 +104,7 @@ public class GlobalMessages implements MethodAdvice {
         }
     }
 
-    public GlobalMessages(List<String> configuration,
+    public GlobalMessagesImpl(List<String> configuration,
             ClasspathURLConverter classpathURLConverter,
             final AssetSource assetSource) {
         for (String name : configuration) {

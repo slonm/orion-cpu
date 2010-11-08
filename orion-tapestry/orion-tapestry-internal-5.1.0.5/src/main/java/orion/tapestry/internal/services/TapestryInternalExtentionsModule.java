@@ -8,6 +8,9 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.ClasspathURLConverter;
 import org.apache.tapestry5.services.UpdateListenerHub;
 import orion.tapestry.internal.services.impl.*;
+import orion.tapestry.internal.utils.TapestryInternalUtilsWrapperImpl;
+import orion.tapestry.services.GlobalMessages;
+import orion.tapestry.services.TapestryInternalUtilsWrapper;
 
 /**
  *
@@ -17,8 +20,9 @@ public class TapestryInternalExtentionsModule {
 
     private static final String TMLinDatabase = "orion.tapestry.useTMLinDatabase";
 
-    public static GlobalMessages buildGlobalMessageAppender(@Autobuild GlobalMessages appender) {
-        return appender;
+    public static void bind(ServiceBinder binder) {
+        binder.bind(GlobalMessages.class, GlobalMessagesImpl.class).withId("GlobalMessageAppender");
+        binder.bind(TapestryInternalUtilsWrapper.class, TapestryInternalUtilsWrapperImpl.class);
     }
 
     public static void contributeFactoryDefaults(
@@ -31,7 +35,7 @@ public class TapestryInternalExtentionsModule {
 
     @Match("ComponentMessagesSource")
     public static void adviseComponentMessagesSource(MethodAdviceReceiver receiver,
-            GlobalMessages globalMessageAppender) {
+            GlobalMessagesImpl globalMessageAppender) {
         receiver.adviseAllMethods(globalMessageAppender);
     }
 
@@ -42,11 +46,8 @@ public class TapestryInternalExtentionsModule {
     }
 
     public ComponentTemplateSource buildOrionComponentTemplateSourceImpl(TemplateParser parser,
-            PageTemplateLocator locator,
-            ClasspathURLConverter classpathURLConverter,
+            @Autobuild OrionComponentTemplateSourceImpl service,
             UpdateListenerHub updateListenerHub) {
-        OrionComponentTemplateSourceImpl service = new OrionComponentTemplateSourceImpl(parser, locator, classpathURLConverter);
-
         updateListenerHub.addUpdateListener(service);
 
         return service;
