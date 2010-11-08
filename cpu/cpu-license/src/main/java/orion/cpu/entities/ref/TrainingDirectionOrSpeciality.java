@@ -2,8 +2,8 @@ package orion.cpu.entities.ref;
 
 import orion.cpu.baseentities.ReferenceEntity;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.apache.tapestry5.beaneditor.Validate;
 
 /**
  * Сущность TrainingDirectionOrSpeciality
@@ -17,7 +17,7 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class TrainingDirectionOrSpeciality extends ReferenceEntity<TrainingDirectionOrSpeciality> {
 
     private static final long serialVersionUID = 1L;
-    @Validate("regexp=([0-9]{2}|[0-9]{4})")
+    @Pattern(regexp="([0-9]{2}|[0-9]{4})")
     private String code;
     private KnowledgeAreaOrTrainingDirection knowledgeAreaOrTrainingDirection;
     @DataType("TrainingDirectionOrSpeciality")
