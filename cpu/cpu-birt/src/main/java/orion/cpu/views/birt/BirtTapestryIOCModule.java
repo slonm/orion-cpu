@@ -1,17 +1,18 @@
 package orion.cpu.views.birt;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import java.util.Map;
+import java.util.Set;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.tapestry5.ioc.Configuration;
@@ -63,22 +64,21 @@ public class BirtTapestryIOCModule {
         configuration.add("orion.birt.BIRT_VIEWER_LOG_LEVEL", "OFF");
     }
     private static String[] BIRT_PARAMETER_NAMES = {
-        "orion.birt.BIRT_VIEWER_DOCUMENT_FOLDER",
-"orion.birt.BIRT_VIEWER_PRINT_SERVERSIDE",
-"orion.birt.BIRT_VIEWER_CUBE_MEMORY_SIZE",
-"orion.birt.BIRT_VIEWER_SCRIPTLIB_DIR",
-"orion.birt.BIRT_VIEWER_IMAGE_DIR",
-"orion.birt.BIRT_VIEWER_CONFIG_FILE",
-"orion.birt.BIRT_VIEWER_MAX_ROWS",
-"orion.birt.BIRT_VIEWER_MAX_CUBE_ROWLEVELS",
-"orion.birt.BIRT_VIEWER_LOCALE",
-"orion.birt.BIRT_VIEWER_MAX_CUBE_COLUMNLEVELS",
-"orion.birt.BIRT_VIEWER_WORKING_FOLDER",
-"orion.birt.BIRT_VIEWER_LOG_DIR",
-"orion.birt.BIRT_RESOURCE_PATH",
-"orion.birt.HTML_ENABLE_AGENTSTYLE_ENGINE",
-"orion.birt.BIRT_VIEWER_LOG_LEVEL"};
-    
+        "BIRT_VIEWER_DOCUMENT_FOLDER",
+        "BIRT_VIEWER_PRINT_SERVERSIDE",
+        "BIRT_VIEWER_CUBE_MEMORY_SIZE",
+        "BIRT_VIEWER_SCRIPTLIB_DIR",
+        "BIRT_VIEWER_IMAGE_DIR",
+        "BIRT_VIEWER_CONFIG_FILE",
+        "BIRT_VIEWER_MAX_ROWS",
+        "BIRT_VIEWER_MAX_CUBE_ROWLEVELS",
+        "BIRT_VIEWER_LOCALE",
+        "BIRT_VIEWER_MAX_CUBE_COLUMNLEVELS",
+        "BIRT_VIEWER_WORKING_FOLDER",
+        "BIRT_VIEWER_LOG_DIR",
+        "BIRT_RESOURCE_PATH",
+        "HTML_ENABLE_AGENTSTYLE_ENGINE",
+        "BIRT_VIEWER_LOG_LEVEL"};
     private static String[] BIRT_ENGINE_PATH = {"/document", "/download",
         "/parameter", "/extract", "/preview", "/output"};
     private static String[] BIRT_VIEW_PATH = {"/frameset", "/run"};
@@ -86,178 +86,120 @@ public class BirtTapestryIOCModule {
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
             final SymbolSource symbols) {
         configuration.addInstance("CpuBirtInitializeDatabase", CpuBirtInitializeDatabase.class, "after:CpuTapestryInitializeDatabase");
-//        configuration.add("birtServletInitParameters", new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                for(String name:BIRT_PARAMETER_NAMES){
-//                    BirtTapestryFilter.servletContext.setAttribute(name, symbols.valueForSymbol(name));
-//                }
-//            }
-//        });
+        configuration.add("birtServletInitParameters", new Runnable() {
+
+            @Override
+            public void run() {
+                for (String name : BIRT_PARAMETER_NAMES) {
+                    ServletConfigWrapper.initParametrs.put(name, symbols.valueForSymbol("orion.birt."+name));
+                }
+            }
+        });
     }
 
-//    public static HttpServletRequestFilter buildBirtEngineServletHttpServletRequestFilter(final SymbolSource symbols) {
-//        final Servlet servlet = new org.eclipse.birt.report.servlet.BirtEngineServlet();
-//        try {
-//            servlet.init(new ServletConfig() {
-//
-//                @Override
-//                public String getServletName() {
-//                    return servlet.getClass().getName();
-//                }
-//
-//                @Override
-//                public ServletContext getServletContext() {
-//                    return BirtTapestryFilter.servletContext;
-//                }
-//
-//                @Override
-//                public String getInitParameter(String name) {
-//                    return BirtTapestryFilter.servletContext.getInitParameter(name);
-//                }
-//
-//                @Override
-//                public Enumeration getInitParameterNames() {
-//                    return BirtTapestryFilter.servletContext.getInitParameterNames();
-//                }
-//            });
-//        } catch (ServletException ex) {
-//            throw new RuntimeException(ex.getMessage(), ex);
-//        }
-//        return new HttpServletRequestFilter() {
-//
-//            @Override
-//            public boolean service(HttpServletRequest request, HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
-//                String path = request.getServletPath();
-//                String pathInfo = request.getPathInfo();
-//                if (pathInfo != null) {
-//                    path += pathInfo;
-//                    for (String p : BIRT_ENGINE_PATH) {
-//                        if (path.equals(p) || path.startsWith(p + "?")) {
-//                            try {
-//                                servlet.service(request, response);
-//                                return false;
-//                            } catch (ServletException e) {
-//                                throw new IOException(e.getMessage(), e);
-//                            }
-//                        }
-//                    }
-//                }
-//                return handler.service(request, response);
-//            }
-//        };
-//    }
-//
-//    public static HttpServletRequestFilter buildBirtViewServletHttpServletRequestFilter(final SymbolSource symbols) {
-//        final Servlet servlet = new org.eclipse.birt.report.servlet.ViewerServlet();
-//        try {
-//            servlet.init(new ServletConfig() {
-//
-//                @Override
-//                public String getServletName() {
-//                    return servlet.getClass().getName();
-//                }
-//
-//                @Override
-//                public ServletContext getServletContext() {
-//                    return BirtTapestryFilter.servletContext;
-//                }
-//
-//                @Override
-//                public String getInitParameter(String name) {
-//                    return BirtTapestryFilter.servletContext.getInitParameter(name);
-//                }
-//
-//                @Override
-//                public Enumeration getInitParameterNames() {
-//                    return BirtTapestryFilter.servletContext.getInitParameterNames();
-//                }
-//            });
-//        } catch (ServletException ex) {
-//            throw new RuntimeException(ex.getMessage(), ex);
-//        }
-//        return new HttpServletRequestFilter() {
-//
-//            @Override
-//            public boolean service(HttpServletRequest request, HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
-//                String path = request.getServletPath();
-//                String pathInfo = request.getPathInfo();
-//                if (pathInfo != null) {
-//                    path += pathInfo;
-//                    for (String p : BIRT_VIEW_PATH) {
-//                        if (path.equals(p) || path.startsWith(p + "?")) {
-//                            try {
-//                                servlet.service(request, response);
-//                                return false;
-//                            } catch (ServletException e) {
-//                                throw new IOException(e.getMessage(), e);
-//                            }
-//                        }
-//                    }
-//                }
-//                return handler.service(request, response);
-//            }
-//        };
-//    }
-//
-//    public static HttpServletRequestFilter buildBirtViewerFilterHttpServletRequestFilter() {
-//        final Filter filter = new org.eclipse.birt.report.filter.ViewerFilter();
-//        final List<String> patterns = Arrays.asList(BIRT_VIEW_PATH);
-//        patterns.addAll(Arrays.asList(BIRT_ENGINE_PATH));
-//        return new HttpServletRequestFilter() {
-//
-//            @Override
-//            public boolean service(final HttpServletRequest request, final HttpServletResponse response, final HttpServletRequestHandler handler) throws IOException {
-//                String path = request.getServletPath();
-//                String pathInfo = request.getPathInfo();
-//                if (pathInfo != null) {
-//                    path += pathInfo;
-//                    for (String p : patterns) {
-//                        if (path.equals(p) || path.startsWith(p + "/")) {
-//                            try {
-//                                filter.doFilter(request, response, new FilterChain() {
-//
-//                                    @Override
-//                                    public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
-//                                    }
-//                                });
-//                            } catch (ServletException e) {
-//                                throw new IOException(e.getMessage(), e);
-//                            }
-//                        }
-//                    }
-//                }
-//                return handler.service(request, response);
-//            }
-//        };
-//    }
-//
-//    public static void contributeHttpServletRequestHandler(
-//            OrderedConfiguration<HttpServletRequestFilter> configuration,
-//            @InjectService("BirtEngineServletHttpServletRequestFilter") HttpServletRequestFilter birtEngineServletHttpServletRequestFilter,
-//            @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter,
-//            @InjectService("BirtViewerFilterHttpServletRequestFilter") HttpServletRequestFilter birtViewerFilterHttpServletRequestFilter) {
-//
-//        configuration.add("birtEngineServlet",
-//                birtEngineServletHttpServletRequestFilter, "after:birtViewerFilter");
-//        configuration.add("birtViewServlet",
-//                viewServletHttpServletRequestFilter, "after:birtViewerFilter");
-//        configuration.add("birtViewerFilter",
-//                birtViewerFilterHttpServletRequestFilter, "after:rolesso");
-//    }
+    public static HttpServletRequestFilter buildBirtEngineServletHttpServletRequestFilter(final SymbolSource symbols) {
+        final Servlet servlet = new org.eclipse.birt.report.servlet.BirtEngineServlet();
+        try {
+            servlet.init(new ServletConfigWrapper(servlet.getClass().getName()));
+        } catch (ServletException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        }
+        return new HttpServletRequestFilter() {
 
-//    public static void contributeIgnoredPathsFilter(Configuration<String> configuration) {
-//        configuration.add("/frameset*");
-//	  configuration.add("/document*");
-//	  configuration.add("/download*");
-//	  configuration.add("/parameter*");
-//	  configuration.add("/extract*"); 
-//	  configuration.add("/run*");
-//        configuration.add("/preview*");
-//        configuration.add("/output*");
-//
-//    }
+            @Override
+            public boolean service(HttpServletRequest request, HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
+                String path = request.getServletPath();
+                for (String p : BIRT_ENGINE_PATH) {
+                    if (path.equalsIgnoreCase(p)) {
+                        try {
+                            servlet.service(request, response);
+                            return true;
+                        } catch (ServletException e) {
+                            throw new IOException(e.getMessage(), e);
+                        }
+                    }
+                }
+                return handler.service(request, response);
+            }
+        };
+    }
+
+    public static HttpServletRequestFilter buildBirtViewServletHttpServletRequestFilter(final SymbolSource symbols) {
+        final Servlet servlet = new org.eclipse.birt.report.servlet.ViewerServlet();
+        try {
+            servlet.init(new ServletConfigWrapper(servlet.getClass().getName()));
+        } catch (ServletException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        }
+        return new HttpServletRequestFilter() {
+
+            @Override
+            public boolean service(HttpServletRequest request, HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
+                String path = request.getServletPath();
+                for (String p : BIRT_VIEW_PATH) {
+                    if (path.equalsIgnoreCase(p)) {
+                        try {
+                            servlet.service(request, response);
+                            return true;
+                        } catch (ServletException e) {
+                            throw new IOException(e.getMessage(), e);
+                        }
+                    }
+                }
+                return handler.service(request, response);
+            }
+        };
+    }
+
+    public static HttpServletRequestFilter buildBirtViewerFilterHttpServletRequestFilter() {
+        final Filter filter = new org.eclipse.birt.report.filter.ViewerFilter();
+        final List<String> patterns = new ArrayList<String>(Arrays.asList(BIRT_VIEW_PATH));
+        patterns.addAll(Arrays.asList(BIRT_ENGINE_PATH));
+        return new HttpServletRequestFilter() {
+
+            @Override
+            public boolean service(final HttpServletRequest request, final HttpServletResponse response, final HttpServletRequestHandler handler) throws IOException {
+                String path = request.getServletPath();
+                Boolean processed = false;
+                final Boolean[] ret = new Boolean[1];
+                for (String p : patterns) {
+                    if (path.equalsIgnoreCase(p)) {
+                        processed = true;
+                        try {
+                            filter.doFilter(request, response, new FilterChain() {
+
+                                @Override
+                                public void doFilter(ServletRequest request1, ServletResponse response1) throws IOException, ServletException {
+                                    ret[0] = handler.service(request, response);
+                                }
+                            });
+                        } catch (ServletException e) {
+                            throw new IOException(e.getMessage(), e);
+                        }
+                    }
+                }
+                if (processed) {
+                    return ret[0];
+                } else {
+                    return handler.service(request, response);
+                }
+            }
+        };
+    }
+
+    public static void contributeHttpServletRequestHandler(
+            OrderedConfiguration<HttpServletRequestFilter> configuration,
+            @InjectService("BirtEngineServletHttpServletRequestFilter") HttpServletRequestFilter birtEngineServletHttpServletRequestFilter,
+            @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter,
+            @InjectService("BirtViewerFilterHttpServletRequestFilter") HttpServletRequestFilter birtViewerFilterHttpServletRequestFilter) {
+
+        configuration.add("birtEngineServlet",
+                birtEngineServletHttpServletRequestFilter, "after:birtViewerFilter");
+        configuration.add("birtViewServlet",
+                viewServletHttpServletRequestFilter, "after:birtViewerFilter");
+        configuration.add("birtViewerFilter",
+                birtViewerFilterHttpServletRequestFilter, "after:authorizerUserAndRole");
+    }
 
     public static void bind(ServiceBinder binder) {
         binder.bind(ReportPreviewLinkFactory.class, ReportPreviewLinkFactoryImpl.class);
