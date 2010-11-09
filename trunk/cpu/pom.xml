@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>Полный проект КИС КПУ</name>
-    <url>http://www.zhu.edu.ua/devforum</url>
+    <url>http://code.google.com/p/orion-cpu/</url>
     <modules>
         <module>cpu-core</module>
         <module>cpu-tapestry</module>
@@ -107,10 +107,6 @@
                         <groupId>br.com.arsmachina</groupId>
                         <artifactId>generic-authentication</artifactId>
                     </exclusion>
-                    <!--exclusion>
-                        <groupId>br.com.arsmachina</groupId>
-                        <artifactId>application-module</artifactId>
-                    </exclusion-->
                 </exclusions>
             </dependency>
             <dependency>
@@ -122,26 +118,12 @@
                         <groupId>br.com.arsmachina</groupId>
                         <artifactId>generic-authentication</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>br.com.arsmachina</groupId>
-                        <artifactId>tapestry-crud</artifactId>
-                    </exclusion>
-                    <!--exclusion>
-                        <groupId>br.com.arsmachina</groupId>
-                        <artifactId>application-module</artifactId>
-                    </exclusion-->
                 </exclusions>
             </dependency>
             <dependency>
                 <groupId>br.com.arsmachina</groupId>
                 <artifactId>tapestry-crud-hibernate-validator</artifactId>
-                <version>1.1</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>br.com.arsmachina</groupId>
-                        <artifactId>tapestry-crud</artifactId>
-                    </exclusion>
-                </exclusions>
+                <version>1.1.sl</version>
             </dependency>
             <dependency>
                 <groupId>orion</groupId>
@@ -275,12 +257,6 @@
                 <groupId>br.com.arsmachina</groupId>
                 <artifactId>application-module-hibernate</artifactId>
                 <version>1.1</version>
-                <exclusions>
-                    <!--exclusion>
-                        <groupId>br.com.arsmachina</groupId>
-                        <artifactId>application-module</artifactId>
-                    </exclusion-->
-                </exclusions>
             </dependency>
         <dependency>
             <groupId>orion</groupId>
