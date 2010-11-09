@@ -56,10 +56,10 @@ public class TapestryExtentionsModule {
         receiver.adviseAllMethods(advice);
     }
 
-    public static void contributeTranslatorSource(Configuration<Translator> configuration) {
-
-        configuration.add(new ByteArrayTranslator());
-    }
+//    public static void contributeTranslatorSource(MappedConfiguration<String, Translator> configuration) {
+//
+//        configuration.addInstance(Byte[].class, ByteArrayTranslator.class);
+//    }
 
     /**
      * from EventContext to Object[]
