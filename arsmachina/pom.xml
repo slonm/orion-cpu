@@ -10,9 +10,11 @@
   <name>Полный проект arsmachina</name>
   <url>http://www.zhu.edu.ua/devforum</url>
 <modules>
- <module>tapestry-crud</module>
+ <module>parent</module>
  <module>application-module</module>
  <module>generic-dao-hibernate</module>
+ <module>tapestry-crud</module>
+ <module>tapestry-crud-hibernate-validator</module>
 </modules>
    <build>
     <plugins>
