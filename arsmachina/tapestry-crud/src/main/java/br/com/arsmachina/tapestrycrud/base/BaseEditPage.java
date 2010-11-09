@@ -346,7 +346,8 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
 	 */
 	@AfterRenderTemplate
 	final void clearErrors() {
-		form.getDefaultTracker().clear();
+            //FIXME form is null
+		//form.getDefaultTracker().clear();
 		setMessage(null);
 	}
 
