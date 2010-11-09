@@ -15,39 +15,32 @@ import orion.cpu.security.services.ExtendedAuthorizer;
 public class BirtConnection {
 
     static final private Logger LOG = LoggerFactory.getLogger(BirtConnection.class);
-    private static Class[] services = new Class[]{ControllerSource.class, SymbolSource.class, ExtendedAuthorizer.class, Session.class};
+    private static Class[] services = new Class[]{Session.class};
     private static Registry registry = null;
     private static Map<String, Object> params = new HashMap<String, Object>();
     public static boolean isServlet = false;
     public static ObjectLocator locator = null;
-
-    /**
-     * Добавляет в карту параметров основные сервисы для работы с данными и текущего пользователя
-     */
-    private static void createParams(Map<String, Object> params) {
-        params.clear();
-        for (Class<?> clasz : services) {
-            params.put(clasz.getSimpleName(), locator.getService(clasz));
-        }
-        params.put(User.class.getSimpleName(), locator.getService(ExtendedAuthorizer.class).getUser());
-    }
+    public static Session session=null;
 
     /**
      * Возвращает карту параметров генератору отчетов
      * Если запуск произошел в режиме аплета, то создает реестр
      */
     public static Map<String, Object> params() {
-        if (!isServlet) {
-            if (registry == null) {
-                RegistryBuilder builder = new RegistryBuilder();
-                IOCUtilities.addDefaultModules(builder);
-                registry = builder.build();
-                registry.performRegistryStartup();
-                ExtendedAuthorizer ea = registry.getService(ExtendedAuthorizer.class);
-                ea.storeUserAndRole(User.SYSTEM_USER, null);
+    	params.clear();
+    	if (isServlet) {
+            for (Class<?> clasz : services) {
+                params.put(clasz.getSimpleName(), locator.getService(clasz));
             }
+            locator.getService(ExtendedAuthorizer.class).storeUserAndRole(User.SYSTEM_USER, null);
+            params.put(User.class.getSimpleName(), locator.getService(ExtendedAuthorizer.class).getUser());
+        }else{
+        	if(session==null){
+        		session=HibernateUtil.getSession();
+        	}
+            params.put(Session.class.getSimpleName(), session);
+            params.put(User.class.getSimpleName(), User.SYSTEM_USER);
         }
-        createParams(params);
         return params;
     }
 
@@ -65,12 +58,5 @@ public class BirtConnection {
      * Должен вызыватся при завершении работы генератора отчетов
      */
     public static void shutdown() {
-        if (!isServlet) {
-            //for operations done from this thread
-            registry.cleanupThread();
-            //call this to allow services clean shutdown
-            registry.shutdown();
-            registry = null;
-        }
     }
 }
