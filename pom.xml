@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Полный проект orion</name>
-  <url>http://www.zhu.edu.ua/devforum</url>
+  <url>http://code.google.com/p/orion-cpu/</url>
 <modules>
  <module>arsmachina</module>
  <module>mihailslobodyanukutils</module>
