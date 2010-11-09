@@ -132,4 +132,13 @@ public class ReportPreviewLink implements Link {
         copy.anchor = anchor;
         return copy;
     }
+
+    public Link addParameterValue(String parameterName, Object value) {
+        addParameter(parameterName, value.toString());
+        return this;
+    }
+
+    public String toAbsoluteURI(boolean secure) {
+        return absoluteURI;
+    }
 }
