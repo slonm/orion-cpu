@@ -1,21 +1,20 @@
 package orion.cpu.views.tapestry.pages;
 
 import br.com.arsmachina.tapestrycrud.hibernatevalidator.base.HibernateValidatorBaseEditPage;
-import java.util.List;
+import javax.persistence.QueryHint;
 import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.annotations.ActivationRequestParameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.Coercion;
-import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import orion.cpu.baseentities.BaseEntity;
 import orion.tapestry.menu.lib.IMenuLink;
-import orion.tapestry.menu.services.CpuMenu;
 
 /**
  * Универсальная страница редактирования {@link BaseEntity}
@@ -25,6 +24,10 @@ import orion.tapestry.menu.services.CpuMenu;
 public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
+
+    @ActivationRequestParameter
+    private String menupath;
+
     /**
      * Заголовок страницы
      */
@@ -68,6 +71,7 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     @SuppressWarnings("unchecked")
     @Override
     public Object onActivate(EventContext context) {
+        menupath=request.getParameter("menupath");
         action = messages.get("button.create");
         Class<BaseEntity<?>> beanClass;
         try {
