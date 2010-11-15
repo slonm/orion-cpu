@@ -24,7 +24,6 @@ import orion.cpu.views.tapestry.pages.ListView;
 import orion.cpu.views.tapestry.pages.MenuNavigator;
 import orion.cpu.views.tapestry.utils.DataTMLURLConnection;
 import orion.tapestry.menu.lib.IMenuLink;
-import orion.tapestry.services.FieldLabelSource;
 import orion.tapestry.services.impl.URLStreamHandlerFactoryImpl;
 
 /**

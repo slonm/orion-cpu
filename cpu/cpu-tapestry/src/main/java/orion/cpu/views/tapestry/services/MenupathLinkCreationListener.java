@@ -59,5 +59,6 @@ public class MenupathLinkCreationListener implements LinkCreationListener {
 
     @Override
     public void createdComponentEventLink(Link link) {
+        createdPageRenderLink(link);
     }
 }
