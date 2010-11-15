@@ -25,9 +25,6 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
 
-    @ActivationRequestParameter
-    private String menupath;
-
     /**
      * Заголовок страницы
      */
@@ -71,7 +68,6 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     @SuppressWarnings("unchecked")
     @Override
     public Object onActivate(EventContext context) {
-        menupath=request.getParameter("menupath");
         action = messages.get("button.create");
         Class<BaseEntity<?>> beanClass;
         try {
