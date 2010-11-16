@@ -1,17 +1,7 @@
 package orion.cpu.views.birt;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -151,54 +141,15 @@ public class BirtTapestryIOCModule {
         };
     }
 
-    public static HttpServletRequestFilter buildBirtViewerFilterHttpServletRequestFilter() {
-        final Filter filter = new org.eclipse.birt.report.filter.ViewerFilter();
-        final List<String> patterns = new ArrayList<String>(Arrays.asList(BIRT_VIEW_PATH));
-        patterns.addAll(Arrays.asList(BIRT_ENGINE_PATH));
-        return new HttpServletRequestFilter() {
-
-            @Override
-            public boolean service(final HttpServletRequest request, final HttpServletResponse response, final HttpServletRequestHandler handler) throws IOException {
-                String path = request.getServletPath();
-                Boolean processed = false;
-                final Boolean[] ret = new Boolean[1];
-                for (String p : patterns) {
-                    if (path.equalsIgnoreCase(p)) {
-                        processed = true;
-                        try {
-                            filter.doFilter(request, response, new FilterChain() {
-
-                                @Override
-                                public void doFilter(ServletRequest request1, ServletResponse response1) throws IOException, ServletException {
-                                    ret[0] = handler.service(request, response);
-                                }
-                            });
-                        } catch (ServletException e) {
-                            throw new IOException(e.getMessage(), e);
-                        }
-                    }
-                }
-                if (processed) {
-                    return ret[0];
-                } else {
-                    return handler.service(request, response);
-                }
-            }
-        };
-    }
-
     public static void contributeHttpServletRequestHandler(
             OrderedConfiguration<HttpServletRequestFilter> configuration,
             @InjectService("BirtEngineServletHttpServletRequestFilter") HttpServletRequestFilter birtEngineServletHttpServletRequestFilter,
-            @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter,
-            @InjectService("BirtViewerFilterHttpServletRequestFilter") HttpServletRequestFilter birtViewerFilterHttpServletRequestFilter) {
+            @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter) {
 
         configuration.add("birtEngineServlet",
-                birtEngineServletHttpServletRequestFilter, "after:birtViewerFilter");
+                birtEngineServletHttpServletRequestFilter, "after:authorizerUserAndRole");
         configuration.add("birtViewServlet",
-                viewServletHttpServletRequestFilter, "after:birtViewerFilter");
-        configuration.add("birtViewerFilter",
-                birtViewerFilterHttpServletRequestFilter, "after:authorizerUserAndRole");
+                viewServletHttpServletRequestFilter, "after:authorizerUserAndRole");
     }
 
     public static void bind(ServiceBinder binder) {
