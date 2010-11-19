@@ -4,10 +4,10 @@
   http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>arsmachina</groupId>
-  <artifactId>arsmachina_full</artifactId>
+  <artifactId>arsmachina-meta</artifactId>
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Полный проект arsmachina</name>
+  <name>Метапроект arsmachina</name>
   <url>http://www.zhu.edu.ua/devforum</url>
 <modules>
  <module>parent</module>

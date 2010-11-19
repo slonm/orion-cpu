@@ -6,7 +6,6 @@ import orion.cpu.baseentities.NamedEntity;
 
 /**
  * Базовое абстрактное структурное подразделение.
- * Для Hibernate это MappedSuperclass.
  * Содержит поля базовой таблицы Reference
  * @author sl
  */

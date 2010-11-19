@@ -14,6 +14,7 @@
 
 package br.com.arsmachina.tapestrycrud.base;
 
+import br.com.arsmachina.tapestrycrud.CrudViewPage;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +30,8 @@ import org.apache.tapestry5.services.Request;
  * @param <T> the entity class related to this encoder.
  * @param <K> the type of the class' primary key property.
  */
-public class BaseViewPage<T, ID extends Serializable> extends BasePage<T, ID> {
+public class BaseViewPage<T, ID extends Serializable> extends BasePage<T, ID> implements
+		CrudViewPage<T, ID> {
 
 	// copied from ComponentEventDispatcher
 	private final Pattern PATH_PATTERN = Pattern.compile(

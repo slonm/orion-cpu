@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>orion</groupId>
     <artifactId>cpu-eduprocess-tapestry</artifactId>
-    <name>Подсистема организации учебного процесса КПУ - веб интерфейс</name>
+    <name>Учебный процесс - веб</name>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>

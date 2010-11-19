@@ -17,6 +17,7 @@ package br.com.arsmachina.tapestrycrud;
 import java.io.Serializable;
 
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Zone;
 
 /**
@@ -26,7 +27,7 @@ import org.apache.tapestry5.corelib.components.Zone;
  * @param <K> the type of the class' primary key property.
  * @author Thiago H. de Paula Figueiredo
  */
-public interface EditPage<T, K extends Serializable> extends
+public interface CrudEditPage<T, K extends Serializable> extends
 		CrudPage<T, K> {
 
 	/**
@@ -51,5 +52,19 @@ public interface EditPage<T, K extends Serializable> extends
 	 * {@link Block}
 	 */
 	public Object getFormZone();
+
+	/**
+	 * Returns <code>null</code> if we are inserting a new object and
+	 * {@link #getFormZoneId()} (<code>zone</code>) otherwise.
+	 *
+	 * @return a {@link String}.
+	 */
+	public String getZone();
+	/**
+	 * Creates a {@link BeanModel} and removes the primary key property from it.
+	 *
+	 * @return a {@link BeanModel}.
+	 */
+	public BeanModel<T> getBeanModel();
 
 }

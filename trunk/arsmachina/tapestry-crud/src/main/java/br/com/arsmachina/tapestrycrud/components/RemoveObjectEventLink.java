@@ -29,14 +29,14 @@ import org.apache.tapestry5.runtime.Component;
 
 import br.com.arsmachina.authorization.Authorizer;
 import br.com.arsmachina.tapestrycrud.Constants;
-import br.com.arsmachina.tapestrycrud.base.BaseEditPage;
-import br.com.arsmachina.tapestrycrud.base.BaseViewPage;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
+import br.com.arsmachina.tapestrycrud.CrudViewPage;
 import br.com.arsmachina.tapestrycrud.services.PrimaryKeyEncoderSource;
 
 /**
  * <p>
  * Component that creates a link that removes the object being show or edited. It must be used
- * inside pages that subclass {@link BaseViewPage} or {@link BaseEditPage}.
+ * inside pages that implements {@link CrudViewPage} or {@link CrudEditPage}.
  * </p>
  * <p>
  * The code of this class is largely adapted from Tapestry's {@link Label}.
@@ -76,13 +76,13 @@ public class RemoveObjectEventLink {
 		Object object;
 		Component page = resources.getPage();
 
-		if (page instanceof BaseViewPage) {
-			BaseViewPage viewPage = (BaseViewPage) page;
+		if (page instanceof CrudViewPage) {
+			CrudViewPage viewPage = (CrudViewPage) page;
 			object = viewPage.getObject();
 			entityClass = viewPage.getEntityClass();
 		}
-		else if (page instanceof BaseEditPage) {
-			BaseEditPage editPage = (BaseEditPage) page;
+		else if (page instanceof CrudViewPage) {
+			CrudEditPage editPage = (CrudEditPage) page;
 			object = editPage.getObject();
 			entityClass = editPage.getEntityClass();
 		}

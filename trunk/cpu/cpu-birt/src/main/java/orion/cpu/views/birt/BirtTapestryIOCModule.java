@@ -102,6 +102,7 @@ public class BirtTapestryIOCModule {
                 for (String p : BIRT_ENGINE_PATH) {
                     if (path.equalsIgnoreCase(p)) {
                         try {
+                            response.setContentType("text/html");
                             servlet.service(request, response);
                             return true;
                         } catch (ServletException e) {
@@ -129,6 +130,7 @@ public class BirtTapestryIOCModule {
                 for (String p : BIRT_VIEW_PATH) {
                     if (path.equalsIgnoreCase(p)) {
                         try {
+                            response.setContentType("text/html");
                             servlet.service(request, response);
                             return true;
                         } catch (ServletException e) {

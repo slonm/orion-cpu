@@ -29,6 +29,7 @@ import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.services.Request;
 
 import br.com.arsmachina.tapestrycrud.Constants;
+import br.com.arsmachina.tapestrycrud.CrudListPage;
 import br.com.arsmachina.tapestrycrud.grid.ControllerGridDataSource;
 import br.com.arsmachina.tapestrycrud.services.PrimaryKeyEncoderSource;
 
@@ -48,7 +49,8 @@ import br.com.arsmachina.tapestrycrud.services.PrimaryKeyEncoderSource;
  * 
  * @author Thiago H. de Paula Figueiredo
  */
-public abstract class BaseListPage<T, K extends Serializable> extends BasePage<T, K> {
+public abstract class BaseListPage<T, K extends Serializable> extends BasePage<T, K> implements
+		CrudListPage<T, K> {
 
 	@Inject
 	private ComponentResources componentResources;

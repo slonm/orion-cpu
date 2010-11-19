@@ -27,16 +27,16 @@ import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.runtime.Component;
 
 import br.com.arsmachina.authorization.Authorizer;
-import br.com.arsmachina.tapestrycrud.base.BaseEditPage;
-import br.com.arsmachina.tapestrycrud.base.BaseViewPage;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
+import br.com.arsmachina.tapestrycrud.CrudViewPage;
 import br.com.arsmachina.tapestrycrud.encoder.ActivationContextEncoder;
 import br.com.arsmachina.tapestrycrud.services.ActivationContextEncoderSource;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 
 /**
  * <p>
- * Component that creates a link to the corresponding viewing page (a {@link BaseViewPage} instance,
- * typically). It must be used inside pages that subclass {@link BaseEditPage}.
+ * Component that creates a link to the corresponding viewing page (a {@link CrudViewPage} instance,
+ * typically). It must be used inside pages that implements {@link CrudEditPage}.
  * </p>
  * <p>
  * The code of this class is largely adapted from Tapestry's {@link Label}.
@@ -78,14 +78,14 @@ public class ViewObjectPageLink {
 		
 		Component page = resources.getPage();
 
-		if (page instanceof BaseEditPage == false) {
+		if (page instanceof CrudEditPage == false) {
 
 			throw new RuntimeException("The EditObjectPageLink must be used inside a page "
 					+ "that extends BasePage");
 
 		}
 
-		BaseEditPage editPage = (BaseEditPage) page;
+		CrudEditPage editPage = (CrudEditPage) page;
 		Object object = editPage.getObject();
 		
 		if (authorizer.canRead(object.getClass()) == false || authorizer.canRead(object) == false) {

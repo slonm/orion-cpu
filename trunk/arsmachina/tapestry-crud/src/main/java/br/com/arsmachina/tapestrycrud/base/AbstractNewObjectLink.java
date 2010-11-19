@@ -27,7 +27,8 @@ import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 
 import br.com.arsmachina.authorization.Authorizer;
 import br.com.arsmachina.tapestrycrud.CrudPage;
-import br.com.arsmachina.tapestrycrud.EditPage;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
+import br.com.arsmachina.tapestrycrud.CrudListPage;
 import br.com.arsmachina.tapestrycrud.components.NewObjectEventLink;
 import br.com.arsmachina.tapestrycrud.components.NewObjectPageLink;
 import br.com.arsmachina.tapestrycrud.services.PageUtil;
@@ -121,7 +122,7 @@ public abstract class AbstractNewObjectLink {
 		}
 
 		if (returnedLabel == null && 
-                        (getPage() instanceof EditPage<?,?> || getPage() instanceof BaseListPage<?,?>) &&
+                        (getPage() instanceof CrudEditPage<?,?> || getPage() instanceof CrudListPage<?,?>) &&
                         getPage().getEntityClass()!=null) {
 
 			final String entityLabelMessage = getPage().getEntityClass().getSimpleName() + "-label";

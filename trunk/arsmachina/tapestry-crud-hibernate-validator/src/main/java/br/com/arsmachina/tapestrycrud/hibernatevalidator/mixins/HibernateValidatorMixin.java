@@ -27,7 +27,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
 
 import br.com.arsmachina.tapestrycrud.Constants;
-import br.com.arsmachina.tapestrycrud.EditPage;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
 
 /**
  * Mixin that provides validation for {@link EditPage} using Hibernate Validator.
@@ -39,7 +39,7 @@ public class HibernateValidatorMixin extends DummyHibernateValidatorMixin {
 
 	@SuppressWarnings("unchecked")
 	@InjectContainer
-	private EditPage page;
+	private CrudEditPage page;
 	
 	@Inject
 	private ComponentResources componentResources;

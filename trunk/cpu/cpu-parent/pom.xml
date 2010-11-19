@@ -46,6 +46,16 @@
             </dependency>
             <dependency>
                 <groupId>orion</groupId>
+                <artifactId>cpu-personal</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>orion</groupId>
+                <artifactId>cpu-employees</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>orion</groupId>
                 <artifactId>cpu-units-tapestry</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
