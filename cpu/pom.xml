@@ -5,10 +5,10 @@
          http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>orion</groupId>
-    <artifactId>cpu_full</artifactId>
+    <artifactId>cpu-meta</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Полный проект КИС КПУ</name>
+    <name>Метапроект КИС КПУ</name>
     <url>http://code.google.com/p/orion-cpu/</url>
     <modules>
         <module>cpu-parent</module>
@@ -16,6 +16,8 @@
         <module>cpu-tapestry</module>
         <module>cpu-units</module>
         <module>cpu-units-tapestry</module>
+        <module>cpu-personal</module>
+        <module>cpu-employees</module>
         <module>cpu-license</module>
         <module>cpu-license-tapestry</module>
         <module>cpu-eduprocess</module>

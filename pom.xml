@@ -4,10 +4,10 @@
   http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>orion</groupId>
-  <artifactId>orion_full</artifactId>
+  <artifactId>orion-meta</artifactId>
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Полный проект orion</name>
+  <name>Метапроект Orion</name>
   <url>http://code.google.com/p/orion-cpu/</url>
 <modules>
  <module>arsmachina</module>

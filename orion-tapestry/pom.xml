@@ -4,10 +4,10 @@
   http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>orion</groupId>
-  <artifactId>orion_tapestry_full</artifactId>
+  <artifactId>orion-tapestry-meta</artifactId>
   <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Полный проект Orion Tapestry</name>
+  <name>Метапроект Orion Tapestry</name>
   <url>http://www.zhu.edu.ua/devforum</url>
 <modules>
  <module>orion-tapestry</module>

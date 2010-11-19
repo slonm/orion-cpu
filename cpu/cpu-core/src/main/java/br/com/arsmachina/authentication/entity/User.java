@@ -14,6 +14,7 @@ import orion.cpu.baseentities.AbstractRole;
 @Entity
 @Table(schema = "sec", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"login"})})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends AbstractRole<User> {
 
     /**

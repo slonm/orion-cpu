@@ -27,17 +27,15 @@ import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.runtime.Component;
 
 import br.com.arsmachina.authorization.Authorizer;
-import br.com.arsmachina.tapestrycrud.EditPage;
-import br.com.arsmachina.tapestrycrud.base.BaseEditPage;
-import br.com.arsmachina.tapestrycrud.base.BaseListPage;
-import br.com.arsmachina.tapestrycrud.base.BasePage;
+import br.com.arsmachina.tapestrycrud.CrudPage;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
+import br.com.arsmachina.tapestrycrud.CrudListPage;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 
 /**
  * <p>
- * Component that creates a link to the corresponding listing page (a {@link BaseListPage} instance,
- * typically). It must be used inside pages that implement {@link EditPage} or subclass
- * {@link BaseEditPage}.
+ * Component that creates a link to the corresponding listing page (a {@link ListPage} instance,
+ * typically). It must be used inside pages that implement {@link EditPage}.
  * </p>
  * <p>
  * The code of this class is largely adapted from Tapestry's {@link Label}.
@@ -76,14 +74,14 @@ public class ListPageLink {
 		
 		Component page = resources.getPage();
 
-		if (page instanceof BasePage == false) {
+		if (page instanceof CrudPage == false) {
 
 			throw new RuntimeException("The crud/ListPageLink must be used inside a page "
-					+ "that extends BasePage");
+					+ "that extends CrudPage");
 
 		}
 
-		BasePage basePage = (BasePage) page;
+		CrudPage basePage = (CrudPage) page;
 		entityClass = basePage.getEntityClass();
 		
 		if (authorizer.canSearch(entityClass) == false) {

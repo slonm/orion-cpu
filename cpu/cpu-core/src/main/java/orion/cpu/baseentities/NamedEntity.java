@@ -1,6 +1,5 @@
 package orion.cpu.baseentities;
 
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,7 +18,6 @@ public abstract class NamedEntity<T extends NamedEntity<?>> extends BaseEntity<T
      *
      * @return a {@link String}.
      */
-    @Column(nullable = false)
     @NotNull
     @Size(min = 1)
     public String getName() {

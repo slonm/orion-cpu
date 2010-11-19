@@ -1,10 +1,14 @@
 package orion.cpu.views.tapestry.pages;
 
-import br.com.arsmachina.tapestrycrud.hibernatevalidator.base.HibernateValidatorBaseEditPage;
-import javax.persistence.QueryHint;
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
+import br.com.arsmachina.tapestrycrud.hibernatevalidator.mixins.HibernateValidatorMixin;
+import br.com.arsmachina.tapestrycrud.mixins.CrudEditPageMixin;
+import br.com.arsmachina.tapestrycrud.services.ActivationContextEncoderSource;
+import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.annotations.ActivationRequestParameter;
+import org.apache.tapestry5.annotations.Mixin;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -21,9 +25,15 @@ import orion.tapestry.menu.lib.IMenuLink;
  * @author sl
  */
 @SuppressWarnings("unused")
-public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer> {
+public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
+
+    @Mixin
+    private HibernateValidatorMixin hibernateValidatorMixin;
+
+    @Mixin
+    private CrudEditPageMixin<BaseEntity<?>, Integer> crudEditPageMixin;
 
     /**
      * Заголовок страницы
@@ -47,12 +57,15 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     private Object menudata;
     @Inject
     private Request request;
+    @Inject
+    private ActivationContextEncoderSource acEncoderSource;
+    @Inject
+    private TapestryCrudModuleService tCrudModuleService;
 
-    @Override
     public Object onPassivate() {
         if (getObject() != null) {
-            return getActivationContextEncoder(getEntityClass()).toActivationContext(getObject());
-        } else if (isInitiated()) {
+            return acEncoderSource.get(getEntityClass()).toActivationContext(getObject());
+        } else if (crudEditPageMixin.isInitiated()) {
             return BaseEntity.getFullClassName(getEntityClass());
         }
         return null;
@@ -66,7 +79,6 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
      * @author sl
      */
     @SuppressWarnings("unchecked")
-    @Override
     public Object onActivate(EventContext context) {
         action = messages.get("button.create");
         Class<BaseEntity<?>> beanClass;
@@ -78,20 +90,20 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
             LOG.debug("Invalid activation context. Redirect to root page");
             return "";
         }
-        setEntityClass(beanClass);
+        crudEditPageMixin.setEntityClass(beanClass);
 
         if (context.getCount() == 1) {
             // FIXME Очищает Message при добавлении новой записи. Нужно еще
             // сделать очистку при редактироании
             setMessage("");
-            checkStoreTypeAccess();
+            crudEditPageMixin.checkStoreTypeAccess();
         } else {
-            checkUpdateTypeAccess();
+            crudEditPageMixin.checkUpdateTypeAccess();
         }
-        final BaseEntity<?> activationContextObject = getActivationContextEncoder(
+        final BaseEntity<?> activationContextObject = acEncoderSource.get(
                 getEntityClass()).toObject(context);
         if (activationContextObject != null) {
-            checkUpdateObjectAccess(activationContextObject);
+            crudEditPageMixin.checkUpdateObjectAccess(activationContextObject);
         }
 
         setObject(activationContextObject);
@@ -102,7 +114,7 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     }
 
     public String getListPageURL() {
-        return getTapestryCrudModuleService().getListPageURL(getEntityClass());
+        return tCrudModuleService.getListPageURL(getEntityClass());
     }
 
     public String getListPageURLContext() {
@@ -110,15 +122,60 @@ public class Edit extends HibernateValidatorBaseEditPage<BaseEntity<?>, Integer>
     }
 
     public Object getContext() {
-        return getActivationContextEncoder(getEntityClass()).toActivationContext(getObject());
+        return acEncoderSource.get(getEntityClass()).toActivationContext(getObject());
     }
 
     public boolean getCreate() {
-        return getAuthorizer().canStore(getEntityClass());
+        return crudEditPageMixin.getAuthorizer().canStore(getEntityClass());
     }
 
     public boolean getListView() {
-        return getAuthorizer().canRead(getEntityClass());
+        return crudEditPageMixin.getAuthorizer().canRead(getEntityClass());
+    }
+
+    @Override
+    public BaseEntity<?> getObject() {
+        return crudEditPageMixin.getObject();
+    }
+
+    @Override
+    public void setObject(BaseEntity<?> object) {
+        crudEditPageMixin.setObject(object);
+    }
+
+    @Override
+    public Object getFormZone() {
+        return crudEditPageMixin.getFormZone();
+    }
+
+    @Override
+    public String getMessage() {
+        return crudEditPageMixin.getMessage();
+    }
+
+    @Override
+    public void setMessage(String message) {
+        crudEditPageMixin.setMessage(message);
+    }
+
+    @Override
+    public Class<BaseEntity<?>> getEntityClass() {
+        return crudEditPageMixin.getEntityClass();
+    }
+
+    @Override
+    public Class<?> getPrimaryKeyClass() {
+        return Integer.class;
+    }
+
+    @Override
+    public String getZone() {
+        return crudEditPageMixin.getZone();
+    }
+
+    @Override
+    public BeanModel<BaseEntity<?>> getBeanModel() {
+        return crudEditPageMixin.getBeanModel();
     }
 
     public static class MetaLinkCoercion implements Coercion<IMenuLink, Class<BaseEntity<?>>> {
