@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 /**
  * Checks for JPA annotations, and extracts its value to form the result.
  */
-//TODO Сделать что-бы hibernate validator обрабатывал аннотации hibernate
 public class JPAAnnotationsConstraintGenerator implements ValidationConstraintGenerator {
 
     /**

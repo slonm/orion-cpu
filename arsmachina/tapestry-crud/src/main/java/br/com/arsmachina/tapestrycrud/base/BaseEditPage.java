@@ -93,7 +93,7 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
         final T object = getObject();
 
         if (object == null) {
-            setObject(createNewObject());
+//            setObject(createNewObject());
         } else if (getController().isPersistent(object)) {
             getController().reattach(object);
         }

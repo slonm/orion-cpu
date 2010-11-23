@@ -6,7 +6,7 @@
           t:sidebarTitle="Links">
 
     <t:zone t:id="zone">
-        <t:form t:id="form" zone="prop:zone">
+        <t:form t:id="form" zone="prop:zone" validate="object">
             <crud:Message t:message="message"/>
             <t:errors/>
             <div class="t-beaneditor">
