@@ -1,7 +1,7 @@
 package orion.cpu.views.tapestry.pages;
 
 import br.com.arsmachina.tapestrycrud.CrudEditPage;
-import br.com.arsmachina.tapestrycrud.hibernatevalidator.mixins.HibernateValidatorMixin;
+//import br.com.arsmachina.tapestrycrud.hibernatevalidator.mixins.HibernateValidatorMixin;
 import br.com.arsmachina.tapestrycrud.mixins.CrudEditPageMixin;
 import br.com.arsmachina.tapestrycrud.services.ActivationContextEncoderSource;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
@@ -29,8 +29,8 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
 
-    @Mixin
-    private HibernateValidatorMixin hibernateValidatorMixin;
+//    @Mixin
+//    private HibernateValidatorMixin hibernateValidatorMixin;
 
     @Mixin
     private CrudEditPageMixin<BaseEntity<?>, Integer> crudEditPageMixin;

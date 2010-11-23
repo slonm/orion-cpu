@@ -2,6 +2,7 @@ package orion.cpu.entities.ref;
 
 import orion.cpu.baseentities.ReferenceEntity;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.apache.tapestry5.beaneditor.DataType;
 
@@ -18,12 +19,12 @@ import org.apache.tapestry5.beaneditor.DataType;
 public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeAreaOrTrainingDirection> {
 
     private static final long serialVersionUID = 1L;
-    @Pattern(regexp="[0-9]{4}")
     private String code;
     @DataType("KnowledgeAreaOrTrainingDirection")
     private Boolean isKnowledgeArea;
 
-    @Column(nullable=false)
+    @Pattern(regexp="[0-9]{4}")
+    @NotNull
     public String getCode() {
         return code;
     }
@@ -32,7 +33,7 @@ public class KnowledgeAreaOrTrainingDirection extends ReferenceEntity<KnowledgeA
         this.code = code;
     }
 
-    @Column(nullable=false)
+    @NotNull
     public Boolean getIsKnowledgeArea() {
         return isKnowledgeArea;
     }

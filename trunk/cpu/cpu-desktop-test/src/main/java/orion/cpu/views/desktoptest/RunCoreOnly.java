@@ -2,16 +2,11 @@ package orion.cpu.views.desktoptest;
 
 import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.module.service.ControllerSource;
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.tapestry5.internal.TapestryAppInitializer;
-import org.apache.tapestry5.ioc.IOCUtilities;
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.RegistryBuilder;
-import org.apache.tapestry5.services.TapestryModule;
-import org.slf4j.*;
 import orion.cpu.security.services.ExtendedAuthorizer;
 
 public class RunCoreOnly {
@@ -27,7 +22,8 @@ public class RunCoreOnly {
             if(module.startsWith("orion.cpu.views")||
                module.startsWith("br.com.arsmachina.tapestrycrud")||
                module.startsWith("nu.localhost")||
-               module.startsWith("orion.tapestry")
+               module.startsWith("orion.tapestry")||
+               module.equals("org.apache.tapestry5.beanvalidator.BeanValidatorModule")
                ){
                it.remove();
             }

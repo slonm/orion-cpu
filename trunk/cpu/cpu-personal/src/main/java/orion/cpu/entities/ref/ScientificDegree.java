@@ -4,6 +4,6 @@ package orion.cpu.entities.ref;
  *
  * @author sl
  */
-public enum AcademicDegree {
+public enum ScientificDegree {
     DOCTOR, KANDIDATE;
 }

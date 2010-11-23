@@ -1,12 +1,9 @@
 package orion.cpu.entities.emp;
 
 import java.util.Set;
-import orion.cpu.entities.ref.AcademicDegree;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import orion.cpu.entities.psn.Person;
-import orion.cpu.entities.ref.AcademicRank;
 
 /**
  * Работник.

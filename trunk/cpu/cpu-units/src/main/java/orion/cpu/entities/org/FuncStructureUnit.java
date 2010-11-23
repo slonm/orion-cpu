@@ -1,17 +1,22 @@
 package orion.cpu.entities.org;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import orion.cpu.baseentities.BaseEntity;
 
 /**
  *
  * @author sl
  */
+//TODO проработать
 @Entity
 @Table(schema = "org")
 public class FuncStructureUnit extends BaseEntity<FuncStructureUnit> {
-private OrgUnit orgUnit;
 
+    private OrgUnit orgUnit;
+
+    @OneToOne
+    @NotNull
     public OrgUnit getOrgUnit() {
         return orgUnit;
     }
@@ -29,5 +34,4 @@ private OrgUnit orgUnit;
     public int compareTo(FuncStructureUnit o) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

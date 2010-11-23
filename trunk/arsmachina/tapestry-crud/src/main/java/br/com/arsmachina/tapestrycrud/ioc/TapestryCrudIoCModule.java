@@ -60,6 +60,7 @@ import br.com.arsmachina.module.service.EntitySource;
 import br.com.arsmachina.module.service.ModuleService;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
 import br.com.arsmachina.tapestrycrud.Constants;
+import br.com.arsmachina.tapestrycrud.beaneditor.BeanModelWrapper;
 import br.com.arsmachina.tapestrycrud.beanmodel.BeanModelCustomizer;
 import br.com.arsmachina.tapestrycrud.beanmodel.EntityDataTypeAnalyzer;
 import br.com.arsmachina.tapestrycrud.encoder.ActivationContextEncoder;
@@ -96,6 +97,8 @@ import br.com.arsmachina.tapestrycrud.services.impl.TapestryCrudModuleServiceImp
 import br.com.arsmachina.tapestrycrud.services.impl.TreeServiceSourceImpl;
 import br.com.arsmachina.tapestrycrud.services.impl.UserServiceImpl;
 import br.com.arsmachina.tapestrycrud.tree.SingleTypeTreeService;
+import org.apache.tapestry5.ioc.MethodAdviceReceiver;
+import org.apache.tapestry5.ioc.annotations.Match;
 
 /**
  * Tapestry-IoC module for Tapestry CRUD.
@@ -902,5 +905,18 @@ public class TapestryCrudIoCModule {
 		}
 
 	}
+
+    @Match("BeanModelSource")
+    public static void adviseBeanModelSourceStandartNewInstance(MethodAdviceReceiver receiver) {
+        receiver.adviseAllMethods(new MethodAdvice() {
+
+            public void advise(Invocation invocation) {
+                invocation.proceed();
+                if (BeanModel.class.equals(invocation.getResultType())) {
+                    invocation.overrideResult(new BeanModelWrapper((BeanModel)invocation.getResult()){});
+                }
+            }
+        });
+    }
 
 }

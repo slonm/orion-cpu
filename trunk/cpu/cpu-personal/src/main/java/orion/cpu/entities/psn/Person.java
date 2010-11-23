@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import orion.cpu.baseentities.NamedEntity;
-import orion.cpu.entities.ref.AcademicDegree;
+import orion.cpu.entities.ref.ScientificDegree;
 import orion.cpu.entities.ref.AcademicRank;
 
 /**
@@ -19,7 +19,7 @@ public class Person extends NamedEntity<Person> {
     private String firstName;
     private String secondName;
     private String surename;
-    private AcademicDegree academicDegree;
+    private ScientificDegree scientificDegree;
     private AcademicRank academicRank;
 
     @Size(min = 2)
@@ -51,12 +51,12 @@ public class Person extends NamedEntity<Person> {
         this.surename = capitalize(surename);
     }
 
-    public AcademicDegree getAcademicDegree() {
-        return academicDegree;
+    public ScientificDegree getScientificDegree() {
+        return scientificDegree;
     }
 
-    public void setAcademicDegree(AcademicDegree academicDegree) {
-        this.academicDegree = academicDegree;
+    public void setScientificDegree(ScientificDegree scientificDegree) {
+        this.scientificDegree = scientificDegree;
     }
 
     public AcademicRank getAcademicRank() {
