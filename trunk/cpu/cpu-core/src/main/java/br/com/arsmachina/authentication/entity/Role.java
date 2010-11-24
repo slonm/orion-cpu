@@ -98,7 +98,6 @@ public class Role extends AbstractRole<Role> {
      */
     @ManyToMany
     @JoinTable(schema = "sec", name = "role_permissiongroup", joinColumns = @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false))
-    //FIXME разобратся как переопределять @JoinTable и заменить эти костыли на нормальное объявление
     public Set<PermissionGroup> getPermissionGroups() {
         return permissionGroups();
     }

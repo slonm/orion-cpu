@@ -76,23 +76,4 @@ public abstract class AbstractRoleControllerImpl<T extends AbstractRole<?>> exte
         }
     }
 
-    @Override
-    public List<Class<?>> findPermittedTypes(T abstractRole, String permissionType) {
-        try {
-            List<Class<?>> l = dao.findPermittedTypes(abstractRole, permissionType);
-            return processAfterEvent(new AfterFindPermittedTypesEv<T>(l, abstractRole, permissionType));
-        } catch (AbortControllerEventException ex) {
-            return Collections.EMPTY_LIST;
-        }
-    }
-
-    @Override
-    public <X> List<X> findPermittedObjects(Class<X> objectType, T abstractRole, String permissionType) {
-        try {
-            List<X> l = dao.findPermittedObjects(objectType, abstractRole, permissionType);
-            return processAfterEvent(new AfterFindPermittedObjectsEv<T, X>(l, objectType, abstractRole, permissionType));
-        } catch (AbortControllerEventException ex) {
-            return Collections.EMPTY_LIST;
-        }
-    }
 }

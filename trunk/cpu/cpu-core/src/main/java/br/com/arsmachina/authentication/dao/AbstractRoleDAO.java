@@ -46,21 +46,4 @@ public interface AbstractRoleDAO<T extends AbstractRole<?>> extends DAO<T, Integ
      */
     boolean hasWithLogin(String login);
 
-    /**
-     * Вовращает список типов, на которые есть право у роли.
-     * @param abstractRole роль
-     * @param permissionType право
-     * @return a <code>List</code>.
-     */
-    List<Class<?>> findPermittedTypes(T abstractRole, String permissionType);
-
-    /**
-     * Вовращает список объектов, на которые есть право у роли.
-     * @param <X> тип объекта
-     * @param objectType тип объекта
-     * @param abstractRole роль
-     * @param permissionType право
-     * @return a <code>List</code>.
-     */
-    <X> List<X> findPermittedObjects(Class<X> objectType, T abstractRole, String permissionType);
 }

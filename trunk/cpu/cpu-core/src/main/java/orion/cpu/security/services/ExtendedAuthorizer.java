@@ -4,24 +4,13 @@ import br.com.arsmachina.authentication.entity.Permission;
 import br.com.arsmachina.authentication.entity.Role;
 import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authorization.Authorizer;
-import org.hibernate.Criteria;
 
 /**
  * Расширенная версия {@link Authorizer}.
  * The service has a per-thread scope.
  * @author sl
  */
-//TODO Отвязать ExtendedAuthorizer от org.hibernate.Criteria
 public interface ExtendedAuthorizer extends Authorizer {
-
-    /**
-     * Добавляет ограничения на выбор данных.
-     * Часть механизма Row  Level Security. Записи, которые нельзя
-     * видеть пользователю должны быть исключены добавлением условий к
-     * объекту criteria.
-     * @param criteria объект Criteria, который дополнится ограничениями
-     */
-    void addConstraintsToCriteria(Criteria criteria);
 
     /**
      * Показывает есть ли право у текущего пользователя с текущей ролью

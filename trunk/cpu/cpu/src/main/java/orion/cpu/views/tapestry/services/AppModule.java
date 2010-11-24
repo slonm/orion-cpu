@@ -33,11 +33,11 @@ public class AppModule {
         // header. If existing assets are changed, the version number should also
         // change, to force the browser to download new versions.
         configuration.add(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
-        //-Djava.util.logging.config.file="logging.properties"
-        //configuration.add("java.util.logging.config.file", "logging.properties");
-        configuration.add("tapestry.compress-whitespace", "false");
+        configuration.add(SymbolConstants.COMPRESS_WHITESPACE, SymbolConstants.PRODUCTION_MODE_VALUE);
         //Заполнение базы данных тестовыми данными
         configuration.add(CoreIOCModule.FILL_TEST_DATA, "true");
+        configuration.add(SymbolConstants.GZIP_COMPRESSION_ENABLED, "false");
+//        configuration.add(SymbolConstants.BLACKBIRD_ENABLED, "true");
     }
 
 }

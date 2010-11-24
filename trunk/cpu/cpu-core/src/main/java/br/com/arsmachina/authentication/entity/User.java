@@ -226,7 +226,6 @@ public class User extends AbstractRole<User> {
     @JoinTable(schema = "sec", name = "user_permissiongroup", joinColumns =
     @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns =
     @JoinColumn(name = "permissiongroup_id", nullable = false))
-    //FIXME разобратся как переопределять @JoinTable и заменить эти костыли на нормальное объявление
     public Set<PermissionGroup> getPermissionGroups() {
         return super.permissionGroups();
     }

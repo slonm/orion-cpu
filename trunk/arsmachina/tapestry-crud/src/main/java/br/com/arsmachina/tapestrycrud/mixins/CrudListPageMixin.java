@@ -14,11 +14,12 @@
  *  limitations under the License.
  *  under the License.
  */
-
 package br.com.arsmachina.tapestrycrud.mixins;
 
 import br.com.arsmachina.tapestrycrud.base.BaseListPage;
 import java.io.Serializable;
+import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.corelib.components.Grid;
 
 /**
  *
@@ -26,4 +27,11 @@ import java.io.Serializable;
  */
 public class CrudListPageMixin<T, K extends Serializable> extends BaseListPage<T, K> {
 
+    @InjectComponent
+    private Grid grid;
+
+    @Override
+    public Grid getGrid() {
+        return grid;
+    }
 }

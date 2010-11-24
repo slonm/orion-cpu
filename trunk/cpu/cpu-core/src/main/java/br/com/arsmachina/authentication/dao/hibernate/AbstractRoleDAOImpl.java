@@ -53,7 +53,6 @@ public abstract class AbstractRoleDAOImpl<T extends AbstractRole<?>> extends Con
         return (T) cr.uniqueResult();
     }
 
-    //TODO test it
     @Override
     public T loadForAuthentication(String login) {
         Session session = getSession();
@@ -95,24 +94,6 @@ public abstract class AbstractRoleDAOImpl<T extends AbstractRole<?>> extends Con
         query.setParameter("login", login.toLowerCase());
         Integer result = (Integer) query.uniqueResult();
         return result > 0;
-    }
-
-    //TODO test it
-    @Override
-    public List<Class<?>> findPermittedTypes(T abstractRole, String permissionType) {
-        Query query =
-                getSession().createQuery("select distinct p.subject from " +
-                getRoleClass().getSimpleName() + " r join r.permissionGroups as pg " +
-                "join pg.permissions p where r=:role p.type=:permissionType");
-        query.setParameter("role", abstractRole);
-        query.setParameter("permissionType", permissionType);
-        return query.list();
-
-    }
-    //TODO RLS
-    @Override
-    public <X> List<X> findPermittedObjects(Class<X> objectType, T abstractRole, String permissionType){
-        return Collections.EMPTY_LIST;
     }
 
 }

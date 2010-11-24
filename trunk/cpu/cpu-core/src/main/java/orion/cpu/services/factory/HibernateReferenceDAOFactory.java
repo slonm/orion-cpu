@@ -5,7 +5,6 @@ import br.com.arsmachina.module.factory.DAOFactory;
 import org.hibernate.SessionFactory;
 import orion.cpu.dao.hibernate.HibernateReferenceDAO;
 import orion.cpu.baseentities.ReferenceEntity;
-import orion.cpu.security.services.ExtendedAuthorizer;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
@@ -15,16 +14,14 @@ import ua.mihailslobodyanuk.utils.Defense;
 public class HibernateReferenceDAOFactory implements DAOFactory {
 
     final private SessionFactory sessionFactory;
-    final private ExtendedAuthorizer authorizer;
     /**
      * Single constructor of this class.
      *
      * @param sessionFactory a {@link SessionFactory}. It cannot be null.
      * @param authorizer 
      */
-    public HibernateReferenceDAOFactory(SessionFactory sessionFactory, ExtendedAuthorizer authorizer) {
+    public HibernateReferenceDAOFactory(SessionFactory sessionFactory) {
         this.sessionFactory = Defense.notNull(sessionFactory, "sessionFactory");
-        this.authorizer = Defense.notNull(authorizer, "authorizer");
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +30,7 @@ public class HibernateReferenceDAOFactory implements DAOFactory {
         DAO<T, ?> dao = null;
         if (sessionFactory.getClassMetadata(entityClass) != null &&
                 ReferenceEntity.class.isAssignableFrom(entityClass)) {
-            dao = new HibernateReferenceDAO(entityClass, sessionFactory, authorizer);
+            dao = new HibernateReferenceDAO(entityClass, sessionFactory);
         }
         return dao;
     }

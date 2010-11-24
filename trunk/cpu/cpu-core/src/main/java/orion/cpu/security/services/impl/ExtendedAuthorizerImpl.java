@@ -7,7 +7,6 @@ import br.com.arsmachina.module.service.ControllerSource;
 import java.util.Stack;
 import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.annotations.Scope;
-import org.hibernate.Criteria;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.security.exceptions.*;
 import orion.cpu.security.services.ExtendedAuthorizer;
@@ -153,11 +152,6 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
         }
     }
 
-    //TODO Row Level Security
-    @Override
-    public void addConstraintsToCriteria(Criteria criteria) {
-    }
-
 //FIXME рассматриваются только аннотации!
     private boolean canReadBySchema(Class<?> subject) {
         javax.persistence.Table t = subject.getAnnotation(javax.persistence.Table.class);
@@ -175,7 +169,6 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
         return can(permission, null);
     }
 
-    //TODO Row Level Security
     @Override
     public boolean can(Permission permission, Object object) {
         Defense.notNull(permission, "permission");
@@ -232,7 +225,6 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
         }
     }
 
-    //TODO Row Level Security
     @Override
     public void check(Permission permission, Object object) {
         Defense.notNull(permission, "permission");

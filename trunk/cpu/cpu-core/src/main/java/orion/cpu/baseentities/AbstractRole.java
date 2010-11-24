@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
  * @param <T> конечный класс
  * @author Mihail Slobodyanuk
  */
-//TODO getPermissions должен получать в аргументе тип прав
 @MappedSuperclass
 public abstract class AbstractRole<T extends AbstractRole<?>> extends NamedEntity<T> {
 
@@ -36,9 +35,6 @@ public abstract class AbstractRole<T extends AbstractRole<?>> extends NamedEntit
      * Returns unmodifiable ordered value of the <code>permissionGroups</code> property.
      * @return a {@link Set<PermissionGroup>}.
      */
-//    @ManyToMany
-//    @JoinTable(schema="sec", name = "role_permissiongroup", joinColumns = @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false))
-    //FIXME разобратся как переопределять @JoinTable и заменить эти костыли на нормальное объявление
     public Set<PermissionGroup> permissionGroups() {
         return permissionGroups;
     }

@@ -93,7 +93,7 @@ public class CoreIOCModule {
             OrderedConfiguration<DAOFactory> configuration) {
         configuration.addInstance("named", HibernateNamedEntityDAOFactory.class, "before:hibernate");
         configuration.addInstance("ref", HibernateReferenceDAOFactory.class, "before:named");
-        configuration.overrideInstance("hibernate", SecuredDAOFactory.class, "after:*");
+        configuration.overrideInstance("hibernate", OrionHibernateGenericDAOFactory.class, "after:*");
     }
 
     /**
