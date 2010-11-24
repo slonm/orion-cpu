@@ -95,9 +95,7 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
         crudEditPageMixin.setEntityClass(beanClass);
 
         if (context.getCount() == 1) {
-            // FIXME Очищает Message при добавлении новой записи. Нужно еще
-            // сделать очистку при редактироании
-            setMessage("");
+            setMessage(null);
             crudEditPageMixin.checkStoreTypeAccess();
         } else {
             crudEditPageMixin.checkUpdateTypeAccess();
