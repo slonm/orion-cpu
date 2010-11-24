@@ -3,7 +3,8 @@ package orion.cpu.entities.pub;
 import orion.cpu.baseentities.*;
 import java.util.*;
 import javax.persistence.*;
-
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.ScriptAssert;
 /**
  * Абстрактная реализация документа.
  * Реализует общие для всех документов поля: Серия, Номер, Дата издания, тело в
@@ -11,12 +12,13 @@ import javax.persistence.*;
  * @param <T>
  * @author kgp
  */
-//TODO Указать обязательность номера или серии
 @Entity
 @Table(schema = "pub", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"serial", "number", "issue"})
 })
 @Inheritance(strategy = InheritanceType.JOINED)
+@ScriptAssert(lang = "javascript", 
+        script = "_this.serial!=null||_this.number!=null")
 public class Document<T extends Document<?>> extends BaseEntity<T> {
 
     private String serial;
@@ -48,6 +50,7 @@ public class Document<T extends Document<?>> extends BaseEntity<T> {
     /**
      * @return the Serial
      */
+    @Size(min=1)
     public String getSerial() {
         return serial;
     }
@@ -62,6 +65,7 @@ public class Document<T extends Document<?>> extends BaseEntity<T> {
     /**
      * @return the licenseNumber
      */
+    @Size(min=1)
     public String getNumber() {
         return number;
     }

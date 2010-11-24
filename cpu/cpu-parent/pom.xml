@@ -268,7 +268,7 @@
         </dependencies>
     </dependencyManagement>
     <properties>
-        <slf4j-release-version>1.5.2</slf4j-release-version>
+        <slf4j-release-version>1.6.1</slf4j-release-version>
         <tapestry-release-version>5.2.2</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.javaDocEncoding>UTF-8</project.build.javaDocEncoding>

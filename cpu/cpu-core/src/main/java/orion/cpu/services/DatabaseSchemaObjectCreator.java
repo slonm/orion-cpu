@@ -9,10 +9,8 @@ import org.apache.tapestry5.hibernate.HibernateConfigurer;
 import org.apache.tapestry5.hibernate.HibernateEntityPackageManager;
 import org.apache.tapestry5.ioc.services.ClassNameLocator;
 import org.hibernate.*;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
-import org.hibernate.mapping.PersistentClass;
 import org.slf4j.*;
 
 /**
@@ -64,7 +62,8 @@ public class DatabaseSchemaObjectCreator implements HibernateConfigurer {
             }
         }
         if (schemas.size() > 0) {
-            SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Configuration cfg=new Configuration().configure();
+            SessionFactory sessionFactory = cfg.buildSessionFactory();
             Session session = sessionFactory.openSession();
             session.doWork(new Work() {
 

@@ -14,17 +14,22 @@
  *  limitations under the License.
  *  under the License.
  */
-
 package br.com.arsmachina.tapestrycrud.mixins;
 
+import br.com.arsmachina.tapestrycrud.CrudEditPage;
 import br.com.arsmachina.tapestrycrud.base.BaseEditPage;
 import java.io.Serializable;
+import org.apache.tapestry5.annotations.InjectContainer;
+import org.apache.tapestry5.corelib.components.Form;
 
 /**
  *
  * @author sl
  */
-public class CrudEditPageMixin<T, K extends Serializable> extends BaseEditPage<T, K>{
+public class CrudEditPageMixin<T, K extends Serializable> extends BaseEditPage<T, K> {
+
+    @InjectContainer
+    private CrudEditPage page;
 
     @Override
     public void checkStoreTypeAccess() {
@@ -39,6 +44,11 @@ public class CrudEditPageMixin<T, K extends Serializable> extends BaseEditPage<T
     @Override
     public void checkUpdateTypeAccess() {
         super.checkUpdateTypeAccess();
+    }
+
+    @Override
+    public Form getForm() {
+        return page.getForm();
     }
 
 

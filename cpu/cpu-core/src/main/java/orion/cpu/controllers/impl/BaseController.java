@@ -27,7 +27,6 @@ import ua.mihailslobodyanuk.utils.Defense;
  * @param <T> the entity class related to this controller.
  * @param <K> the type of the field that represents the entity class' primary key.
  */
-//TODO протестировать возможность изменения параметров в из слушателей
 public class BaseController<T, K extends Serializable>
         implements ControllerEventsListenerHub, Controller<T, K> {
 
@@ -219,7 +218,6 @@ public class BaseController<T, K extends Serializable>
         }
     }
 
-    //TODO Какое Количество должен возвращать countAll, с правами чтения или все?
     @Override
     public int countAll() {
         try {

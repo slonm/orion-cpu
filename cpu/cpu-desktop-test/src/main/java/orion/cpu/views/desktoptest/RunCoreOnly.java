@@ -42,8 +42,7 @@ public class RunCoreOnly {
     public static void main(String[] args) throws IOException {
 	System.setProperty("java.util.logging.config.file", "logging.properties");
         Registry registry = startup();
-        ControllerSource cs = registry.getService(ControllerSource.class);
-
+        
         shutdown(registry);
     }
 

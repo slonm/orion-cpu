@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import orion.cpu.baseentities.NamedEntity;
 import orion.cpu.dao.NamedEntityDAO;
-import orion.cpu.security.services.ExtendedAuthorizer;
 
 /**
  * Hibernate реализация DAO для NamedEntity
@@ -15,11 +14,11 @@ import orion.cpu.security.services.ExtendedAuthorizer;
  * @author sl 
  */
 @SuppressWarnings("unchecked")
-public class HibernateNamedEntityDAO<T extends NamedEntity<?>> extends SecuredHibernateDAOImpl<T, Integer>
+public class HibernateNamedEntityDAO<T extends NamedEntity<?>> extends OrionHibernateGenericDAO<T, Integer>
         implements NamedEntityDAO<T> {
 
-    public HibernateNamedEntityDAO(Class<T> clasz, SessionFactory sessionFactory, ExtendedAuthorizer authorizer) {
-        super(clasz, sessionFactory, authorizer);
+    public HibernateNamedEntityDAO(Class<T> clasz, SessionFactory sessionFactory) {
+        super(clasz, sessionFactory);
     }
 
     @Override

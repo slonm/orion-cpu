@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import orion.cpu.dao.ReferenceDAO;
 import orion.cpu.baseentities.ReferenceEntity;
-import orion.cpu.security.services.ExtendedAuthorizer;
 
 /**
  * Hibernate реализация DAO справочников
@@ -15,8 +14,8 @@ import orion.cpu.security.services.ExtendedAuthorizer;
 @SuppressWarnings("unchecked")
 public class HibernateReferenceDAO<T extends ReferenceEntity<?>> extends HibernateNamedEntityDAO<T> implements ReferenceDAO<T> {
 
-    public HibernateReferenceDAO(Class<T> clasz, SessionFactory sessionFactory, ExtendedAuthorizer authorizer) {
-        super(clasz, sessionFactory, authorizer);
+    public HibernateReferenceDAO(Class<T> clasz, SessionFactory sessionFactory) {
+        super(clasz, sessionFactory);
     }
 
     @Override

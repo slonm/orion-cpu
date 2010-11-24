@@ -21,7 +21,6 @@ public class AuthorityControllerListener implements ControllerEventsListener {
         this.authorizer = Defense.notNull(authorizer, "authorizer");
     }
 
-//TODO Row Level Security, Column Level Security
     @Override
     public <T> void onControllerEvent(Controller<T, ?> controller, Class<T> entityClass,
             ControllerEvent event) {
