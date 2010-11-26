@@ -26,7 +26,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
     @NonVisual
     private Integer id;
     @NonVisual
-    private User filler;
+    private String filler;
     @NonVisual
     private Timestamp fillDateTime;
     @NonVisual
@@ -54,8 +54,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         return fillDateTime;
     }
 
-    @ManyToOne
-    public User getFiller() {
+    public String getFiller() {
         return filler;
     }
 
@@ -68,7 +67,7 @@ public abstract class BaseEntity<T extends BaseEntity<?>> extends AObject
         this.fillDateTime = fillDateTime;
     }
 
-    public void setFiller(User filler) {
+    public void setFiller(String filler) {
         this.filler = filler;
     }
 
