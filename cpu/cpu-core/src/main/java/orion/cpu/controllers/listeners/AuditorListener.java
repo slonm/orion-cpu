@@ -30,7 +30,7 @@ public class AuditorListener implements ControllerEventsListener {
             if (event instanceof AbstractBeforeModifyByObjectEv) {
                 BaseEntity<?> be = ((BaseEntity<?>) ((AbstractBeforeModifyByObjectEv) event).getObject());
                 if (authorizer.getUser().getId() != null) {
-                    be.setFiller(authorizer.getUser());
+                    be.setFiller(authorizer.getUser().getLogin());
                 }
                 if (be.getFillDateTime() == null) {
                     be.setFillDateTime(be.getModifyDateTime());
