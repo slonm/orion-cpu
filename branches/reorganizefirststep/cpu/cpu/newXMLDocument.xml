@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data date="31.12.2009">
+    <orgUnits>
+        <orgUnit operation="create">
+            <id>2</id>
+            <name>Інститут інформаційних технологій</name>
+            <shortName>ІІТ</shortName>
+            <parent>1</parent>
+            <orgUnitType>1</orgUnitType>
+        </orgUnit>
+        <orgUnit operation="update">
+            <id>3</id>
+            <shortName>КПІТ</shortName>
+        </orgUnit>
+    </orgUnits>
+    <orgUnitTypes>
+        <orgUnitType operation="create">
+            <id>1</id>
+            <name>Інститут</name>
+        </orgUnitType>
+    </orgUnitTypes>
+    <postBranches>
+        <postBranch>
+            <id>1</id>
+            <name>Професорсько-викладацький</name>
+            <shortName>ПВ</shortName>
+        </postBranch>
+        <postBranch>
+            <id>2</id>
+            <name>Адміністративно-управлінський</name>
+            <shortName>АУ</shortName>
+        </postBranch>
+    </postBranches>
+    <posts>
+        <post operation="create">
+            <id>5</id>
+            <orgUnit>2</orgUnit>
+            <name>Заступник директора</name>
+            <postBranch>2</postBranch>
+        </post>
+        <post operation="create">
+            <id>4</id>
+            <orgUnit>3</orgUnit>
+            <name>Доцент</name>
+            <postBranch>1</postBranch>
+        </post>
+    </posts>
+    <employees>
+        <employee operation="create">
+            <id>1</id>
+            <surname>Коломоєць</surname>
+            <firstName>Геннадій</firstName>
+            <secondName>Павлович</secondName>
+            <scientificDegree>1</scientificDegree>
+            <academicRank>1</academicRank>
+            <isInState>true</isInState>
+            <employeePosts>
+                <employeePost operation="create">
+                    <id>1</id>
+                    <post>4</post>
+                    <isMain>true</isMain>
+                </employeePost>
+                <employeePost operation="create">
+                    <id>2</id>
+                    <post>5</post>
+                    <isMain>false</isMain>
+                </employeePost>
+            </employeePosts>
+        </employee>
+        <employee operation="update">
+            <id>2</id>
+            <employeePosts>
+                <employeePost operation="delete">
+                    <id>10</id>
+                </employeePost>
+                <employeePost operation="create">
+                    <id>21</id>
+                    <post>4</post>
+                    <isMain>true</isMain>
+                </employeePost>
+            </employeePosts>
+        </employee>
+    </employees>
+    <scientificDegrees>
+        <scientificDegree operation="create">
+            <id>1</id>
+            <name>Кандидат фізико-математичних наук</name>
+        </scientificDegree>
+    </scientificDegrees>
+    <academicRanks>
+        <academicRank operation="create">
+            <id>1</id>
+            <name>Доцент</name>
+        </academicRank>
+    </academicRanks>
+</data>

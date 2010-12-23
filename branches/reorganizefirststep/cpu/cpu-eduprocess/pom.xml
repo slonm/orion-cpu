@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>orion</groupId>
+    <artifactId>cpu-eduprocess</artifactId>
+    <name>Учебный процесс</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <parent>
+        <artifactId>cpu-parent</artifactId>
+        <groupId>orion</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../cpu-parent/pom.xml</relativePath>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu-units</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu-license</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>
+                                orion.cpu.services.EduprocessIOCModule
+                            </Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

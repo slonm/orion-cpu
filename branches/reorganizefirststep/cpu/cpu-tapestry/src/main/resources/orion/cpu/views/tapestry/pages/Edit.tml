@@ -1,0 +1,21 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter"
+          xmlns:crud="tapestry-library:crud"
+          title="prop:title"
+          t:sidebarTitle="Links">
+
+    <t:zone t:id="zone">
+        <t:form t:id="form" zone="prop:zone" validate="object">
+            <crud:Message t:message="message"/>
+            <t:errors/>
+            <div class="t-beaneditor">
+                <t:beaneditor t:id="editor" object="object" model="beanmodel"/>
+                <div class="t-beaneditor-row">
+                    <t:submit class="t-beaneditor-submit"
+                              value="prop:action" context="context"/>
+                </div>
+            </div>
+        </t:form>
+    </t:zone>
+    <crud:PageLinks/>
+</t:layout>

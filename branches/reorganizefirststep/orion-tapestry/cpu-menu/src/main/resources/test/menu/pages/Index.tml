@@ -1,0 +1,21 @@
+<t:menu.layout t:title="message:project.name"
+          t:menudata="CpuMenu"
+          mode="activationContext"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter">
+<!--
+    t:sidebarTitle="Current Time"
+
+ -->
+ !!!!
+<p>${message:greeting}</p>
+
+<div><t:menu.menudropdown menudata="getContextMenu(1)"/> авывардвоыардол</div>
+<div><t:menu.menudropdown menudata="getContextMenu(2)"/> 312437089авыоз</div>
+<!-- 
+
+<p><t:menu.menudropdown menudata="getContextMenu(3)"/> 0бвыаолбэ оыфа</p>
+<p><t:menu.menudropdown menudata="getContextMenu(4)"/> важдлз09832- ывао</p>
+<p><t:menu.menudropdown menudata="getContextMenu(5)"/>  выдахзщываъхзщыва</p>
+ -->
+</t:menu.layout>

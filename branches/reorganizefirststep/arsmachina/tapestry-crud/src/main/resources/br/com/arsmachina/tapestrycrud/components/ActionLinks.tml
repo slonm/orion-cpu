@@ -1,0 +1,19 @@
+<div 
+    xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd"
+    class="t-crud-actionlinks">
+    <t:if test="view">
+        <a href="#" t:type="crud/ViewObjectPageLink" class="t-crud-view-object-pic">
+            <!--img src="${asset:images/view.png}" alt="${message:link.view.object}"/-->
+        </a>
+    </t:if>
+    <t:if test="edit">
+        <a href="#" t:type="crud/EditObjectPageLink" class="t-crud-edit-object-pic">
+            <!--img src="${asset:images/edit.png}" alt="${message:link.edit.object}"/-->
+        </a>
+    </t:if>
+    <t:if test="remove">
+        <a href="#" t:type="crud/RemoveObjectEventLink" class="t-crud-remove-object-pic">
+            <!--img src="${asset:images/delete.png}" alt="${message:link.remove.object}"/-->
+        </a>
+    </t:if>
+</div>

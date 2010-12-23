@@ -1,0 +1,17 @@
+<div class="t-crud-links t-crud-page-links" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+    <t:if test="edit">
+        <a href="#" t:type="crud/EditObjectPageLink">Edit this record</a>
+    </t:if>
+    <t:if test="view">
+        <a href="#" t:type="crud/ViewObjectPageLink">View this record</a>
+    </t:if>
+    <t:if test="remove">
+        <a href="#" t:type="crud/RemoveObjectEventLink">Remove this record</a>
+    </t:if>
+    <t:if test="create">
+        <a href="#" t:type="crud/NewObjectPageLink">Create a new object</a>
+    </t:if>
+    <t:if test="list">
+        <a href="#" t:type="crud/ListPageLink">Back to listing . . . </a>
+    </t:if>
+</div>

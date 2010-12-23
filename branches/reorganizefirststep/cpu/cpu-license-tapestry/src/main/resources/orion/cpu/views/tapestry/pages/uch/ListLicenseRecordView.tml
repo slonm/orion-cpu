@@ -1,0 +1,33 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter"
+          xmlns:crud="tapestry-library:crud"
+          title="message:reflect.orion.cpu.entities.uch.LicenseRecordView"
+          menudata="MENU_PATH"
+          t:sidebarTitle="Links">
+    <crud:Message t:message="message"/><br/>
+    ${license}<br/><br/>
+    <t:zone t:id="zone">
+        <t:grid source="objects" row="object"
+                model="beanModel" inplace="true" exclude="KnowledgeAreaOrTrainingDirectionCode,LicenseSerialNumber,LicenseIssueDate,license,educationalQualificationLevel">
+            <p:knowledgeAreaOrTrainingDirectionCell>
+                <b>${object.knowledgeAreaOrTrainingDirectionCode}</b> ${object.knowledgeAreaOrTrainingDirection.name}
+            </p:knowledgeAreaOrTrainingDirectionCell>
+            <p:actionCell>
+                <crud:ActionLinks t:object="object" view="false"/>
+            </p:actionCell>
+            <p:empty>
+                <crud:EmptyGridMessage/>
+            </p:empty>
+        </t:grid>
+    </t:zone>
+    <br/>
+    <t:if test="authorizer.canStore(entityClass)">
+        <t:PageLink page="prop:editpageurl" context="prop:editPageURLContext">
+	${message:link.new.object}
+        </t:PageLink>
+    </t:if>
+    <br/>
+    <t:birt.ReportPreviewLink report="license.rptdesign">Звіт</t:birt.ReportPreviewLink>
+    <br/>
+    <crud:Message t:message="message"/>
+</t:layout>
