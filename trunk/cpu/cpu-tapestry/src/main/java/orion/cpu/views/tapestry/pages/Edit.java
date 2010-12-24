@@ -6,11 +6,9 @@ import br.com.arsmachina.tapestrycrud.mixins.CrudEditPageMixin;
 import br.com.arsmachina.tapestrycrud.services.ActivationContextEncoderSource;
 import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Mixin;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
-import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -31,8 +29,8 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
 
-    @Component
-    private Form form;
+//    @Mixin
+//    private HibernateValidatorMixin hibernateValidatorMixin;
 
     @Mixin
     private CrudEditPageMixin<BaseEntity<?>, Integer> crudEditPageMixin;
@@ -176,11 +174,6 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
     @Override
     public BeanModel<BaseEntity<?>> getBeanModel() {
         return crudEditPageMixin.getBeanModel();
-    }
-
-    @Override
-    public Form getForm() {
-        return form;
     }
 
     public static class MetaLinkCoercion implements Coercion<IMenuLink, Class<BaseEntity<?>>> {

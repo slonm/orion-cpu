@@ -14,17 +14,16 @@
  *  limitations under the License.
  *  under the License.
  */
+
 package br.com.arsmachina.tapestrycrud;
 
 import java.io.Serializable;
-import org.apache.tapestry5.corelib.components.Grid;
 
 /**
  *
  * @author sl
  */
 public interface CrudListPage<T, K extends Serializable> extends
-        CrudPage<T, K> {
+		CrudPage<T, K> {
 
-    Grid getGrid();
 }
