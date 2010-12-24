@@ -54,6 +54,7 @@ import br.com.arsmachina.tapestrycrud.encoder.ActivationContextEncoder;
 public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T, K> implements
         CrudEditPage<T, K> {
 
+    private static final String DEFAULT_CONSTRUCTOR_NOT_FOUND_MESSAGE = "Class %s does not have a single argument constructor";
     /**
      * You can change the persistence strategy from flash to another using
      * <code>@Meta("tapestry.persistence-strategy=" + PersistenceConstants.FLASH)</code> in your class.
@@ -89,10 +90,12 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
     @OnEvent(component = Constants.FORM_ID, value = EventConstants.PREPARE)
     final protected void prepare() {
 
-        final T obj = getObject();
+        final T object = getObject();
 
-        if (obj != null && getController().isPersistent(obj)) {
-            getController().reattach(obj);
+        if (object == null) {
+//            setObject(createNewObject());
+        } else if (getController().isPersistent(object)) {
+            getController().reattach(object);
         }
 
     }
@@ -107,10 +110,10 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
         // clear the confirmation message, if set.
         setMessage(null);
 
-        final T obj = getObject();
-        final Form frm = getForm();
+        final T object = getObject();
+        final Form form = getForm();
 
-        validateObject(obj, frm);
+        validateObject(object, form);
 
         Object returnValue = null;
 
@@ -146,7 +149,7 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
         assert message != null;
 
         Field field = (Field) componentResources.getEmbeddedComponent(fieldId);
-        getForm().recordError(field, message);
+        form.recordError(field, message);
 
     }
 
@@ -261,6 +264,30 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
     }
 
     /**
+     * Creates a new entity object to be edited. Fields can be prefilled if desired. This method is
+     * used by {@link #prepare()}. This implementation attempts to instantiate the object using its
+     * class default constructor.
+     *
+     * @return a {@link T}.
+     */
+    protected T createNewObject() {
+
+        try {
+            return getEntityClass().newInstance();
+        } catch (InstantiationException e) {
+
+            final String exceptionMessage = String.format(DEFAULT_CONSTRUCTOR_NOT_FOUND_MESSAGE,
+                    getEntityClass().getName());
+
+            throw new RuntimeException(exceptionMessage, e);
+
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
      * Returns the value of the <code>object</code> property.
      *
      * @return a {@link T}.
@@ -283,7 +310,7 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
      *
      * @return a {@link Form}.
      */
-    public Form getForm() {
+    protected final Form getForm() {
         return form;
     }
 
@@ -305,7 +332,7 @@ public abstract class BaseEditPage<T, K extends Serializable> extends BasePage<T
     @AfterRenderTemplate
     final void clearErrors() {
         //FIXME form is null
-        getForm().getDefaultTracker().clear();
+        //form.getDefaultTracker().clear();
         setMessage(null);
     }
 

@@ -11,13 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package br.com.arsmachina.tapestrycrud;
 
 import java.io.Serializable;
 
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.beaneditor.BeanModel;
-import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 
 /**
@@ -28,45 +28,43 @@ import org.apache.tapestry5.corelib.components.Zone;
  * @author Thiago H. de Paula Figueiredo
  */
 public interface CrudEditPage<T, K extends Serializable> extends
-        CrudPage<T, K> {
+		CrudPage<T, K> {
 
-    /**
-     * Returns edited object.
-     *
-     * @return a {@link T}.
-     */
-    T getObject();
+	/**
+	 * Returns edited object.
+	 * 
+	 * @return a {@link T}.
+	 */
+	public T getObject();
 
-    /**
-     * Changes the edited object.
-     *
-     * @param object a {@link T}.
-     */
-    void setObject(T object);
+	/**
+	 * Changes the edited object.
+	 * 
+	 * @param object a {@link T}.
+	 */
+	public void setObject(T object);
 
-    /**
-     * Returns the {@link Zone} that wraps the form. It is used for AJAX form submission.
-     * Otherwise, just return <code>null</code>.
-     *
-     * @return an {@link Object} that must be a {@link Zone} (preferred) or a
-     * {@link Block}
-     */
-    Object getFormZone();
+	/**
+	 * Returns the {@link Zone} that wraps the form. It is used for AJAX form submission.
+	 * Otherwise, just return <code>null</code>.
+	 *  
+	 * @return an {@link Object} that must be a {@link Zone} (preferred) or a  
+	 * {@link Block}
+	 */
+	public Object getFormZone();
 
-    /**
-     * Returns <code>null</code> if we are inserting a new object and
-     * {@link #getFormZoneId()} (<code>zone</code>) otherwise.
-     *
-     * @return a {@link String}.
-     */
-    String getZone();
+	/**
+	 * Returns <code>null</code> if we are inserting a new object and
+	 * {@link #getFormZoneId()} (<code>zone</code>) otherwise.
+	 *
+	 * @return a {@link String}.
+	 */
+	public String getZone();
+	/**
+	 * Creates a {@link BeanModel} and removes the primary key property from it.
+	 *
+	 * @return a {@link BeanModel}.
+	 */
+	public BeanModel<T> getBeanModel();
 
-    /**
-     * Creates a {@link BeanModel} and removes the primary key property from it.
-     *
-     * @return a {@link BeanModel}.
-     */
-    BeanModel<T> getBeanModel();
-
-    Form getForm();
 }
