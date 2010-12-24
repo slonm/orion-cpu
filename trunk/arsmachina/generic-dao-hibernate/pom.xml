@@ -38,10 +38,10 @@
 			<artifactId>c3p0</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>

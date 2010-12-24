@@ -224,24 +224,27 @@ public class CpuTapestryIOCModule {
         path = "Start>Admin>TML";
         configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
         //add All Reference Book
-        for(Class<?> e:esource.getEntityClasses()){
-            javax.persistence.Table a=e.getAnnotation(javax.persistence.Table.class);
-            if(a!=null&&"ref".equals(a.schema())){
-                path = "Start>Admin>Reference>"+e.getSimpleName();
+        for (Class<?> e : esource.getEntityClasses()) {
+            javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
+            if (a != null && "ref".equals(a.schema())) {
+                path = "Start>Admin>Reference>" + e.getSimpleName();
                 configuration.add(path, mlb.buildListPageMenuLink(e, path));
             }
         }
     }
 
-    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            URLStreamHandlerFactory factory) {
-        factory.createURLStreamHandler("dd");
+    public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("CpuTapestryInitializeDatabase", CpuTapestryInitializeDatabase.class, "after:InitializeDatabase");
     }
 
+    @EagerLoad
     public static URLStreamHandlerFactory buildURLStreamHandlerFactory(
-            @Autobuild URLStreamHandlerFactoryImpl factory) {
-        URL.setURLStreamHandlerFactory(factory);
+            @Autobuild URLStreamHandlerFactoryImpl factory, final Logger log) {
+        try {
+            URL.setURLStreamHandlerFactory(factory);
+        } catch (Throwable ex) {
+            log.error("URLStreamHandlerFactory not setted");
+        }
         return factory;
     }
 
