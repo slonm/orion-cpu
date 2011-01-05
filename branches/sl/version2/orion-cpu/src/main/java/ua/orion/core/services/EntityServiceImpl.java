@@ -4,13 +4,18 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
+import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
+import org.apache.tapestry5.ioc.AnnotationProvider;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.annotations.Scope;
 import org.apache.tapestry5.ioc.services.*;
 import org.slf4j.Logger;
+import ua.orion.core.annotations.UserPresentable;
+import ua.orion.core.persistence.MetaEntity;
 import ua.orion.core.utils.Defense;
 import ua.orion.core.validation.UniqueConstraintValidator;
 
@@ -27,6 +32,7 @@ public class EntityServiceImpl implements EntityService {
     private final UniqueConstraintValidator validator;
     private final Logger logger;
     private final TypeCoercer typeCoercer;
+    private final Map<Class<?>, MetaEntity> metaEntityByEntityClass = new HashMap<Class<?>, MetaEntity>();
 
     public EntityServiceImpl(EntityManager entityManager,
             Logger logger, PropertyAccess propertyAccess,
@@ -46,7 +52,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public <T> T persistOrGet(Class<T> type, T entity) {
+    public <T> T persistOrGet(T entity) {
         T persistentEntity = validator.getPersistentUniqueObject(entity);
         if (persistentEntity == null) {
             em.persist(entity);
@@ -108,13 +114,53 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public <T> T findByUserPresentable(Class<T> type, String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setPrimaryKey(Object entity, Serializable primaryKey) {
+        EntityType<?> eType = metamodel.entity(entity.getClass());
+        Class<?> pkFieldType = eType.getIdType().getJavaType();
+        Object key = typeCoercer.coerce(primaryKey, pkFieldType);
+        propertyAccess.set(entity, eType.getId(pkFieldType).getName(), key);
     }
 
     @Override
-    public String getUserPresentable(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Serializable getPrimaryKey(Object entity) {
+        EntityType<?> eType = metamodel.entity(entity.getClass());
+        Class<?> pkFieldType = eType.getIdType().getJavaType();
+        return (Serializable) propertyAccess.get(entity, eType.getId(pkFieldType).getName());
+    }
+
+    @Override
+    public synchronized MetaEntity getMetaEntity(Class<?> entityClass) {
+        if (!metaEntityByEntityClass.containsKey(entityClass)) {
+            metaEntityByEntityClass.put(entityClass, new MetaEntityImpl(entityClass));
+        }
+        return metaEntityByEntityClass.get(entityClass);
+    }
+
+    @Override
+    public <T> T findByUserPresentableOrPrimaryKey(Class<T> type, String name) {
+        if (getMetaEntity(type).supportUserPresentable()) {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<T> query = cb.createQuery(type);
+            Root<T> root = query.from(type);
+            query.where(cb.equal(root.get(getMetaEntity(type).getUserPresentableAttributeName()), name));
+            try {
+                return em.createQuery(query).getSingleResult();
+            } catch (NoResultException ex) {
+                return null;
+            }
+        } else {
+            return find(type, name);
+        }
+    }
+
+    @Override
+    public String getUserPresentableOrPrimaryKey(Object entity) {
+        Defense.notNull(entity, "entity");
+        if (getMetaEntity(entity.getClass()).supportUserPresentable()) {
+            return (String) propertyAccess.get(entity, getMetaEntity(entity.getClass()).getUserPresentableAttributeName());
+        } else {
+            return typeCoercer.coerce(getPrimaryKey(entity), String.class);
+        }
     }
 
     @Override
@@ -124,46 +170,85 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public String getUKey(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Defense.notNull(entity, "entity");
+        if (getMetaEntity(entity.getClass()).supportUKey()) {
+            return (String) propertyAccess.get(entity, getMetaEntity(entity.getClass()).getUKeyAttributeName());
+        }
+        throw new IllegalArgumentException("UKey not supported by " + entity.getClass().getName());
     }
 
     @Override
     public void setUKey(Object entity, String uKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Defense.notNull(entity, "entity");
+        if (getMetaEntity(entity.getClass()).supportUKey()) {
+            propertyAccess.set(entity, getMetaEntity(entity.getClass()).getUKeyAttributeName(), uKey);
+        }
+        throw new IllegalArgumentException("UKey not supported by " + entity.getClass().getName());
     }
 
     @Override
-    public void setPrimaryKey(Object entity, Serializable primaryKey) {
+    public Object getVersion(Object entity) {
+        //TODO Непонятно как это сделать
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public Serializable getPrimaryKey(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    class MetaEntityImpl implements MetaEntity {
 
-    @Override
-    public boolean supportUKey(Class<?> type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        private final Class<?> type;
+        private Boolean supportUKey = null;
+        private Boolean supportUserPresentable = null;
+        private String userPresentableAttributeName = null;
+        private String uKeyAttributeName = null;
 
-    @Override
-    public String getLabel(Class<?> type, Messages messages) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        public MetaEntityImpl(Class<?> type) {
+            this.type = type;
+        }
 
-    @Override
-    public String getLabel(Class<?> type, Locale locale) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        @Override
+        public boolean supportUKey() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
 
-    @Override
-    public String getPropertyLabel(Class<?> type, String propertyName, Messages messages) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        @Override
+        public boolean supportUserPresentable() {
+            if (supportUserPresentable == null) {
+                if (type.isAnnotationPresent(UserPresentable.class)) {
+                    userPresentableAttributeName = type.getAnnotation(UserPresentable.class).value();
+                }
+            }
+            return supportUserPresentable;
+        }
 
-    @Override
-    public String getPropertyLabel(Class<?> type, String propertyName, Locale locale) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        @Override
+        public String getLabel(Messages messages) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String getLabel(Locale locale) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String getPropertyLabel(String propertyName, Messages messages) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String getPropertyLabel(String propertyName, Locale locale) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String getUserPresentableAttributeName() {
+            supportUserPresentable();
+            return userPresentableAttributeName;
+        }
+
+        @Override
+        public String getUKeyAttributeName() {
+            supportUKey();
+            return uKeyAttributeName;
+        }
     }
 }
