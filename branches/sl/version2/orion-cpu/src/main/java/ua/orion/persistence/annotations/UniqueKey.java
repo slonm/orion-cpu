@@ -1,4 +1,4 @@
-package ua.orion.core.annotations;
+package ua.orion.persistence.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,15 +7,15 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Аннотация может переопределятся при наследовании
  * @author sl
  */
 @Target({ElementType.METHOD, ElementType.TYPE, ElementType.FIELD})
 @Retention(RUNTIME)
 @Documented
-public @interface UserPresentable {
+public @interface UniqueKey {
     /**
-     * Имя UserPresentable атрибута. Используется если аннотирован класс
+     * Имя UniqueKey атрибута. Используется если аннотирован класс
      */
     String value() default "";
 }

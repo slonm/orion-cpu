@@ -12,10 +12,15 @@ import org.apache.tapestry5.services.UpdateListener;
  * @author sl
  */
 @UsesConfiguration(String.class)
-public interface ApplicationMessagesSource extends UpdateListener{
+public interface ApplicationMessagesSource{
 
     /**
      * Return localized messages.
      */
     Messages getMessages(Locale locale);
+    
+    /**
+     * Discards all stored messages and clear Resource bundle cache.
+     */
+    void clearCache();
 }

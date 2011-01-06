@@ -5,11 +5,13 @@
 package ua.orion.core.persistence;
 
 import java.io.Serializable;
+import ua.orion.persistence.annotations.UniqueKey;
 
 /**
  *
  * @author sl
  */
+@UniqueKey("name")
 public interface PersistentSingleton<T extends Serializable> {
 
     String getName();

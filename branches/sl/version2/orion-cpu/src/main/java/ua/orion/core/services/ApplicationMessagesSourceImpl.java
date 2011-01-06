@@ -30,9 +30,9 @@ public class ApplicationMessagesSourceImpl implements ApplicationMessagesSource 
     }
 
     @Override
-    public void checkForUpdates() {
-//        ResourceBundle.clearCache();
-//        messagesByLocale.clear();
+    public void clearCache() {
+        ResourceBundle.clearCache();
+        messagesByLocale.clear();
     }
 
     private class InternalMessages extends AbstractMessages {

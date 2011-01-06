@@ -25,15 +25,10 @@ public class OrionCoreIOCModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(ModelLibraryService.class, ModelLibraryServiceImpl.class);
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
+        binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
     }
 
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> configuration) {
-    }
-
-    public ApplicationMessagesSource build(
-            @Autobuild ApplicationMessagesSourceImpl source) {
-        updateListenerHub.addUpdateListener(source);
-        return source;
     }
 
     public void contributeJPAEntityPackageManager(Configuration<String> conf,

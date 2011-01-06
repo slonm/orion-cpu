@@ -8,14 +8,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import org.apache.tapestry5.ioc.AnnotationProvider;
 import org.apache.tapestry5.ioc.Messages;
-import org.apache.tapestry5.ioc.ScopeConstants;
-import org.apache.tapestry5.ioc.annotations.Scope;
 import org.apache.tapestry5.ioc.services.*;
 import org.slf4j.Logger;
-import ua.orion.core.annotations.UserPresentable;
-import ua.orion.core.persistence.MetaEntity;
+import ua.orion.persistence.annotations.UniqueKey;
+import ua.orion.persistence.annotations.UserPresentable;
+import ua.orion.persistence.MetaEntity;
 import ua.orion.core.utils.Defense;
 import ua.orion.core.validation.UniqueConstraintValidator;
 
@@ -29,6 +27,8 @@ public class EntityServiceImpl implements EntityService {
     private final EntityManager em;
     private final Metamodel metamodel;
     private final PropertyAccess propertyAccess;
+    private final InheritedAnnotationProviderSource aProviderSource;
+    private final ApplicationMessagesSource applicationMessagesSource;
     private final UniqueConstraintValidator validator;
     private final Logger logger;
     private final TypeCoercer typeCoercer;
@@ -36,7 +36,11 @@ public class EntityServiceImpl implements EntityService {
 
     public EntityServiceImpl(EntityManager entityManager,
             Logger logger, PropertyAccess propertyAccess,
-            TypeCoercer typeCoercer) {
+            TypeCoercer typeCoercer,
+            ApplicationMessagesSource applicationMessagesSource,
+            InheritedAnnotationProviderSource aProviderSource) {
+        this.aProviderSource = aProviderSource;
+        this.applicationMessagesSource = applicationMessagesSource;
         this.propertyAccess = propertyAccess;
         this.em = entityManager;
         this.logger = logger;
@@ -52,7 +56,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public <T> T persistOrGet(T entity) {
+    public <T> T findUniqueOrPersist(T entity) {
         T persistentEntity = validator.getPersistentUniqueObject(entity);
         if (persistentEntity == null) {
             em.persist(entity);
@@ -165,7 +169,18 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public <T> T findByUKey(Class<T> type, String uKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (getMetaEntity(type).supportUKey()) {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<T> query = cb.createQuery(type);
+            Root<T> root = query.from(type);
+            query.where(cb.equal(root.get(getMetaEntity(type).getUKeyAttributeName()), uKey));
+            try {
+                return em.createQuery(query).getSingleResult();
+            } catch (NoResultException ex) {
+                return null;
+            }
+        }
+        throw new IllegalArgumentException("UKey not supported by " + type.getName());
     }
 
     @Override
@@ -192,6 +207,11 @@ public class EntityServiceImpl implements EntityService {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void clearCache() {
+        metaEntityByEntityClass.clear();
+    }
+
     class MetaEntityImpl implements MetaEntity {
 
         private final Class<?> type;
@@ -206,37 +226,30 @@ public class EntityServiceImpl implements EntityService {
 
         @Override
         public boolean supportUKey() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            if (supportUKey == null) {
+                UniqueKey ann = aProviderSource.getClassProviderWithInterfaces(type).getAnnotation(UniqueKey.class);
+                if (ann != null) {
+                    userPresentableAttributeName = ann.value();
+                    supportUKey = true;
+                } else {
+                    supportUKey = false;
+                }
+            }
+            return supportUKey;
         }
 
         @Override
         public boolean supportUserPresentable() {
             if (supportUserPresentable == null) {
-                if (type.isAnnotationPresent(UserPresentable.class)) {
-                    userPresentableAttributeName = type.getAnnotation(UserPresentable.class).value();
+                UserPresentable ann = aProviderSource.getClassProviderWithInterfaces(type).getAnnotation(UserPresentable.class);
+                if (ann != null) {
+                    userPresentableAttributeName = ann.value();
+                    supportUserPresentable = true;
+                } else {
+                    supportUserPresentable = false;
                 }
             }
             return supportUserPresentable;
-        }
-
-        @Override
-        public String getLabel(Messages messages) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public String getLabel(Locale locale) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public String getPropertyLabel(String propertyName, Messages messages) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public String getPropertyLabel(String propertyName, Locale locale) {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
@@ -249,6 +262,26 @@ public class EntityServiceImpl implements EntityService {
         public String getUKeyAttributeName() {
             supportUKey();
             return uKeyAttributeName;
+        }
+
+        @Override
+        public String getLabel(Messages messages) {
+            return messages.get("entity." + type.getSimpleName());
+        }
+
+        @Override
+        public String getLabel(Locale locale) {
+            return getLabel(applicationMessagesSource.getMessages(Locale.getDefault()));
+        }
+
+        @Override
+        public String getPropertyLabel(String propertyName, Messages messages) {
+            return messages.get("property." + type.getSimpleName() + "." + propertyName);
+        }
+
+        @Override
+        public String getPropertyLabel(String propertyName, Locale locale) {
+            return getPropertyLabel(propertyName, applicationMessagesSource.getMessages(Locale.getDefault()));
         }
     }
 }

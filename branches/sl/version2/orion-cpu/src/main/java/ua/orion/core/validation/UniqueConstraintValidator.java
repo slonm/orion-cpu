@@ -111,23 +111,14 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                                     isUniqueCalculated = true;
                                 }
                             }
-                            //Check Column Annotation for Field
+                            //TODO Test Column and JoinColumn Annotation for private Field
+                            //Check Column Annotation
                             if (!isUniqueCalculated) {
                                 Column column = null;
-                                try {
-                                    column = entityClass.getDeclaredField(a.getName()).getAnnotation(Column.class);
-                                } catch (Exception ex) {
-                                }
+                                column = adapter.getAnnotation(Column.class);
                                 if (column != null) {
                                     isUnique = column.unique();
                                     isUniqueCalculated = true;
-                                } else {
-                                    //Check Column Annotation for getter
-                                    column = adapter.getReadMethod().getAnnotation(Column.class);
-                                    if (column != null) {
-                                        isUnique = column.unique();
-                                        isUniqueCalculated = true;
-                                    }
                                 }
                             }
                         } else {
@@ -154,23 +145,13 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                                     isUniqueCalculated = true;
                                 }
                             }
-                            //Check JoinColumn Annotation for Field
+                            //Check JoinColumn Annotation
                             if (!isUniqueCalculated) {
                                 JoinColumn joinColumn = null;
-                                try {
-                                    joinColumn = entityClass.getDeclaredField(a.getName()).getAnnotation(JoinColumn.class);
-                                } catch (Exception ex) {
-                                }
+                                joinColumn = adapter.getAnnotation(JoinColumn.class);
                                 if (joinColumn != null) {
                                     isUnique = joinColumn.unique();
                                     isUniqueCalculated = true;
-                                } else {
-                                    //Check JoinColumn Annotation for getter
-                                    joinColumn = adapter.getReadMethod().getAnnotation(JoinColumn.class);
-                                    if (joinColumn != null) {
-                                        isUnique = joinColumn.unique();
-                                        isUniqueCalculated = true;
-                                    }
                                 }
                             }
                         }

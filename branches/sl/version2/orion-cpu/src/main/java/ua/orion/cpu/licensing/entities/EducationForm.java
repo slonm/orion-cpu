@@ -1,7 +1,7 @@
 package ua.orion.cpu.licensing.entities;
 
 import javax.persistence.*;
-import ua.orion.core.annotations.UserPresentable;
+import ua.orion.persistence.annotations.UserPresentable;
 import ua.orion.core.persistence.AbstractReferenceEntity;
 
 /**

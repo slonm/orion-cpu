@@ -1,12 +1,10 @@
 package ua.orion.core.services;
 
 import java.io.Serializable;
-import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import org.apache.tapestry5.ioc.Messages;
 import org.tynamo.jpa.annotations.CommitAfter;
-import ua.orion.core.persistence.MetaEntity;
+import ua.orion.persistence.MetaEntity;
 
 /**
  * методы UserPresentable работают всегда. Если сущность не поддерживает UserPresentable,
@@ -44,10 +42,11 @@ public interface EntityService {
             Serializable primaryKey);
 
     /*
-     * Сохраняет объект и возвращает его, если выполняются условия уникальности,
-     * в противном случае возвращает найденый уникальный персистентный объект
+     * Ищет объект в хранилище с которым конфликтует entity по ограничениям
+     * уникальности и возвращает его. В противном случае сохраняет entity и 
+     * возвращает его
      */
-    <T> T persistOrGet(T entity);
+    <T> T findUniqueOrPersist(T entity);
 
     /*
      * Находит объект по его Name атрибуту.
@@ -92,4 +91,9 @@ public interface EntityService {
     Serializable getPrimaryKey(Object entity);
     
     Object getVersion(Object entity);
+    
+    /**
+     * Discards all stored MetaEntity.
+     */
+    void clearCache();
 }

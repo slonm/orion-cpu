@@ -1,4 +1,4 @@
-package ua.orion.core.persistence;
+package ua.orion.persistence;
 
 import java.util.Locale;
 import org.apache.tapestry5.ioc.Messages;

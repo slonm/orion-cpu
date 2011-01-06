@@ -37,6 +37,5 @@ public class ApplicationMessagesSourceImplTest {
         Assert.assertEquals(m.get("transliterated.name.for.Query"), "Zapit");
         Assert.assertEquals(m.get("transliterated.name.for.Tree"), "Tree");
         
-        ams.checkForUpdates();
     }
 }
