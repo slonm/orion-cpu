@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import test.bar.controllers.HibernatePersonController;
 import test.foo.dao.PersonDAO;
 import test.foo.entities.Person;
-import ua.orion.core.utils.ModelLibraryInfo;
+import ua.orion.core.ModelLibraryInfo;
 
 public class ModelLibraryServiceImplTest {
 

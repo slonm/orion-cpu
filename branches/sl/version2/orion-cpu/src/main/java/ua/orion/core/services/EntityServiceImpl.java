@@ -2,15 +2,13 @@ package ua.orion.core.services;
 
 import java.io.Serializable;
 import java.util.*;
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.NoResultException;
+import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.services.*;
-import org.slf4j.Logger;
+import ua.orion.core.InheritedAnnotationProvider;
 import ua.orion.persistence.annotations.UniqueKey;
 import ua.orion.persistence.annotations.UserPresentable;
 import ua.orion.persistence.MetaEntity;
@@ -21,7 +19,6 @@ import ua.orion.core.validation.UniqueConstraintValidator;
  *
  * @author sl
  */
-//@Scope(ScopeConstants.PERTHREAD)
 public class EntityServiceImpl implements EntityService {
 
     private final EntityManager em;
@@ -30,12 +27,11 @@ public class EntityServiceImpl implements EntityService {
     private final InheritedAnnotationProviderSource aProviderSource;
     private final ApplicationMessagesSource applicationMessagesSource;
     private final UniqueConstraintValidator validator;
-    private final Logger logger;
     private final TypeCoercer typeCoercer;
     private final Map<Class<?>, MetaEntity> metaEntityByEntityClass = new HashMap<Class<?>, MetaEntity>();
 
     public EntityServiceImpl(EntityManager entityManager,
-            Logger logger, PropertyAccess propertyAccess,
+            PropertyAccess propertyAccess,
             TypeCoercer typeCoercer,
             ApplicationMessagesSource applicationMessagesSource,
             InheritedAnnotationProviderSource aProviderSource) {
@@ -43,7 +39,6 @@ public class EntityServiceImpl implements EntityService {
         this.applicationMessagesSource = applicationMessagesSource;
         this.propertyAccess = propertyAccess;
         this.em = entityManager;
-        this.logger = logger;
         this.typeCoercer = typeCoercer;
         metamodel = em.getMetamodel();
         validator = new UniqueConstraintValidator();
@@ -141,7 +136,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public <T> T findByUserPresentableOrPrimaryKey(Class<T> type, String name) {
+    public <T> T findByUserPresentable(Class<T> type, String name) {
         if (getMetaEntity(type).supportUserPresentable()) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<T> query = cb.createQuery(type);
@@ -158,7 +153,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public String getUserPresentableOrPrimaryKey(Object entity) {
+    public String getUserPresentable(Object entity) {
         Defense.notNull(entity, "entity");
         if (getMetaEntity(entity.getClass()).supportUserPresentable()) {
             return (String) propertyAccess.get(entity, getMetaEntity(entity.getClass()).getUserPresentableAttributeName());
@@ -227,12 +222,21 @@ public class EntityServiceImpl implements EntityService {
         @Override
         public boolean supportUKey() {
             if (supportUKey == null) {
-                UniqueKey ann = aProviderSource.getClassProviderWithInterfaces(type).getAnnotation(UniqueKey.class);
-                if (ann != null) {
-                    userPresentableAttributeName = ann.value();
+                supportUKey = false;
+                InheritedAnnotationProvider classProvider = aProviderSource.getClassProviderWithInterfaces(type);
+                UniqueKey classAnn = classProvider.getAnnotation(UniqueKey.class);
+                if (classAnn != null) {
+                    uKeyAttributeName = classAnn.value();
                     supportUKey = true;
-                } else {
-                    supportUKey = false;
+                }
+                ClassPropertyAdapter cpa = propertyAccess.getAdapter(type);
+                for (String name : cpa.getPropertyNames()) {
+                    InheritedAnnotationProvider propertyProvider = aProviderSource.getPropertyProviderWithInterfaces(type, name);
+                    UniqueKey propAnn = propertyProvider.getAnnotation(UniqueKey.class);
+                    if (propAnn != null && (classAnn == null || classProvider.getDeclarationBeanType(UniqueKey.class).isAssignableFrom(propertyProvider.getDeclarationBeanType(UniqueKey.class)))) {
+                        uKeyAttributeName = name;
+                        supportUKey = true;
+                    }
                 }
             }
             return supportUKey;
@@ -241,12 +245,21 @@ public class EntityServiceImpl implements EntityService {
         @Override
         public boolean supportUserPresentable() {
             if (supportUserPresentable == null) {
-                UserPresentable ann = aProviderSource.getClassProviderWithInterfaces(type).getAnnotation(UserPresentable.class);
-                if (ann != null) {
-                    userPresentableAttributeName = ann.value();
+                supportUserPresentable = false;
+                InheritedAnnotationProvider classProvider = aProviderSource.getClassProviderWithInterfaces(type);
+                UserPresentable classAnn = classProvider.getAnnotation(UserPresentable.class);
+                if (classAnn != null) {
+                    userPresentableAttributeName = classAnn.value();
                     supportUserPresentable = true;
-                } else {
-                    supportUserPresentable = false;
+                }
+                ClassPropertyAdapter cpa = propertyAccess.getAdapter(type);
+                for (String name : cpa.getPropertyNames()) {
+                    InheritedAnnotationProvider propertyProvider = aProviderSource.getPropertyProviderWithInterfaces(type, name);
+                    UserPresentable propAnn = propertyProvider.getAnnotation(UserPresentable.class);
+                    if (propAnn != null && (classAnn == null || classProvider.getDeclarationBeanType(UserPresentable.class).isAssignableFrom(propertyProvider.getDeclarationBeanType(UserPresentable.class)))) {
+                        userPresentableAttributeName = name;
+                        supportUserPresentable = true;
+                    }
                 }
             }
             return supportUserPresentable;

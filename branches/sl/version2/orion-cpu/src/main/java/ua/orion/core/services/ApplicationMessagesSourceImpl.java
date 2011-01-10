@@ -6,7 +6,6 @@ import org.apache.tapestry5.ioc.util.AbstractMessages;
 import ua.orion.core.utils.Defense;
 
 /**
- * Каталог сообщений уровня приложения
  * @author sl
  * @todo добавить мониторинг изменений файлов ресурсов
  */

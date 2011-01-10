@@ -2,11 +2,12 @@ package ua.orion.core.services;
 
 import org.apache.tapestry5.ioc.ObjectLocator;
 import org.tynamo.jpa.JPATransactionManager;
-import ua.orion.core.utils.LibraryOrientedBeansFactory;
+import ua.orion.core.LibraryOrientedBeansFactory;
 
 /**
- * При вызове run создает объекты для инициализации персистентного хранилища
- * с именем типа в формате libraryRootPackage.services.libraryName+SeedEntity.
+ * Инициализатор персистентного хранилища
+ * При вызове run создает все бины для инициализации персистентного хранилища
+ * с именем типа бина в формате libraryRootPackage.services.libraryName+SeedEntity.
  * Эти объекты, в свою очередь, инициализируют хранилище.
  * @author sl
  */

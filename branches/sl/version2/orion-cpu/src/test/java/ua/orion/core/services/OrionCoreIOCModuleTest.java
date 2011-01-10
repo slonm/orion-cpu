@@ -11,7 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import test.DAO;
 import test.foo.entities.Person;
-import ua.orion.core.utils.EntityOrientedBeanFactory;
+import ua.orion.core.EntityOrientedBeanFactory;
 
 public class OrionCoreIOCModuleTest extends IOCTestCase{
 

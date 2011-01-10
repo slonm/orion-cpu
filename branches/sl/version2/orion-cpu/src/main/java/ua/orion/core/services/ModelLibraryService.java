@@ -1,7 +1,7 @@
 package ua.orion.core.services;
 
 import java.util.*;
-import ua.orion.core.utils.ModelLibraryInfo;
+import ua.orion.core.ModelLibraryInfo;
 
 /**
  * Хранилище метаданных о библиотеках моделей данных

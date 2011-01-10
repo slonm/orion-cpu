@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ua.orion.core.services;
 
 import java.io.Serializable;
@@ -12,7 +7,8 @@ import org.apache.tapestry5.ioc.ObjectProvider;
 import ua.orion.core.annotations.PersistentSingleton;
 
 /**
- *
+ * Поддержка иньектирования хранимых переменых с помощью аннотации
+ * PersistentSingleton
  * @author sl
  */
 public class PersistentSingletonProvider implements ObjectProvider{

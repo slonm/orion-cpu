@@ -11,9 +11,9 @@ import ua.orion.persistence.annotations.UniqueKey;
  *
  * @author sl
  */
-@UniqueKey("name")
 public interface PersistentSingleton<T extends Serializable> {
 
+    @UniqueKey()
     String getName();
 
     void setName(String name);
@@ -21,6 +21,6 @@ public interface PersistentSingleton<T extends Serializable> {
     T getSingleton();
 
     void setSingleton(T singleton);
-    
+
     Class<T> getSingletonClass();
 }

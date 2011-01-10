@@ -27,12 +27,13 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>8.3-603.jdbc3</version>
+            <scope>test</scope>
         </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-beanvalidator</artifactId>
+            <artifactId>tapestry-ioc</artifactId>
             <version>${tapestry-release-version}</version>
-        </dependency-->
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -79,7 +80,11 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <version>${tapestry-release-version}</version>
             <scope>test</scope>
         </dependency-->
-
+        <dependency>
+            <artifactId>validation-api</artifactId>
+            <groupId>javax.validation</groupId>
+            <version>1.0.0.GA</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>orion-cpu</finalName>

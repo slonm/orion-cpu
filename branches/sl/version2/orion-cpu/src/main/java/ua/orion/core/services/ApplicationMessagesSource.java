@@ -3,11 +3,14 @@ package ua.orion.core.services;
 import java.util.*;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.UsesConfiguration;
-import org.apache.tapestry5.services.UpdateListener;
 
 /**
- * Каталог сообщений уровня приложения
- * Каждый ресурс с сообщениями должен предоставлять свои ключи.
+ * Каталог строковых ресурсов приложения. Является мостом между
+ * ResourceBundle и org.apache.tapestry5.ioc.Messages. В конфигурации
+ * получает список имен ResourceBundle и строит комплексный bundle.
+ * Конфигурация по умолчанию состоит из ресурсов одноименных с именами всех
+ * ModelLibrary расположенных в пакетах по умолчанию.
+ * Каждый ResourceBundle должен предоставлять свои ключи.
  * В случае пересечения имен ключей в разных ресурсах результат непредсказуем
  * @author sl
  */

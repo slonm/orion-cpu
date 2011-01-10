@@ -4,7 +4,7 @@ import java.util.*;
 import ua.orion.core.annotations.AfterLibrary;
 import ua.orion.core.annotations.BeforeLibrary;
 import ua.orion.core.utils.Defense;
-import ua.orion.core.utils.ModelLibraryInfo;
+import ua.orion.core.ModelLibraryInfo;
 
 /**
  *

@@ -10,7 +10,7 @@ import org.apache.tapestry5.services.UpdateListenerHub;
 import org.tynamo.jpa.JPAEntityManagerSource;
 import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
-import ua.orion.core.utils.ModelLibraryInfo;
+import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.validation.UniqueConstraintValidator;
 
 /**
@@ -26,6 +26,7 @@ public class OrionCoreIOCModule {
         binder.bind(ModelLibraryService.class, ModelLibraryServiceImpl.class);
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
         binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
+        binder.bind(InheritedAnnotationProviderSource.class, InheritedAnnotationProviderSourceImpl.class);
     }
 
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> configuration) {

@@ -1,37 +1,48 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.core.services;
 
-import org.apache.tapestry5.ioc.AnnotationProvider;
+import ua.orion.core.InheritedAnnotationProvider;
 
 /**
- * Доступ к унаследованным аннотациям
+ * Доступ к унаследованным аннотациям. Аннотации классой и суперклассов приоритетнее 
+ * интерфейсов. При наследовании аннотаций от множества интерфейсов
+ * результат неопределенный.
  * @author sl
  */
 public interface InheritedAnnotationProviderSource{
 
     /**
-     * Возвращаемый AnnotationProvider будет искать аннотацию в классе и суперкласах,
+     * Возвращаемый InheritedAnnotationProvider будет искать аннотацию в классе и суперкласах,
      * в обратном порядке наследования и вернет null если не найдет
      * @param clasz
      * @return 
      */
-    AnnotationProvider getClassProvider(Class<?> clasz);
+    InheritedAnnotationProvider getClassProvider(Class<?> clasz);
 
     /**
-     * Возвращаемый AnnotationProvider будет искать аннотацию в классе и суперкласах,
+     * Возвращаемый InheritedAnnotationProvider будет искать аннотацию в классе и суперкласах,
      * в обратном порядке наследования, затем в интерфейсах реализуемых классом
      * и вернет null если не найдет
      * @param clasz
      * @return 
      */
-    AnnotationProvider getClassProviderWithInterfaces(Class<?> clasz);
+    InheritedAnnotationProvider getClassProviderWithInterfaces(Class<?> clasz);
 
-    AnnotationProvider getPropertyProvider(Class<?> clasz, String propertyName);
+    /**
+     * Возвращаемый InheritedAnnotationProvider будет искать аннотацию в классе и суперкласах,
+     * в обратном порядке наследования и вернет null если не найдет
+     * @param clasz
+     * @return
+     */
+    InheritedAnnotationProvider getPropertyProvider(Class<?> clasz, String propertyName);
 
-    AnnotationProvider getPropertyProviderWithInterfaces(Class<?> clasz, String propertyName);
+    /**
+     * Возвращаемый InheritedAnnotationProvider будет искать аннотацию в классе и суперкласах,
+     * в обратном порядке наследования, затем в интерфейсах реализуемых классом
+     * и вернет null если не найдет
+     * @param clasz
+     * @return
+     */
+    InheritedAnnotationProvider getPropertyProviderWithInterfaces(Class<?> clasz, String propertyName);
     
     /**
      * Discards all stored property access information, discarding all created class adapters.

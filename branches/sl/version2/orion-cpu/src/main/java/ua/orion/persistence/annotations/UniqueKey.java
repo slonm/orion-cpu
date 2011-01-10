@@ -7,7 +7,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
- * Аннотация может переопределятся при наследовании
+ * Аннотация может переопределятся при наследовании.
  * @author sl
  */
 @Target({ElementType.METHOD, ElementType.TYPE, ElementType.FIELD})
