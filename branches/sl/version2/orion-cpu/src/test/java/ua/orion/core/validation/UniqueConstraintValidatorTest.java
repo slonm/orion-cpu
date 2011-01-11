@@ -1,7 +1,5 @@
 package ua.orion.core.validation;
 
-import ua.orion.core.validation.UniqueConstraintValidatorFactory;
-import ua.orion.core.validation.UniqueConstraintValidator;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.Configuration;
@@ -60,7 +58,8 @@ public class UniqueConstraintValidatorTest extends IOCTestCase {
         replay();
         txManager = new JPATransactionManagerImpl(emSource);
         uValidator = new UniqueConstraintValidator();
-        UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory());
+        uValidator.setEntityManager(txManager.getEntityManager());
+//        UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory());
         UniqueConstraintValidator.setPROPERTY_ACCESS(propertyAccess);
     }
     

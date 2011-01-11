@@ -41,12 +41,15 @@ public class ApplicationMessagesSourceImpl implements ApplicationMessagesSource 
         private InternalMessages(Locale locale) {
             super(locale);
             for (String name : resources) {
-                ResourceBundle bundle = ResourceBundle.getBundle(name, locale);
-                Enumeration<String> e = bundle.getKeys();
-                while (e.hasMoreElements()) {
-                    String key = e.nextElement();
-                    String value = bundle.getString(key);
-                    properties.put(key, value);
+                try {
+                    ResourceBundle bundle = ResourceBundle.getBundle(name, locale);
+                    Enumeration<String> e = bundle.getKeys();
+                    while (e.hasMoreElements()) {
+                        String key = e.nextElement();
+                        String value = bundle.getString(key);
+                        properties.put(key, value);
+                    }
+                } catch (MissingResourceException ex) {
                 }
             }
         }

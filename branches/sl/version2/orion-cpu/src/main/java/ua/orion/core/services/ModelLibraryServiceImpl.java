@@ -12,10 +12,10 @@ import ua.orion.core.ModelLibraryInfo;
  */
 public class ModelLibraryServiceImpl implements ModelLibraryService {
 
-    private final List<ModelLibraryInfo> libs;
+    private final Set<ModelLibraryInfo> libs = new HashSet();
 
-    public ModelLibraryServiceImpl(List<ModelLibraryInfo> libs) {
-        this.libs = Defense.notNull(libs, "libs");
+    public ModelLibraryServiceImpl(Collection<ModelLibraryInfo> libs) {
+        this.libs.addAll(Defense.notNull(libs, "libs"));
     }
 
     @Override
@@ -47,12 +47,12 @@ public class ModelLibraryServiceImpl implements ModelLibraryService {
             } catch (ClassNotFoundException ex) {
             }
         }
-        return null;
+        return result;
     }
 
     @Override
     public Set<ModelLibraryInfo> getModelLibraryInfos() {
-        return Collections.unmodifiableSet(new HashSet(libs));
+        return Collections.unmodifiableSet(libs);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ModelLibraryServiceImpl implements ModelLibraryService {
         }
         List<Class<?>> result = new ArrayList();
         result.addAll(map.keySet());
-        Collections.sort(result, new Comparator<Class<?>>()     {
+        Collections.sort(result, new Comparator<Class<?>>()      {
 
             @Override
             public int compare(Class<?> o1, Class<?> o2) {

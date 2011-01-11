@@ -15,7 +15,7 @@ public class PersistentSingletonProvider implements ObjectProvider{
 
     private final PersistentSingletonSource persistentSingletonSource;
 
-    public PersistentSingletonProvider(PersistentSingletonSource persistentSingletonSource) {
+    public PersistentSingletonProvider(@OrionCore PersistentSingletonSource persistentSingletonSource) {
         this.persistentSingletonSource = persistentSingletonSource;
     }
             

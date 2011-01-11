@@ -1,6 +1,7 @@
 package ua.orion.core.services;
 
 import org.apache.tapestry5.ioc.Configuration;
+import ua.orion.core.ModelLibraryInfo;
 
 public class TestIOCModule {
 
@@ -9,8 +10,8 @@ public class TestIOCModule {
         conf.add("test.Messages2");
     }
     
-    public static void contributeModelLibraryService(Configuration<String> conf) {
-        conf.add("test.foo");
-        conf.add("test.bar");
+    public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
+        conf.add(new ModelLibraryInfo("Foo", "test.foo"));
+        conf.add(new ModelLibraryInfo("Foo", "test.bar"));
     }
 }

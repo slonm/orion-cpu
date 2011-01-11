@@ -1,4 +1,4 @@
-package ua.orion.cpu.licensing.entities;
+package test.licensing.entities;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.tynamo.jpa.JPAEntityPackageManager;
 import org.tynamo.jpa.internal.DatabaseSchemaObjectCreator;
-import ua.orion.cpu.entities.Document;
-import ua.orion.cpu.orgunits.entities.Chair;
 
 /**
  *

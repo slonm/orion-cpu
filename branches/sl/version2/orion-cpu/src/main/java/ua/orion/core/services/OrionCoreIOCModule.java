@@ -17,6 +17,7 @@ import ua.orion.core.validation.UniqueConstraintValidator;
  *
  * @author sl
  */
+@Marker(OrionCore.class)
 public class OrionCoreIOCModule {
 
     @Inject
@@ -27,6 +28,7 @@ public class OrionCoreIOCModule {
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
         binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
         binder.bind(InheritedAnnotationProviderSource.class, InheritedAnnotationProviderSourceImpl.class);
+        binder.bind(EntityService.class, EntityServiceImpl.class);
     }
 
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> configuration) {
@@ -68,7 +70,7 @@ public class OrionCoreIOCModule {
         configuration.add(Serializable.class, SerializableSingleton.class);
     }
 
-    public static void contributeObjectProviders(OrderedConfiguration<ObjectProvider> configuration) {
+    public static void contributeMasterObjectProvider(OrderedConfiguration<ObjectProvider> configuration) {
         configuration.addInstance("PersistentSingleton", PersistentSingletonProvider.class);
     }
 

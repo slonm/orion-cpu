@@ -1,13 +1,6 @@
 package ua.orion.core.validation;
 
-import ua.orion.core.validation.UniqueConstraintValidator;
-import java.util.Set;
 import javax.persistence.*;
-import javax.validation.Configuration;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import org.apache.tapestry5.ioc.internal.services.PropertyAccessImpl;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.ioc.test.IOCTestCase;
@@ -72,7 +65,7 @@ public class UniqueTest extends IOCTestCase {
         txManager.abort();
     }
 
-    @Test(expectedExceptions=javax.validation.ConstraintViolationException.class)
+    @Test(expectedExceptions=javax.validation.ValidationException.class)
     public void column() {
         Document doc = new Document();
         doc.setSerial("AS");
@@ -84,7 +77,7 @@ public class UniqueTest extends IOCTestCase {
         txManager.getEntityManager().persist(doc1);
     }
 
-    @Test(expectedExceptions=javax.validation.ConstraintViolationException.class)
+    @Test(expectedExceptions=javax.validation.ValidationException.class)
     public void attributeOverride() {
         State state1 = new State();
         state1.setName("USA");

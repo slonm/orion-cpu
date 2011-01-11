@@ -1,7 +1,5 @@
 package ua.orion.core.services;
 
-import ua.orion.core.services.ApplicationMessagesSource;
-import ua.orion.core.services.ApplicationMessagesSourceImpl;
 import java.util.*;
 import org.apache.tapestry5.ioc.Messages;
 import org.testng.annotations.Test;
