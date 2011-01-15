@@ -22,11 +22,11 @@ import org.hibernate.validator.constraints.ScriptAssert;
 @Inheritance(strategy = InheritanceType.JOINED)
 @ScriptAssert(lang = "javascript", 
         script = "_this.serial!=null||_this.number!=null")
-public class Document<T extends Document<?>> extends AbstractEntity<T> {
+public abstract class Document<T extends Document<?>> extends AbstractEntity<T> {
 
     private String serial;
     private String number;
-    private Date issue;
+    private Calendar issue;
     private String body;
 
     @Lob
@@ -73,14 +73,14 @@ public class Document<T extends Document<?>> extends AbstractEntity<T> {
      */
     @Temporal(javax.persistence.TemporalType.DATE)
     @NotNull
-    public Date getIssue() {
+    public Calendar getIssue() {
         return issue;
     }
 
     /**
      * @param issue the issue to set
      */
-    public void setIssue(Date issue) {
+    public void setIssue(Calendar issue) {
         this.issue = issue;
     }
 

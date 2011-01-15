@@ -45,8 +45,9 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>5.12.1</version>
+            <version>5.14.6</version>
             <scope>test</scope>
+            <!--version>5.14.6</version-->
         </dependency>
 
         <dependency>
@@ -55,24 +56,12 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <version>2.5.2</version>
             <scope>test</scope>
         </dependency>
-        <!--dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency-->
         <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>1.8.0.10</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.2.145</version>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.2.145</version>
-            <scope>test</scope>
-		</dependency>
 
         <!--dependency>
             <groupId>org.apache.tapestry</groupId>

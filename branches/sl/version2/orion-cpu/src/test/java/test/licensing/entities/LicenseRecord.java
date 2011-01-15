@@ -15,7 +15,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     private EducationalQualificationLevel educationalQualificationLevel;
     private TrainingDirectionOrSpeciality trainingDirectionOrSpeciality;
-    private Date terminationDate;
+    private Calendar termination;
     private OrgUnit orgUnit;
     private License license;
     private LicenseRecordGroup licenseRecordGroup;
@@ -28,14 +28,14 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
             TrainingDirectionOrSpeciality trainingDirectionOrSpeciality,
             EducationalQualificationLevel educationalQualificationLevel,
             Map<EducationForm, Integer> licenseQuantityByEducationForm,
-            Date terminationDate,
+            Calendar terminationDate,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
                 this.license=license;
                 this.trainingDirectionOrSpeciality=trainingDirectionOrSpeciality;
                 this.educationalQualificationLevel=educationalQualificationLevel;
                 this.licenseQuantityByEducationForm=licenseQuantityByEducationForm;
-                this.terminationDate=terminationDate;
+                this.termination=terminationDate;
                 this.orgUnit=orgUnit;
                 this.licenseRecordGroup=licenseRecordGroup;
     }
@@ -116,22 +116,22 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @Temporal(value = javax.persistence.TemporalType.DATE)
     @NotNull
-    public Date getTerminationDate() {
-        return terminationDate;
+    public Calendar getTermination() {
+        return termination;
     }
 
     /**
-     * @param terminationDate the terminationDate to set
+     * @param termination the termination to set
      */
-    public void setTerminationDate(Date terminationDate) {
-        this.terminationDate = Defense.notNull(terminationDate, "terminationDate");
+    public void setTermination(Calendar termination) {
+        this.termination = Defense.notNull(termination, "termination");
     }
 
     /**
      * @return the orgUnit
      */
     @ManyToOne
-//    @NotNull
+    @NotNull
     public OrgUnit getOrgUnit() {
         return orgUnit;
     }

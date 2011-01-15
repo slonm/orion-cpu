@@ -1,8 +1,6 @@
 package test.licensing.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -19,7 +17,7 @@ public class License extends Document<License> {
     public License() {
     }
 
-    public License(String serial, String number, Date issue) {
+    public License(String serial, String number, Calendar issue) {
         setIssue(issue);
         setSerial(serial);
         setNumber(number);
@@ -31,6 +29,7 @@ public class License extends Document<License> {
     @Pattern(regexp="([А-Я]{2})")
     @NotNull
     @Override
+    @Transient
     public String getSerial() {
         return super.getSerial();
     }
@@ -41,6 +40,7 @@ public class License extends Document<License> {
     @Pattern(regexp="([0-9]{6})")
     @NotNull
     @Override
+    @Transient
     public String getNumber() {
         return super.getNumber();
     }

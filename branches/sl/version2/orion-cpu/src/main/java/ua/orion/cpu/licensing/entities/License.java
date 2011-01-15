@@ -1,8 +1,6 @@
 package ua.orion.cpu.licensing.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import ua.orion.cpu.entities.Document;
@@ -21,7 +19,7 @@ public class License extends Document<License> {
     public License() {
     }
 
-    public License(String serial, String number, Date issue) {
+    public License(String serial, String number, Calendar issue) {
         setIssue(issue);
         setSerial(serial);
         setNumber(number);

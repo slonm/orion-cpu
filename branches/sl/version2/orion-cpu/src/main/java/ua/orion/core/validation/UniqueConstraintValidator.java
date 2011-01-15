@@ -1,6 +1,5 @@
 package ua.orion.core.validation;
 
-import java.util.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.*;
@@ -8,6 +7,7 @@ import javax.validation.*;
 import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.ioc.services.PropertyAdapter;
+import java.util.*;
 
 /**
  * Ограничения: Уникальный атрибут сущности и его геттер должен соответствовать соглашению по именованию,
@@ -15,13 +15,18 @@ import org.apache.tapestry5.ioc.services.PropertyAdapter;
  * getName() проверка уникальности этого атрибута может быть выполнена неверна.
  * Инициализация валидатора делается либо установкой статических членов
  * ENTITY_MANAGER_FACTORY и PROPERTY_ACCESS, либо с помощью фабрики
- * UniqueConstraintValidatorFactory
+ * UniqueConstraintValidatorFactory.
+ * При явной передаче EntityManager валидация происходит в текущей транзакции, при этом доступны незафиксированные 
+ * изменения, но при этом в кеш EntityManager попадают прочитанные во время поиска сущности, кроме того EntityManager
+ * может быть переопределенным подсистемой безопасности и не "видеть" некоторые сущности, которые реально есть в хранилище,
+ * но при попытке сохранения сущности нарушающей условия уникальности хранилище все равно будет выбрасывать исключение.
  * @author sl
  */
 public class UniqueConstraintValidator implements ConstraintValidator<Unique, Object> {
 
     public static final String MESSAGE = "{javax.validation.constraints.Unique.message}";
     private EntityManager em = null;
+    private CriteriaBuilder cb;
     private static EntityManagerFactory ENTITY_MANAGER_FACTORY = null;
     private static PropertyAccess PROPERTY_ACCESS = null;
 
@@ -35,6 +40,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
 
     public void setEntityManager(EntityManager entityManager) {
         this.em = entityManager;
+        cb = em.getCriteriaBuilder();
     }
 
     @Override
@@ -58,7 +64,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
      * или null если конфликта нет.
      */
     public <T> T getPersistentUniqueObject(T entity) {
-        if (em == null && ENTITY_MANAGER_FACTORY!=null) {
+        if (em == null && ENTITY_MANAGER_FACTORY != null) {
             em = ENTITY_MANAGER_FACTORY.createEntityManager();
         }
         if (entity == null || em == null || PROPERTY_ACCESS == null
@@ -67,16 +73,16 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
         }
         Metamodel metamodel = em.getMetamodel();
         EntityType entityType = null;
+        Class<T> entityClass = (Class<T>) entity.getClass();
         try {
-            entityType = metamodel.entity(entity.getClass());
+            entityType = metamodel.entity(entityClass);
         } catch (IllegalArgumentException ex) {
             return null;
         }
-        CriteriaBuilder cb = em.getCriteriaBuilder();
         ClassPropertyAdapter cpa = PROPERTY_ACCESS.getAdapter(entity);
 
         //Process Singular Attributes
-        CriteriaQuery<T> query = cb.createQuery((Class<T>)entity.getClass());
+        CriteriaQuery<T> query = cb.createQuery(entityClass);
         Root<T> root = query.from(entityType);
         Set<SingularAttribute> singularAttributes = entityType.getSingularAttributes();
         if (singularAttributes.size() > 0) {
@@ -85,14 +91,14 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                 PropertyAdapter adapter = cpa.getPropertyAdapter(a.getName());
                 Object value = adapter.get(entity);
                 if (value != null) {
-                    Class<?> entityClass = entity.getClass();
+                    Class<?> entitySuperClass = entityClass;
                     boolean isUniqueCalculated = false;
                     boolean isUnique = false;
                     do {
                         if (!a.isAssociation()) {
                             //Check AttributeOverride Annotation
                             if (!isUniqueCalculated) {
-                                AttributeOverrides attributeOverrides = entityClass.getAnnotation(AttributeOverrides.class);
+                                AttributeOverrides attributeOverrides = entitySuperClass.getAnnotation(AttributeOverrides.class);
                                 if (attributeOverrides != null) {
                                     for (AttributeOverride attributeOverride : attributeOverrides.value()) {
                                         if (attributeOverride != null && a.getName().equals(attributeOverride.name())) {
@@ -105,7 +111,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                             }
                             //Check AttributeOverride Annotation
                             if (!isUniqueCalculated) {
-                                AttributeOverride attributeOverride = entityClass.getAnnotation(AttributeOverride.class);
+                                AttributeOverride attributeOverride = entitySuperClass.getAnnotation(AttributeOverride.class);
                                 if (attributeOverride != null && a.getName().equals(attributeOverride.name())) {
                                     isUnique = attributeOverride.column().unique();
                                     isUniqueCalculated = true;
@@ -124,7 +130,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                         } else {
                             //Check AssociationOverride Annotation
                             if (!isUniqueCalculated) {
-                                AssociationOverrides associationOverrides = entityClass.getAnnotation(AssociationOverrides.class);
+                                AssociationOverrides associationOverrides = entitySuperClass.getAnnotation(AssociationOverrides.class);
                                 if (associationOverrides != null) {
                                     for (AssociationOverride associationOverride : associationOverrides.value()) {
                                         if (associationOverride != null && a.getName().equals(associationOverride.name())
@@ -138,7 +144,7 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                             }
                             //Check AssociationOverride Annotation
                             if (!isUniqueCalculated) {
-                                AssociationOverride associationOverride = entityClass.getAnnotation(AssociationOverride.class);
+                                AssociationOverride associationOverride = entitySuperClass.getAnnotation(AssociationOverride.class);
                                 if (associationOverride != null && a.getName().equals(associationOverride.name())
                                         && associationOverride.joinColumns().length > 0) {
                                     isUnique = associationOverride.joinColumns()[0].unique();
@@ -155,10 +161,10 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
                                 }
                             }
                         }
-                        entityClass = entityClass.getSuperclass();
-                    } while (!isUniqueCalculated &&
-                            (entityClass.isAnnotationPresent(Entity.class) ||
-                            entityClass.isAnnotationPresent(MappedSuperclass.class)));
+                        entitySuperClass = entitySuperClass.getSuperclass();
+                    } while (!isUniqueCalculated
+                            && (entitySuperClass.isAnnotationPresent(Entity.class)
+                            || entitySuperClass.isAnnotationPresent(MappedSuperclass.class)));
                     if (isUniqueCalculated && isUnique) {
                         whereExprs.add(cb.equal(root.get(a), value));
                     }
@@ -173,32 +179,61 @@ public class UniqueConstraintValidator implements ConstraintValidator<Unique, Ob
             }
         }
 
-        //Process UniqueConstraint annotation
-        query = cb.createQuery((Class<T>)entity.getClass());
+        //Process UniqueConstraint annotation with hierarchy
+        query = cb.createQuery(entityClass);
         root = query.from(entityType);
-        if (entity.getClass().isAnnotationPresent(Table.class)) {
-            Table annotation = entity.getClass().getAnnotation(Table.class);
-            if (annotation.uniqueConstraints() != null) {
-                for (UniqueConstraint uniqueConstraint : annotation.uniqueConstraints()) {
-                    List<Predicate> whereExprs = new ArrayList();
-                    for (String uniqueColumn : uniqueConstraint.columnNames()) {
-                        Object value = cpa.get(entity, uniqueColumn);
-                        if (value != null) {
-                            whereExprs.add(cb.equal(root.get(uniqueColumn), value));
-                        } else {
-                            //if at least one attribute is null, then unique check is passed
-                            whereExprs.clear();
-                            break;
-                        }
+        Class<?> entitySuperClass = entityClass;
+        while (entitySuperClass != null && entitySuperClass.isAnnotationPresent(Entity.class)) {
+            if (entitySuperClass.isAnnotationPresent(Table.class)) {
+                if (entitySuperClass.equals(entityClass)
+                        || ((!entitySuperClass.isAnnotationPresent(Inheritance.class))
+                        || entitySuperClass.getAnnotation(Inheritance.class).strategy() != InheritanceType.JOINED)) {
+                    Object result = getByUniqueConstraintAnnotation(entityClass, entity, cpa);
+                    if (result != null) {
+                        return (T) result;
                     }
-                    if (whereExprs.size() > 0) {
-                        query.where(whereExprs.toArray(new Predicate[whereExprs.size()]));
-                        List<T> list = em.createQuery(query).getResultList();
-                        if (!list.isEmpty()) {
-                            return list.get(0);
+                } else {
+                    Object result = getByUniqueConstraintAnnotation(entitySuperClass, entity, cpa);
+                    if (result != null) {
+                        if (entity.getClass().isAssignableFrom(result.getClass())) {
+                            return (T) result;
+                        } else {
+                            //TODO Продумать сообщение
+                            throw new RuntimeException("Entity with conflicted unique constraints exists and have other type");
                         }
                     }
                 }
+            }
+            entitySuperClass = entitySuperClass.getSuperclass();
+        }
+        return null;
+    }
+
+    private Object getByUniqueConstraintAnnotation(Class<?> entityClass, Object entity, ClassPropertyAdapter cpa) {
+        Table annotation = entityClass.getAnnotation(Table.class);
+        if (annotation.uniqueConstraints() != null) {
+            for (UniqueConstraint uniqueConstraint : annotation.uniqueConstraints()) {
+                CriteriaQuery<?> query = cb.createQuery(entityClass);
+                Root<?> root = query.from(em.getMetamodel().entity(entityClass));
+                List<Predicate> whereExprs = new ArrayList();
+                for (String uniqueColumn : uniqueConstraint.columnNames()) {
+                    Object value = cpa.get(entity, uniqueColumn);
+                    if (value != null) {
+                        whereExprs.add(cb.equal(root.get(uniqueColumn), value));
+                    } else {
+                        //if at least one attribute is null, then unique check is passed
+                        whereExprs.clear();
+                        break;
+                    }
+                }
+                if (whereExprs.size() > 0) {
+                    query.where(whereExprs.toArray(new Predicate[whereExprs.size()]));
+                    List<?> list = em.createQuery(query).getResultList();
+                    if (!list.isEmpty()) {
+                        return list.get(0);
+                    }
+                }
+                return null;
             }
         }
         return null;

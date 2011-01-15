@@ -51,7 +51,7 @@ public class LicensingSeedEntity {
             TrainingDirectionOrSpeciality tdosSA_B = dao.findUniqueOrPersist(new TrainingDirectionOrSpeciality("Системний аналіз та управління", "СА", "03", true, kaotdSysSciCyber, false));
 
             //---Серия, номер и дата выдачи лицензии----------
-            License licenseCPU = dao.findUniqueOrPersist(new License("АВ", "420720", createDate(21, 10, 2008)));
+            License licenseCPU = dao.findUniqueOrPersist(new License("АВ", "420720", createCalendar(21, 10, 2008)));
             
             //---Кафедры, выполняющие обучение по лицензиям----------
             Chair kafPIT = dao.findByName(Chair.class, "кафедра програмування та інформаційних технологій");
@@ -61,9 +61,9 @@ public class LicensingSeedEntity {
             Chair kafSAVM = dao.findByName(Chair.class, "кафедра системного аналізу та вищої математики");
             assert kafSAVM!=null;
             //Термін закінчення ліцензій ПЗАС та ПІ
-            Date lrCal20100701 = createDate(1, Calendar.JULY, 2010);
+            Calendar lrCal20100701 = createCalendar(1, Calendar.JULY, 2010);
             //Термін закінчення ліцензій ПВШ
-            Date lrCal20090701 = createDate(1, Calendar.JULY, 2009);
+            Calendar lrCal20090701 = createCalendar(1, Calendar.JULY, 2009);
             
             //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
