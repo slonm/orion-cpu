@@ -1,0 +1,32 @@
+01-17 19:37:49 jdbc[3]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "SYSTEM_SEQUENCES" не найдена
+Table "SYSTEM_SEQUENCES" not found; SQL statement:
+select sequence_name from information_schema.system_sequences [42102-145]
+01-17 19:37:50 jdbc[2]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "SYSTEM_SEQUENCES" не найдена
+Table "SYSTEM_SEQUENCES" not found; SQL statement:
+select sequence_name from information_schema.system_sequences [42102-145]
+01-17 19:37:50 jdbc[2]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "USER" не найдена
+Table "USER" not found; SQL statement:
+insert into security.User (id, email, encodedPassword, firstName, lastName, version) values (null, ?, ?, ?, ?, ?) [42102-145]
+01-17 19:37:50 jdbc[2]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "USER" не найдена
+Table "USER" not found; SQL statement:
+insert into security.User (id, email, encodedPassword, firstName, lastName, version) values (null, ?, ?, ?, ?, ?) [42102-145]
+01-17 19:40:50 jdbc[5]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "SYSTEM_SEQUENCES" не найдена
+Table "SYSTEM_SEQUENCES" not found; SQL statement:
+select sequence_name from information_schema.system_sequences [42102-145]
+01-17 19:40:51 jdbc[3]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "SYSTEM_SEQUENCES" не найдена
+Table "SYSTEM_SEQUENCES" not found; SQL statement:
+select sequence_name from information_schema.system_sequences [42102-145]
+01-17 19:40:51 jdbc[3]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "USER" не найдена
+Table "USER" not found; SQL statement:
+insert into security.User (id, email, encodedPassword, firstName, lastName, version) values (null, ?, ?, ?, ?, ?) [42102-145]
+01-17 19:40:51 jdbc[3]: SQLException
+org.h2.jdbc.JdbcSQLException: Таблица "USER" не найдена
+Table "USER" not found; SQL statement:
+insert into security.User (id, email, encodedPassword, firstName, lastName, version) values (null, ?, ?, ?, ?, ?) [42102-145]
