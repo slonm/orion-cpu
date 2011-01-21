@@ -88,7 +88,7 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
         //--Переменная для работы с экземпляром элемента спискка
         Chair p;
         //--Инициализация элемента списка
-        if (ou.size() == 0) {
+        if (ou.isEmpty()) {
             p = new Chair();
             p.setName(name);
             p.setShortName(shortName);
