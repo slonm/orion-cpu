@@ -114,7 +114,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Tapestry-Module-Classes>org.tynamo.security.services.SecurityCoreModule
+							<Tapestry-Module-Classes>org.tynamo.security.core.services.SecurityCoreModule
 							</Tapestry-Module-Classes>
 						</manifestEntries>
 					</archive>
