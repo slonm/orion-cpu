@@ -19,12 +19,12 @@ public class ACL extends AbstractEntity<ACL> {
     private String subject;
     /**
      * Объект разрешений. Им может быть класс сущности, сущность, веб страница, пункт меню и т.п.
-     * Класс сущности: ua.orion.entity.Entity
-     * Сущность: ua.orion.entity.Entity$12
+     * Класс сущности: Entity
+     * Сущность: Entity$12
      * Страница: PAGE_Index
      * Пункт меню: MENUITEM_Start>Licensing>LicenseRecord
      */
-    private String securedObject;
+//    private String protectedObject;
     /**
      * Разрешение. операция с объектом. read, write, menu, etc.
      */
@@ -38,14 +38,6 @@ public class ACL extends AbstractEntity<ACL> {
         this.permission = permission;
     }
 
-    public String getSecuredObject() {
-        return securedObject;
-    }
-
-    public void setSecuredObject(String securedObject) {
-        this.securedObject = securedObject;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -56,7 +48,7 @@ public class ACL extends AbstractEntity<ACL> {
 
     @Override
     public String toString() {
-        return subject + ":" + securedObject + ":" + permission;
+        return subject + ":" + permission;
     }
 
     @Override
