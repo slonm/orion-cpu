@@ -48,24 +48,15 @@ public class RealmTest {
 
     DefaultSecurityManager securityManager = null;
     OrionActiveDirectoryRealm realm;
-    private static final String USERNAME = "zav";
-    private static final String PASSWORD = "zav";
-//    private static final int USER_ID = 12345;
-    private static final String ROLE = "Users";
 
     @BeforeClass
     public void setup() {
         ThreadContext.remove();
         realm = new OrionActiveDirectoryRealm();
-//        Map<String, String> grm=new HashMap();
-        //grm.put("Users", "CN=Users,DC=uni,DC=zhu,DC=edu,DC=ua");
-//        grm.put("CN=students,DC=uni,DC=zhu,DC=edu,DC=ua", "Students");
-//        realm.setGroupRolesMap(grm);
-        realm.setSystemUsername("zav");
-        realm.setSystemPassword("zav");
+        realm.setSystemUsername("student");
+        realm.setSystemPassword("student");
         realm.setPermissionResolver(null);
         realm.setRolePermissionResolver(null);
-//        realm.setSearchBase("CN=Users,DC=uni,DC=zhu,DC=edu,DC=ua");
         realm.setSearchBase("DC=uni,DC=zhu,DC=edu,DC=ua");
         realm.setUrl("ldap://172.16.1.2:389");
         realm.setPrincipalSuffix("@uni.zhu.edu.ua");
@@ -85,6 +76,7 @@ public class RealmTest {
         Subject subject = SecurityUtils.getSubject();
         subject.login(new UsernamePasswordToken("zav", "zav"));
         assertTrue(subject.isAuthenticated());
+        assertTrue(subject.hasRole("Developers"));//Primary Group
         assertTrue(subject.hasRole("Builtin.Users"));
 //        assertTrue( realm.isPermitted( pCollection, ROLE + ":perm1" ) );
 //        assertTrue( realm.isPermitted( pCollection, ROLE + ":perm2" ) );
@@ -95,17 +87,9 @@ public class RealmTest {
 
         ActiveDirectoryPrincipal usernamePrincipal = subject.getPrincipals().oneByType(ActiveDirectoryPrincipal.class);
         assertTrue("zav".equals(usernamePrincipal.getLogin()));
-//        assertTrue("S-1-5-21-3809343169-324925516-669149220-2312".equals(usernamePrincipal.getSid()));
+        assertTrue("S-1-5-21-3809343169-324925516-669149220-2312".equals(usernamePrincipal.getSid()));
         assertTrue("Зинченко Антон Владимирович".equals(usernamePrincipal.getFio()));
         
-//        UsernamePrincipal usernamePrincipal = subject.getPrincipals().oneByType(UsernamePrincipal.class);
-//        assertTrue(usernamePrincipal.getUsername().equals(USERNAME));
-//
-//        UserIdPrincipal userIdPrincipal = subject.getPrincipals().oneByType(UserIdPrincipal.class);
-//        assertTrue(userIdPrincipal.getUserId() == USER_ID);
-//
-//        assertTrue(realm.hasRole(subject.getPrincipals(), ROLE));
-
         subject.logout();
     }
 
