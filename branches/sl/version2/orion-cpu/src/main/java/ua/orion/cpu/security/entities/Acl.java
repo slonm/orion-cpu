@@ -1,6 +1,7 @@
 package ua.orion.cpu.security.entities;
 
 import javax.persistence.*;
+import org.apache.shiro.authz.permission.WildcardPermission;
 import ua.orion.core.persistence.AbstractEntity;
 
 /**
@@ -10,23 +11,20 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author sl
  */
 @Entity
-public class ACL extends AbstractEntity<ACL> {
+public class Acl extends AbstractEntity<Acl> {
 
     /**
      * Субъект разрешений. Им может быть пользователь или роль
-     * У роль должен быть префикс ROLE_. Запрещенный символ во всех полях ":"
      */
     private String subject;
+    private SubjectType subjectType;
     /**
      * Объект разрешений. Им может быть класс сущности, сущность, веб страница, пункт меню и т.п.
-     * Класс сущности: Entity
-     * Сущность: Entity$12
-     * Страница: PAGE_Index
-     * Пункт меню: MENUITEM_Start>Licensing>LicenseRecord
-     */
-//    private String protectedObject;
-    /**
-     * Разрешение. операция с объектом. read, write, menu, etc.
+     * Класс сущности: entity:edit
+     * Сущность: entity:edit:12
+     * Страница: page_index:view
+     * Пункт меню: menu_Start>Licensing>LicenseRecord:show
+     * @see WildcardPermission
      */
     private String permission;
 
@@ -35,6 +33,9 @@ public class ACL extends AbstractEntity<ACL> {
     }
 
     public void setPermission(String permission) {
+        if (permission != null) {
+            permission = permission.toLowerCase();
+        }
         this.permission = permission;
     }
 
@@ -46,18 +47,26 @@ public class ACL extends AbstractEntity<ACL> {
         this.subject = subject;
     }
 
-    @Override
-    public String toString() {
-        return subject + ":" + permission;
+    public SubjectType getSubjectType() {
+        return subjectType;
+    }
+
+    public void setSubjectType(SubjectType subjectType) {
+        this.subjectType = subjectType;
     }
 
     @Override
-    protected boolean entityEquals(ACL obj) {
+    public String toString() {
+        return "[" + subjectType.toString() + "." + subject + "][" + permission + "]";
+    }
+
+    @Override
+    protected boolean entityEquals(Acl obj) {
         return toString().equalsIgnoreCase(obj.toString());
     }
 
     @Override
-    public int compareTo(ACL o) {
+    public int compareTo(Acl o) {
         return toString().compareTo(o.toString());
     }
 }

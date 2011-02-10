@@ -193,7 +193,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         return roleNames;
     }
 
-    protected String distinguishedGroupNameToRoleName(String dName) {
+    protected static String distinguishedGroupNameToRoleName(String dName) {
         String roleName = "";
         for (String cn : dName.split(",")) {
             if (cn.startsWith("CN=")) {
@@ -283,10 +283,10 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
             LdapUtils.closeContext(ldapContext);
         }
 
-        return buildAuthorizationInfo(roleNames);
+        return buildAuthorizationInfo(roleNames, username);
     }
 
-    protected AuthorizationInfo buildAuthorizationInfo(Set<String> roleNames) {
+    protected AuthorizationInfo buildAuthorizationInfo(Set<String> roleNames, String username) {
         return new SimpleAuthorizationInfo(roleNames);
     }
 
@@ -339,7 +339,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
                         roleNames.addAll(rolesForGroups);
                     }
                 }
-                String primaryGroup = BindPrimaryGroup(primaryGroupSID(userSid, primaryGroupId), ldapContext);
+                String primaryGroup = bindPrimaryGroup(primaryGroupSID(userSid, primaryGroupId), ldapContext);
                 if (primaryGroup != null) {
                     roleNames.add(primaryGroup);
                 }
@@ -398,7 +398,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
 /// <param name="sidBytes"></param>
 /// <param name="server"></param>
 /// <returns></returns>
-    private String BindPrimaryGroup(String sidBytes, LdapContext ldapContext) throws NamingException {
+    private String bindPrimaryGroup(String sidBytes, LdapContext ldapContext) throws NamingException {
         SearchControls searchCtls = new SearchControls();
         searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
@@ -430,7 +430,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         return null;
     }
 
-    private String primaryGroupSID(String userSid, String primaryGroupID) {
+    private static String primaryGroupSID(String userSid, String primaryGroupID) {
         return userSid.substring(0, userSid.lastIndexOf("-")+1)+primaryGroupID;
     }
 
