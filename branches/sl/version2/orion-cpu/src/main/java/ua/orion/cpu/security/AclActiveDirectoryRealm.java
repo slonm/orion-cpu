@@ -16,7 +16,7 @@ import org.apache.shiro.authz.permission.WildcardPermission;
 import ua.orion.cpu.security.entities.*;
 
 /**
- *
+ * Realm извлекает авторизационную информацию из таблицы Acl
  * @author sl
  */
 public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {

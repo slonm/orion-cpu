@@ -27,7 +27,8 @@ import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 
 /**
- *
+ * Realm получает из Active Directory информацию о пользователе и создает principal типа
+ * ActiveDirectoryPrincipal. Кроме этого отображает имена групп AD на имена ролей
  * @author sl
  */
 public class OrionActiveDirectoryRealm extends AuthorizingRealm {
@@ -203,7 +204,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
                 roleName = cn.substring(3) + roleName;
             }
         }
-        return roleName;
+        return roleName.toLowerCase();
     }
 
     /**
@@ -392,12 +393,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         return adp;
     }
 
-/// <summary>
-/// This method is used to bind the primary group and bind
-/// </summary>
-/// <param name="sidBytes"></param>
-/// <param name="server"></param>
-/// <returns></returns>
+// This method is used to bind the primary group and bind
     private String bindPrimaryGroup(String sidBytes, LdapContext ldapContext) throws NamingException {
         SearchControls searchCtls = new SearchControls();
         searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -469,5 +465,10 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
 
         // That's it - we have the SID
         return strSID.toString();
+    }
+    
+    @Override
+    protected boolean hasRole(String roleIdentifier, AuthorizationInfo info) {
+        return info != null && info.getRoles() != null && info.getRoles().contains(roleIdentifier.toLowerCase());
     }
 }
