@@ -1,0 +1,24 @@
+<html t:type="layout" title="CRUD"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:zone t:id="listZone">
+        <t:grid source="objects" row="object" inplace="true" add="action" >
+            <p:actionCell>
+                <t:PopupWindowEvent t:id="edit" context="${object.id}" zone="editZone" window="editWindow">E </t:PopupWindowEvent>
+                <t:EventLink t:event="edit" context="${object.id}" zone="editZone">E </t:EventLink>
+            </p:actionCell>
+        </t:grid>
+    </t:zone>
+    <t:PopupWindowEvent t:id="add" zone="editZone" window="editWindow">Add</t:PopupWindowEvent>
+    <t:ck.Window t:id="editWindow" t:style="bluelighting" show="false"
+                 modal="true" title="literal:Edit Entity"
+                 width="500" height="200">
+        <t:zone t:id="editZone">
+            <t:beaneditform t:id="form" object="object" 
+                            zone="listZone" context="${object?.id}"/>
+        </t:zone>
+
+    </t:ck.Window>
+
+</html>
