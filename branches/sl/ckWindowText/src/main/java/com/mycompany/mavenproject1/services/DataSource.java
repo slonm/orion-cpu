@@ -12,19 +12,20 @@ public class DataSource {
     private int nextId = 1;
 
     {
-        list.add(new Entity(nextId++, "Entity 1"));
-        list.add(new Entity(nextId++, "Entity 2"));
-        list.add(new Entity(nextId++, "Entity 3"));
-        list.add(new Entity(nextId++, "Entity 4"));
-        list.add(new Entity(nextId++, "Entity 5"));
-        list.add(new Entity(nextId++, "Entity 6"));
+        list.add(new Entity(nextId++, "Entity 1", "Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1Entity 1"));
+        list.add(new Entity(nextId++, "Entity 2", "Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2Entity 2"));
+        list.add(new Entity(nextId++, "Entity 3", "Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3Entity 3"));
+        list.add(new Entity(nextId++, "Entity 4", "Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4Entity 4"));
+        list.add(new Entity(nextId++, "Entity 5", "Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5Entity 5"));
+        list.add(new Entity(nextId++, "Entity 6", "Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6Entity 6"));
     }
 
     public Entity newEntity() {
-        return new Entity(nextId++, null);
+        return new Entity();
     }
 
     public void insert(Entity e) {
+        e.setId(nextId++);
         list.add(e);
     }
 
