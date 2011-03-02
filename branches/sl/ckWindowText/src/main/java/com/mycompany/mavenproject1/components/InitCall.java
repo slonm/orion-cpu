@@ -11,16 +11,30 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 /**
- *
+ * A non visual component.
+ * Adds a call to a client-side function inside the Tapestry.Initializer namespace. 
+ * It same as call JavascriptSupport.addInitializerCall method.
+ * Calls to this method are aggregated into a call to the Tapestry.init() function. 
+ * Initialization occurs at {@link InitializationPriority#NORMAL} priority.
+ * All informal parameters has been added as JSON parametrs.
  * @author sl
  */
 @SupportsInformalParameters
 public class InitCall {
 
+    /**
+     * Client-side function inside the Tapestry.Initializer namespace 
+     */
     @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL, allowNull = false)
-    private String method;
+    private String function;
+    /**
+     * Add function call at page render request
+     */
     @Parameter(value = "true", defaultPrefix = BindingConstants.LITERAL, allowNull = false)
     private boolean html;
+    /**
+     * Add function call at component event's Zone update
+     */
     @Parameter(value = "true", defaultPrefix = BindingConstants.LITERAL, allowNull = false)
     private boolean ajax;
     @Environmental
@@ -33,10 +47,10 @@ public class InitCall {
     Object beginRender() {
         if ((request.isXHR() && ajax) || (!request.isXHR() && html)) {
             JSONObject options = new JSONObject();
-            for(String name: resources.getInformalParameterNames()){
+            for (String name : resources.getInformalParameterNames()) {
                 options.put(name, resources.getInformalParameter(name, String.class));
             }
-            javascriptSupport.addInitializerCall(method, options);
+            javascriptSupport.addInitializerCall(function, options);
         }
         return false;
     }

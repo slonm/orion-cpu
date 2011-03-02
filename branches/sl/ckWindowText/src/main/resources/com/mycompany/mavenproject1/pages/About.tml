@@ -2,7 +2,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
     <t:zone t:id="listZone">
-        <t:InitCall method="closeCkWindow" window="editWindow"/><!--для вызова метода скрытия окна-->
+        <t:InitCall function="closeCkWindow" window="editWindow"/><!--для вызова метода скрытия окна-->
         <t:grid source="objects" row="object" inplace="true" model="listmodel">
             <p:idCell>
                 <t:EventLink t:event="view" context="${object.id}" zone="editZone">${object.id}</t:EventLink>
@@ -16,12 +16,12 @@
     </t:zone>
     <t:EventLink t:event="add" zone="editZone">Add</t:EventLink>
     <t:block id="editBlock">
-        <t:InitCall method="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
+        <t:InitCall function="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
         <t:beaneditform t:id="form" object="object" model="editmodel"
                         zone="listZone" context="${object?.id}" submitLabel="prop:modeaction"/>
     </t:block>
     <t:block id="viewBlock">
-        <t:InitCall method="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
+        <t:InitCall function="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
         <t:beandisplay t:id="display" object="object" model="viewmodel"/>
     </t:block>
     <t:ck.Window t:id="editWindow" t:style="bluelighting" show="false"
