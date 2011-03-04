@@ -9,6 +9,10 @@ import org.apache.tapestry5.ioc.Messages;
  */
 public interface MetaEntity {
     
+    Class<?> getEntityClass();
+    
+    String getEntityName();
+    
     /**
      * @return 
      * @throws IllegalArgumentException if type not entity

@@ -207,6 +207,29 @@ public class EntityServiceImpl implements EntityService {
         metaEntityByEntityClass.clear();
     }
 
+    @Override
+    public MetaEntity getMetaEntity(String entityName) {
+        Defense.notBlank(entityName, "entityName");
+        for(EntityType<?> et: metamodel.getEntities()){
+            //используем et.getJavaType().getSimpleName() вместо et.getName()
+            //так как Hibernate в этом случае возвращает каноническое имя (с пакетом)
+            if(et.getJavaType().getSimpleName().equalsIgnoreCase(entityName)){
+                return getMetaEntity(et.getJavaType());
+            }
+        }
+        throw new IllegalArgumentException("Not managed entity " + entityName);
+    }
+
+    @Override
+    public <T> T newInstance(Class<T> entityClass) {
+        try {
+            return entityClass.newInstance();
+        } catch (InstantiationException ex) {
+        } catch (IllegalAccessException ex) {
+        }
+        return null;
+    }
+
     class MetaEntityImpl implements MetaEntity {
 
         private final Class<?> type;
@@ -295,6 +318,16 @@ public class EntityServiceImpl implements EntityService {
         @Override
         public String getPropertyLabel(String propertyName, Locale locale) {
             return getPropertyLabel(propertyName, applicationMessagesSource.getMessages(Locale.getDefault()));
+        }
+
+        @Override
+        public Class<?> getEntityClass() {
+            return type;
+        }
+
+        @Override
+        public String getEntityName() {
+            return type.getSimpleName();
         }
     }
 }

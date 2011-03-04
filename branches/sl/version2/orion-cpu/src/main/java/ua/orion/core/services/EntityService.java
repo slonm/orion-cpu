@@ -35,10 +35,20 @@ public interface EntityService {
     MetaEntity getMetaEntity(Class<?> entityClass);
 
     /**
+     * Возвращает MetaEntity по регистронезависимому имени сущности
+     */
+    MetaEntity getMetaEntity(String entityName);
+
+    /**
      * Transactional wrapper for EntityManager.persist(object)
      */
     @CommitAfter
     void persist(Object entity);
+
+    /**
+     * newInstance of entity
+     */
+    <T> T newInstance(Class<T> entityClass);
 
     /**
      * Transactional wrapper for EntityManager.merge(object)

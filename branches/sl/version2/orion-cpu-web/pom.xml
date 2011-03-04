@@ -2,47 +2,30 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.orion</groupId>
-    <artifactId>orion-cpu-core</artifactId>
+    <artifactId>orion-cpu-web</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Orion CPU core functionality</name>
+    <name>Orion CPU web interface core functionality</name>
     <dependencies>
         <dependency>
-            <groupId>org.tynamo</groupId>
-            <artifactId>tapestry-jpa-hibernate-entitymanager</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <type>jar</type>
+            <groupId>ua.orion</groupId>
+            <artifactId>orion-cpu-core</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.tynamo</groupId>
-            <artifactId>tapestry-security-core</artifactId>
+            <artifactId>tapestry-security-web</artifactId>
             <version>0.3.1.sl-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-ioc</artifactId>
+            <artifactId>tapestry-core</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry5-annotations</artifactId>
             <version>${tapestry-release-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.1.0.Final</version>
         </dependency>
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
 will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
@@ -81,7 +64,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
     </dependencies>
     <build>
-        <finalName>orion-cpu-core</finalName>
+        <finalName>orion-cpu-web</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
