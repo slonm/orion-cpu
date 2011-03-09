@@ -3,10 +3,8 @@
       xmlns:p="tapestry:parameter">
     <t:zone t:id="listZone">
         <t:InitCall function="closeCkWindow" window="editWindow"/><!--для вызова метода скрытия окна-->
-        <t:grid source="objects" row="object" inplace="true" model="listmodel">
-            <p:idCell>
-                <t:EventLink t:event="view" context="${object.id}" zone="editZone">${object.id}</t:EventLink>
-            </p:idCell>
+        <t:grid source="objects" row="object" inplace="true" add="action"
+                model="${dataSource.getBeanModelForList(objectClass)}">
             <p:actionCell>
                 <t:EventLink t:event="edit" context="${object.id}" zone="editZone">Edit </t:EventLink>
                 <t:EventLink t:event="view" context="${object.id}" zone="editZone">View </t:EventLink>
@@ -17,12 +15,12 @@
     <t:EventLink t:event="add" zone="editZone">Add</t:EventLink>
     <t:block id="editBlock">
         <t:InitCall function="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
-        <t:beaneditform t:id="form" object="object" model="editmodel"
+        <t:beaneditform t:id="form" object="object" model="${dataSource.getBeanModelForEdit(objectClass)}"
                         zone="listZone" context="${object?.id}" submitLabel="prop:modeaction"/>
     </t:block>
     <t:block id="viewBlock">
         <t:InitCall function="showCkWindow" window="editWindow" title="prop:mode" html="false" /><!--для вызова метода показа окна-->
-        <t:beandisplay t:id="display" object="object" model="viewmodel"/>
+        <t:beandisplay t:id="display" object="object" model="${dataSource.getBeanModelForView(objectClass)}"/>
     </t:block>
     <t:ck.Window t:id="editWindow" t:style="bluelighting" show="false"
               modal="true" title="mode"

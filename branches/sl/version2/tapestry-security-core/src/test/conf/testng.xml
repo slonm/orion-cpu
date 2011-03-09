@@ -6,9 +6,9 @@
 			<define name="notLoggedIn"/>
 			<define name="loggedIn"/>
 		</groups>
-		<classes>
+		<!--classes>
 			<class name="org.tynamo.security.TapestrySecurityIntegrationTest"/>
-		</classes>
+		</classes-->
 	</test>
 
 </suite>

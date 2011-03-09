@@ -2,6 +2,7 @@ package ua.orion.web.pages;
 
 import java.util.List;
 import javax.persistence.Entity;
+import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
@@ -33,13 +34,12 @@ public class Crud {
     @Inject
     private EntityService entityService;
     @Inject
-    private BeanModelSource modelSource;
-    @Inject
     private Messages messages;
     @Inject
     private Logger LOG;
     @Inject
-    private TapestryComponentDataSource tapestryComponentDataSource;
+    @Property(write=false)
+    private TapestryComponentDataSource dataSource;
     //---Locals---
     @Persist
     private Class<?> objectClass;
@@ -57,7 +57,7 @@ public class Crud {
         return object;
     }
 
-    protected void setObject(Object object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 
@@ -65,7 +65,7 @@ public class Crud {
         return objectClass;
     }
 
-    protected void setObjectClass(Class<?> objectClass) {
+    public void setObjectClass(Class<?> objectClass) {
         this.objectClass = objectClass;
     }
             
@@ -93,13 +93,13 @@ public class Crud {
             LOG.debug("Invalid activation context. Redirect to root page");
             return "";
         }
-        //getAuthorizer().checkSearch(getEntityClass());
+//        SecurityUtils.getSubject().isPermitted(objectClass.getSimpleName()+":read");
         //title = messages.get("reflect." + beanClass.getName());
         return null;
     }
 
     public GridDataSource getObjects() {
-        return tapestryComponentDataSource.getGridDataSource(objectClass);
+        return dataSource.getGridDataSource(objectClass);
     }
 
     public Object onSuccessFromForm() {
@@ -149,21 +149,19 @@ public class Crud {
         return "Удалить";
     }
     
-    public BeanModel<?> getListModel(){
-        BeanModel<?> bm=modelSource.createDisplayModel(Entity.class, messages);
-        bm.add("action", null);
-        bm.exclude("veryLongStringField");
-        return bm;
-    }
-    
-    public BeanModel<?> getEditModel(){
-        BeanModel<?> bm=modelSource.createEditModel(Entity.class, messages);
-        bm.exclude("id");
-        return bm;
-    }
-    
-    public BeanModel<?> getViewModel(){
-        BeanModel<?> bm=modelSource.createDisplayModel(Entity.class, messages);
-        return bm;
-    }
+//    public BeanModel<?> getListModel(){
+//        BeanModel<?> bm=dataSource.getBeanModelForList(objectClass);
+////        bm.add("action", null);
+//        return bm;
+//    }
+//
+//    public BeanModel<?> getEditModel(){
+//        BeanModel<?> bm=dataSource.getBeanModelForEdit(objectClass);
+//        return bm;
+//    }
+//
+//    public BeanModel<?> getViewModel(){
+//        BeanModel<?> bm=dataSource.getBeanModelForView(objectClass);
+//        return bm;
+//    }
 }
