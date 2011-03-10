@@ -5,7 +5,7 @@ import javax.persistence.metamodel.Metamodel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.services.BeanModelSource;
-import org.apache.tapestry5.services.LocalizationSetter;
+import org.tynamo.jpa.internal.JPAGridDataSource;
 import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 
@@ -15,14 +15,20 @@ import ua.orion.core.services.EntityService;
  */
 public class TapestryComponentDataSourceImpl implements TapestryComponentDataSource{
 
-//    private final EntityService entityService;
+    private final EntityService entityService;
     private final BeanModelSource beanModelSource;
     private final ApplicationMessagesSource messagesSource;
+
+    public TapestryComponentDataSourceImpl(EntityService entityService, BeanModelSource beanModelSource, ApplicationMessagesSource messagesSource) {
+        this.entityService = entityService;
+        this.beanModelSource = beanModelSource;
+        this.messagesSource = messagesSource;
+    }
 //    private final Metamodel metamodel;
 
     @Override
     public GridDataSource getGridDataSource(Class<?> entityClass) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new JPAGridDataSource(entityService.getEntityManager(), entityClass);
     }
 
     @Override

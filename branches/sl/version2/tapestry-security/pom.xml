@@ -2,8 +2,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.tynamo</groupId>
-	<artifactId>tapestry-security</artifactId>
-	<name>Tapestry Security</name>
+	<artifactId>tapestry-security-web</artifactId>
+	<name>Tapestry Security Web filter</name>
 	<description>Tynamo Security package for Tapestry 5 based on Shiro Security</description>
 	<packaging>jar</packaging>
 	<version>0.3.1.sl-SNAPSHOT</version>

@@ -99,7 +99,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Tapestry-Module-Classes>org.tynamo.jpa.HibernateModule</Tapestry-Module-Classes>
+                            <Tapestry-Module-Classes>org.tynamo.jpa.Ejb3HibernateModule</Tapestry-Module-Classes>
                         </manifestEntries>
                     </archive>
                 </configuration>

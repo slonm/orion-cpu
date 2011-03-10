@@ -2,6 +2,7 @@ package ua.orion.core.services;
 
 import java.util.*;
 import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.services.ThreadLocale;
 import org.apache.tapestry5.ioc.util.AbstractMessages;
 import ua.orion.core.utils.Defense;
 
@@ -15,9 +16,12 @@ public class ApplicationMessagesSourceImpl implements ApplicationMessagesSource 
     private final Collection<String> resources = new HashSet<String>();
     //Локализованные каталоги
     private final Map<Locale, Messages> messagesByLocale = new HashMap();
+    private final ThreadLocale locale;
 
-    public ApplicationMessagesSourceImpl(Collection<String> configuration) {
+    public ApplicationMessagesSourceImpl(Collection<String> configuration,
+            ThreadLocale locale) {
         resources.addAll(configuration);
+        this.locale=locale;
     }
 
     @Override
@@ -32,6 +36,12 @@ public class ApplicationMessagesSourceImpl implements ApplicationMessagesSource 
     public void clearCache() {
         ResourceBundle.clearCache();
         messagesByLocale.clear();
+    }
+
+    //TODO Test it
+    @Override
+    public Messages getMessages() {
+        return getMessages(locale.getLocale());
     }
 
     private class InternalMessages extends AbstractMessages {

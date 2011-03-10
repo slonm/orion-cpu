@@ -23,6 +23,11 @@ public interface ApplicationMessagesSource{
     Messages getMessages(Locale locale);
     
     /**
+     * Return localized messages for thread locale.
+     */
+    Messages getMessages();
+    
+    /**
      * Discards all stored messages and clear Resource bundle cache.
      */
     void clearCache();
