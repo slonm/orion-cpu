@@ -1,0 +1,30 @@
+/* 
+    Document   : dateselector
+    Created on : 14.06.2010, 21:15:18
+    Author     : root
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.date_selector_btn{
+  display:inline-block;
+  padding:3px;
+  font-size:10px;
+  text-decoration:none;
+  border:1px outset gray;
+  background-color:orange;
+  color:black;
+}
+
+
+.date_selector_block{
+   position:absolute;
+   background-color:silver;
+   left:50px;
+   padding:3pt;
+   text-align: center;
+}
+
+span.date_selector_block td {
+   text-align: center;
+   background-color:#e0e0e0;
+}

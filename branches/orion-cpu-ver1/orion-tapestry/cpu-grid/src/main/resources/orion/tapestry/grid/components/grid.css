@@ -1,0 +1,296 @@
+div#gridpropertiesheader{
+    background-color:#99ccff;
+    padding:3px;
+    font-size:11pt;
+}
+a#show_grid_properties,a#hide_grid_properties{
+    background-color: #99ccff;
+    color:white;
+    float:left;
+    font-family: monospace;
+    text-decoration:none;
+    padding:1px;
+    font-size:10pt;
+    margin-right:3pt;
+    width:18px;
+    text-align:center;
+}
+
+div.gridproperties{
+    background-color:#c0c0c0;
+}
+span.gridproperties{
+    display:inline-block;
+    width:99%;
+    padding:2px;
+    background-color:#c0c0c0;
+    font-size:11px;
+}
+
+span.uparrow{
+    display: inline-block;
+    border-bottom: 16px solid white;
+    border-right: 8px solid #99ccff;
+    border-left: 8px solid #99ccff;
+}
+span.downarrow{
+    display: inline-block;
+    border-top: 16px solid white;
+    border-right: 8px solid #99ccff;
+    border-left: 8px solid #99ccff;
+}
+
+.grid-human-readable-filter{
+    background-color:#ffff66;
+    color:black;
+    padding:10px;
+}
+
+
+
+
+
+
+
+
+
+.grid-filter-container{
+    display:inline-block;
+    width:45%;
+    vertical-align: top;
+}
+.grid-filter-header{
+    font-weight: bold;
+}
+
+#viewJSON,#filterJSON,#sortJSON,#widthJSON{
+    height:1px;
+    background-color: #c0c0c0;
+    border:none;
+    color:#c0c0c0;
+    width:100%;
+}
+
+
+
+.grid-view-container{
+    display:inline-block;
+    width:26%;
+    vertical-align: top;
+}
+
+.grid-view-header{
+    font-weight: bold;
+}
+
+div.grid-view-element label,
+div.grid-view-element{
+    cursor:move;
+}
+div.grid-view-element:hover{
+    background-color: #ffff66;
+}
+
+.grid-sort-container{
+    display:inline-block;
+    width:26%;
+    vertical-align: top;
+}
+
+
+
+.grid-sort-header{
+    font-weight: bold;
+}
+
+
+
+table.grid-calendar td{text-align:right;font-size:10pt;}
+table.grid-calendar th{text-align:right;font-size:10pt;}
+
+
+
+
+
+
+
+
+
+
+
+tr#columnheaders th{
+  margin:0px;
+  padding:0px;
+  background-color:silver;
+  cursor:move;
+  height:80px;
+}
+
+
+
+div.grid-width-slider-right{
+    width:6px;
+    background-color:#0099cc;
+    height:80px;
+    
+}
+
+div.grid-width-slider-right{
+    float:right;
+    cursor:e-resize;
+}
+
+div.grid-width-slider-right:hover{
+    background-color:red;
+}
+
+div.grid-cell{
+  overflow:hidden;
+  width:200px;
+  margin-right:0px;
+  padding:5px;
+}
+
+th div.grid-cell{
+    height:70px;
+}
+
+tr#columnheaders div.gridsortlink{
+    text-align:center;
+    background-color: #99ccff;
+}
+
+
+
+tr#columnheaders div.gridsortlink:hover{
+    background-color: #33ccff;
+}
+
+
+
+tr#columnheaders div.gridsortlink:hover span.uparrow{
+    border-right-color: #33ccff;
+    border-left-color: #33ccff;
+}
+
+tr#columnheaders div.gridsortlink:hover span.downarrow{
+    border-right-color: #33ccff;
+    border-left-color: #33ccff;
+}
+
+
+
+
+.grid-context-menu{
+    position:absolute;
+    background-color:#e0e0e0;
+    width:200px;
+    padding:10px;
+    border:1px solid gray;
+}
+
+
+
+
+.visibility-selector-container{
+    width:50px;
+    text-align: center;
+    display:inline-block;
+}
+
+.filter-form-element-label{
+    display:inline-block;
+    width:80px;
+}
+
+.filter-form-element{
+    background-color: #e0e0e0;
+}
+
+.filter-form-element-number-label{
+    display:inline-block;
+    width:40px;
+}
+
+.filter-form-element-number-field{
+    width:100px;
+}
+
+
+.filter-form-element-string-label{
+    display:inline-block;
+    width:60px;
+}
+
+.filter-form-element-string-field{
+    width:270px;
+}
+
+.filter-form-element-date-field{
+    width:120px;
+}
+
+.filter-form-element-title{
+    margin:2pt;
+    background-color: #e0e0e0;
+}
+
+.filter-form-element-title,
+.filter-form-element-number-label,
+.filter-form-element-label,
+.filter-form-element-string-label{
+    padding:0px 2pt 0px 2pt;
+}
+
+
+.gridsort{
+    display:inline-block;
+    width:250px;
+    vertical-align: top;
+}
+
+.gridsortformelement-header,
+.gridsortformelement{
+    margin:2pt;
+    background-color: #e0e0e0;
+}
+
+.gridsortformelement{
+  cursor:move;
+}
+
+.sorttype-selector-container{
+    display:inline-block;
+    width:110px;
+    white-space:nowrap;
+}
+
+
+.grid-page-link{
+    display:inline-block;
+    margin:3pt;
+    padding:3pt;
+    vertical-align: middle;
+    border:1px dotted gray;
+    text-decoration:none;
+}
+
+
+a.grid-page-link{
+    text-decoration:none;
+    background-color:#e0e0e0;
+    color:blue;
+}
+span.grid-page-link{
+    background-color:yellow;
+    color:black;
+}
+
+a.grid-page-link:hover{
+    background-color:lime;
+}
+
+.date_selector_block{
+    top:20px;
+}
+

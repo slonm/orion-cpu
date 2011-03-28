@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry-core</artifactId>
+            <version>${tapestry-release-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry-ioc</artifactId>
+            <version>${tapestry-release-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry5-annotations</artifactId>
+            <version>${tapestry-release-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry5-annotations</artifactId>
+            <version>${tapestry-release-version}</version>
+        </dependency>
+        <!--
+-->
+        <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
+will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
+of testing facilities designed for use with TestNG (http://testng.org/), so it's recommended. -->
+
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.4</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- tapestry-test will conflict with RunJettyRun inside Eclipse. tapestry-test brings in Selenium, which
+             is based on Jetty 5.1; RunJettyRun uses Jetty 6.
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry-test</artifactId>
+            <version>${tapestry-release-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        -->
+
+        <!-- Provided by the servlet container, but sometimes referenced in the application
+       code. -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j-release-version}</version>
+            <!-- scope>test</scope -->
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-release-version}</version>
+        </dependency>
+        <!--
+-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit4</artifactId>
+            <version>2.4.3</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>cpu-menu</finalName>
+        <!--Причины следующей строки тут: http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html-->
+        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <optimize>true</optimize>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Run the application using "mvn jetty:run" -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.19</version>
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <!-- Log to the console. -->
+                    <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
+                        <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug
+                             that prevents the requestLog from being set. -->
+                        <append>true</append>
+                    </requestLog>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>java.util.logging.config.file</name>
+                            <value>logging.properties</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <!--
+-->
+
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-jdk14</artifactId>
+                        <version>${slf4j-release-version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                        <version>${slf4j-release-version}</version>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>
+                                orion.tapestry.menu.services.CpuMenuModule
+                            </Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+
+        <!-- Adds a report detailing the components, mixins and base classes defined by this module. -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tapestry</groupId>
+                <artifactId>tapestry-component-report</artifactId>
+                <version>${tapestry-release-version}</version>
+                <configuration>
+                    <rootPackage>orion.cpu</rootPackage>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <repositories>
+
+        <repository>
+            <id>localhost.nu</id>
+            <url>http://www.localhost.nu/java/mvn</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- This repository is only needed if the Tapestry released artifacts haven't made it to the central Maven repository yet. -->
+<!--
+        <repository>
+            <id>tapestry</id>
+            <url>http://tapestry.formos.com/maven-repository/</url>
+        </repository>
+-->
+
+        <!-- This repository is only needed when the tapestry-release-version is a snapshot release. -->
+<!--
+        <repository>
+            <id>tapestry-snapshots</id>
+            <url>http://tapestry.formos.com/maven-snapshot-repository/</url>
+        </repository>
+-->
+<!--
+        <repository>
+            <id>codehaus.snapshots</id>
+            <url>http://snapshots.repository.codehaus.org</url>
+        </repository>
+-->
+<!--
+        <repository>
+            <id>OpenQA_Release</id>
+            <name>OpenQA Release Repository</name>
+            <url>http://archiva.openqa.org/repository/releases/</url>
+        </repository>
+-->
+<!--
+        <repository>
+            <id>chenillekit</id>
+            <url>http://www.chenillekit.org/mvnrepo/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+-->
+        <repository>
+            <id>ars-machina</id>
+            <name>Ars Machina repository</name>
+            <url>http://www.arsmachina.com.br/maven/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+
+        <!-- As above, this can be commented out when access to the snapshot version
+of a Tapestry Maven plugin is not required.   -->
+<!--
+        <pluginRepository>
+            <id>tapestry-snapshots</id>
+            <url>http://tapestry.formos.com/maven-snapshot-repository/</url>
+        </pluginRepository>
+-->
+
+    </pluginRepositories>
+
+    <properties>
+        <slf4j-release-version>1.5.2</slf4j-release-version>
+        <tapestry-release-version>5.2.2</tapestry-release-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <groupId>orion</groupId>
+    <artifactId>cpu-menu</artifactId>
+    <name>cpu-menu</name>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

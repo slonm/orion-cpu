@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Title      : Concrete
+Version    : 1.0
+Released   : 20080825
+Description: A Web 2.0 design with fluid width suitable for blogs and small websites.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>${title}</title>
+    </head>
+    <body>
+        <!-- start header -->
+        <div id="header">
+            <span id="menu"><t:menu.menubar menudata="menudata" /></span>
+        </div>
+
+        <t:security.IfLoggedIn>
+            <table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:label.user}:&nbsp;</td><td class="topusername">&nbsp;${user.name}&nbsp;</td><td class="td-user-logout"><t:ActionLink t:id="logout"><div class="user-logout" title="${message:link.logout}"></div></t:ActionLink></td></tr></table>
+            <p:else>
+                <table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:message.not.login}&nbsp;</td><td class="td-user-login"><t:pagelink page="login"><div class="user-login" title="${message:link.login}"></div></t:pagelink></td></tr></table>
+            </p:else>
+        </t:security.IfLoggedIn>
+        <!-- end header -->
+        <!-- start page -->
+        <div id="page">
+            <!-- start content -->
+            <div id="content">
+                <div class="post">
+                    <div class="title"><h2>${title}</h2></div>
+                    <div class="entry">
+                        <t:body/>
+                    </div>
+                </div>
+            </div>
+            <!-- end content -->
+            <br style="clear: both;"/>
+        </div>
+        <!-- end page -->
+        <!-- start footer -->
+        <div id="footer">
+            <p class="legal">
+                &copy;2009 orion. All Rights Reserved.
+                &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+                Design by
+                <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>
+                &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+                Icons by
+                <a href="http://famfamfam.com/">FAMFAMFAM</a>.
+            </p>
+        </div>
+        <!-- end footer -->
+    </body>
+</html>

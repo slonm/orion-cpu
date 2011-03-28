@@ -1,0 +1,155 @@
+* {padding: 0; margin: 0}
+
+/* Форматируем ячейки Grid */
+table.t-data-grid tbody tr td{
+    font-size: 9pt;
+    color: black;
+    background-image: url(images/td_blue.gif);
+}
+
+/* Форматируем ячейки заголовков для Grid, выбора страниц в Grid, и панели авторизации */
+table.t-data-grid thead tr th,
+.t-data-grid-pager a,
+.topusername,
+.td-user-logout{
+    text-decoration: none;
+    background-image: url(images/table_head.png);
+    font-style: italic;
+}
+
+/* Форматируем текст заголовков для Grid */
+table.t-data-grid thead tr th a{
+    font-size: 10pt;
+    color: #15428b;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Выделяем ячейку с классом name, disciplineNumber в Grid */
+table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
+    background-image: url(images/td_main.gif)
+}
+/* Выделяем серым цветом ячейки с кнопками в Grid, панель авторизации */
+table.t-data-grid td.action,
+.topuser{
+    background-image: url(images/td_action.gif);
+}
+
+/* Выделяем строку в Grid при наведении курсора мыши */
+table.t-data-grid tbody tr:hover td{
+    background-image: url(images/tr_hover.gif);
+}
+
+/* Выравниваем данные в некоторых колонках Grid по центру */
+.t-data-grid .code,                          .t-data-grid .isObsolete,
+.t-data-grid .shortName,                     .t-data-grid .action,
+.t-data-grid .isTrainingDirection,           .t-data-grid .isKnowledgeArea,
+.t-data-grid .stationaryStudentLicenseQuantity,
+.t-data-grid .correspondenseStudentLicenseQuantity,
+.t-data-grid .terminationDate,               .t-data-grid .eduPlanSemester,
+.t-data-grid .isExam,                        .t-data-grid .isCredit,
+.t-data-grid .isCourseWork,                  .t-data-grid .isControlWork,
+.t-data-grid .disciplineTotalHoursPerRecord, .t-data-grid .lecturesHours,
+.t-data-grid .labsHours,                     .t-data-grid .practicesHours,
+.t-data-grid .disciplineNumber,              .t-data-grid .KATDCode,
+.t-data-grid .educationalQualificationLevel, .t-data-grid .trainingTerm,
+.t-data-grid .introducingDate,               .t-data-grid .disciplineTotalHourVolume,
+.t-data-grid .isMandatory,                   .t-data-grid .eduPlanDisciplineCycleNumber,
+.t-data-grid .eduplan,                       .t-data-grid .isRegulatory,
+.t-data-grid .ePPCycleTotalHours,            .t-data-grid .eduWeekAmount
+{
+    min-width: 45px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Граница окна ошибки */
+.error-report-table {
+    border: 1px solid Red
+}
+
+/* Загловок окна ошибки и панели авторизации */
+.error-report-table .title-error-report, .td-user-login{
+    background-image: url(images/td_error.png);
+    color: #ffff99;
+    font-weight: bold;
+}
+
+/* Содержимое окна ошибки */
+.error-report-table .title-error-report-mes{
+    background-image: url(images/td_error_rep.png);
+    color: #FF0000;
+    font-weight: bold;
+}
+
+.post .title h2{
+    font-size: 1.8em;
+}
+
+/* Панель авторизации */
+.userntable{
+    float: right;
+    border: 1px solid #1692B8;
+    margin-right: 10px;
+    display: none;
+}
+
+/* Левая граница панели авторизации */
+.topuser{
+    color: black;
+    font-weight: bold;
+}
+/* Правая граница панели авторизации */
+.topusername{
+    color: #15428b;
+    font-weight: bold;
+}
+/* Кнопка выхода */
+.user-logout{
+    background-image: url("images/td_exit.png");
+    width: 32px;
+    height: 32px;
+}
+/* Кнопка входа */
+.user-login{
+    background-image: url(images/td_key_enter.png);
+    width: 32px;
+    height: 32px;
+}
+/* Картинка с изображением университета на главной странице */
+#sp_logo1{
+    background-image: url(images/klas_pryvat_univer.jpg);
+    width: 500px;
+    height: 325px;
+    display: none;
+}
+/* Текст приветствия на главной странице */
+#wlctocpu{
+    text-align: center;
+    display: none;
+}
+/* Ссылки в ListView */
+.post > .entry > div > a{
+    color: black;
+    font-weight: bold;
+    font-size: 10pt;
+    text-decoration: none;
+}
+/* Ссылки в ListView при наведении */
+.post > .entry > div > a:hover{
+    color: dodgerblue;
+    font-size: 11pt;
+}
+/* Меню */
+span.menutitle{
+    padding: 10px;
+    font: 12px Arial,Helvetica, sans-serif;
+}
+
+span.menutitle a{
+    text-decoration: none;
+    color: #ffff99;
+}
+
+
+
