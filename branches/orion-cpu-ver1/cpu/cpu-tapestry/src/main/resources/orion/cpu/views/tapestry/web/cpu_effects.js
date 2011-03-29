@@ -31,13 +31,19 @@ jQuery(document).ready(function(){
                     editg.click();
                 }
             }
-        }   
+        }
     })
     //Скрытие кнопки авторизации в окне авторизации
     if ((document.location.href.indexOf("login")!=-1)&&(document.location.href.indexOf("loginfailed")<0)){
         jQuery(".userntable").css({
             'display':'none'
         });
-       
+
     }
+    //Появление t-beaneditor
+    jQuery("div.t-beaneditor").css({
+        'display':'none'
+    });
+
+    jQuery("div.t-beaneditor").show("slow").slideDown("slow");
 })

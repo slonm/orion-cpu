@@ -41,7 +41,14 @@ public class CrudEditPageMixin<T, K extends Serializable> extends BaseEditPage<T
     public void checkUpdateTypeAccess() {
         super.checkUpdateTypeAccess();
     }
-
+    /**Переопределён метод базового класса (BaseEditPage), поскольку в некоторых
+     * случаях он не возращал null сразу, а входил в ветку isInitiated
+     * (т.е. isInitiated==true) после чего вызывал Runtime Exception в методе
+     * checkUpdateTypeAccess();
+     * @param context коллекция параметров, передаваемых по наступдению события
+     * в обработчик
+     * @return null
+     */
     @Override
     public Object onActivate(EventContext context) {
         return null;
