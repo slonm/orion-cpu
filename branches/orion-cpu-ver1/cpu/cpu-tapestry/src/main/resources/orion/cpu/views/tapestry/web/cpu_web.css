@@ -153,6 +153,7 @@ span.menutitle a{
     color: #ffff99;
 }
 
+/*--------------------------*/
 /* Ширина колонок в таблице */
 th.disciplineTotalHourVolume,th.ePPCycleTotalHours,
 th.eduWeekAmount,th.isObsolete, th.isMandatory,
@@ -177,15 +178,17 @@ th.knowledgeAreaOrTrainingDirection{
 th.shortName{
     max-width: 60px;
 }
+/*--------------------------*/
 
 /* t-beaneditor */
 div.t-beaneditor{
     background-color: #fffff5;
 }
-
+/* Изменяем шрифт и высоту линии в t-beaneditor */
 .t-beaneditor-row label{
     color: black;
+    line-height: 100%;
+    font-size: 13px;
 }
-
 
 

@@ -26,7 +26,7 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         <t:security.IfLoggedIn>
             <table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:label.user}:&nbsp;</td><td class="topusername">&nbsp;${user.name}&nbsp;</td><td class="td-user-logout"><t:ActionLink t:id="logout"><div class="user-logout" title="${message:link.logout}"></div></t:ActionLink></td></tr></table>
             <p:else>
-                <table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:message.not.login}&nbsp;</td><td class="td-user-login"><t:pagelink page="login"><div class="user-login" title="${message:link.login}"></div></t:pagelink></td></tr></table>
+                <t:pagelink page="login"><table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:message.not.login}&nbsp;</td><td class="td-user-login"><div class="user-login" title="${message:link.login}"></div></td></tr></table></t:pagelink>
             </p:else>
         </t:security.IfLoggedIn>
         <!-- end header -->
