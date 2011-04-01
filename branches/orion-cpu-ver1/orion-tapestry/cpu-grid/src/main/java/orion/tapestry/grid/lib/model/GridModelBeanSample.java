@@ -133,4 +133,6 @@ public class GridModelBeanSample extends GridModelAdapter<String>{
         }
         return Math.random()*1000 +"";
     }
+
+    
 }

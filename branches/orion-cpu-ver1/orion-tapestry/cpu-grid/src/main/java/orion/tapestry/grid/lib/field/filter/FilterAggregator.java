@@ -67,6 +67,8 @@ public class FilterAggregator {
 
         if(!isActive) return 0;
 
+        //System.out.println(node.toString());
+
         // узел имеет тип
         // если узел имеет детей, надо сначала применить правила детей
         // и заодно сосчитать количество модификаций, совершенных детьми.
@@ -81,11 +83,12 @@ public class FilterAggregator {
             }
         }
         // а потом применить собственные правила узла
-        // (в зависимости от модификаций, совершенныхдетьми)
+        // (в зависимости от модификаций, совершенных детьми)
         // параметры узла : тип узла, строка с данными пользователя, количество детей, активный или нет
         // например, узел "И" имеет детей и не принимает данные пользователя
         // для правильного вычисления, надо знать количество детей
         FilterElementAbstract fElement = this.filterElementList.get(node.getString("type"));
+        //System.out.println(node.getString("type"));
         if (fElement != null) {
 
             // данные пользователя из формы
@@ -96,7 +99,8 @@ public class FilterAggregator {
 
             // вызываем метод для модификации условия фильтрации
             if (fElement.modifyRestriction(restrictionEditor, value, isActive, nModifications)) {
-                nModifications++;
+                //nModifications++;
+                nModifications=1;
             }
         }
         return nModifications;

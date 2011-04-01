@@ -67,6 +67,7 @@ function thisRemoveClicked(event){
    var nodeId=this.id.replace(/delete$/,'');
    filterNode[nodeId].remove();
    serializeTree();
+   grid_changed();
 }
 
 // создание под-узла
@@ -95,6 +96,7 @@ function thisRemove(){
    }
    this.DOMElement.remove();
    if(filterNode[this.id]) delete(filterNode[this.id]);
+   grid_changed();
 }
 
 // функция сериализации детей
@@ -156,34 +158,7 @@ function NodeRoot(){
    // ссылка "добавить под-узел"
    this.createChildDOMElement=new Element('a',{id:this.id+'newchild', 'class':'filterNodeMenu','href':'#'}).update('New condition');
    this.createChildDOMElement.observe('click',thisNewChildClicked);
-//   this.createChildDOMElement.observe('click',
-//      function(event){
-//         // проверить существование узлов-детей
-//         var n=0; // количество детей
-//         var children=rootNode.children;
-//         for(var c1 in children){
-//            if(!filterNode[c1]) delete(children[c1]);
-//            else n++;
-//         }
-//
-//         // переспрашиваем, можно ли удалить старое условие и создать новое
-//         var confirmation;
-//         if(n>0) confirmation=confirm('Do you really want to delete existing condition and create new one?');
-//         else confirmation=true;
-//         if(!confirmation)  return;
-//
-//         // удаляем старое условие
-//         for(var c2 in children){
-//            children[c2].remove();
-//            delete(children[c2]);
-//         }
-//
-//         // создаём новое условие
-//         var nodeId=this.id.replace(/newchild$/,'');
-//         // предложить список типов в диалоге
-//         chooseNodeType(nodeId);
-//      }
-//   );
+
    this.nodeInfoDOMElement.insert(this.createChildDOMElement);
 
    // указатель на объект DOM, соответствующий всему узлу

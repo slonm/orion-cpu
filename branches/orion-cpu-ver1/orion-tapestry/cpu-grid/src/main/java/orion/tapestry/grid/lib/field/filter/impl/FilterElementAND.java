@@ -26,7 +26,8 @@ public class FilterElementAND extends FilterElementAbstract {
         if (!isActive) {
             return false;
         }
-        if(nChildren==0) return false;
+        //System.out.println("NodeAND "+  nChildren);
+        if(nChildren<2) return false;
         for (int i = 1; i < nChildren; i++) {
             restriction.and();
         }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.tapestry5.ioc.Messages;
+import org.json.JSONException;
+import org.json.JSONObject;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
 import orion.tapestry.grid.lib.paging.Pager;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
@@ -89,7 +91,6 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
      */
     @Override
     public abstract List<GridRow> getRows() throws RestrictionEditorException;
-
 
     // =========================================================================
     // Методы, указанные ниже, скорее всего, перекрывать не придётся никогда
@@ -237,7 +238,17 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
 
     @Override
     public void setFilter(String _filterJSON) {
+
         this.filterJSON = _filterJSON;
+        String customFilter=this.customFilterJSON();
+        if(customFilter!=null){
+            try {
+                JSONObject root = new JSONObject(customFilter);
+                this.filterJSON = "{\"type\": \"NodeAND\", \"isactive\": \"1\", \"children\": {\"filterNodeUser\":"+this.filterJSON+",\"filterNodeSys\":"+customFilter+"}}";
+            } catch (JSONException ex) {
+                Logger.getLogger(GridModelAdapter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -268,5 +279,11 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
     @Override
     public void setPager(Pager _pager) {
         this.pager = _pager;
+    }
+
+    @Override
+    public String customFilterJSON() {
+        // не делает ничего, но можно и поправить условие фильтрации
+        return null;
     }
 }

@@ -48,10 +48,18 @@ Event.observe(window, 'load',function(){
         grid_changed();
     });
 
-    // add menu items
+    // add context menu items
     // addMenuItem(menuId,menuItem)
     for(var cid in table.column){
-        addMenuItem('menu_'+cid,new MenuItem('javascript:menuItemHide(\''+cid+'\')','Hide',''));
+        // add "Hide column" item
+        table.addMenuItem('menu_'+cid,new table.MenuItem('javascript:menuItemHide(\''+cid+'\')','Hide',''));
+
+    }
+    // add "Filter by value" items
+    for(var irow=1; irow< table.table.length; irow++){
+        for(var icol=0;icol<table.table[0].length;icol++){
+            table.addMenuItem('menu_'+table.table[irow][icol],new table.MenuItem('javascript:menuItemFilterByValue(\''+table.table[0][icol]+'\',\''+table.table[irow][icol]+'\')','Filter by cell value',''));
+        }
     }
 
 
@@ -59,7 +67,7 @@ Event.observe(window, 'load',function(){
     sortform=new  sortForm('ordersort','sortJSON');
 });
 
-
+// действие "Скрыть колонку" в котекстном меню
 function menuItemHide(cid){
     table.hide_one_column(cid);
     var checked=table.getVisibleColumns();
@@ -68,6 +76,17 @@ function menuItemHide(cid){
     viewform.drawViewBlock(checked);
     $(viewform.textFieldId).value=viewform.viewSettings.toJSON();
     grid_changed();
+}
+
+
+// Действие "Фильтровать по значению" в контекстном меню
+function menuItemFilterByValue(col,cell){
+    var fieldUid=col.replace(/^col_/,'');
+    var newNodeId=filterNode['filterNode0'].createChild(filterNodeType[fieldUid+'EQ']);
+    var vl=$(cell).innerHTML.replace(/<[^>]+>/gi,'');
+    $(newNodeId+'parameter').value=vl;
+    grid_changed();
+    serializeTree();
 }
 
 // sorting properties form
@@ -568,6 +587,74 @@ function cpuGrid(gridId){
         return Object.toJSON(this.columnWidth);
     }
 
+
+    // context menu
+    this.contextMenu={};
+
+    this.addMenuItem=function (menuId,menuItem){
+        if(!this.contextMenu[menuId]) this.contextMenu[menuId]=[];
+        this.contextMenu[menuId].push(menuItem);
+    }
+
+    this.MenuItem = function (_href,_text,_attr){
+        this.href=_href;
+        this.text=_text;
+        this.attr=_attr;
+    }
+    this.MenuItem.prototype.getHtml=function(){
+        return "<a href=\""+this.href+"\" "+this.attr+">"+this.text+"</a>";
+    }
+
+    window.conextMenuFlag=0;
+    Event.observe(window,'mouseup',function(){
+        if(window.conextMenuFlag==0){
+            $$('div.grid-context-menu').each(function(el){
+                el.hide();
+            });
+        }else{
+            window.conextMenuFlag=0;
+        }
+    });
+
+    // add listeners to all table cells
+    for(irow=0;irow<this.table.length;irow++){
+        for(icol=0;icol<this.table[0].length;icol++){
+            $(this.table[irow][icol]).observe('contextmenu',function (event){
+                    if(Event.isLeftClick(event)) return;
+                    $$('div.grid-context-menu').each(function(el){ el.hide(); });
+                    var pos=$(this).cumulativeOffset();
+
+                    menuId='menu_'+$(this).identify();
+                    X=pos.left+10;
+                    Y=pos.top+10;
+                    if(!$(menuId)){
+                        var mnu=new Element('div',{
+                            'class':'grid-context-menu',
+                            'id':menuId
+                        });
+                        mnu.hide();
+                        // mnu.update('lllala'+menuId);
+                        Element.insert($('grid'),{after:mnu});
+                        var mg=currentTable.contextMenu[menuId];
+                        if(!mg) return;
+                        var str='';
+                        for(var i=0;i<mg.length;i++){
+                            str+=mg[i].getHtml();
+                        }
+                        //console.log(menuId+str);
+                        mnu.update(str);
+                    }
+                    var e=$(menuId);
+                    e.setStyle({'top':Y+'px','left':X+'px'});
+                    e.show();
+
+
+                    Event.stop(event);
+                    conextMenuFlag=1;
+                });
+        }
+    }
+
 }
 
 
@@ -577,77 +664,6 @@ function cpuGrid(gridId){
 
 
 // ======================== load table into array = end ========================
-
-// =============================================================================
-// context menu
-var contextMenu=[];// collection of the context menus
-var conextMenuFlag=0;
-
-function addMenuItem(menuId,menuItem){
-    if(!contextMenu[menuId]) contextMenu[menuId]=[];
-    contextMenu[menuId].push(menuItem);
-}
-
-function MenuItem(_href,_text,_attr){
-    this.href=_href;
-    this.text=_text;
-    this.attr=_attr;
-}
-MenuItem.prototype.getHtml=function(){
-    return "<a href=\""+this.href+"\" "+this.attr+">"+this.text+"</a>";
-}
-
-
-// add context menu to column headers
-Event.observe(window, 'load',function(){
-    $('grid').select('th').each(
-        function(lnk, ilnk){
-            $(lnk).observe('contextmenu',//      (Prototype.Browser.Opera ? 'click' : 'contextmenu'),
-                function(event){
-                    if(Event.isLeftClick(event)) return;
-                    var pos=$(this).cumulativeOffset();
-                    // console.log([pos.left,pos.top]);
-                    showContextMenu('menu_'+$(this).identify(),pos.left+10,pos.top+10);
-                    Event.stop(event);
-                    conextMenuFlag=1;
-                });
-        });
-    Event.observe(window,'mouseup',function(){
-        if(conextMenuFlag==0){
-            $$('div.grid-context-menu').each(function(el){
-                el.hide();
-            });
-        }else{
-            conextMenuFlag=0;
-        }
-    });
-});
-
-function showContextMenu(menuId,X,Y){
-    if(!$(menuId)){
-        var mnu=new Element('div',{
-            'class':'grid-context-menu',
-            'id':menuId
-        });
-        mnu.hide();
-        // mnu.update('lllala'+menuId);
-        Element.insert($('grid'),{after:mnu});
-        var mg=contextMenu[menuId];
-        var str='';
-        for(var i=0;i<mg.length;i++){
-            str+=mg[i].getHtml();
-        }
-        //console.log(menuId+str);
-        mnu.update(str);
-    }
-    var e=$(menuId);
-    e.setStyle({
-        'top':Y+'px',
-        'left':X+'px'
-    });
-    e.show();
-}
-// =============================================================================
 
 
 
