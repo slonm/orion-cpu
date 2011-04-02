@@ -119,7 +119,7 @@ public class CrudList {
             String entityClassName = context.get(String.class, 0);
 
             // get class by name
-            this.entityClass = Class.forName(entityClassName);
+            this.entityClass = this.entityClassForName(entityClassName);
             //
         } catch (Exception ex) {
             LOG.debug("Invalid activation context. Redirect to root page");
@@ -230,5 +230,16 @@ public class CrudList {
      */
     public String setCustomFilterJSON(){
        return null;
+    }
+
+
+    /**
+     * Создаёт класс по имени.
+     * Наличие метода позволяет организовать создание класса по сокращённому имени.
+     * @param entityClassName полное имя класса
+     * @return класс сущности
+     */
+    public Class entityClassForName(String entityClassName) throws ClassNotFoundException{
+        return Class.forName(entityClassName);
     }
 }
