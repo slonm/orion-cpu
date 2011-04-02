@@ -180,7 +180,13 @@ public class CrudList {
         GridModelInterface gridmodel = null;
         try {
             Session session = sm.getSession();
-            gridmodel = new GridModelHibernateBean(this.entityClass, typeMap.getConfiguration(), messages, session);
+            gridmodel = new GridModelHibernateBean(this.entityClass, typeMap.getConfiguration(), messages, session) {
+
+                @Override
+                public String customFilterJSON() {
+                    return setCustomFilterJSON();
+                }
+            };
             // add empty column
             gridmodel.addField(new GridFieldCalculable("rowActions"));
             // todo добавить дополнительные условия выборки, в зависимости от прав пользователя
@@ -209,5 +215,20 @@ public class CrudList {
         }
         return null;
     }
-    //CRUDEdit
+
+
+
+    /**
+     * Возвращает дополнительное условие фильтрации в формате JSON.
+     * Структура условия описана в комментариях к методу customFilterJSON()
+     * интерфейса {@link orion.tapestry.grid.lib.model.GridModelInterface}
+     * Чтобы добавить в {@link orion.tapestry.grid.components.Grid}
+     * дополнительные условия отбора строк, надо создать наследника
+     * класса {@link orion.cpu.views.tapestry.pages.crud.CrudList}
+     * перекрыть этот метод.
+     * @return дополнительные условия фильтрации в формате JSON
+     */
+    public String setCustomFilterJSON(){
+       return null;
+    }
 }
