@@ -76,18 +76,16 @@ public class GridModelBeanSample extends GridModelAdapter<String>{
      * и задаёт их начальные свойства
      * @param forClass класс сущности, его атрибуты будут колонками в таблице
      * @param configuration конфигурация, соответствие между типами данных Java и свойствами колонки
-     * @param messages список сообщений интерфейса
      * @throws IntrospectionException возникает, если интроспекция не удалась
      */
     public GridModelBeanSample(
             Class forClass,
-            Map<String, Class> configuration,
-            Messages messages) throws IntrospectionException {
+            Map<String, Class> configuration) throws IntrospectionException {
 
 
         // объявляем поля таблицы
         // поля надо объявлять обязательно, а то в таблице не будет колонок
-           this.fieldList = GridFieldFactory.getFields( forClass,configuration,messages);
+           this.fieldList = GridFieldFactory.getFields( forClass,configuration);
         // =========== объявляем поля таблицы - конец ==========================
 
         /*

@@ -24,6 +24,12 @@
         <dependency>
             <groupId>orion</groupId>
             <artifactId>cpu-tapestry</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>mysql</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>orion</groupId>
@@ -76,7 +82,7 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc3</version>
+            <version>8.3-603.jdbc4</version>
         </dependency>
         <!-- Provided by the servlet container, but sometimes referenced in the application
        code. -->

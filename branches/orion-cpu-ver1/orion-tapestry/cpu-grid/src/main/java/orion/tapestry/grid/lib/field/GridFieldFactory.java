@@ -39,8 +39,7 @@ public class GridFieldFactory {
      */
     public static List<GridFieldAbstract> getFields(
             Class forClass,
-            Map<String, Class> configuration,
-            Messages messages) throws IntrospectionException {
+            Map<String, Class> configuration) throws IntrospectionException {
 
         // этот список будем возвращать из метода
         ArrayList<GridFieldAbstract> fields = new ArrayList<GridFieldAbstract>();
@@ -85,13 +84,14 @@ public class GridFieldFactory {
                     fld.setAttributeName(uid);
 
                     // label - метка поля на текущем языке, заголовок колонки
-                    label_id=forClass.getName()+"."+uid + "-label";
-                    //label_id=uid + "-label";
-                    if(messages !=null){
-                        fld.setLabel(messages.get(label_id));
-                    }else{
+                    //    history: идентификатор метки согласован с остальной частью приложения
+                    label_id="reflect."+forClass.getName()+"."+uid;
+                    
+                    //if(messages !=null){
+                    //    fld.setLabel(messages.get(label_id));
+                    //}else{
                         fld.setLabel(label_id);
-                    }
+                    //}
 
                     // объект для хранения информации о видимости колонки
                     fld.setFieldView(new GridFieldView()._setUid(uid)._setLabel(fld.getLabel()));
@@ -132,9 +132,9 @@ public class GridFieldFactory {
     }
 
 
-    public static List<GridFieldAbstract> getFields(Class forClass, Map<String, Class> configuration) throws IntrospectionException {
-        return getFields(forClass, configuration, null);
-    }
+//    public static List<GridFieldAbstract> getFields(Class forClass, Map<String, Class> configuration) throws IntrospectionException {
+//        return getFields(forClass, configuration);
+//    }
 
     private static <T> void addAll(List<T> list, T[] array) {
         list.addAll(Arrays.asList(array));

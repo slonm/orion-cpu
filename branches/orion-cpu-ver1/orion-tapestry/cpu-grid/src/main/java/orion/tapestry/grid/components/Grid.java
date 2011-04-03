@@ -16,6 +16,7 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -133,8 +134,8 @@ import orion.tapestry.grid.lib.rows.GridRow;
  * @author Gennadiy Dobrovolsky
  */
 @IncludeStylesheet({"grid.css", "gridfilter.css", "dateselector.css"})
-@IncludeJavaScriptLibrary({"grid.js", "dateselector.js","gridfilter.js",
-                           "${tapestry.scriptaculous}/dragdrop.js"})
+@IncludeJavaScriptLibrary({"grid.js", "dateselector.js", "gridfilter.js",
+    "${tapestry.scriptaculous}/dragdrop.js"})
 //   "gridview.js",, "gridsort.js", "scriptaculous.js","effects.js""dragdrop.js",
 @SupportsInformalParameters
 public class Grid {
@@ -264,7 +265,13 @@ public class Grid {
      */
     @Inject
     private Block afterTable;
-    
+
+    /**
+     * Сообщения интерфейса
+     */
+    @Inject
+    private Messages messages;
+
     /**
      * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
      * Если параметр с именем <b>currentField.getUid() + "Header"</b> существует,
@@ -327,6 +334,13 @@ public class Grid {
      * Подготовка к созданию страницы
      */
     void setupRender() {
+
+        // ------------- set localized field labels - begin --------------------
+        for(GridFieldAbstract fld:gridModel.getFields()){
+            fld.setLabel(messages.get(fld.getLabel()));
+        }
+        // ------------- set localized field labels - end ----------------------
+
 
         // ------------- create filter list - begin ----------------------------
         // load list of possible filter elements

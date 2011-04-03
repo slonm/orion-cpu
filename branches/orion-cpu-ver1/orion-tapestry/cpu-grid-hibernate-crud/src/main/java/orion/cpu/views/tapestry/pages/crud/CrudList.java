@@ -51,7 +51,7 @@ public class CrudList {
     /**
      * Logger class
      */
-    private static final Logger LOG = LoggerFactory.getLogger(CrudList.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(CrudList.class);
     /**
      * Entity class used by grid model
      */
@@ -72,12 +72,11 @@ public class CrudList {
     @SuppressWarnings("unused") // <= меньше мусора при компиляции
     @Property                   // <= чтобы не писать примитивные методы get...() и set...()
     private GridRow currentRow;
-
     /**
      * page title
      */
-    @Property
     private String title;
+
     //    /**
 //     * Configuration parameter.
 //     * Root project package.
@@ -132,16 +131,10 @@ public class CrudList {
         // get identifier type name
         this.entityClassIdentifierName = this.entityClassMetadata.getIdentifierPropertyName();
 
-        // todo добавить проверку прав доступа к классу
-
-        // check permission
-        //getAuthorizer().checkSearch(getEntityClass());
-
-        // get page title
+        // load page title
         title = messages.get(this.entityClass.getName());// "reflect." +
 
-        // get menu path
-        // menuPath = request.getParameter("menupath");
+
         return null;
     }
 
@@ -172,15 +165,19 @@ public class CrudList {
         return this.currentRow.getValue(this.entityClassIdentifierName);
     }
 
-
     /**
      * @return Модель данных для grid
      */
     public GridModelInterface getGridModel() {
-        GridModelInterface gridmodel = null;
+        // create grid model
+
+        /**
+         * Grid model
+         */
+        GridModelInterface gridmodel=null;
         try {
             Session session = sm.getSession();
-            gridmodel = new GridModelHibernateBean(this.entityClass, typeMap.getConfiguration(), messages, session) {
+            gridmodel = new GridModelHibernateBean(this.entityClass, typeMap.getConfiguration(), session) {
 
                 @Override
                 public String customFilterJSON() {
@@ -189,7 +186,7 @@ public class CrudList {
             };
             // add empty column
             gridmodel.addField(new GridFieldCalculable("rowActions"));
-            // todo добавить дополнительные условия выборки, в зависимости от прав пользователя
+
         } catch (HibernateException ex) {
             LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
         } catch (IntrospectionException ex) {
@@ -200,23 +197,31 @@ public class CrudList {
 
     Object onActionFromCRUDDelete(Long rowId) {
         try {
-            Session session=sm.getSession();
+            Session session = sm.getSession();
             Criteria criteria = session.createCriteria(this.entityClass).add(Restrictions.eq(this.entityClassIdentifierName, rowId));
-                List result = criteria.list();
-                if (!result.isEmpty()) {
-                    Object entity = result.get(0);
-                    session.delete(entity);
-                    sm.commit();
-                }
+            List result = criteria.list();
+
+
+            if (!result.isEmpty()) {
+                Object entity = result.get(0);
+                session.delete(entity);
+                sm.commit();
+
+
+            }
         } catch (IllegalArgumentException ex) {
             LOG.debug(this.getClass().getName() + ":IllegalArgumentException:" + ex.getMessage());
+
+
         } catch (HibernateException ex) {
             LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
+
+
         }
         return null;
+
+
     }
-
-
 
     /**
      * Возвращает дополнительное условие фильтрации в формате JSON.
@@ -228,10 +233,11 @@ public class CrudList {
      * перекрыть этот метод.
      * @return дополнительные условия фильтрации в формате JSON
      */
-    public String setCustomFilterJSON(){
-       return null;
-    }
+    public String setCustomFilterJSON() {
+        return null;
 
+
+    }
 
     /**
      * Создаёт класс по имени.
@@ -239,7 +245,38 @@ public class CrudList {
      * @param entityClassName полное имя класса
      * @return класс сущности
      */
-    public Class entityClassForName(String entityClassName) throws ClassNotFoundException{
+    public Class entityClassForName(String entityClassName) throws ClassNotFoundException {
         return Class.forName(entityClassName);
+
+
+    }
+
+    public Class getEntityClass() {
+        return this.entityClass;
+
+
+    }
+
+    public String getEntityClassIdentifierName() {
+        return this.entityClassIdentifierName;
+
+
+    }
+
+    public ClassMetadata getEntityClassMetadata() {
+        return this.entityClassMetadata;
+
+
+    }
+
+    public void setTitle(String _title) {
+        this.title = _title;
+
+
+    }
+
+    public String getTitle() {
+        return this.title;
+
     }
 }

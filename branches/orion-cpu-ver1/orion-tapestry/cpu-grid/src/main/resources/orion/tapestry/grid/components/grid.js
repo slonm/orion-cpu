@@ -84,7 +84,7 @@ function menuItemFilterByValue(col,cell){
     var fieldUid=col.replace(/^col_/,'');
     var newNodeId=filterNode['filterNode0'].createChild(filterNodeType[fieldUid+'EQ']);
     var vl=$(cell).innerHTML.replace(/<[^>]+>/gi,'');
-    $(newNodeId+'parameter').value=vl;
+    $(newNodeId+'parameter').value=vl.trim();
     grid_changed();
     serializeTree();
 }
@@ -552,7 +552,7 @@ function cpuGrid(gridId){
         for(var i in currentTable.column[columnid]){
             col=$(currentTable.column[columnid][i]).select('div.grid-cell');
             if(col && col.first()){
-                col.first().setStyle({width:newwidth});
+                col.first().setStyle({width:newwidth+'px'});
             }
         }
         currentTable.columnWidth[columnid]=newwidth;

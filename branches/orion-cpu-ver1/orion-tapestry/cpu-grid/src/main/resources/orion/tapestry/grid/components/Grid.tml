@@ -11,10 +11,13 @@
     </div>
     <div class="gridproperties">
     <span class="gridproperties" id="grid_properties_editor" style="display:inline-block;">
+        <input type="text" t:type="TextField" t:id="filterJSON" style="height:1px;padding:0px;width:1px;"/>
+        <input type="text" t:type="TextField" t:id="viewJSON"   style="height:1px;padding:0px;width:1px;"/>
+        <input type="text" t:type="TextField" t:id="widthJSON"  style="height:1px;padding:0px;width:1px;"/>
+        <input type="text" t:type="TextField" t:id="sortJSON"   style="height:1px;padding:0px;width:1px;"/>
 
 
         <span class='grid-filter-container'>
-            <input type="text" t:type="TextField" t:id="filterJSON"/>
             <div class="grid-filter-header">${message:grid-filter}</div>
             <div id="filtergui"></div>
             <div id="filterNodeType" style='display:none;'></div>
@@ -24,8 +27,6 @@
         </span>
 
         <span class='grid-view-container'>
-            <input type="text" t:type="TextField" t:id="viewJSON"/>
-            <input type="text" t:type="TextField" t:id="widthJSON"/>
             <div class="grid-view-header">
                ${message:grid-view}<br/>
                 <span class="visibility-selector-container">${message:grid-view-show}</span>
@@ -34,7 +35,6 @@
         </span>
 
         <span class='grid-sort-container'>
-            <input type="text" t:type="TextField" t:id="sortJSON" style="width:100%;"/>
             <div class="grid-sort-header">
               ${message:grid-sort}<br/>
               <span class="sorttype-selector-container">${message:grid-sort-type}</span>
@@ -72,7 +72,7 @@ Page number <input type="text" t:type="TextField" t:id="pageNumber" style="width
         <th t:type="Loop" t:source="visibleFields" t:value="currentField" id="col_${currentField.uid}" valign="top">
             <t:delegate to="blockColumnHeader"/>
             <t:block id="standardColumnHeader">
-                <div class="grid-cell">${currentField.Label}</div>
+                <div class="grid-cell" style="margin-right:8px;">${currentField.Label}</div>
             </t:block>
         </th>
     </tr>

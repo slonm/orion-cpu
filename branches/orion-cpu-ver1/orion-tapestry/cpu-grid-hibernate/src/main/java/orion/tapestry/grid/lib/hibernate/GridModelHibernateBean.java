@@ -104,18 +104,16 @@ public class GridModelHibernateBean extends GridModelAdapter<Criteria> {
         // Временный массив
         Map<String, Object> data = new HashMap<String, Object>();
 
+        // список всех колонок
+        List<String> rowPropertyNames=this.сlassPropertyAdapter.getPropertyNames();
         // Заполняем список строк
 
-        // для каждого объекта, возвращенного из БД ...
-        for (Object i : foundRows) {
-
-            // для каждого поля
-            for (GridFieldAbstract key : this.getFields()) {
-
-                // если поле соответствует атрибуту ...
-                if (key.getAttributeName() != null) {
-                    data.put(key.getUid(), this.сlassPropertyAdapter.get(i, key.getUid()));
-                }
+        // для каждого объекта, возвращенного из БД достаём все поля
+        // скрытые поля тоже нужны
+        for (Object row : foundRows) {
+            for(String pn:rowPropertyNames){
+                    // System.out.println("row "+row+" ==================> "+pn+"=>"+this.сlassPropertyAdapter.get(row, pn));
+                    data.put(pn, this.сlassPropertyAdapter.get(row, pn));
             }
             rows.add(new GridRowMap(data));
         }
@@ -127,24 +125,21 @@ public class GridModelHibernateBean extends GridModelAdapter<Criteria> {
      * и задаёт их начальные свойства
      * @param _forClass класс-сущность для Hibernate
      * @param _configuration конфигурация, соответствие тип атрибута &lt;=&gt; тип колонки в таблице
-     * @param _messages сообщения для интерфейса
      * @param _session Hibernate session object
      * @throws IntrospectionException происходит, если классу GridFieldFactory не удалось понять структуру класса forClass
      */
     public GridModelHibernateBean(
             Class _forClass,
             Map<String, Class> _configuration,
-            Messages _messages,
             Session _session) throws IntrospectionException {
 
         this.forClass = _forClass;
         this.configuration = _configuration;
-        this.messages = _messages;
         this.session = _session;
 
         // =========== объявляем поля таблицы - начало =========================
         // поля надо объявлять обязательно, а то в таблице не будет колонок
-        this.fieldList = GridFieldFactory.getFields(forClass, configuration, messages);
+        this.fieldList = GridFieldFactory.getFields(forClass, configuration);
         // =========== объявляем поля таблицы - конец ==========================
 
         /*
