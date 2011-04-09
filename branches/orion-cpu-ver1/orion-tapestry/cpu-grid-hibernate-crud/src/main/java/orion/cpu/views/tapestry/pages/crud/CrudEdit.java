@@ -114,19 +114,27 @@ public class CrudEdit {
 
         if (context.getCount() > 1) {
             this.entityId = context.get(this.entityClassMetadata.getIdentifierType().getReturnedClass(), 1);
+            this.entity = this.getEntity(this.entityId);
         } else {
             this.entityId = null;
+            this.entity = null;
         }
-        // load or create entity
-        if (this.entity == null) {
-            // if entity does not exist load or create it
-            this.entity = this.getEntity(this.entityId);
-        }else{
-            if(!this.entityClassMetadata.getIdentifier(entity, (SessionImplementor) sm.getSession()).equals(this.entityId) ){
-                // reload if entityId is changed
-                this.entity = this.getEntity(this.entityId);
-            }
-        }
+
+//        if(this.entity !=null && !this.entity.getClass().getName().equals(this.entityClass.getName())){
+//            this.entity = null;
+//        }
+
+//        // load or create entity
+//        if (this.entity == null) {
+//            // if entity does not exist load or create it
+//            this.entity = this.getEntity(this.entityId);
+//        }
+        //else{
+        //            if(!this.entityClassMetadata.getIdentifier(entity, (SessionImplementor) sm.getSession()).equals(this.entityId) ){
+        //                // reload if entityId is changed
+        //                this.entity = this.getEntity(this.entityId);
+        //            }
+        //}
         //else{System.out.println("Entity exists");}
         // todo добавить проверку прав доступа к классу
 

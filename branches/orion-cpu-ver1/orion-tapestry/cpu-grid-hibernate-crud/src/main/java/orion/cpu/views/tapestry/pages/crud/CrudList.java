@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.metadata.ClassMetadata;
@@ -198,16 +199,16 @@ public class CrudList {
     Object onActionFromCRUDDelete(Long rowId) {
         try {
             Session session = sm.getSession();
-            Criteria criteria = session.createCriteria(this.entityClass).add(Restrictions.eq(this.entityClassIdentifierName, rowId));
-            List result = criteria.list();
+            Query query=session.createQuery("from "+this.entityClass.getSimpleName()+" where "+this.entityClassIdentifierName+"="+rowId);
+            List result = query.list();
+            //Criteria criteria = session.createCriteria(this.entityClass).add(Restrictions.eq(this.entityClassIdentifierName, rowId));
+            //List result = criteria.list();
 
 
             if (!result.isEmpty()) {
                 Object entity = result.get(0);
                 session.delete(entity);
                 sm.commit();
-
-
             }
         } catch (IllegalArgumentException ex) {
             LOG.debug(this.getClass().getName() + ":IllegalArgumentException:" + ex.getMessage());
