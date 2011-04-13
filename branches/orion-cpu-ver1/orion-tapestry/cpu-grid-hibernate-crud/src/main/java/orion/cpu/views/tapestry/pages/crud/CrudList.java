@@ -78,34 +78,6 @@ public class CrudList {
      */
     private String title;
 
-    //    /**
-//     * Configuration parameter.
-//     * Root project package.
-//     */
-//    @Inject
-//    @Symbol("orion.root-package")
-//    private String rootPackage;
-//    /**
-//     * Configuration parameter.
-//     * Package where entities classes are located.
-//     */
-//    @Inject
-//    @Symbol("orion.entities-package")
-//    private String entitiesPackage;
-//    /**
-//     * Main navigation menu path
-//     */
-//    @Property
-//    private Object menuPath;
-//    /**
-//     * HTTP Request
-//     */
-//    @Inject
-//    private Request request;
-//    /**
-//     * Type of the entity primary key
-//     */
-//    private Class entityPrimaryKeyClass;
     /**
      * При открытии страницы извлекаем из параметров класс сущности
      * @param context
@@ -120,9 +92,9 @@ public class CrudList {
 
             // get class by name
             this.entityClass = this.entityClassForName(entityClassName);
-            //
+
         } catch (Exception ex) {
-            LOG.debug("Invalid activation context. Redirect to root page");
+            LOG.error("Invalid activation context. Redirect to root page. Error message is:"+ex.getMessage());
             return "";
         }
 
@@ -212,12 +184,10 @@ public class CrudList {
             }
         } catch (IllegalArgumentException ex) {
             LOG.debug(this.getClass().getName() + ":IllegalArgumentException:" + ex.getMessage());
-
-
         } catch (HibernateException ex) {
             LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
-
-
+        } catch(Exception ex){
+            LOG.debug(this.getClass().getName() + ":Exception:" + ex.getMessage());
         }
         return null;
 
