@@ -93,19 +93,20 @@ public class CrudList {
             // get class by name
             this.entityClass = this.entityClassForName(entityClassName);
 
+            // get hibernate metadata for a given entity
+            this.entityClassMetadata = sm.getSession().getSessionFactory().getClassMetadata(this.entityClass);
+
+            // get identifier type name
+            this.entityClassIdentifierName = this.entityClassMetadata.getIdentifierPropertyName();
+
+            // load page title
+            title = messages.get(this.entityClass.getName());// "reflect." +
+
         } catch (Exception ex) {
-            LOG.error("Invalid activation context. Redirect to root page. Error message is:"+ex.getMessage());
+            LOG.error("Invalid activation context. Redirect to root page. Error message is:" + ex.getMessage());
             return "";
         }
 
-        // get hibernate metadata for a given entity
-        this.entityClassMetadata = sm.getSession().getSessionFactory().getClassMetadata(this.entityClass);
-
-        // get identifier type name
-        this.entityClassIdentifierName = this.entityClassMetadata.getIdentifierPropertyName();
-
-        // load page title
-        title = messages.get(this.entityClass.getName());// "reflect." +
 
 
         return null;
@@ -147,7 +148,7 @@ public class CrudList {
         /**
          * Grid model
          */
-        GridModelInterface gridmodel=null;
+        GridModelInterface gridmodel = null;
         try {
             Session session = sm.getSession();
             gridmodel = new GridModelHibernateBean(this.entityClass, typeMap.getConfiguration(), session) {
@@ -171,7 +172,7 @@ public class CrudList {
     Object onActionFromCRUDDelete(Long rowId) {
         try {
             Session session = sm.getSession();
-            Query query=session.createQuery("from "+this.entityClass.getSimpleName()+" where "+this.entityClassIdentifierName+"="+rowId);
+            Query query = session.createQuery("from " + this.entityClass.getSimpleName() + " where " + this.entityClassIdentifierName + "=" + rowId);
             List result = query.list();
             //Criteria criteria = session.createCriteria(this.entityClass).add(Restrictions.eq(this.entityClassIdentifierName, rowId));
             //List result = criteria.list();
@@ -186,7 +187,7 @@ public class CrudList {
             LOG.debug(this.getClass().getName() + ":IllegalArgumentException:" + ex.getMessage());
         } catch (HibernateException ex) {
             LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
-        } catch(Exception ex){
+        } catch (Exception ex) {
             LOG.debug(this.getClass().getName() + ":Exception:" + ex.getMessage());
         }
         return null;
