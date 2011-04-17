@@ -41,13 +41,17 @@ span.downarrow{
 }
 
 .grid-human-readable-filter{
-    background-color:#ffff66;
+    padding: 2pt;
     color:black;
-    padding:10px;
+    border:2px solid #99CCFF;
+  /*padding:10px;
+    background-color:#ffff66;*/
 }
 
 
-
+#gridpropertiesform{
+    margin-bottom: 0pt;
+}
 
 
 
@@ -294,3 +298,8 @@ a.grid-page-link:hover{
     top:20px;
 }
 
+.block-saved-properties-container{
+    float:right;
+    display:inline-block;
+    margin-left:10px;
+}

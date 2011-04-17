@@ -65,6 +65,8 @@ Event.observe(window, 'load',function(){
 
     // create form to change sort settings
     sortform=new  sortForm('ordersort','sortJSON');
+
+
 });
 
 // действие "Скрыть колонку" в котекстном меню

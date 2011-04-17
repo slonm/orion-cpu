@@ -11,13 +11,17 @@ import org.apache.tapestry5.PropertyOverrides;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
 import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.TextField;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,7 @@ import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.sort.GridFieldSortType;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.rows.GridRow;
+import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 
 /**
  * Основной класс компоненты
@@ -136,7 +141,6 @@ import orion.tapestry.grid.lib.rows.GridRow;
 @IncludeStylesheet({"grid.css", "gridfilter.css", "dateselector.css"})
 @IncludeJavaScriptLibrary({"grid.js", "dateselector.js", "gridfilter.js",
     "${tapestry.scriptaculous}/dragdrop.js"})
-//   "gridview.js",, "gridsort.js", "scriptaculous.js","effects.js""dragdrop.js",
 @SupportsInformalParameters
 public class Grid {
 
@@ -265,12 +269,19 @@ public class Grid {
      */
     @Inject
     private Block afterTable;
-
     /**
      * Сообщения интерфейса
      */
     @Inject
     private Messages messages;
+
+    /**
+     * обьект для доступа к сохранённым наборам настроек
+     */
+    @Parameter
+    @Property
+    private IGridSettingStore gridSettingStore;
+
 
     /**
      * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
@@ -336,7 +347,7 @@ public class Grid {
     void setupRender() {
 
         // ------------- set localized field labels - begin --------------------
-        for(GridFieldAbstract fld:gridModel.getFields()){
+        for (GridFieldAbstract fld : gridModel.getFields()) {
             fld.setLabel(messages.get(fld.getLabel()));
         }
         // ------------- set localized field labels - end ----------------------
