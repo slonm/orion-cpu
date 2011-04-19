@@ -97,7 +97,8 @@ public class GridSettingStore {
         if (this.selectedGridPropertiesId == null) {
             return "null";
         } else {
-            return selectedGridPropertiesId.toString();//gridSettingStore.getSavedSetting(selectedGridPropertiesId);
+            //return selectedGridPropertiesId.toString();//gridSettingStore.getSavedSetting(selectedGridPropertiesId);
+            return gridSettingStore.getSavedSetting(selectedGridPropertiesId);
         }
     }
     // ========= загрузка/удаление сохранённых настроек = конец ================

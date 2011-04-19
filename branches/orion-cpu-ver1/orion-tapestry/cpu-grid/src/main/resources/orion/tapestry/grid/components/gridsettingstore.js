@@ -8,7 +8,15 @@ function draw_load_setting(data){
      $('block-saved-properties').insert(selector);
 }
 function load_setting(data){
-   //alert("Loading " + data);
+    if(data){
+       //alert("Loading " + data);
+       //console.log(data);
+       //console.log(data.sortJSON);
+       for(var i in data){
+           $(i).value=data[i];
+       }
+       $('gridpropertiesform').submit();
+    }
 }
 
 function update_settings(){
