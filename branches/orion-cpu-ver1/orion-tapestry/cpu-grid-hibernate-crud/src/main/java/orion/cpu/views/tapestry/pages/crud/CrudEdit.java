@@ -72,7 +72,6 @@ public class CrudEdit {
      */
     @Persist
     private String feedbackMessage;
-
     /**
      * This page title
      */
@@ -102,6 +101,9 @@ public class CrudEdit {
      */
     @SuppressWarnings("unchecked")
     public Object onActivate(EventContext context) {
+        if(this.isBlocked()){
+            return "";
+        }
         try {
             // at east one parameter is required
             assert context.getCount() >= 1;
@@ -177,8 +179,8 @@ public class CrudEdit {
     }
 
     public String getFeedbackMessage() {
-        String msg=(this.feedbackMessage == null) ? "" : this.feedbackMessage;
-        this.feedbackMessage="";
+        String msg = (this.feedbackMessage == null) ? "" : this.feedbackMessage;
+        this.feedbackMessage = "";
         return msg;
     }
 
@@ -203,7 +205,6 @@ public class CrudEdit {
         // get entity identifier name
         this.entityClassIdentifierName = this.entityClassMetadata.getIdentifierPropertyName();
     }
-
 
     /**
      * Load or create entity
@@ -236,5 +237,9 @@ public class CrudEdit {
             LOG.debug(CrudEdit.class.getName() + " access error while creating " + this.entityClass.getName() + " : " + ex.getMessage());
         }
         return null;
+    }
+
+    public boolean isBlocked() {
+        return false;
     }
 }

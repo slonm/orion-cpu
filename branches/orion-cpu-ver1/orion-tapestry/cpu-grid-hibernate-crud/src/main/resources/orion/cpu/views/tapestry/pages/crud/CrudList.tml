@@ -20,16 +20,6 @@ ${message:crud-action}
 <t:pagelink class="grid-page-link grid-page-link-edit" t:id="CRUDEdit" target="_blank" page="crud/CrudEdit" context="currentRowContext">${message:crud-edit}</t:pagelink>
 </t:parameter>
 
-<!--
-
-<t:parameter name="id3Header">
-${currentField.UID} -+
-</t:parameter>
-
-<t:parameter name="id3Cell">
-<div style="color:yellow;background-color:black;">${currentField.getStringValue(currentRow)}</div>
-</t:parameter>
- -->
 </t:grid.Grid>
 </body>
 </html>
