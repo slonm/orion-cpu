@@ -9,13 +9,11 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.HibernateSessionManager;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.metadata.ClassMetadata;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
 import orion.tapestry.grid.lib.field.impl.GridFieldCalculable;
@@ -85,6 +83,9 @@ public class CrudList {
      */
     @SuppressWarnings("unchecked")
     public Object onActivate(EventContext context) {
+        if(this.isBlocked()){
+            return "";
+        }
         try {
             // at east one parameter is required
             assert context.getCount() > 0;
@@ -250,5 +251,13 @@ public class CrudList {
     public String getTitle() {
         return this.title;
 
+    }
+
+
+    /**
+     * if the current page is blocked
+     */
+    public boolean isBlocked(){
+        return true;
     }
 }
