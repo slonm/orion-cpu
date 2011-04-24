@@ -90,9 +90,10 @@ public class CrudList {
             // at east one parameter is required
             assert context.getCount() > 0;
             String entityClassName = context.get(String.class, 0);
-
+            // LOG.error("onActivate : entityClassName="+entityClassName);
             // get class by name
             this.entityClass = this.entityClassForName(entityClassName);
+            // LOG.error("onActivate : entityClass="+entityClass.getName());
 
             // get hibernate metadata for a given entity
             this.entityClassMetadata = sm.getSession().getSessionFactory().getClassMetadata(this.entityClass);
@@ -163,9 +164,9 @@ public class CrudList {
             gridmodel.addField(new GridFieldCalculable("rowActions"));
 
         } catch (HibernateException ex) {
-            LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
+            LOG.error(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
         } catch (IntrospectionException ex) {
-            LOG.debug(this.getClass().getName() + ":IntrospectionException:" + ex.getMessage());
+            LOG.error(this.getClass().getName() + ":IntrospectionException:" + ex.getMessage());
         }
         return gridmodel;
     }
@@ -219,15 +220,12 @@ public class CrudList {
      * @return класс сущности
      */
     public Class entityClassForName(String entityClassName) throws ClassNotFoundException {
+        //System.out.println("+++++++++++++ getting class for entity "+entityClassName);
         return Class.forName(entityClassName);
-
-
     }
 
     public Class getEntityClass() {
         return this.entityClass;
-
-
     }
 
     public String getEntityClassIdentifierName() {

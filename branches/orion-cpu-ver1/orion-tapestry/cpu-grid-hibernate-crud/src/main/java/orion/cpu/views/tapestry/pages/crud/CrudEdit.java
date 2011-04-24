@@ -44,7 +44,7 @@ public class CrudEdit {
     /**
      * Logger class
      */
-    private static final Logger LOG = LoggerFactory.getLogger(CrudList.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(CrudList.class);
     /**
      * Соединение с БД
      */
@@ -75,7 +75,6 @@ public class CrudEdit {
     /**
      * This page title
      */
-    @Property
     private String title;
 
     /**
@@ -101,7 +100,7 @@ public class CrudEdit {
      */
     @SuppressWarnings("unchecked")
     public Object onActivate(EventContext context) {
-        if(this.isBlocked()){
+        if (this.isBlocked()) {
             return "";
         }
         try {
@@ -122,15 +121,15 @@ public class CrudEdit {
             this.entity = null;
         }
 
-//        if(this.entity !=null && !this.entity.getClass().getName().equals(this.entityClass.getName())){
-//            this.entity = null;
-//        }
+        //        if(this.entity !=null && !this.entity.getClass().getName().equals(this.entityClass.getName())){
+        //            this.entity = null;
+        //        }
 
-//        // load or create entity
-//        if (this.entity == null) {
-//            // if entity does not exist load or create it
-//            this.entity = this.getEntity(this.entityId);
-//        }
+        //        // load or create entity
+        //        if (this.entity == null) {
+        //            // if entity does not exist load or create it
+        //            this.entity = this.getEntity(this.entityId);
+        //        }
         //else{
         //            if(!this.entityClassMetadata.getIdentifier(entity, (SessionImplementor) sm.getSession()).equals(this.entityId) ){
         //                // reload if entityId is changed
@@ -197,7 +196,7 @@ public class CrudEdit {
      */
     public void setEntityClass(String entityClassName) throws ClassNotFoundException {
         // get class by name
-        this.entityClass = Class.forName(entityClassName);
+        this.entityClass = entityClassForName(entityClassName);//Class.forName(entityClassName);
 
         // get hibernate metadata for a given entity
         this.entityClassMetadata = sm.getSession().getSessionFactory().getClassMetadata(this.entityClass);
@@ -239,7 +238,31 @@ public class CrudEdit {
         return null;
     }
 
+    /**
+     * Возвращает true, если эту страницу нельзя просматривать
+     */
     public boolean isBlocked() {
-        return false;
+        return true;
+    }
+
+    /**
+     * Создаёт класс по имени.
+     * Наличие метода позволяет организовать создание класса по сокращённому имени.
+     * @param entityClassName полное имя класса
+     * @return класс сущности
+     */
+    public Class entityClassForName(String entityClassName) throws ClassNotFoundException {
+        return Class.forName(entityClassName);
+    }
+
+    public Class getEntityClass() {
+        return this.entityClass;
+    }
+
+    public void setTitle(String _title) {
+        this.title = _title;
+    }
+    public String getTitle() {
+        return this.title;
     }
 }
