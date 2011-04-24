@@ -73,6 +73,8 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
      */
     @Override
     public Class entityClassForName(String entityClassName) throws ClassNotFoundException {
+        //LOG.error("entityClassForName: "+String.format("%s.%s", this.rootPackage, this.entitiesPackage));
+        //System.out.println("================================== entityClassForName: "+String.format("%s.%s", this.rootPackage, this.entitiesPackage));
         if (entityClassName.startsWith(String.format("%s.%s", this.rootPackage, this.entitiesPackage))) {
             return Class.forName(entityClassName);
         } else {
@@ -156,7 +158,7 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
                         Logger.getLogger(CrudList.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                System.out.println("getSavedSettingListJSON:" + arrJSON.toString());
+                //System.out.println("getSavedSettingListJSON:" + arrJSON.toString());
                 return arrJSON.toString();
             }
             return "[]";
@@ -182,5 +184,10 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
      */
     public IGridSettingStore getGridSettingStore() {
         return this.gridSettingStore;
+    }
+
+    @Override
+    public boolean isBlocked() {
+        return false;
     }
 }

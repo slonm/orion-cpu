@@ -18,6 +18,7 @@ public class GridSetting {
      * Saved setting set identifier
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Long getId() {
