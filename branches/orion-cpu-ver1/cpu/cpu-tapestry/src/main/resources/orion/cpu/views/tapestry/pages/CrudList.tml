@@ -4,14 +4,14 @@
           title="prop:title"
           menudata="menudata"
           t:sidebarTitle="Links">
-
-
+<div>${feedback}</div>
 <t:grid.Grid gridModel="gridModel" currentField="currentField" currentRow="currentRow"  gridSettingStore="gridSettingStore">
     <t:parameter name="rowActionsHeader">
         ${message:crud-action}
     </t:parameter>
 
     <t:parameter name="beforeTable">
+        
         <t:pagelink class="grid-page-link grid-page-link-edit" target="_blank" page="CrudEdit" context="entityClassName">${message:crud-create}</t:pagelink>
     </t:parameter>
 

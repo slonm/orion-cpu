@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package orion.cpu.views.tapestry.pages;
 
 import br.com.arsmachina.authorization.Authorizer;
@@ -74,7 +70,6 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
     @Override
     public Class entityClassForName(String entityClassName) throws ClassNotFoundException {
         //LOG.error("entityClassForName: "+String.format("%s.%s", this.rootPackage, this.entitiesPackage));
-        //System.out.println("================================== entityClassForName: "+String.format("%s.%s", this.rootPackage, this.entitiesPackage));
         if (entityClassName.startsWith(String.format("%s.%s", this.rootPackage, this.entitiesPackage))) {
             return Class.forName(entityClassName);
         } else {
