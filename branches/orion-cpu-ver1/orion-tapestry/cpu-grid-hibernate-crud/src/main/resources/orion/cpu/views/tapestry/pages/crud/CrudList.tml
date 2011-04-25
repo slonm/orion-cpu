@@ -12,6 +12,7 @@ ${message:crud-action}
 </t:parameter>
 
 <t:parameter name="beforeTable">
+${feedback}
 <t:pagelink class="grid-page-link grid-page-link-edit" target="_blank" page="crud/CrudEdit" context="entityClassName">${message:crud-create}</t:pagelink>
 </t:parameter>
 

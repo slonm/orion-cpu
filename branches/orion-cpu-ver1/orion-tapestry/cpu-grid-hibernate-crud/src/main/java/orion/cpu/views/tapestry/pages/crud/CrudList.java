@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
 import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.HibernateSessionManager;
 import org.apache.tapestry5.ioc.Messages;
@@ -55,7 +56,13 @@ public class CrudList {
      * Entity class used by grid model
      */
     private Class entityClass;
+    /**
+     * Entity class metadata
+     */
     private ClassMetadata entityClassMetadata;
+    /**
+     * name of the identifier attribute
+     */
     private String entityClassIdentifierName;
     /**
      * Временная переменная для цикла по колонкам
@@ -75,6 +82,11 @@ public class CrudList {
      * page title
      */
     private String title;
+    /**
+     * Feedback messages
+     */
+    @Persist
+    private String feedback;
 
     /**
      * При открытии страницы извлекаем из параметров класс сущности
@@ -83,7 +95,7 @@ public class CrudList {
      */
     @SuppressWarnings("unchecked")
     public Object onActivate(EventContext context) {
-        if(this.isBlocked()){
+        if (this.isBlocked()) {
             return "";
         }
         try {
@@ -178,23 +190,23 @@ public class CrudList {
             List result = query.list();
             //Criteria criteria = session.createCriteria(this.entityClass).add(Restrictions.eq(this.entityClassIdentifierName, rowId));
             //List result = criteria.list();
-
-
             if (!result.isEmpty()) {
                 Object entity = result.get(0);
                 session.delete(entity);
                 sm.commit();
+                this.setFeedback(this.messages.get("crud-record-deleted-successfully"));
             }
         } catch (IllegalArgumentException ex) {
+            this.setFeedback(this.messages.get("crud-record-deleting-error") + ":" + ex.getMessage());
             LOG.debug(this.getClass().getName() + ":IllegalArgumentException:" + ex.getMessage());
         } catch (HibernateException ex) {
+            this.setFeedback(this.messages.get("crud-record-deleting-error") + ":" + ex.getMessage());
             LOG.debug(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
         } catch (Exception ex) {
+            this.setFeedback(this.messages.get("crud-record-deleting-error") + ":" + ex.getMessage());
             LOG.debug(this.getClass().getName() + ":Exception:" + ex.getMessage());
         }
         return null;
-
-
     }
 
     /**
@@ -209,8 +221,6 @@ public class CrudList {
      */
     public String setCustomFilterJSON() {
         return null;
-
-
     }
 
     /**
@@ -224,38 +234,61 @@ public class CrudList {
         return Class.forName(entityClassName);
     }
 
+    /**
+     * Возвращает класс сущности
+     */
     public Class getEntityClass() {
         return this.entityClass;
     }
 
+    /**
+     * Возвращает название идентификатора сущности
+     */
     public String getEntityClassIdentifierName() {
         return this.entityClassIdentifierName;
-
-
     }
 
+    /**
+     * Возвращает метаданные сущности
+     */
     public ClassMetadata getEntityClassMetadata() {
         return this.entityClassMetadata;
-
-
     }
 
+    /**
+     * Устанавливает название страницы
+     */
     public void setTitle(String _title) {
         this.title = _title;
-
-
     }
 
+    /**
+     * Возвращает название страницы
+     */
     public String getTitle() {
         return this.title;
-
     }
 
+    /**
+     * Устанавливает сообщение для пользователя
+     */
+    public void setFeedback(String _feedback) {
+        this.feedback = _feedback;
+    }
+
+    /**
+     * Возвращает сообщение для пользователя
+     */
+    public String getFeedback() {
+        String tmp=(this.feedback != null ? this.feedback : "");
+        this.feedback=null;
+        return tmp;
+    }
 
     /**
      * if the current page is blocked
      */
-    public boolean isBlocked(){
+    public boolean isBlocked() {
         return true;
     }
 }
