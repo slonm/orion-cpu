@@ -178,18 +178,18 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
 
             //--Создание контроллера, работающего с экземплярами записей лицензии 
             Controller<LicenseRecord, Integer> lrCnt = iDBSpt.getControllerSource().get(LicenseRecord.class);
-            //Для "Программная инженерия" бакалавр Ден.
+            //Для "Программная инженерия" бакалавр
             LicenseRecord lrSamplePI = new LicenseRecord();
             lrSamplePI.setEducationalQualificationLevel(bach);
             lrSamplePI.setTrainingDirectionOrSpeciality(tdosPI_B);
-            lrSamplePI.setEducationForm(efStat);
+//            lrSamplePI.setEducationForm(efStat);
             List<LicenseRecord> pIBachList = (List<LicenseRecord>)lrCnt.findByExample(lrSamplePI);
             LicenseRecord pIBach=pIBachList.get(0);
-            //Для "Прикладна математика" бакалавр Ден.
+            //Для "Прикладна математика" бакалавр
             LicenseRecord lrSampleSA = new LicenseRecord();
             lrSampleSA.setEducationalQualificationLevel(bach);
             lrSampleSA.setTrainingDirectionOrSpeciality(tdosSA_B);
-            lrSampleSA.setEducationForm(efStat);
+//            lrSampleSA.setEducationForm(efStat);
             List<LicenseRecord> sABachList = (List<LicenseRecord>)lrCnt.findByExample(lrSampleSA);
             LicenseRecord sABach=sABachList.get(0);
 
