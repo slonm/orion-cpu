@@ -62,9 +62,9 @@ public class LicensePropertyBlocks {
     @Property
     private EducationForm eduForm;
 
-     @Component(parameters = {"source=licenseQuantityByEducationForm",
-     "value=eduForm"})
-     private AjaxFormLoop eduFormLicenseQuantityAfl;
+//     @Component(parameters = {"source=licenseQuantityByEducationForm",
+//     "value=eduForm"})
+//     private AjaxFormLoop eduFormLicenseQuantityAfl;
 
     public FieldValidator<?> getKnowledgeAreaOrTrainingDirectionValidator() {
         return editContext.getValidator(knowledgeAreaOrTrainingDirection);

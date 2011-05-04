@@ -44,7 +44,7 @@
     <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
     используемый в бинэдиторе для редактирования списка лицензированного объёма
     по формам обучения-->
-    <t:block id="EditEduFormLicenseQuantity">
+<!--    <t:block id="EditEduFormLicenseQuantity">
         <div t:type="ajaxformloop" t:id="eduFormLicenseQuantityAfl">
           <t:select t:id="eduForm" value="eduForm.name"/>
           <t:textfield t:id="eduFormLicenseQuantities" value="eduFormLicenseQuantities"/>
@@ -56,5 +56,5 @@
 
         <t:ajaxformloop t:id="eduFormLicenseQuantityAfl"/>
         
-    </t:block>
+    </t:block> -->
 </div>
