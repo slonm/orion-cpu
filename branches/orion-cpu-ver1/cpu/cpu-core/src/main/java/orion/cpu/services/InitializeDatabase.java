@@ -70,9 +70,9 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
             Role role = initDBSupport.saveOrUpdateRole("Developer",
                     "Розробник", subSystem, pg);
             //---------Пользователи----------
-            User user = saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
-            saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net", "ru");
-            saveOrUpdateUser("guest", "123456", "Гость информационной системы КПУ", "guest@cpu.edu", null);
+            User user = saveOrUpdateUser("sl", "123456", "Адміністратор ІС КПУ", "admin@cpu.edu", "uk");
+            saveOrUpdateUser("TII", "123456", "Оператор підсистем ІС КПУ", "operator@cpu.edu", "ru");
+            saveOrUpdateUser("guest", "123456", "Гість ІС КПУ", "guest@cpu.edu", null);
             user.add(role);
             initDBSupport.getUserController().saveOrUpdate(user);
         }
