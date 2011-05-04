@@ -23,6 +23,13 @@ table.t-data-grid thead tr th a{
     text-decoration: none; /* Убираем подчеркивание */
 }
 
+/* Форматируем текст заголовков для PropertyBlocks в Grid так же, как и для обычных заголовков*/
+table.t-data-grid th.licenseQuantityByEducationForm{
+    font-size: 10pt;
+    color: #15428b;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
 /* Выделяем ячейку с классом name, disciplineNumber в Grid */
 table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
     background-color: #d8e3f9
@@ -58,7 +65,8 @@ table.t-data-grid tbody tr:hover td{
 .t-data-grid .introducingDate,               .t-data-grid .disciplineTotalHourVolume,
 .t-data-grid .isMandatory,                   .t-data-grid .eduPlanDisciplineCycleNumber,
 .t-data-grid .eduplan,                       .t-data-grid .isRegulatory,
-.t-data-grid .ePPCycleTotalHours,            .t-data-grid .eduWeekAmount
+.t-data-grid .ePPCycleTotalHours,            .t-data-grid .eduWeekAmount,
+.t-data-grid .licenseQuantityByEducationForm, .t-data-grid .knowledgeAreaOrTrainingDirectionCode
 {
     min-width: 45px;
     text-align: center;
@@ -191,4 +199,15 @@ div.t-beaneditor{
     font-size: 13px;
 }
 
+textarea#body{
+    width: 600px;
+    height: 120px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-color: #DFDFDF;
+}
+textarea#body:focus{
+    background-color: inherit;
+}
 
