@@ -1,7 +1,6 @@
 package orion.cpu.services;
 
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

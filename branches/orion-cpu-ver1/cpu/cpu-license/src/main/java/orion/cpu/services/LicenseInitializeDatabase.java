@@ -117,21 +117,19 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
         Map<String, Permission> LPermissions = iDBSpt.getPermissionsMap(License.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> LRPermissions = iDBSpt.getPermissionsMap(LicenseRecord.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
-        Map<String, Permission> LRVPermissions = iDBSpt.getPermissionsMap(LicenseRecordView.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+//        Map<String, Permission> LRVPermissions = iDBSpt.getPermissionsMap(LicenseRecordView.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         if (iDBSpt.isFillTestData()) {
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
             LOG.debug("Add Test PermissionGroups...");
             PermissionGroup pgReadLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр лицензий",
                     LPermissions.get(READ_OP), LPermissions.get(MENU_OP),
-                    LRPermissions.get(READ_OP),
-                    LRVPermissions.get(READ_OP), LRVPermissions.get(MENU_OP));
+                    LRPermissions.get(READ_OP), LRPermissions.get(MENU_OP));
 
             //Права изменения, добавления, удаления с сохранением записей о лицензиях
             PermissionGroup pgManageLicenseRecords = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление лицензиями",
                     LPermissions.get(UPDATE_OP), LPermissions.get(STORE_OP), LPermissions.get(REMOVE_OP),
-                    LRPermissions.get(UPDATE_OP), LRPermissions.get(STORE_OP), LRPermissions.get(REMOVE_OP),
-                    LRVPermissions.get(UPDATE_OP), LRVPermissions.get(STORE_OP), LRVPermissions.get(REMOVE_OP));
+                    LRPermissions.get(UPDATE_OP), LRPermissions.get(STORE_OP), LRPermissions.get(REMOVE_OP));
 
             //Права просмотра справочников для подсистемы лицензий
             PermissionGroup pgReadLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Просмотр справочников",
@@ -487,321 +485,227 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Подготовка бакалавров, специалистов, магистров
             //Специфічні категорії
             //Педагогіка вищої школи - магістри
-            saveOrUpdateLR(licenseCPU, tdosPVSH_M, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPVSH_M, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPVSH_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
             //Адміністративний менеджмент - магістри
-            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafAM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafAM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafAM, bsmtrain_LRG);
             //Управління навчальним закладом - магістри
-            saveOrUpdateLR(licenseCPU, tdosUNZ_M, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosUNZ_M, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosUNZ_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
             //Прикладна економіка - магістри
-            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, cal_2012_07_01.getTime(), kafPEBA, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, corr_EF, 30, cal_2012_07_01.getTime(), kafPEBA, bsmtrain_LRG);
-            //Бізнес-адміністрування - магістри 
-            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPEBA, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPEBA, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2012_07_01.getTime(), kafPEBA, bsmtrain_LRG);
+            //Бізнес-адміністрування - магістри
+            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPEBA, bsmtrain_LRG);
 
             //Фізичне виховання і спорт
             //Фізичне виховання і спорт - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPVS_B, bach_EQL, stat_EF, 110, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPVS_B, bach_EQL, corr_EF, 110, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPVS_B, bach_EQL, stat_EF, 110, corr_EF, 110, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
             //Фізичне виховання - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafTOFAV, bsmtrain_LRG);
             //Фізична реабілітація - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafFR, bsmtrain_LRG);
 
             //Журналістика
             //Журналістика - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosZhurn_B, bach_EQL, stat_EF, 110, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_B, bach_EQL, corr_EF, 100, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZhurn_B, bach_EQL, stat_EF, 110, corr_EF, 100, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafZSK, bsmtrain_LRG);
+
             //Видавнича справа та редагування - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, spec_EQL, stat_EF, 50, cal_2011_07_01.getTime(), kafVSRUF, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, spec_EQL, corr_EF, 50, cal_2011_07_01.getTime(), kafVSRUF, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosVSR_S, spec_EQL, stat_EF, 50, corr_EF, 50, cal_2011_07_01.getTime(), kafVSRUF, bsmtrain_LRG);
 
             //Міжнародні відносини
             //Міжнародне право - бакалаври, спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosMP_B, bach_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMP_B, bach_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMP_S, spec_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMP_S, spec_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMP_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMP_S, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, bsmtrain_LRG);
 
             //Філологія
-            //Філологія - бакалаври 
-            saveOrUpdateLR(licenseCPU, tdosPhyl_B, bach_EQL, stat_EF, 80, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhyl_B, bach_EQL, corr_EF, 55, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
+            //Філологія - бакалаври
+            saveOrUpdateLR(licenseCPU, tdosPhyl_B, bach_EQL, stat_EF, 80, corr_EF, 55, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
             //Мова та література(англійська) - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, master_EQL, stat_EF, 12, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, master_EQL, corr_EF, 12, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, master_EQL, stat_EF, 12, corr_EF, 12, cal_2015_07_01.getTime(), kafAFZL, bsmtrain_LRG);
             //Переклад - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTransl_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafTPP, bsmtrain_LRG);
             //Літературна творчість - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosLT_B, bach_EQL, stat_EF, 25, cal_2010_07_01.getTime(), kafAFZL, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosLT_B, bach_EQL, corr_EF, 0, cal_2010_07_01.getTime(), kafAFZL, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosLT_B, bach_EQL, stat_EF, 25, corr_EF, 0, cal_2010_07_01.getTime(), kafAFZL, bsmtrain_LRG);
 
             //Психологія
             //Психологія - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPS_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPS_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPS_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, bsmtrain_LRG);
 
             //Соціологія
             //Соціальна робота - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 30, cal_2012_07_01.getTime(), kafSSR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, corr_EF, 30, cal_2012_07_01.getTime(), kafSSR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2012_07_01.getTime(), kafSSR, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, bsmtrain_LRG);
 
             //Економіка і підприємництво
             //Економіка і підприємництво - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosEIP_B, bach_EQL, stat_EF, 430, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEIP_B, bach_EQL, corr_EF, 460, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEIP_B, bach_EQL, stat_EF, 430, corr_EF, 460, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
             //Економічна кібернетика - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, spec_EQL, stat_EF, 20, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, spec_EQL, corr_EF, 20, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, master_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, master_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEKib_SM, spec_EQL, stat_EF, 20, corr_EF, 20, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEKib_SM, master_EQL, stat_EF, 25, corr_EF, 15, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
             //Міжнародна економіка - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosME_SM, master_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosME_SM, master_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosME_SM, master_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafME, bsmtrain_LRG);
             //Фінанси
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosF_SM, master_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosF_SM, master_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 30, corr_EF, 60, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosF_SM, master_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
             //Облік і аудит - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 100, cal_2015_07_01.getTime(), kafOA, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, corr_EF, 100, cal_2015_07_01.getTime(), kafOA, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, master_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafOA, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, master_EQL, corr_EF, 80, cal_2013_07_01.getTime(), kafOA, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 100, corr_EF, 100, cal_2015_07_01.getTime(), kafOA, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOA_SM, master_EQL, stat_EF, 30, corr_EF, 80, cal_2013_07_01.getTime(), kafOA, bsmtrain_LRG);
             //Банківська справа - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, master_EQL, stat_EF, 20, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, master_EQL, corr_EF, 20, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosBS_SM, master_EQL, stat_EF, 20, corr_EF, 20, cal_2015_07_01.getTime(), kafFK, bsmtrain_LRG);
             //Економіка підприємства - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEP_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, bsmtrain_LRG);
             //Маркетинг - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosM_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosM_SM, spec_EQL, corr_EF, 20, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosM_SM, master_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosM_SM, master_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosM_SM, spec_EQL, stat_EF, 30, corr_EF, 20, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosM_SM, master_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafM, bsmtrain_LRG);
             //Прикладна статистика - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosES_SM, spec_EQL, stat_EF, 0, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosES_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosES_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosES_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosES_SM, spec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosES_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafEKS, bsmtrain_LRG);
 
             //Менеджмент
             //Менеджмент - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
             //Менеджмент організацій - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, corr_EF, 150, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
             //Менеджмент зовнішньо-економічної діяльності - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, master_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, master_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMZED_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMZED_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
 
             //Туризм
             //Туризм - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosTR_B, bach_EQL, stat_EF, 90, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTR_B, bach_EQL, corr_EF, 90, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, spec_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, spec_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, master_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, master_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTR_B, bach_EQL, stat_EF, 90, corr_EF, 90, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTR_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
             //Готельне господарство - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, spec_EQL, stat_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, spec_EQL, corr_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, master_EQL, stat_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, master_EQL, corr_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosGGos_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosGGos_SM, master_EQL, stat_EF, 15, corr_EF, 15, cal_2013_07_01.getTime(), kafTGG, bsmtrain_LRG);
 
             //Право
             //Право - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPZ_B, bach_EQL, stat_EF, 150, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZ_B, bach_EQL, corr_EF, 250, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-            //Правознавство - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, spec_EQL, stat_EF, 115, cal_2012_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, spec_EQL, corr_EF, 210, cal_2012_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, master_EQL, stat_EF, 40, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, master_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPZ_B, bach_EQL, stat_EF, 150, corr_EF, 250, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
+//            //Правознавство - спеціалісти, магістри
+            saveOrUpdateLR(licenseCPU, tdosPZ_SM, spec_EQL, stat_EF, 115, corr_EF, 210, cal_2012_07_01.getTime(), kafTZGP, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPZ_SM, master_EQL, stat_EF, 40, corr_EF, 60, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
 
             //Геодезія, картографія та землевпорядкування
             //Землевпорядкування та кадастр - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
 
             //Прикладна математика
             //Прикладна математика - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPM_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPM_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPM_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
             //Системний аналіз і управління - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, spec_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafSAVM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, spec_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafSAVM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSAU_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSAU_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
             //Інформатика - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosI_B, bach_EQL, stat_EF, 30, cal_2011_07_01.getTime(), kafSAVM, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosI_B, bach_EQL, corr_EF, 0, cal_2011_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosI_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2011_07_01.getTime(), kafSAVM, bsmtrain_LRG);
 
             //Комп'ютерні науки
             //Програмне забезпечення автоматизованих систем - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafPIT, bsmtrain_LRG);
 
             //Електроніка
             //Фізична та біомедична електроніка - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, corr_EF, 0, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, corr_EF, 0, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
 
             //Державне управління
             //Державна служба - магістри
-            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, cal_2012_07_01.getTime(), kafDU, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, corr_EF, 90, cal_2012_07_01.getTime(), kafDU, bsmtrain_LRG);
-
+            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, corr_EF, 90, cal_2012_07_01.getTime(), kafDU, bsmtrain_LRG);
 
 
             //Перепідготовка спеціалістів
             //Фізичне виховання і спорт
             //Фізичне виховання  - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafTOFAV, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafTOFAV, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafTOFAV, sretrain_LRG);
             //Фізична реабілітація  - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafFR, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafFR, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafFR, sretrain_LRG);
 
             //Журналістика
             //Журналістика - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafZSK, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafZSK, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafZSK, sretrain_LRG);
 
             //Філологія
             //Мова та література (англійська) - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafAFZL, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafAFZL, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafAFZL, sretrain_LRG);
             //Переклад - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafTPP, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafTPP, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafTPP, sretrain_LRG);
 
             //Психологія
             //Психологія - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafPP, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafPP, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafPP, sretrain_LRG);
 
             //Соціологія
             //Соціальна робота - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 15, cal_2012_07_01.getTime(), kafSSR, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, corr_EF, 15, cal_2012_07_01.getTime(), kafSSR, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2012_07_01.getTime(), kafSSR, sretrain_LRG);
 
             //Економіка і підприємництво
             //Міжнародна економіка - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafME, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafME, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafME, sretrain_LRG);
             //Фінанси - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
             //Облік і аудит - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafOA, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafOA, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafOA, sretrain_LRG);
             //Банківська справа - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafFK, sretrain_LRG);
             //Економіка підприємства - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 25, cal_2015_07_01.getTime(), kafEP, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, corr_EF, 25, cal_2015_07_01.getTime(), kafEP, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafEP, sretrain_LRG);
 
             //Менеджмент
             //Менеджмент організацій - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, cal_2015_07_01.getTime(), kafMG, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, corr_EF, 40, cal_2015_07_01.getTime(), kafMG, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, corr_EF, 40, cal_2015_07_01.getTime(), kafMG, sretrain_LRG);
 
             //Комп'ютерні науки
             //Програмне забезпечення автоматизованих систем
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 15, cal_2015_07_01.getTime(), kafPIT, sretrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, corr_EF, 15, cal_2015_07_01.getTime(), kafPIT, sretrain_LRG);
-
+            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 15, corr_EF, 15, cal_2015_07_01.getTime(), kafPIT, sretrain_LRG);
 
 
             //Для коледжу КПУ
             //Журналістика
             //Видавнича справа та редагування - молодші спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, jSpec_EQL, stat_EF, 0, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosVSR_S, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
 
             //Соціологія
             //Соціальна робота - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, jSpec_EQL, stat_EF, 0, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_SM, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
 
             //Економіка і підприємництво
             //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEP_SM, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
 
             //Менеджмент
             //Організація обслуговування населення
-            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
 
             //Торгівля
             //Товарознавство та комерційна діяльність
-            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
 
             //Туризм
             //Організація обслуговування в готелях та туристичних комплексах
-            saveOrUpdateLR(licenseCPU, tdosOOGTK_JS, jSpec_EQL, stat_EF, 0, cal_2015_07_01.getTime(), kafTGG, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOOGTK_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafTGG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOOGTK_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafTGG, forcol_LRG);
 
             //Прикладна математика
             //Прикладна математика
-            saveOrUpdateLR(licenseCPU, tdosPM_JS, jSpec_EQL, stat_EF, 0, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPM_JS, jSpec_EQL, corr_EF, 30, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
 
             //Комп'ютерні науки
             //Програмування для електроно-обчислювальної техніки і автоматизованих систем
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
 
 
 
@@ -809,161 +713,123 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Подготовка бакалавров
             //Фізичне виховання, спорт і здоров'я людини
             //Фізичне виховання
-            saveOrUpdateLR(licenseCPU, tdosPhysV_B, bach_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_B, bach_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhysV_B, bach_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafTOFAV, btrain_LRG);
             //Здоров'я людини
-            saveOrUpdateLR(licenseCPU, tdosZL_B, bach_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafFR, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZL_B, bach_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafFR, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZL_B, bach_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafFR, btrain_LRG);
 
             //Мистецтво
             //Дизайн
-            saveOrUpdateLR(licenseCPU, tdosDZ_B, bach_EQL, stat_EF, 30, cal_2014_07_01.getTime(), kafTGG, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosDZ_B, bach_EQL, corr_EF, 0, cal_2014_07_01.getTime(), kafTGG, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosDZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2014_07_01.getTime(), kafTGG, btrain_LRG);
 
             //Гуманітарні науки
             //Філологія
-            saveOrUpdateLR(licenseCPU, tdosPhilol_B, bach_EQL, stat_EF, 105, cal_2015_07_01.getTime(), kafAFZL, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPhilol_B, bach_EQL, corr_EF, 55, cal_2015_07_01.getTime(), kafAFZL, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPhilol_B, bach_EQL, stat_EF, 105, corr_EF, 55, cal_2015_07_01.getTime(), kafAFZL, btrain_LRG);
 
             //Соціально-політичні науки
             //Соціологія
-            saveOrUpdateLR(licenseCPU, tdosS_B, bach_EQL, stat_EF, 10, cal_2015_07_01.getTime(), kafSSR, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosS_B, bach_EQL, corr_EF, 10, cal_2015_07_01.getTime(), kafSSR, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosS_B, bach_EQL, stat_EF, 10, corr_EF, 10, cal_2015_07_01.getTime(), kafSSR, btrain_LRG);
             //Психологія
-            saveOrUpdateLR(licenseCPU, tdosPSH_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPP, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPSH_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPSH_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, btrain_LRG);
 
 //            //Міжнародні відносини
 //            //Міжнародні відносини
 //            saveOrUpdateLR(licenseCPU, tdosMV_B, bach_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafMP, btrain_LRG);
 //            saveOrUpdateLR(licenseCPU, tdosMV_B, bach_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, btrain_LRG);
 //            //Міжнародне право
-            
-
-
 
             //Журналістика та інформація
             //Журналістика
-            saveOrUpdateLR(licenseCPU, tdosZhu_B, bach_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafZSK, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZhu_B, bach_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafZSK, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZhu_B, bach_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafZSK, btrain_LRG);
             //Реклама і зв'язки з громадкістю (за видами)
-            saveOrUpdateLR(licenseCPU, tdosRZG_B, bach_EQL, stat_EF, 30, cal_2011_07_01.getTime(), kafRZG, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosRZG_B, bach_EQL, corr_EF, 0, cal_2011_07_01.getTime(), kafRZG, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosRZG_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2011_07_01.getTime(), kafRZG, btrain_LRG);
             //Видавнича справа та редагування
-            saveOrUpdateLR(licenseCPU, tdosVSR_B, bach_EQL, stat_EF, 30, cal_2011_07_01.getTime(), kafVSRUF, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosVSR_B, bach_EQL, corr_EF, 50, cal_2011_07_01.getTime(), kafVSRUF, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosVSR_B, bach_EQL, stat_EF, 30, corr_EF, 50, cal_2011_07_01.getTime(), kafVSRUF, btrain_LRG);
 
             //Право
             //Право
-            saveOrUpdateLR(licenseCPU, tdosP_B, bach_EQL, stat_EF, 150, cal_2015_07_01.getTime(), kafTZGP, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosP_B, bach_EQL, corr_EF, 250, cal_2015_07_01.getTime(), kafTZGP, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosP_B, bach_EQL, stat_EF, 150, corr_EF, 250, cal_2015_07_01.getTime(), kafTZGP, btrain_LRG);
 
             //Економіка і підприємництво
             //Економічна кібернетика
-            saveOrUpdateLR(licenseCPU, tdosEKib_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEKib_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEKib_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
             //Міжнародна економіка
-            saveOrUpdateLR(licenseCPU, tdosME_B, bach_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafME, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosME_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafME, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosME_B, bach_EQL, stat_EF, 50, corr_EF, 30, cal_2015_07_01.getTime(), kafME, btrain_LRG);
             //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEP_B, bach_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafEP, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEP_B, bach_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafEP, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEP_B, bach_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafEP, btrain_LRG);
             //Прикладна статистика
-            saveOrUpdateLR(licenseCPU, tdosPRS_B, bach_EQL, stat_EF, 20, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPRS_B, bach_EQL, corr_EF, 20, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPRS_B, bach_EQL, stat_EF, 20, corr_EF, 20, cal_2015_07_01.getTime(), kafEKS, btrain_LRG);
             //Маркетинг
-            saveOrUpdateLR(licenseCPU, tdosM_B, bach_EQL, stat_EF, 50, cal_2015_07_01.getTime(), kafM, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosM_B, bach_EQL, corr_EF, 50, cal_2015_07_01.getTime(), kafM, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosM_B, bach_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafM, btrain_LRG);
             //Фінанси і кредит
-            saveOrUpdateLR(licenseCPU, tdosFK_B, bach_EQL, stat_EF, 120, cal_2015_07_01.getTime(), kafFK, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFK_B, bach_EQL, corr_EF, 120, cal_2015_07_01.getTime(), kafFK, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFK_B, bach_EQL, stat_EF, 120, corr_EF, 120, cal_2015_07_01.getTime(), kafFK, btrain_LRG);
             //Облік і аудит
-            saveOrUpdateLR(licenseCPU, tdosOA_B, bach_EQL, stat_EF, 100, cal_2015_07_01.getTime(), kafOA, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOA_B, bach_EQL, corr_EF, 150, cal_2015_07_01.getTime(), kafOA, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOA_B, bach_EQL, stat_EF, 100, corr_EF, 150, cal_2015_07_01.getTime(), kafOA, btrain_LRG);
 
             //Менеджмент і адміністрування
             //Менеджмент
-            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, cal_2015_07_01.getTime(), kafMG, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, btrain_LRG);
 
             //Системні науки та кібернетика
             //Інформатика
-            saveOrUpdateLR(licenseCPU, tdosIF_B, bach_EQL, stat_EF, 30, cal_2011_07_01.getTime(), kafSAVM, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosIF_B, bach_EQL, corr_EF, 0, cal_2011_07_01.getTime(), kafSAVM, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosIF_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2011_07_01.getTime(), kafSAVM, btrain_LRG);
             //Системний аналіз
-            saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSAVM, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSAVM, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSAVM, btrain_LRG);
 
             //Інформатика та обчислювальна техніка
             //Програмна інженерія
-            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, cal_2015_07_01.getTime(), kafPIT, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, corr_EF, 60, cal_2015_07_01.getTime(), kafPIT, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafPIT, btrain_LRG);
 
             //Електроніка
             //Мікро- та наноелектроніка
-            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPTD, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPTD, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPTD, btrain_LRG);
 
             //Геодезія та землеустрій
             //Геодезія, картографія та землеустрій
-            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafZK, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, btrain_LRG);
 
             //Соціальне забезпечення
             //Соціальна робота
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 40, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, corr_EF, 40, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 40, corr_EF, 40, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
 
             //Сфера обслуговування
             //Готельно-ресторанна справа
-            saveOrUpdateLR(licenseCPU, tdosGRS_B, bach_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafTGG, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosGRS_B, bach_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosGRS_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2013_07_01.getTime(), kafTGG, forcol_LRG);
             //Туризм
-            saveOrUpdateLR(licenseCPU, tdosT_B,   bach_EQL, stat_EF, 60, cal_2013_07_01.getTime(), kafTGG, btrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosT_B,   bach_EQL, corr_EF, 60, cal_2013_07_01.getTime(), kafTGG, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosT_B,   bach_EQL, stat_EF, 60, corr_EF, 60, cal_2013_07_01.getTime(), kafTGG, btrain_LRG);
 
 
-//            //Подготовка младших специалистов
-//            //Культура
-//            //Організація туристичного обслуговування (туристичне обслуговування (нов.))
-//            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, stat_EF, 0, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
-//            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, corr_EF, 30, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
+            //Подготовка младших специалистов
+////            //Культура
+////            //Організація туристичного обслуговування (туристичне обслуговування (нов.))
+////            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, stat_EF, 0, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
+////            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, corr_EF, 30, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
 
             //Журналістика та інформація
             //Видавнича справа та редагування
-            saveOrUpdateLR(licenseCPU, tdosVSTR_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosVSTR_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosVSTR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);
 
             //Економіка та підприємництво
             //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEKP_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosEKP_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosEKP_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
             //Товарознавство та комерційна діяльність
-            saveOrUpdateLR(licenseCPU, tdosTZKD_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTZKD_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTZKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEP, forcol_LRG);
 
             //Системні науки та кібернетика
             //Прикладна математика
-            saveOrUpdateLR(licenseCPU, tdosPRM_JS, jSpec_EQL, stat_EF, 0, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosPRM_JS, jSpec_EQL, corr_EF, 30, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPRM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2011_07_01.getTime(), kafSAVM, forcol_LRG);
 
             //Інформатика та обчислювальна техника
             //Розробка програмного забезпечення
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPIT, forcol_LRG);
 
             //Соціальне забезпечення
             //Соціальна робота
-            saveOrUpdateLR(licenseCPU, tdosSOCR_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosSOCR_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosSOCR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
 
             //Сфера обслуговування
             //Організація обслуговування населення
-            saveOrUpdateLR(licenseCPU, tdosOONAS_JS, jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosOONAS_JS, jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTO_JS,    jSpec_EQL, stat_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-            saveOrUpdateLR(licenseCPU, tdosTO_JS,    jSpec_EQL, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
-
+            saveOrUpdateLR(licenseCPU, tdosOONAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTO_JS,    jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSSR, forcol_LRG);
         }
     }
 
@@ -1077,8 +943,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             License license,
             TrainingDirectionOrSpeciality trainingDirectionOrSpeciality,
             EducationalQualificationLevel educationalQualificationLevel,
-            EducationForm educationForm,
-            Integer studentLicenseQuantity,
+            EducationForm statEduForm,
+            Integer statLicenseQuantity,
+            EducationForm corrEduForm,
+            Integer corrLicenseQuantity,
+//            Map<EducationForm, Integer> licenseQuantityByEducationForm,
             Date terminationDate,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
@@ -1091,8 +960,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         lrSample.setLicense(license);
         lrSample.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
         lrSample.setEducationalQualificationLevel(educationalQualificationLevel);
-        lrSample.setEducationForm(educationForm);
-        lrSample.setStudentLicenseQuantity(studentLicenseQuantity);
+//        lrSample.addEduFormLicenseQuantity(eduForm, licenseQuantity);
         lrSample.setTerminationDate(terminationDate);
         lrSample.setOrgUnit(orgUnit);
         lrSample.setLicenseRecordGroup(licenseRecordGroup);
@@ -1104,12 +972,14 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
         //--Инициализация элемента списка
 
         if (lr.isEmpty()) {
+            SortedMap<EducationForm, Integer> licenseQuantityByEducationForm=new TreeMap();
+            licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
+            licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
             p = new LicenseRecord();
             p.setLicense(license);
             p.setTrainingDirectionOrSpeciality(trainingDirectionOrSpeciality);
             p.setEducationalQualificationLevel(educationalQualificationLevel);
-            p.setEducationForm(educationForm);
-            p.setStudentLicenseQuantity(studentLicenseQuantity);
+            p.setLicenseQuantityByEducationForm(licenseQuantityByEducationForm);
             p.setTerminationDate(terminationDate);
             p.setOrgUnit(orgUnit);
             p.setLicenseRecordGroup(licenseRecordGroup);

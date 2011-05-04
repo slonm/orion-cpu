@@ -1,7 +1,12 @@
 package orion.cpu.entities.uch;
 
-import java.util.Date;
+import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import org.apache.tapestry5.beaneditor.DataType;
+import org.apache.tapestry5.beaneditor.NonVisual;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationForm;
@@ -12,49 +17,61 @@ import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
- * Сущность подситемы учета лицензий
+ * Сущность подсистемы учета лицензий
  * @author kgp
  */
 @Entity
 @Table(schema = "uch")
 public class LicenseRecord extends BaseEntity<LicenseRecord> {
 
-    private EducationalQualificationLevel educationalQualificationLevel;
+    private License license;
     private TrainingDirectionOrSpeciality trainingDirectionOrSpeciality;
-    private EducationForm educationForm;
-    private Integer studentLicenseQuantity;
+    private EducationalQualificationLevel educationalQualificationLevel;
+    //Создание пользовательского типа данных, указывающего на Property Block,
+    //используемый в гриде и бинэдиторе
+    @DataType("EduFormLicenseQuantity")
+    private SortedMap<EducationForm, Integer> licenseQuantityByEducationForm;
     private Date terminationDate;
     private OrgUnit orgUnit;
-    private License license;
     private LicenseRecordGroup licenseRecordGroup;
-
-   @Transient
-    public String getLicenseSerialNumber() {
-       try {
-            return (license.getSerial()+"  "+license.getNumber());
-        } catch (NullPointerException e) {
-            return null;
-        }
+    
+    public LicenseRecord() {
     }
 
-    @Transient
-    public Date getLicenseIssueDate() {
-        try {
-            return license.getIssue();
-        } catch (NullPointerException e) {
-            return null;
-        }
+    public LicenseRecord(License license,
+            TrainingDirectionOrSpeciality trainingDirectionOrSpeciality,
+            EducationalQualificationLevel educationalQualificationLevel,
+            SortedMap<EducationForm, Integer> licenseQuantityByEducationForm,
+            Date terminationDate,
+            OrgUnit orgUnit,
+            LicenseRecordGroup licenseRecordGroup) {
+                this.license=license;
+                this.trainingDirectionOrSpeciality=trainingDirectionOrSpeciality;
+                this.educationalQualificationLevel=educationalQualificationLevel;
+                this.licenseQuantityByEducationForm=licenseQuantityByEducationForm;
+                this.terminationDate=terminationDate;
+                this.orgUnit=orgUnit;
+                this.licenseRecordGroup=licenseRecordGroup;
     }
 
-    @Transient
-    public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
-         try {
-            return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
-        } catch (NullPointerException e) {
-            return null;
-        }
+    /**
+     * @return Серия, номер и дата выдачи лицензии, к которой принадлежит данная запись
+     * (не отображается в гриде)
+     */
+    @NonVisual
+    @ManyToOne
+    @NotNull
+    public License getLicense() {
+        return license;
     }
 
+    public void setLicense(License license) {
+        this.license = Defense.notNull(license, "license");
+    }
+
+    /**
+     * @return код области знаний/направления обучения
+     */
     @Transient
     public String getKnowledgeAreaOrTrainingDirectionCode() {
          try {
@@ -65,21 +82,36 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     }
 
     /**
-     * @return the educationalQualificationLevel
+     * @return название области знаний/направления обучения
      */
-    @JoinColumn(nullable = false)
+     @Transient
+    public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
+         try {
+            return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+     /**
+     * @return образовательно-квалификайционный уровень
+     * (не отображается в гриде)
+     */
+    @NonVisual
     @ManyToOne
+    @NotNull
     public EducationalQualificationLevel getEducationalQualificationLevel() {
         return educationalQualificationLevel;
     }
 
-    /**
-     * @param educationalQualificationLevel the educationalQualificationLevel to set
-     */
     public void setEducationalQualificationLevel(EducationalQualificationLevel educationalQualificationLevel) {
         this.educationalQualificationLevel = Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel");
     }
 
+    /**
+     * @return составной код, включающий код образовательно-квалификационного уровня, 
+     * код области знаний/направления обучения и код направления обучения/специальности
+     */
     @Transient
     public String getCode() {
         try {
@@ -88,105 +120,65 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
                     getTrainingDirectionOrSpeciality().getCode() == null) {
                 return null;
             }
-            return (getEducationalQualificationLevel().getCode() + "." + getKnowledgeAreaOrTrainingDirection().getCode() + getTrainingDirectionOrSpeciality().getCode());
+            StringBuilder sb = new StringBuilder(getEducationalQualificationLevel().getCode())
+                    .append(".").append(getKnowledgeAreaOrTrainingDirection().getCode())
+                    .append(getTrainingDirectionOrSpeciality().getCode());
+            return sb.toString();
         } catch (NullPointerException e) {
             return null;
         }
     }
-
+    
     /**
-     * @return the TrainingDirectionOrSpeciality
+     * @return название направления обучения/специальности
      */
-    @JoinColumn(nullable = false)
     @ManyToOne
+    @NotNull
     public TrainingDirectionOrSpeciality getTrainingDirectionOrSpeciality() {
         return trainingDirectionOrSpeciality;
     }
 
-    /**
-     * @param TrainingDirectionOrSpeciality the TrainingDirectionOrSpeciality to set
-     */
     public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality TrainingDirectionOrSpeciality) {
         this.trainingDirectionOrSpeciality = Defense.notNull(TrainingDirectionOrSpeciality, "TrainingDirectionOrSpeciality");
     }
 
     /**
-     * @return the EducationForm
+     * @return Ассоциированный массив форма обучения - лицензированный объем
      */
-    @JoinColumn(nullable = false)
-    @ManyToOne
-    public EducationForm getEducationForm() {
-        return educationForm;
+    @ElementCollection
+    @CollectionTable(schema="uch")
+    //Необходимый параметр для коллекции SortedMap
+    @Sort(type=SortType.NATURAL)
+    public SortedMap<EducationForm, Integer> getLicenseQuantityByEducationForm() {
+        return licenseQuantityByEducationForm;
     }
 
-    /**
-     * @param EducationForm the EducationForm to set
-     */
-    public void setEducationForm(EducationForm EducationForm) {
-        this.educationForm = Defense.notNull(EducationForm, "EducationForm");
+    public void setLicenseQuantityByEducationForm(SortedMap<EducationForm, Integer> licenseQuantityByEducationForm) {
+        this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
     }
 
-    /**
-     * @return the studentLicenseQuantity
-     */
-    public Integer getStudentLicenseQuantity() {
-        return studentLicenseQuantity;
-    }
+//    public void addEduFormLicenseQuantity(EducationForm eduForm, Integer licenseQuantity){
+//        this.licenseQuantityByEducationForm.put(eduForm, licenseQuantity);
+//    }
 
     /**
-     * @param studentLicenseQuantity the studentLicenseQuantity to set
-     */
-    public void setStudentLicenseQuantity(Integer studentLicenseQuantity) {
-        this.studentLicenseQuantity = studentLicenseQuantity;
-    }
-
-    /**
-     * @return the terminationDate
+     * @return дата окончания лицензионной записи
      */
     @Temporal(value = javax.persistence.TemporalType.DATE)
+    @NotNull
     public Date getTerminationDate() {
         return terminationDate;
     }
 
-    /**
-     * @param terminationDate the terminationDate to set
-     */
     public void setTerminationDate(Date terminationDate) {
         this.terminationDate = Defense.notNull(terminationDate, "terminationDate");
     }
 
     /**
-     * @return the orgUnit
+     * @return название групп лицензионных записей (подготовка бакалавров, для колледжа и т.д.)
      */
-    @JoinColumn(nullable = false)
     @ManyToOne
-    public OrgUnit getOrgUnit() {
-        return orgUnit;
-    }
-
-    public void setOrgUnit(OrgUnit orgUnit) {
-        this.orgUnit = Defense.notNull(orgUnit, "orgUnit");
-    }
-
-    /**
-     * @return the license
-     */
-//    @NonVisual
-    @JoinColumn(nullable = false)
-    @ManyToOne
-    public License getLicense() {
-        return license;
-    }
-
-    /**
-     * @param license the license to set
-     */
-    public void setLicense(License license) {
-        this.license = Defense.notNull(license, "license");
-    }
-
-    @JoinColumn(nullable = false)
-    @ManyToOne
+    @NotNull
     public LicenseRecordGroup getLicenseRecordGroup() {
         return licenseRecordGroup;
     }
@@ -195,9 +187,22 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
         this.licenseRecordGroup = Defense.notNull(licenseRecordGroup, "licenseRecordGroup");
     }
 
+    /**
+     * @return Организационная единица, подготавливающая студентов в рамках данной лицензионной записи
+     */
+    @ManyToOne
+    @NotNull
+    public OrgUnit getOrgUnit() {
+        return orgUnit;
+    }
+
+    public void setOrgUnit(OrgUnit orgUnit) {
+        this.orgUnit = Defense.notNull(orgUnit, "orgUnit");
+    }
+
     @Override
     public String toString() {
-        return getCode()+" - "+educationForm;
+        return getCode();
     }
 
     @Override
@@ -210,6 +215,4 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     public int compareTo(LicenseRecord o) {
         return o.toString().compareTo(o.toString());
     }
-
-    
 }
