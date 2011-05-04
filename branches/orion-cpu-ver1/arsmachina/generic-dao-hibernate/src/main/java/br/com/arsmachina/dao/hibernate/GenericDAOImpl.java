@@ -168,7 +168,7 @@ public class GenericDAOImpl<T, K extends Serializable> implements DAO<T, K> {
 	protected void addSortCriteria(Criteria criteria) {
 		readableDAO.addSortCriteria(criteria);
 	}
-
+    
 	/**
 	 * Invokes <code>delegate.addSortCriteria()<code>.
 	 * 
