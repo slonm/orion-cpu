@@ -1,7 +1,7 @@
 <div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
 
     <t:block id="DisplayTrainingDirectionOrSpeciality">
-        <t:if test="prop:outputContext.propertyValue">
+        <t:if test="displayContext.propertyValue">
             ${message:TrainingDirectionOrSpeciality-true}
             <t:parameter name="else">
                 ${message:TrainingDirectionOrSpeciality-false}
@@ -15,7 +15,7 @@
     </t:block>
 
     <t:block id="DisplayKnowledgeAreaOrTrainingDirection">
-        <t:if test="prop:outputContext.propertyValue">
+        <t:if test="displayContext.propertyValue">
             ${message:KnowledgeAreaOrTrainingDirection-true}
             <t:parameter name="else">
                 ${message:KnowledgeAreaOrTrainingDirection-false}
@@ -28,4 +28,33 @@
         <input t:id="KnowledgeAreaOrTrainingDirection"/>
     </t:block>
 
+    <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
+    используемый в гриде при отображении списка лицензий-->
+    <t:block id="DisplayEduFormLicenseQuantity">
+        <!--параметры source и value вынесены в аннотацию @Component в класс
+        параметр t:id содержит имя свойства класса-компонента типа Loop-->
+        <t:loop t:id="eduFormLicenseQuantity">
+            <!--для каждого элемента мэпа возвращается имя объекта EduForm eduForm,
+            являющегося полем класса и указанным в свойстве value компонента,
+            и соответствующее количество лицензий, определённое методом
+            Integer getEduFormLicenseQuantities() класса-->
+            ${eduForm.name} - ${EduFormLicenseQuantities}<br/>
+        </t:loop>
+    </t:block>
+    <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
+    используемый в бинэдиторе для редактирования списка лицензированного объёма
+    по формам обучения-->
+    <t:block id="EditEduFormLicenseQuantity">
+        <div t:type="ajaxformloop" t:id="eduFormLicenseQuantityAfl">
+          <t:select t:id="eduForm" value="eduForm.name"/>
+          <t:textfield t:id="eduFormLicenseQuantities" value="eduFormLicenseQuantities"/>
+
+          <t:removerowlink>remove</t:removerowlink>
+
+        </div>
+
+
+        <t:ajaxformloop t:id="eduFormLicenseQuantityAfl"/>
+        
+    </t:block>
 </div>
