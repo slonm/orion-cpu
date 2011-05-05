@@ -1,6 +1,5 @@
 package orion.cpu.views.tapestry.pages;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import javax.naming.event.EventContext;
@@ -8,7 +7,6 @@ import org.apache.tapestry5.FieldValidator;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.AjaxFormLoop;
 import org.apache.tapestry5.corelib.components.Loop;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
@@ -28,6 +26,7 @@ public class LicensePropertyBlocks {
     //создаваемыми используемыми в классе компонентами - форма позднего связывания.)
     //Свойство, представляющее контекст, получаемый при выводе грида на экран
     @Environmental
+    //Свойство, представляющее контекст, получаемый при выводе грида на экран
     @Property(write = false)
     private PropertyOutputContext displayContext;
     //Свойство, представляющее контекст, получаемый при выводе бинэдитора на экран
@@ -59,12 +58,18 @@ public class LicensePropertyBlocks {
     private Loop eduFormLicenseQuantity;
     //Свойство, необходимое для установления текущего значения при выводе
     //элементов мэпа в гриде в компоненте Loop
-    @Property
+    @Property(read=false)
     private EducationForm eduForm;
-
-//     @Component(parameters = {"source=licenseQuantityByEducationForm",
-//     "value=eduForm"})
-//     private AjaxFormLoop eduFormLicenseQuantityAfl;
+    //Используемый методами этого класса мэп
+    private SortedMap<EducationForm, Integer> mp = null;
+    //Компонент Loop, выводящий в бинэдитор все элементы мэпа "форма обучения -
+    //лицензированный объем" (ключ - форма обучения)
+    //В параметрах компонента указаны: в source - метод getEduForms(), возвращающий
+    //набор ключей, хранящихся в мэп; в value - поле текущего класса,
+    //из которого извлекаются значения для отображением в гриде в компоненте Loop
+    @Component(parameters = {"source=EduForms",
+        "value=EduForm"})
+    private Loop eduFormLicenseQuantityAfl;
 
     public FieldValidator<?> getKnowledgeAreaOrTrainingDirectionValidator() {
         return editContext.getValidator(knowledgeAreaOrTrainingDirection);
@@ -75,29 +80,43 @@ public class LicensePropertyBlocks {
     }
 
     /**
-     * Метод, возвращающий мэп с формами обучения и количеством лицензий
-     * (используется в компоненте Loop в шаблоне)
-     * @return мэп с формами обучения и количеством лицензий     *
+     * Метод, возвращающий количество лицензий для записи с ключом eduForm
+     * (используется в компонентах Loop в шаблоне)
+     * @return количество лицензий для записи с ключом eduForm
      */
     public Integer getEduFormLicenseQuantities() {
-        SortedMap<EducationForm, Integer> mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+        try {
+            mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+        } catch (Exception ex) {
+            System.out.println("EXCEPTION STACK" + ex.getStackTrace());
+            mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
+        }
         return mp.get(eduForm);
     }
 
-    //TODO Создать компаратор и отсортировать по значению поля EducationForm
-    //изучить параметры отображения Мар Hibernate-ом
+    public void setEduFormLicenseQuantities(Integer value) {
+        mp.put(getEduForm(), value);
+        editContext.setPropertyValue(mp);
+    }
+
+    public EducationForm getEduForm(){
+        System.out.println("--- "+eduForm.getName()+" ---");
+        return eduForm;
+    }
 
     /**
      * Метод для получения ключей мэпа "форма обучения - лицензированный объем"
-     * (используется параметром source компонент Loop)
+     * (используется параметром source компонентов Loop)
      * @return множество ключей мэпа Map<EducationForm, Integer> licenseQuantityByEducationForm
      */
-        public Set getEduForms() {
-        SortedMap<EducationForm, Integer> mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+    public Set getEduForms() {
+        try {
+            mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+        } catch (Exception ex) {
+            mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
+        }
         return mp.keySet();
     }
-    //TODO Добавить источник данных для LOOP, обработчики событий удаления, добавления
-    
 
     /**
      * Запрещает явное открытие этой псевдо-страницы.

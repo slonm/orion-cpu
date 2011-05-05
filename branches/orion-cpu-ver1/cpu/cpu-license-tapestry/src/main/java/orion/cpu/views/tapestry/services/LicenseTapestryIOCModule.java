@@ -29,7 +29,7 @@ public class LicenseTapestryIOCModule {
         //Display EduFormLicenseQuantity
         configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "LicensePropertyBlocks", "DisplayEduFormLicenseQuantity"));
         //Edit EduFormLicenseQuantity
-//        configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "LicensePropertyBlocks", "EditEduFormLicenseQuantity"));
+        configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "LicensePropertyBlocks", "EditEduFormLicenseQuantity"));
     }
 
     /**

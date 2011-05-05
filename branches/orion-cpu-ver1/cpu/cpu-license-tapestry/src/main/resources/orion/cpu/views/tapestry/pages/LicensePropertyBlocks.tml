@@ -44,17 +44,11 @@
     <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
     используемый в бинэдиторе для редактирования списка лицензированного объёма
     по формам обучения-->
-<!--    <t:block id="EditEduFormLicenseQuantity">
-        <div t:type="ajaxformloop" t:id="eduFormLicenseQuantityAfl">
-          <t:select t:id="eduForm" value="eduForm.name"/>
-          <t:textfield t:id="eduFormLicenseQuantities" value="eduFormLicenseQuantities"/>
-
-          <t:removerowlink>remove</t:removerowlink>
-
-        </div>
-
-
-        <t:ajaxformloop t:id="eduFormLicenseQuantityAfl"/>
-        
-    </t:block> -->
+    <t:block id="EditEduFormLicenseQuantity">
+        ${message:reflect.orion.cpu.entities.uch.LicenseRecord.LicenseQuantityByEducationForm}<br/>
+        <t:loop t:id="eduFormLicenseQuantityAfl">
+            <h4 style="width:250px">${eduForm.name}</h4>
+            <t:textfield t:id="txtEduFormLicenseQuantity" value="EduFormLicenseQuantities"/>
+        </t:loop>
+    </t:block> 
 </div>
