@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<t:ori.layout title="message:label.project.name"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <t:zone t:id="listZone">
+        <t:ori.InitCall function="closeCkWindow" window="editWindow"/><!--для вызова метода скрытия окна-->
+        <t:grid source="objects" row="object" inplace="true" add="action"
+                model="dataSource.getBeanModelForList(objectClass,messages)">
+            <p:actionCell>
+                <div class="crud-links">
+                    <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="editZone" title="message:button.mode.edit"/>
+                    <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="editZone" title="message:button.mode.view"/>
+                    <t:EventLink class="crud-del-pic" t:event="delete" context="${object.id}" zone="listZone" title="message:button.mode.del"/>
+                </div>
+            </p:actionCell>
+        </t:grid>
+    </t:zone>
+    <t:EventLink class="crud-add" t:event="add" zone="editZone">${message:button.mode.add}</t:EventLink>
+    <t:block id="editBlock">
+        <t:if test="isedit">
+            <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.edit" html="false" /><!--для вызова метода показа окна-->
+            <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
+                            zone="listZone" context="${object?.id}" submitLabel="message:button.mode.edit"/>
+            <p:else>
+                <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
+                <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
+                                zone="listZone" submitLabel="message:button.mode.add"/>
+            </p:else>    
+        </t:if>
+    </t:block>
+    <t:block id="viewBlock">
+        <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.view" html="false" /><!--для вызова метода показа окна-->
+        <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
+    </t:block>
+    <t:ck.Window t:id="editWindow" t:style="bluelighting" show="false"
+                 modal="true" title="mode"
+                 width="500" height="200">
+        <t:zone t:id="editZone"/>
+        <a href="#" onclick="Windows.close('editWindow')">${message:button.closewindow}</a>        
+    </t:ck.Window>
+</t:ori.layout>
