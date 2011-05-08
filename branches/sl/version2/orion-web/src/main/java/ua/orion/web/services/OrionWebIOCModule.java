@@ -114,9 +114,7 @@ public class OrionWebIOCModule {
 
     public void contributeApplicationMessagesSource(Configuration<String> conf,
             ComponentClassResolver componentClassResolver) {
-        for (String lib : componentClassResolver.getFolderToPackageMapping().keySet()) {
-            conf.add(lib+"Web");
-        }
+            conf.add("OriWeb");
     }
 
     /**
