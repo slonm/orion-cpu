@@ -13,4 +13,5 @@
   * *property.EntityName.PropertyName* - подпись свойства PropertyName сущности EntityName
   * *Menu>Start>Admin* - подпись пункта меню Start>Admin
   * *label.text* - подпись на странице с именем text
-  * *action.actionname* - подпись для действия с именем actionname
+  * *message.text* - длинный самостоятельный текст на странице с именем text
+  * *action.actionname* - подпись для действия с именем actionname. Т.е. подписи для Submit, ActionLink и EventLink - другими словами для Component Event Request
