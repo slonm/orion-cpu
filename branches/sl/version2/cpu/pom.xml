@@ -54,12 +54,16 @@
                              that prevents the requestLog from being set. -->
                         <append>true</append>
                     </requestLog>
-                    <!--systemProperties>
+                    <systemProperties>
                         <systemProperty>
+                            <name>log4j.configuration</name>
+                            <value>file:${project.build.directory}/${project.build.finalName}/WEB-INF/classes/log4j.properties</value>
+                        </systemProperty>
+                        <!--systemProperty>
                             <name>java.util.logging.config.file</name>
                             <value>logging.properties</value>
-                        </systemProperty>
-                    </systemProperties-->
+                        </systemProperty-->
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,5 +1,6 @@
 package ua.orion.web.pages;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.SymbolConstants;
@@ -58,6 +59,8 @@ public class Crud {
     @Persist
     @Property(write = false)
     private String mode;
+    @Property(write = false)
+    private String title;
     private static final String EDIT = "edit";
     private static final String ADD = "add";
     private static final String VIEW = "view";
@@ -122,8 +125,8 @@ public class Crud {
                 return startPageName;
             }
         }
-//        SecurityUtils.getSubject().isPermitted(objectClass.getSimpleName()+":read");
-        //title = messages.get("reflect." + beanClass.getName());
+//        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":read");
+        title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
 
