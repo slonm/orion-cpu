@@ -5,7 +5,8 @@
 
 package ua.orion.cpu.security;
 
-import ua.orion.cpu.security.entities.Acl;
+import ua.orion.cpu.core.security.AclActiveDirectoryRealm;
+import ua.orion.cpu.core.security.entities.Acl;
 import javax.persistence.EntityManager;
 import org.hibernate.ejb.Ejb3Configuration;
 import javax.persistence.EntityManagerFactory;
@@ -17,7 +18,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ThreadContext;
-import ua.orion.cpu.security.entities.SubjectType;
+import ua.orion.cpu.core.security.entities.SubjectType;
 
 import static org.testng.Assert.assertTrue;
 

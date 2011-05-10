@@ -1,7 +1,7 @@
 package ua.orion.core.persistence;
 
 import javax.persistence.*;
-import ua.orion.persistence.annotations.UserPresentable;
+import ua.orion.core.annotations.UserPresentable;
 
 /**
  * Сущность-перечислитель. Отличается от NamedEntity уникальностью атрибута name

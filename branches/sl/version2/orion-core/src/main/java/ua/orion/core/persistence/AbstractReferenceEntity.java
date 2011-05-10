@@ -2,7 +2,7 @@ package ua.orion.core.persistence;
 
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
-import ua.orion.persistence.annotations.UniqueKey;
+import ua.orion.core.annotations.UniqueKey;
 
 /**
  * Базовая абстрактная сущность справочника.

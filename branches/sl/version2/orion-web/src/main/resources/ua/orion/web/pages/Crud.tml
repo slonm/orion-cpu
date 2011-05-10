@@ -9,9 +9,9 @@
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
                 <div class="crud-links">
-                    <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="editZone" title="message:button.mode.edit"/>
-                    <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="editZone" title="message:button.mode.view"/>
-                    <t:EventLink class="crud-del-pic" t:event="delete" context="${object.id}" zone="listZone" title="message:button.mode.del"/>
+                    <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="editZone" title="message:action.edit"/>
+                    <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="editZone" title="message:action.view"/>
+                    <t:EventLink class="crud-del-pic" t:event="delete" context="${object.id}" zone="listZone" title="message:action.del"/>
                 </div>
             </p:actionCell>
         </t:grid>
@@ -25,7 +25,7 @@
             <p:else>
                 <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
                 <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
-                                zone="listZone" submitLabel="message:button.mode.add"/>
+                                zone="listZone" submitLabel="message:action.add"/>
             </p:else>    
         </t:if>
     </t:block>
@@ -37,6 +37,6 @@
                  modal="true" title="mode"
                  width="500" height="200">
         <t:zone t:id="editZone"/>
-        <a href="#" onclick="Windows.close('editWindow')">${message:button.closewindow}</a>        
+        <a href="#" onclick="Windows.close('editWindow')">${message:action.closewindow}</a>        
     </t:ck.Window>
 </t:ori.layout>

@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import org.tynamo.jpa.annotations.CommitAfter;
-import ua.orion.persistence.MetaEntity;
+import ua.orion.core.persistence.MetaEntity;
 
 /**
  * Основной сервис для работы с моделью данных.

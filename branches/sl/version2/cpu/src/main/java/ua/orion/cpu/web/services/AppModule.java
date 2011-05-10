@@ -9,10 +9,10 @@ import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import org.tynamo.jpa.Ejb3HibernateSymbols;
 import ua.orion.core.utils.IOCUtils;
 import ua.orion.cpu.core.OrionCPUSymbols;
-import ua.orion.cpu.licensing.services.LicensingIOCModule;
-import ua.orion.cpu.orgunits.services.OrgUnitsIOCModule;
-import ua.orion.cpu.security.services.OrionSecurityIOCModule;
-import ua.orion.cpu.services.OrionCpuIOCModule;
+import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
+import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
+import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
+import ua.orion.cpu.core.services.OrionCpuIOCModule;
 
 /**
  * Модуль конфигурирования IOC

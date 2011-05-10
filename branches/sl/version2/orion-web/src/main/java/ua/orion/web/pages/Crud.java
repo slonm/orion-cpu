@@ -14,7 +14,7 @@ import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
-import ua.orion.persistence.MetaEntity;
+import ua.orion.core.persistence.MetaEntity;
 import ua.orion.web.services.TapestryComponentDataSource;
 
 /**

@@ -18,7 +18,8 @@
  */
 package ua.orion.cpu.security;
 
-import ua.orion.cpu.security.entities.ActiveDirectoryPrincipal;
+import ua.orion.cpu.core.security.OrionActiveDirectoryRealm;
+import ua.orion.cpu.core.security.entities.ActiveDirectoryPrincipal;
 import org.testng.annotations.Test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

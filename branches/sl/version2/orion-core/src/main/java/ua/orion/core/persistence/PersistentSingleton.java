@@ -5,7 +5,7 @@
 package ua.orion.core.persistence;
 
 import java.io.Serializable;
-import ua.orion.persistence.annotations.UniqueKey;
+import ua.orion.core.annotations.UniqueKey;
 
 /**
  *

@@ -14,7 +14,7 @@ import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.utils.IOCUtils;
 import ua.orion.core.validation.UniqueConstraintValidator;
-import ua.orion.persistence.MetaEntity;
+import ua.orion.core.persistence.MetaEntity;
 
 /**
  *

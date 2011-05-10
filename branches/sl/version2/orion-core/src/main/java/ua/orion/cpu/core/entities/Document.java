@@ -1,8 +1,7 @@
-package test.licensing.entities;
+package ua.orion.cpu.core.entities;
 
 
 
-import ua.orion.cpu.core.entities.*;
 import ua.orion.core.persistence.AbstractEntity;
 import java.util.*;
 import javax.persistence.*;
@@ -90,7 +89,7 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
      */
     @Override
     public String toString() {
-        return (serial + number + " (" + issue + ")");
+        return (serial + number + " (" + issue+ ")");
     }
 
     @Override

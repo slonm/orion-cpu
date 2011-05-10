@@ -9,9 +9,9 @@ import javax.persistence.metamodel.Metamodel;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.services.*;
 import ua.orion.core.InheritedAnnotationProvider;
-import ua.orion.persistence.annotations.UniqueKey;
-import ua.orion.persistence.annotations.UserPresentable;
-import ua.orion.persistence.MetaEntity;
+import ua.orion.core.annotations.UniqueKey;
+import ua.orion.core.annotations.UserPresentable;
+import ua.orion.core.persistence.MetaEntity;
 import ua.orion.core.utils.Defense;
 import ua.orion.core.validation.UniqueConstraintValidator;
 
