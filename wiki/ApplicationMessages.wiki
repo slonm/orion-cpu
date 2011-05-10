@@ -11,6 +11,7 @@
 ==Соглашение на именование ключей ресурсов==
   * *entity.EntityName* - подпись сущности с именем EntityName
   * *property.EntityName.PropertyName* - подпись свойства PropertyName сущности EntityName
+  * *property-cell.EntityName.PropertyName* - подпись свойства PropertyName сущности EntityName в заголовке таблицы
   * *Menu>Start>Admin* - подпись пункта меню Start>Admin
   * *label.text* - подпись на странице с именем text
   * *message.text* - длинный самостоятельный текст на странице с именем text
