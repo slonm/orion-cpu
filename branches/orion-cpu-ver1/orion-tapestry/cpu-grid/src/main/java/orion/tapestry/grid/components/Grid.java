@@ -11,17 +11,13 @@ import org.apache.tapestry5.PropertyOverrides;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
 import org.apache.tapestry5.annotations.IncludeStylesheet;
-import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.TextField;
-import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -274,14 +270,12 @@ public class Grid {
      */
     @Inject
     private Messages messages;
-
     /**
      * обьект для доступа к сохранённым наборам настроек
      */
     @Parameter
     @Property
     private IGridSettingStore gridSettingStore;
-
 
     /**
      * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
@@ -360,37 +354,20 @@ public class Grid {
         // ------------- create filter list - end ------------------------------
 
         // ------------- данные о сортировке строк - begin ---------------------
-        if (this.sortJSON == null) {
-            this.fieldSortList = this.gridModel.getFieldSortList();
-            this.sortJSON = jsonFromFieldSortList(this.fieldSortList);
-        } else {
-            this.fieldSortList = this.fieldSortListFromJson(this.sortJSON);
-            if (this.fieldSortList != null) {
-                this.gridModel.setFieldSortList(this.fieldSortList);
-            } else {
-                this.fieldSortList = this.gridModel.getFieldSortList();
-                this.sortJSON = jsonFromFieldSortList(this.fieldSortList);
-            }
+        this.fieldSortList = this.gridModel.getFieldSortList();
+        if (this.sortJSON != null) {
+            this.loadSortJSON(this.sortJSON, this.fieldSortList);
         }
+        this.sortJSON = jsonFromFieldSortList(this.fieldSortList);
         // ------------- данные о сортировке строк - end -----------------------
 
         // ------------- данные о видимости колонок - begin --------------------
         // данные определяется в модели таблицы
-        if (this.viewJSON == null) {
-            this.fieldViewList = gridModel.getFieldViewList();
-            //for(GridFieldView fv:this.fieldViewList){
-            //    System.out.println(fv.getUid());
-            //}
-            this.viewJSON = this.jsonFromFieldViewList(fieldViewList);
-        } else {
-            this.fieldViewList = this.fieldViewListFromJson(this.viewJSON);
-            if (this.fieldViewList != null) {
-                gridModel.setFieldViewList(this.fieldViewList);
-            } else {
-                this.fieldViewList = gridModel.getFieldViewList();
-                this.viewJSON = this.jsonFromFieldViewList(fieldViewList);
-            }
+        this.fieldViewList = gridModel.getFieldViewList();
+        if (this.viewJSON != null) {
+            this.loadViewJSON(this.viewJSON, this.fieldViewList);
         }
+        this.viewJSON = this.jsonFromFieldViewList(fieldViewList);
         // ------------- данные о видимости колонок - end ----------------------
 
 
@@ -566,37 +543,32 @@ public class Grid {
      * set default value if _viewJSON is null
      * @param _viewJSON новая строка с информацией о видимости и порядке столбцов
      */
-    public List<GridFieldView> fieldViewListFromJson(String _viewJSON) {
+    public void loadViewJSON(String _viewJSON, List<GridFieldView> fvl) {
         // set default value if this.viewJSON is null
         if (_viewJSON == null || _viewJSON.isEmpty()) {
-            return null;
+            return;
         }
-        ArrayList<GridFieldView> fvl = new ArrayList<GridFieldView>();
+
         try {
             //System.out.println("Parsing " + _viewJSON);
             JSONArray root = new JSONArray(_viewJSON);
             int cnt = root.length();
             JSONObject node;
-            GridFieldView gfv;
+
+            String uid;
             for (int i = 0; i < cnt; i++) {
                 node = root.getJSONObject(i);
-                gfv = new GridFieldView();
-                gfv.setLabel(node.getString("label"));
-                gfv.setUid(node.getString("uid"));
-                gfv.setOrdering(node.getInt("ordering"));
-                gfv.setIsVisible(node.getBoolean("isVisible"));
-                //System.out.println(node.getString("label")
-                //        + " " + node.getString("uid")
-                //        + " " + node.getInt("ordering")
-                //        + " " + node.getBoolean("isVisible"));
-                fvl.add(gfv);
+                uid = node.getString("uid");
+                for (GridFieldView gfv : fvl) {
+                    if (uid.equals(gfv.getUid())) {
+                        gfv.setOrdering(node.optInt("ordering", 0));
+                        gfv.setIsVisible(node.optBoolean("isVisible", true));
+                    }
+                }
             }
-
-            return fvl;
         } catch (JSONException ex) {
             //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
 
     /**
@@ -637,33 +609,30 @@ public class Grid {
     /**
      * TODO Add JavaDoc here
      */
-    public List<GridFieldSort> fieldSortListFromJson(String _sortJSON) {
+    public void loadSortJSON(String _sortJSON, List<GridFieldSort> fsl) {
         // set default value if this.viewJSON is null
         if (_sortJSON == null || _sortJSON.isEmpty()) {
-            return null;
+            return;
         }
-        ArrayList<GridFieldSort> fsl = new ArrayList<GridFieldSort>();
+        //ArrayList<GridFieldSort> fsl = new ArrayList<GridFieldSort>();
         try {
             //System.out.println("Parsing " + _viewJSON);
             JSONArray root = new JSONArray(_sortJSON);
             int cnt = root.length();
             JSONObject node;
-            GridFieldSort gfs;
+            String uid;
             for (int i = 0; i < cnt; i++) {
                 node = root.getJSONObject(i);
-                gfs = new GridFieldSort();
-                gfs.setAttributeName(node.getString("attributeName"));
-                gfs.setLabel(node.getString("label"));
-                gfs.setOrdering(node.getInt("ordering"));
-                gfs.setSortType(GridFieldSortType.valueOf(node.getString("sortType")));
-                gfs.setUid(node.getString("uid"));
-                fsl.add(gfs);
+                uid = node.getString("uid");
+                for (GridFieldSort gfs : fsl) {
+                    if (gfs.getUid().equals(uid)) {
+                        gfs.setOrdering(node.optInt("ordering", 0));
+                        gfs.setSortType(GridFieldSortType.valueOf(node.optString("sortType", "NONE")));
+                    }
+                }
             }
-
-            return fsl;
         } catch (JSONException ex) {
             //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
 }
