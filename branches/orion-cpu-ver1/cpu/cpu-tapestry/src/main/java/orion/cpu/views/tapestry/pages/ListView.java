@@ -11,6 +11,7 @@ import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import orion.cpu.baseentities.BaseEntity;
+import orion.cpu.views.tapestry.utils.EVTools;
 import orion.tapestry.menu.lib.IMenuLink;
 
 /**
@@ -65,11 +66,12 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
         Class<BaseEntity<?>> beanClass;
         try {
             assert context.getCount() > 0;
-            //Так как User находится в пакете br.com.arsmachina.authentication.entity, необходимо переопределить rootPackage, entitiesPackage.
-            if ((context.get(String.class, 0)).indexOf("entity.User") > -1) {
-                beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", "br.com.arsmachina.authentication", context.get(String.class, 0)));
-            } else {
+            //При необходимости выполняем переопределение пакета
+            String pack = EVTools.getPackageByStringFromEventContext(context.get(String.class, 0));
+            if (pack == null) {
                 beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s", rootPackage, entitiesPackage, context.get(String.class, 0)));
+            } else {
+                beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", pack, context.get(String.class, 0)));
             }
         } catch (Exception ex) {
             LOG.debug("Invalid activation context. Redirect to root page");
@@ -108,11 +110,12 @@ public class ListView extends BaseListPage<BaseEntity<?>, Integer> {
             try {
                 assert input.getPageClass().equals(ListView.class);
                 assert input.getContext().length > 0;
-                //Так как User находится в пакете br.com.arsmachina.authentication.entity, необходимо переопределить rootPackage, entitiesPackage.
-                if ((input.getContext()[0].toString()).indexOf("entity.User") > -1) {
-                    return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", "br.com.arsmachina.authentication", input.getContext()[0]));
-                } else {
+                //При необходимости выполняем переопределение пакета
+                String pack = EVTools.getPackageByStringFromEventContext(input.getContext()[0].toString());
+                if (pack == null) {
                     return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s", rootPackage, entitiesPackage, input.getContext()[0]));
+                } else {
+                    return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", pack, input.getContext()[0]));
                 }
             } catch (Exception ex) {
                 return null;
