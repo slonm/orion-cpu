@@ -1,5 +1,7 @@
 package ua.orion.cpu.web.services;
 
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Match;
@@ -30,30 +32,12 @@ public class AppModule {
      */
     public static void contributeApplicationDefaults(
             MappedConfiguration<String, String> configuration) {
-        // Contributions to ApplicationDefaults will override any contributions to
-        // FactoryDefaults (with the same key). Here we're restricting the supported
-        // locales to just "en" (English). As you add localised message catalogs and other assets,
-        // you can extend this list of locales (it's a comma separated series of locale names;
-        // the first locale name is the default when there's no reasonable match).
-
-        configuration.add(SymbolConstants.SUPPORTED_LOCALES, "uk,ru,en");
-
-        // The factory default is true but during the early stages of an application
-        // overriding to false is a good idea. In addition, this is often overridden
-        // on the command line as -Dtapestry.production-mode=false
-        configuration.add(SymbolConstants.PRODUCTION_MODE, "false");
-
-        // The application version number is incorprated into URLs for some
-        // assets. Web browsers will cache assets because of the far future expires
-        // header. If existing assets are changed, the version number should also
-        // change, to force the browser to download new versions.
-        configuration.add(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
-        configuration.add(SymbolConstants.COMPRESS_WHITESPACE, SymbolConstants.PRODUCTION_MODE_VALUE);
-        //Заполнение базы данных тестовыми данными
-        configuration.add(OrionCPUSymbols.TEST_DATA, "true");
-        configuration.add(SymbolConstants.GZIP_COMPRESSION_ENABLED, "false");
-//        configuration.add(SymbolConstants.BLACKBIRD_ENABLED, "true");
-        configuration.add(Ejb3HibernateSymbols.CREATE_SCHEMA_STATEMENT, "CREATE SCHEMA %s");
+        ResourceBundle bundle = ResourceBundle.getBundle("Cpu");
+        Enumeration<String> e = bundle.getKeys();
+        while (e.hasMoreElements()){
+            String key=e.nextElement();
+            configuration.add(key, bundle.getString(key));
+        }
     }
 
     public static void contributePageRenderLinkTransformer(OrderedConfiguration<PageRenderLinkTransformer> configuration,

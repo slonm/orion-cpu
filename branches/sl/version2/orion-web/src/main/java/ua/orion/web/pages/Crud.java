@@ -145,14 +145,14 @@ public class Crud {
     }
 
     public Object onEdit(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":update:"+object.getId());
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":update:"+id);
         mode = EDIT;
         object = entityService.find(objectClass, id);
         return editBlock;
     }
 
     public Object onAdd() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":insert:"+object.getId());
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":insert");
         mode = ADD;
         object = entityService.newInstance(objectClass);
         return editBlock;
@@ -165,7 +165,7 @@ public class Crud {
     }
 
     public Object onDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":delete:"+object.getId());
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":delete:"+id);
         mode = DEL;
         entityService.remove(entityService.find(objectClass, id));
         return listZone.getBody();

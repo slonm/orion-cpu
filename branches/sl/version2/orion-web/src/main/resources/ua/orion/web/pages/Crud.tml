@@ -10,20 +10,20 @@
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
                 <div class="crud-links">
-                    <s:HasPermission permission="${objectClass}:update:${object.id}">
+                    <s:HasPermission permission="${objectClass.simpleName}:update:${object.id}">
                         <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="editZone" title="message:action.edit"/>
                     </s:HasPermission>
-                    <s:HasPermission permission="${objectClass}:read:${object.id}">
+                    <s:HasPermission permission="${objectClass.simpleName}:read:${object.id}">
                         <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="editZone" title="message:action.view"/>
                     </s:HasPermission>
-                    <s:HasPermission permission="${objectClass}:delete:${object.id}">
+                    <s:HasPermission permission="${objectClass.simpleName}:delete:${object.id}">
                         <t:EventLink class="crud-del-pic" t:event="delete" context="${object.id}" zone="listZone" title="message:action.del"/>
                     </s:HasPermission>
                 </div>
             </p:actionCell>
         </t:grid>
     </t:zone>
-    <s:HasPermission permission="${objectClass}:insert:${object.id}">
+    <s:HasPermission permission="${objectClass.simpleName}:insert">
         <t:EventLink class="crud-add" t:event="add" zone="editZone">${message:action.add}</t:EventLink>
     </s:HasPermission>
     <t:block id="editBlock">

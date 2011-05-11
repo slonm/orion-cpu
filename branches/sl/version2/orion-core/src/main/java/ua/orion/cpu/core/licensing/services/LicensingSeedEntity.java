@@ -40,7 +40,7 @@ public class LicensingSeedEntity {
         if (testData) {
             //---Списки доступа----------
             es.findUniqueOrPersist(new Acl("LicenseReader", SubjectType.ROLE, "EducationForm:read"));
-            es.findUniqueOrPersist(new Acl("LicenseAppender", SubjectType.ROLE, "EducationForm:read,add"));
+            es.findUniqueOrPersist(new Acl("LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,delete"));
             //---------Области знаний или направления подготовки----------
             KnowledgeAreaOrTrainingDirection kaotdCompSci = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Комп'ютерні науки", null, "0804", false, false));
             KnowledgeAreaOrTrainingDirection kaotdInfComp = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Інформатика та обчислювальна техніка", null, "0501", true, false));
