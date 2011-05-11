@@ -15,7 +15,7 @@ import ua.orion.core.services.EntityService;
 public class OrgUnitsSeedEntity {
     public OrgUnitsSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {
-        SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(OrgUnitsSymbols.ORG_UNITS));
+        SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(OrgUnitsSymbols.ORG_UNITS_LIB));
         if (testData) {
         //---Кафедры, выполняющие обучение по лицензиям----------
             Chair kafPIT = es.findUniqueOrPersist(new Chair("кафедра програмування та інформаційних технологій", "КПІТ"));

@@ -141,7 +141,6 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
             }
             DefaultLdapContextFactory defaultFactory = new DefaultLdapContextFactory();
             defaultFactory.setPrincipalSuffix(this.principalSuffix);
-            defaultFactory.setSearchBase(this.searchBase);
             defaultFactory.setUrl(this.url);
             defaultFactory.setSystemUsername(this.systemUsername);
             defaultFactory.setSystemPassword(this.systemPassword);

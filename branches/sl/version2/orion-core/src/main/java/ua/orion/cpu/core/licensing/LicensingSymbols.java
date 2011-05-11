@@ -10,5 +10,5 @@ package ua.orion.cpu.core.licensing;
  * @author sl
  */
 public class LicensingSymbols {
-    public static final String LICENSING = "Licensing";
+    public static final String LICENSING_LIB = "Licensing";
 }

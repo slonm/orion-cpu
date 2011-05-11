@@ -107,11 +107,6 @@ public class OrionWebIOCModule {
         configuration.add(new LibraryMapping("ori", "ua.orion.web"));
     }
 
-    public static void contributeRealmSource(Configuration<Realm> configuration) {
-        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
-        configuration.add(realm);
-    }
-
     public void contributeApplicationMessagesSource(Configuration<String> conf,
             ComponentClassResolver componentClassResolver) {
         for (String lib : componentClassResolver.getFolderToPackageMapping().keySet()) {

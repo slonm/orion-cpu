@@ -11,6 +11,7 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author sl
  */
 @Entity
+@Table(schema="sec", uniqueConstraints=@UniqueConstraint(columnNames={"subject", "subjectType", "permission"}))
 public class Acl extends AbstractEntity<Acl> {
 
     /**
@@ -20,13 +21,22 @@ public class Acl extends AbstractEntity<Acl> {
     private SubjectType subjectType;
     /**
      * Объект разрешений. Им может быть класс сущности, сущность, веб страница, пункт меню и т.п.
-     * Класс сущности: entity:edit
-     * Сущность: entity:edit:12
+     * Класс сущности: Entity:edit
+     * Сущность: Entity:edit:12
      * Страница: page_index:view
      * Пункт меню: menu_Start>Licensing>LicenseRecord:show
      * @see WildcardPermission
      */
     private String permission;
+
+    public Acl() {
+    }
+
+    public Acl(String subject, SubjectType subjectType, String permission) {
+        this.subject = subject;
+        this.subjectType = subjectType;
+        this.permission = permission;
+    }
 
     public String getPermission() {
         return permission;

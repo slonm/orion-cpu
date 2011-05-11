@@ -1,5 +1,7 @@
 package ua.orion.cpu.core.licensing.services;
 
+import ua.orion.cpu.core.security.entities.Acl;
+import ua.orion.cpu.core.security.entities.SubjectType;
 import ua.orion.cpu.core.licensing.LicensingSymbols;
 import java.util.*;
 import ua.orion.cpu.core.orgunits.OrgUnitsSymbols;
@@ -16,11 +18,11 @@ import static ua.orion.core.utils.DateTimeUtils.*;
  *
  * @author sl
  */
-@AfterLibrary(OrgUnitsSymbols.ORG_UNITS)
+@AfterLibrary(OrgUnitsSymbols.ORG_UNITS_LIB)
 public class LicensingSeedEntity {
     public LicensingSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {
-        SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(LicensingSymbols.LICENSING));
+        SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(LicensingSymbols.LICENSING_LIB));
         //---------Формы обучения---------
         EducationForm stat_EF = es.findUniqueOrPersist(new EducationForm("Денна", "Ден.", EducationForm.STATIONARY_UKEY, 1));
         EducationForm corr_EF = es.findUniqueOrPersist(new EducationForm("Заочна", "Заоч.", EducationForm.CORRESPONDENCE_UKEY, 2));
@@ -36,6 +38,9 @@ public class LicensingSeedEntity {
         LicenseRecordGroup btrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка бакалаврів", LicenseRecordGroup.BACH_TRAINING_UKEY));
         LicenseRecordGroup jstrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка молодших спеціалістів", LicenseRecordGroup.JUN_SPEC_TRAINING_UKEY));
         if (testData) {
+            //---Списки доступа----------
+            es.findUniqueOrPersist(new Acl("LicenseReader", SubjectType.ROLE, "EducationForm:read"));
+            es.findUniqueOrPersist(new Acl("LicenseAppender", SubjectType.ROLE, "EducationForm:read,add"));
             //---------Области знаний или направления подготовки----------
             KnowledgeAreaOrTrainingDirection kaotdCompSci = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Комп'ютерні науки", null, "0804", false, false));
             KnowledgeAreaOrTrainingDirection kaotdInfComp = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Інформатика та обчислювальна техніка", null, "0501", true, false));

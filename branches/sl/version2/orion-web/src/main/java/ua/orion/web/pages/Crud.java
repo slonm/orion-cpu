@@ -125,7 +125,7 @@ public class Crud {
                 return startPageName;
             }
         }
-//        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":read");
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":read");
         title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
@@ -145,12 +145,14 @@ public class Crud {
     }
 
     public Object onEdit(Integer id) {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":update:"+object.getId());
         mode = EDIT;
         object = entityService.find(objectClass, id);
         return editBlock;
     }
 
     public Object onAdd() {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":insert:"+object.getId());
         mode = ADD;
         object = entityService.newInstance(objectClass);
         return editBlock;
@@ -163,6 +165,7 @@ public class Crud {
     }
 
     public Object onDelete(Integer id) {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":delete:"+object.getId());
         mode = DEL;
         entityService.remove(entityService.find(objectClass, id));
         return listZone.getBody();

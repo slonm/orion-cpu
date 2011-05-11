@@ -82,4 +82,9 @@ public class AppModule {
         receiver.adviseMethod(IOCUtils.getMethod(ComponentClassResolver.class, "canonicalizePageName", String.class), advice);
     }
 
+//    public static void contributeRealmSource(Configuration<Realm> configuration) {
+//        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
+//        configuration.add(realm);
+//    }
+
 }

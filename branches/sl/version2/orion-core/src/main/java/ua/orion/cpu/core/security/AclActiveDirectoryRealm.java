@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -22,6 +20,7 @@ import ua.orion.cpu.core.security.entities.*;
 public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
 
     private EntityManager em;
+    private final String QL = "FROM Acl WHERE lower(subject) = :subject and subjectType=:subjectType";
 
     public AclActiveDirectoryRealm(EntityManager em) {
         this.em = em;
@@ -32,12 +31,10 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
     @Override
     protected AuthorizationInfo buildAuthorizationInfo(Set<String> roleNames, String username) {
         SimpleAuthorizationInfo saf = (SimpleAuthorizationInfo) super.buildAuthorizationInfo(roleNames, username);
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Acl> query = cb.createQuery(Acl.class);
-        Root<Acl> root = query.from(Acl.class);
-        query.where(cb.equal(root.get("subjectType"), SubjectType.USER),
-                cb.equal(root.get("subject"), username.toLowerCase()));
-        for (Acl acl : em.createQuery(query).getResultList()) {
+        TypedQuery<Acl> q = em.createQuery(QL, Acl.class);
+        q.setParameter("subject", username.toLowerCase());
+        q.setParameter("subjectType", SubjectType.USER);
+        for (Acl acl : q.getResultList()) {
             saf.addStringPermission(acl.getPermission());
         }
         return saf;
@@ -48,12 +45,10 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         @Override
         public Collection<Permission> resolvePermissionsInRole(String roleString) {
             Collection<Permission> permissions = new HashSet<Permission>();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Acl> query = cb.createQuery(Acl.class);
-            Root<Acl> root = query.from(Acl.class);
-            query.where(cb.equal(root.get("subjectType"), SubjectType.ROLE),
-                    cb.equal(root.get("subject"), roleString.toLowerCase()));
-            for (Acl acl : em.createQuery(query).getResultList()) {
+            TypedQuery<Acl> q = em.createQuery(QL, Acl.class);
+            q.setParameter("subject", roleString.toLowerCase());
+            q.setParameter("subjectType", SubjectType.ROLE);
+            for (Acl acl : q.getResultList()) {
                 permissions.add(new WildcardPermission(acl.getPermission()));
             }
             return permissions;

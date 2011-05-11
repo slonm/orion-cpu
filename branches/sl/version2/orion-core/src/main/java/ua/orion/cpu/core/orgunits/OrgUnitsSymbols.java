@@ -10,5 +10,5 @@ package ua.orion.cpu.core.orgunits;
  * @author sl
  */
 public class OrgUnitsSymbols {
-    public static final String ORG_UNITS = "OrgUnits";
+    public static final String ORG_UNITS_LIB = "OrgUnits";
 }

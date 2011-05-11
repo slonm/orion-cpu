@@ -130,6 +130,11 @@
                 <version>${slf4j-release-version}</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j-release-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.tapestry</groupId>
                 <artifactId>tapestry-ioc</artifactId>
                 <version>${tapestry-release-version}</version>
