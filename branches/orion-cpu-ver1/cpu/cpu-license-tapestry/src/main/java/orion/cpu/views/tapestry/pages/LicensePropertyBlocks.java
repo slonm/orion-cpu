@@ -1,5 +1,7 @@
 package orion.cpu.views.tapestry.pages;
 
+import br.com.arsmachina.module.service.ControllerSource;
+import java.util.Collections;
 import java.util.Set;
 import java.util.SortedMap;
 import javax.naming.event.EventContext;
@@ -8,6 +10,7 @@ import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Loop;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
 import orion.cpu.entities.ref.EducationForm;
@@ -25,6 +28,9 @@ public class LicensePropertyBlocks {
     //полученным от службы Environment (Обеспечивает доступ к объектам окружения,
     //создаваемыми используемыми в классе компонентами - форма позднего связывания.)
     //Свойство, представляющее контекст, получаемый при выводе грида на экран
+
+    @Inject
+    private ControllerSource controllerSource;
     @Environmental
     //Свойство, представляющее контекст, получаемый при выводе грида на экран
     @Property(write = false)
@@ -54,11 +60,11 @@ public class LicensePropertyBlocks {
     //В параметрах компонента указаны: в source - метод getEduForms(), возвращающий
     //набор ключей, хранящихся в мэп; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте Loop
-    @Component(parameters = {"source=EduForms", "value=eduForm"})
+    @Component(parameters = {"source=EduFormsD", "value=eduForm"})
     private Loop eduFormLicenseQuantity;
     //Свойство, необходимое для установления текущего значения при выводе
     //элементов мэпа в гриде в компоненте Loop
-    @Property(read=false)
+    @Property(read = false)
     private EducationForm eduForm;
     //Используемый методами этого класса мэп
     private SortedMap<EducationForm, Integer> mp = null;
@@ -67,7 +73,7 @@ public class LicensePropertyBlocks {
     //В параметрах компонента указаны: в source - метод getEduForms(), возвращающий
     //набор ключей, хранящихся в мэп; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте Loop
-    @Component(parameters = {"source=EduForms",
+    @Component(parameters = {"source=EduFormsE",
         "value=EduForm"})
     private Loop eduFormLicenseQuantityAfl;
 
@@ -94,26 +100,48 @@ public class LicensePropertyBlocks {
         return mp.get(eduForm);
     }
 
+    /**
+     * Метод для установки значения Map в контекст.
+     * Используется при сохранении формы.
+     * @param value (Целочисленный тип, который отвечает за лиценз. объем студентов для данной формы обучения)
+     */
     public void setEduFormLicenseQuantities(Integer value) {
-        mp.put(getEduForm(), value);
-        editContext.setPropertyValue(mp);
+        SortedMap<EducationForm, Integer> tempMap = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
+        tempMap.put(getEduForm(), value);
     }
 
-    public EducationForm getEduForm(){
-        System.out.println("--- "+eduForm.getName()+" ---");
+    /**
+     * Метод возвращает текущую форму обучения для компонента Loop.
+     * Используется для получения формы обучения с последующим ее сохранением.
+     * @return EducationForm (форма обучения)
+     */
+    public EducationForm getEduForm() {
         return eduForm;
     }
 
     /**
      * Метод для получения ключей мэпа "форма обучения - лицензированный объем"
-     * (используется параметром source компонентов Loop)
+     * (используется параметром source компонентов Loop для отображения в Grid)
      * @return множество ключей мэпа Map<EducationForm, Integer> licenseQuantityByEducationForm
      */
-    public Set getEduForms() {
-        try {
-            mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
-        } catch (Exception ex) {
-            mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
+    public Set getEduFormsD() {
+        mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+        return mp.keySet();
+    }
+
+    /**
+     * Метод для получения ключей мэпа "форма обучения - лицензированный объем"
+     * (используется параметром source компонентов Loop для редактирования в BeanEditor)
+     * @return множество ключей мэпа Map<EducationForm, Integer> licenseQuantityByEducationForm
+     */
+    public Set getEduFormsE() {
+        mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
+        if (mp.isEmpty()) {
+            for (EducationForm ef : controllerSource.get(EducationForm.class).findAll()) {
+                if (!mp.keySet().contains(ef)) {
+                    mp.put(ef, 0);
+                }
+            }
         }
         return mp.keySet();
     }

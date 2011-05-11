@@ -45,10 +45,17 @@
     используемый в бинэдиторе для редактирования списка лицензированного объёма
     по формам обучения-->
     <t:block id="EditEduFormLicenseQuantity">
-        ${message:reflect.orion.cpu.entities.uch.LicenseRecord.LicenseQuantityByEducationForm}<br/>
-        <t:loop t:id="eduFormLicenseQuantityAfl">
-            <h4 style="width:250px">${eduForm.name}</h4>
-            <t:textfield t:id="txtEduFormLicenseQuantity" value="EduFormLicenseQuantities"/>
-        </t:loop>
-    </t:block> 
+
+        <table class="t-loop">
+            <tr><th class="f-right">
+                    ${message:reflect.orion.cpu.entities.uch.LicenseRecord.LicenseQuantityByEducationForm}<br/>
+                </th></tr>
+            <t:loop t:id="eduFormLicenseQuantityAfl">
+                <tr>
+                    <td class="f-right"><i>${eduForm.name}:</i></td>
+                    <td><t:textfield t:id="txtEduFormLicenseQuantity" value="EduFormLicenseQuantities"/></td>
+                </tr>
+            </t:loop>
+        </table>
+    </t:block>
 </div>

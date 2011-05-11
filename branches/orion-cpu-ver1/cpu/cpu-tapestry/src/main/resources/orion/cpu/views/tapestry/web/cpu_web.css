@@ -11,13 +11,15 @@ table.t-data-grid tbody tr td{
 table.t-data-grid thead tr th,
 .t-data-grid-pager a,
 .topusername,
-.td-user-logout{
+.td-user-logout,
+.t-palette-title{
     text-decoration: none;
     background-image: url(images/table_head.png);
 }
 
 /* Форматируем текст заголовков для Grid */
-table.t-data-grid thead tr th a{
+table.t-data-grid thead tr th a,
+.t-palette-title{
     font-size: 10pt;
     color: #15428b;
     text-decoration: none; /* Убираем подчеркивание */
@@ -37,7 +39,6 @@ table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
 /* Выделяем серым цветом ячейки с кнопками в Grid */
 table.t-data-grid td.action{
     background-color: #d7d7d7;
-
 }
 
 .topuser{
@@ -199,6 +200,8 @@ div.t-beaneditor{
     font-size: 13px;
 }
 
+/* Оформление многострочного поля редактирования.
+Например, в отчетах и шаблонах страниц */
 textarea#body{
     width: 600px;
     height: 120px;
@@ -207,7 +210,69 @@ textarea#body{
     font-family: Tahoma, sans-serif;
     background-color: #DFDFDF;
 }
+/* Оформление многострочного поля. При фокусировке
+поле становится светлым */
 textarea#body:focus{
     background-color: inherit;
 }
 
+/* Оформление ссылок. Они приобретают вид кнопок. */
+.btnwicon, .t-crud-new-object{
+    -moz-border-radius: 8px 8px 8px 8px;
+    background-image: url(images/white000.jpg) repeat-x scroll 0 0 transparent;
+    border: 1px solid #DFDFDF;
+    color: #999999;
+    display: inline-block;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    height: 44px;
+    line-height: 44px;
+    margin: 0 10px 10px 0;
+    padding: 0 10px 0 50px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+    text-decoration: none;
+    border-radius: 12px;
+}
+
+/* Оформление ссылок. При наведении появляется эффект фокусировки */
+.btnwicon:hover,.t-crud-new-object:hover{
+    background: none repeat scroll 0 0 #F8F8F8;
+    border-color: #CACACA;
+}
+
+/* Оформление картинок внутри кнопок */
+.bticon{
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    height: 32px;
+    left: 9px;
+    position: absolute;
+    top: 6px;
+    width: 32px;
+}
+
+/* Кнопка добавления записи */
+#recordAdd{
+    background-image: url(images/add00000.png);
+}
+
+/* Кнопка списка записей - grid */
+#recordList{
+    background-image: url(images/page0000.png);
+}
+
+/* Применяется для элементов, в которых текст должен быть по выровнен по
+правому краю */
+.f-right{
+    text-align: right;
+}
+
+/* Применяется в beaneditor, для элементов loop, для того чтобы не нарушать
+структуру формы */
+.t-loop .f-right{
+    width: 250px;
+    color: #000000;
+}

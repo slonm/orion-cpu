@@ -30,11 +30,11 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     //Создание пользовательского типа данных, указывающего на Property Block,
     //используемый в гриде и бинэдиторе
     @DataType("EduFormLicenseQuantity")
-    private SortedMap<EducationForm, Integer> licenseQuantityByEducationForm;
+    private SortedMap<EducationForm, Integer> licenseQuantityByEducationForm=new TreeMap();
     private Date terminationDate;
     private OrgUnit orgUnit;
     private LicenseRecordGroup licenseRecordGroup;
-    
+
     public LicenseRecord() {
     }
 
@@ -58,7 +58,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @return Серия, номер и дата выдачи лицензии, к которой принадлежит данная запись
      * (не отображается в гриде)
      */
-    @NonVisual
+
     @ManyToOne
     @NotNull
     public License getLicense() {
@@ -97,7 +97,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @return образовательно-квалификайционный уровень
      * (не отображается в гриде)
      */
-    @NonVisual
+
     @ManyToOne
     @NotNull
     public EducationalQualificationLevel getEducationalQualificationLevel() {
@@ -109,7 +109,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     }
 
     /**
-     * @return составной код, включающий код образовательно-квалификационного уровня, 
+     * @return составной код, включающий код образовательно-квалификационного уровня,
      * код области знаний/направления обучения и код направления обучения/специальности
      */
     @Transient
@@ -128,7 +128,7 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
             return null;
         }
     }
-    
+
     /**
      * @return название направления обучения/специальности
      */

@@ -28,13 +28,10 @@ import orion.tapestry.menu.lib.IMenuLink;
 public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Edit.class);
-
 //    @Mixin
 //    private HibernateValidatorMixin hibernateValidatorMixin;
-
     @Mixin
     private CrudEditPageMixin<BaseEntity<?>, Integer> crudEditPageMixin;
-
     /**
      * Заголовок страницы
      */
@@ -75,7 +72,7 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
      * При открытии страницы
      *
      * @param context
-     * @return 
+     * @return
      * @author sl
      */
     @SuppressWarnings("unchecked")
@@ -84,8 +81,12 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
         Class<BaseEntity<?>> beanClass;
         try {
             assert context.getCount() > 0;
-            beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s", rootPackage, entitiesPackage,
-                    context.get(String.class, 0)));
+            //Так как User находится в пакете br.com.arsmachina.authentication.entity, необходимо переопределить rootPackage, entitiesPackage.
+            if ((context.get(String.class, 0)).indexOf("entity.User") > -1) {
+                beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", "br.com.arsmachina.authentication", context.get(String.class, 0)));
+            } else {
+                beanClass = (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s", rootPackage, entitiesPackage, context.get(String.class, 0)));
+            }
         } catch (Exception ex) {
             LOG.debug("Invalid activation context. Redirect to root page");
             return "";
@@ -190,8 +191,12 @@ public class Edit implements CrudEditPage<BaseEntity<?>, Integer> {
             try {
                 assert input.getPageClass().equals(Edit.class);
                 assert input.getContext().length > 0;
-                return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s",
-                        rootPackage, entitiesPackage, input.getContext()[0]));
+                //Так как User находится в пакете br.com.arsmachina.authentication.entity, необходимо переопределить rootPackage, entitiesPackage.
+                if ((input.getContext()[0].toString()).indexOf("entity.User") > -1) {
+                    return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s", "br.com.arsmachina.authentication", input.getContext()[0]));
+                } else {
+                    return (Class<BaseEntity<?>>) Class.forName(String.format("%s.%s.%s", rootPackage, entitiesPackage, input.getContext()[0]));
+                }
             } catch (Exception ex) {
                 return null;
             }

@@ -13,7 +13,7 @@ import ua.mihailslobodyanuk.utils.Defense;
 /**
  * Реализация {@link ActivationContextEncoder}
  * Помещает в ActivationContext класс справочника и id записи
- * 
+ *
  * @author sl
  */
 public class BaseActivationContextEncoder implements ActivationContextEncoder<BaseEntity<?>> {
@@ -47,7 +47,7 @@ public class BaseActivationContextEncoder implements ActivationContextEncoder<Ba
     }
 
     /**
-     * @param eventContext 
+     * @param eventContext
      * @return Объект. null, если AC будет содержать меньше одного параметра
      */
     @Override
@@ -56,6 +56,10 @@ public class BaseActivationContextEncoder implements ActivationContextEncoder<Ba
         if (eventContext.getCount() >= 2) {
             Controller<?, Integer> controller;
             String entityName = eventContext.get(String.class, 0);
+            //Исключение entity.entity
+            if (entityName.indexOf("entity.User") > -1) {
+                entityName = "User";
+            }
             Class<?> entityClass = null;
             for (String pkg : hibernateEntityPackageManager.getPackageNames()) {
                 try {

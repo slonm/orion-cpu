@@ -20,11 +20,12 @@
     </t:zone>
     <br/>
     <t:if test="create">
-        <crud:NewObjectEventLink/><br/>
+        <crud:NewObjectEventLink/>
     </t:if>
     <t:if test="listView">
-        <t:PageLink page="prop:listpageurl" context="prop:listPageURLContext">
-	${message:link.list.class}
+        <!--Ссылка переоформлена для задания CSS-->
+        <t:PageLink page="prop:listpageurl" context="prop:listPageURLContext" class="btnwicon">
+	${message:link.list.class}<span class="bticon" id="recordList"/>
         </t:PageLink>
     </t:if>
 </t:layout>

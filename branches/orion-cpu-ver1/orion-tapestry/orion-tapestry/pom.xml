@@ -75,6 +75,13 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <artifactId>mihailslobodyanukutils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>br.com.arsmachina</groupId>
+            <artifactId>tapestry-crud-hibernate-validator</artifactId>
+            <version>1.1.sl</version>
+            <type>jar</type>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>orion-tapestry</finalName>

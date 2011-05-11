@@ -40,10 +40,13 @@ jQuery(document).ready(function(){
         });
 
     }
-    //Появление t-beaneditor
-    jQuery("div.t-beaneditor").css({
-        'display':'none'
-    });
+//    //Появление t-beaneditor
+//    jQuery("div.t-beaneditor").css({
+//        'display':'none'
+//    });
+//
+//    jQuery("div.t-beaneditor").show("slow").slideDown("slow");
 
-    jQuery("div.t-beaneditor").show("slow").slideDown("slow");
+    //Подстановка иконки к t-crud-new-object на странице Edit
+    jQuery(".t-crud-new-object").prepend("<span class=\"bticon\" id=\"recordAdd\"/>")
 })
