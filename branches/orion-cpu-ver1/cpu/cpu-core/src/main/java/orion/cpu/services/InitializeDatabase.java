@@ -54,16 +54,21 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
         if (initDBSupport.isFillTestData()) {
             //---------Группы прав----------
             //Права управления всеми справочниками
-            Set<Permission> allReference = new HashSet<Permission>();
+            Set<Permission> allEntities = new HashSet<Permission>();
             for (Class<?> e : entitySource.getEntityClasses()) {
                 javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
                 if (a != null && "ref".equals(a.schema())) {
                     Map<String, Permission> permissions = initDBSupport.getPermissionsMap(e, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
-                    allReference.addAll(permissions.values());
+                    allEntities.addAll(permissions.values());
                 }
             }
-            PermissionGroup pg=null;
-            for (Permission p : allReference) {
+            //Права управления пользователями и ролями
+            Map<String, Permission> permissions = initDBSupport.getPermissionsMap(User.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+            allEntities.addAll(permissions.values());
+            permissions = initDBSupport.getPermissionsMap(Role.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+            allEntities.addAll(permissions.values());
+            PermissionGroup pg = null;
+            for (Permission p : allEntities) {
                 pg = initDBSupport.saveOrUpdatePermissionGroup("Управління довідниками", p);
             }
             //---------Роли----------
