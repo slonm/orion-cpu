@@ -35,7 +35,7 @@ public class GenericAuthenticationIOCModule {
      * @param config
      */
     public static void contributeHibernateSessionSource(OrderedConfiguration<HibernateConfigurer> config) {
-        config.addInstance("AuthorityInterceptor", HibernateAuthorityEventListener.class);
+//        config.addInstance("AuthorityInterceptor", HibernateAuthorityEventListener.class);
     }
 
     /**
