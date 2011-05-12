@@ -23,6 +23,7 @@ import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
+import ua.orion.core.utils.IOCUtils;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
@@ -252,6 +253,25 @@ public class OrionWebIOCModule {
             }
         };
         receiver.adviseMethod(getMethod(BeanModelSource.class, "createEditModel", Class.class, Messages.class), advice);
+    }
+
+    /**
+     * Патч позволяет делать редирект на "" если index в библиотеке
+     */
+    @Match("ComponentClassResolver")
+    public static void adviseComponentClassResolverWithIndexInLib(MethodAdviceReceiver receiver) {
+
+        MethodAdvice advice = new MethodAdvice() {
+
+            @Override
+            public void advise(Invocation invocation) {
+                if ("".equals(invocation.getParameter(0).toString())) {
+                    invocation.override(0, "ori/index");
+                }
+                invocation.proceed();
+            }
+        };
+        receiver.adviseMethod(IOCUtils.getMethod(ComponentClassResolver.class, "canonicalizePageName", String.class), advice);
     }
 
     /**

@@ -9,6 +9,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.UpdateListenerHub;
 import org.slf4j.Logger;
 import org.tynamo.jpa.JPAEntityManagerSource;
+import org.tynamo.jpa.JPATransactionAdvisor;
 import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
@@ -81,6 +82,11 @@ public class OrionCoreIOCModule {
         configuration.addInstance("PersistentSingleton", PersistentSingletonProvider.class);
     }
 
+    @Match("*Service")
+    public static void adviseTransactions(JPATransactionAdvisor advisor, MethodAdviceReceiver receiver)   {
+        advisor.addTransactionCommitAdvice(receiver);
+    }
+    
     /**
      * from String to Class
      * from String to MetaEntity

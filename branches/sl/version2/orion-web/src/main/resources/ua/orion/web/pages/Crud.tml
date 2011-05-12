@@ -5,47 +5,63 @@
               xmlns:p="tapestry:parameter"
               xmlns:s="tapestry-library:security">
     <t:zone t:id="listZone">
-        <t:ori.InitCall function="closeCkWindow" window="editWindow"/><!--для вызова метода скрытия окна-->
+        <t:if test="error">
+            <div class="t-error">${error}</div>
+        </t:if>
+        <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--для вызова метода скрытия окна-->
         <t:grid source="objects" row="object" inplace="true" add="action"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
                 <div class="crud-links">
                     <s:HasPermission permission="${objectClass.simpleName}:update:${object.id}">
-                        <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="editZone" title="message:action.edit"/>
+                        <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="popupZone" title="message:action.edit"/>
                     </s:HasPermission>
                     <s:HasPermission permission="${objectClass.simpleName}:read:${object.id}">
-                        <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="editZone" title="message:action.view"/>
+                        <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="popupZone" title="message:action.view"/>
                     </s:HasPermission>
                     <s:HasPermission permission="${objectClass.simpleName}:delete:${object.id}">
-                        <t:EventLink class="crud-del-pic" t:event="delete" context="${object.id}" zone="listZone" title="message:action.del"/>
+                        <t:EventLink class="crud-del-pic" t:event="trydelete" context="${object.id}" zone="popupZone" title="message:action.del"/>
                     </s:HasPermission>
                 </div>
             </p:actionCell>
         </t:grid>
     </t:zone>
     <s:HasPermission permission="${objectClass.simpleName}:insert">
-        <t:EventLink class="crud-add" t:event="add" zone="editZone">${message:action.add}</t:EventLink>
+        <t:EventLink class="crud-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
     </s:HasPermission>
     <t:block id="editBlock">
         <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.edit" html="false" /><!--для вызова метода показа окна-->
+            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" /><!--для вызова метода показа окна-->
             <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                             zone="listZone" context="${object?.id}" submitLabel="message:action.edit"/>
             <p:else>
-                <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
+                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
                 <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                 zone="listZone" submitLabel="message:action.add"/>
             </p:else>    
         </t:if>
     </t:block>
     <t:block id="viewBlock">
-        <t:ori.InitCall function="showCkWindow" window="editWindow" title="message:label.mode.view" html="false" /><!--для вызова метода показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" /><!--для вызова метода показа окна-->
         <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
     </t:block>
-    <t:ck.Window t:id="editWindow" t:style="bluelighting" show="false"
+    <t:block id="deleteBlock">
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" /><!--для вызова метода показа окна-->
+        <table>
+            <tr>
+                <td>
+                    <t:EventLink t:event="delete" zone="listZone">${message:action.del}</t:EventLink>
+                </td>
+                <td>
+                    <a href="#" onclick="Windows.close('popupWindow')">${message:action.cancel}</a>
+                </td>
+            </tr>
+        </table>
+    </t:block>
+    <t:ck.Window t:id="popupWindow" t:style="bluelighting" show="false"
                  modal="true" title="mode"
                  width="500" height="200">
-        <t:zone t:id="editZone"/>
-        <a href="#" onclick="Windows.close('editWindow')">${message:action.closewindow}</a>        
+        <t:zone t:id="popupZone"/>
+        <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
     </t:ck.Window>
 </t:ori.layout>

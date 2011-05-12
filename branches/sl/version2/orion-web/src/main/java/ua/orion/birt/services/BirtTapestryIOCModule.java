@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.ObjectLocator;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.InjectService;
@@ -17,6 +18,7 @@ import org.apache.tapestry5.services.ApplicationGlobals;
 import org.apache.tapestry5.services.HttpServletRequestFilter;
 import org.apache.tapestry5.services.HttpServletRequestHandler;
 import org.apache.tapestry5.services.LibraryMapping;
+import ua.orion.birt.BirtConnection;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.MenuLinkBuilder;
 
@@ -76,12 +78,13 @@ public class BirtTapestryIOCModule {
     private static String[] BIRT_VIEW_PATH = {"/frameset", "/run"};
 
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration,
-            final SymbolSource symbols) {
+            final SymbolSource symbols, final ObjectLocator locator) {
 //        configuration.addInstance("CpuBirtInitializeDatabase", CpuBirtInitializeDatabase.class, "after:CpuTapestryInitializeDatabase");
         configuration.add("birtServletInitParameters", new Runnable() {
 
             @Override
             public void run() {
+                BirtConnection.setLOCATOR(locator);
                 for (String name : BIRT_PARAMETER_NAMES) {
                     ServletConfigWrapper.initParametrs.put(name, symbols.valueForSymbol("birt."+name));
                 }
@@ -165,9 +168,9 @@ public class BirtTapestryIOCModule {
             @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter) {
 
         configuration.add("birtEngineServlet",
-                birtEngineServletHttpServletRequestFilter, "after:authorizerUserAndRole");
+                birtEngineServletHttpServletRequestFilter, "after:SecurityRequestFilter");
         configuration.add("birtViewServlet",
-                viewServletHttpServletRequestFilter, "after:authorizerUserAndRole");
+                viewServletHttpServletRequestFilter, "after:SecurityRequestFilter");
     }
 
     public static void bind(ServiceBinder binder) {
@@ -186,11 +189,7 @@ public class BirtTapestryIOCModule {
         configuration.add("rptdesign", DataRptDesignURLConnection.class);
     }
 
-    public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration) {
-        configuration.add("BirtTapestry", "classpath:BirtTapestry.properties");
-    }
-
-    public static void contributeCpuMenu(MappedConfiguration<String, IMenuLink> configuration,
+    public static void contributeOrionMenuService(MappedConfiguration<String, IMenuLink> configuration,
             MenuLinkBuilder mlb) {
         String path;
         path = "Start>Admin>Report";

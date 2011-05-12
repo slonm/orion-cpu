@@ -23,7 +23,7 @@ import ua.orion.web.services.TapestryComponentDataSource;
  * @author slobodyanuk
  */
 @Import(library = "../WindowUtils.js",
-        stylesheet="../css/tapestry-crud.css")
+stylesheet = "../css/tapestry-crud.css")
 public class Crud {
     //---Components and component's resources---
 
@@ -33,6 +33,8 @@ public class Crud {
     private Block editBlock;
     @Inject
     private Block viewBlock;
+    @Inject
+    private Block deleteBlock;
     @Inject
     @Property(write = false)
     private Messages messages;
@@ -61,6 +63,8 @@ public class Crud {
     private String mode;
     @Property(write = false)
     private String title;
+    @Property(write = false)
+    private String error;
     private static final String EDIT = "edit";
     private static final String ADD = "add";
     private static final String VIEW = "view";
@@ -125,7 +129,7 @@ public class Crud {
                 return startPageName;
             }
         }
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":read");
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
         title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
@@ -135,39 +139,64 @@ public class Crud {
     }
 
     public Object onSuccessFromEditForm() {
-        entityService.merge(object);
+        error = null;
+        try {
+            entityService.merge(object);
+        } catch (RuntimeException ex) {
+            error = messages.get("message.update-error");
+        }
         return listZone.getBody();
     }
 
     public Object onSuccessFromAddForm() {
-        entityService.persist(object);
+        error = null;
+        try {
+            entityService.persist(object);
+        } catch (RuntimeException ex) {
+            error = messages.get("message.insert-error");
+        }
         return listZone.getBody();
     }
 
     public Object onEdit(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":update:"+id);
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
         mode = EDIT;
         object = entityService.find(objectClass, id);
+        error = null;
         return editBlock;
     }
 
     public Object onAdd() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":insert");
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         mode = ADD;
         object = entityService.newInstance(objectClass);
+        error = null;
         return editBlock;
     }
 
     public Object onView(Integer id) {
         mode = VIEW;
         object = entityService.find(objectClass, id);
+        error = null;
         return viewBlock;
     }
 
-    public Object onDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName()+":delete:"+id);
+    public Object onTryDelete(Integer id) {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         mode = DEL;
-        entityService.remove(entityService.find(objectClass, id));
+        object = entityService.find(objectClass, id);
+        error = null;
+        return deleteBlock;
+    }
+
+    public Object onDelete() {
+        error = null;
+        try {
+            object = entityService.getEntityManager().merge(object);
+            entityService.remove(object);
+        } catch (RuntimeException ex) {
+            error = messages.get("message.delete-error");
+        }
         return listZone.getBody();
     }
 

@@ -46,6 +46,7 @@ public class SecurityCoreModule
 	{
 		configuration.add(SecurityCoreSymbols.CONFIG_PATH, "classpath:shiro.ini");
 		configuration.add(SecurityCoreSymbols.SHOULD_LOAD_INI_FROM_CONFIG_PATH, "false");
+		configuration.add(SecurityCoreSymbols.ENABLED, "true");
 	}
 
 	/**

@@ -40,31 +40,16 @@ public class AppModule {
         }
     }
 
-    public static void contributePageRenderLinkTransformer(OrderedConfiguration<PageRenderLinkTransformer> configuration,
-            IndexPageRenderLinkTransformer lTranformer) {
-        configuration.add("IndexPage", lTranformer);
-    }
+//    public static void contributePageRenderLinkTransformer(OrderedConfiguration<PageRenderLinkTransformer> configuration,
+//            IndexPageRenderLinkTransformer lTranformer) {
+//        configuration.add("IndexPage", lTranformer);
+//    }
+    
 //    public static void contributeComponentEventLinkTransformer(
 //            OrderedConfiguration<ComponentEventLinkTransformer> configuration)
 //    {
 //        configuration.addInstance("App", AppComponentEventLinkTransformer.class);
 //    }
-
-    @Match("ComponentClassResolver")
-    public static void adviseComponentClassResolverWithForeigIndex(MethodAdviceReceiver receiver) {
-
-        MethodAdvice advice = new MethodAdvice() {
-
-            @Override
-            public void advise(Invocation invocation) {
-                if ("".equals(invocation.getParameter(0).toString())) {
-                    invocation.override(0, "ori/index");
-                }
-                invocation.proceed();
-            }
-        };
-        receiver.adviseMethod(IOCUtils.getMethod(ComponentClassResolver.class, "canonicalizePageName", String.class), advice);
-    }
 
 //    public static void contributeRealmSource(Configuration<Realm> configuration) {
 //        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
