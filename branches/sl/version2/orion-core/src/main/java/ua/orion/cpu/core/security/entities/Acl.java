@@ -43,9 +43,6 @@ public class Acl extends AbstractEntity<Acl> {
     }
 
     public void setPermission(String permission) {
-        if (permission != null) {
-            permission = permission.toLowerCase();
-        }
         this.permission = permission;
     }
 
