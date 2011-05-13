@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
 import javax.persistence.EntityManager;
-import org.apache.tapestry5.ioc.services.ThreadLocale;
 import ua.orion.cpu.core.security.services.ThreadRole;
 
 /**

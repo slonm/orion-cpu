@@ -2,7 +2,9 @@ package ua.orion.web.pages;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -11,6 +13,7 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
@@ -24,6 +27,7 @@ import ua.orion.web.services.TapestryComponentDataSource;
  */
 @Import(library = "../WindowUtils.js",
 stylesheet = "../css/tapestry-crud.css")
+@SuppressWarnings("unused")
 public class Crud {
     //---Components and component's resources---
 
@@ -38,9 +42,13 @@ public class Crud {
     @Inject
     @Property(write = false)
     private Messages messages;
+    @Inject
+    private ComponentResources resources;
     //---Services---
     @Inject
     private Request request;
+    @Inject
+    private PageRenderLinkSource pageRenderLinkSource;
     @Inject
     private EntityService entityService;
     @Inject
@@ -107,7 +115,7 @@ public class Crud {
      * @return
      * @author sl
      */
-//    public Object onPassivate() {
+    public void onPassivate() {
 //        if (getObject() != null) {
 //            return getActivationContextEncoder(getEntityClass()).
 //                    toActivationContext(getObject());
@@ -115,15 +123,24 @@ public class Crud {
 //            return BaseEntity.getFullClassName(getEntityClass());
 //        }
 //        return null;
-//    }
-    @SuppressWarnings("unchecked")
+        return;
+    }
     public Object onActivate(EventContext context) {
         if (!isComponentEventRequst()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
                 }
-                objectClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
+                Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
+                if(!objClass.equals(objectClass)&&objectClass!=null){
+                    resources.discardPersistentFieldChanges();
+                    Link link=pageRenderLinkSource.createPageRenderLinkWithContext(Crud.class, context);
+                    for(String s:request.getParameterNames()){
+                        link.addParameter(s, request.getParameter(s));
+                    }
+                    return link;
+                }
+                objectClass=objClass;
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return startPageName;
