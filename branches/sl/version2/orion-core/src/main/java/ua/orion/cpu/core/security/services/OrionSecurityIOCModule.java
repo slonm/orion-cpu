@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
+import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.tynamo.jpa.Ejb3HibernateConfigurer;
 import ua.orion.core.ModelLibraryInfo;
@@ -17,6 +18,10 @@ import ua.orion.cpu.core.security.OrionSecuritySymbols;
  * @author sl
  */
 public class OrionSecurityIOCModule {
+
+    public static void bind(ServiceBinder binder) {
+        binder.bind(ThreadRole.class, ThreadRoleImpl.class);
+    }
 
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
         conf.add(new ModelLibraryInfo(OrionSecuritySymbols.SECURITY_LIB, "ua.orion.cpu.core.security"));

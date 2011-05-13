@@ -116,7 +116,6 @@ public class DummySubject implements Subject {
 
     @Override
     public void login(AuthenticationToken token) throws AuthenticationException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

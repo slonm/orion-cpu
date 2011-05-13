@@ -166,6 +166,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         return info;
     }
 
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         AuthorizationInfo info;
         try {
@@ -290,7 +291,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         return new SimpleAuthorizationInfo(roleNames);
     }
 
-    private Set<String> getRoleNamesForUser(String username, LdapContext ldapContext) throws NamingException {
+    protected Set<String> getRoleNamesForUser(String username, LdapContext ldapContext) throws NamingException {
         Set<String> roleNames;
         roleNames = new LinkedHashSet<String>();
 
