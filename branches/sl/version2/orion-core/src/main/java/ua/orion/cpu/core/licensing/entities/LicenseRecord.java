@@ -3,6 +3,8 @@ package ua.orion.cpu.core.licensing.entities;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
+import org.hibernate.annotations.Formula;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.core.utils.Defense;
@@ -21,7 +23,9 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     private OrgUnit orgUnit;
     private License license;
     private LicenseRecordGroup licenseRecordGroup;
-    private Map<EducationForm, Integer> licenseQuantityByEducationForm=new HashMap();
+    private Map<EducationForm, Integer> licenseQuantityByEducationForm = new HashMap();
+    private String knowledgeAreaOrTrainingDirectionCode;
+    private String knowledgeAreaOrTrainingDirectionName;
 
     public LicenseRecord() {
     }
@@ -33,16 +37,26 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
             Calendar termination,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
-                this.license=license;
-                this.trainingDirectionOrSpeciality=trainingDirectionOrSpeciality;
-                this.educationalQualificationLevel=educationalQualificationLevel;
-                this.licenseQuantityByEducationForm=licenseQuantityByEducationForm;
-                this.termination=termination;
-                this.orgUnit=orgUnit;
-                this.licenseRecordGroup=licenseRecordGroup;
+        this.license = license;
+        this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
+        this.educationalQualificationLevel = educationalQualificationLevel;
+        this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
+        this.termination = termination;
+        this.orgUnit = orgUnit;
+        this.licenseRecordGroup = licenseRecordGroup;
+    }
+
+    @Formula("(select ka.name from ref.Training_Direction_Or_Speciality tr join ref.knowledge_Area_Or_Training_Direction ka on tr.knowledge_Area_Or_Training_Direction=ka.id where tr.id=training_Direction_Or_Speciality)")
+    public String getKnowledgeAreaOrTrainingDirectionName() {
+        return knowledgeAreaOrTrainingDirectionName;
+    }
+
+    public void setKnowledgeAreaOrTrainingDirectionName(String knowledgeAreaOrTrainingDirectionName) {
+        this.knowledgeAreaOrTrainingDirectionName = knowledgeAreaOrTrainingDirectionName;
     }
 
     @Transient
+    @NonVisual
     public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
         try {
             return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
@@ -52,7 +66,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     @ElementCollection
-    @CollectionTable(schema="uch")
+    @CollectionTable(schema = "uch")
     public Map<EducationForm, Integer> getLicenseQuantityByEducationForm() {
         return licenseQuantityByEducationForm;
     }
@@ -61,13 +75,13 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
     }
 
-    @Transient
+    @Formula("(select ka.code from ref.Training_Direction_Or_Speciality tr join ref.knowledge_Area_Or_Training_Direction ka on tr.knowledge_Area_Or_Training_Direction=ka.id where tr.id=training_Direction_Or_Speciality)")
     public String getKnowledgeAreaOrTrainingDirectionCode() {
-        try {
-            return (getKnowledgeAreaOrTrainingDirection().getCode());
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return knowledgeAreaOrTrainingDirectionCode;
+    }
+
+    public void setKnowledgeAreaOrTrainingDirectionCode(String knowledgeAreaOrTrainingDirectionCode) {
+        this.knowledgeAreaOrTrainingDirectionCode = knowledgeAreaOrTrainingDirectionCode;
     }
 
     /**
@@ -89,9 +103,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     @Transient
     public String getCode() {
         try {
-            StringBuilder sb = new StringBuilder(getEducationalQualificationLevel().getCode())
-                    .append(".").append(getKnowledgeAreaOrTrainingDirection().getCode())
-                    .append(getTrainingDirectionOrSpeciality().getCode());
+            StringBuilder sb = new StringBuilder(getEducationalQualificationLevel().getCode()).append(".").append(getKnowledgeAreaOrTrainingDirection().getCode()).append(getTrainingDirectionOrSpeciality().getCode());
             return sb.toString();
         } catch (NullPointerException e) {
             return null;
@@ -182,6 +194,6 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     @Override
     public int compareTo(LicenseRecord o) {
-        return o==null?-1:toString().compareToIgnoreCase(o.toString());
+        return o == null ? -1 : toString().compareToIgnoreCase(o.toString());
     }
 }
