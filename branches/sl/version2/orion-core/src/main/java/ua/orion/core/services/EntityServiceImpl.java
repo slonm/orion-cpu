@@ -242,6 +242,14 @@ public class EntityServiceImpl implements EntityService {
         return entities;
     }
 
+    @Override
+    public <T> CriteriaQuery<T> createQuery(Class<T> resultClass) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = cb.createQuery(resultClass);
+        query.from(resultClass);
+        return query;
+    }
+
     class MetaEntityImpl implements MetaEntity {
 
         private final Class<?> type;

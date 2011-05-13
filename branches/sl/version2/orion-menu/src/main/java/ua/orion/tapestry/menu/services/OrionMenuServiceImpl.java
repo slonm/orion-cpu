@@ -14,6 +14,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
+import org.apache.tapestry5.ioc.Messages;
+import org.apache.tapestry5.ioc.services.TypeCoercer;
 import ua.orion.tapestry.menu.lib.DefaultMenuLink;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
@@ -29,9 +31,9 @@ public class OrionMenuServiceImpl implements OrionMenuService {
 
     //private Logger logger;
     public SortedMap<MenuItemPosition, MenuItemSource> fullMenu;
-
-    public OrionMenuServiceImpl(Map<String, IMenuLink> config) {
-
+    private final TypeCoercer coercer;
+    public OrionMenuServiceImpl(Map<String, IMenuLink> config, TypeCoercer coercer) {
+        this.coercer=coercer;
         //logger=LoggerFactory.getLogger(CpuMenuModule.class);
 
         ArrayList<MenuItemSource> tmp = new ArrayList<MenuItemSource>();
@@ -197,32 +199,33 @@ public class OrionMenuServiceImpl implements OrionMenuService {
     public ArrayList<MenuData> getMenu(String path, Object[] context, Map<String, String> parameters, String anchor) {
         return getMenu(new MenuItemPosition(path), context, parameters, anchor);
     }
-//    @Override
-//    public ArrayList<MenuData> getMenu(String uid, ComponentResources LinkSource, Object... context) {
-//        return this.getMenu(new MenuItemPosition(uid), LinkSource, context);
-//    }
-//
-//    @Override
-//    public ArrayList<MenuData> getMenu(String path, ComponentResources LinkSource, EventContext context) {
-//        return this.getMenu(path, LinkSource, EventContextEncoder.toObjectArray(context));
-//    }
-//
-//    @Override
-//    public MenuData getOneMenu(String path, ComponentResources LinkSource, EventContext context) {
-//        return this.getOneMenu(path, LinkSource, EventContextEncoder.toObjectArray(context));
-//    }
-//
-//    @Override
-//    public MenuData getOneMenu(String path, ComponentResources LinkSource, Object... context) {
-//        return this.getOneMenu(new MenuItemPosition(path), LinkSource, context);
-//    }
-//
-//    @Override
-//    public ArrayList<MenuData> getMenu(String path, EventContext context) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
-//    @Override
-//    public MenuData getOneMenu(String path, EventContext context) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
+
+    public String localizeItem(String msg, IMenuLink lnk, Messages messages) {
+        
+        //Пример: menu>Start где Start - подпись пункта
+        String key = "menu>" + msg;
+        if (messages.contains(key)) {
+            return messages.get(key);
+        }
+
+        //Пример: foo.Bar где foo.Bar - имя класса сущности, с которой работает страница
+        String clazzName;
+        try {
+            clazzName = "entity." + coercer.coerce(lnk, Class.class).getSimpleName();
+            if (messages.contains(clazzName)) {
+                return messages.get(clazzName);
+            }
+        } catch (Exception t) {
+        }
+
+        //Пример: foo.Bar где foo.Bar - имя класса страницы
+        try {
+            clazzName = "page." + lnk.getPage();
+            if (messages.contains(clazzName)) {
+                return messages.get(clazzName);
+            }
+        } catch (Exception t) {
+        }
+        return messages.get(key);
+    }
 }

@@ -27,7 +27,6 @@ import ua.orion.core.utils.IOCUtils;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
-import ua.orion.web.MenuLinkBuilder;
 import ua.orion.web.pages.Crud;
 import ua.orion.web.pages.Index;
 import ua.orion.web.pages.MenuNavigator;

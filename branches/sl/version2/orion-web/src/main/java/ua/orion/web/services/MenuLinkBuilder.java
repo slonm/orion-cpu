@@ -1,4 +1,4 @@
-package ua.orion.web;
+package ua.orion.web.services;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.PostInjection;

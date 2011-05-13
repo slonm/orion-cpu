@@ -5,7 +5,7 @@
           xmlns:p="tapestry:parameter">
 
 <div t:type="loop" t:source="items" t:value="Item">
-    <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Uid)}</t:menu.menulink>
+    <t:menu.menulink t:menuLink="Item.itemLink">${localize(Item.Uid)}</t:menu.menulink>
 </div>
 
 </t:ori.layout>

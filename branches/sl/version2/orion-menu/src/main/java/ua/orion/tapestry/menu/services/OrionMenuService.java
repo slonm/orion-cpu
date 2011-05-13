@@ -6,6 +6,8 @@ package ua.orion.tapestry.menu.services;
 
 import java.util.ArrayList;
 import java.util.Map;
+import org.apache.tapestry5.ioc.Messages;
+import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
 
 /**
@@ -33,4 +35,5 @@ public interface OrionMenuService {
      * @return one menu
      */
     public MenuData getOneMenu(String path, Object[] context,Map<String,String>parameters,String anchor);
+    public String localizeItem(String msg, IMenuLink lnk, Messages messages);
 }

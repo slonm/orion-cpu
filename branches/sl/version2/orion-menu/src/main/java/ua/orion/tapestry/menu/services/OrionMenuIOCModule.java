@@ -6,6 +6,7 @@ package ua.orion.tapestry.menu.services;
 
 import java.util.Map;
 import org.apache.tapestry5.ioc.Configuration;
+import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.SymbolSource;
 import org.apache.tapestry5.services.LibraryMapping;
@@ -17,14 +18,8 @@ import ua.orion.tapestry.menu.lib.IMenuLink;
  */
 public class OrionMenuIOCModule {
 
-    /**
-     * CpuMenu Service builder
-     * @param configuration  registry of menu items
-     * @param ss symbol source to get navigator page
-     * @return CpuMenu object
-     */
-    public static OrionMenuService buildOrionMenuService(Map<String, IMenuLink> configuration,  @Inject SymbolSource ss ) {
-        return new OrionMenuServiceImpl(configuration);
+    public static void bind(ServiceBinder binder) {
+        binder.bind(OrionMenuService.class, OrionMenuServiceImpl.class);
     }
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {

@@ -1,19 +1,18 @@
 package ua.orion.web.pages;
 
-import java.util.*;
-import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.FieldValidator;
-import org.apache.tapestry5.OptionGroupModel;
-import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.BeanEditForm;
+import org.apache.tapestry5.corelib.components.BeanEditor;
+import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.*;
-import org.apache.tapestry5.util.AbstractSelectModel;
+import ua.orion.web.BooleanSelectModel;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.services.TapestryComponentDataSource;
 
@@ -49,7 +48,6 @@ public class PropertyBlocks {
         "label=prop:editContext.label",
         "model=prop:booleanSelectModel",
         "clientId=prop:editContext.propertyId",
-        "encoder=prop:booleanValueEncoder",
         "validate=prop:booleanSelectValidator"
     })
     private Select booleanSelect;
@@ -87,7 +85,7 @@ public class PropertyBlocks {
         if (propertyValue == null) {
             return "";
         }
-        return es.getUserPresentable(propertyValue);
+        return String.valueOf(propertyValue);
     }
 
     public SelectModel getEntitySelectModel() {
@@ -103,57 +101,6 @@ public class PropertyBlocks {
     }
 
     public SelectModel getBooleanSelectModel() {
-        return new AbstractSelectModel() {
-
-            @Override
-            public List<OptionGroupModel> getOptionGroups() {
-                return null;
-            }
-
-            @Override
-            public List<OptionModel> getOptions() {
-                List<OptionModel> optionModelList = new ArrayList<OptionModel>();
-                optionModelList.add(new AbstractOptionModel() {
-
-                    @Override
-                    public String getLabel() {
-                        return messages.get("true");
-                    }
-
-                    @Override
-                    public Object getValue() {
-                        return true;
-                    }
-                });
-                optionModelList.add(new AbstractOptionModel() {
-
-                    @Override
-                    public String getLabel() {
-                        return messages.get("false");
-                    }
-
-                    @Override
-                    public Object getValue() {
-                        return false;
-                    }
-                });
-                return optionModelList;
-            }
-        };
-    }
-
-    public ValueEncoder<Boolean> getBooleanValueEncoder() {
-        return new ValueEncoder<Boolean>() {
-
-            @Override
-            public String toClient(Boolean serverValue) {
-                return String.valueOf(serverValue);
-            }
-
-            @Override
-            public Boolean toValue(String clientValue) {
-                return Boolean.valueOf(clientValue);
-            }
-        };
+        return new BooleanSelectModel(messages.get("true"), messages.get("false"));
     }
 }

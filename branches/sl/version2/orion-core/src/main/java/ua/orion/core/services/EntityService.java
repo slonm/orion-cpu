@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.criteria.CriteriaQuery;
 import org.tynamo.jpa.annotations.CommitAfter;
 import ua.orion.core.persistence.MetaEntity;
 
@@ -32,9 +33,9 @@ import ua.orion.core.persistence.MetaEntity;
 public interface EntityService {
 
     EntityManager getEntityManager();
-    
+
     Set<Class<?>> getManagedEntities();
-    
+
     MetaEntity getMetaEntity(Class<?> entityClass);
 
     /**
@@ -51,7 +52,7 @@ public interface EntityService {
     /**
      * newInstance of entity
      */
-    <T> T newInstance(Class<T> entityClass);
+     <T> T newInstance(Class<T> entityClass);
 
     /**
      * Transactional wrapper for EntityManager.merge(object)
@@ -69,7 +70,7 @@ public interface EntityService {
      * Wrapper for EntityManager.find(entityClass, primaryKey)
      * primaryKey будет приведен к нужному типу с помощью TypeCoercer
      */
-    <T> T find(Class<T> entityClass, Serializable primaryKey);
+     <T> T find(Class<T> entityClass, Serializable primaryKey);
 
     /**
      * Wrapper for EntityManager.find(entityClass, primaryKey, lockMode)
@@ -90,7 +91,7 @@ public interface EntityService {
      * уникальности и возвращает его. Если такого экземпляр нет сохраняет entity и
      * возвращает его
      */
-    <T> T findUniqueOrPersist(T entity);
+     <T> T findUniqueOrPersist(T entity);
 
     /*
      * Находит экземпляр T по его Name атрибуту.
@@ -98,12 +99,12 @@ public interface EntityService {
      * Если Name в сущности нет, то возникает есключение IllegalArgumentException
      * @todo архитектурно этому DAO методу тут не место
      */
-    <T> T findByName(Class<T> type, String name);
+     <T> T findByName(Class<T> type, String name);
 
     /*
      * Находит экземпляр T по его UserPresentable атрибуту
      */
-    <T> T findByUserPresentable(Class<T> type, String name);
+     <T> T findByUserPresentable(Class<T> type, String name);
 
     /*
      * Возвращает значение UserPresentable атрибута у entity
@@ -115,7 +116,7 @@ public interface EntityService {
      * Если UKey не поддерживается или entity не сущность,
      * то возникает исключение IllegalArgumentException
      */
-    <T> T findByUKey(Class<T> type, String uKey);
+     <T> T findByUKey(Class<T> type, String uKey);
 
     /*
      * Возвращает значение UniqueKey атрибута у entity
@@ -141,14 +142,24 @@ public interface EntityService {
      * Возвращает значение Id атрибута у entity
      */
     Serializable getPrimaryKey(Object entity);
-    
+
     /*
      * Возвращает значение Version атрибута у entity
      */
     Object getVersion(Object entity);
-    
+
     /**
      * Discards all stored MetaEntity.
      */
     void clearCache();
+
+    /**
+     * Create a <code>CriteriaQuery</code> object with the specified result
+     * type and root entity with same type.
+     *
+     * @param resultClass type of the query result
+     *
+     * @return criteria query object
+     */
+     <T> CriteriaQuery<T> createQuery(Class<T> resultClass);
 }

@@ -15,11 +15,18 @@ import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
 import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
 import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
+import ua.orion.cpu.web.licensing.pages.LicensingWebIOCModule;
 
 /**
  * Модуль конфигурирования IOC
  */
-@SubModule({LicensingIOCModule.class, OrionSecurityIOCModule.class, OrgUnitsIOCModule.class, OrionCpuIOCModule.class})
+@SubModule({
+    LicensingIOCModule.class, 
+    OrionSecurityIOCModule.class, 
+    OrgUnitsIOCModule.class, 
+    OrionCpuIOCModule.class,
+    LicensingWebIOCModule.class
+})
 public class AppModule {
 
     public static void bind(ServiceBinder binder) {

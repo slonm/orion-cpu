@@ -15,6 +15,7 @@ import org.apache.tapestry5.ioc.services.TypeCoercer;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
 import ua.orion.tapestry.menu.lib.MenuItem;
+import ua.orion.tapestry.menu.services.OrionMenuService;
 
 /**
  *
@@ -37,47 +38,20 @@ public class Menu {
     private MenuItem _Item;
     @Inject
     private TypeCoercer coercer;
+    @Inject
+    private OrionMenuService menuService;
     /**
      * Localized messages
      */
     @Inject
     private Messages messages;
 
-    //TODO Debug it
-    public static String localize(String msg, IMenuLink lnk, Messages messages, TypeCoercer coercer) {
-        //Пример: menu>Start где Start - подпись пункта
-        String key = "menu>" + msg;
-        if (messages.contains(key)) {
-            return messages.get(key);
-        }
-
-        //Пример: foo.Bar где foo.Bar - имя класса сущности, с которой работает страница
-        String clazzName;
-        try {
-            clazzName = "entity." + coercer.coerce(lnk, Class.class).getSimpleName();
-            if (messages.contains(clazzName)) {
-                return messages.get(clazzName);
-            }
-        } catch (Throwable t) {
-        }
-
-        //Пример: foo.Bar где foo.Bar - имя класса страницы
-        try {
-            clazzName = "page." + lnk.getPage();
-            if (messages.contains(clazzName)) {
-                return messages.get(clazzName);
-            }
-        } catch (Throwable t) {
-        }
-        return messages.get(key);
-    }
-
     /**
      * @param msg - unique message name
      * @return message in current language
      */
     public String localize(String msg, IMenuLink lnk) {
-        return localize(msg, lnk, messages, coercer);
+        return menuService.localizeItem(msg, lnk, messages);
     }
 
     /**

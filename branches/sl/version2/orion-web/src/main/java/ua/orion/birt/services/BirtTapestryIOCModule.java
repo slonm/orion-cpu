@@ -20,7 +20,7 @@ import org.apache.tapestry5.services.HttpServletRequestHandler;
 import org.apache.tapestry5.services.LibraryMapping;
 import ua.orion.birt.BirtConnection;
 import ua.orion.tapestry.menu.lib.IMenuLink;
-import ua.orion.web.MenuLinkBuilder;
+import ua.orion.web.services.MenuLinkBuilder;
 
 public class BirtTapestryIOCModule {
 

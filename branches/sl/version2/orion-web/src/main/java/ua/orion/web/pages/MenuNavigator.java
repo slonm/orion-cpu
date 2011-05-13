@@ -9,8 +9,6 @@ import java.util.PriorityQueue;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.TypeCoercer;
-import ua.orion.tapestry.menu.components.Menu;
 import ua.orion.tapestry.menu.lib.MenuData;
 import ua.orion.tapestry.menu.lib.MenuItem;
 import ua.orion.tapestry.menu.services.OrionMenuService;
@@ -29,9 +27,6 @@ public class MenuNavigator {
     private OrionMenuService cpuMenu;
     @Property
     private MenuItem _Item;
-
-    @Inject
-    private TypeCoercer coercer;
 
     /**
      * Localized messages
@@ -55,13 +50,12 @@ public class MenuNavigator {
      * @param msg - unique message name
      * @return message in current language
      */
-    public String Localize(String msg) {
-        return Menu.localize(msg, _Item.getItemLink(), messages, coercer);
+    public String localize(String msg) {
+        return cpuMenu.localizeItem(msg, _Item.getItemLink(), messages);
     }
 
     void onActivate(String position) {
         this.path = position;
-        Object[] context = null;
         //Logger logger = LoggerFactory.getLogger(MenuNavigator.class);
         //logger.info(path);
         this.menu = cpuMenu.getMenu(path, null, null, null);

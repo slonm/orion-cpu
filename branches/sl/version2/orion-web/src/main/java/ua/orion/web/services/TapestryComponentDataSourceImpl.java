@@ -1,9 +1,7 @@
 package ua.orion.web.services;
 
 import java.util.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.metamodel.Metamodel;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionGroupModel;
 import org.apache.tapestry5.OptionModel;
@@ -11,13 +9,11 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.util.AbstractSelectModel;
 import org.tynamo.jpa.internal.JPAGridDataSource;
 import ua.orion.core.services.*;
 import ua.orion.core.utils.Defense;
-import ua.orion.web.pages.Crud;
 
 /**
  *
@@ -25,24 +21,22 @@ import ua.orion.web.pages.Crud;
  */
 public class TapestryComponentDataSourceImpl implements TapestryComponentDataSource {
 
-    private final EntityService entityService;
+    private final EntityService es;
     private final BeanModelSource beanModelSource;
     private final ApplicationMessagesSource messagesSource;
     private final ModelLabelSource modelLabelSource;
-    private final CriteriaBuilder cb;
 
     public TapestryComponentDataSourceImpl(EntityService entityService, BeanModelSource beanModelSource, ApplicationMessagesSource messagesSource, ModelLabelSource modelLabelSource) {
-        this.entityService = entityService;
+        this.es = entityService;
         this.beanModelSource = beanModelSource;
         this.messagesSource = messagesSource;
         this.modelLabelSource = modelLabelSource;
-        this.cb = entityService.getEntityManager().getCriteriaBuilder();
     }
 
 //    private final Metamodel metamodel;
     @Override
     public GridDataSource getGridDataSource(Class<?> entityClass) {
-        return new JPAGridDataSource(entityService.getEntityManager(), entityClass);
+        return new JPAGridDataSource(es.getEntityManager(), entityClass);
     }
 
     @Override
@@ -114,15 +108,15 @@ public class TapestryComponentDataSourceImpl implements TapestryComponentDataSou
     public <T> SelectModel getSelectModel(Class<T> entityClass, String property) {
         Defense.notNull(entityClass, "entityClass");
         Defense.notBlank(property, "property");
-        CriteriaQuery<T> query = cb.createQuery(entityClass);
-        List<T> objects = entityService.getEntityManager().createQuery(query).getResultList();
+        CriteriaQuery<T> query = es.createQuery(entityClass);
+        List<T> objects = es.getEntityManager().createQuery(query).getResultList();
         final List<OptionModel> options = new ArrayList<OptionModel>();
         for (final T object : objects) {
             options.add(new AbstractOptionModel() {
 
                 @Override
                 public String getLabel() {
-                    return entityService.getUserPresentable(object);
+                    return String.valueOf(object);
                 }
 
                 @Override

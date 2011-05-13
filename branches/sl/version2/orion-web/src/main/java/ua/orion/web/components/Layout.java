@@ -26,14 +26,18 @@ public class Layout {
     /**
      * Page navigation menu
      */
-    @Parameter(required = true)
-    @Property(write = false)
-    private Object menudata;
+//    @Parameter(required = true)
+//    @Property(write = false)
+//    private Object menudata;
     @Inject
     private Request request;
     @Inject
     private Response response;
 
+    public Object getMenudata(){
+        return defaultMenudata();
+    }
+    
     Object defaultMenudata() {
         return request.getParameter("menupath")==null?"Start":request.getParameter("menupath");
     }
