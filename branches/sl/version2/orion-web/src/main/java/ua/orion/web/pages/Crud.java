@@ -115,7 +115,7 @@ public class Crud {
      * @return
      * @author sl
      */
-    public void onPassivate() {
+//    public void onPassivate() {
 //        if (getObject() != null) {
 //            return getActivationContextEncoder(getEntityClass()).
 //                    toActivationContext(getObject());
@@ -123,8 +123,7 @@ public class Crud {
 //            return BaseEntity.getFullClassName(getEntityClass());
 //        }
 //        return null;
-        return;
-    }
+//    }
     public Object onActivate(EventContext context) {
         if (!isComponentEventRequst()) {
             try {
