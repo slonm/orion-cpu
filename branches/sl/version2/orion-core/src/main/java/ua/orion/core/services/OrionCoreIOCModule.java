@@ -1,6 +1,8 @@
 package ua.orion.core.services;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.Coercion;
@@ -28,6 +30,7 @@ public class OrionCoreIOCModule {
     private UpdateListenerHub updateListenerHub;
 
     public static void bind(ServiceBinder binder) {
+        binder.bind(StringValueProvider.class, StringValueProviderImpl.class);
         binder.bind(ModelLibraryService.class, ModelLibraryServiceImpl.class);
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
         binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
@@ -39,7 +42,7 @@ public class OrionCoreIOCModule {
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
         conf.add(new ModelLibraryInfo("OrionCore", "ua.orion.core"));
     }
-    
+
     public static void contributeJPAEntityPackageManager(Configuration<String> conf,
             ModelLibraryService modelLibraryService, Logger LOG) {
         for (ModelLibraryInfo libInfo : modelLibraryService.getModelLibraryInfos()) {
@@ -83,10 +86,10 @@ public class OrionCoreIOCModule {
     }
 
     @Match("*Service")
-    public static void adviseTransactions(JPATransactionAdvisor advisor, MethodAdviceReceiver receiver)   {
+    public static void adviseTransactions(JPATransactionAdvisor advisor, MethodAdviceReceiver receiver) {
         advisor.addTransactionCommitAdvice(receiver);
     }
-    
+
     /**
      * from String to Class
      * from String to MetaEntity
@@ -110,6 +113,14 @@ public class OrionCoreIOCModule {
 
                     public MetaEntity coerce(String className) {
                         return entityService.getMetaEntity(className);
+                    }
+                });
+        IOCUtils.addTuple(configuration, Calendar.class, Date.class,
+                new Coercion<Calendar, Date>() {
+
+                    @Override
+                    public Date coerce(Calendar cal) {
+                        return cal.getTime();
                     }
                 });
     }

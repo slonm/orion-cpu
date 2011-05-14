@@ -25,6 +25,7 @@ public class EntityServiceImpl implements EntityService {
     private final Metamodel metamodel;
     private final PropertyAccess propertyAccess;
     private final InheritedAnnotationProviderSource aProviderSource;
+    private final StringValueProvider entityStringValueProvider;
     private final ApplicationMessagesSource applicationMessagesSource;
     private final UniqueConstraintValidator validator;
     private final TypeCoercer typeCoercer;
@@ -35,12 +36,14 @@ public class EntityServiceImpl implements EntityService {
             PropertyAccess propertyAccess,
             TypeCoercer typeCoercer,
             ApplicationMessagesSource applicationMessagesSource,
-            InheritedAnnotationProviderSource aProviderSource) {
+            InheritedAnnotationProviderSource aProviderSource,
+            StringValueProvider entityStringValueProvider) {
         this.aProviderSource = aProviderSource;
         this.applicationMessagesSource = applicationMessagesSource;
         this.propertyAccess = propertyAccess;
         this.em = entityManager;
         this.typeCoercer = typeCoercer;
+        this.entityStringValueProvider=entityStringValueProvider;
         metamodel = em.getMetamodel();
         validator = new UniqueConstraintValidator();
         validator.setEntityManager(em);
@@ -123,9 +126,10 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Serializable getPrimaryKey(Object entity) {
-        EntityType<?> eType = metamodel.entity(entity.getClass());
-        Class<?> pkFieldType = eType.getIdType().getJavaType();
-        return (Serializable) propertyAccess.get(entity, eType.getId(pkFieldType).getName());
+        return (Serializable) em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
+//        EntityType<?> eType = metamodel.entity(entity.getClass());
+//        Class<?> pkFieldType = eType.getIdType().getJavaType();
+//        return (Serializable) propertyAccess.get(entity, eType.getId(pkFieldType).getName());
     }
 
     @Override
@@ -248,6 +252,11 @@ public class EntityServiceImpl implements EntityService {
         CriteriaQuery<T> query = cb.createQuery(resultClass);
         query.from(resultClass);
         return query;
+    }
+
+    @Override
+    public String getStringValue(Object entity) {
+        return entityStringValueProvider.getStringValue(entity);
     }
 
     class MetaEntityImpl implements MetaEntity {

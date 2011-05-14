@@ -3,8 +3,9 @@ package ua.orion.web.services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
-import org.apache.shiro.realm.Realm;
+import java.util.Map;
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.MarkupWriter;
@@ -17,7 +18,6 @@ import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
 import org.slf4j.Logger;
-import org.tynamo.shiro.extension.realm.text.ExtendedPropertiesRealm;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.services.ApplicationMessagesSource;
@@ -27,9 +27,6 @@ import ua.orion.core.utils.IOCUtils;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
-import ua.orion.web.pages.Crud;
-import ua.orion.web.pages.Index;
-import ua.orion.web.pages.MenuNavigator;
 
 /**
  *
@@ -38,8 +35,15 @@ import ua.orion.web.pages.MenuNavigator;
 public class OrionWebIOCModule {
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(TapestryComponentDataSource.class, TapestryComponentDataSourceImpl.class);
+        binder.bind(TapestryDataSource.class, TapestryDataSourceImpl.class);
+        binder.bind(TapestryDataFactory.class, TapestryDataFactoryImpl.class);
         binder.bind(MenuLinkBuilder.class);
+    }
+
+    public static void contributeTapestryDataSource(
+            OrderedConfiguration<TapestryDataTransformer> configuration) {
+        
+        configuration.addInstance("entity", EntityTapestryDataTransformer.class, "after:*");
     }
 
     public static void contributeFactoryDefaults(
@@ -110,8 +114,8 @@ public class OrionWebIOCModule {
     public void contributeApplicationMessagesSource(Configuration<String> conf,
             ComponentClassResolver componentClassResolver) {
         for (String lib : componentClassResolver.getFolderToPackageMapping().keySet()) {
-              conf.add(lib+"Web");		
-          }
+            conf.add(lib + "Web");
+        }
     }
 
     /**

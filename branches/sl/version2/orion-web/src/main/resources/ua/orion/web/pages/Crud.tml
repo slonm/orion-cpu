@@ -60,7 +60,7 @@
     </t:block>
     <t:ck.Window t:id="popupWindow" t:style="bluelighting" show="false"
                  modal="true" title="mode"
-                 width="500" height="200">
+                 width="900" height="500">
         <t:zone t:id="popupZone"/>
         <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
     </t:ck.Window>

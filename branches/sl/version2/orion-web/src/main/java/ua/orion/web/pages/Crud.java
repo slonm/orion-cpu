@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.persistence.MetaEntity;
-import ua.orion.web.services.TapestryComponentDataSource;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  * Страница, которая предоставляет CRUD для простых сущностей
@@ -55,7 +55,7 @@ public class Crud {
     private Logger LOG;
     @Inject
     @Property(write = false)
-    private TapestryComponentDataSource dataSource;
+    private TapestryDataSource dataSource;
     @Inject
     private ComponentEventLinkEncoder componentEventLinkEncoder;
     @Inject
@@ -131,6 +131,9 @@ public class Crud {
                     throw new RuntimeException();
                 }
                 Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
+                //Если страница вызвана для класса сущности, отличного от предыдущего
+                //вызова, то сбросим все Persistent поля и отправим редирект на эту же страницу,
+                //т.к. сброс произойдеи только при следующем запросе страницы
                 if(!objClass.equals(objectClass)&&objectClass!=null){
                     resources.discardPersistentFieldChanges();
                     Link link=pageRenderLinkSource.createPageRenderLinkWithContext(Crud.class, context);

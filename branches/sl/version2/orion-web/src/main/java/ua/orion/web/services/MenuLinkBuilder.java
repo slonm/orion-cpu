@@ -5,7 +5,7 @@ import org.apache.tapestry5.ioc.annotations.PostInjection;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.tapestry.menu.lib.DefaultMenuLink;
 import ua.orion.tapestry.menu.lib.PageMenuLink;
-import ua.orion.web.services.TapestryComponentDataSource;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  *
@@ -13,9 +13,9 @@ import ua.orion.web.services.TapestryComponentDataSource;
  */
 public class MenuLinkBuilder {
 
-    private final TapestryComponentDataSource tcds;
+    private final TapestryDataSource tcds;
 
-    public MenuLinkBuilder(TapestryComponentDataSource tcds) {
+    public MenuLinkBuilder(TapestryDataSource tcds) {
         this.tcds = tcds;
     }
 

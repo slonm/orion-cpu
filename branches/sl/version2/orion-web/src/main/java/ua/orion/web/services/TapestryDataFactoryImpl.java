@@ -9,43 +9,48 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.util.AbstractSelectModel;
 import org.tynamo.jpa.internal.JPAGridDataSource;
 import ua.orion.core.services.*;
-import ua.orion.core.utils.Defense;
 
 /**
  *
  * @author slobodyanuk
  */
-public class TapestryComponentDataSourceImpl implements TapestryComponentDataSource {
+public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     private final EntityService es;
     private final BeanModelSource beanModelSource;
     private final ApplicationMessagesSource messagesSource;
     private final ModelLabelSource modelLabelSource;
+    private final PropertyAccess propertyAccess;
 
-    public TapestryComponentDataSourceImpl(EntityService entityService, BeanModelSource beanModelSource, ApplicationMessagesSource messagesSource, ModelLabelSource modelLabelSource) {
+    public TapestryDataFactoryImpl(EntityService entityService, 
+            BeanModelSource beanModelSource, 
+            ApplicationMessagesSource messagesSource, 
+            ModelLabelSource modelLabelSource,
+            PropertyAccess propertyAccess) {
         this.es = entityService;
         this.beanModelSource = beanModelSource;
         this.messagesSource = messagesSource;
         this.modelLabelSource = modelLabelSource;
+        this.propertyAccess = propertyAccess;
     }
 
-//    private final Metamodel metamodel;
     @Override
-    public GridDataSource getGridDataSource(Class<?> entityClass) {
+    public GridDataSource createGridDataSource(Class<?> entityClass) {
         return new JPAGridDataSource(es.getEntityManager(), entityClass);
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForList(Class<T> clasz) {
-        return getBeanModelForList(clasz, messagesSource.getMessages());
+    public <T> BeanModel<T> createBeanModelForList(Class<T> clasz) {
+        return createBeanModelForList(clasz, messagesSource.getMessages());
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForList(Class<T> clasz, Messages messages) {
+    public <T> BeanModel<T> createBeanModelForList(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createDisplayModel(clasz, messages);
         setCellLabels(bm, messages);
         //TODO Hide some user defined fields
@@ -53,37 +58,37 @@ public class TapestryComponentDataSourceImpl implements TapestryComponentDataSou
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForView(Class<T> clasz) {
-        return getBeanModelForView(clasz, messagesSource.getMessages());
+    public <T> BeanModel<T> createBeanModelForView(Class<T> clasz) {
+        return createBeanModelForView(clasz, messagesSource.getMessages());
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForView(Class<T> clasz, Messages messages) {
+    public <T> BeanModel<T> createBeanModelForView(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createDisplayModel(clasz, messages);
         setLabels(bm, messages);
         return bm;
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForEdit(Class<T> clasz) {
-        return getBeanModelForEdit(clasz, messagesSource.getMessages());
+    public <T> BeanModel<T> createBeanModelForEdit(Class<T> clasz) {
+        return createBeanModelForEdit(clasz, messagesSource.getMessages());
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForEdit(Class<T> clasz, Messages messages) {
+    public <T> BeanModel<T> createBeanModelForEdit(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createEditModel(clasz, messages);
         setLabels(bm, messages);
         return bm;
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForAdd(Class<T> clasz) {
-        return getBeanModelForEdit(clasz, messagesSource.getMessages());
+    public <T> BeanModel<T> createBeanModelForAdd(Class<T> clasz) {
+        return createBeanModelForEdit(clasz, messagesSource.getMessages());
     }
 
     @Override
-    public <T> BeanModel<T> getBeanModelForAdd(Class<T> clasz, Messages messages) {
-        return getBeanModelForEdit(clasz, messages);
+    public <T> BeanModel<T> createBeanModelForAdd(Class<T> clasz, Messages messages) {
+        return createBeanModelForEdit(clasz, messages);
     }
 
     private void setLabels(BeanModel<?> model, Messages messages) {
@@ -105,10 +110,8 @@ public class TapestryComponentDataSourceImpl implements TapestryComponentDataSou
     }
 
     @Override
-    public <T> SelectModel getSelectModel(Class<T> entityClass, String property) {
-        Defense.notNull(entityClass, "entityClass");
-        Defense.notBlank(property, "property");
-        CriteriaQuery<T> query = es.createQuery(entityClass);
+    public <T> SelectModel createSelectModel(Class<T> entityClass, String property) {
+        CriteriaQuery<T> query = es.createQuery(propertyAccess.getAdapter(entityClass).getPropertyAdapter(property).getType());
         List<T> objects = es.getEntityManager().createQuery(query).getResultList();
         final List<OptionModel> options = new ArrayList<OptionModel>();
         for (final T object : objects) {
@@ -116,7 +119,7 @@ public class TapestryComponentDataSourceImpl implements TapestryComponentDataSou
 
                 @Override
                 public String getLabel() {
-                    return String.valueOf(object);
+                    return es.getStringValue(object);
                 }
 
                 @Override
@@ -140,14 +143,12 @@ public class TapestryComponentDataSourceImpl implements TapestryComponentDataSou
     }
 
     @Override
-    public <T> SelectModel getSelectModel(T entity, String property) {
-        Defense.notNull(entity, "entity");
-        Defense.notBlank(property, "property");
-        return getSelectModel(entity.getClass(), property);
+    public <T> SelectModel createSelectModel(T entity, String property) {
+        return createSelectModel(entity.getClass(), property);
     }
 
     @Override
-    public String getCrudPage(Class<?> entityClass) {
+    public String createCrudPage(Class<?> entityClass) {
         return "ori/crud";
     }
 }

@@ -6,10 +6,11 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 
 /**
- *
+ * Источник моделей данных и источников данных на основе сущностей JPA для компонентов
+ * Tapestry
  * @author slobodyanuk
  */
-public interface TapestryComponentDataSource {
+public interface TapestryDataSource {
     GridDataSource getGridDataSource(Class<?> entityClass);
     <T> BeanModel<T> getBeanModelForList(Class<T> entityClass);
     <T> BeanModel<T> getBeanModelForList(Class<T> entityClass, Messages messages);

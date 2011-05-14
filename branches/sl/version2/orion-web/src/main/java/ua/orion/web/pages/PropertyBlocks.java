@@ -14,7 +14,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.*;
 import ua.orion.web.BooleanSelectModel;
 import ua.orion.core.services.EntityService;
-import ua.orion.web.services.TapestryComponentDataSource;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ public class PropertyBlocks {
     @Inject
     private ValueEncoderSource valueEncoderSource;
     @Inject
-    private TapestryComponentDataSource tapestryComponentDataSource;
+    private TapestryDataSource tapestryComponentDataSource;
     @Environmental
     @Property(write = false)
     private PropertyEditContext editContext;
@@ -85,7 +85,7 @@ public class PropertyBlocks {
         if (propertyValue == null) {
             return "";
         }
-        return String.valueOf(propertyValue);
+        return es.getStringValue(propertyValue);
     }
 
     public SelectModel getEntitySelectModel() {

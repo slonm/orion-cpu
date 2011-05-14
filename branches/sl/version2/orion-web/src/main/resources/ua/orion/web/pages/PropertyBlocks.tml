@@ -23,7 +23,7 @@
     </t:block>
 
     <t:block id="displayEntity">
-        ${prop:outputContext.propertyValue}
+        ${prop:entity}
     </t:block>
 
     <t:block id="editEntity">

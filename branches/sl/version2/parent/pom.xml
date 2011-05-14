@@ -92,6 +92,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.tapestry</groupId>
+                <artifactId>tapestry-beanvalidator</artifactId>
+                <version>${tapestry-release-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tapestry</groupId>
                 <artifactId>tapestry-func</artifactId>
                 <version>${tapestry-release-version}</version>
             </dependency>

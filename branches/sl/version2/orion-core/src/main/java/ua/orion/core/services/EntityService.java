@@ -126,6 +126,11 @@ public interface EntityService {
     String getUKey(Object entity);
 
     /*
+     * Фасад для EntityStringValueProvider#getStringValue(Object)
+     */
+    String getStringValue(Object entity);
+    
+    /*
      * Устанавливает UniqueKey у entity
      * Если UKey не поддерживается или entity не сущность,
      * то возникает исключение IllegalArgumentException
