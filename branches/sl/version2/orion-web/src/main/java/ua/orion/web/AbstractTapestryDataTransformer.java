@@ -15,7 +15,7 @@ import ua.orion.web.services.TapestryDataTransformer;
  *
  * @author sl
  */
-public class AbstractTapestryDataTransformer implements TapestryDataTransformer{
+public abstract class AbstractTapestryDataTransformer implements TapestryDataTransformer{
 
     @Override
     public GridDataSource transformGridDataSource(GridDataSource ds) {
