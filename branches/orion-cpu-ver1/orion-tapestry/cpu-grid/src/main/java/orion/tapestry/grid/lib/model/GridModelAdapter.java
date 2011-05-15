@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.tapestry5.ioc.Messages;
+//import org.apache.tapestry5.ioc.Messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
@@ -78,10 +78,10 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
      * Это условие будет показано на странице.
      */
     protected RestrictionEditorInterface<String> restrictionEditorHumanReadable;
-    /**
-     * Сообщения на человеческом языке (локализованные)
-     */
-    protected Messages messages;
+    //    /**
+    //     * Сообщения на человеческом языке (локализованные)
+    //     */
+    //    protected Messages messages;
 
     // =============================================================================
     // Эти методы надо заменять своими

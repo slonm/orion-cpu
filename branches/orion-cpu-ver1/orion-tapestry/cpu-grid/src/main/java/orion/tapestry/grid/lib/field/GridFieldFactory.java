@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.internal.services.ClassPropertyAdapterImpl;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
@@ -85,7 +84,8 @@ public class GridFieldFactory {
 
                     // label - метка поля на текущем языке, заголовок колонки
                     //    history: идентификатор метки согласован с остальной частью приложения
-                    label_id="reflect."+forClass.getName()+"."+uid;
+                    //label_id="reflect."+forClass.getName()+"."+uid;
+                    label_id=forClass.getName()+"."+uid;
                     
                     //if(messages !=null){
                     //    fld.setLabel(messages.get(label_id));

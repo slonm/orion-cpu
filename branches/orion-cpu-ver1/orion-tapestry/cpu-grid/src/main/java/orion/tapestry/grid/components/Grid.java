@@ -265,11 +265,11 @@ public class Grid {
      */
     @Inject
     private Block afterTable;
-    /**
-     * Сообщения интерфейса
-     */
-    @Inject
-    private Messages messages;
+    // /**
+    //   * Сообщения интерфейса
+    //   */
+    //  @Inject
+    //  private Messages messages;
     /**
      * обьект для доступа к сохранённым наборам настроек
      */
@@ -340,11 +340,11 @@ public class Grid {
      */
     void setupRender() {
 
-        // ------------- set localized field labels - begin --------------------
-        for (GridFieldAbstract fld : gridModel.getFields()) {
-            fld.setLabel(messages.get(fld.getLabel()));
-        }
-        // ------------- set localized field labels - end ----------------------
+        // // ------------- set localized field labels - begin -----------------
+        //    for (GridFieldAbstract fld : gridModel.getFields()) {
+        //        fld.setLabel(messages.get(fld.getLabel()));
+        //    }
+        // // ------------- set localized field labels - end -------------------
 
 
         // ------------- create filter list - begin ----------------------------
