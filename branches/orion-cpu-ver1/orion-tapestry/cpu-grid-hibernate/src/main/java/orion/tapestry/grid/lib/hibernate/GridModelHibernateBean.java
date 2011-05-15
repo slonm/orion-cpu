@@ -33,6 +33,7 @@ public class GridModelHibernateBean extends GridModelAdapter<Criteria> {
      * Класс сущности
      */
     private Class forClass;
+
     /**
      * Конфигурация, отображение стандартных типов Java в типы полей
      */
@@ -42,6 +43,7 @@ public class GridModelHibernateBean extends GridModelAdapter<Criteria> {
      * Сессия Hibernate, подключание к базе данных
      */
     private Session session;
+
     /**
      * Адаптер для извлечения полей записи
      */
