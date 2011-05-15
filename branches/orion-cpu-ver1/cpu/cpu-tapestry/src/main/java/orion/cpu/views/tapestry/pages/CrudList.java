@@ -1,5 +1,6 @@
 package orion.cpu.views.tapestry.pages;
 
+import br.com.arsmachina.authentication.service.UserService;
 import br.com.arsmachina.authorization.Authorizer;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,8 +18,11 @@ import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 import orion.cpu.entities.grid.GridSetting;
+import orion.tapestry.grid.lib.model.GridModelInterface;
+import orion.tapestry.grid.lib.model.GridModelLocalizator;
 
 import orion.tapestry.grid.lib.savedsettings.*;
+import orion.tapestry.services.FieldLabelSource;
 
 /**
  *
@@ -26,24 +30,49 @@ import orion.tapestry.grid.lib.savedsettings.*;
  */
 public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
 
-    // configuration: root package
+    /**
+     * configuration: root package
+     * корневой пакет Tapestry
+     */
     @Inject
     @Symbol("orion.root-package")
     private String rootPackage;
-    // configuration: package where entities are located
+    /**
+     * configuration: package where entities are located
+     * пакет, в котором хранятся сущности для БД
+     */
     @Inject
     @Symbol("orion.entities-package")
     private String entitiesPackage;
-    // permission checker
+    /**
+     * Сервис, который хранит информацию о текущем пользователе.
+     */
+    @Inject
+    private UserService userService;
+    /**
+     * Рermission checker
+     */
     @Inject
     private Authorizer authorizer;
-    // interface messages
+    /**
+     *  interface messages
+     */
     @Inject
     private Messages messages;
-    // navigation menu
+    /**
+     * tolerant messages retrieval
+     */
+    private 
+    @Inject
+    FieldLabelSource fieldLabelSource;
+    /**
+     *  navigation menu
+     */
     @Property
     private Object menudata;
-    // HTTP request
+    /**
+     * HTTP request
+     */
     @Inject
     private Request request;
     /**
@@ -107,7 +136,7 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
     }
 
     /**
-     * interface to saved grid settiongs
+     * interface to saved grid settings
      * @author dobro
      */
     public class HibernateGridSettingStore implements IGridSettingStore {
@@ -138,7 +167,7 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
 
         @Override
         public String getSavedSettingListJSON() {
-            Query query = session.createQuery("from " + GridSetting.class.getSimpleName());
+            Query query = session.createQuery("from " + GridSetting.class.getSimpleName() + " where userId=" + userService.getUser().getId());
             List result = query.list();
             if (!result.isEmpty()) {
                 JSONArray arrJSON = new JSONArray();
@@ -153,7 +182,6 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
                         Logger.getLogger(CrudList.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                //System.out.println("getSavedSettingListJSON:" + arrJSON.toString());
                 return arrJSON.toString();
             }
             return "[]";
@@ -165,7 +193,8 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
             GridSetting entity = new GridSetting();
             entity.setLabel(label);
             entity.setSettingJSON(setting);
-            entity.setUserId(1L);
+            entity.setUserId(new Long(userService.getUser().getId()));
+
             session.beginTransaction();
             session.saveOrUpdate(entity);
             sm.commit();
@@ -184,5 +213,26 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
     @Override
     public boolean isBlocked() {
         return false;
+    }
+
+    /**
+     * @return Модель данных для grid
+     */
+    @Override
+    public GridModelInterface getGridModel() {
+        GridModelInterface model = super.getGridModel();
+
+        // декоратор для модели
+        // заменяет подписи для
+        GridModelLocalizator localizator = new GridModelLocalizator() {
+            @Override
+            protected String getLabel(String uid) {
+                String propertyName=uid.replaceFirst("^(\\w+\\.)+", "");
+                System.out.println(getEntityClass()+" ==== "+propertyName +" === "+ messages);
+                //return fieldLabelSource.get(getEntityClass(), propertyName, messages);
+                return "msg:" + uid;
+            }
+        };
+        return localizator.localize(model);
     }
 }
