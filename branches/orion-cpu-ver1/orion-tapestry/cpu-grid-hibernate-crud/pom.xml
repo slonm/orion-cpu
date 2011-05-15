@@ -168,7 +168,12 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <version>4.1.0.Final</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>orion-tapestry</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <finalName>cpu-grid-hibernate</finalName>

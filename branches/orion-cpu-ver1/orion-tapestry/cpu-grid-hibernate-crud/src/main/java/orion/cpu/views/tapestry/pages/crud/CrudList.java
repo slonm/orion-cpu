@@ -20,8 +20,10 @@ import orion.tapestry.grid.lib.field.GridFieldAbstract;
 import orion.tapestry.grid.lib.field.impl.GridFieldCalculable;
 import orion.tapestry.grid.lib.hibernate.GridModelHibernateBean;
 import orion.tapestry.grid.lib.model.GridModelInterface;
+import orion.tapestry.grid.lib.model.GridModelLocalizator;
 import orion.tapestry.grid.lib.rows.GridRow;
 import orion.tapestry.grid.services.GridTypeMap;
+import orion.tapestry.services.FieldLabelSource;
 
 /**
  * Список записей для изменения/удаления/добавления
@@ -43,6 +45,10 @@ public class CrudList {
      */
     @Inject
     private Messages messages;
+
+    @Inject
+    private FieldLabelSource fieldLabelSource;
+
     /**
      * Соединение с БД
      */
@@ -120,9 +126,6 @@ public class CrudList {
             LOG.error("Invalid activation context. Redirect to root page. Error message is:" + ex.getMessage());
             return "";
         }
-
-
-
         return null;
     }
 
@@ -174,6 +177,9 @@ public class CrudList {
             };
             // add empty column
             gridmodel.addField(new GridFieldCalculable("rowActions"));
+
+            // localize
+            //gridmodel=( new GridModelLocalizator() ).localize(gridmodel);
 
         } catch (HibernateException ex) {
             LOG.error(this.getClass().getName() + ":HibernateException:" + ex.getMessage());
