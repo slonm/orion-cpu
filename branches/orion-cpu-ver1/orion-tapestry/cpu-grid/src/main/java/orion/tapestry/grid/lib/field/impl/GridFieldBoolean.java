@@ -7,14 +7,14 @@ import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementEQ;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNOTNULL;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNULL;
+import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireBoolean;
 import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireLong;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.rows.GridRow;
 
 /**
- * Типовой класс для полей типа "Идентификатор, целое число"
- * отличается от {@link GridFieldNumberLong} другим типом фильтра
+ * класс для полей типа Boolean
  * @author Gennadiy Dobrovolsky
  */
 
@@ -41,11 +41,11 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
     public GridFieldBoolean(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this.setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireLong());
+        this.setValidator(new ValidatorRequireBoolean());
     }
 
     public GridFieldBoolean() {
-        this.setValidator(new ValidatorRequireLong());
+        this.setValidator(new ValidatorRequireBoolean());
     }
 
     @Override
@@ -58,8 +58,6 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
         for (FilterElementAbstract fe : list) {
             fe.setValidator(this.getValidator());
         }
-
-
 
         return list;
     }

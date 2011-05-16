@@ -16,7 +16,6 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -339,13 +338,6 @@ public class Grid {
      * Подготовка к созданию страницы
      */
     void setupRender() {
-
-        // // ------------- set localized field labels - begin -----------------
-        //    for (GridFieldAbstract fld : gridModel.getFields()) {
-        //        fld.setLabel(messages.get(fld.getLabel()));
-        //    }
-        // // ------------- set localized field labels - end -------------------
-
 
         // ------------- create filter list - begin ----------------------------
         // load list of possible filter elements

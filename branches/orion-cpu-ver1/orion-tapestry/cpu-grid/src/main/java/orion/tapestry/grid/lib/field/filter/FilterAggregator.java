@@ -48,7 +48,7 @@ public class FilterAggregator {
             }
 
             // создаём объект из строки
-            System.out.println("filterJSON="+filterJSON);
+            // System.out.println("filterJSON="+filterJSON);
             JSONObject root = new JSONObject(filterJSON);
 
             // выполняем операции, описанные объектом root, в редакторе restrictionEditor

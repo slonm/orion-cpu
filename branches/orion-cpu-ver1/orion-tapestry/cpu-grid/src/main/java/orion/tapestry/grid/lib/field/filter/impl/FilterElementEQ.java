@@ -44,6 +44,7 @@ public class FilterElementEQ extends FilterElementText {
             checkedValue=value;
         }
 
+        //System.out.println(" ===== "+this.fieldName + " == "+checkedValue);
         restriction.constField(this.fieldName);
         restriction.constValue(checkedValue);
         restriction.eq();

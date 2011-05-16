@@ -21,12 +21,12 @@ public class GridFieldCalculable extends GridFieldAbstract<Object> {
         this.setFieldSort(null);
 
         GridFieldView extraFieldView = new GridFieldView();
-        extraFieldView._setIsVisible(true)._setOrdering(0)._setUid(_uid)._setLabel(_uid+"-label");
+        extraFieldView._setIsVisible(true)._setOrdering(0)._setUid(_uid)._setLabel(_uid);
         this.setFieldView(extraFieldView);
 
         this.setAttributeName(null);
         this.setUid(_uid);
-        this.setLabel(_uid + "-label");
+        this.setLabel(_uid);
     }
 
     public GridFieldCalculable() {
