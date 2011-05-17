@@ -8,7 +8,6 @@ import orion.tapestry.grid.lib.field.filter.impl.FilterElementEQ;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNOTNULL;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNULL;
 import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireBoolean;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireLong;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.rows.GridRow;
@@ -26,7 +25,7 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
      */
     public GridFieldBoolean(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireLong());
+        this.setValidator(new ValidatorRequireBoolean());
         this.setFilterElementList(this.createFilterElementList());
     }
 
