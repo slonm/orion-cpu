@@ -1,19 +1,29 @@
 package ua.orion.web.components;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.shiro.SecurityUtils;
+import org.apache.tapestry5.AbstractOptionModel;
+import org.apache.tapestry5.OptionGroupModel;
+import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventConstants;
+import org.apache.tapestry5.Link;
+import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
-import org.apache.tapestry5.services.Session;
+import org.apache.tapestry5.util.AbstractSelectModel;
+import ua.orion.web.services.LastPageHolder;
 
 /**
  * Layout component for pages.
  */
-@Import(stylesheet={"layout/layout.css"})
+@Import(stylesheet = {"layout/layout.css"})
 @SuppressWarnings("unused")
 public class Layout {
 
@@ -29,35 +39,96 @@ public class Layout {
 //    @Parameter(required = true)
 //    @Property(write = false)
 //    private Object menudata;
+    private String role;
     @Inject
     private Request request;
     @Inject
     private Response response;
+    @Inject
+    private ComponentResources resources;
+    @Inject
+    private LastPageHolder holder;
 
-    public Object getMenudata(){
+    public Object getMenudata() {
         return defaultMenudata();
     }
-    
+
     Object defaultMenudata() {
-        return request.getParameter("menupath")==null?"Start":request.getParameter("menupath");
+        return request.getParameter("menupath") == null ? "Start" : request.getParameter("menupath");
     }
 
-    public String getUser(){
-        //TODO Возвращать ФИО
-       return SecurityUtils.getSubject().getPrincipals().oneByType(String.class); 
+    public String getRole() {
+        return request.getParameter("role");
     }
-    
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getUser() {
+        //TODO Возвращать ФИО
+        return SecurityUtils.getSubject().getPrincipals().oneByType(String.class);
+    }
+
     /**
      * Invalidates the session.
      */
     @OnEvent(component = "logout", value = EventConstants.ACTION)
     public Object logout() throws IOException {
         SecurityUtils.getSubject().logout();
-//        final Session session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
         response.sendRedirect(request.getContextPath());
         return false;
+    }
+
+    public Object onSetRoleMode() {
+        Link link = holder.getLastPage();
+        link.removeParameter("role");
+        return link;
+    }
+
+    public SelectModel getRoleModel() {
+        return new AbstractSelectModel() {
+
+            @Override
+            public List<OptionGroupModel> getOptionGroups() {
+                return null;
+            }
+
+            @Override
+            public List<OptionModel> getOptions() {
+                List<OptionModel> optionModelList = new ArrayList<OptionModel>();
+                optionModelList.add(new AbstractOptionModel() {
+
+                    @Override
+                    public String getLabel() {
+                        return "manager";
+                    }
+
+                    @Override
+                    public Object getValue() {
+                        return "manager";
+                    }
+                });
+                optionModelList.add(new AbstractOptionModel() {
+
+                    @Override
+                    public String getLabel() {
+                        return "admin";
+                    }
+
+                    @Override
+                    public Object getValue() {
+                        return "admin";
+                    }
+                });
+                return optionModelList;
+            }
+        };
+    }
+
+    public Object onActionFromRoleForm() {
+        Link link = holder.getLastPage();
+        link.addParameter("role", role);
+        return link;
     }
 }

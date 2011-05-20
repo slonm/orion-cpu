@@ -1,8 +1,6 @@
 package ua.orion.cpu.core.security;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -20,7 +18,6 @@ import ua.orion.cpu.core.security.entities.*;
 public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
 
     private EntityManager em;
-    private final String QL = "FROM Acl WHERE lower(subject) = :subject and subjectType=:subjectType";
 
     public AclActiveDirectoryRealm(EntityManager em) {
         this.em = em;
@@ -31,27 +28,38 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
     @Override
     protected AuthorizationInfo buildAuthorizationInfo(Set<String> roleNames, String username) {
         SimpleAuthorizationInfo saf = (SimpleAuthorizationInfo) super.buildAuthorizationInfo(roleNames, username);
-        TypedQuery<Acl> q = em.createQuery(QL, Acl.class);
-        q.setParameter("subject", username.toLowerCase());
-        q.setParameter("subjectType", SubjectType.USER);
-        for (Acl acl : q.getResultList()) {
-            saf.addStringPermission(acl.getPermission());
+        for (Permission permission : resolvePermissionsForSubject(username, SubjectType.USER)) {
+            saf.addObjectPermission(permission);
         }
         return saf;
+    }
+
+    protected Collection<Permission> resolvePermissionsForSubject(String subject, SubjectType type) {
+        Collection<Permission> permissions = new HashSet<Permission>();
+        String qStr = "FROM Acl WHERE lower(subject) = lower(:subject) and subjectType=:subjectType";
+        TypedQuery<Acl> query = em.createQuery(qStr, Acl.class);
+        query.setParameter("subject", subject);
+        query.setParameter("subjectType", type);
+        for (Acl acl : query.getResultList()) {
+            permissions.add(new MyWildcardPermission(acl.getPermission()));
+        }
+        Set<MyWildcardPermission> list = new HashSet();
+        list.addAll((Set<MyWildcardPermission>) (Set) permissions);
+        for (MyWildcardPermission p : list) {
+            if (p.getObject().toLowerCase().startsWith("permg_")) {
+                permissions.addAll(resolvePermissionsForSubject(
+                        p.getObject().substring("permg_".length()),
+                        SubjectType.PERMISSION_GROUP));
+            }
+        }
+        return permissions;
     }
 
     class AclRolePermissionResolver implements RolePermissionResolver {
 
         @Override
         public Collection<Permission> resolvePermissionsInRole(String roleString) {
-            Collection<Permission> permissions = new HashSet<Permission>();
-            TypedQuery<Acl> q = em.createQuery(QL, Acl.class);
-            q.setParameter("subject", roleString.toLowerCase());
-            q.setParameter("subjectType", SubjectType.ROLE);
-            for (Acl acl : q.getResultList()) {
-                permissions.add(new WildcardPermission(acl.getPermission()));
-            }
-            return permissions;
+            return resolvePermissionsForSubject(roleString, SubjectType.ROLE);
         }
     }
 
@@ -59,7 +67,22 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
 
         @Override
         public Permission resolvePermission(String permissionString) {
-            return new WildcardPermission(permissionString);
+            return new MyWildcardPermission(permissionString);
+        }
+    }
+
+    static class MyWildcardPermission extends WildcardPermission {
+
+        public MyWildcardPermission(String wildcardString) {
+            super(wildcardString);
+        }
+
+        String getObject() {
+            Set<String> part0 = getParts().get(0);
+            for (String s : part0) {
+                return s;
+            }
+            return null;
         }
     }
 }

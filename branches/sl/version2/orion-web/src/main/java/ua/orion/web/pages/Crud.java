@@ -13,12 +13,12 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
-import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.persistence.MetaEntity;
+import ua.orion.web.services.LastPageHolder;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -48,7 +48,7 @@ public class Crud {
     @Inject
     private Request request;
     @Inject
-    private PageRenderLinkSource pageRenderLinkSource;
+    private LastPageHolder lastPageHolder;
     @Inject
     private EntityService entityService;
     @Inject
@@ -136,11 +136,7 @@ public class Crud {
                 //т.к. сброс произойдеи только при следующем запросе страницы
                 if(!objClass.equals(objectClass)&&objectClass!=null){
                     resources.discardPersistentFieldChanges();
-                    Link link=pageRenderLinkSource.createPageRenderLinkWithContext(Crud.class, context);
-                    for(String s:request.getParameterNames()){
-                        link.addParameter(s, request.getParameter(s));
-                    }
-                    return link;
+                    return lastPageHolder.getLastPage();
                 }
                 objectClass=objClass;
             } catch (Exception ex) {

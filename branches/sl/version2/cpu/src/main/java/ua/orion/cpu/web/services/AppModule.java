@@ -16,6 +16,7 @@ import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
 import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
 import ua.orion.cpu.web.licensing.pages.LicensingWebIOCModule;
+import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
  * Модуль конфигурирования IOC
@@ -25,7 +26,8 @@ import ua.orion.cpu.web.licensing.pages.LicensingWebIOCModule;
     OrionSecurityIOCModule.class, 
     OrgUnitsIOCModule.class, 
     OrionCpuIOCModule.class,
-    LicensingWebIOCModule.class
+    LicensingWebIOCModule.class,
+    OrionSecurityWebIOCModule.class
 })
 public class AppModule {
 
@@ -47,11 +49,6 @@ public class AppModule {
         }
     }
 
-//    public static void contributePageRenderLinkTransformer(OrderedConfiguration<PageRenderLinkTransformer> configuration,
-//            IndexPageRenderLinkTransformer lTranformer) {
-//        configuration.add("IndexPage", lTranformer);
-//    }
-    
 //    public static void contributeComponentEventLinkTransformer(
 //            OrderedConfiguration<ComponentEventLinkTransformer> configuration)
 //    {

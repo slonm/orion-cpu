@@ -3,9 +3,7 @@ package ua.orion.web.services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.MarkupWriter;
@@ -37,6 +35,7 @@ public class OrionWebIOCModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(TapestryDataSource.class, TapestryDataSourceImpl.class);
         binder.bind(TapestryDataFactory.class, TapestryDataFactoryImpl.class);
+        binder.bind(LastPageHolder.class, LastPageHolderImpl.class);
         binder.bind(MenuLinkBuilder.class);
     }
 
@@ -171,12 +170,13 @@ public class OrionWebIOCModule {
      * @param filter
      */
     public void contributeRequestHandler(OrderedConfiguration<RequestFilter> configuration,
-            @Local RequestFilter filter) {
+            @InjectService("TimingFilter") RequestFilter filter, LastPageHolder holder) {
         // Each contribution to an ordered configuration has a name, When necessary, you may
         // set constraints to precisely control the invocation order of the contributed filter
         // within the pipeline.
 
         configuration.add("Timing", filter);
+        configuration.add("LastPageHolder", holder);
     }
 
     /**
