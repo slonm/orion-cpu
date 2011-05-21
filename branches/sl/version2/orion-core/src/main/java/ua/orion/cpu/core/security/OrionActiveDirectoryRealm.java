@@ -272,17 +272,18 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
     protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals, LdapContextFactory ldapContextFactory) throws NamingException {
 
         String username = (String) getAvailablePrincipal(principals);
-
-        // Perform context search
-        LdapContext ldapContext = ldapContextFactory.getSystemLdapContext();
-
-        Set<String> roleNames;
-
-        try {
-            roleNames = getRoleNamesForUser(username, ldapContext);
-        } finally {
-            LdapUtils.closeContext(ldapContext);
-        }
+        Set<String> roleNames=principals.oneByType(ActiveDirectoryPrincipal.class).getRoles();
+//
+//        // Perform context search
+//        LdapContext ldapContext = ldapContextFactory.getSystemLdapContext();
+//
+//        Set<String> roleNames;
+//
+//        try {
+//            roleNames = getRoleNamesForUser(username, ldapContext);
+//        } finally {
+//            LdapUtils.closeContext(ldapContext);
+//        }
 
         return buildAuthorizationInfo(roleNames, username);
     }
