@@ -18,7 +18,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.util.AbstractSelectModel;
-import ua.orion.cpu.core.security.AclActiveDirectoryRealm;
+import ua.orion.cpu.core.security.entities.ActiveDirectoryPrincipal;
 import ua.orion.web.services.LastPageHolder;
 
 /**
@@ -49,8 +49,6 @@ public class Layout {
     private ComponentResources resources;
     @Inject
     private LastPageHolder holder;
-    @Inject
-    private AclActiveDirectoryRealm realm;
 
     public Object getMenudata() {
         return defaultMenudata();
@@ -100,20 +98,23 @@ public class Layout {
             @Override
             public List<OptionModel> getOptions() {
                 List<OptionModel> optionModelList = new ArrayList<OptionModel>();
-                Set<String> roles = realm.getRoles(SecurityUtils.getSubject().getPrincipals());
-                for (final String _role : roles) {
-                    optionModelList.add(new AbstractOptionModel() {
+                ActiveDirectoryPrincipal adp = SecurityUtils.getSubject().getPrincipals().oneByType(ActiveDirectoryPrincipal.class);
+                if (adp != null) {
+                    Set<String> roles = adp.getRoles();
+                    for (final String _role : roles) {
+                        optionModelList.add(new AbstractOptionModel() {
 
-                        @Override
-                        public String getLabel() {
-                            return _role;
-                        }
+                            @Override
+                            public String getLabel() {
+                                return _role;
+                            }
 
-                        @Override
-                        public Object getValue() {
-                            return _role;
-                        }
-                    });
+                            @Override
+                            public Object getValue() {
+                                return _role;
+                            }
+                        });
+                    }
                 }
                 return optionModelList;
             }

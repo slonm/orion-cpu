@@ -9,7 +9,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.authz.permission.WildcardPermission;
-import org.apache.shiro.subject.PrincipalCollection;
 import ua.orion.cpu.core.security.entities.*;
 import ua.orion.cpu.core.security.services.ThreadRole;
 
@@ -61,15 +60,6 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         return permissions;
     }
 
-    public Set<String> getRoles(PrincipalCollection principal){
-        Set<String> ret=new HashSet();
-        AuthorizationInfo info = getAuthorizationInfo(principal);
-        if(info != null && info.getRoles() != null){
-            ret.addAll(info.getRoles());
-        }
-        return ret;
-    }
-    
     class AclRolePermissionResolver implements RolePermissionResolver {
 
         @Override

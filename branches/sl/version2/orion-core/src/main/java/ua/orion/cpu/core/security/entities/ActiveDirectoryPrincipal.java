@@ -5,6 +5,9 @@
 
 package ua.orion.cpu.core.security.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 
  * @author sl
@@ -20,8 +23,18 @@ public class ActiveDirectoryPrincipal {
     private String sid;
     //sAMAccountName
     private String login;
+    //Groups
+    private Set<String> roles=new HashSet();
 
     public ActiveDirectoryPrincipal() {
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 
     public String getDescription() {

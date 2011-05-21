@@ -388,6 +388,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
                         adp.setLogin((String) attr.get());
                     }
                 }
+                adp.getRoles().addAll(getRoleNamesForUser(username, ldapContext));
             }
         }
         return adp;
