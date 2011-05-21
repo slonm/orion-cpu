@@ -4,6 +4,7 @@
  */
 package ua.orion.cpu.core.security;
 
+import ua.orion.cpu.core.security.services.ThreadRole;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,8 +28,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.apache.shiro.util.ThreadContext;
 import ua.orion.cpu.core.security.entities.SubjectType;
+import ua.orion.cpu.core.security.services.ThreadRoleImpl;
 
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * 
@@ -37,6 +39,7 @@ import static org.testng.Assert.assertTrue;
 public class AclActiveDirectoryRealmTest {
 
     AclActiveDirectoryRealm realm;
+    ThreadRole thRole = new ThreadRoleImpl();
 
     @BeforeClass
     public void setup() {
@@ -118,7 +121,7 @@ public class AclActiveDirectoryRealmTest {
 
         em.getTransaction().commit();
         //Обойдем обращение к AD
-        realm = new AclActiveDirectoryRealm(em) {
+        realm = new AclActiveDirectoryRealm(em, thRole) {
 
             @Override
             protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals, LdapContextFactory ldapContextFactory) throws NamingException {
@@ -139,8 +142,11 @@ public class AclActiveDirectoryRealmTest {
         assertTrue(realm.isPermitted(principals, "Object1:edit"));//User permission
         assertTrue(realm.isPermitted(principals, "object1:edit"));//Case insensitive
         assertTrue(realm.isPermitted(principals, "Object2:read"));//User wildcard permission
-        assertTrue(realm.isPermitted(principals, "Object3:read"));//Role permission
+        assertFalse(realm.isPermitted(principals, "Object3:read"));//Role permission
         assertTrue(realm.isPermitted(principals, "Object4:read"));//PERMISSION_GROUP permission for USER
+        assertFalse(realm.isPermitted(principals, "Object5:read"));//PERMISSION_GROUP permission for ROLE
+        thRole.setRole("developers");
+        assertTrue(realm.isPermitted(principals, "Object3:read"));//Role permission
         assertTrue(realm.isPermitted(principals, "Object5:read"));//PERMISSION_GROUP permission for ROLE
     }
 }

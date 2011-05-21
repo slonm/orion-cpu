@@ -9,18 +9,24 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.apache.shiro.subject.PrincipalCollection;
 import ua.orion.cpu.core.security.entities.*;
+import ua.orion.cpu.core.security.services.ThreadRole;
 
 /**
- * Realm извлекает авторизационную информацию из таблицы Acl
+ * Realm извлекает авторизационную информацию из таблицы Acl и добавляет поддержку динамических ролей
  * @author sl
  */
 public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
 
-    private EntityManager em;
+    private final EntityManager em;
+    private final ThreadRole threadRole;
 
-    public AclActiveDirectoryRealm(EntityManager em) {
+    public AclActiveDirectoryRealm(EntityManager em, ThreadRole threadRole) {
+        assert threadRole != null;
+        assert em != null;
         this.em = em;
+        this.threadRole = threadRole;
         this.setPermissionResolver(new AclPermissionResolver());
         this.setRolePermissionResolver(new AclRolePermissionResolver());
     }
@@ -55,10 +61,22 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         return permissions;
     }
 
+    public Set<String> getRoles(PrincipalCollection principal){
+        Set<String> ret=new HashSet();
+        AuthorizationInfo info = getAuthorizationInfo(principal);
+        if(info != null && info.getRoles() != null){
+            ret.addAll(info.getRoles());
+        }
+        return ret;
+    }
+    
     class AclRolePermissionResolver implements RolePermissionResolver {
 
         @Override
         public Collection<Permission> resolvePermissionsInRole(String roleString) {
+            if (!roleString.equalsIgnoreCase(threadRole.getRole())) {
+                return Collections.EMPTY_SET;
+            }
             return resolvePermissionsForSubject(roleString, SubjectType.ROLE);
         }
     }

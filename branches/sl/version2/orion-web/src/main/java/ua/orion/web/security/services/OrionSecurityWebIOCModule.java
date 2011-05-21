@@ -17,12 +17,12 @@ public class OrionSecurityWebIOCModule {
     public static void contributeHttpServletRequestHandler(
             OrderedConfiguration<HttpServletRequestFilter> configuration,
             ThreadLocalRoleRequestFilter filter) {
-        configuration.add("Role", filter);
+        configuration.add("RoleFilter", filter, "after:SecurityFilter");
     }
 
     public static void contributePageRenderLinkTransformer(
             OrderedConfiguration<PageRenderLinkTransformer> configuration,
             ThreadLocalRoleRequestFilter filter) {
-        configuration.add("Role", filter);
+        configuration.add("RoleHolder", filter, "before:*");
     }
 }

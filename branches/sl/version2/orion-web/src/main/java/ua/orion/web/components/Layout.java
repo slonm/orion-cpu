@@ -3,6 +3,7 @@ package ua.orion.web.components;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionGroupModel;
@@ -14,10 +15,10 @@ import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.util.AbstractSelectModel;
+import ua.orion.cpu.core.security.AclActiveDirectoryRealm;
 import ua.orion.web.services.LastPageHolder;
 
 /**
@@ -48,6 +49,8 @@ public class Layout {
     private ComponentResources resources;
     @Inject
     private LastPageHolder holder;
+    @Inject
+    private AclActiveDirectoryRealm realm;
 
     public Object getMenudata() {
         return defaultMenudata();
@@ -97,30 +100,21 @@ public class Layout {
             @Override
             public List<OptionModel> getOptions() {
                 List<OptionModel> optionModelList = new ArrayList<OptionModel>();
-                optionModelList.add(new AbstractOptionModel() {
+                Set<String> roles = realm.getRoles(SecurityUtils.getSubject().getPrincipals());
+                for (final String _role : roles) {
+                    optionModelList.add(new AbstractOptionModel() {
 
-                    @Override
-                    public String getLabel() {
-                        return "manager";
-                    }
+                        @Override
+                        public String getLabel() {
+                            return _role;
+                        }
 
-                    @Override
-                    public Object getValue() {
-                        return "manager";
-                    }
-                });
-                optionModelList.add(new AbstractOptionModel() {
-
-                    @Override
-                    public String getLabel() {
-                        return "admin";
-                    }
-
-                    @Override
-                    public Object getValue() {
-                        return "admin";
-                    }
-                });
+                        @Override
+                        public Object getValue() {
+                            return _role;
+                        }
+                    });
+                }
                 return optionModelList;
             }
         };

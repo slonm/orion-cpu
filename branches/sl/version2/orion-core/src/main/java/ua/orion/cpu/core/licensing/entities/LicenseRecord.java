@@ -7,7 +7,6 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 import org.hibernate.annotations.Formula;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.utils.Defense;
 
 /**
  * Сущность подситемы учета лицензий
@@ -97,7 +96,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @param educationalQualificationLevel the educationalQualificationLevel to set
      */
     public void setEducationalQualificationLevel(EducationalQualificationLevel educationalQualificationLevel) {
-        this.educationalQualificationLevel = Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel");
+        this.educationalQualificationLevel = educationalQualificationLevel;
     }
 
     @Transient
@@ -123,7 +122,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @param TrainingDirectionOrSpeciality the TrainingDirectionOrSpeciality to set
      */
     public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality TrainingDirectionOrSpeciality) {
-        this.trainingDirectionOrSpeciality = Defense.notNull(TrainingDirectionOrSpeciality, "TrainingDirectionOrSpeciality");
+        this.trainingDirectionOrSpeciality = TrainingDirectionOrSpeciality;
     }
 
     /**
@@ -139,7 +138,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @param termination the terminationDate to set
      */
     public void setTermination(Calendar termination) {
-        this.termination = Defense.notNull(termination, "termination");
+        this.termination = termination;
     }
 
     /**
@@ -152,7 +151,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     public void setOrgUnit(OrgUnit orgUnit) {
-        this.orgUnit = Defense.notNull(orgUnit, "orgUnit");
+        this.orgUnit = orgUnit;
     }
 
     /**
@@ -168,7 +167,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @param license the license to set
      */
     public void setLicense(License license) {
-        this.license = Defense.notNull(license, "license");
+        this.license = license;
     }
 
     @ManyToOne
@@ -178,7 +177,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     public void setLicenseRecordGroup(LicenseRecordGroup licenseRecordGroup) {
-        this.licenseRecordGroup = Defense.notNull(licenseRecordGroup, "licenseRecordGroup");
+        this.licenseRecordGroup = licenseRecordGroup;
     }
 
     @Override

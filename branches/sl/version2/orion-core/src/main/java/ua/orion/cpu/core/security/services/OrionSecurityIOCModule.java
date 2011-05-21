@@ -32,18 +32,23 @@ public class OrionSecurityIOCModule {
     }
 
     public static void contributeRealmSource(Configuration<Realm> config,
+            AclActiveDirectoryRealm realm) {
+        config.add(realm);
+    }
+
+    public static AclActiveDirectoryRealm build(
             EntityManager em,
             @Symbol("ldap.system-username") String systemUsername,
             @Symbol("ldap.system-password") String systemPassword,
             @Symbol("ldap.search-base") String searchBase,
             @Symbol("ldap.url") String url,
-            @Symbol("ldap.principal-suffix") String principalSuffix) {
-        AclActiveDirectoryRealm realm = new AclActiveDirectoryRealm(em);
+            @Symbol("ldap.principal-suffix") String principalSuffix, ThreadRole role) {
+        AclActiveDirectoryRealm realm = new AclActiveDirectoryRealm(em, role);
         realm.setSystemUsername(systemUsername);
         realm.setSystemPassword(systemPassword);
         realm.setSearchBase(searchBase);
         realm.setUrl(url);
         realm.setPrincipalSuffix(principalSuffix);
-        config.add(realm);
+        return realm;
     }
 }

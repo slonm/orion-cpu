@@ -268,7 +268,8 @@ public class OrionWebIOCModule {
 
             @Override
             public void advise(Invocation invocation) {
-                if ("".equals(invocation.getParameter(0).toString())) {
+                String page=invocation.getParameter(0).toString();
+                if ("".equals(page)||"index".equalsIgnoreCase(page)) {
                     invocation.override(0, "ori/index");
                 }
                 invocation.proceed();

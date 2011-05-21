@@ -3,6 +3,7 @@ package ua.orion.web.security.services;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.services.HttpServletRequestFilter;
 import org.apache.tapestry5.services.HttpServletRequestHandler;
@@ -33,6 +34,9 @@ public class ThreadLocalRoleRequestFilter implements HttpServletRequestFilter, P
             HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
         String role = request.getParameter("role");
         if ("".equals(role)) {
+            role = null;
+        }
+        if (role != null && !SecurityUtils.getSubject().hasRole(role)) {
             role = null;
         }
         threadRole.setRole(role);
