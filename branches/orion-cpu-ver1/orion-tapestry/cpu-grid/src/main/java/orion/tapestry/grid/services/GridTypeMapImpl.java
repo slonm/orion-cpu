@@ -12,6 +12,7 @@ public class GridTypeMapImpl implements GridTypeMap {
 
     @Override
     public Class getField(String attribyteType) {
+        //System.out.println(attribyteType);
         if (this.configuration.containsKey(attribyteType)) {
             return this.configuration.get(attribyteType);
         } else {
