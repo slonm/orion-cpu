@@ -9,6 +9,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import ua.orion.cpu.core.security.entities.*;
 import ua.orion.cpu.core.security.services.ThreadRole;
 
@@ -60,6 +62,18 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         return permissions;
     }
 
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        final String user = principals.oneByType(String.class);
+        if (user.startsWith("role_")) {
+            SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+            info.setObjectPermissions(new HashSet(resolvePermissionsForSubject(user.substring(5), SubjectType.ROLE)));
+            return info;
+        } else {
+            return super.doGetAuthorizationInfo(principals);
+        }
+    }
+
     class AclRolePermissionResolver implements RolePermissionResolver {
 
         @Override
@@ -67,7 +81,7 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
             if (!roleString.equalsIgnoreCase(threadRole.getRole())) {
                 return Collections.EMPTY_SET;
             }
-            return resolvePermissionsForSubject(roleString, SubjectType.ROLE);
+            return getAuthorizationInfo(new SimplePrincipalCollection("role_"+roleString, "role")).getObjectPermissions();
         }
     }
 

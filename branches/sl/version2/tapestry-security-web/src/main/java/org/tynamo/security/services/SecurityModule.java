@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.tynamo.security.core.services.RealmSource;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.util.ClassUtils;
-import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.apache.tapestry5.internal.services.PageResponseRenderer;
 import org.apache.tapestry5.internal.services.RequestPageCache;
 import org.apache.tapestry5.ioc.*;
@@ -83,7 +82,7 @@ public class SecurityModule {
         binder.bind(PageService.class, PageServiceImpl.class);
     }
 
-    public static WebSecurityManager buildWebSecurityManager(RealmSource realmSource) {
+    public static DefaultWebSecurityManager buildWebSecurityManager(RealmSource realmSource) {
         return new DefaultWebSecurityManager(realmSource.getRealms());
     }
 

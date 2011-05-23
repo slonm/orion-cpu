@@ -14,6 +14,14 @@
     </parent>
     <dependencies>
         <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>tapestry-jpa-hibernate-entitymanager</artifactId>
         </dependency>

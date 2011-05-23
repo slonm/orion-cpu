@@ -13,4 +13,5 @@ import ua.orion.cpu.core.orgunits.*;
  */
 public class OrionSecuritySymbols {
     public static final String SECURITY_LIB = "Security";
+    public static final String EHCACHE_CONFIG = "shiro.ehcache.config";
 }

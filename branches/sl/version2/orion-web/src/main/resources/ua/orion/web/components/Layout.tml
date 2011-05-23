@@ -24,34 +24,25 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         </div>
         <br/>
         <t:security.Authenticated>
-            ${message:label.user}: ${user} (${role}) <t:ActionLink t:id="logout"> ${message:action.logout}</t:ActionLink>
+            ${message:label.user}: ${user} <t:if test="role">(${role})</t:if><t:ActionLink t:id="logout"> ${message:action.logout}</t:ActionLink>
         </t:security.Authenticated>
         <t:security.NotAuthenticated>
             <t:pagelink page="security/login">${message:action.login}</t:pagelink>
-        </t:security.NotAuthenticated>
-        <t:if test="role">
-            <t:EventLink t:event="setRoleMode">${message:action.setRoleMode}</t:EventLink>
-        </t:if>        
+        </t:security.NotAuthenticated>&nbsp;
+        <t:security.Authenticated>
+            <t:pagelink page="ori/selectRole">${message:action.selectRolePage}</t:pagelink>
+        </t:security.Authenticated>
         <!-- end header -->
         <!-- start page -->
         <div id="page">
             <!-- start content -->
             <div id="content">
-                <t:if test="role">
-                    <div class="post">
-                        <div class="title"><h2>${title}</h2></div>
-                        <div class="entry">
-                            <t:body/>
-                        </div>
+                <div class="post">
+                    <div class="title"><h2>${title}</h2></div>
+                    <div class="entry">
+                        <t:body/>
                     </div>
-                    <p:else>
-                        <t:form t:id="roleForm">
-                            <t:label for="selectRole"/>
-                            <t:select t:id="selectRole" label="message:label.selectRole" model="roleModel" blankOption="never" value="role"/><br/>
-                            <t:submit value="message:action.selectRole" />
-                        </t:form>
-                    </p:else>
-                </t:if>    
+                </div>
             </div>
             <!-- end content -->
             <br style="clear: both;"/>

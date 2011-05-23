@@ -5,7 +5,9 @@ import java.util.ResourceBundle;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Match;
+import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.SubModule;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentClassResolver;
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import org.tynamo.jpa.Ejb3HibernateSymbols;
@@ -22,9 +24,9 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
  * Модуль конфигурирования IOC
  */
 @SubModule({
-    LicensingIOCModule.class, 
-    OrionSecurityIOCModule.class, 
-    OrgUnitsIOCModule.class, 
+    LicensingIOCModule.class,
+    OrionSecurityIOCModule.class,
+    OrgUnitsIOCModule.class,
     OrionCpuIOCModule.class,
     LicensingWebIOCModule.class,
     OrionSecurityWebIOCModule.class
@@ -43,8 +45,8 @@ public class AppModule {
             MappedConfiguration<String, String> configuration) {
         ResourceBundle bundle = ResourceBundle.getBundle("Cpu");
         Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()){
-            String key=e.nextElement();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
             configuration.add(key, bundle.getString(key));
         }
     }
@@ -54,10 +56,9 @@ public class AppModule {
 //    {
 //        configuration.addInstance("App", AppComponentEventLinkTransformer.class);
 //    }
-
 //    public static void contributeRealmSource(Configuration<Realm> configuration) {
 //        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
 //        configuration.add(realm);
 //    }
-
+    
 }

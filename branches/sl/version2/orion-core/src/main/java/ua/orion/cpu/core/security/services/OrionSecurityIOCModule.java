@@ -1,10 +1,9 @@
 package ua.orion.cpu.core.security.services;
 
-import java.util.Enumeration;
-import java.util.ResourceBundle;
 import javax.persistence.EntityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.tapestry5.ioc.Configuration;
+import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -46,4 +45,9 @@ public class OrionSecurityIOCModule {
         realm.setPrincipalSuffix(principalSuffix);
         config.add(realm);
     }
+    public static void contributeFactoryDefaults(
+            MappedConfiguration<String, String> configuration) {
+        configuration.add(OrionSecuritySymbols.EHCACHE_CONFIG, "/ehcache.xml");
+    }
+
 }
