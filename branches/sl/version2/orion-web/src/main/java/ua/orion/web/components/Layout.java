@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionGroupModel;
 import org.apache.tapestry5.OptionModel;
@@ -98,22 +99,26 @@ public class Layout {
             @Override
             public List<OptionModel> getOptions() {
                 List<OptionModel> optionModelList = new ArrayList<OptionModel>();
-                ActiveDirectoryPrincipal adp = SecurityUtils.getSubject().getPrincipals().oneByType(ActiveDirectoryPrincipal.class);
-                if (adp != null) {
-                    Set<String> roles = adp.getRoles();
-                    for (final String _role : roles) {
-                        optionModelList.add(new AbstractOptionModel() {
+                PrincipalCollection pc = SecurityUtils.getSubject().getPrincipals();
 
-                            @Override
-                            public String getLabel() {
-                                return _role;
-                            }
+                if (pc != null) {
+                    ActiveDirectoryPrincipal adp = pc.oneByType(ActiveDirectoryPrincipal.class);
+                    if (adp != null) {
+                        Set<String> roles = adp.getRoles();
+                        for (final String _role : roles) {
+                            optionModelList.add(new AbstractOptionModel() {
 
-                            @Override
-                            public Object getValue() {
-                                return _role;
-                            }
-                        });
+                                @Override
+                                public String getLabel() {
+                                    return _role;
+                                }
+
+                                @Override
+                                public Object getValue() {
+                                    return _role;
+                                }
+                            });
+                        }
                     }
                 }
                 return optionModelList;
