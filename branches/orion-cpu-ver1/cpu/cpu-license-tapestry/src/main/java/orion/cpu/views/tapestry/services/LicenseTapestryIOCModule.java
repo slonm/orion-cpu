@@ -6,6 +6,8 @@ import org.apache.tapestry5.services.*;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.ref.*;
 import orion.cpu.entities.uch.*;
+import orion.tapestry.grid.lib.field.GridFieldAbstract;
+import orion.tapestry.grid.lib.field.impl.GridFieldKnowledgeAreaOrTrainingDirection;
 import orion.tapestry.menu.lib.IMenuLink;
 import orion.tapestry.menu.lib.PageMenuLink;
 
@@ -61,4 +63,13 @@ public class LicenseTapestryIOCModule {
         configuration.add("License", "classpath:License.properties");
         configuration.add("LicenseTapestry", "classpath:LicenseTapestry.properties");
     }
+
+    /**
+     * Связываем класс сущности KnowledgeAreaOrTrainingDirection
+     * и класс для её отображения в Grid
+     * @author Gennadiy Dobrovolsky
+     */
+      public static void contributeTypeMap(MappedConfiguration<String, Class<? extends GridFieldAbstract>> configuration) {
+          configuration.add(KnowledgeAreaOrTrainingDirection.class.getName(), GridFieldKnowledgeAreaOrTrainingDirection.class);
+      }
 }
