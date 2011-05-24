@@ -21,7 +21,7 @@ import orion.tapestry.grid.lib.rows.GridRow;
  * после этого добавляем созданный класс в конфигурацию:
  *
  *     public static void contributeTypeMap(MappedConfiguration<String, Class<? extends GridFieldAbstract>> configuration) {
- *         configuration.add(GridFieldSample.class.getName(), GridFieldSample.class);
+ *         configuration.add(SampleDataType.class.getName(), GridFieldSample.class);
  *     }
  * 
  * @author Gennadiy Dobrovolsky
@@ -142,9 +142,9 @@ class SampleDataType{
  * и получать значения из тестового поля
  * @author Gennadiy Dobrovolsky
  */
-class FilterElementSample extends FilterElementText {
+class FilterElementKnowledgeAreaOrTrainingDirection extends FilterElementText {
 
-    public FilterElementSample(String newFieldName, String newLabel) {
+    public FilterElementKnowledgeAreaOrTrainingDirection(String newFieldName, String newLabel) {
         super(newFieldName);
         this.setUid(this.fieldName + "CONTAINS");
         this.setLabel(newLabel);
