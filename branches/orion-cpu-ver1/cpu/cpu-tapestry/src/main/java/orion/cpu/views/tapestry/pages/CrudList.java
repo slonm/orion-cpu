@@ -229,7 +229,7 @@ public class CrudList extends orion.cpu.views.tapestry.pages.crud.CrudList {
             protected String getLabel(String uid) {
                 String propertyName=uid.replaceFirst("^(\\w+\\.)+", "");
                 //System.out.println(getEntityClass()+" ==== "+propertyName +" === "+ messages);
-                System.out.println(" === " + fieldLabelSource.get(getEntityClass(), propertyName, messages));
+                //System.out.println(" === " + fieldLabelSource.get(getEntityClass(), propertyName, messages));
                 String msg=fieldLabelSource.get(getEntityClass(), propertyName, messages);
                 if(msg==null){
                     return "msg:" + uid;
