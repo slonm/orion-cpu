@@ -5,6 +5,7 @@ import org.apache.tapestry5.ioc.annotations.PostInjection;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.tapestry.menu.lib.DefaultMenuLink;
 import ua.orion.tapestry.menu.lib.PageMenuLink;
+import ua.orion.web.OrionWebSymbols;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -21,7 +22,7 @@ public class MenuLinkBuilder {
 
     //инициализация DefaultMenuLink.navigatorPageClass
     @PostInjection
-    public void postInjection(@Inject @Symbol("cpumenu.navigatorpage") String page) {
+    public void postInjection(@Inject @Symbol(OrionWebSymbols.MENU_NAVIGATOR) String page) {
         DefaultMenuLink.setNavigatorPage(page);
     }
 

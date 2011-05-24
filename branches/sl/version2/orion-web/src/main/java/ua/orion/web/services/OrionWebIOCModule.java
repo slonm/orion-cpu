@@ -25,6 +25,7 @@ import ua.orion.core.utils.IOCUtils;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
+import ua.orion.web.OrionWebSymbols;
 
 /**
  *
@@ -49,7 +50,7 @@ public class OrionWebIOCModule {
             MappedConfiguration<String, String> configuration) {
         configuration.override(SymbolConstants.START_PAGE_NAME, "ori/index");
         //Это страница может и не понадобится, если шаблоны tml будут браться их базы
-        configuration.add("cpumenu.navigatorpage", "ori/MenuNavigator");
+        configuration.add(OrionWebSymbols.MENU_NAVIGATOR, "ori/MenuNavigator");
     }
 
     public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration,

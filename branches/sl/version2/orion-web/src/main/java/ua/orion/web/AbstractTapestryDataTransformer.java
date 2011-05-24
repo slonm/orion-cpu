@@ -8,7 +8,6 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
-import ua.orion.web.services.TapestryDataFactory;
 import ua.orion.web.services.TapestryDataTransformer;
 
 /**
