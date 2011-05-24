@@ -23,6 +23,9 @@ public class ThreadRoleImpl implements ThreadRole{
 
     @Override
     public void setRole(String role) {
+        if ("".equals(role)) {
+            role = null;
+        }
         this.role = role;
     }
 }

@@ -32,23 +32,21 @@ public class ThreadLocalRoleRequestFilter implements HttpServletRequestFilter, P
     @Override
     public boolean service(HttpServletRequest request,
             HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
-        String role = request.getParameter("role");
-        if ("".equals(role)) {
-            role = null;
+        threadRole.setRole(request.getParameter("role"));
+        if (threadRole.getRole() != null && !SecurityUtils.getSubject().hasRole(threadRole.getRole())) {
+            threadRole.setRole(null);
         }
-        if (role != null && !SecurityUtils.getSubject().hasRole(role)) {
-            role = null;
-        }
-        threadRole.setRole(role);
-        LOG.debug("Role now: {}", role == null ? "<none>" : role.toString());
+        LOG.debug("Role now: {}", threadRole.getRole() == null ? "<none>" : threadRole.getRole());
         return handler.service(request, response);
     }
 
     @Override
     public Link transformPageRenderLink(Link defaultLink, PageRenderRequestParameters parameters) {
         String role = threadRole.getRole();
-        if (!defaultLink.getParameterNames().contains("role") && role != null) {
+        if (role != null) {
             defaultLink.addParameter("role", role);
+        } else {
+            defaultLink.removeParameter("role");
         }
         return null;
     }
