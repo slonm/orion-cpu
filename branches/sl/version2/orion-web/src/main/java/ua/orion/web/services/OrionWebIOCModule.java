@@ -25,6 +25,8 @@ import ua.orion.core.utils.IOCUtils;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
+import ua.orion.web.JPAAnnotationsConstraintGenerator;
+import ua.orion.web.JSR303AnnotationsConstraintGenerator;
 import ua.orion.web.OrionWebSymbols;
 
 /**
@@ -302,4 +304,15 @@ public class OrionWebIOCModule {
             }
         }
     }
+    
+    /**
+     * Регистация обработчика аннотаций JPA для валидации в Beaneditor
+     * @param configuration
+     */
+    public static void contributeValidationConstraintGenerator(
+            OrderedConfiguration<ValidationConstraintGenerator> configuration) {
+        configuration.add("JPAAnnotation", new JPAAnnotationsConstraintGenerator());
+        configuration.add("JSR303Annotation", new JSR303AnnotationsConstraintGenerator());
+    }
+
 }

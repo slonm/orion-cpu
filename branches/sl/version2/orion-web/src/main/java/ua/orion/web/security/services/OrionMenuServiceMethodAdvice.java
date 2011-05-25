@@ -6,10 +6,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.ioc.Invocation;
 import org.apache.tapestry5.ioc.MethodAdvice;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Value;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.BeanModelSource;
-import org.apache.tapestry5.services.ComponentClassResolver;
 import ua.orion.tapestry.menu.lib.MenuData;
 import ua.orion.tapestry.menu.lib.MenuItem;
 import ua.orion.tapestry.menu.services.OrionMenuService;
@@ -22,17 +21,14 @@ import ua.orion.web.OrionWebSymbols;
 public class OrionMenuServiceMethodAdvice implements MethodAdvice {
 
     private final TypeCoercer coercer;
-    private final Class<?> navigatorClass;
+    private final String navigatorPage;
     private final OrionMenuService cpuMenu;
-    private final ComponentClassResolver pageResolver;
     public OrionMenuServiceMethodAdvice(TypeCoercer coercer,
             OrionMenuService cpuMenu,
-            @Inject @Value("${"+OrionWebSymbols.MENU_NAVIGATOR+"}") Class<?> navigatorClass,
-            ComponentClassResolver pageResolver) {
+            @Inject @Symbol(OrionWebSymbols.MENU_NAVIGATOR) String navigatorPage) {
         this.coercer = coercer;
-        this.navigatorClass = navigatorClass;
+        this.navigatorPage = navigatorPage;
         this.cpuMenu = cpuMenu;
-        this.pageResolver = pageResolver;
     }
 
 //    @PostInjection
@@ -58,7 +54,7 @@ public class OrionMenuServiceMethodAdvice implements MethodAdvice {
         if (!ret) {
             return false;
         }
-        ret = !navigatorClass.getName().equals(pageResolver.resolvePageNameToClassName(data.getPageLink().getPage()));
+        ret = !navigatorPage.equalsIgnoreCase(data.getPageLink().getPage());
         Iterator<MenuItem> iter = data.getItems().iterator();
         while (iter.hasNext()) {
             MenuItem item = iter.next();
