@@ -72,75 +72,75 @@ public class UnitsInitializeDatabase extends OperationTypes implements Runnable 
             user = uCnt.findByLogin("guest");
             user.add(roleOUG);
             uCnt.saveOrUpdate(user);
-
+            
+            //Структура КПУ відповідно до наказів ректора #67 від 16.05.2011 та #74 від 16.05.2011
             //---Университет
             University ou_CPU=saveOrUpdateUniversity("Класичний приватний університет", "КПУ", null);
             //---Институты
             Institute iU=saveOrUpdateInstitute("Інститут управління","ІУ",ou_CPU);
             Institute iE=saveOrUpdateInstitute("Інститут економіки","ІЕ",ou_CPU);
-            Institute iP=saveOrUpdateInstitute("Інститут права","ІП",ou_CPU);
-            Institute iZhMK=saveOrUpdateInstitute("Інститут журналістики і масової комунікації","ІЖМК",ou_CPU);
-            Institute iZST=saveOrUpdateInstitute("Інститут здоров'я, спорту і туризму","ІЗСТ",ou_CPU);
+            Institute iP=saveOrUpdateInstitute("Інститут права ім. В.Сташиса","ІП",ou_CPU);
+            Institute iZhMK=saveOrUpdateInstitute("Інститут журналістики й масової комунікації","ІЖМК",ou_CPU);
+            Institute iZST=saveOrUpdateInstitute("Інститут здоров'я, спорту та туризму","ІЗСТ",ou_CPU);
             Institute iIPh=saveOrUpdateInstitute("Інститут іноземної філології","ІІФ",ou_CPU);
-            Institute iDMU=saveOrUpdateInstitute("Інститут державного та муніципального управління","ІДМУ",ou_CPU);
-            Institute iIST=saveOrUpdateInstitute("Інститут інформаційних і соціальних технологій","ІІСТ",ou_CPU);
-            Institute iPO=saveOrUpdateInstitute("Інститут післядипломної освіти","ІПО",ou_CPU);
+            Institute iIST=saveOrUpdateInstitute("Інститут інформаційних та соціальних технологій","ІІСТ",ou_CPU);
+            Institute bIDMU=saveOrUpdateInstitute("Бердянський інститут державного та муніципального управління","БІДМУ",ou_CPU);
+            
+            //---Отделы
+            Department dptPorfRetrainingCenter=saveOrUpdateDepartment("Центр професійної перепідготовки та підвищення кваліфікації","ЦПППК",ou_CPU);
+            Department dptColledgeCPU=saveOrUpdateDepartment("Колледж КПУ","кол.КПУ",ou_CPU);
+            Department dptPreVocationalTraining=saveOrUpdateDepartment("Відділення допрофесійної підготовки","ДПП",ou_CPU);
+            Department dptIITO=saveOrUpdateDepartment("Інститут інтерактивних технологій в освіті","ІІТО",ou_CPU);
+            Department dptPersManag=saveOrUpdateDepartment("Відділ управління персоналом","ВУП",ou_CPU);
+            
             //---Кафедры
                         //---Інститут управління----------
-            Chair kafMG       = saveOrUpdateChair("Кафедра менеджменту","КМ",iU);
+            Chair kafMO       = saveOrUpdateChair("Кафедра менеджменту організацій","КМО",iU);
             Chair kafMZD      = saveOrUpdateChair("Кафедра менеджменту зовнішньоекономічної діяльності","КМЗЕД",iU);
+            Chair kafGD       = saveOrUpdateChair("Кафедра гуманітарних дисциплін","КГД",iU);
+            Chair kafRT       = saveOrUpdateChair("Кафедра релігієзнавства та теології","КРТ",iU);
             Chair kafIAM      = saveOrUpdateChair("Кафедра інвестиційного та аграрного менеджменту","КІАМ",iU);
+            Chair kafAMBA     = saveOrUpdateChair("Кафедра адміністративного менеджменту та бізнес-адміністрування","КАМБА",iU);
             //---Інститут економіки----------
             Chair kafEP       = saveOrUpdateChair("Кафедра економіки підприємства","КЕП",iE);
             Chair kafEKS      = saveOrUpdateChair("Кафедра економічної кібернетики та статистики","КЕКС",iE);
-            Chair kafETNE     = saveOrUpdateChair("Кафедра економічної теорії та національної економіки","КЕТНЕ",iE);
+            Chair kafETNPE    = saveOrUpdateChair("Кафедра економічної теорії, національної та прикладної економіки","КЕТНПЕ",iE);
             Chair kafM        = saveOrUpdateChair("Кафедра маркетингу","КМК",iE);
             Chair kafME       = saveOrUpdateChair("Кафедра міжнародної економіки","КМЕ",iE);
             Chair kafOA       = saveOrUpdateChair("Кафедра обліку і аудиту","КОА",iE);
-            Chair kafFK       = saveOrUpdateChair("Кафедра фінансів і кредиту","КФК",iE);
-            //---Інститут права----------
+            Chair kafFK       = saveOrUpdateChair("Кафедра фінансів та кредиту","КФК",iE);
+            //---Інститут права ім. В.Сташиса----------
             Chair kafKAP      = saveOrUpdateChair("Кафедра конституційного та адміністративного права","ККАП",iP);
             Chair kafKP       = saveOrUpdateChair("Кафедра кримінального права","ККП",iP);
             Chair kafKPK      = saveOrUpdateChair("Кафедра кримінального процесу та криміналістики","ККПК",iP);
             Chair kafMP       = saveOrUpdateChair("Кафедра міжнародного права","КМП",iP);
             Chair kafTZGP     = saveOrUpdateChair("Кафедра трудового, земельного та господарського права","КТЗГП",iP);
-            Chair kafGPP      = saveOrUpdateChair("Кафедра цивільного права та процесу","КЦПП",iP);
-            Chair kafTIDP     = saveOrUpdateChair("Кафедра теорії та історії держави і права","КТІДП",iP);
-            //---Інститут журналістики і масової комунікації----------
+            Chair kafGPP      = saveOrUpdateChair("Кафедра цивільного права і процесу","КЦПП",iP);
+            Chair kafTIDP     = saveOrUpdateChair("Кафедра теорії та історії держави та права","КТІДП",iP);
+            Chair kafVPCO     = saveOrUpdateChair("Кафедра військової підготовки та цивільної оборони","КВПЦО",iP);
+            //---Інститут журналістики й масової комунікації----------
             Chair kafZSK      = saveOrUpdateChair("Кафедра журналістики і соціальних комунікацій","КЖСК",iZhMK);
             Chair kafVSRUF    = saveOrUpdateChair("Кафедра видавничої справи, редагування та української філології","КВСРУФ",iZhMK);
-            Chair kafRZG      = saveOrUpdateChair("Кафедра реклами та з'язків із громадкістю","КРЗГ",iZhMK);
-            //---Інститут здоров'я, спорту і туризму----------
+            Chair kafRZG      = saveOrUpdateChair("Кафедра реклами і з'язків із громадкістю","КРЗГ",iZhMK);
+            //---Інститут здоров'я, спорту та туризму----------
             Chair kafTGG      = saveOrUpdateChair("Кафедра туризму та готельного господарства","КТГГ",iZST);
             Chair kafTOFAV    = saveOrUpdateChair("Кафедра теоретичних основ фізичного та адаптивного виховання","КТОФАВ",iZST);
             Chair kafFR       = saveOrUpdateChair("Кафедра фізичної реабілітації","КФР",iZST);
             Chair kafV        = saveOrUpdateChair("Кафедра фізичного виховання","КФВ",iZST);
             //---Інститут іноземної філології----------
             Chair kafAFZL     = saveOrUpdateChair("Кафедра англійської філології та зарубіжної літератури","КАФЗЛ",iIPh);
-            Chair kafPF       = saveOrUpdateChair("Кафедра перекладу за фахом","КПФ",iIPh);
+//            Chair kafPF       = saveOrUpdateChair("Кафедра перекладу за фахом","КПФ",iIPh);
             Chair kafRGF      = saveOrUpdateChair("Кафедра романо–германської філології","КРГФ",iIPh);
             Chair kafTPP      = saveOrUpdateChair("Кафедра теорії та практики  перекладу","КТПП",iIPh);
             Chair kafIM       = saveOrUpdateChair("Кафедра іноземних мов","КІМ",iIPh);
-            //---Інститут державного та муніципального управління ----------
-            Chair kafDU       = saveOrUpdateChair("Кафедра державного управління","КДУ",iDMU);
-            Chair kafAM       = saveOrUpdateChair("Кафедра адміністративного менеджменту","КАМ",iDMU);
-            Chair kafZK       = saveOrUpdateChair("Кафедра землевпорядкування та кадастру","КЗК",iDMU);
-            //---Інститут інформаційних і соціальних технологій ----------
+            //---Інститут інформаційних та соціальних технологій ----------
             Chair kafD        = saveOrUpdateChair("Кафедра дизайну","КД",iIST);
             Chair kafPP       = saveOrUpdateChair("Кафедра практичної психології","КПП",iIST);
-            Chair kafPTD      = saveOrUpdateChair("Кафедра природничих і технічних дисциплін","КПТД",iIST);
             Chair kafPIT      = saveOrUpdateChair("Кафедра програмування та інформаційних технологій", "КПІТ", iIST);
             Chair kafSAVM     = saveOrUpdateChair("Кафедра системного аналізу та вищої математики", "КСАВМ",iIST);
             Chair kafSSR      = saveOrUpdateChair("Кафедра соціології та соціальної роботи","КССР",iIST);
-            //---Інститут післядипломної освіти ----------
-            Chair kafPEBA     = saveOrUpdateChair("Кафедра прикладної економіки та бізнес-адміністрування","КПЕБА",iPO);
-            Chair kafEICPHS   = saveOrUpdateChair("Кафедра управління навчальними закладами та педагогіки вищої школи","КПВШ",iPO);
-            
-            //Временно
-//            Chair kafUND      = saveOrUpdateChair("Неопределенная","ННН",iPO);
-
-            //---Отделы
-            Department dptPersManag=saveOrUpdateDepartment("Відділ управління персоналом","ВУП",ou_CPU);
+            Chair kafDUZK     = saveOrUpdateChair("Кафедра державного управління та земельного кадастру","КДУЗК",iIST);
+            Chair kafEICPHS   = saveOrUpdateChair("Кафедра управління навчальними закладами та педагогіки вищої школи","КПВШ",iIST);
         }
     }
 
