@@ -4,20 +4,20 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.apache.tapestry5.beaneditor.NonVisual;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.org.OrgUnit;
 import orion.cpu.entities.ref.EducationForm;
 import orion.cpu.entities.ref.EducationalQualificationLevel;
-import orion.cpu.entities.ref.KnowledgeAreaOrTrainingDirection;
 import orion.cpu.entities.ref.LicenseRecordGroup;
 import orion.cpu.entities.ref.TrainingDirectionOrSpeciality;
 import ua.mihailslobodyanuk.utils.Defense;
 
 /**
- * Сущность подсистемы учета лицензий
+ * Сущность записи в лицензии (даёт право на обучение студентов в соответствии 
+ * с указанными в записи атрибутами)
  * @author kgp
  */
 @Entity
@@ -30,10 +30,21 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
     //Создание пользовательского типа данных, указывающего на Property Block,
     //используемый в гриде и бинэдиторе
     @DataType("EduFormLicenseQuantity")
-    private SortedMap<EducationForm, Integer> licenseQuantityByEducationForm=new TreeMap();
+    private SortedMap<EducationForm, Integer> licenseQuantityByEducationForm = new TreeMap();
     private Date terminationDate;
     private OrgUnit orgUnit;
     private LicenseRecordGroup licenseRecordGroup;
+    //Добавляем свойство название области знаний/направления обучения для обеспечения 
+    //выборки с использованием @Formula, что нужно для сортировки по этому полю
+    private String knowledgeAreaOrTrainingDirectionName;
+    //Добавляем свойство код области знаний/направления обучения для обеспечения 
+    //выборки с использованием @Formula, что нужно для сортировки по этому полю
+    private String knowledgeAreaOrTrainingDirectionCode;
+    //Добавляем свойство составной шифр лицензионной записи для обеспечения 
+    //выборки с использованием @Formula, что нужно для сортировки по этому полю
+    private String code;
+
+    
 
     public LicenseRecord() {
     }
@@ -45,20 +56,19 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
             Date terminationDate,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
-                this.license=license;
-                this.trainingDirectionOrSpeciality=trainingDirectionOrSpeciality;
-                this.educationalQualificationLevel=educationalQualificationLevel;
-                this.licenseQuantityByEducationForm=licenseQuantityByEducationForm;
-                this.terminationDate=terminationDate;
-                this.orgUnit=orgUnit;
-                this.licenseRecordGroup=licenseRecordGroup;
+        this.license = license;
+        this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
+        this.educationalQualificationLevel = educationalQualificationLevel;
+        this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
+        this.terminationDate = terminationDate;
+        this.orgUnit = orgUnit;
+        this.licenseRecordGroup = licenseRecordGroup;
     }
 
     /**
      * @return Серия, номер и дата выдачи лицензии, к которой принадлежит данная запись
      * (не отображается в гриде)
      */
-
     @ManyToOne
     @NotNull
     public License getLicense() {
@@ -69,35 +79,36 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
         this.license = Defense.notNull(license, "license");
     }
 
-    /**
-     * @return код области знаний/направления обучения
-     */
-    @Transient
+    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
+    //для обеспечения сортировки по этому полю
+    @Formula("(select katd.code from ref.Training_Direction_Or_Speciality tds "
+            + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+            + "where tds.id=training_Direction_Or_Speciality)")
     public String getKnowledgeAreaOrTrainingDirectionCode() {
-         try {
-            return (getKnowledgeAreaOrTrainingDirection().getCode());
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return knowledgeAreaOrTrainingDirectionCode;
+    }
+
+    public void setKnowledgeAreaOrTrainingDirectionCode(String knowledgeAreaOrTrainingDirectionCode) {
+        this.knowledgeAreaOrTrainingDirectionCode = knowledgeAreaOrTrainingDirectionCode;
+    }
+    
+    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
+    //для обеспечения сортировки по этому полю
+    @Formula("(select katd.name from ref.Training_Direction_Or_Speciality tds "
+            + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+            + "where tds.id=training_Direction_Or_Speciality)")
+    public String getKnowledgeAreaOrTrainingDirectionName() {
+        return knowledgeAreaOrTrainingDirectionName;
+    }
+    
+    public void setKnowledgeAreaOrTrainingDirectionName(String knowledgeAreaOrTrainingDirectionName) {
+        this.knowledgeAreaOrTrainingDirectionName = knowledgeAreaOrTrainingDirectionName;
     }
 
     /**
-     * @return название области знаний/направления обучения
-     */
-     @Transient
-    public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
-         try {
-            return trainingDirectionOrSpeciality.getKnowledgeAreaOrTrainingDirection();
-        } catch (NullPointerException e) {
-            return null;
-        }
-    }
-
-     /**
      * @return образовательно-квалификайционный уровень
      * (не отображается в гриде)
      */
-
     @ManyToOne
     @NotNull
     public EducationalQualificationLevel getEducationalQualificationLevel() {
@@ -108,25 +119,17 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
         this.educationalQualificationLevel = Defense.notNull(educationalQualificationLevel, "educationalQualificationLevel");
     }
 
-    /**
-     * @return составной код, включающий код образовательно-квалификационного уровня,
-     * код области знаний/направления обучения и код направления обучения/специальности
-     */
-    @Transient
+    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
+    //для обеспечения сортировки по этому полю
+    @Formula("(select eql.code||'.'||katd.code||tds.code from ref.educational_qualification_level eql, ref.Training_Direction_Or_Speciality tds "
+            + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+            + "where tds.id=training_Direction_Or_Speciality and educational_qualification_level=eql.id)")
     public String getCode() {
-        try {
-            if (getEducationalQualificationLevel().getCode() == null ||
-                    getKnowledgeAreaOrTrainingDirection().getCode() == null ||
-                    getTrainingDirectionOrSpeciality().getCode() == null) {
-                return null;
-            }
-            StringBuilder sb = new StringBuilder(getEducationalQualificationLevel().getCode())
-                    .append(".").append(getKnowledgeAreaOrTrainingDirection().getCode())
-                    .append(getTrainingDirectionOrSpeciality().getCode());
-            return sb.toString();
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     /**
@@ -146,9 +149,9 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
      * @return Ассоциированный массив форма обучения - лицензированный объем
      */
     @ElementCollection
-    @CollectionTable(schema="uch")
+    @CollectionTable(schema = "uch")
     //Необходимый параметр для коллекции SortedMap
-    @Sort(type=SortType.NATURAL)
+    @Sort(type = SortType.NATURAL)
     public SortedMap<EducationForm, Integer> getLicenseQuantityByEducationForm() {
         return licenseQuantityByEducationForm;
     }
@@ -160,7 +163,6 @@ public class LicenseRecord extends BaseEntity<LicenseRecord> {
 //    public void addEduFormLicenseQuantity(EducationForm eduForm, Integer licenseQuantity){
 //        this.licenseQuantityByEducationForm.put(eduForm, licenseQuantity);
 //    }
-
     /**
      * @return дата окончания лицензионной записи
      */

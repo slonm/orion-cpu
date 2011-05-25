@@ -117,7 +117,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
         Map<String, Permission> LPermissions = iDBSpt.getPermissionsMap(License.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
         Map<String, Permission> LRPermissions = iDBSpt.getPermissionsMap(LicenseRecord.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
-//        Map<String, Permission> LRVPermissions = iDBSpt.getPermissionsMap(LicenseRecordView.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+
         if (iDBSpt.isFillTestData()) {
             //---------Группы прав----------
             //Права просмотра записей о лицензиях
@@ -142,8 +142,8 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Права изменения, добавления, удаления с сохранением записей справочников для подсистемы лицензий
             PermissionGroup pgManageLicenseRecordsReference = iDBSpt.saveOrUpdatePermissionGroup("Подсистема лицензий. Управление справочниками",
                     //Разрешения на редактирование справочников EducationForm и EducatioQualificztionLevel удалены, т.к. записи в них редко изменяются и это можно будет делать Администратору системы
-                    //                    EFPermissions.get(UPDATE_OP), EFPermissions.get(STORE_OP), EFPermissions.get(REMOVE_OP),
-                    //                    EQLPermissions.get(UPDATE_OP), EQLPermissions.get(STORE_OP), EQLPermissions.get(REMOVE_OP),
+                    EFPermissions.get(UPDATE_OP), EFPermissions.get(STORE_OP), EFPermissions.get(REMOVE_OP),
+                    EQLPermissions.get(UPDATE_OP), EQLPermissions.get(STORE_OP), EQLPermissions.get(REMOVE_OP),
                     KAOTPermissions.get(UPDATE_OP), KAOTPermissions.get(STORE_OP), KAOTPermissions.get(REMOVE_OP),
                     TDOSPermissions.get(UPDATE_OP), TDOSPermissions.get(STORE_OP), TDOSPermissions.get(REMOVE_OP),
                     LRGPermissions.get(UPDATE_OP), LRGPermissions.get(STORE_OP), LRGPermissions.get(REMOVE_OP));
@@ -200,7 +200,9 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             KnowledgeAreaOrTrainingDirection kaotdCompSci = saveOrUpdateKAOTD("Комп'ютерні науки", null, "0804", false, false);
             KnowledgeAreaOrTrainingDirection kaotdElect = saveOrUpdateKAOTD("Електроніка", null, "0908", false, false);
             KnowledgeAreaOrTrainingDirection kaotdGover = saveOrUpdateKAOTD("Державне управління", null, "1501", false, false);
+            
             //Переподготовка специалистов (Перелік 1997р - напрями навчання) - додатковх до основних напрямів немає
+            
             //Для коледжу КПУ (Перелік 1997г - напрями навчання) - додаткові до основних напрями
             KnowledgeAreaOrTrainingDirection kaotdTrade = saveOrUpdateKAOTD("Торгівля", null, "0503", false, false);
 
@@ -218,6 +220,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             KnowledgeAreaOrTrainingDirection kaotdInfComp = saveOrUpdateKAOTD("Інформатика та обчислювальна техніка", null, "0501", true, false);
             KnowledgeAreaOrTrainingDirection kaotdElectron = saveOrUpdateKAOTD("Електроніка", null, "0508", true, false);
             KnowledgeAreaOrTrainingDirection kaotdGeodLandReg = saveOrUpdateKAOTD("Геодезія та землеустрій", null, "0801", true, false);
+            
             //Подготовка младших специалистов (Перелік 2006р - галузі знань) - додаткові до основних напрями
             KnowledgeAreaOrTrainingDirection kaotdSocServ = saveOrUpdateKAOTD("Соціальне забезпечення", null, "1301", true, false);
             KnowledgeAreaOrTrainingDirection kaotdServSect = saveOrUpdateKAOTD("Сфера обслуговування", null, "1401", true, false);
@@ -312,15 +315,13 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Фізичне виховання, спорт і здоров'я людини
             TrainingDirectionOrSpeciality tdosPhysV_B = saveOrUpdateTDOS("Фізичне виховання", "ФВ", "01", true, kaotdPhysTrainSportHealth, false);
             TrainingDirectionOrSpeciality tdosZL_B = saveOrUpdateTDOS("Здоров'я людини", "ЗЛ", "03", true, kaotdPhysTrainSportHealth, false);
-//          //Культура
+            //Культура
             TrainingDirectionOrSpeciality tdosT_B = saveOrUpdateTDOS("Туризм", "Т", "07", true, kaotdCult, false);
             //Гуманітарні науки
             TrainingDirectionOrSpeciality tdosPhilol_B = saveOrUpdateTDOS("Філологія", "ФЛ", "03", true, kaotdHumanSci, false);
             //Соціально-політичні науки
             TrainingDirectionOrSpeciality tdosS_B = saveOrUpdateTDOS("Соціологія", "С", "01", true, kaotdSocPolSci, false);
             TrainingDirectionOrSpeciality tdosPSH_B = saveOrUpdateTDOS("Психологія", "П", "02", true, kaotdSocPolSci, false);
-            //Міжнародні відносини
-           // TrainingDirectionOrSpeciality tdosMV_B = saveOrUpdateTDOS("Міжнародні відносини", "МВ", "01", true, kaotdIntRelat, false);
             //Журналістика та інформація
             TrainingDirectionOrSpeciality tdosZhu_B = saveOrUpdateTDOS("Журналістика", "Ж", "01", true, kaotdZhurnInf, false);
             TrainingDirectionOrSpeciality tdosRZG_B = saveOrUpdateTDOS("Реклама і зв'язки з громадкістю (за видами)", "РЗГ", "02", true, kaotdZhurnInf, false);
@@ -351,7 +352,6 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Сфера обслуговування (NEW)
             TrainingDirectionOrSpeciality tdosGRS_B = saveOrUpdateTDOS("Готельно ресторанна справа", "ГРС", "01", true, kaotdServSect, false);
 
-
             //Подготовка младших специалистов (Перелік 2006р - спеціальності)
             //Культура
             TrainingDirectionOrSpeciality tdosOTO_JS = saveOrUpdateTDOS("Організація туристичного обслуговування", "ОТО", "0701", false, kaotdCult, false);
@@ -381,29 +381,30 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //---Кафедры, выполняющие обучение по лицензиям----------
             NamedEntityController<OrgUnit> ouCnt = (NamedEntityController<OrgUnit>) (Object) iDBSpt.getControllerSource().get(OrgUnit.class);
             //---Інститут управління----------
-            OrgUnit kafMG = ouCnt.findByNameFirst("Кафедра менеджменту");
+            OrgUnit kafMO = ouCnt.findByNameFirst("Кафедра менеджменту організацій");
             OrgUnit kafMZD = ouCnt.findByNameFirst("Кафедра менеджменту зовнішньоекономічної діяльності");
             OrgUnit kafIAM = ouCnt.findByNameFirst("Кафедра інвестиційного та аграрного менеджменту");
+            OrgUnit kafAMBA = ouCnt.findByNameFirst("Кафедра адміністративного менеджменту та бізнес-адміністрування");
             //---Інститут економіки----------
             OrgUnit kafEP = ouCnt.findByNameFirst("Кафедра економіки підприємства");
             OrgUnit kafEKS = ouCnt.findByNameFirst("Кафедра економічної кібернетики та статистики");
-            OrgUnit kafETNE = ouCnt.findByNameFirst("Кафедра економічної теорії та національної економіки");
+            OrgUnit kafETNPE = ouCnt.findByNameFirst("Кафедра економічної теорії, національної та прикладної економіки");
             OrgUnit kafM = ouCnt.findByNameFirst("Кафедра маркетингу");
             OrgUnit kafME = ouCnt.findByNameFirst("Кафедра міжнародної економіки");
             OrgUnit kafOA = ouCnt.findByNameFirst("Кафедра обліку і аудиту");
-            OrgUnit kafFK = ouCnt.findByNameFirst("Кафедра фінансів і кредиту");
+            OrgUnit kafFK = ouCnt.findByNameFirst("Кафедра фінансів та кредиту");
             //---Інститут права----------
             OrgUnit kafKAP = ouCnt.findByNameFirst("Кафедра конституційного та адміністративного права");
             OrgUnit kafKP = ouCnt.findByNameFirst("Кафедра кримінального права");
             OrgUnit kafKPK = ouCnt.findByNameFirst("Кафедра кримінального процесу та криміналістики");
             OrgUnit kafMP = ouCnt.findByNameFirst("Кафедра міжнародного права");
             OrgUnit kafTZGP = ouCnt.findByNameFirst("Кафедра трудового, земельного та господарського права");
-            OrgUnit kafGPP = ouCnt.findByNameFirst("Кафедра цивільного права та процесу");
-            OrgUnit kafTIDP = ouCnt.findByNameFirst("Кафедра теорії та історії держави і права");
-            //---Інститут журналістики і масової комунікації----------
+            OrgUnit kafGPP = ouCnt.findByNameFirst("Кафедра цивільного права і процесу");
+            OrgUnit kafTIDP = ouCnt.findByNameFirst("Кафедра теорії та історії держави та права");
+            //---Інститут журналістики й масової комунікації----------
             OrgUnit kafZSK = ouCnt.findByNameFirst("Кафедра журналістики і соціальних комунікацій");
             OrgUnit kafVSRUF = ouCnt.findByNameFirst("Кафедра видавничої справи, редагування та української філології");
-            OrgUnit kafRZG = ouCnt.findByNameFirst("Кафедра реклами та з'язків із громадкістю");
+            OrgUnit kafRZG = ouCnt.findByNameFirst("Кафедра реклами і з'язків із громадкістю");
             //---Інститут здоров'я, спорту і туризму----------
             OrgUnit kafTGG = ouCnt.findByNameFirst("Кафедра туризму та готельного господарства");
             OrgUnit kafTOFAV = ouCnt.findByNameFirst("Кафедра теоретичних основ фізичного та адаптивного виховання");
@@ -411,26 +412,17 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             OrgUnit kafV = ouCnt.findByNameFirst("Кафедра фізичного виховання");
             //---Інститут іноземної філології----------
             OrgUnit kafAFZL = ouCnt.findByNameFirst("Кафедра англійської філології та зарубіжної літератури");
-            OrgUnit kafPF = ouCnt.findByNameFirst("Кафедра перекладу за фахом");
             OrgUnit kafRGF = ouCnt.findByNameFirst("Кафедра романо–германської філології");
             OrgUnit kafTPP = ouCnt.findByNameFirst("Кафедра теорії та практики  перекладу");
             OrgUnit kafIM = ouCnt.findByNameFirst("Кафедра іноземних мов");
-            //---Інститут державного та муніципального управління ----------
-            OrgUnit kafDU = ouCnt.findByNameFirst("Кафедра державного управління");
-            OrgUnit kafAM = ouCnt.findByNameFirst("Кафедра адміністративного менеджменту");
-            OrgUnit kafZK = ouCnt.findByNameFirst("Кафедра землевпорядкування та кадастру");
-            //---Інститут інформаційних і соціальних технологій ----------
+            //---Інститут інформаційних та соціальних технологій ----------
             OrgUnit kafD = ouCnt.findByNameFirst("Кафедра дизайну");
             OrgUnit kafPP = ouCnt.findByNameFirst("Кафедра практичної психології");
-            OrgUnit kafPTD = ouCnt.findByNameFirst("Кафедра природничих і технічних дисциплін");
             OrgUnit kafPIT = ouCnt.findByNameFirst("Кафедра програмування та інформаційних технологій");
             OrgUnit kafSAVM = ouCnt.findByNameFirst("Кафедра системного аналізу та вищої математики");
             OrgUnit kafSSR = ouCnt.findByNameFirst("Кафедра соціології та соціальної роботи");
-            //---Інститут післядипломної освіти ----------
-            OrgUnit kafPEBA = ouCnt.findByNameFirst("Кафедра прикладної економіки та бізнес-адміністрування");
+            OrgUnit kafDUZK = ouCnt.findByNameFirst("Кафедра державного управління та земельного кадастру");
             OrgUnit kafEICPHS = ouCnt.findByNameFirst("Кафедра управління навчальними закладами та педагогіки вищої школи");
-            //Временно
-//            OrgUnit kafUND = ouCnt.findByNameFirst("Неопределенная");
 
             //Термін закінчення ліцензій 2009.07.01
             Calendar cal_2009_07_01 = Calendar.getInstance();
@@ -487,13 +479,13 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Педагогіка вищої школи - магістри
             saveOrUpdateLR(licenseCPU, tdosPVSH_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
             //Адміністративний менеджмент - магістри
-            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafAM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafAMBA, bsmtrain_LRG);
             //Управління навчальним закладом - магістри
             saveOrUpdateLR(licenseCPU, tdosUNZ_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafEICPHS, bsmtrain_LRG);
             //Прикладна економіка - магістри
-            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2012_07_01.getTime(), kafPEBA, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2012_07_01.getTime(), kafETNPE, bsmtrain_LRG);
             //Бізнес-адміністрування - магістри
-            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPEBA, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafAMBA, bsmtrain_LRG);
 
             //Фізичне виховання і спорт
             //Фізичне виховання і спорт - бакалаври
@@ -573,10 +565,10 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Менеджмент
             //Менеджмент - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMO, bsmtrain_LRG);
             //Менеджмент організацій - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafMG, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, cal_2015_07_01.getTime(), kafMO, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, cal_2015_07_01.getTime(), kafMO, bsmtrain_LRG);
             //Менеджмент зовнішньо-економічної діяльності - спеціалісти, магістри
             saveOrUpdateLR(licenseCPU, tdosMZED_SM, spec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
             saveOrUpdateLR(licenseCPU, tdosMZED_SM, master_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMZD, bsmtrain_LRG);
@@ -593,14 +585,14 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Право
             //Право - бакалаври
             saveOrUpdateLR(licenseCPU, tdosPZ_B, bach_EQL, stat_EF, 150, corr_EF, 250, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
-//            //Правознавство - спеціалісти, магістри
+            //Правознавство - спеціалісти, магістри
             saveOrUpdateLR(licenseCPU, tdosPZ_SM, spec_EQL, stat_EF, 115, corr_EF, 210, cal_2012_07_01.getTime(), kafTZGP, bsmtrain_LRG);
             saveOrUpdateLR(licenseCPU, tdosPZ_SM, master_EQL, stat_EF, 40, corr_EF, 60, cal_2015_07_01.getTime(), kafTZGP, bsmtrain_LRG);
 
             //Геодезія, картографія та землевпорядкування
             //Землевпорядкування та кадастр - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafDUZK, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafDUZK, bsmtrain_LRG);
 
             //Прикладна математика
             //Прикладна математика - бакалаври
@@ -619,13 +611,13 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Електроніка
             //Фізична та біомедична електроніка - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, corr_EF, 0, cal_2015_07_01.getTime(), kafPTD, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, corr_EF, 25, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, corr_EF, 0, cal_2015_07_01.getTime(), kafSAVM, bsmtrain_LRG);
 
             //Державне управління
             //Державна служба - магістри
-            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, corr_EF, 90, cal_2012_07_01.getTime(), kafDU, bsmtrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, corr_EF, 90, cal_2012_07_01.getTime(), kafDUZK, bsmtrain_LRG);
 
 
             //Перепідготовка спеціалістів
@@ -667,7 +659,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Менеджмент
             //Менеджмент організацій - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, corr_EF, 40, cal_2015_07_01.getTime(), kafMG, sretrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, corr_EF, 40, cal_2015_07_01.getTime(), kafMO, sretrain_LRG);
 
             //Комп'ютерні науки
             //Програмне забезпечення автоматизованих систем
@@ -689,11 +681,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Менеджмент
             //Організація обслуговування населення
-            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, cal_2015_07_01.getTime(), kafMO, forcol_LRG);
 
             //Торгівля
             //Товарознавство та комерційна діяльність
-            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMG, forcol_LRG);
+            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafMO, forcol_LRG);
 
             //Туризм
             //Організація обслуговування в готелях та туристичних комплексах
@@ -731,12 +723,6 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
             //Психологія
             saveOrUpdateLR(licenseCPU, tdosPSH_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPP, btrain_LRG);
 
-//            //Міжнародні відносини
-//            //Міжнародні відносини
-//            saveOrUpdateLR(licenseCPU, tdosMV_B, bach_EQL, stat_EF, 30, cal_2013_07_01.getTime(), kafMP, btrain_LRG);
-//            saveOrUpdateLR(licenseCPU, tdosMV_B, bach_EQL, corr_EF, 30, cal_2013_07_01.getTime(), kafMP, btrain_LRG);
-//            //Міжнародне право
-
             //Журналістика та інформація
             //Журналістика
             saveOrUpdateLR(licenseCPU, tdosZhu_B, bach_EQL, stat_EF, 50, corr_EF, 50, cal_2015_07_01.getTime(), kafZSK, btrain_LRG);
@@ -767,7 +753,7 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Менеджмент і адміністрування
             //Менеджмент
-            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMG, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, corr_EF, 250, cal_2015_07_01.getTime(), kafMO, btrain_LRG);
 
             //Системні науки та кібернетика
             //Інформатика
@@ -781,11 +767,11 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
             //Електроніка
             //Мікро- та наноелектроніка
-            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafPTD, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafSAVM, btrain_LRG);
 
             //Геодезія та землеустрій
             //Геодезія, картографія та землеустрій
-            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafZK, btrain_LRG);
+            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, cal_2015_07_01.getTime(), kafDUZK, btrain_LRG);
 
             //Соціальне забезпечення
             //Соціальна робота
@@ -799,11 +785,6 @@ public class LicenseInitializeDatabase extends OperationTypes implements Runnabl
 
 
             //Подготовка младших специалистов
-////            //Культура
-////            //Організація туристичного обслуговування (туристичне обслуговування (нов.))
-////            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, stat_EF, 0, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
-////            saveOrUpdateLR(licenseCPU, tdosOTO_JS, jSpec_EQL, corr_EF, 30, cal_2012_07_01.getTime(), kafUND, forcol_LRG);
-
             //Журналістика та інформація
             //Видавнича справа та редагування
             saveOrUpdateLR(licenseCPU, tdosVSTR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, cal_2015_07_01.getTime(), kafVSRUF, forcol_LRG);

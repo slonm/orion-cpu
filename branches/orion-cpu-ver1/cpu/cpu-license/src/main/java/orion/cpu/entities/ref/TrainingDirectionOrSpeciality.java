@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 import org.apache.tapestry5.beaneditor.DataType;
 
 /**
- * Сущность TrainingDirectionOrSpeciality
+ * Справочник направлений обучения или специальностей (старая/новая классификация)
  * @author sl
  */
 @Entity
