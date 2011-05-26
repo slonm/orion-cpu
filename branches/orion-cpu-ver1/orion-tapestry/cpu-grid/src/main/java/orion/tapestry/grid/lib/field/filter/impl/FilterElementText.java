@@ -17,5 +17,8 @@ public abstract class FilterElementText extends FilterElementAbstract{
         this.setType(FieldFilterElementType.TEXT);
     }
 
+    public FilterElementText(){
+    }
+
 
 }
