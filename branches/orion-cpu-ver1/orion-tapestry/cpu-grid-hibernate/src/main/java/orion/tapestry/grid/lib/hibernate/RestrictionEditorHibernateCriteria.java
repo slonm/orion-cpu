@@ -107,11 +107,15 @@ public class RestrictionEditorHibernateCriteria implements RestrictionEditorInte
      */
     @Override
     public RestrictionEditorInterface<Criteria> constField(String value) {
-        if(value.contains(".")){
-            String fld=value.replaceAll("\\.\\w+$", "");
-            this.criteria.createAlias(fld, fld);
+        //System.out.println("%%%%%%%%%%%%%%%8 "+value);
+        if (value.contains(".")) {
+            String fld = value.replaceAll("\\.\\w+$", "");
+            this.criteria=this.criteria.createAlias(fld, fld);
+            //System.out.println("%%%%%%%%%%%%%%%%%%%%%9 "+fld);
+            this.expression.add(new RestrictionEditorHibernateCriteria.Attribute(value));
+        } else {
+            this.expression.add(new RestrictionEditorHibernateCriteria.Attribute(value));
         }
-        this.expression.add(new RestrictionEditorHibernateCriteria.Attribute(value));
         return this;
     }
 
