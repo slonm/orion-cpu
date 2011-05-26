@@ -142,9 +142,9 @@ class SampleDataType{
  * и получать значения из тестового поля
  * @author Gennadiy Dobrovolsky
  */
-class FilterElementKnowledgeAreaOrTrainingDirection extends FilterElementText {
+class FilterElementKnowledgeAreaOrTrainingDirection1 extends FilterElementText {
 
-    public FilterElementKnowledgeAreaOrTrainingDirection(String newFieldName, String newLabel) {
+    public FilterElementKnowledgeAreaOrTrainingDirection1(String newFieldName, String newLabel) {
         super(newFieldName);
         this.setUid(this.fieldName + "CONTAINS");
         this.setLabel(newLabel);
