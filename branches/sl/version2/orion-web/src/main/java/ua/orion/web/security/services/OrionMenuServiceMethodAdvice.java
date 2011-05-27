@@ -60,7 +60,9 @@ public class OrionMenuServiceMethodAdvice implements MethodAdvice {
             MenuItem item = iter.next();
             clasz = coercer.coerce(item.getItemLink(), Class.class);
             if (clasz == null) {
-                if (cpuMenu.getOneMenu(item.getUid(), data.getPageLink().getContext(),
+//                if (cpuMenu.getOneMenu(item.getUid(), data.getPageLink().getContext(),
+//                        null, null) == null) {
+                if (cpuMenu.getOneMenu(item.getUid(), null,
                         null, null) == null) {
                     iter.remove();
                 } else {
