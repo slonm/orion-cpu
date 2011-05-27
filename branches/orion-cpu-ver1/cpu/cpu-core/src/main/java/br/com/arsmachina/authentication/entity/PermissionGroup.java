@@ -40,9 +40,12 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
 
     /**
      * Returns the value of the <code>permissions</code> property.
+     * Отключаем ленивую загрузку из связанной таблицы, для исправления ошибки
+     * failed to lazily initialize a collection of role: br.com.arsmachina.authentication.entity.Role.permissionGroups, 
+     * no session or session was closed
      * @return a {@link List<Permission>}.
      */
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(schema = "sec", name = "permissiongroup_permission", joinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permission_id", nullable = false))
     @Size(min = 1, max = 100)
     public Set<Permission> getPermissions() {
