@@ -15,6 +15,7 @@ import ua.orion.core.persistence.AbstractReferenceEntity;
 @AttributeOverrides({
     @AttributeOverride(name = "name", column = @Column(unique = true)),
     @AttributeOverride(name = "shortName", column = @Column(unique = true))})
+@Cacheable
 public class EducationalQualificationLevel extends AbstractReferenceEntity<EducationalQualificationLevel> {
 
     private static final long serialVersionUID = 1L;

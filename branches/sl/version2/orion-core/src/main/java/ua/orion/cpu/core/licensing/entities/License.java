@@ -11,6 +11,7 @@ import ua.orion.cpu.core.entities.Document;
  */
 @Entity
 @Table(schema = "uch")
+@Cacheable
 public class License extends Document<License> {
 
     private static final long serialVersionUID = 1L;

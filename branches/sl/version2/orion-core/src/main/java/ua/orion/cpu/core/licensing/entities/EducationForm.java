@@ -19,6 +19,7 @@ import ua.orion.core.persistence.IRangable;
     @AttributeOverride(name = "shortName", column =
     @Column(unique = true))})
 @UserPresentable("name")
+@Cacheable
 public class EducationForm extends AbstractReferenceEntity<EducationForm>
         implements IRangable {
 

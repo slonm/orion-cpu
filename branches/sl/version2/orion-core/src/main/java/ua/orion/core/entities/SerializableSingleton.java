@@ -14,6 +14,7 @@ import ua.orion.core.persistence.PersistentSingleton;
  */
 @Entity
 @Table(schema = "sys")
+@Cacheable
 public class SerializableSingleton extends AbstractEnumerationEntity<SerializableSingleton>
         implements PersistentSingleton<Serializable> {
 

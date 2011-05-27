@@ -14,6 +14,7 @@ import ua.orion.core.persistence.AbstractReferenceEntity;
     @Column(unique = true)),
     @AttributeOverride(name = "shortName", column =
     @Column(unique = true))})
+@Cacheable
 public class LicenseRecordGroup extends AbstractReferenceEntity<LicenseRecordGroup> {
 
     private static final long serialVersionUID = 1L;

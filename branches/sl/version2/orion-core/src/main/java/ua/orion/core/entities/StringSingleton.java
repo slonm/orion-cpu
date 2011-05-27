@@ -13,6 +13,7 @@ import ua.orion.core.persistence.PersistentSingleton;
  */
 @Entity
 @Table(schema = "sys")
+@Cacheable
 public class StringSingleton extends AbstractEnumerationEntity<StringSingleton>
         implements PersistentSingleton<String> {
 
