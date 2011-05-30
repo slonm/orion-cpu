@@ -45,7 +45,7 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
      * no session or session was closed
      * @return a {@link List<Permission>}.
      */
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany
     @JoinTable(schema = "sec", name = "permissiongroup_permission", joinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permission_id", nullable = false))
     @Size(min = 1, max = 100)
     public Set<Permission> getPermissions() {

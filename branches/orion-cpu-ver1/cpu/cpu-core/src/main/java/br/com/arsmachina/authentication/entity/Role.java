@@ -31,12 +31,8 @@ public class Role extends AbstractRole<Role> {
         setName(name);
         setSubSystem(subSystem);
     }
-    /**
-     * Отключаем ленивую загрузку из связанной таблицы, для исправления ошибки
-     * failed to lazily initialize a collection of role: br.com.arsmachina.authentication.entity.Role.permissionGroups, 
-     * no session or session was closed
-     */
-    @ManyToOne(fetch=FetchType.EAGER)
+
+    @ManyToOne
     @NotNull
     public SubSystem getSubSystem() {
         return subSystem;
@@ -77,12 +73,9 @@ public class Role extends AbstractRole<Role> {
 
     /**
      * Returns the unmodifiable ordered value of the <code>users</code> property.
-     * Отключаем ленивую загрузку из связанной таблицы, для исправления ошибки
-     * failed to lazily initialize a collection of role: br.com.arsmachina.authentication.entity.Role.permissionGroups, 
-     * no session or session was closed
      * @return a {@link Set<User>}.
      */
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany
     @JoinTable(schema = "sec", name = "user_role", joinColumns = 
     @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns =
     @JoinColumn(name = "user_id", nullable = false))
@@ -103,12 +96,9 @@ public class Role extends AbstractRole<Role> {
 
     /**
      * Returns unmodifiable ordered value of the <code>permissionGroups</code> property.
-     * Отключаем ленивую загрузку из связанной таблицы, для исправления ошибки
-     * failed to lazily initialize a collection of role: br.com.arsmachina.authentication.entity.Role.permissionGroups, 
-     * no session or session was closed
      * @return a {@link Set<PermissionGroup>}.
      */
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany
     @JoinTable(schema = "sec", name = "role_permissiongroup", joinColumns = @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "permissiongroup_id", nullable = false))
     public Set<PermissionGroup> getPermissionGroups() {
         return permissionGroups();
