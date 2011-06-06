@@ -1,6 +1,7 @@
 package ua.orion.core.services;
 
 import java.util.*;
+import org.apache.tapestry5.ioc.internal.util.Orderer;
 import ua.orion.core.annotations.AfterLibrary;
 import ua.orion.core.annotations.BeforeLibrary;
 import ua.orion.core.utils.Defense;
@@ -79,36 +80,57 @@ public class ModelLibraryServiceImpl implements ModelLibraryService {
         }
         List<Class<?>> result = new ArrayList();
         result.addAll(map.keySet());
-        Collections.sort(result, new Comparator<Class<?>>()      {
+        sort(result, map);
+        return result;
+    }
 
-            @Override
-            public int compare(Class<?> o1, Class<?> o2) {
-                return - compare(o1, o2, false);
+    static void sort(List<Class<?>> result, Map<Class<?>, String> map) {
+        ServiceOrderer so = new ServiceOrderer(map);
+        for (int i = 0; i < result.size() - 1; i++) {
+            for (int j = 1; j < result.size(); j++) {
+                int compare = so.compare(result.get(i), result.get(j));
+                if (compare < 0) {
+                    Class<?> cls = result.get(i);
+                    result.set(i, result.get(j));
+                    result.set(j, cls);
+                }
             }
+        }
+    }
+
+    static class ServiceOrderer {
+
+        final Map<Class<?>, String> map;
+
+        public ServiceOrderer(Map<Class<?>, String> map) {
+            this.map = map;
+        }
+
+        public int compare(Class<?> o1, Class<?> o2) {
+            return compare(o1, o2, false);
+        }
 
 //TODO Добавить проверку непротиворечивости условий
-            public int compare(Class<?> o1, Class<?> o2, boolean swap) {
-                BeforeLibrary beforeLibrary = o1.getAnnotation(BeforeLibrary.class);
-                if (beforeLibrary != null) {
-                    List<String> libs = Arrays.asList(beforeLibrary.value());
-                    if (libs.contains(map.get(o2))) {
-                        return -1;
-                    }
-                }
-                AfterLibrary afterLibrary = o1.getAnnotation(AfterLibrary.class);
-                if (afterLibrary != null) {
-                    List<String> libs = Arrays.asList(afterLibrary.value());
-                    if (libs.contains(map.get(o2))) {
-                        return 1;
-                    }
-                }
-                if (swap) {
-                    return 0;
-                } else {
-                    return compare(o2, o1, true);
+        private int compare(Class<?> o1, Class<?> o2, boolean swap) {
+            BeforeLibrary beforeLibrary = o1.getAnnotation(BeforeLibrary.class);
+            if (beforeLibrary != null) {
+                List<String> libs = Arrays.asList(beforeLibrary.value());
+                if (libs.contains(map.get(o2))) {
+                    return -1;
                 }
             }
-        });
-        return result;
+            AfterLibrary afterLibrary = o1.getAnnotation(AfterLibrary.class);
+            if (afterLibrary != null) {
+                List<String> libs = Arrays.asList(afterLibrary.value());
+                if (libs.contains(map.get(o2))) {
+                    return 1;
+                }
+            }
+            if (swap) {
+                return 0;
+            } else {
+                return -compare(o2, o1, true);
+            }
+        }
     }
 }
