@@ -1,11 +1,10 @@
 package ua.orion.core.services;
 
 import java.util.*;
-import org.apache.tapestry5.ioc.internal.util.Orderer;
-import ua.orion.core.annotations.AfterLibrary;
-import ua.orion.core.annotations.BeforeLibrary;
+import ua.orion.core.annotations.OrderLibrary;
 import ua.orion.core.utils.Defense;
 import ua.orion.core.ModelLibraryInfo;
+import ua.orion.core.utils.Orderer;
 
 /**
  *
@@ -62,7 +61,7 @@ public class ModelLibraryServiceImpl implements ModelLibraryService {
         if ((prefix == null || prefix.isEmpty()) && (suffix == null || suffix.isEmpty())) {
             throw new IllegalArgumentException("'prefix' or 'suffix' must have value");
         }
-        final Map<Class<?>, String> map = new HashMap();
+        Orderer<Class<?>> orderer = new Orderer();
         for (ModelLibraryInfo lib : libs) {
             StringBuilder sb = new StringBuilder(lib.getLibraryPackage());
             sb.append(".").append(subPackage).append(".");
@@ -74,63 +73,16 @@ public class ModelLibraryServiceImpl implements ModelLibraryService {
                 sb.append(suffix);
             }
             try {
-                map.put(Class.forName(sb.toString()), lib.getLibraryName());
+                Class<?> clasz = Class.forName(sb.toString());
+                OrderLibrary ann = clasz.getAnnotation(OrderLibrary.class);
+                if (ann != null) {
+                    orderer.add(lib.getLibraryName(), clasz, ann.value());
+                } else {
+                    orderer.add(lib.getLibraryName(), clasz);
+                }
             } catch (ClassNotFoundException ex) {
             }
         }
-        List<Class<?>> result = new ArrayList();
-        result.addAll(map.keySet());
-        sort(result, map);
-        return result;
-    }
-
-    static void sort(List<Class<?>> result, Map<Class<?>, String> map) {
-        ServiceOrderer so = new ServiceOrderer(map);
-        for (int i = 0; i < result.size() - 1; i++) {
-            for (int j = 1; j < result.size(); j++) {
-                int compare = so.compare(result.get(i), result.get(j));
-                if (compare < 0) {
-                    Class<?> cls = result.get(i);
-                    result.set(i, result.get(j));
-                    result.set(j, cls);
-                }
-            }
-        }
-    }
-
-    static class ServiceOrderer {
-
-        final Map<Class<?>, String> map;
-
-        public ServiceOrderer(Map<Class<?>, String> map) {
-            this.map = map;
-        }
-
-        public int compare(Class<?> o1, Class<?> o2) {
-            return compare(o1, o2, false);
-        }
-
-//TODO Добавить проверку непротиворечивости условий
-        private int compare(Class<?> o1, Class<?> o2, boolean swap) {
-            BeforeLibrary beforeLibrary = o1.getAnnotation(BeforeLibrary.class);
-            if (beforeLibrary != null) {
-                List<String> libs = Arrays.asList(beforeLibrary.value());
-                if (libs.contains(map.get(o2))) {
-                    return -1;
-                }
-            }
-            AfterLibrary afterLibrary = o1.getAnnotation(AfterLibrary.class);
-            if (afterLibrary != null) {
-                List<String> libs = Arrays.asList(afterLibrary.value());
-                if (libs.contains(map.get(o2))) {
-                    return 1;
-                }
-            }
-            if (swap) {
-                return 0;
-            } else {
-                return -compare(o2, o1, true);
-            }
-        }
+        return orderer.getOrdered();
     }
 }

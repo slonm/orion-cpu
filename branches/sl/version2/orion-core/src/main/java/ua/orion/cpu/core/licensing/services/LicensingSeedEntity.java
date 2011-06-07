@@ -5,7 +5,7 @@ import ua.orion.cpu.core.security.entities.SubjectType;
 import ua.orion.cpu.core.licensing.LicensingSymbols;
 import java.util.*;
 import ua.orion.cpu.core.orgunits.OrgUnitsSymbols;
-import ua.orion.core.annotations.AfterLibrary;
+import ua.orion.core.annotations.OrderLibrary;
 import ua.orion.cpu.core.orgunits.entities.Chair;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.cpu.core.OrionCPUSymbols;
@@ -18,7 +18,7 @@ import static ua.orion.core.utils.DateTimeUtils.*;
  *
  * @author sl
  */
-@AfterLibrary(OrgUnitsSymbols.ORG_UNITS_LIB)
+@OrderLibrary("after:"+OrgUnitsSymbols.ORG_UNITS_LIB)
 public class LicensingSeedEntity {
     public LicensingSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.core.annotations;
 
 import java.lang.annotation.Documented;
@@ -17,6 +13,6 @@ import java.lang.annotation.Target;
 @Target({TYPE})
 @Retention(RUNTIME)
 @Documented
-public @interface BeforeLibrary {
+public @interface OrderLibrary {
     String[] value();
 }
