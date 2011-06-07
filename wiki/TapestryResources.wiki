@@ -1,0 +1,3 @@
+[http://tawus.wordpress.com/ Java Magic]
+[http://tapestryjava.blogspot.com/ Howard M. Lewis Ship Blog]
+[http://blog.tapestry5.de Tapestry 5 Blog]
