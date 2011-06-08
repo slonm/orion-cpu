@@ -8,6 +8,7 @@ import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.*;
+import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer;
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import ua.orion.cpu.core.security.OrionSecuritySymbols;
 
@@ -29,6 +30,12 @@ public class OrionSecurityWebIOCModule {
 
     public static void contributePageRenderLinkTransformer(
             OrderedConfiguration<PageRenderLinkTransformer> configuration,
+            ThreadLocalRoleRequestFilter filter) {
+        configuration.add("RoleHolder", filter, "before:*");
+    }
+
+    public static void contributeComponentEventLinkTransformer(
+            OrderedConfiguration<ComponentEventLinkTransformer> configuration,
             ThreadLocalRoleRequestFilter filter) {
         configuration.add("RoleHolder", filter, "before:*");
     }
