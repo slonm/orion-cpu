@@ -6,18 +6,17 @@
  Пуск-Настройка-Панель управления-Система-Дополнительно-Переменные среды
 Например, <code>C:\Program Files\Java\jdk1.6.0_16</code> для Windows.
 
-В <code>Fedora Linux</code> переменную <code>JAVA_HOME</code> можно установить дописав в файл <code>.bash_profile</code> в Вашем профиле команды <code>JAVA_HOME=/usr/java/jdk1.6.0_16</code> (в указанном каталоге должен находиться JDK) и <code>export JAVA_HOME</code>.
+В <code>Fedora Linux</code> переменную <code>JAVA_HOME</code> можно установить, дописав в файл <code>.bash_profile</code> в Вашем профиле команды <code>JAVA_HOME=/usr/java/jdk1.6.0_16</code> (в указанном каталоге должен находиться JDK) и <code>export JAVA_HOME</code>.
 
 В <code>Ubuntu</code> <code>bash.bashrc</code>  в Вашем профиле или  <code>/etc/bash.bashrc</code> для всех пользователей.  Проверить установку переменной окружения можно командой <code>echo $JAVA_HOME</code> после выхода и повторного входа в систему.
  
 В Windows установить переменную <code>JRE_HOME</code> (например, <code>C:\Program Files\Java\jdk1.6.0_16\jre</code>). 
 В переменную среды <code>PATH</code> добавить <code>C:\Program Files\Java\jdk1.6.0_16\bin\</code>.
 
-Установить NetBeans из дистрибутива с любой конфигурацией, включающей сервер Apache TomCat (Java или Все) с [http://www.netbeans.org/downloads/index.html http://www.netbeans.org/downloads] 
-(на момент написания инструкции актуальной была версия 6.7.1).
+Установить NetBeans из дистрибутива с любой конфигурацией, включающей сервер Apache TomCat (Java или Все) с [http://www.netbeans.org/downloads/index.html http://www.netbeans.org/downloads].
 
-При установке NetBeans отметить галочкой установку сервера Apache TomCat. и JavaWeb и J2EE
-В файле конфигурации NetBeans C:\Program Files\NetBeans 6.7.1\etc\netbeans.conf (В Linux /usr/local/netbeans-x.x/etc/netbeans.conf) добавить netbeans_default_options= -J-Dfile.encoding=UTF-8 --fontsize 16 
+При установке NetBeans отметить галочкой установку сервера Apache TomCat, JavaWeb и J2EE
+В файле конфигурации NetBeans C:\Program Files\NetBeans 7.0\etc\netbeans.conf (В Linux /usr/local/netbeans-x.x/etc/netbeans.conf) добавить netbeans_default_options= -J-Dfile.encoding=UTF-8 --fontsize 16 
 (все это добавить в строку, которая в кавычках, размер шрифта можно устанавливать по желанию).
 
 == Установка Maven ==
@@ -28,12 +27,12 @@
  /etc/maven2/m2.conf
 здесь же лежит основной файл настроек
  /etc/maven2/settings.xml
-при этом сам maven находиться в
+при этом сам maven находится в
  /usr/share/maven2
  /usr/share/maven2/bin
 а директория ''/usr/share/maven2/conf'' является симлинком на указнную выше ''/etc/maven2/''
 
-=== Устанвка в ручную ===
+=== Устанвка вручную ===
 
 Загрузить Maven с http://maven.apache.org/download.html и распаковать его в C:\apache-maven.
 Положить в   C:\apache-maven\conf\  файл настроек Maven settings.xml
@@ -49,7 +48,7 @@
 org-netbeans-modules-tapestry.nbm 
 org-netbeans-modules-tapestry-codetemplates.nbm 
 org-netbeans-modules-web-tapestry-templates.nbm 
-(версии файлов актуальны на 18.09.2009, новые версии смотреть на  nbtapestrysupport.dev.java.net . 
+(версии файлов актуальны на 18.09.2009, в версии Netbeans 7.0 эти плагины не устанавливаются - новые версии смотреть на  nbtapestrysupport.dev.java.net). 
 Перегрузить NetBeans. Установленные модули будут перечислены в
  Tools-Plugins-Installed-User Installed Plugins
 Включить подсказки javadoc - Tools-Options-Editord-Hints. Поставить галки возле Javadoc, Create Javadoc, Error in Javadoc.
@@ -66,7 +65,7 @@ org-netbeans-modules-web-tapestry-templates.nbm
 }}}
 Javadoc для текущего проекта генерируется командой Run-Generate Javadoc, страницы документации располагаются в папке target/site/apidocs проекта (файловая структура проекта отображается на вкладке Files навигатора (слева)).
 Выполнить настройку клиента Subversion в NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию. В случае доступа из Интернета путь: https://212.8.40.76:12443/svn/cpu, Вход возможен под именем пользователя домена UNI (домена локальной сети КПУ). 
-Необходимо или отключить прокси сервер, или настроить исключение по указанным адресам.
+Необходимо или отключить прокси сервер, или настроить исключение по указанному адресу.
 При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
 После нажатия Next можно выбрать ту часть репозитория с которой необходимо работать.
 Реализованная стратегия использования svn ресурсов основана на первом варианте из [http://www.gnuman.ru/stuff/svn_strateg/ http://www.gnuman.ru/stuff/svn_strateg/] 
