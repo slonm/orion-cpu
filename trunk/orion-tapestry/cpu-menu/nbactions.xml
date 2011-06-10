@@ -32,4 +32,16 @@
                 <netbeans.deploy.profilemode>true</netbeans.deploy.profilemode>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Build-skip-tests</actionName>
+            <displayName>Build-skip-tests</displayName>
+            <goals>
+                <goal>install</goal>
+            </goals>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                
+                
+            </properties>
+        </action>
     </actions>

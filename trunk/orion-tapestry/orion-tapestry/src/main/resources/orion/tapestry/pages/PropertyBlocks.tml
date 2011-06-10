@@ -1,5 +1,4 @@
 <div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-
     <t:block id="displayBooleanText">
         <t:if test="prop:outputContext.propertyValue">
             ${message:true}
@@ -20,4 +19,13 @@
         <input t:id="booleanSelectField"/>
     </t:block>
 
+    <t:block id="editUserRole">
+        <t:label for="UserRoleField"/>
+        <input t:id="UserRoleField"/>
+    </t:block>
+
+    <t:block id="editPassword">
+        <t:label for="PasswordField"/>
+        <input t:type="passwordField" t:id="PasswordField"/>
+    </t:block>
 </div>
