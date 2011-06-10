@@ -7,6 +7,7 @@ import br.com.arsmachina.module.service.ControllerSource;
 import java.util.Stack;
 import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.annotations.Scope;
+import org.hibernate.Session;
 import orion.cpu.security.OperationTypes;
 import orion.cpu.security.exceptions.*;
 import orion.cpu.security.services.ExtendedAuthorizer;
@@ -23,8 +24,9 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     private final ControllerSource controllerSource;
     private User user;
     private Role role;
-    private Stack<User> userStack=new Stack<User>();
-    private Stack<Role> roleStack=new Stack<Role>();
+    private Stack<User> userStack = new Stack<User>();
+    private Stack<Role> roleStack = new Stack<Role>();
+    private Session session;
 
     /**
      * Single constructor of this class.
@@ -33,8 +35,9 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
      * @param controllerSource
      */
     @SuppressWarnings("unchecked")
-    public ExtendedAuthorizerImpl(ControllerSource controllerSource) {
+    public ExtendedAuthorizerImpl(ControllerSource controllerSource, Session session) {
         this.controllerSource = Defense.notNull(controllerSource, "controllerSource");
+        this.session = Defense.notNull(session, "session");
     }
 
     private PermissionController getPermissionController() {
@@ -172,6 +175,20 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
     @Override
     public boolean can(Permission permission, Object object) {
         Defense.notNull(permission, "permission");
+        /*Добавлена проверка связаны ли текущие объекты user и role с сессией
+         * если сессия закрыта, то !session.contains(user) возвращает true
+         * и выполняется повторное открытие сессии для этого объекта т предотвращается
+         * ошибка failed to lazily initialize a collection of role: 
+         * br.com.arsmachina.authentication.entity.Role.permissionGroups, no session or session was closed
+         */
+        if (user != null && user.getId()!=null && !session.contains(user)) {
+            user = getUserController().findById(user.getId());
+        }
+        if (role != null && role.getId()!=null && !session.contains(role)) {
+            role = getRoleController().findById(role.getId());
+        }
+        //Конец проверки
+        
         //rule: by schema in (sys, sec, ref)
         if (permission.getPermissionType().equals(OperationTypes.READ_OP)
                 && canReadBySchema(permission.getSubject())) {
@@ -265,15 +282,15 @@ public class ExtendedAuthorizerImpl implements ExtendedAuthorizer {
 
     @Override
     public void popUserAndRole() {
-        user=userStack.pop();
-        role=roleStack.pop();
+        user = userStack.pop();
+        role = roleStack.pop();
     }
 
     @Override
     public void pushUserAndRole() {
         userStack.push(user);
         roleStack.push(role);
-        user=null;
-        role=null;
+        user = null;
+        role = null;
     }
 }

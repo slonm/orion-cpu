@@ -1,7 +1,6 @@
 package orion.cpu.services;
 
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,6 @@ public class UnitsIOCModule {
      * Начальная инициализация базы данных
      * Создание сервиса ObjectLocatorInstance
      * @param configuration
-     * @param objectLocatorInstance
      */
     public static void contributeRegistryStartup(OrderedConfiguration<Runnable> configuration) {
         configuration.addInstance("UnitsInitializeDatabase", UnitsInitializeDatabase.class, "after:InitializeDatabase");

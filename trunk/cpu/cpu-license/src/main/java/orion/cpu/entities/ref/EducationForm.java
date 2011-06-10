@@ -4,7 +4,7 @@ import javax.persistence.*;
 import orion.cpu.baseentities.ReferenceEntity;
 
 /**
- *Сущность-справочник EducationForm
+ * Справочник форм обучения
  * @author kgp
  */
 @Entity

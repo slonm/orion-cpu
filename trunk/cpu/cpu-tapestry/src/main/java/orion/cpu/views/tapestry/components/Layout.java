@@ -13,7 +13,8 @@ import org.apache.tapestry5.services.Session;
 /**
  * Layout component for pages of application mavenproject1.
  */
-@IncludeStylesheet({"classpath:orion/cpu/views/tapestry/components/layout/layout.css"})
+@Import(stylesheet={"classpath:orion/cpu/views/tapestry/components/layout/layout.css","../web/cpu_web.css"},
+library={"../web/jquery.js","../web/cpu_effects.js"})
 @SuppressWarnings("unused")
 public class Layout {
 

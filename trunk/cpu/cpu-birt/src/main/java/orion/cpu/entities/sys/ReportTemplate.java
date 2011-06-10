@@ -2,7 +2,6 @@ package orion.cpu.entities.sys;
 
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.hibernate.annotations.Type;
 import orion.cpu.baseentities.NamedEntity;
 
 /**
@@ -20,7 +19,6 @@ public class ReportTemplate extends NamedEntity<ReportTemplate> {
     private String body;
 
     @Lob
-    @Type(type="org.hibernate.type.StringClobType")
     @DataType("longtext")
     public String getBody() {
         return body;

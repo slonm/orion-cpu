@@ -5,7 +5,7 @@ import org.apache.tapestry5.beaneditor.Validate;
 import orion.cpu.baseentities.ReferenceEntity;
 
 /**
- * Сущность-справочник EducationalQualificationLevel
+ * Справочник образовательно-квалификационных уровней
  * @author kgp
  */
 @Entity

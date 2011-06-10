@@ -22,11 +22,11 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         <div id="header">
             <span id="menu"><t:menu.menubar menudata="menudata" /></span>
         </div>
-        <br/>
+
         <t:security.IfLoggedIn>
-            ${message:label.user}: ${user.name} <t:ActionLink t:id="logout"> ${message:link.logout}</t:ActionLink>
+            <table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:label.user}:&nbsp;</td><td class="topusername">&nbsp;${user.name}&nbsp;</td><td class="td-user-logout"><t:ActionLink t:id="logout"><div class="user-logout" title="${message:link.logout}"></div></t:ActionLink></td></tr></table>
             <p:else>
-            <t:pagelink page="login">${message:link.login}</t:pagelink>
+                <t:pagelink page="login"><table cellspacing="0" class="userntable"><tr><td class="topuser">&nbsp;${message:message.not.login}&nbsp;</td><td class="td-user-login"><div class="user-login" title="${message:link.login}"></div></td></tr></table></t:pagelink>
             </p:else>
         </t:security.IfLoggedIn>
         <!-- end header -->
@@ -48,13 +48,10 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
         <!-- start footer -->
         <div id="footer">
             <p class="legal">
-                &copy;2009 orion. All Rights Reserved.
-                &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-                Design by
-                <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>
-                &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-                Icons by
-                <a href="http://famfamfam.com/">FAMFAMFAM</a>.
+                <p>${message:message.cpu}</p>
+                <p>
+                    <a href="mailto:ido@zhu.edu.ua">${message:message.contact}</a>
+                </p>
             </p>
         </div>
         <!-- end footer -->

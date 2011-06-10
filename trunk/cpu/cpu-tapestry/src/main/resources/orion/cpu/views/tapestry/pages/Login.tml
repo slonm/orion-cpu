@@ -1,34 +1,23 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-      xmlns:p="tapestry:parameter">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-        <title>Login</title>
-    </head>
-    <body>
-        <br/>
-        <br/>
-        <br/>
-        <form
-            action="${loginCheckUrl}"
-            method="post"
-            class="tssga-login-form">
-
-            <table>
+<t:layout xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter"
+          title="${message:title.login}"
+          t:sidebarTitle="Links">
+    <form action="${loginCheckUrl}" method="post" class="tssga-login-form">
+        <table>
             <tr>
-            <td><label for="j_username">${message:label.username}</label></td>
-            <td><input name="j_username" type="text" /></td>
+                <td><label for="j_username">${message:label.username}</label></td>
+                <td><input name="j_username" type="text" /></td>
             </tr>
             <tr>
-            <td><label for="j_password">${message:label.password}</label></td>
-            <td><input name="j_password" type="password" /></td>
+                <td><label for="j_password">${message:label.password}</label></td>
+                <td><input name="j_password" type="password" /></td>
             </tr>
             <tr>
-            <td><input id="submit" class="submit" type="submit"
-                   value="${message:button.login}"/></td>
+                <td><input id="submit" class="submit" type="submit"
+                           value="${message:button.login}"/></td>
             </tr>
-                   </table>
-            <input type="hidden" name="spring-security-redirect" value="${prop:redirectUrl}" />
-        </form>
-    </body>
-</html>
+        </table>
+        <input type="hidden" name="spring-security-redirect" value="${prop:redirectUrl}" />
+    </form>
+</t:layout>

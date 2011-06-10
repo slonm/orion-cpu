@@ -16,11 +16,22 @@
         <dependency>
             <groupId>orion</groupId>
             <artifactId>cpu-tapestry</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.eclipse.birt</groupId>
             <artifactId>viewservlets</artifactId>
             <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
         </dependency>
     </dependencies>
     <build>

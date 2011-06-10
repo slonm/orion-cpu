@@ -68,7 +68,7 @@ public class EduPlan extends BaseEntity<EduPlan> {
     @Transient
     public KnowledgeAreaOrTrainingDirection getKnowledgeAreaOrTrainingDirection() {
         try {
-            return licenseRecord.getKnowledgeAreaOrTrainingDirection();
+            return licenseRecord.getTrainingDirectionOrSpeciality().getKnowledgeAreaOrTrainingDirection();
         } catch (NullPointerException e) {
             return null;
         }

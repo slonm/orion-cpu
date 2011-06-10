@@ -94,7 +94,7 @@ public class Document<T extends Document<?>> extends BaseEntity<T> {
     }
 
     /**
-     * Сортрирует по issue, serial, number
+     * Распечатка объекта класса выводит серию, номер и дату выдачи
      */
     @Override
     public String toString() {

@@ -54,25 +54,30 @@ public class InitializeDatabase extends OperationTypes implements Runnable {
         if (initDBSupport.isFillTestData()) {
             //---------Группы прав----------
             //Права управления всеми справочниками
-            Set<Permission> allReference = new HashSet<Permission>();
+            Set<Permission> allEntities = new HashSet<Permission>();
             for (Class<?> e : entitySource.getEntityClasses()) {
                 javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
                 if (a != null && "ref".equals(a.schema())) {
                     Map<String, Permission> permissions = initDBSupport.getPermissionsMap(e, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
-                    allReference.addAll(permissions.values());
+                    allEntities.addAll(permissions.values());
                 }
             }
-            PermissionGroup pg=null;
-            for (Permission p : allReference) {
+            //Права управления пользователями и ролями
+            Map<String, Permission> permissions = initDBSupport.getPermissionsMap(User.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+            allEntities.addAll(permissions.values());
+            permissions = initDBSupport.getPermissionsMap(Role.class, READ_OP, REMOVE_OP, STORE_OP, UPDATE_OP, MENU_OP);
+            allEntities.addAll(permissions.values());
+            PermissionGroup pg = null;
+            for (Permission p : allEntities) {
                 pg = initDBSupport.saveOrUpdatePermissionGroup("Управління довідниками", p);
             }
             //---------Роли----------
             Role role = initDBSupport.saveOrUpdateRole("Developer",
                     "Розробник", subSystem, pg);
             //---------Пользователи----------
-            User user = saveOrUpdateUser("sl", "123456", "Михаил Слободянюк", "slobodyanukma@ukr.net", "uk");
-            saveOrUpdateUser("TII", "123456", "Ирина Тесленко", "bbb@aaa.net", "ru");
-            saveOrUpdateUser("guest", "123456", "Гость информационной системы КПУ", "guest@cpu.edu", null);
+            User user = saveOrUpdateUser("sl", "123456", "Адміністратор ІС КПУ", "admin@cpu.edu", "uk");
+            saveOrUpdateUser("TII", "123456", "Оператор підсистем ІС КПУ", "operator@cpu.edu", "ru");
+            saveOrUpdateUser("guest", "123456", "Гість ІС КПУ", "guest@cpu.edu", null);
             user.add(role);
             initDBSupport.getUserController().saveOrUpdate(user);
         }

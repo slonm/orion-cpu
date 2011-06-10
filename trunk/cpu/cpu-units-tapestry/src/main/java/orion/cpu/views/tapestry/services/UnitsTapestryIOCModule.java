@@ -20,8 +20,14 @@ public class UnitsTapestryIOCModule {
             MenuLinkBuilder mlb) {
         String path;
 
-        path = "Start>Units>Chair";
+        path = "Start>Units>2Chair";
         configuration.add(path, mlb.buildListPageMenuLink(Chair.class, path));
+
+        path = "Start>Units>1Institute";
+        configuration.add(path, mlb.buildListPageMenuLink(Institute.class, path));
+
+        path = "Start>Units>3Department";
+        configuration.add(path, mlb.buildListPageMenuLink(Department.class, path));
     }
     private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity,String path){
         IMenuLink lnk=new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));

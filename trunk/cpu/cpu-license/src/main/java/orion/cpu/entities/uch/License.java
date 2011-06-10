@@ -7,7 +7,8 @@ import javax.validation.constraints.Pattern;
 import orion.cpu.entities.pub.Document;
 
 /**
- * Сущность, хранящая общие сведения (шапку) лицензий
+ * Сущность, хранящая серию и номер лицензий, 
+ * а также набор лицензионных записей
  * @author kgp
  */
 @Entity

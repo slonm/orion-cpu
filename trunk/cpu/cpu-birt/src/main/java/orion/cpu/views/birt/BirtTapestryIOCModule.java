@@ -88,7 +88,7 @@ public class BirtTapestryIOCModule {
     }
 
     public static HttpServletRequestFilter buildBirtEngineServletHttpServletRequestFilter(final SymbolSource symbols) {
-        final Servlet servlet = new org.eclipse.birt.report.servlet.BirtEngineServlet();
+        final Servlet servlet = (Servlet) new org.eclipse.birt.report.servlet.BirtEngineServlet();
         try {
             servlet.init(new ServletConfigWrapper(servlet.getClass().getName()));
         } catch (ServletException ex) {
@@ -116,7 +116,7 @@ public class BirtTapestryIOCModule {
     }
 
     public static HttpServletRequestFilter buildBirtViewServletHttpServletRequestFilter(final SymbolSource symbols) {
-        final Servlet servlet = new org.eclipse.birt.report.servlet.ViewerServlet();
+        final Servlet servlet = (Servlet) new org.eclipse.birt.report.servlet.ViewerServlet();
         try {
             servlet.init(new ServletConfigWrapper(servlet.getClass().getName()));
         } catch (ServletException ex) {
