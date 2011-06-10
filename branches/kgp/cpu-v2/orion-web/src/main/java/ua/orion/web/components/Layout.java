@@ -13,7 +13,7 @@ import ua.orion.cpu.core.security.services.ThreadRole;
 /**
  * Layout component for pages.
  */
-@Import(stylesheet = {"layout/layout.css"})
+@Import(stylesheet = {"layout/layout.css","../css/cpu_web.css"}, library={"../jquery.js","../cpu_effects.js"})
 @SuppressWarnings("unused")
 public class Layout {
 

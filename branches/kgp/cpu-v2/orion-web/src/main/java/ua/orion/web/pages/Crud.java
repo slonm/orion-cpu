@@ -1,5 +1,6 @@
 package ua.orion.web.pages;
 
+import java.awt.Toolkit;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
@@ -77,7 +78,15 @@ public class Crud {
     private static final String ADD = "add";
     private static final String VIEW = "view";
     private static final String DEL = "del";
-
+    /**
+     * Высота формы редактирования
+     */
+    private Integer editorHeight;
+    /**
+     * Ширина формы редактирования
+     */
+    private Integer editorWidth;
+    
     public boolean isComponentEventRequst() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
@@ -134,11 +143,11 @@ public class Crud {
                 //Если страница вызвана для класса сущности, отличного от предыдущего
                 //вызова, то сбросим все Persistent поля и отправим редирект на эту же страницу,
                 //т.к. сброс произойдеи только при следующем запросе страницы
-                if(!objClass.equals(objectClass)&&objectClass!=null){
+                if (!objClass.equals(objectClass) && objectClass != null) {
                     resources.discardPersistentFieldChanges();
                     return lastPageHolder.getLastPage();
                 }
-                objectClass=objClass;
+                objectClass = objClass;
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return startPageName;
@@ -148,11 +157,11 @@ public class Crud {
         title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
-
+    
     public GridDataSource getObjects() {
         return dataSource.getGridDataSource(objectClass);
     }
-
+    
     public Object onSuccessFromEditForm() {
         error = null;
         try {
@@ -162,7 +171,7 @@ public class Crud {
         }
         return listZone.getBody();
     }
-
+    
     public Object onSuccessFromAddForm() {
         error = null;
         try {
@@ -173,6 +182,29 @@ public class Crud {
         return listZone.getBody();
     }
 
+    /**
+     * Метод расчета необходимой высоты для формы редактирования.
+     * Исходит из кол-ва полей в классе и в одном из его суперклассов. 
+     * @return значение высоты формы (в пикселях)
+     */
+    public Integer getEditorHeight() {
+        if (object == null) {
+            return 80;
+        } else {
+            return (1 + (((object.getClass().getDeclaredFields().length - object.getClass().getFields().length))
+                    + ((object.getClass().getSuperclass().getDeclaredFields().length - object.getClass().getSuperclass().getFields().length)))) * 35;
+        }
+    }
+
+    /**
+     * Метод расчета ширины формы редактирования. 
+     * Исходит из того, что ширина должна составлять 90% от ширины экрана(разрешения)
+     * @return значение ширины формы (в пикселях)
+     */
+    public Integer getEditorWidth() {
+        return (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.9);
+    }
+    
     public Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
         mode = EDIT;
@@ -180,7 +212,7 @@ public class Crud {
         error = null;
         return editBlock;
     }
-
+    
     public Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         mode = ADD;
@@ -188,14 +220,14 @@ public class Crud {
         error = null;
         return editBlock;
     }
-
+    
     public Object onView(Integer id) {
         mode = VIEW;
         object = entityService.find(objectClass, id);
         error = null;
         return viewBlock;
     }
-
+    
     public Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         mode = DEL;
@@ -203,7 +235,7 @@ public class Crud {
         error = null;
         return deleteBlock;
     }
-
+    
     public Object onDelete() {
         error = null;
         try {
@@ -214,7 +246,7 @@ public class Crud {
         }
         return listZone.getBody();
     }
-
+    
     public boolean getIsEdit() {
         return EDIT.equals(mode);
     }

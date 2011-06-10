@@ -1,0 +1,140 @@
+/* Определяем стиль для кнопок */
+.btn {
+    float:left;
+    display:inline-block;
+    height:44px;
+    line-height:44px;
+    padding:0 10px 0 50px;
+    background:url(../images/white000.jpg) repeat-x;
+    color:#999;
+    font-weight:bold;
+    font-size:13px;
+    text-shadow:0 1px 0 #fff;
+    position:relative;
+    border:1px solid black;
+    margin:0 10px 10px 0;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+}
+
+/* Определеям стиль для кнопок, на которые наведена мышь */
+.btn:hover {
+    border-color:black;
+    background:#F8F8F8;
+}
+
+/* Определеям стиль для кнопок */
+.btn span {
+    display:block;
+    position:absolute;
+    top:6px;
+    left:9px;
+    width:32px;
+    height:32px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+/* Определеям кнопку закрытия формы редактирования */
+.btn.close span {
+    background-image:url(../images/close.png);
+}
+
+.btn.close {
+    left: 80%;
+}
+
+/* Картинка с изображением университета на главной странице */
+#sp_logo1{
+    background-image: url(../images/klas_pryvat_univer.jpg);
+    width: 500px;
+    height: 325px;
+    display: none;
+}
+
+/* Текст приветствия на главной странице */
+#wlctocpu{
+    text-align: center;
+    display: none;
+}
+
+/* Форматируем ячейки Grid */
+table.t-data-grid tbody tr td{
+    font-size: 9pt;
+    color: black;
+    background-color: #e5ecf5;
+}
+
+/* Форматируем ячейки заголовков для Grid, выбора страниц в Grid, и панели авторизации */
+table.t-data-grid thead tr th,
+.t-data-grid-pager a,
+.topusername,
+.td-user-logout,
+.t-palette-title{
+    text-decoration: none;
+    background-image: url(../images/table_head.png);
+}
+
+/* Форматируем текст заголовков для Grid */
+table.t-data-grid thead tr th a,
+.t-palette-title{
+    font-size: 10pt;
+    color: #15428b;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Выделяем ячейку с классом name, disciplineNumber в Grid */
+table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
+    background-color: #d8e3f9
+}
+
+/* Выделяем серым цветом ячейки с кнопками в Grid */
+table.t-data-grid td.action{
+    background-color: #d7d7d7;
+}
+
+/* Выделяем строку в Grid при наведении курсора мыши */
+table.t-data-grid tbody tr:hover td{
+    background-color: #fffff3;
+}
+
+/* Ссылки в ListView */
+.post > .entry > div > a{
+    color: black;
+    font-weight: bold;
+    font-size: 10pt;
+}
+/* Ссылки в ListView при наведении */
+.post > .entry > div > a:hover{
+    color: dodgerblue;
+    text-decoration: underline;
+}
+
+/* Меню */
+span.menutitle{
+    padding: 10px;
+    font: 12px Arial,Helvetica, sans-serif;
+}
+
+span.menutitle a{
+    text-decoration: none;
+    color: #ffff99;
+}
+
+div.title h2{
+    font-size: 26pt;
+}
+/*a:hover {
+    background: #3a599d;
+    text-decoration: none;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-transform: scale(1.05) rotate(-1deg);
+    -moz-transform: scale(1.05) rotate(-1deg);
+    -o-transform: scale(1.05) rotate(-1deg);
+    transform: scale(1.05) rotate(-1deg);
+}*/

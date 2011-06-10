@@ -60,8 +60,8 @@
     </t:block>
     <t:ck.Window t:id="popupWindow" t:style="bluelighting" show="false"
                  modal="true" title="mode"
-                 width="900" height="500">
+                 width="${editorWidth}" height="${editorHeight}">
         <t:zone t:id="popupZone"/>
-        <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
+        <p align="center"><a href="" onclick="Windows.close('popupWindow')" class="btn close"><span></span>${message:action.closewindow}</a></p>       
     </t:ck.Window>
 </t:ori.layout>
