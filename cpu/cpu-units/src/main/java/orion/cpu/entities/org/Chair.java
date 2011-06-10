@@ -15,5 +15,6 @@ import javax.persistence.*;
 @Table(schema = "org")
 public class Chair extends OrgUnit {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }
+

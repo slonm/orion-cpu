@@ -6,4 +6,5 @@ package orion.cpu.entities.ref;
  */
 public enum ScientificDegree {
     DOCTOR, KANDIDATE;
+    //TODO необходимо учитывать и обасть наук
 }

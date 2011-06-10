@@ -9,7 +9,7 @@ import javax.persistence.*;
 import orion.cpu.baseentities.ReferenceEntity;
 
 /**
- *
+ * Справочник названий груп лицензионных записей (их назначения)
  * @author kgp
  */
 @Entity

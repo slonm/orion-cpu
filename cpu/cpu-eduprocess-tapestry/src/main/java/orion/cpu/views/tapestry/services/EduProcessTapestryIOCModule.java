@@ -67,11 +67,11 @@ public class EduProcessTapestryIOCModule {
         configuration.add(path, mlb.buildListPageMenuLink(Discipline.class, path));
     }
 
-    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
-        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
-        lnk.setParameterPersistent("menupath", path);
-        return lnk;
-    }
+//    private static IMenuLink createPageMenuLink(TapestryCrudModuleService tcms, Class<?> entity, String path) {
+//        IMenuLink lnk = new PageMenuLink(tcms.getListPageClass(entity), BaseEntity.getFullClassName(entity));
+//        lnk.setParameterPersistent("menupath", path);
+//        return lnk;
+//    }
 
     public static void contributeGlobalMessageAppender(OrderedConfiguration<String> configuration) {
         configuration.add("EduProcess", "classpath:EduProcess.properties");

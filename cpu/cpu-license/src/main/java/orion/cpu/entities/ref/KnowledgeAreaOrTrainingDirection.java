@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 import org.apache.tapestry5.beaneditor.DataType;
 
 /**
- * Сущность KnowledgeAreaOrTrainingDirection
+ * Справочник областей знаний или направлений обучения (старая/новая классификация)
  * @author sl
  */
 @Entity

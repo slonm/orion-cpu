@@ -14,7 +14,7 @@ import orion.cpu.baseentities.BaseEntity;
  *
  * @author sl
  */
-public class ListEduProcessRecordView extends BaseListPage<LicenseRecordView, Integer> {
+public class ListEduProcessRecordView extends BaseListPage<LicenseRecord, Integer> {
 
 //    public static final String MENU_PATH = "Start>EduProcess";
 //    @Inject

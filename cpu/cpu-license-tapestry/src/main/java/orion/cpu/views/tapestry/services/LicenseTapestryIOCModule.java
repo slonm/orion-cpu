@@ -1,12 +1,15 @@
 package orion.cpu.views.tapestry.services;
 
+import br.com.arsmachina.tapestrycrud.services.TapestryCrudModuleService;
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.*;
+import orion.cpu.baseentities.BaseEntity;
 import orion.cpu.entities.ref.*;
 import orion.cpu.entities.uch.*;
-import orion.cpu.views.tapestry.pages.uch.ListLicenseRecordView;
+import orion.tapestry.grid.lib.field.GridFieldAbstract;
+import orion.tapestry.grid.lib.field.impl.GridFieldKnowledgeAreaOrTrainingDirection;
 import orion.tapestry.menu.lib.IMenuLink;
+import orion.tapestry.menu.lib.PageMenuLink;
 
 /**
  * Модуль конфигурирования IOC
@@ -19,12 +22,16 @@ public class LicenseTapestryIOCModule {
      * @author sl
      */
     public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
-        //Edit
-        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "EditTrainingDirectionOrSpeciality", true));
-        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "EditKnowledgeAreaOrTrainingDirection", true));
-        //Display
-        configuration.add(new BeanBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "DisplayTrainingDirectionOrSpeciality", false));
-        configuration.add(new BeanBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection", false));
+        //Display TDS or KATD
+        configuration.add(new DisplayBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "DisplayTrainingDirectionOrSpeciality"));
+        configuration.add(new DisplayBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection"));
+        //Edit TDS or KATD
+        configuration.add(new EditBlockContribution("TrainingDirectionOrSpeciality", "LicensePropertyBlocks", "EditTrainingDirectionOrSpeciality"));
+        configuration.add(new EditBlockContribution("KnowledgeAreaOrTrainingDirection", "LicensePropertyBlocks", "EditKnowledgeAreaOrTrainingDirection"));
+        //Display EduFormLicenseQuantity
+        configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "LicensePropertyBlocks", "DisplayEduFormLicenseQuantity"));
+        //Edit EduFormLicenseQuantity
+        configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "LicensePropertyBlocks", "EditEduFormLicenseQuantity"));
     }
 
     /**
@@ -42,16 +49,13 @@ public class LicenseTapestryIOCModule {
         path = "Start>License>LicenseRecord";
         configuration.add(path, mlb.buildListPageMenuLink(LicenseRecord.class, path));
 
-        path = ListLicenseRecordView.MENU_PATH;
-        configuration.add(path, mlb.buildListPageMenuLink(LicenseRecordView.class, path));
-
-        path = "Start>License>LicenseRecordView>KnowledgeAreaOrTrainingDirection";
+        path = "Start>License>LicenseRecord>KnowledgeAreaOrTrainingDirection";
         configuration.add(path, mlb.buildListPageMenuLink(KnowledgeAreaOrTrainingDirection.class, path));
 
-        path = "Start>License>LicenseRecordView>TrainingDirectionOrSpeciality";
+        path = "Start>License>LicenseRecord>TrainingDirectionOrSpeciality";
         configuration.add(path, mlb.buildListPageMenuLink(TrainingDirectionOrSpeciality.class, path));
 
-        path = "Start>License>LicenseRecordView>LicenseRecordGroup";
+        path = "Start>License>LicenseRecord>LicenseRecordGroup";
         configuration.add(path, mlb.buildListPageMenuLink(LicenseRecordGroup.class, path));
     }
 
@@ -60,16 +64,12 @@ public class LicenseTapestryIOCModule {
         configuration.add("LicenseTapestry", "classpath:LicenseTapestry.properties");
     }
 
-    public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration) {
-        configuration.add(new Coercion<IMenuLink, Class<LicenseRecordView>>() {
-
-            @Override
-            public Class<LicenseRecordView> coerce(IMenuLink input) {
-                if (input.getPageClass().equals(ListLicenseRecordView.class)) {
-                    return LicenseRecordView.class;
-                }
-                return null;
-            }
-        });
-    }
+    /**
+     * Связываем класс сущности KnowledgeAreaOrTrainingDirection
+     * и класс для её отображения в Grid
+     * @author Gennadiy Dobrovolsky
+     */
+      public static void contributeTypeMap(MappedConfiguration<String, Class<? extends GridFieldAbstract>> configuration) {
+          configuration.add(KnowledgeAreaOrTrainingDirection.class.getName(), GridFieldKnowledgeAreaOrTrainingDirection.class);
+      }
 }

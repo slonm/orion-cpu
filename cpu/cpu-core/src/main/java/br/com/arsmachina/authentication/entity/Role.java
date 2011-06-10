@@ -76,7 +76,9 @@ public class Role extends AbstractRole<Role> {
      * @return a {@link Set<User>}.
      */
     @ManyToMany
-    @JoinTable(schema = "sec", name = "user_role", joinColumns = @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false))
+    @JoinTable(schema = "sec", name = "user_role", joinColumns = 
+    @JoinColumn(name = "role_id", nullable = false), inverseJoinColumns =
+    @JoinColumn(name = "user_id", nullable = false))
     public Set<User> getUsers() {
         return users;
     }

@@ -44,7 +44,7 @@ public class MenupathLinkCreationListener implements LinkCreationListener {
                 }
                 //Путь меню начинается со Start
                 if (s.startsWith("Start") && isNavigator) {
-                    newMenupath = _URLEncoder.decode(s);
+                    newMenupath = _URLEncoder.decode(s.replaceAll(";.*$", ""));
                     break;
                 }
             }

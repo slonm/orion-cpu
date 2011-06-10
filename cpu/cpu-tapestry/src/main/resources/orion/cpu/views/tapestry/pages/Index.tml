@@ -3,6 +3,15 @@
           xmlns:p="tapestry:parameter">
     <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
 
-    <p>${message:greeting}</p>
+<p id="wlctocpu">${message:greeting}</p>
+    <center>
+        <table>
+            <tr>
+                <td><div id="sp_logo2"><br/></div></td>
+                <td><div id="sp_logo1"></div></td>
+            </tr>
+        </table>
+    </center>
+
 
 </t:layout>

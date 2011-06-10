@@ -163,38 +163,33 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             ePCal20090901.set(Calendar.MONTH, Calendar.SEPTEMBER);
             ePCal20090901.set(Calendar.DAY_OF_MONTH, 1);
 
-            //--Создание контроллера, работающего с экземплярами записи лицензии
             //--Создание контроллера, работающего с экземплярами образовательно-квалификационного уровня
             NamedEntityController<EducationalQualificationLevel> lrEQLcnt = (NamedEntityController<EducationalQualificationLevel>) (Object) iDBSpt.getControllerSource().get(EducationalQualificationLevel.class);
             EducationalQualificationLevel bach = lrEQLcnt.findByNameFirst("Бакалавр");
-            //--Создание контроллера, работающего с экземплярами направления обучения или специальности
-            NamedEntityController<TrainingDirectionOrSpeciality> lrTDSPIcnt = (NamedEntityController<TrainingDirectionOrSpeciality>) (Object) iDBSpt.getControllerSource().get(TrainingDirectionOrSpeciality.class);
-            TrainingDirectionOrSpeciality tdosPI_B = lrTDSPIcnt.findByNameFirst("Програмна інженерія");
 
-            NamedEntityController<TrainingDirectionOrSpeciality> lrTDScntSA = (NamedEntityController<TrainingDirectionOrSpeciality>) (Object) iDBSpt.getControllerSource().get(TrainingDirectionOrSpeciality.class);
-            TrainingDirectionOrSpeciality tdosSA_B = lrTDScntSA.findByNameFirst("Системний аналіз та управління");
+            //--Создание контроллера, работающего с экземплярами направления обучения или специальности
+            NamedEntityController<TrainingDirectionOrSpeciality> lrTDScnt = (NamedEntityController<TrainingDirectionOrSpeciality>) (Object) iDBSpt.getControllerSource().get(TrainingDirectionOrSpeciality.class);
+            TrainingDirectionOrSpeciality tdosPI_B = lrTDScnt.findByNameFirst("Програмна інженерія");
+            TrainingDirectionOrSpeciality tdosSA_B = lrTDScnt.findByNameFirst("Системний аналіз");
 
             //--Создание контроллера, работающего с формами обучения
             NamedEntityController<EducationForm> lrEFcnt = (NamedEntityController<EducationForm>) (Object) iDBSpt.getControllerSource().get(EducationForm.class);
             EducationForm efStat = lrEFcnt.findByNameFirst("Денна");
 
-            //--Создание контроллера, работающего с экземплярами записей лицензии
+            //--Создание контроллера, работающего с экземплярами записей лицензии 
             Controller<LicenseRecord, Integer> lrCnt = iDBSpt.getControllerSource().get(LicenseRecord.class);
-            //Для "Программная инженерия" бакалавр Ден.
-            LicenseRecord lrSample = new LicenseRecord();
-            lrSample.setEducationalQualificationLevel(bach);
-            lrSample.setTrainingDirectionOrSpeciality(tdosPI_B);
-            lrSample.setEducationForm(efStat);
-             //--Заполнение экземпляра лицензионной записи (для бакалавров ПИ)
-            List<LicenseRecord> pIBachList = (List<LicenseRecord>)lrCnt.findByExample(lrSample);
+            //Для "Программная инженерия" бакалавр
+            LicenseRecord lrSamplePI = new LicenseRecord();
+            lrSamplePI.setEducationalQualificationLevel(bach);
+            lrSamplePI.setTrainingDirectionOrSpeciality(tdosPI_B);
+//            lrSamplePI.setEducationForm(efStat);
+            List<LicenseRecord> pIBachList = (List<LicenseRecord>)lrCnt.findByExample(lrSamplePI);
             LicenseRecord pIBach=pIBachList.get(0);
-
-            //Для "Системний аналіз та управління" бакалавр Ден.
+            //Для "Прикладна математика" бакалавр
             LicenseRecord lrSampleSA = new LicenseRecord();
             lrSampleSA.setEducationalQualificationLevel(bach);
             lrSampleSA.setTrainingDirectionOrSpeciality(tdosSA_B);
-            lrSampleSA.setEducationForm(efStat);
-            //--Заполнение экземпляра лицензионной записи (для бакалавров СА)
+//            lrSampleSA.setEducationForm(efStat);
             List<LicenseRecord> sABachList = (List<LicenseRecord>)lrCnt.findByExample(lrSampleSA);
             LicenseRecord sABach=sABachList.get(0);
 
@@ -210,9 +205,9 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             EduPlanDisciplineCycle pIBach2009Prof = saveOrUpdateEPDC(prof_DC, "3", pIBach2009, true, 3744);
 
             //--Заполнение циклов дисциплин учебных планов (для бакалавров СА 2009г)
-            EduPlanDisciplineCycle sABach2009SocHumEconom = saveOrUpdateEPDC(sochumekonom_DC, "1", sABach2009, true, 864);
-            EduPlanDisciplineCycle sABach2009NaturSci = saveOrUpdateEPDC(natursci_DC, "2", sABach2009, true, 2187);
-            EduPlanDisciplineCycle sABach2009ProfND = saveOrUpdateEPDC(profnd_DC, "3", sABach2009, true, 2070);
+            EduPlanDisciplineCycle pMBach2009SocHumEconom = saveOrUpdateEPDC(sochumekonom_DC, "1", sABach2009, true, 864);
+            EduPlanDisciplineCycle pMBach2009NaturSci = saveOrUpdateEPDC(natursci_DC, "2", sABach2009, true, 2187);
+            EduPlanDisciplineCycle pMBach2009ProfND = saveOrUpdateEPDC(profnd_DC, "3", sABach2009, true, 2070);
 
             //--Заполнение номеров семестров учебных планов с количество недель теоретических занятий
             LOG.debug("Add Test EduPlanSemesters...");
@@ -253,12 +248,12 @@ public class EduprocessInitializeDatabase extends OperationTypes implements Runn
             EduPlanDiscipline discrStrucPI2009 = saveOrUpdateEPDisc(discrStruc, pIBach2009Prof, 126, true);
 
             //--Заполнение дисциплин учебных планов СА
-            EduPlanDiscipline ukrainianLangSA2009 = saveOrUpdateEPDisc(ukrainianLang, sABach2009SocHumEconom, 108, true);
-            EduPlanDiscipline politologiyaSA2009 = saveOrUpdateEPDisc(politologiya, sABach2009SocHumEconom, 54, true);
-            EduPlanDiscipline algGeomSA2009 = saveOrUpdateEPDisc(algGeom, sABach2009NaturSci, 396, true);
-            EduPlanDiscipline funcAnalysSA2009 = saveOrUpdateEPDisc(funcAnalys, sABach2009NaturSci, 108, true);
-            EduPlanDiscipline programSA2009 = saveOrUpdateEPDisc(program, sABach2009ProfND, 378, true);
-            EduPlanDiscipline modelSA2009 = saveOrUpdateEPDisc(model, sABach2009ProfND, 144, true);
+            EduPlanDiscipline ukrainianLangSA2009 = saveOrUpdateEPDisc(ukrainianLang, pMBach2009SocHumEconom, 108, true);
+            EduPlanDiscipline politologiyaSA2009 = saveOrUpdateEPDisc(politologiya, pMBach2009SocHumEconom, 54, true);
+            EduPlanDiscipline algGeomSA2009 = saveOrUpdateEPDisc(algGeom, pMBach2009NaturSci, 396, true);
+            EduPlanDiscipline funcAnalysSA2009 = saveOrUpdateEPDisc(funcAnalys, pMBach2009NaturSci, 108, true);
+            EduPlanDiscipline programSA2009 = saveOrUpdateEPDisc(program, pMBach2009ProfND, 378, true);
+            EduPlanDiscipline modelSA2009 = saveOrUpdateEPDisc(model, pMBach2009ProfND, 144, true);
 
             //--Заполнение записей учебных планов
             LOG.debug("Add Test EduPlanRecords...");

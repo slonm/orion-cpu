@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import orion.cpu.baseentities.NamedEntity;
 
 /**
- * Базовое абстрактная структурная единица.
+ * Базовое абстрактная единица организационной структуры
  * @author sl
  */
 @Entity

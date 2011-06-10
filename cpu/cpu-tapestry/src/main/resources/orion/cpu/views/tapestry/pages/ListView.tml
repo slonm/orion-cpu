@@ -14,7 +14,7 @@
     -->
     <t:zone t:id="zone">
         <t:grid source="objects" row="object"
-                model="beanModel" inplace="true">
+                model="beanModel" inplace="true" exclude="password">
             <p:actionCell>
                 <!--
                 <a href="#" t:type="crud/PrimaryKeyEventLink" t:object="object"
@@ -32,8 +32,9 @@
     </t:zone>
     <br/>
     <t:if test="authorizer.canStore(entityClass)">
-        <t:PageLink page="prop:editpageurl" context="prop:editPageURLContext">
-	${message:link.new.object}
+        <!--Ссылка переоформлена для задания CSS-->
+        <t:PageLink page="prop:editpageurl" context="prop:editPageURLContext" class="btnwicon">
+	${message:link.new.object}<span class="bticon" id="recordAdd"/>
         </t:PageLink>
     </t:if>
     <br/>

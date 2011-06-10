@@ -40,6 +40,9 @@ public class PermissionGroup extends NamedEntity<PermissionGroup> {
 
     /**
      * Returns the value of the <code>permissions</code> property.
+     * Отключаем ленивую загрузку из связанной таблицы, для исправления ошибки
+     * failed to lazily initialize a collection of role: br.com.arsmachina.authentication.entity.Role.permissionGroups, 
+     * no session or session was closed
      * @return a {@link List<Permission>}.
      */
     @ManyToMany

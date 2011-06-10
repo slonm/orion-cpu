@@ -1,5 +1,7 @@
 package orion.cpu.views.tapestry.services;
 
+import br.com.arsmachina.authentication.entity.Role;
+import br.com.arsmachina.authentication.entity.User;
 import br.com.arsmachina.authentication.springsecurity.ioc.TapestrySpringSecurityGenericAuthenticationModule;
 import br.com.arsmachina.module.service.EntitySource;
 import br.com.arsmachina.module.service.PrimaryKeyTypeService;
@@ -101,6 +103,9 @@ public class CpuTapestryIOCModule {
      */
     public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
         //Display
+                //Edit
+        configuration.add(new BeanBlockContribution("Password", "ori/PropertyBlocks", "editPassword", true));
+        configuration.add(new BeanBlockContribution("UserRole", "ori/PropertyBlocks", "editUserRole", true));
         configuration.add(new BeanBlockContribution("boolean", "ori/PropertyBlocks", "displayBooleanText", false));
     }
 
@@ -223,6 +228,8 @@ public class CpuTapestryIOCModule {
         configuration.add(path, mlb.buildPageMenuLink(Index.class, path));
         path = "Start>Admin>TML";
         configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
+        path = "Start>Admin>User";
+        configuration.add(path, mlb.buildListPageMenuLink(User.class, path));
         //add All Reference Book
         for (Class<?> e : esource.getEntityClasses()) {
             javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);

@@ -3,6 +3,7 @@ package br.com.arsmachina.authentication.entity;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.apache.tapestry5.beaneditor.DataType;
 import org.hibernate.validator.constraints.Email;
 import orion.cpu.baseentities.AbstractRole;
 
@@ -28,8 +29,19 @@ public class User extends AbstractRole<User> {
     private Boolean expired = false;
     private Boolean locked = false;
     private Boolean loggedIn = false;
+    /**
+     * Для редактирования данного типа данных будет назначен компонент
+     * PasswordField. Он позволит скрыть пароль специальными символами
+     * при вводе.
+     */
+    @DataType("Password")
     private String password;
     private String locale;
+    /**
+     * Для редактирования данного типа данных будет назначен компонент
+     * Palette.
+     */
+    @DataType("UserRole")
     private Set<Role> roles = new HashSet<Role>();
 
     static {
@@ -38,9 +50,19 @@ public class User extends AbstractRole<User> {
         GUEST_USER = new User("GUEST", "******", "GUEST", "GUEST@GUEST.GUEST");
     }
 
+    /**
+     * Конструктор по умолчанию
+     */
     public User() {
     }
 
+    /**
+     * Конструкор с заданием логина, пароля, имени и эл.адреса пользователя.
+     * @param login
+     * @param password
+     * @param name
+     * @param email
+     */
     public User(String login, String password, String name, String email) {
         setLogin(login);
         setPassword(password);
@@ -62,7 +84,7 @@ public class User extends AbstractRole<User> {
     /**
      * Removes a role from this user.
      * @param role a {@link Role}.
-     * @param roles 
+     * @param roles
      */
     public void remove(Role role, Role... roles) {
         this.roles.remove(role);
