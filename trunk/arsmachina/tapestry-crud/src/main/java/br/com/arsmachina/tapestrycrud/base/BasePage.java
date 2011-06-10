@@ -25,7 +25,6 @@ import org.apache.tapestry5.PrimaryKeyEncoder;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Retain;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -58,7 +57,9 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("deprecation")
 public abstract class BasePage<T, K extends Serializable> implements CrudPage<T, K> {
     private final static Logger LOG=LoggerFactory.getLogger(BasePage.class);
-	@Retain
+    //Выполнена замена аннотации @Persist для корректной  очистки данных 
+    //загруженной сущности в страницу ListView при вызове в ней другой сущности
+    @Persist
     private PrimaryKeyEncoder<K, T> primaryKeyEncoder;
     @Inject
     private ActivationContextEncoderSource activationContextEncoderSource;
@@ -78,9 +79,13 @@ public abstract class BasePage<T, K extends Serializable> implements CrudPage<T,
     private PrimaryKeyTypeService primaryKeyTypeService;
     @Inject
     private TapestryCrudModuleService tapestryCrudModuleService;
-    @Retain
+    //Выполнена замена аннотации @Retain на @Persist для корректной  очистки данных 
+    //загруженной сущности в страницу ListView при вызове в ней другой сущности
+    @Persist
     private Class<T> entityClass;
-    @Retain
+    //Выполнена замена аннотации @Retain на @Persist для корректной  очистки данных 
+    //загруженной сущности в страницу ListView при вызове в ней другой сущности
+    @Persist
     private Controller<T, K> controller;
     @Persist(PersistenceConstants.FLASH)
     private String message;
@@ -90,11 +95,15 @@ public abstract class BasePage<T, K extends Serializable> implements CrudPage<T,
     private Messages messages;
     @Inject
     private ComponentSource componentSource;
-    @Retain
+    //Выполнена замена аннотации @Retain на @Persist для корректной  очистки данных 
+    //загруженной сущности в страницу ListView при вызове в ней другой сущности
+    @Persist
     private Class<K> primaryKeyClass;
     private boolean removedObjectNotFound;
-    @Retain
-    private boolean initiated = false;
+    //Выполнена замена аннотации @Retain на @Persist для корректной  очистки данных 
+    //загруженной сущности в страницу ListView при вызове в ней другой сущности
+    @Persist
+    private boolean initiated;
 
     /**
      * Get the value of initiated

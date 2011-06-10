@@ -85,7 +85,7 @@ public class PagedSearchGridDataSource<T> implements GridDataSource {
 		sortCriteria = convertSortConstraintToSortCriterion(sortConstraints);
 		
 		final int maximumResults = (endIndex - firstIndex) + 1;
-		list = pagedSearch.search(firstIndex, maximumResults, sortCriteria);
+		list = pagedSearch.search(firstIndex, firstIndex+maximumResults, sortCriteria);
 
 	}
 

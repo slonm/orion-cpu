@@ -31,7 +31,8 @@ public interface PagedSearch<T> {
 	 *
 	 * @param firstIndex an <code>int</code> with the index of the first object to be returned.
 	 * The first object has index 0.
-	 * @param maximumResults an <code>int</code> with the maximum number of objects to be returned.
+	 * @param maximumResults an <code>int</code> with the index of the last objects to be returned.
+         * maximumResults MUST BE =firstIndex + maximum number for proper pagination!!!
 	 * @param sortingConstraints an {@link SortCriterion} array used to define how the returned
 	 * list will be sorted.
 	 * @return a {@link List} of <code>T</code>.
