@@ -1,0 +1,26 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>${title}</title>
+</head>
+<body>
+
+
+<t:grid.Grid gridModel="gridModel" currentField="currentField" currentRow="currentRow">
+<t:parameter name="rowActionsHeader">
+${message:crud-action}
+</t:parameter>
+
+<t:parameter name="beforeTable">
+${feedback}
+<t:pagelink class="grid-page-link grid-page-link-edit" target="_blank" page="crud/CrudEdit" context="entityClassName">${message:crud-create}</t:pagelink>
+</t:parameter>
+
+<t:parameter name="rowActionsCell">
+<t:actionlink class="grid-page-link" t:id="CRUDDelete" context="currentRowId">${message:crud-delete}</t:actionlink>
+<t:pagelink class="grid-page-link grid-page-link-edit" t:id="CRUDEdit" target="_blank" page="crud/CrudEdit" context="currentRowContext">${message:crud-edit}</t:pagelink>
+</t:parameter>
+
+</t:grid.Grid>
+</body>
+</html>
