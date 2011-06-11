@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>orion</groupId>
+    <artifactId>cpu-desktop-test</artifactId>
+    <name>КИС КПУ Настольный тест</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <parent>
+        <artifactId>cpu-parent</artifactId>
+        <groupId>orion</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../cpu-parent/pom.xml</relativePath>
+    </parent>
+    <dependencies>
+        <!--dependency>
+            <groupId>org.firebirdsql.jdbc</groupId>
+            <artifactId>jaybird</artifactId>
+            <version>2.1.6</version>
+        </dependency-->
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>orion</groupId>
+            <artifactId>cpu</artifactId>
+            <type>warpath</type>
+        </dependency>
+        <!--
+-->
+        <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
+will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
+of testing facilities designed for use with TestNG (http://testng.org/), so it's recommended. -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.8</version>
+            <classifier>jdk15</classifier>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.4</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- tapestry-test will conflict with RunJettyRun inside Eclipse. tapestry-test brings in Selenium, which
+             is based on Jetty 5.1; RunJettyRun uses Jetty 6.-->
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry-test</artifactId>
+            <version>${tapestry-release-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>cpu-test</finalName>
+        <!--Причины следующей строки тут: http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html-->
+        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.appfuse</groupId>
+                <artifactId>maven-warpath-plugin</artifactId>
+                <version>2.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-classes</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>
+                                orion.cpu.views.desktoptest.AppModule
+                            </Tapestry-Module-Classes>
+                            <Main-Class>
+                                orion.cpu.views.desktoptest.Main
+                            </Main-Class>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

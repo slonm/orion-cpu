@@ -1,0 +1,29 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>orion</groupId>
+    <artifactId>cpu-meta</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Метапроект КИС КПУ</name>
+    <url>http://code.google.com/p/orion-cpu/</url>
+    <modules>
+        <module>cpu-parent</module>
+        <module>cpu-core</module>
+        <module>cpu-tapestry</module>
+        <module>cpu-units</module>
+        <module>cpu-units-tapestry</module>
+        <module>cpu-personal</module>
+        <module>cpu-employees</module>
+        <module>cpu-license</module>
+        <module>cpu-license-tapestry</module>
+        <module>cpu-eduprocess</module>
+        <module>cpu-eduprocess-tapestry</module>
+        <module>cpu</module>
+        <module>cpu-desktop-test</module>
+        <module>cpu-birt</module>
+    </modules>
+</project>

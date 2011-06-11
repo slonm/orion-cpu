@@ -1,0 +1,31 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <t:block id="DisplayTrainingDirectionOrSpeciality">
+        <t:if test="prop:outputContext.propertyValue">
+            ${message:TrainingDirectionOrSpeciality-true}
+            <t:parameter name="else">
+                ${message:TrainingDirectionOrSpeciality-false}
+            </t:parameter>
+        </t:if>
+    </t:block>
+
+    <t:block id="EditTrainingDirectionOrSpeciality">
+        <t:label for="TrainingDirectionOrSpeciality"/>
+        <input t:id="TrainingDirectionOrSpeciality"/>
+    </t:block>
+
+    <t:block id="DisplayKnowledgeAreaOrTrainingDirection">
+        <t:if test="prop:outputContext.propertyValue">
+            ${message:KnowledgeAreaOrTrainingDirection-true}
+            <t:parameter name="else">
+                ${message:KnowledgeAreaOrTrainingDirection-false}
+            </t:parameter>
+        </t:if>
+    </t:block>
+
+    <t:block id="EditKnowledgeAreaOrTrainingDirection">
+        <t:label for="KnowledgeAreaOrTrainingDirection"/>
+        <input t:id="KnowledgeAreaOrTrainingDirection"/>
+    </t:block>
+
+</div>
