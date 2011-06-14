@@ -5,7 +5,7 @@
 package ua.orion.core.persistence;
 
 /**
- *
+ * Интерфейс классов со свойством String name
  * @author sl
  */
 public interface INamed {

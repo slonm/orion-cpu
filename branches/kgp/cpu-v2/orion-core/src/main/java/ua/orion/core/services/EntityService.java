@@ -1,6 +1,8 @@
 package ua.orion.core.services;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -80,6 +82,12 @@ public interface EntityService {
             LockModeType lockMode);
 
     /**
+     * Возвращает все объекты класса сущности, указанного в качестве параметра
+     * @return a {@link List} of <code>T</code>.
+     */
+    public <T> List<T> findAll(Class<T> entityClass);
+
+    /**
      * Wrapper for EntityManager.getReference(entityClass, primaryKey)
      * primaryKey будет приведен к нужному типу с помощью TypeCoercer
      */
@@ -129,7 +137,7 @@ public interface EntityService {
      * Фасад для EntityStringValueProvider#getStringValue(Object)
      */
     String getStringValue(Object entity);
-    
+
     /*
      * Устанавливает UniqueKey у entity
      * Если UKey не поддерживается или entity не сущность,
