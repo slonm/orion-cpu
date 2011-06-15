@@ -5,7 +5,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.Link;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -81,12 +80,16 @@ public class Crud {
     /**
      * Высота формы редактирования
      */
-    private Integer editorHeight;
+    private Integer formHeightEdit;
     /**
-     * Ширина формы редактирования
+     * Высота формы просмотра
      */
-    private Integer editorWidth;
-    
+    private Integer formHeightView;
+    /**
+     * Ширина формы 
+     */
+    private Integer formWidth;
+
     public boolean isComponentEventRequst() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
@@ -157,11 +160,11 @@ public class Crud {
         title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
-    
+
     public GridDataSource getObjects() {
         return dataSource.getGridDataSource(objectClass);
     }
-    
+
     public Object onSuccessFromEditForm() {
         error = null;
         try {
@@ -171,7 +174,7 @@ public class Crud {
         }
         return listZone.getBody();
     }
-    
+
     public Object onSuccessFromAddForm() {
         error = null;
         try {
@@ -187,12 +190,26 @@ public class Crud {
      * Исходит из кол-ва полей в классе и в одном из его суперклассов. 
      * @return значение высоты формы (в пикселях)
      */
-    public Integer getEditorHeight() {
+    public Integer getFormHeightEdit() {
         if (object == null) {
             return 80;
         } else {
             return (1 + (((object.getClass().getDeclaredFields().length - object.getClass().getFields().length))
                     + ((object.getClass().getSuperclass().getDeclaredFields().length - object.getClass().getSuperclass().getFields().length)))) * 35;
+        }
+    }
+    
+        /**
+     * Метод расчета необходимой высоты для формы редактирования.
+     * Исходит из кол-ва полей в классе и в одном из его суперклассов. 
+     * @return значение высоты формы (в пикселях)
+     */
+    public Integer getFormHeightView() {
+        if (object == null) {
+            return 60;
+        } else {
+            return (1 + (((object.getClass().getDeclaredFields().length - object.getClass().getFields().length))
+                    + ((object.getClass().getSuperclass().getDeclaredFields().length - object.getClass().getSuperclass().getFields().length)))) * 25;
         }
     }
 
@@ -201,10 +218,10 @@ public class Crud {
      * Исходит из того, что ширина должна составлять 90% от ширины экрана(разрешения)
      * @return значение ширины формы (в пикселях)
      */
-    public Integer getEditorWidth() {
+    public Integer getFormWidth() {
         return (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.9);
     }
-    
+
     public Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
         mode = EDIT;
@@ -212,7 +229,7 @@ public class Crud {
         error = null;
         return editBlock;
     }
-    
+
     public Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         mode = ADD;
@@ -220,14 +237,14 @@ public class Crud {
         error = null;
         return editBlock;
     }
-    
+
     public Object onView(Integer id) {
         mode = VIEW;
         object = entityService.find(objectClass, id);
         error = null;
         return viewBlock;
     }
-    
+
     public Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         mode = DEL;
@@ -235,7 +252,7 @@ public class Crud {
         error = null;
         return deleteBlock;
     }
-    
+
     public Object onDelete() {
         error = null;
         try {
@@ -246,7 +263,7 @@ public class Crud {
         }
         return listZone.getBody();
     }
-    
+
     public boolean getIsEdit() {
         return EDIT.equals(mode);
     }

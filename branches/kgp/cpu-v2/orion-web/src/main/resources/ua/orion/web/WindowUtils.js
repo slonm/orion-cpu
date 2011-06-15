@@ -14,11 +14,14 @@
 
 Tapestry.Initializer.showCkWindow = function(opt){
     var win=$(opt.window).getStorage().ck_window;
+    //Получаем высоту окна из параметра
+    win.height=opt.height;
+    //Получаем ширину окна из параметра
+    win.width=opt.width;
     opt.modal=opt.modal!==false?true:false;
     if(opt.atCenter!==false) win.showCenter(opt.modal);
     else win.show(opt.modal);
     if(opt.title) win.setTitle(opt.title);
-    
 }
 
 Tapestry.Initializer.closeCkWindow = function(opt){

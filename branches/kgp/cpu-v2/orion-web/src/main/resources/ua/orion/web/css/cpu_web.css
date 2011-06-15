@@ -36,13 +36,21 @@
     background-position:center;
 }
 
-/* Определеям кнопку закрытия формы редактирования */
+/* Определеям значки для кнопок */
 .btn.close span {
     background-image:url(../images/close.png);
 }
 
-.btn.close {
-    left: 80%;
+.btn.delete span {
+    background-image:url(../images/delete_web.png);
+}
+
+.btn.cancel span {
+    background-image:url(../images/undo.png);
+}
+
+.crud-add span {
+    background-image:url(../images/gtk-add.png);
 }
 
 /* Картинка с изображением университета на главной странице */
@@ -124,6 +132,28 @@ span.menutitle a{
 
 div.title h2{
     font-size: 26pt;
+}
+
+/* Выравниваем данные в некоторых колонках Grid по центру */
+.t-data-grid .code,                          .t-data-grid .isObsolete,
+.t-data-grid .isTrainingDirection,           .t-data-grid .isKnowledgeArea,
+.t-data-grid .stationaryStudentLicenseQuantity,
+.t-data-grid .correspondenseStudentLicenseQuantity,
+.t-data-grid .terminationDate,               .t-data-grid .eduPlanSemester,
+.t-data-grid .isExam,                        .t-data-grid .isCredit,
+.t-data-grid .isCourseWork,                  .t-data-grid .isControlWork
+{
+    min-width: 45px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.t-data-grid .action{
+    min-width: 133px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;  
 }
 /*a:hover {
     background: #3a599d;
