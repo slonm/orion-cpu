@@ -81,11 +81,11 @@ public interface EntityService {
     public <T> T find(Class<T> entityClass, Serializable primaryKey,
             LockModeType lockMode);
 
-    /**
-     * Возвращает все объекты класса сущности, указанного в качестве параметра
-     * @return a {@link List} of <code>T</code>.
-     */
-    public <T> List<T> findAll(Class<T> entityClass);
+//    /**
+//     * Возвращает все объекты класса сущности, указанного в качестве параметра
+//     * @return a {@link List} of <code>T</code>.
+//     */
+//    public <T> List<T> findAll(Class<T> entityClass);
 
     /**
      * Wrapper for EntityManager.getReference(entityClass, primaryKey)

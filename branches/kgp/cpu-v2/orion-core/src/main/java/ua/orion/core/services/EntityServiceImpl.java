@@ -259,14 +259,14 @@ public class EntityServiceImpl implements EntityService {
         return entityStringValueProvider.getStringValue(entity);
     }
 
-    @Override
-    public <T> List<T> findAll(Class<T> entityClass) {
-        List<T> entities = new ArrayList();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = cb.createQuery(entityClass);
-        query.from(entityClass);
-        return entities;
-    }
+//    @Override
+//    public <T> List<T> findAll(Class<T> entityClass) {
+//        List<T> entities = new ArrayList();
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<T> query = cb.createQuery(entityClass);
+//        query.from(entityClass);
+//        return entities;
+//    }
 
     class MetaEntityImpl implements MetaEntity {
 
