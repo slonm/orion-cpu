@@ -14,6 +14,7 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
+import ua.orion.core.annotations.PersistentSingleton;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
 import ua.orion.web.BooleanSelectModel;
@@ -24,8 +25,11 @@ import ua.orion.web.BooleanSelectModel;
  */
 @SuppressWarnings("unused")
 public class PropertyBlocks {
-//    @Inject
-//    private ControllerSource controllerSource;
+
+    @PersistentSingleton(EducationForm.STATIONARY_UKEY)
+    private EducationForm stationary;
+    @PersistentSingleton(EducationForm.CORRESPONDENCE_UKEY)
+    private EducationForm correspondence;
     private EntityService entityService;
     @Inject
     private Messages messages;
@@ -148,13 +152,9 @@ public class PropertyBlocks {
     public Set getEduFormsE() {
         mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
         if (mp.isEmpty()) {
-            
-            for (EducationForm ef : entityService.findAll(EducationForm.class)) {
-                if (!mp.keySet().contains(ef)) {
-                    mp.put(ef, 0);
+                    mp.put(stationary, 0);
+                    mp.put(correspondence, 0);
                 }
-            }
-        }
         return mp.keySet();
     }
 
