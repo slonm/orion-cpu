@@ -280,6 +280,7 @@ public class EntityServiceImpl implements EntityService {
                 if (classAnn != null) {
                     uKeyAttributeName = classAnn.value();
                     supportUKey = true;
+                    return supportUKey;
                 }
                 ClassPropertyAdapter cpa = propertyAccess.getAdapter(type);
                 for (String name : cpa.getPropertyNames()) {
@@ -288,6 +289,7 @@ public class EntityServiceImpl implements EntityService {
                     if (propAnn != null && (classAnn == null || classProvider.getDeclarationBeanType(UniqueKey.class).isAssignableFrom(propertyProvider.getDeclarationBeanType(UniqueKey.class)))) {
                         uKeyAttributeName = name;
                         supportUKey = true;
+                        return supportUKey;
                     }
                 }
             }
