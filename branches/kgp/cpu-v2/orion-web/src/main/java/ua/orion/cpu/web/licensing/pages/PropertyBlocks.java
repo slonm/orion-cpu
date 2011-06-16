@@ -26,8 +26,10 @@ import ua.orion.web.BooleanSelectModel;
 @SuppressWarnings("unused")
 public class PropertyBlocks {
 
+    @Inject
     @PersistentSingleton(EducationForm.STATIONARY_UKEY)
     private EducationForm stationary;
+    @Inject
     @PersistentSingleton(EducationForm.CORRESPONDENCE_UKEY)
     private EducationForm correspondence;
     private EntityService entityService;
