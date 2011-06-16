@@ -15,11 +15,11 @@ public class PersistentSingletonSourceImpl implements PersistentSingletonSource 
 
     private final EntityService entityService;
     private final TypeCoercer typeCoercer;
-    private final List<Class<?>> orderedKeys = new ArrayList();
-    private final Map<Class<?>, Class<? extends PersistentSingleton>> configuration;
-    private final Map<Class<?>, Class<? extends PersistentSingleton>> cache = new HashMap();
+    private final List<Class> orderedKeys = new ArrayList();
+    private final Map<Class, Class> configuration;
+    private final Map<Class, Class<? extends PersistentSingleton>> cache = new HashMap();
 
-    public PersistentSingletonSourceImpl(Map<Class<?>, Class<? extends PersistentSingleton>> configuration,
+    public PersistentSingletonSourceImpl(Map<Class, Class> configuration,
             EntityService entityService, TypeCoercer typeCoercer) {
         this.entityService = entityService;
         this.configuration = configuration;
