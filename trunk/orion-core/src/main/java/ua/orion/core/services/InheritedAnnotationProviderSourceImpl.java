@@ -176,7 +176,7 @@ public class InheritedAnnotationProviderSourceImpl implements InheritedAnnotatio
             while (aab.annotation == null && aab.type != null) {
                 AnnotationProvider ap = propertyAccess.getAdapter(aab.type).getPropertyAdapter(propertyName);
                 if (ap == null) {
-                    return null;
+                    return aab;
                 }
                 aab.annotation = ap.getAnnotation(annotationClass);
                 if (aab.annotation != null) {
