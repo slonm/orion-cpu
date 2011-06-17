@@ -1,4 +1,4 @@
-package ua.orion.cpu.web.licensing.pages;
+package ua.orion.cpu.web.licensing.services;
 
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.services.*;
