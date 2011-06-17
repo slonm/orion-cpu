@@ -82,6 +82,7 @@ table.t-data-grid thead tr th,
 .t-palette-title{
     text-decoration: none;
     background-image: url(../images/table_head.png);
+    color: #15428b;
 }
 
 /* Форматируем текст заголовков для Grid */
@@ -155,6 +156,25 @@ div.title h2{
     margin-left: auto;
     margin-right: auto;  
 }
+
+.t-data-grid .orgUnit{
+    min-width: 160px;
+}
+
+.t-data-grid .knowledgeAreaOrTrainingDirectionName{
+    max-width: 180px;
+}
+
+
+
+TABLE.t-data-grid THEAD TR TH{
+    white-space: normal;
+}
+
+.t-beaneditor-row input[type="text"]{
+    display: inline;
+}
+
 /*a:hover {
     background: #3a599d;
     text-decoration: none;

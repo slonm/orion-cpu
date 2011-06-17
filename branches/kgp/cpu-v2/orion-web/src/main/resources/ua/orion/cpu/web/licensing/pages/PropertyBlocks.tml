@@ -33,7 +33,7 @@
     <t:block id="DisplayEduFormLicenseQuantity">
         <!--параметры source и value вынесены в аннотацию @Component в класс
         параметр t:id содержит имя свойства класса-компонента типа Loop-->
-        <table>
+        <table class="nb">
         <t:loop t:id="eduFormLicenseQuantity">
             <tr>
             <!--для каждого элемента мэпа возвращается имя объекта EduForm eduForm,
