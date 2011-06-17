@@ -38,6 +38,9 @@ public class OrgUnitsWebIOCModule {
             MenuLinkBuilder mlb) {
         String path;
 
+        path = "Start>OrgUnits>University";
+        configuration.add(path, mlb.buildCrudPageMenuLink(University.class, path));
+        
         path = "Start>OrgUnits>Institute";
         configuration.add(path, mlb.buildCrudPageMenuLink(Institute.class, path));
 
