@@ -1,7 +1,5 @@
 package ua.orion.cpu.core.orgunits.entities;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

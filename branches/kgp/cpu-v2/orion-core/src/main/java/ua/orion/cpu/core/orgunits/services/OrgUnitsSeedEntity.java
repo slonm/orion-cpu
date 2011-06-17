@@ -6,6 +6,8 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.entities.SubSystem;
 import ua.orion.core.services.EntityService;
+import ua.orion.cpu.core.security.entities.Acl;
+import ua.orion.cpu.core.security.entities.SubjectType;
 
 /**
  *
@@ -17,6 +19,9 @@ public class OrgUnitsSeedEntity {
             EntityService es) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(OrgUnitsSymbols.ORG_UNITS_LIB));
         if (testData) {
+             //---Списки доступа----------
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "Chair:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseAppender", SubjectType.ROLE, "Chair:read,insert,update,menu"));
         //---Кафедры, выполняющие обучение по лицензиям----------
 //            Chair kafPIT = es.findUniqueOrPersist(new Chair("кафедра програмування та інформаційних технологій", "КПІТ"));
 //            Chair kafEICPHS = es.findUniqueOrPersist(new Chair("кафедра управління навчальними закладами та педагогіки вищої школи", "КУНЗПВШ"));
