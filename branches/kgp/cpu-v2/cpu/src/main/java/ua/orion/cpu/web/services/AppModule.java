@@ -17,7 +17,8 @@ import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
 import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
 import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
-import ua.orion.cpu.web.licensing.pages.LicensingWebIOCModule;
+import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
+import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
 import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
@@ -29,6 +30,7 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     OrgUnitsIOCModule.class,
     OrionCpuIOCModule.class,
     LicensingWebIOCModule.class,
+    OrgUnitsWebIOCModule.class,
     OrionSecurityWebIOCModule.class
 })
 public class AppModule {
