@@ -15,23 +15,28 @@ import ua.orion.core.utils.IOCUtils;
 import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
 import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
+import ua.orion.cpu.core.persons.services.PersonsIOCModule;
 import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
 import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
 import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
+import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
 import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
  * Модуль конфигурирования IOC
  */
 @SubModule({
-    LicensingIOCModule.class,
     OrionSecurityIOCModule.class,
-    OrgUnitsIOCModule.class,
     OrionCpuIOCModule.class,
+    LicensingIOCModule.class,
+    OrgUnitsIOCModule.class,
+    PersonsIOCModule.class,
+    OrionSecurityWebIOCModule.class,
     LicensingWebIOCModule.class,
     OrgUnitsWebIOCModule.class,
-    OrionSecurityWebIOCModule.class
+    PersonsWebIOCModule.class,
+    
 })
 public class AppModule {
 
