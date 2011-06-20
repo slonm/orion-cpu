@@ -13,7 +13,9 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
+@Table(schema = "uch", uniqueConstraints =
+@UniqueConstraint(columnNames = {"educationalQualificationLevel", 
+    "trainingDirectionOrSpeciality", "termination", "license"}))
 public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     private EducationalQualificationLevel educationalQualificationLevel;
@@ -88,6 +90,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @ManyToOne
     @NotNull
+    @JoinColumn(name="educationalQualificationLevel")
     public EducationalQualificationLevel getEducationalQualificationLevel() {
         return educationalQualificationLevel;
     }
@@ -114,6 +117,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @ManyToOne
     @NotNull
+    @JoinColumn(name="trainingDirectionOrSpeciality")
     public TrainingDirectionOrSpeciality getTrainingDirectionOrSpeciality() {
         return trainingDirectionOrSpeciality;
     }
