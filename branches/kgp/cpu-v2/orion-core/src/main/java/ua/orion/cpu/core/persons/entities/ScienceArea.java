@@ -4,22 +4,22 @@ import javax.persistence.*;
 import ua.orion.core.persistence.AbstractReferenceEntity;
 
 /**
- * Справочник учёных степней
+ * Справочник областей наук для учёных степеней
  * @author kgp
  */
 @Entity
 @Table(schema = "ref", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"})
 })
-public class ScientificDegree extends AbstractReferenceEntity<ScientificDegree> {
+public class ScienceArea extends AbstractReferenceEntity<ScienceArea> {
 
     private static final long serialVersionUID = 1L;
-    
-    public ScientificDegree() {
+
+    public ScienceArea() {
     }
 
-    public ScientificDegree(String name, String shortName) {
-        this.setName(name);
-        this.setShortName(shortName);
+    public ScienceArea(String name, String shortName) {
+        setName(name);
+        setShortName(shortName);
     }
 }

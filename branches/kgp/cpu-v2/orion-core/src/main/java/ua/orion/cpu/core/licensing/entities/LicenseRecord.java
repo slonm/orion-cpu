@@ -4,7 +4,6 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.apache.tapestry5.beaneditor.NonVisual;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
