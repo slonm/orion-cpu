@@ -175,6 +175,39 @@ TABLE.t-data-grid THEAD TR TH{
     display: inline;
 }
 
+/* Применяется для элементов, в которых текст должен быть по выровнен по
+правому краю */
+.f-right{
+    text-align: right;
+}
+
+/* Применяется в beaneditor, для элементов loop, для того чтобы не нарушать
+структуру формы */
+.t-loop .f-right{
+    width: 250px;
+    color: #000000;
+}
+
+.t-loop .text{
+    margin: 0 0 0 1.1em;
+}
+
+/* Размер шрифта в beaneditor */
+DIV.t-beaneditor{
+    font-size: 11pt;
+}
+
+/* Размер шрифта и цвет для beandisplay */
+dl.t-beandisplay{
+    font-size: 11pt;
+    background-color: white;
+}
+
+/* Стиль левой части(наименований свойств в beandisplay) */
+dt{
+    font-weight: bold;
+}
+
 /*a:hover {
     background: #3a599d;
     text-decoration: none;
