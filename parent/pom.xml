@@ -266,5 +266,12 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>orion-cpu</id>
+            <url>http://orion-cpu.googlecode.com/svn/maven</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 </project>
