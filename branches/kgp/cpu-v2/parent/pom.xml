@@ -267,8 +267,8 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             </snapshots>
         </repository>
         <repository>
-            <id>codehaus</id>
-            <url>http://ci.repository.codehaus.org</url>
+            <id>orion-cpu</id>
+            <url>http://orion-cpu.googlecode.com/svn/maven</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
