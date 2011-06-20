@@ -35,7 +35,7 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     OrionSecurityWebIOCModule.class,
     LicensingWebIOCModule.class,
     OrgUnitsWebIOCModule.class,
-    PersonsWebIOCModule.class,
+    PersonsWebIOCModule.class
     
 })
 public class AppModule {
