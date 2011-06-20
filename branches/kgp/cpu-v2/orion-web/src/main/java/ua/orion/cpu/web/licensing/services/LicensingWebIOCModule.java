@@ -43,14 +43,16 @@ public class LicensingWebIOCModule {
 
         path = "Start>Licensing>LicenseRecord";
         configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecord.class, path));
+        
+        path = "Start>Licensing>Reference";
 
-        path = "Start>Licensing>License>KnowledgeAreaOrTrainingDirection";
+        path = "Start>Licensing>Reference>KnowledgeAreaOrTrainingDirection";
         configuration.add(path, mlb.buildCrudPageMenuLink(KnowledgeAreaOrTrainingDirection.class, path));
 
-        path = "Start>Licensing>License>TrainingDirectionOrSpeciality";
+        path = "Start>Licensing>Reference>TrainingDirectionOrSpeciality";
         configuration.add(path, mlb.buildCrudPageMenuLink(TrainingDirectionOrSpeciality.class, path));
 
-        path = "Start>Licensing>License>LicenseRecordGroup";
+        path = "Start>Licensing>Reference>LicenseRecordGroup";
         configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecordGroup.class, path));
     }
 
