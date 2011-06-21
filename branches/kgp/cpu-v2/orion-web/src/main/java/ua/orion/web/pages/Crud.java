@@ -186,40 +186,12 @@ public class Crud {
     }
 
     /**
-     * Метод расчета необходимой высоты для формы редактирования.
-     * Исходит из кол-ва полей в классе и в одном из его суперклассов. 
-     * @return значение высоты формы (в пикселях)
-     */
-    public Integer getFormHeightEdit() {
-        if (object == null) {
-            return 80;
-        } else {
-            return (1 + (((object.getClass().getDeclaredFields().length - object.getClass().getFields().length))
-                    + ((object.getClass().getSuperclass().getDeclaredFields().length - object.getClass().getSuperclass().getFields().length)))) * 35;
-        }
-    }
-    
-        /**
-     * Метод расчета необходимой высоты для формы редактирования.
-     * Исходит из кол-ва полей в классе и в одном из его суперклассов. 
-     * @return значение высоты формы (в пикселях)
-     */
-    public Integer getFormHeightView() {
-        if (object == null) {
-            return 60;
-        } else {
-            return (1 + (((object.getClass().getDeclaredFields().length - object.getClass().getFields().length))
-                    + ((object.getClass().getSuperclass().getDeclaredFields().length - object.getClass().getSuperclass().getFields().length)))) * 25;
-        }
-    }
-
-    /**
      * Метод расчета ширины формы редактирования. 
      * Исходит из того, что ширина должна составлять 90% от ширины экрана(разрешения)
      * @return значение ширины формы (в пикселях)
      */
     public Integer getFormWidth() {
-        return (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.9);
+        return (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.7);
     }
 
     public Object onEdit(Integer id) {

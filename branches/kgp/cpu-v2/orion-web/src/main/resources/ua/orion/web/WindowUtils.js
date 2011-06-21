@@ -11,9 +11,10 @@
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  */
-
 Tapestry.Initializer.showCkWindow = function(opt){
     var win=$(opt.window).getStorage().ck_window;
+    //Создаем декорацию для кнопки в Bean Editor
+    decorateButtonInBeanEditor();
     //Получаем высоту окна из параметра
     win.height=opt.height;
     //Получаем ширину окна из параметра

@@ -18,6 +18,12 @@
     border-radius:8px;
 }
 
+/* Кнопка в bean editor */
+.btnbe{
+    padding:0 10px 0 10px;
+    height: 46px;
+}
+
 /* Определеям стиль для кнопок, на которые наведена мышь */
 .btn:hover {
     border-color:black;
@@ -47,6 +53,10 @@
 
 .btn.cancel span {
     background-image:url(../images/undo.png);
+}
+
+.btn.edit span {
+    background-image:url(../images/edit_web.png);
 }
 
 .crud-add span {
@@ -194,12 +204,12 @@ TABLE.t-data-grid THEAD TR TH{
 
 /* Размер шрифта в beaneditor */
 DIV.t-beaneditor{
-    font-size: 11pt;
+    font-size: 9pt;
 }
 
 /* Размер шрифта и цвет для beandisplay */
 dl.t-beandisplay{
-    font-size: 11pt;
+    font-size: 9pt;
     background-color: white;
 }
 
