@@ -225,10 +225,10 @@ public class Crud {
         return deleteBlock;
     }
 
-    public Object onDelete() {
+    public Object onDelete(Integer id) {
         error = null;
         try {
-            object = entityService.getEntityManager().merge(object);
+            object = entityService.find(objectClass, id);
             entityService.remove(object);
         } catch (RuntimeException ex) {
             error = messages.get("message.delete-error");

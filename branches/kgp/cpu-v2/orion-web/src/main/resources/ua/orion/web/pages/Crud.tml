@@ -53,7 +53,7 @@
         <table>
             <tr>
                 <td>
-                    <t:EventLink t:event="delete" zone="listZone" class="btn delete"><span></span>${message:action.del}</t:EventLink>
+                    <t:EventLink t:event="delete" context="${object?.id}" zone="listZone" class="btn delete"><span></span>${message:action.del}</t:EventLink>
                 </td>
                 <td>
                     <a href="#" onclick="Windows.close('popupWindow')" class="btn cancel"><span></span>${message:action.cancel}</a>
