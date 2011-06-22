@@ -218,6 +218,24 @@ dt{
     font-weight: bold;
 }
 
+/*#easyTooltip{
+    padding:5px;
+    color: white;
+    border:1px solid #ccc;
+    background: #99ccff;
+    font-style: italic;
+    background-image: url(../images/ToolTipBg.gif);
+}*/
+
+/* Работа со слоями */
+.crud-links{
+    z-index: 1;
+}
+
+.menuitems{
+    z-index: 2;
+}
+
 /*a:hover {
     background: #3a599d;
     text-decoration: none;
