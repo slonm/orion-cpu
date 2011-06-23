@@ -196,15 +196,15 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
 
     protected static String distinguishedGroupNameToRoleName(String dName) {
         String roleName = "";
-        for (String cn : dName.split(",")) {
-            if (cn.startsWith("CN=")) {
+        for (String entry : dName.split(",")) {
+            if (entry.startsWith("CN=") || entry.startsWith("OU=")) {
                 if (roleName.length() > 0) {
-                    roleName = "." + roleName;
+                    roleName = "/" + roleName;
                 }
-                roleName = cn.substring(3) + roleName;
+                roleName = entry.substring(3) + roleName;
             }
         }
-        return roleName.toLowerCase();
+        return roleName;
     }
 
     /**
@@ -272,7 +272,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
     protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals, LdapContextFactory ldapContextFactory) throws NamingException {
 
         String username = (String) getAvailablePrincipal(principals);
-        Set<String> roleNames=principals.oneByType(ActiveDirectoryPrincipal.class).getRoles();
+        Set<String> roleNames = principals.oneByType(ActiveDirectoryPrincipal.class).getRoles();
 //
 //        // Perform context search
 //        LdapContext ldapContext = ldapContextFactory.getSystemLdapContext();
@@ -429,7 +429,7 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
     }
 
     private static String primaryGroupSID(String userSid, String primaryGroupID) {
-        return userSid.substring(0, userSid.lastIndexOf("-")+1)+primaryGroupID;
+        return userSid.substring(0, userSid.lastIndexOf("-") + 1) + primaryGroupID;
     }
 
     public static String getSIDAsString(byte[] SID) {
@@ -468,9 +468,17 @@ public class OrionActiveDirectoryRealm extends AuthorizingRealm {
         // That's it - we have the SID
         return strSID.toString();
     }
-    
+
     @Override
     protected boolean hasRole(String roleIdentifier, AuthorizationInfo info) {
-        return info != null && info.getRoles() != null && info.getRoles().contains(roleIdentifier.toLowerCase());
+        boolean ret = info != null && info.getRoles() != null;
+        if (ret) {
+            for (String role : info.getRoles()) {
+                if (role.equalsIgnoreCase(roleIdentifier)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
