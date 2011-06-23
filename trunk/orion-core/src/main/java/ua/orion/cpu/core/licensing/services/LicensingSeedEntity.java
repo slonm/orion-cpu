@@ -39,8 +39,8 @@ public class LicensingSeedEntity {
         LicenseRecordGroup jstrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка молодших спеціалістів", LicenseRecordGroup.JUN_SPEC_TRAINING_UKEY));
         if (testData) {
             //---Списки доступа----------
-            es.findUniqueOrPersist(new Acl("LicenseReader", SubjectType.ROLE, "EducationForm:read,menu"));
-            es.findUniqueOrPersist(new Acl("LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EducationForm:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
             //---------Области знаний или направления подготовки----------
             KnowledgeAreaOrTrainingDirection kaotdCompSci = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Комп'ютерні науки", null, "0804", false, false));
             KnowledgeAreaOrTrainingDirection kaotdInfComp = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Інформатика та обчислювальна техніка", null, "0501", true, false));
