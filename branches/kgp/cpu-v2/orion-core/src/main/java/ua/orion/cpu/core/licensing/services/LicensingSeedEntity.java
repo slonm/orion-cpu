@@ -1,6 +1,5 @@
 package ua.orion.cpu.core.licensing.services;
 
-import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 import ua.orion.cpu.core.security.entities.Acl;
 import ua.orion.cpu.core.security.entities.SubjectType;
 import ua.orion.cpu.core.licensing.LicensingSymbols;
@@ -25,7 +24,7 @@ public class LicensingSeedEntity {
     public LicensingSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(LicensingSymbols.LICENSING_LIB));
-        //---------Константы---------
+        //---------Заполнение справочников---------
         //---------Формы обучения---------
         EducationForm stat_EF = es.findUniqueOrPersist(new EducationForm("Денна", "Ден.", EducationForm.STATIONARY_UKEY, 1));
         EducationForm corr_EF = es.findUniqueOrPersist(new EducationForm("Заочна", "Заоч.", EducationForm.CORRESPONDENCE_UKEY, 2));

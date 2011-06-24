@@ -5,7 +5,7 @@ import ua.orion.core.annotations.OrderLibrary;
 import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.entities.SubSystem;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.LicensingSymbols;
+import ua.orion.cpu.core.orgunits.OrgUnitsSymbols;
 import ua.orion.cpu.core.persons.PersonsSymbols;
 import ua.orion.cpu.core.persons.entities.AcademicRank;
 import ua.orion.cpu.core.persons.entities.Person;
@@ -18,7 +18,7 @@ import ua.orion.cpu.core.security.entities.SubjectType;
  *
  * @author kgp
  */
-//@OrderLibrary("after:" + LicensingSymbols.LICENSING_LIB)
+@OrderLibrary("after:" + OrgUnitsSymbols.ORG_UNITS_LIB)
 public class PersonsSeedEntity {
     public PersonsSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {
