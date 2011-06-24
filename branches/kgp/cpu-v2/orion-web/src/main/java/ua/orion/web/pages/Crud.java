@@ -69,8 +69,8 @@ public class Crud {
     @Persist
     @Property(write = false)
     private String mode;
-    @Property(write = false)
-    private String title;
+//    @Property(write = false)
+//    private String title;
     @Property(write = false)
     private String error;
     private static final String EDIT = "edit";
@@ -157,7 +157,6 @@ public class Crud {
             }
         }
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
-        title = messages.get("entity." + objectClass.getSimpleName());
         return null;
     }
 
@@ -238,5 +237,13 @@ public class Crud {
 
     public boolean getIsEdit() {
         return EDIT.equals(mode);
+    }
+    
+    /**
+     * Переопределение этого метода в наследниках позволит кастомизировать титул страниц
+     * @return 
+     */
+    public String getTitle(){
+        return messages.get("entity." + objectClass.getSimpleName());
     }
 }
