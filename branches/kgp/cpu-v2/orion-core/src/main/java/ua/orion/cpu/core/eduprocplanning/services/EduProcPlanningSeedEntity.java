@@ -77,12 +77,6 @@ public class EduProcPlanningSeedEntity {
             es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanSemester:read,insert,update,menu"));
 
             //---------Учебные планы----------
-            //Дата ввода в действие
-            Calendar ePCal20090901 = Calendar.getInstance();
-            ePCal20090901.set(Calendar.YEAR, 2009);
-            ePCal20090901.set(Calendar.MONTH, Calendar.SEPTEMBER);
-            ePCal20090901.set(Calendar.DAY_OF_MONTH, 1);
-
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
             EducationalQualificationLevel bach = es.findByUKey(EducationalQualificationLevel.class, EducationalQualificationLevel.BACHELOR_UKEY);
             TrainingDirectionOrSpeciality tdosPI_B = es.findByName(TrainingDirectionOrSpeciality.class, "Програмна інженерія");
@@ -105,8 +99,8 @@ public class EduProcPlanningSeedEntity {
             LicenseRecord sABach = es.findUniqueOrPersist(lrSampleSA);
 
             //--Заполнение экземпляра учебных планов (для бакалавров ПИ 2009г утверждения)
-            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, ePCal20090901.getTime()));
-            EduPlan sABach2009 = es.findUniqueOrPersist(new EduPlan(sABach, 4.0, tFGPNT, ePCal20090901.getTime()));
+            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009)));
+            EduPlan sABach2009 = es.findUniqueOrPersist(new EduPlan(sABach, 4.0, tFGPNT, DateTimeUtils.createCalendar(1, 9, 2009)));
 
             //--Заполнение циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) - привязка их к учебным планам
             EduPlanDisciplineCycle pIBach2009HumSocEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, humsocecon_DC, "1", true, 24.0));

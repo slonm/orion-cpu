@@ -157,7 +157,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     /**
      * @return дата окончания лицензионной записи
      */
-    @Temporal(value = javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @NotNull
     public Calendar getTermination() {
         return termination;

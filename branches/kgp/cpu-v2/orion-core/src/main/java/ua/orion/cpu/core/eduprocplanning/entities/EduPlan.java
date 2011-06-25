@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -26,7 +27,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private LicenseRecord licenseRecord;
     private Double trainingTerm;
     private Qualification qualification;
-    private Date introducingDate;
+    private Calendar introducingDate;
     //ПОКА НЕ ИСПОЛЬЗУЮ
 //    //Набор семестров данного учебного плана, в которых читается дисциплина
 //    private SortedSet<EduPlanSemester> eduPlanSemesters = new TreeSet<EduPlanSemester>();
@@ -37,7 +38,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
-            Date introducingDate) {
+            Calendar introducingDate) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
@@ -169,11 +170,11 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getIntroducingDate() {
+    public Calendar getIntroducingDate() {
         return introducingDate;
     }
 
-    public void setIntroducingDate(Date introducingDate) {
+    public void setIntroducingDate(Calendar introducingDate) {
         this.introducingDate = introducingDate;
     }
     
