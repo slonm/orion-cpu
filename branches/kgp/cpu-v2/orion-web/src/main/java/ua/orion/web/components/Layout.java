@@ -13,7 +13,7 @@ import ua.orion.cpu.core.security.services.ThreadRole;
 /**
  * Layout component for pages.
  */
-@Import(stylesheet = {"layout/layout.css","../css/cpu_web.css"}, library={"../jquery.js","../cpu_effects.js"})
+@Import(stylesheet = {"layout/layout.css", "../css/cpu_web.css"}, library = {"../jquery.js", "../easyTooltip.js", "../cpu_effects.js"})
 @SuppressWarnings("unused")
 public class Layout {
 
@@ -35,11 +35,11 @@ public class Layout {
     private Response response;
     @Inject
     private ThreadRole thRole;
-
+    
     public String getRole() {
         return thRole.getRole();
     }
-    
+
     public Object getMenudata() {
         return defaultMenudata();
     }
@@ -62,5 +62,4 @@ public class Layout {
         response.sendRedirect(request.getContextPath());
         return false;
     }
-
 }

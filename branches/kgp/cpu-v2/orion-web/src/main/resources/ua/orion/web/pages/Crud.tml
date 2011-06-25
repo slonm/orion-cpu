@@ -32,11 +32,11 @@
     </s:HasPermission>
     <t:block id="editBlock">
         <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" width="${formWidth}"/><!--для вызова метода показа окна-->
+            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" width="${formWidth}" showhints="${showHints}"/><!--для вызова метода показа окна-->
             <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                             zone="listZone" context="${object?.id}" submitLabel="message:action.edit"/>
             <p:else>
-                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
+                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" width="${formWidth}" showhints="${showHints}"/><!--для вызова метода показа окна-->
                 <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                 zone="listZone" submitLabel="message:action.add"/>
             </p:else>    

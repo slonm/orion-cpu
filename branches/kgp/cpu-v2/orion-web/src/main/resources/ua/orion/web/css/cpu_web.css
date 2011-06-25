@@ -175,8 +175,6 @@ div.title h2{
     max-width: 180px;
 }
 
-
-
 TABLE.t-data-grid THEAD TR TH{
     white-space: normal;
 }
@@ -218,22 +216,31 @@ dt{
     font-weight: bold;
 }
 
-/*#easyTooltip{
+/* Стиль для отображения подсказки */
+#easyTooltip{
     padding:5px;
     color: white;
     border:1px solid #ccc;
     background: #99ccff;
     font-style: italic;
+    border-bottom-width: 1px;
+    border-color: #ffff99;
     background-image: url(../images/ToolTipBg.gif);
-}*/
+}
 
 /* Работа со слоями */
+/* */
 .crud-links{
     z-index: 1;
 }
 
 .menuitems{
-    z-index: 2;
+    z-index: 3;
+}
+
+/* Ограничение на select в Bean Editor */
+.t-beaneditor-row select{
+    max-width: 400px;
 }
 
 /*a:hover {

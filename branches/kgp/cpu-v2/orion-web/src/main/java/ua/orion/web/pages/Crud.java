@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.persistence.MetaEntity;
+import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.web.services.LastPageHolder;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -61,6 +62,13 @@ public class Crud {
     @Inject
     @Symbol(SymbolConstants.START_PAGE_NAME)
     private String startPageName;
+    /*
+     * Свойство, отвечающее за отображение всплывающих подсказок
+     */
+    @Inject
+    @Symbol(OrionCPUSymbols.SHOW_HINTS)
+    @Property
+    private String showHints;
     //---Locals---
     @Persist
     private Class<? extends IEntity> objectClass;
@@ -77,14 +85,6 @@ public class Crud {
     private static final String ADD = "add";
     private static final String VIEW = "view";
     private static final String DEL = "del";
-    /**
-     * Высота формы редактирования
-     */
-    private Integer formHeightEdit;
-    /**
-     * Высота формы просмотра
-     */
-    private Integer formHeightView;
     /**
      * Ширина формы 
      */

@@ -23,6 +23,10 @@ Tapestry.Initializer.showCkWindow = function(opt){
     if(opt.atCenter!==false) win.showCenter(opt.modal);
     else win.show(opt.modal);
     if(opt.title) win.setTitle(opt.title);
+    //Создание подсказок
+    if (opt.showhints=="true"){
+        createToolTips();
+    }
 }
 
 Tapestry.Initializer.closeCkWindow = function(opt){
