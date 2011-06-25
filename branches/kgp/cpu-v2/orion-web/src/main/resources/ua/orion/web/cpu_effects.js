@@ -18,7 +18,7 @@ function decorateButtonInBeanEditor(){
     var bESBM=jQuery("DIV.t-beaneditor DIV.t-beaneditor-row input.t-beaneditor-submit");
     bESBM.addClass("btn btnbe");  
     if (jQuery("DIV.t-beaneditor DIV.t-beaneditor-row input[type=submit]").size()>0){
-        jQuery("DIV.t-beaneditor DIV.t-beaneditor-row input[type=submit]").after("<br/><br/><br/>");
+        jQuery("DIV.t-beaneditor DIV.t-beaneditor-row input[type=submit]").after("<br/><br/>");
     } 
 }
 

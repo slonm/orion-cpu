@@ -51,12 +51,12 @@
     <t:block id="EditEduFormLicenseQuantity">
         <!--Отображать PropertyBlock для объемов необходимо в таблице-->
         <table class="t-loop">
-            <tr><th class="f-right">
+            <tr><th class="f-left">
                     ${message:property.LicenseRecord.LicenseQuantityByEducationForm}<br/>
                 </th></tr>
             <t:loop t:id="eduFormLicenseQuantityAfl">
                 <tr>
-                    <td class="f-right"><i>${eduForm.name}:</i></td>
+                    <td class="f-left"><i>${eduForm.name}:</i></td>
                     <td><t:textfield t:id="txtEduFormLicenseQuantity" value="EduFormLicenseQuantities" class="text"/></td>
                 </tr>
             </t:loop>
