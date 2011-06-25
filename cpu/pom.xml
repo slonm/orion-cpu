@@ -45,15 +45,14 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
                 <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <!--stopPort>9966</stopPort>
-                    <stopKey>foo</stopKey-->
+                    <contextPath>/</contextPath>
+                    <!--scanIntervalSeconds>5</scanIntervalSeconds-->
                     <!-- Log to the console. -->
                     <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
                         <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug
                              that prevents the requestLog from being set. -->
                         <append>true</append>
-                    </requestLog>
+                    </requestLog>                
                 </configuration>
             </plugin>
         </plugins>
