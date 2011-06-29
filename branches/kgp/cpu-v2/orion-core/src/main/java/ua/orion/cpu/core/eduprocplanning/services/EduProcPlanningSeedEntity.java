@@ -9,7 +9,6 @@ import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.EduProcPlanningSymbols;
 import ua.orion.cpu.core.security.entities.Acl;
 import ua.orion.cpu.core.security.entities.SubjectType;
-import java.util.*;
 import ua.orion.core.annotations.OrderLibrary;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.cpu.core.OrionCPUSymbols;
@@ -82,12 +81,16 @@ public class EduProcPlanningSeedEntity {
             TrainingDirectionOrSpeciality tdosPI_B = es.findByName(TrainingDirectionOrSpeciality.class, "Програмна інженерія");
             TrainingDirectionOrSpeciality tdosSA_B = es.findByName(TrainingDirectionOrSpeciality.class, "Системний аналіз");
 
+            //ПРИ ИСПОЛЬЗОВАНИИ ПОИСКА ПО ОБРАЗЦУ НЕОБХОДИМО В ОБРАЗЦЕ ЗОАПОЛНЯТЬ ПОЛЯ,
+            //ПОМЕЧЕННЫЕ АННОТАЦИЕЙ @NotNull!!!
+            
             LicenseRecord lrSamplePI = new LicenseRecord();
             lrSamplePI.setLicense(es.findUniqueOrPersist(new License("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010))));
             lrSamplePI.setEducationalQualificationLevel(bach);
             lrSamplePI.setTrainingDirectionOrSpeciality(tdosPI_B);
             lrSamplePI.setLicenseRecordGroup(es.findByName(LicenseRecordGroup.class, "Підготовка бакалаврів"));
             lrSamplePI.setOrgUnit(es.findByName(OrgUnit.class, "Кафедра програмування та інформаційних технологій"));
+            lrSamplePI.setTermination(DateTimeUtils.createCalendar(1, 7, 2015));
             LicenseRecord pIBach = es.findUniqueOrPersist(lrSamplePI);
 
             LicenseRecord lrSampleSA = new LicenseRecord();
@@ -96,6 +99,7 @@ public class EduProcPlanningSeedEntity {
             lrSampleSA.setTrainingDirectionOrSpeciality(tdosSA_B);
             lrSampleSA.setLicenseRecordGroup(es.findByName(LicenseRecordGroup.class, "Підготовка бакалаврів"));
             lrSampleSA.setOrgUnit(es.findByName(OrgUnit.class, "Кафедра системного аналізу та вищої математики"));
+            lrSampleSA.setTermination(DateTimeUtils.createCalendar(1, 7, 2015));
             LicenseRecord sABach = es.findUniqueOrPersist(lrSampleSA);
 
             //--Заполнение экземпляра учебных планов (для бакалавров ПИ 2009г утверждения)

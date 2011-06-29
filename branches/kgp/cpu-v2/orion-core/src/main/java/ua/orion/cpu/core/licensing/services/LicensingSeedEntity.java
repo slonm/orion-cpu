@@ -363,58 +363,6 @@ public class LicensingSeedEntity {
 
             //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
-            //stat_EF, corr_EF обозначают дневную и заочн формы обучения----------
-
-//            //Програмне забезпечення автоматизованих систем - молодші спеціалісти, заочна
-//            //Эта карта будет передана в сущность по ссылке, поэтому ее нельзя использовать повторно
-//            SortedMap<EducationForm, Integer> pZASJSpecLicQuantity = new TreeMap();
-//            pZASJSpecLicQuantity.put(corr_EF, 30);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPECTAS_JS, jSpec_EQL, pZASJSpecLicQuantity, lrCal20100701, kafPIT, forcol_LRG));
-//
-//            //Програмне забезпечення автоматизованих систем - бакалаври
-//            SortedMap<EducationForm, Integer> pZASBachLicQuantity = new TreeMap();
-//            pZASBachLicQuantity.put(stat_EF, 60);
-//            pZASBachLicQuantity.put(corr_EF, 60);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_B, bach_EQL, pZASBachLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
-//
-//            //Програмне забезпечення автоматизованих систем - специалісти
-//            SortedMap<EducationForm, Integer> pZASSpecLicQuantity = new TreeMap();
-//            pZASSpecLicQuantity.put(stat_EF, 30);
-//            pZASSpecLicQuantity.put(corr_EF, 30);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, spec_EQL, pZASSpecLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
-//
-//            //Програмне забезпечення автоматизованих систем - магістри
-//            SortedMap<EducationForm, Integer> pZASMasterLicQuantity = new TreeMap();
-//            pZASMasterLicQuantity.put(stat_EF, 10);
-//            pZASMasterLicQuantity.put(corr_EF, 10);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, master_EQL, pZASMasterLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
-//
-//            //Розробка програмного забезпечення - молодші спеціалісти
-//            SortedMap<EducationForm, Integer> pPZJSpecLicQuantity = new TreeMap();
-//            pPZJSpecLicQuantity.put(corr_EF, 30);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosRPZ_JS, jSpec_EQL, pPZJSpecLicQuantity, lrCal20100701, kafPIT, jstrain_LRG));
-//
-//            //Програмна інженерія- бакалаври, денна
-//            SortedMap<EducationForm, Integer> pIBachLicQuantity = new TreeMap();
-//            pIBachLicQuantity.put(stat_EF, 60);
-//            pIBachLicQuantity.put(corr_EF, 60);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPI_B, bach_EQL, pIBachLicQuantity, lrCal20100701, kafPIT, jstrain_LRG));
-//
-//            //Педагогіка вищої школи- магістри
-//            SortedMap<EducationForm, Integer> pVSHMasterLicQuantity = new TreeMap();
-//            pVSHMasterLicQuantity.put(stat_EF, 30);
-//            pVSHMasterLicQuantity.put(corr_EF, 30);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPVSH_SM, master_EQL, pVSHMasterLicQuantity, lrCal20090701, kafEICPHS, bsmtrain_LRG));
-//
-//            //Програмна інженерія- бакалаври, денна
-//            SortedMap<EducationForm, Integer> sABachLicQuantity = new TreeMap();
-//            sABachLicQuantity.put(stat_EF, 30);
-//            sABachLicQuantity.put(corr_EF, 30);
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSA_B, bach_EQL, sABachLicQuantity, lrCal20090701, kafSAVM, btrain_LRG));
-
-            
-            //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
-            //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
             //суффиксы _D, _Z обозначают дневную и заочн формы обучения----------
 
             //Старая лицензия

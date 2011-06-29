@@ -49,7 +49,7 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     }
 
     //Двунаправленная ассоциация с учебным планом
-    @ManyToOne
+    @ManyToOne(optional=false)
     public EduPlan getEduPlan() {
         return eduPlan;
     }

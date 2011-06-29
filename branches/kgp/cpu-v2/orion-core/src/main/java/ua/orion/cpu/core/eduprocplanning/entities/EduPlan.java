@@ -1,7 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.*;
@@ -194,7 +193,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * @return набор циклов дисциплин данного учебного плана
      */
     @Sort(type = SortType.NATURAL)
-    @OneToMany(mappedBy="eduPlan")
+    @OneToMany(mappedBy="eduPlan", cascade= CascadeType.ALL)
     public SortedSet<EduPlanDisciplineCycle> getEduPlanDisciplineCycle() {
         return eduPlanDisciplineCycles;
     }
