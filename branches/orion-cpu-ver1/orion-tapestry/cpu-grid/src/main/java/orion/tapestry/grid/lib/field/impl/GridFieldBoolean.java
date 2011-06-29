@@ -7,7 +7,7 @@ import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementEQ;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNOTNULL;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNULL;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireBoolean;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementBoolean;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.rows.GridRow;
@@ -25,7 +25,7 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
      */
     public GridFieldBoolean(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireBoolean());
+        this.setDatatype(new FieldFilterElementBoolean());
         this.setFilterElementList(this.createFilterElementList());
     }
 
@@ -40,11 +40,11 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
     public GridFieldBoolean(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this.setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireBoolean());
+        this.setDatatype(new FieldFilterElementBoolean());
     }
 
     public GridFieldBoolean() {
-        this.setValidator(new ValidatorRequireBoolean());
+        this.setDatatype(new FieldFilterElementBoolean());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class GridFieldBoolean extends GridFieldAbstract<Boolean>  {
         list.add(new FilterElementISNULL(this.getAttributeName(), this.getLabel() + " is null "));
 
         for (FilterElementAbstract fe : list) {
-            fe.setValidator(this.getValidator());
+            fe.setDatatype(this.getDatatype());
         }
 
         return list;

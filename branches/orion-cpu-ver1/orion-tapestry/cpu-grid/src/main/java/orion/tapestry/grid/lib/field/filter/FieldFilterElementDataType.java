@@ -5,7 +5,7 @@ package orion.tapestry.grid.lib.field.filter;
  * Строка вводится пользователем в форме фильтрации.
  * @author Gennadiy Dobrovolsky
  */
-public interface FieldFilterElementValidator<T> {
+public interface FieldFilterElementDataType<T> {
 
     /**
      * метод проверяет, можно ли преобразовать строку в объект типа T

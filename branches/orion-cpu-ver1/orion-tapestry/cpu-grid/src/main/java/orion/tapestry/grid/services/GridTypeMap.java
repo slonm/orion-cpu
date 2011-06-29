@@ -1,7 +1,6 @@
 package orion.tapestry.grid.services;
 
 import java.util.Map;
-import orion.tapestry.grid.lib.field.GridFieldAbstract;
 
 /**
  * Класс, который устанавливает соответствие между типом поля
@@ -10,7 +9,8 @@ import orion.tapestry.grid.lib.field.GridFieldAbstract;
  */
 public interface GridTypeMap {
     /**
-     * Метод, который отображает тип атрибута в тип колонки в таблице
+     * Метод, который отображает тип атрибута в тип колонки в таблице.
+     * Можно расширить, чтобы учитывать имена атрибутов.
      * @param attribyteType
      * @return 
      */

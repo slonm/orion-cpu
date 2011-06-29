@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementType;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementGUIType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.filter.impl.*;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireDate;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireList;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementDate;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementList;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 
@@ -24,7 +24,7 @@ public class GridFieldDate extends GridFieldAbstract<Date> {
      */
     public GridFieldDate(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireDate());
+        this.setDatatype(new FieldFilterElementDate());
         this.setFilterElementList(this.createFilterElementList());
 
     }
@@ -39,12 +39,12 @@ public class GridFieldDate extends GridFieldAbstract<Date> {
      */
     public GridFieldDate(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
-        this.setValidator(new ValidatorRequireDate());
+        this.setDatatype(new FieldFilterElementDate());
         this.setFilterElementList(this.createFilterElementList());
     }
 
     public GridFieldDate() {
-        this.setValidator(new ValidatorRequireDate());
+        this.setDatatype(new FieldFilterElementDate());
     }
 
     @Override
@@ -60,14 +60,14 @@ public class GridFieldDate extends GridFieldAbstract<Date> {
 
         // устанавливаем особенный тип элемента формы
         for (FilterElementAbstract fe : list) {
-            fe.setType(FieldFilterElementType.DATE);
+            fe.setType(FieldFilterElementGUIType.DATE);
         }
 
         list.add(new FilterElementISNOTNULL(this.getAttributeName(), this.getLabel() + " is not null "));
         list.add(new FilterElementISNULL(this.getAttributeName(), this.getLabel() + " is null "));
 
         for (FilterElementAbstract fe : list) {
-            fe.setValidator(this.getValidator());
+            fe.setDatatype(this.getDatatype());
         }
 
         return list;

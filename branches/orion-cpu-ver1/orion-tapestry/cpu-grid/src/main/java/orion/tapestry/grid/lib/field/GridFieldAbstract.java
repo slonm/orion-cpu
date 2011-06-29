@@ -1,7 +1,7 @@
 package orion.tapestry.grid.lib.field;
 
 import java.util.List;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.field.sort.GridFieldSortType;
@@ -50,9 +50,10 @@ public abstract class GridFieldAbstract<T> {
      */
     private List<FilterElementAbstract> fieldFilterElementList;
     /**
-     * Валидатор пользовательского ввода
+     * Обработчик пользовательского ввода
+     * (валидатор, преобразователь и т.д.)
      */
-    private FieldFilterElementValidator validator;
+    private FieldFilterElementDataType datatype;
 
     /**
      * Создаёт новый объект с данными для фильтрации
@@ -257,19 +258,19 @@ public abstract class GridFieldAbstract<T> {
     /**
      * @return Объект-валидатор пользовательского ввода
      */
-    public FieldFilterElementValidator getValidator() {
-        return this.validator;
+    public FieldFilterElementDataType getDatatype() {
+        return this.datatype;
     }
 
     /**
      * Устанавливает новый объект в качестве валидатора
      * @param _validator объект-валидатор пользовательского ввода
      */
-    public void setValidator(FieldFilterElementValidator _validator) {
-        this.validator = _validator;
+    public void setDatatype(FieldFilterElementDataType _validator) {
+        this.datatype = _validator;
         if (this.fieldFilterElementList != null) {
             for (FilterElementAbstract fe : this.fieldFilterElementList) {
-                fe.setValidator(this.validator);
+                fe.setDatatype(this.datatype);
             }
         }
     }

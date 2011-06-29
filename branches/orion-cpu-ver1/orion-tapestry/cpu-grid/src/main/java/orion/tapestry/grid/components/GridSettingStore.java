@@ -1,13 +1,11 @@
 package orion.tapestry.grid.components;
 
-import java.awt.TextField;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -16,7 +14,7 @@ import org.apache.tapestry5.services.Request;
 import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 
 /**
- *
+ * Интерфейс для сохранения/загрузки разных настроек таблицы
  * @author dobro
  */
 @IncludeJavaScriptLibrary({"gridsettingstore.js"})

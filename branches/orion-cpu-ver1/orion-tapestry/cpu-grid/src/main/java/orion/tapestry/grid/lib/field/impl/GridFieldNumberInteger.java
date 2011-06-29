@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.impl;
 
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireInteger;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementInteger;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 
@@ -17,7 +17,7 @@ public class GridFieldNumberInteger extends GridFieldNumberAbstractInt<Integer> 
     public GridFieldNumberInteger(String _attributeName) {
         this.init(_attributeName);
         this._setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireInteger());
+        this.setDatatype(new FieldFilterElementInteger());
     }
 
     /**
@@ -31,10 +31,10 @@ public class GridFieldNumberInteger extends GridFieldNumberAbstractInt<Integer> 
     public GridFieldNumberInteger(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this._setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireInteger());
+        this.setDatatype(new FieldFilterElementInteger());
     }
 
     public GridFieldNumberInteger() {
-        this.setValidator(new ValidatorRequireInteger());
+        this.setDatatype(new FieldFilterElementInteger());
     }
 }

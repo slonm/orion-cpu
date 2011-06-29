@@ -1,16 +1,16 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  * Валидатор на основе регулярного выражения
  * @author dobro
  */
-public class ValidatorRequireRegexp implements FieldFilterElementValidator<String> {
+public class FieldFilterElementRegexp implements FieldFilterElementDataType<String> {
 
     private String pattern;
 
-    ValidatorRequireRegexp(String _pattern){
+    FieldFilterElementRegexp(String _pattern){
         this.pattern=_pattern;
     }
 

@@ -1,6 +1,6 @@
 package trash;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementType;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementGUIType;
 
 /**
  * Один элемент формы фильтрации
@@ -21,7 +21,7 @@ public class FieldFilterElement {
     private String label;
 
     // тип элемента формы
-    private FieldFilterElementType type;
+    private FieldFilterElementGUIType type;
 
     public FieldFilterElement() {
         id++;
@@ -60,11 +60,11 @@ public class FieldFilterElement {
         this.label = _label;
     }
 
-    public FieldFilterElementType getType() {
+    public FieldFilterElementGUIType getType() {
         return this.type;
     }
 
-    public void setType(FieldFilterElementType _type) {
+    public void setType(FieldFilterElementGUIType _type) {
         this.type = _type;
     }
 

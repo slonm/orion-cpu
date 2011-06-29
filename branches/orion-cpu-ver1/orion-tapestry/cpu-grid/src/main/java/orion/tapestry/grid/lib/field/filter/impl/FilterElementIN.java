@@ -1,7 +1,7 @@
 package orion.tapestry.grid.lib.field.filter.impl;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireList;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementList;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 
@@ -17,6 +17,9 @@ public class FilterElementIN extends FilterElementText {
         this.setLabel(newLabel);
     }
 
+    /**
+     * Условие "принадлежит множеству"
+     */
     @Override
     public <T> boolean modifyRestriction(
             RestrictionEditorInterface<T> restriction,
@@ -35,13 +38,13 @@ public class FilterElementIN extends FilterElementText {
 
         // используем валидатор для проверки данных
         Object checkedValue;
-        if (validator != null) {
-            checkedValue = validator.fromString(value.toString());
+        if (datatype != null) {
+            checkedValue = datatype.fromString(value.toString());
             if (checkedValue == null) {
                 return false;
             }
-        }else{
-            checkedValue=value;
+        } else {
+            checkedValue = value;
         }
         Object[] valueList = checkedValue.toString().split(",");
         restriction.constValueList(valueList);
@@ -55,8 +58,8 @@ public class FilterElementIN extends FilterElementText {
      * @param _validator объект-валидатор пользовательского ввода
      */
     @Override
-    public void setValidator(FieldFilterElementValidator _validator) {
+    public void setDatatype(FieldFilterElementDataType _validator) {
         // особенный валидатор для списка
-        this.validator = new ValidatorRequireList(_validator);
+        this.datatype = new FieldFilterElementList(_validator);
     }
 }

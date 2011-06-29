@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.impl;
 
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireFloat;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementFloat;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.rows.GridRow;
@@ -17,7 +17,7 @@ public class GridFieldNumberFloat extends GridFieldNumberAbstractFloat<Float> {
      */
     public GridFieldNumberFloat(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireFloat());
+        this.setDatatype(new FieldFilterElementFloat());
         this.setFilterElementList(this.createFilterElementList());
     }
 
@@ -31,13 +31,13 @@ public class GridFieldNumberFloat extends GridFieldNumberAbstractFloat<Float> {
      */
     public GridFieldNumberFloat(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
-        this.setValidator(new ValidatorRequireFloat());
+        this.setDatatype(new FieldFilterElementFloat());
         this.setFilterElementList(this.createFilterElementList());
         ;
     }
 
     public GridFieldNumberFloat() {
-        this.setValidator(new ValidatorRequireFloat());
+        this.setDatatype(new FieldFilterElementFloat());
     }
 
     @Override

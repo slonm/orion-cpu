@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.impl;
 
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireByte;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementByte;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 
@@ -16,7 +16,7 @@ public class GridFieldNumberByte extends GridFieldNumberAbstractInt<Byte> {
      */
     public GridFieldNumberByte(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireByte());
+        this.setDatatype(new FieldFilterElementByte());
         this.setFilterElementList(this.createFilterElementList());
     }
 
@@ -31,11 +31,11 @@ public class GridFieldNumberByte extends GridFieldNumberAbstractInt<Byte> {
     public GridFieldNumberByte(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this._setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireByte());
+        this.setDatatype(new FieldFilterElementByte());
     }
 
     public GridFieldNumberByte() {
-        this.setValidator(new ValidatorRequireByte());
+        this.setDatatype(new FieldFilterElementByte());
     }
 
 }

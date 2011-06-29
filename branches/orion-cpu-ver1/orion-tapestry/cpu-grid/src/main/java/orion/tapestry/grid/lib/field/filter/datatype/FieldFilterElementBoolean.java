@@ -1,12 +1,12 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireBoolean implements FieldFilterElementValidator<Boolean> {
+public class FieldFilterElementBoolean implements FieldFilterElementDataType<Boolean> {
 
     @Override
     public boolean isValid(String value) {

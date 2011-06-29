@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.impl;
 
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireLong;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementLong;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 
@@ -17,7 +17,7 @@ public class GridFieldNumberLong extends GridFieldNumberAbstractInt<Long> {
     public GridFieldNumberLong(String _attributeName) {
         this.init(_attributeName);
         this._setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireLong());
+        this.setDatatype(new FieldFilterElementLong());
     }
 
     /**
@@ -31,10 +31,10 @@ public class GridFieldNumberLong extends GridFieldNumberAbstractInt<Long> {
     public GridFieldNumberLong(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this._setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireLong());
+        this.setDatatype(new FieldFilterElementLong());
     }
 
     public GridFieldNumberLong() {
-        this.setValidator(new ValidatorRequireLong());
+        this.setDatatype(new FieldFilterElementLong());
     }
 }

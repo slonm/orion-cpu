@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.filter.impl;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 
@@ -29,7 +29,7 @@ public class FilterElementISNULL extends FilterElementCheckbox {
     }
 
     @Override
-    public void setValidator(FieldFilterElementValidator _validator){
-        this.validator=null;
+    public void setDatatype(FieldFilterElementDataType _validator){
+        this.datatype=null;
     }
 }

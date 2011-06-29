@@ -8,6 +8,8 @@ import orion.tapestry.grid.lib.field.view.GridFieldView;
 /**
  * Класс для назначения подписей на заданном языке.
  * Модифицирует все текстовые метки в модели {@link GridModelInterface}
+ * Для реального использования надо перекрыть метод protected String getLabel(String uid)
+ * этого класса
  * @author dobro
  */
 public class GridModelLocalizator {

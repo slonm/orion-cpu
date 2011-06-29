@@ -7,10 +7,12 @@ import orion.tapestry.grid.lib.paging.Page;
 import orion.tapestry.grid.lib.paging.Pager;
 
 /**
- * Component to draw paging links
+ * Компонента, отображающая ссылки
+ * для перехода на другие страницы списка
  * @author Gennadiy Dobrovolsky
  */
 public class GridPager {
+
     /**
      * Источник/приёмник данных формы,
      * источник данных для цикла
@@ -18,7 +20,6 @@ public class GridPager {
      */
     @Parameter(principal = true)
     private Pager pager;
-
     /**
      * Временная переменная для цикла
      * Цикл объявлен в шаблоне
@@ -27,28 +28,32 @@ public class GridPager {
     @Property                   // <= чтобы не писать примитивные методы get...() и set...()
     private Page currentPage;
 
-
-    public List<Page> getPageList(){
+    /**
+     * Список ссылок на разные страницы списка
+     */
+    public List<Page> getPageList() {
         return this.pager.getPageList();
     }
 
-    public int getRowsFound(){
+    /**
+     * Количество найденных строк в списке
+     */
+    public int getRowsFound() {
         return this.pager.getRowsFound();
     }
 
-    public boolean getIsCurrentPage(){
-        return ( currentPage.getPageNumber()==this.pager.getVisiblePage().getPageNumber() );
+    /**
+     * Проверяет, является ли страница текущей
+     */
+    public boolean getIsCurrentPage() {
+        return (currentPage.getPageNumber() == this.pager.getVisiblePage().getPageNumber());
 
     }
 
-    public boolean getCurrentPageIsNull(){
-        return currentPage==null;
+    /**
+     * Задана ли текущая страница
+     */
+    public boolean getCurrentPageIsNull() {
+        return currentPage == null;
     }
-
-//    Object onActionFromGotopage(int pageNumber)
-//    {
-//        this.pager.setVisiblePage(pageNumber);
-//        return null;
-//    }
-
 }

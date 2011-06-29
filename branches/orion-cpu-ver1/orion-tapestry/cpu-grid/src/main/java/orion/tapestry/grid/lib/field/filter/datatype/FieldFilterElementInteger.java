@@ -1,12 +1,12 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireInteger implements FieldFilterElementValidator<Integer> {
+public class FieldFilterElementInteger implements FieldFilterElementDataType<Integer> {
 
     @Override
     public boolean isValid(String value) {
@@ -29,7 +29,7 @@ public class ValidatorRequireInteger implements FieldFilterElementValidator<Inte
     }
 
     public static void main(String [] a){
-        ValidatorRequireInteger v=new ValidatorRequireInteger();
+        FieldFilterElementInteger v=new FieldFilterElementInteger();
         System.out.println(v.isValid("23e"));
         System.out.println(v.isValid("re23e"));
         System.out.println(v.isValid("+23"));

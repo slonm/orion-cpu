@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.filter.impl;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementType;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementGUIType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
@@ -14,7 +14,7 @@ public class FilterElementNOT extends FilterElementAbstract {
     public FilterElementNOT(String newLabel) {
         this.setUid("NodeNOT");
         this.setLabel(newLabel);
-        this.setType(FieldFilterElementType.NodeNOT);
+        this.setType(FieldFilterElementGUIType.NodeNOT);
     }
 
     @Override

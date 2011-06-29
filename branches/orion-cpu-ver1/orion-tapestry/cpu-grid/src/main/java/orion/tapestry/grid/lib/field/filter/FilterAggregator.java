@@ -3,8 +3,6 @@ package orion.tapestry.grid.lib.field.filter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
@@ -58,6 +56,9 @@ public class FilterAggregator {
         }
     }
 
+    /**
+     * Изменение условия фильтрации
+     */
     public <T> int modifyRestriction(JSONObject node, RestrictionEditorInterface<T> restrictionEditor) throws JSONException, RestrictionEditorException {
         // отмечен ли флажок "условие активно"
         boolean isActive = true;

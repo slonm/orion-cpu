@@ -9,14 +9,15 @@ import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
  */
 public class FilterElementEQ extends FilterElementText {
 
-    public FilterElementEQ(String newFieldName,String newLabel) {
+    public FilterElementEQ(String newFieldName, String newLabel) {
         super(newFieldName);
-        this.setUid(this.fieldName+"EQ");
+        this.setUid(this.fieldName + "EQ");
         this.setLabel(newLabel);
     }
 
-
-
+    /**
+     * Условие "равно"
+     */
     @Override
     public <T> boolean modifyRestriction(
             RestrictionEditorInterface<T> restriction,
@@ -35,13 +36,13 @@ public class FilterElementEQ extends FilterElementText {
 
         // используем валидатор для проверки данных
         Object checkedValue;
-        if (validator != null) {
-            checkedValue = validator.fromString(value.toString());
+        if (datatype != null) {
+            checkedValue = datatype.fromString(value.toString());
             if (checkedValue == null) {
                 return false;
             }
-        }else{
-            checkedValue=value;
+        } else {
+            checkedValue = value;
         }
 
         //System.out.println(" ===== "+this.fieldName + " == "+checkedValue);

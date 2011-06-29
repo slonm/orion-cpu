@@ -1,10 +1,10 @@
 package orion.tapestry.grid.lib.field.filter;
 
 /**
- * Возможные типы елементов формы
+ * Возможные типы елементов GUI для формы фильтрации
  * @author root
  */
-public enum FieldFilterElementType {
+public enum FieldFilterElementGUIType {
   TEXTAREA   , // Текстовая область
   DATE       , // Ввод даты, текстовое поле как для числа + выпадающий календарь
   TEXT       , // текстовое поле

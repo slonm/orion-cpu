@@ -1,12 +1,12 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireShort implements FieldFilterElementValidator<Short> {
+public class FieldFilterElementLong implements FieldFilterElementDataType<Long> {
 
     @Override
     public boolean isValid(String value) {
@@ -14,10 +14,10 @@ public class ValidatorRequireShort implements FieldFilterElementValidator<Short>
     }
 
     @Override
-    public Short fromString(String value) {
+    public Long fromString(String value) {
         if (!isValid(value)) return null;
         try{
-            return new Short(value.replace('+', ' ').trim());
+            return new Long(value.replace('+', ' ').trim());
         }catch(NumberFormatException e){
             return null;
         }

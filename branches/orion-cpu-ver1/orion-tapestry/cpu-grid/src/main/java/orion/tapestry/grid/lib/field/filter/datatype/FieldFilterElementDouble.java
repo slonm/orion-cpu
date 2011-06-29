@@ -1,12 +1,12 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireDouble implements FieldFilterElementValidator<Double> {
+public class FieldFilterElementDouble implements FieldFilterElementDataType<Double> {
 
     @Override
     public boolean isValid(String value) {
@@ -29,7 +29,7 @@ public class ValidatorRequireDouble implements FieldFilterElementValidator<Doubl
     }
 
     public static void main(String [] a){
-        ValidatorRequireDouble v=new ValidatorRequireDouble();
+        FieldFilterElementDouble v=new FieldFilterElementDouble();
         String[] validateMe={"12","+1.5","-.89","gg","erw","1e9","3.2344E4","45,67"};
         for(String s: validateMe){
             System.out.println(s+" "+v.isValid(s));

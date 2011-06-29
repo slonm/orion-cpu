@@ -3,7 +3,7 @@ package orion.tapestry.grid.lib.field.impl;
 import java.util.ArrayList;
 import java.util.List;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementEQ;
 import orion.tapestry.grid.lib.field.filter.impl.FilterElementISNOTNULL;
@@ -37,7 +37,7 @@ public class GridFieldSample extends GridFieldAbstract<SampleDataType>  {
         this.init(_attributeName);
 
         // назначаем объект для проверки/преобразования типа данных
-        this.setValidator(new ValidatorSample());
+        this.setDatatype(new DatatypeSample());
 
         this.setFilterElementList(this.createFilterElementList());
     }
@@ -54,12 +54,12 @@ public class GridFieldSample extends GridFieldAbstract<SampleDataType>  {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this.setFilterElementList(this.createFilterElementList());
         // назначаем объект для проверки/преобразования типа данных
-        this.setValidator(new ValidatorSample());
+        this.setDatatype(new DatatypeSample());
     }
 
     public GridFieldSample() {
         // назначаем объект для проверки/преобразования типа данных
-        this.setValidator(new ValidatorSample());
+        this.setDatatype(new DatatypeSample());
     }
 
 
@@ -72,7 +72,7 @@ public class GridFieldSample extends GridFieldAbstract<SampleDataType>  {
         list.add(new FilterElementISNULL(this.getAttributeName(), this.getLabel() + " is null "));
 
         for (FilterElementAbstract fe : list) {
-            fe.setValidator(this.getValidator());
+            fe.setDatatype(this.getDatatype());
         }
 
         return list;
@@ -92,16 +92,14 @@ public class GridFieldSample extends GridFieldAbstract<SampleDataType>  {
             return (val.toString().equalsIgnoreCase("true")?"yes":"no");
         }
     }
-        /**
-     * Извлекает из строки "своё" значение в виде строковой константы
-     * @param row объект, представляющий строку таблицы
-     * @return строка, представляющая значение поля
-     */
+
 }
 
 
-
-class ValidatorSample implements FieldFilterElementValidator<SampleDataType> {
+/**
+ * Обработчик входных данных
+ */
+class DatatypeSample implements FieldFilterElementDataType<SampleDataType> {
 
     // проверяем входные данные
     @Override
@@ -142,9 +140,9 @@ class SampleDataType{
  * и получать значения из тестового поля
  * @author Gennadiy Dobrovolsky
  */
-class FilterElementKnowledgeAreaOrTrainingDirection1 extends FilterElementText {
+class FilterElementKnowledgeAreaOrTrainingDirectionContains extends FilterElementText {
 
-    public FilterElementKnowledgeAreaOrTrainingDirection1(String newFieldName, String newLabel) {
+    public FilterElementKnowledgeAreaOrTrainingDirectionContains(String newFieldName, String newLabel) {
         super(newFieldName);
         this.setUid(this.fieldName + "CONTAINS");
         this.setLabel(newLabel);
@@ -168,8 +166,8 @@ class FilterElementKnowledgeAreaOrTrainingDirection1 extends FilterElementText {
 
         // используем валидатор для проверки данных
         Object checkedValue;
-        if (validator != null) {
-            checkedValue = validator.fromString(value.toString());
+        if (datatype != null) {
+            checkedValue = datatype.fromString(value.toString());
             if (checkedValue == null) {
                 return false;
             }

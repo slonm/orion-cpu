@@ -25,7 +25,7 @@ public class GridFieldNumberAbstractFloat<B> extends GridFieldAbstract<B> {
         list.add(new FilterElementLT(       this.getAttributeName(), this.getLabel() + " < "));
         list.add(new FilterElementNEQ(      this.getAttributeName(), this.getLabel() + " != "));
         for (FilterElementAbstract fe : list) {
-            fe.setValidator(this.getValidator());
+            fe.setDatatype(this.getDatatype());
         }
 
         

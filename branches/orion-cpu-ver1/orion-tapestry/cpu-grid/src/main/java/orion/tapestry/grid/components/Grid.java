@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 import orion.tapestry.grid.lib.model.GridModelInterface;
 import orion.tapestry.grid.lib.paging.Pager;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
@@ -264,11 +264,7 @@ public class Grid {
      */
     @Inject
     private Block afterTable;
-    // /**
-    //   * Сообщения интерфейса
-    //   */
-    //  @Inject
-    //  private Messages messages;
+
     /**
      * обьект для доступа к сохранённым наборам настроек
      */
@@ -442,8 +438,8 @@ public class Grid {
                     s.append("','");
                     s.append(fe.getUid());
                     s.append("','',");
-                    FieldFilterElementValidator validator;
-                    validator = fe.getValidator();
+                    FieldFilterElementDataType validator;
+                    validator = fe.getDatatype();
                     if (validator == null) {
                         s.append("null");
                     } else {
@@ -482,8 +478,8 @@ public class Grid {
                     s.append("','");
                     s.append(fe.getUid());
                     s.append("','',");
-                    FieldFilterElementValidator validator2;
-                    validator2 = fe.getValidator();
+                    FieldFilterElementDataType validator2;
+                    validator2 = fe.getDatatype();
                     if (validator2 == null) {
                         s.append("null");
                     } else {
@@ -606,7 +602,6 @@ public class Grid {
         if (_sortJSON == null || _sortJSON.isEmpty()) {
             return;
         }
-        //ArrayList<GridFieldSort> fsl = new ArrayList<GridFieldSort>();
         try {
             //System.out.println("Parsing " + _viewJSON);
             JSONArray root = new JSONArray(_sortJSON);

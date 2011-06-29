@@ -33,8 +33,8 @@ public class FilterElementNEQ extends FilterElementText {
 
         // используем валидатор для проверки данных
         Object checkedValue;
-        if (validator != null) {
-            checkedValue = validator.fromString(value.toString());
+        if (datatype != null) {
+            checkedValue = datatype.fromString(value.toString());
             if (checkedValue == null) {
                 return false;
             }

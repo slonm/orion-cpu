@@ -1,12 +1,12 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireFloat implements FieldFilterElementValidator<Float> {
+public class FieldFilterElementFloat implements FieldFilterElementDataType<Float> {
 
     @Override
     public boolean isValid(String value) {
@@ -29,7 +29,7 @@ public class ValidatorRequireFloat implements FieldFilterElementValidator<Float>
     }
 
     public static void main(String [] a){
-        ValidatorRequireFloat v=new ValidatorRequireFloat();
+        FieldFilterElementFloat v=new FieldFilterElementFloat();
         String[] validateMe={"12","+1.5","-.89","gg","erw","1e9","3.2344E4","45,67"};
         for(String s: validateMe){
             System.out.println(s+" "+v.isValid(s));

@@ -1,6 +1,6 @@
 package orion.tapestry.grid.lib.field.impl;
 
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireDouble;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementDouble;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.view.GridFieldView;
 import orion.tapestry.grid.lib.rows.GridRow;
@@ -17,7 +17,7 @@ public class GridFieldNumberDouble extends GridFieldNumberAbstractFloat<Double> 
      */
     public GridFieldNumberDouble(String _attributeName) {
         this.init(_attributeName);
-        this.setValidator(new ValidatorRequireDouble());
+        this.setDatatype(new FieldFilterElementDouble());
         this.setFilterElementList(this.createFilterElementList());
     }
 
@@ -32,11 +32,11 @@ public class GridFieldNumberDouble extends GridFieldNumberAbstractFloat<Double> 
     public GridFieldNumberDouble(String _attributeName, String _uid, String _label, GridFieldView _fieldView, GridFieldSort _fieldSort) {
         this.init(_attributeName, _uid, _label, _fieldView, _fieldSort);
         this.setFilterElementList(this.createFilterElementList());
-        this.setValidator(new ValidatorRequireDouble());
+        this.setDatatype(new FieldFilterElementDouble());
     }
 
     public GridFieldNumberDouble() {
-        this.setValidator(new ValidatorRequireDouble());
+        this.setDatatype(new FieldFilterElementDouble());
     }
 
     @Override

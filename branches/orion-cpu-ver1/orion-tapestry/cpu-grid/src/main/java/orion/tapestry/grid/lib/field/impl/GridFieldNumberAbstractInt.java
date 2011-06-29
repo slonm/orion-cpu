@@ -5,7 +5,7 @@ import java.util.List;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.field.filter.impl.*;
-import orion.tapestry.grid.lib.field.filter.validator.ValidatorRequireList;
+import orion.tapestry.grid.lib.field.filter.datatype.FieldFilterElementList;
 
 /**
  * Класс, который описывает поле типа Byte
@@ -26,7 +26,7 @@ public class GridFieldNumberAbstractInt<B> extends GridFieldAbstract<B> {
         list.add(new FilterElementNEQ(this.getAttributeName(), this.getLabel() + " != "));
 
         for (FilterElementAbstract fe : list) {
-            fe.setValidator(this.getValidator());
+            fe.setDatatype(this.getDatatype());
         }
 
 

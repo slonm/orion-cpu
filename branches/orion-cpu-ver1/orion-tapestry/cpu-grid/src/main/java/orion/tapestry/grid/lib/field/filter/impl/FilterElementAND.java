@@ -1,12 +1,12 @@
 package orion.tapestry.grid.lib.field.filter.impl;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementType;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementGUIType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 
 /**
- * элемент "И"
+ * Объединяет условия фильтрации с помощью логического И
  * @author Gennadiy Dobrovolsky
  */
 public class FilterElementAND extends FilterElementAbstract {
@@ -14,9 +14,12 @@ public class FilterElementAND extends FilterElementAbstract {
     public FilterElementAND(String newLabel) {
         this.setUid("NodeAND");
         this.setLabel(newLabel);
-        this.setType(FieldFilterElementType.NodeAND);
+        this.setType(FieldFilterElementGUIType.NodeAND);
     }
 
+    /**
+     * Объединяет условия фильтрации с помощью логического И
+     */
     @Override
     public <T> boolean modifyRestriction(
             RestrictionEditorInterface<T> restriction,

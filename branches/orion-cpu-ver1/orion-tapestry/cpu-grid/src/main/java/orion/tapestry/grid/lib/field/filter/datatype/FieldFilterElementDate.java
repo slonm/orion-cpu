@@ -1,15 +1,15 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  *
  * @author dobro
  */
-public class ValidatorRequireDate implements FieldFilterElementValidator<Date> {
+public class FieldFilterElementDate implements FieldFilterElementDataType<Date> {
 
     /**
      * Форматы дат в виде массива строк
@@ -63,7 +63,7 @@ public class ValidatorRequireDate implements FieldFilterElementValidator<Date> {
     @Override
     public Date fromString(String dateString) {
         Date dt = null;
-        for (SimpleDateFormat dft : ValidatorRequireDate.dateFormatter) {
+        for (SimpleDateFormat dft : FieldFilterElementDate.dateFormatter) {
             try {
                 // извлекаем значение
                 dt = dft.parse(dateString);

@@ -58,22 +58,47 @@ public class GridFieldFactory {
             PropertyAdapter pad = cpa.getPropertyAdapter(uid);
 
             // игнорируем свойство, если его нельзя читать
-            if (!pad.isRead()) continue;
+            if (!pad.isRead()) {
+                continue;
+            }
 
             // игнорируем свойство, если оно помечено аннотацией NonVisual
-            if (pad.getAnnotation(NonVisual.class) != null) continue;
+            if (pad.getAnnotation(NonVisual.class) != null) {
+                continue;
+            }
 
             // читаем название типа атрибута
             attributetype = pad.getType();
             // System.out.println(attributetype.getName());
 
-            // проверяем, зарегистрирован ли тип атрибута в конфигурации фабрики
-            if (configuration.containsKey(attributetype.getName())) {
+
+            // чтобы в метаданных атрибута наверняка ничего не было
+
+            // класс с метаданными
+            flc = null;
+
+            // экземпляр класса с метаданными
+            fld = null;
+
+            // проверяем, зарегистрировано ли имя атрибута в конфигурации фабрики
+            // System.out.println("Searching configuration for "+forClass.getName() + "." + uid);
+            if (configuration.containsKey(forClass.getName() + "." + uid)) {
                 flc = configuration.get(attributetype.getName());
+            }
+
+
+            // если атрибут не зарегистрирован по имени,
+            // проверяем, зарегистрирован ли тип атрибута в конфигурации фабрики
+            if (flc == null && configuration.containsKey(attributetype.getName())) {
+                flc = configuration.get(attributetype.getName());
+            }
+
+            // если запись в конфигурации найдена
+            if (flc != null) {
                 try {
                     // Создаём объект с информацией о колонке в таблице,
                     // используется конструктор без параметров
-                    fld = (GridFieldAbstract)flc.newInstance();
+                    fld = (GridFieldAbstract) flc.newInstance();
 
                     // устанавливаем атрибуты:
                     // UID
@@ -82,16 +107,9 @@ public class GridFieldFactory {
                     // attributeName
                     fld.setAttributeName(uid);
 
-                    // label - метка поля на текущем языке, заголовок колонки
-                    //    history: идентификатор метки согласован с остальной частью приложения
-                    //label_id="reflect."+forClass.getName()+"."+uid;
-                    label_id=forClass.getName()+"."+uid;
-                    
-                    //if(messages !=null){
-                    //    fld.setLabel(messages.get(label_id));
-                    //}else{
-                        fld.setLabel(label_id);
-                    //}
+                    // метка поля, заголовок колонки
+                    label_id = forClass.getName() + "." + uid;
+                    fld.setLabel(label_id);
 
                     // объект для хранения информации о видимости колонки
                     fld.setFieldView(new GridFieldView()._setUid(uid)._setLabel(fld.getLabel()));
@@ -101,25 +119,26 @@ public class GridFieldFactory {
 
                     // объект с условиями фильтрации
                     fld._setFilterElementList(fld.createFilterElementList());
-
-                    // добавляем поле в модель
-                    fields.add(fld);
                 } catch (InstantiationException ex) {
                     Logger.getLogger(GridFieldFactory.class.getName()).log(Level.SEVERE, null, ex);
-                    fld = new GridFieldCalculable(uid);
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(GridFieldFactory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                // если экземпляр создать не удалось
+                if (fld == null) {
                     fld = new GridFieldCalculable(uid);
                 }
-                
+                // добавляем поле в модель
+                fields.add(fld);
             }
+
+
         }
 
         return fields;
     }
 
-
-    public static ClassPropertyAdapter getClassPropertyAdapter(Class forClass) throws IntrospectionException{
+    public static ClassPropertyAdapter getClassPropertyAdapter(Class forClass) throws IntrospectionException {
         BeanInfo info = Introspector.getBeanInfo(forClass);
         List<PropertyDescriptor> descriptors = CollectionFactory.newList();
         addAll(descriptors, info.getPropertyDescriptors());
@@ -131,11 +150,9 @@ public class GridFieldFactory {
         return cpa;
     }
 
-
 //    public static List<GridFieldAbstract> getFields(Class forClass, Map<String, Class> configuration) throws IntrospectionException {
 //        return getFields(forClass, configuration);
 //    }
-
     private static <T> void addAll(List<T> list, T[] array) {
         list.addAll(Arrays.asList(array));
     }
@@ -155,7 +172,6 @@ public class GridFieldFactory {
             addAll(queue, c.getInterfaces());
         }
     }
-
 //    public static void main(String[] args) {
 //        Map<String, Class> configuration = new TreeMap<String, Class>();
 //        configuration.put("java.lang.String", GridFieldString.class);

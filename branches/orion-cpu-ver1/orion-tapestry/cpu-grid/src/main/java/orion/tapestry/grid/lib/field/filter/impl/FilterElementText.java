@@ -2,7 +2,7 @@
 
 package orion.tapestry.grid.lib.field.filter.impl;
 
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementType;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementGUIType;
 import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
 
 /**
@@ -14,7 +14,7 @@ public abstract class FilterElementText extends FilterElementAbstract{
     public String fieldName;
     public FilterElementText(String newFieldName){
         this.fieldName=newFieldName;
-        this.setType(FieldFilterElementType.TEXT);
+        this.setType(FieldFilterElementGUIType.TEXT);
     }
 
     public FilterElementText(){

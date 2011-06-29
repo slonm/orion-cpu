@@ -15,6 +15,9 @@ public class FilterElementCONTAINS extends FilterElementText {
         this.setLabel(newLabel);
     }
 
+    /**
+     * Условие "строка содержит подстроку"
+     */
     @Override
     public <T> boolean modifyRestriction(
             RestrictionEditorInterface<T> restriction,
@@ -33,13 +36,13 @@ public class FilterElementCONTAINS extends FilterElementText {
 
         // используем валидатор для проверки данных
         Object checkedValue;
-        if (validator != null) {
-            checkedValue = validator.fromString(value.toString());
+        if (datatype != null) {
+            checkedValue = datatype.fromString(value.toString());
             if (checkedValue == null) {
                 return false;
             }
-        }else{
-            checkedValue=value;
+        } else {
+            checkedValue = value;
         }
         restriction.constField(this.fieldName);
         restriction.constValue(checkedValue);

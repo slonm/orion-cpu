@@ -26,13 +26,13 @@ public abstract class FilterElementAbstract {
     /**
      * тип элемента формы
      */
-    private FieldFilterElementType type;
+    private FieldFilterElementGUIType type;
 
 
     /**
      * Валидатор
      */
-    protected FieldFilterElementValidator validator;
+    protected FieldFilterElementDataType datatype;
 
     /**
      * Метод изменяет условие отбора, которое будет передано в источник данных
@@ -81,29 +81,29 @@ public abstract class FilterElementAbstract {
     /**
      * @return тип элемента формы
      */
-    public FieldFilterElementType getType(){
+    public FieldFilterElementGUIType getType(){
         return this.type;
     }
 
     /**
      * @param newType новый тип элемента формы
      */
-    public void setType(FieldFilterElementType newType){
+    public void setType(FieldFilterElementGUIType newType){
         this.type = newType;
     }
 
     /**
      * @return Объект-валидатор пользовательского ввода
      */
-    public FieldFilterElementValidator getValidator(){
-        return this.validator;
+    public FieldFilterElementDataType getDatatype(){
+        return this.datatype;
     }
 
     /**
      * Устанавливает новый объект в качестве валидатора
-     * @param _validator объект-валидатор пользовательского ввода
+     * @param _datatype объект-валидатор пользовательского ввода
      */
-    public void setValidator(FieldFilterElementValidator _validator){
-        this.validator=_validator;
+    public void setDatatype(FieldFilterElementDataType _datatype){
+        this.datatype=_datatype;
     }
 }

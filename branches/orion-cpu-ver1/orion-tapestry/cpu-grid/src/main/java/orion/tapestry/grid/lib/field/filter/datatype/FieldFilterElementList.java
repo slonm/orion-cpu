@@ -1,7 +1,7 @@
-package orion.tapestry.grid.lib.field.filter.validator;
+package orion.tapestry.grid.lib.field.filter.datatype;
 
 import java.util.ArrayList;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
+import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
 
 /**
  * Валидатор, который проверяет, 
@@ -9,10 +9,10 @@ import orion.tapestry.grid.lib.field.filter.FieldFilterElementValidator;
  * @param <T> тип значений, которые разделяются запятыми в списке.
  * @author Gennadiy Dobrovolsky
  */
-public class ValidatorRequireList<T> implements FieldFilterElementValidator<String> {
+public class FieldFilterElementList<T> implements FieldFilterElementDataType<String> {
 
-    private FieldFilterElementValidator<T> itemValidator;
-    public ValidatorRequireList(FieldFilterElementValidator<T> _itemValidator){
+    private FieldFilterElementDataType<T> itemValidator;
+    public FieldFilterElementList(FieldFilterElementDataType<T> _itemValidator){
         this.itemValidator=_itemValidator;
     }
 

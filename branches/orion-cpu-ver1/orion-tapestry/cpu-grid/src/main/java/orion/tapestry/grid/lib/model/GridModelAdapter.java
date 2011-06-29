@@ -78,10 +78,7 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
      * Это условие будет показано на странице.
      */
     protected RestrictionEditorInterface<String> restrictionEditorHumanReadable;
-    //    /**
-    //     * Сообщения на человеческом языке (локализованные)
-    //     */
-    //    protected Messages messages;
+
 
     // =============================================================================
     // Эти методы надо заменять своими
@@ -95,8 +92,9 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
     // =========================================================================
     // Методы, указанные ниже, скорее всего, перекрывать не придётся никогда
     // =========================================================================
-    // работа с описанием сортировки
-    //
+    /**
+     * работа с описанием сортировки
+     */
     @Override
     public List<GridFieldSort> getFieldSortList() {
         if (this.fieldSortList == null) {
