@@ -23,12 +23,12 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     OrionSecurityIOCModule.class,
     OrionCpuIOCModule.class,
     LicensingIOCModule.class,
-//    EduProcPlanningIOCModule.class,
+    EduProcPlanningIOCModule.class,
     OrgUnitsIOCModule.class,
     PersonsIOCModule.class,
     OrionSecurityWebIOCModule.class,
     LicensingWebIOCModule.class,
-//    EduProcPlanningWebIOCModule.class,
+    EduProcPlanningWebIOCModule.class,
     OrgUnitsWebIOCModule.class,
     PersonsWebIOCModule.class
     
