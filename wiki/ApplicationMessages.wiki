@@ -18,3 +18,8 @@
   * *action.actionname* - подпись для действия с именем actionname. Т.е. подписи для Submit, ActionLink и EventLink - другими словами для Component Event Request
   * *link.name.foo* - переход на страницу. name - имя страницы, foo префикс, конкретику, т.к. страница может иметь параметры, контекст или предварительно установленные переменные. В общем подпись для контекстного PageLink
   * *page.name* - титул страницы с именем name
+
+==ОБРАТИТЕ ВНИМАНИЕ==
+Название файла свойств подсистемы с суффиксом Web, хранящегося в библиотеке orion-web должно С УЧЁТОМ РЕГИСТРА совпадать с именем подсистемы, заданном в классе <имя-подсистемы>WebIOCModule.java в методе contributeComponentClassResolver(Configuration<LibraryMapping> configuration)
+
+Это справедливо по крайней мере для *NIX-систем
