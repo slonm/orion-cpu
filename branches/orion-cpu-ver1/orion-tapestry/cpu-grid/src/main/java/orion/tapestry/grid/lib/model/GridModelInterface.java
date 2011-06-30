@@ -10,7 +10,8 @@ import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.rows.GridRow;
 
 /**
- *
+ * Интерфейс модели данных, который используется компонентой Grid
+ * для взаимодействия с базой данных или другим источником записей
  * @author Gennadiy Dobrovolsky
  */
 public interface GridModelInterface {

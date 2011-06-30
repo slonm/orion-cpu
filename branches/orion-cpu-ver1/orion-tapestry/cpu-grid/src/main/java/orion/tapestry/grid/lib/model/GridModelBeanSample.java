@@ -19,7 +19,9 @@ import orion.tapestry.grid.lib.field.sort.SortEditor;
 import orion.tapestry.grid.lib.field.sort.SortEditorSample;
 
 /**
- *
+ * Этот класс составляет модель
+ * по классу в формате JavaBean,
+ * который описывает сущность в базе данных.
  * @author Gennadiy Dobrovolsky
  */
 public class GridModelBeanSample extends GridModelAdapter<String>{

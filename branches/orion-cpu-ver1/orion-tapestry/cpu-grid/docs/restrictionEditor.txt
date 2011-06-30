@@ -1,3 +1,42 @@
+Для составления модели надо реализовать редактор условия выбора строк.
+Т.е. реализовать интерфейс RestrictionEditorInterface<T>
+Модель предоставляет компоненте Grid этот интерфейс, 
+а компонента  Grid с его помощью передаёт модели 
+условия фильтрации строк, заданные пользователем.
+
+Grid (точнее, класс orion.tapestry.grid.lib.field.filter.FilterAggregator) 
+вызывает методы интерфейса в стиле обратной бесскобочной записи
+Например, условие a>10  передаётся в модель примерно следующими командами:
+
+RestrictionEditorInterface<Criteria> re;
+re.createEmpty();
+...
+re.constField("a");
+re.constValue(new Long(10));
+re.gt();
+...
+
+т.е. сначала задаётся первый операнд
+потом - второй операнд
+потом оператор.
+
+
+
+
+
+Исходный код интерфейса находится в файле
+orion/tapestry/grid/lib/restrictioneditor/RestrictionEditorInterface.java
+
+Пример реализации находится в классе
+orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorHumanReadable
+
+Реализация для Hibernate находися в классе
+orion.tapestry.grid.lib.hibernate.RestrictionEditorHibernateCriteria
+
+Реализацию для JPA проще всего сделать из 
+orion.tapestry.grid.lib.hibernate.RestrictionEditorHibernateCriteria
+=======================================================================
+
 package orion.tapestry.grid.lib.restrictioneditor;
 
 
@@ -210,3 +249,14 @@ public interface RestrictionEditorInterface<T> {
 
 
 }
+
+
+
+
+
+
+=============================================================
+
+
+
+
