@@ -107,11 +107,9 @@ public class RestrictionEditorHibernateCriteria implements RestrictionEditorInte
      */
     @Override
     public RestrictionEditorInterface<Criteria> constField(String value) {
-        //System.out.println("%%%%%%%%%%%%%%%8 "+value);
         if (value.contains(".")) {
             String fld = value.replaceAll("\\.\\w+$", "");
             this.criteria=this.criteria.createAlias(fld, fld);
-            //System.out.println("%%%%%%%%%%%%%%%%%%%%%9 "+fld);
             this.expression.add(new RestrictionEditorHibernateCriteria.Attribute(value));
         } else {
             this.expression.add(new RestrictionEditorHibernateCriteria.Attribute(value));
@@ -462,15 +460,5 @@ public class RestrictionEditorHibernateCriteria implements RestrictionEditorInte
     public int size() {
         return this.expression.size();
     }
-//    public static void main(String[] a) {
-//        RestrictionEditorInterface<String> rs = new RestrictionEditorHibernateCriteria();
-//        rs.constString("fdsf ' 12");
-//        rs.constField("fld1");
-//        rs.eq();
-//        rs.constInteger(10);
-//        rs.constField("fld2");
-//        rs.ge();
-//        rs.and();
-//        System.out.println(rs.getValue());
-//    }
+
 }
