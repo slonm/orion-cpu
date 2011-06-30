@@ -7,7 +7,6 @@ import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.Qualification;
-import ua.orion.cpu.core.orgunits.entities.*;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.services.MenuLinkBuilder;
 
@@ -16,23 +15,17 @@ import ua.orion.web.services.MenuLinkBuilder;
  */
 public class EduProcPlanningWebIOCModule {
 
-//    /**
-//     * Регистрация блоков для автоформирования моделей данных
-//     * @param configuration
-//     * @author sl
-//     */
-//    public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
-//        //Display TDS or KATD
-//        configuration.add(new DisplayBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "DisplayTrainingDirectionOrSpeciality"));
-//        configuration.add(new DisplayBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection"));
-//        //Edit TDS or KATD
-//        configuration.add(new EditBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "EditTrainingDirectionOrSpeciality"));
-//        configuration.add(new EditBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "EditKnowledgeAreaOrTrainingDirection"));
-//        //Display EduFormLicenseQuantity
-//        configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "DisplayEduFormLicenseQuantity"));
-//        //Edit EduFormLicenseQuantity
-//        configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "EditEduFormLicenseQuantity"));
-//    }
+    /**
+     * Регистрация блоков для автоформирования моделей данных
+     * @param configuration
+     * @author sl
+     */
+    public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
+        //Display EduPlanDisciplineCycle
+        configuration.add(new DisplayBlockContribution("EduPlanDisciplineCycle", "eduprocplanning/PropertyBlocks", "DisplayEduPlanDisciplineCycle"));
+        //Edit EduPlanDisciplineCycle
+        configuration.add(new EditBlockContribution("EduPlanDisciplineCycle", "eduprocplanning/PropertyBlocks", "EditEduPlanDisciplineCycle"));
+    }
     /**
      * Add menu item to configuration
      * @param configuration
@@ -42,21 +35,21 @@ public class EduProcPlanningWebIOCModule {
             MenuLinkBuilder mlb) {
         String path;
         
-        path = "Start>EduPlanning>EduPlan";
+        path = "Start>EduProcPlanning>EduPlan";
         configuration.add(path, mlb.buildCrudPageMenuLink(EduPlan.class, path));
 
-        path = "Start>EduPlanning>EduPlanDisciplineCycle";
+        path = "Start>EduProcPlanning>EduPlanDisciplineCycle";
         configuration.add(path, mlb.buildCrudPageMenuLink(EduPlanDisciplineCycle.class, path));
 
-        path = "Start>EduPlanning>>Reference";
+        path = "Start>EduProcPlanning>Reference";
         
-        path = "Start>EduPlanning>>Reference>EPPCycle";
+        path = "Start>EduProcPlanning>Reference>EPPCycle";
         configuration.add(path, mlb.buildCrudPageMenuLink(EPPCycle.class, path));
         
-        path = "Start>EduPlanning>>Reference>Discipline";
+        path = "Start>EduProcPlanning>Reference>Discipline";
         configuration.add(path, mlb.buildCrudPageMenuLink(Discipline.class, path));
         
-        path = "Start>EduPlanning>>Reference>Qualification";
+        path = "Start>EduProcPlanning>Reference>Qualification";
         configuration.add(path, mlb.buildCrudPageMenuLink(Qualification.class, path));
     }
 

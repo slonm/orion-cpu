@@ -18,17 +18,8 @@ public class OrgUnitsWebIOCModule {
 //     * @author sl
 //     */
 //    public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
-//        //Display TDS or KATD
-//        configuration.add(new DisplayBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "DisplayTrainingDirectionOrSpeciality"));
-//        configuration.add(new DisplayBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection"));
-//        //Edit TDS or KATD
-//        configuration.add(new EditBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "EditTrainingDirectionOrSpeciality"));
-//        configuration.add(new EditBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "EditKnowledgeAreaOrTrainingDirection"));
-//        //Display EduFormLicenseQuantity
-//        configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "DisplayEduFormLicenseQuantity"));
-//        //Edit EduFormLicenseQuantity
-//        configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "EditEduFormLicenseQuantity"));
 //    }
+    
     /**
      * Add menu item to configuration
      * @param configuration

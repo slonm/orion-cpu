@@ -1,0 +1,42 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <!--Редактор свойства @DataType("EduPlanDisciplineCycle") в сущности EduPlan,
+    используемый в гриде при отображении списка учебных планов-->
+    <t:block id="DisplayEduPlanDisciplineCycle">
+        <!--параметры source и value вынесены в аннотацию @Component в класс
+        параметр t:id содержит имя свойства класса-компонента типа AjaxFormLoop-->
+        <table>
+            <t:loop t:id="eduPlanDisciplineCyclesLoop">
+                <tr>
+                    <!--для каждого элемента набора EduPlanDisciplineCycles возвращается 
+                    имя объекта eduPlanDisciplineCycle.ePPCycle,
+                    являющегося полем класса и указанным в свойстве value компонента,
+                    и соответствующее количество лицензий, определённое методом
+                    Integer getEduFormLicenseQuantities() класса-->
+                    <td>${eduPlanDisciplineCycle.ePPCycle}</td>
+                </tr>
+            </t:loop>
+        </table>
+    </t:block>
+    <!--Редактор свойства @DataType("EduPlanDisciplineCycle") в сущности EduPlan,
+    используемый в бинэдиторе для редактирования списка циклов дисциплин для 
+    учебного плана -->
+    <t:block id="EditEduPlanDisciplineCycle">
+        <!--Отображать PropertyBlock для объемов необходимо в таблице-->
+        <table class="t-loop">
+            <tr><th class="f-left">
+                    ${message:property.LicenseRecord.LicenseQuantityByEducationForm}<br/>
+                </th></tr>
+            <t:ajaxformloop t:id="eduPlanDisciplineCycles">
+                <tr>
+                    <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td>
+                    <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
+                    <td><t:checkbox t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
+                    <td><t:textfield t:id="cycleTotalCredits" value="eduPlanDisciplineCycle.cycleTotalCredits"/></td>
+                </tr>
+                <t:removerowlink>${message:remove}</t:removerowlink>
+            </t:ajaxformloop>
+        </table>
+    </t:block> 
+
+</div>

@@ -66,7 +66,7 @@ public class PropertyBlocks {
     private Select knowledgeAreaOrTrainingDirection;
     //Компонент Loop, выводящий в грид все элементы мэпа "форма обучения -
     //лицензированный объем" (ключ - форма обучения)
-    //В параметрах компонента указаны: в source - метод getEduForms(), возвращающий
+    //В параметрах компонента указаны: в source - метод getEduFormsD(), возвращающий
     //набор ключей, хранящихся в мэп; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте Loop
     @Component(parameters = {"source=EduFormsD", "value=eduForm"})
