@@ -7,6 +7,8 @@
 Сущности:
 
 {{{
+package test.licensing.entities;
+
 public class LicenseRecord {
 
     @Id private Integer id;
@@ -16,6 +18,7 @@ public class LicenseRecord {
     @Formula("(select ka.code from Training_Direction tr join ref.knowledge_Area ka on tr.knowledge_Area=ka.id where tr.id=training_Direction)")
     private String knowledgeAreaCode;
     @Formula("(select ka.name from Training_Direction tr join ref.knowledge_Area ka on tr.knowledge_Area=ka.id where tr.id=training_Direction)")
+    private String knowledgeAreaName;
     ...
     }
 
@@ -44,3 +47,71 @@ public class KnowledgeArea {
 Т.е. в BeanModel для отображения они будут присутствовать, но так же они будут присутствовать и в BeanModel для ввода/редактирования.
 
 Кроме этого в списке вариантов TrainingDirection будет видно только имя TrainingDirection, а к какому KnowledgeArea он принадлежит - нет.
+
+Сделаем TapestryDataTransformer для LicenseRecord. Имя будет LicenseRecordTapestryDataTransformer, а пакет это подпакет transformers любой библиотеки компонентов Tapestry.
+
+Трансформер для всех методов возвращающих BeanModel для редактирования удаляет свойства "KnowledgeAreaCode" и "KnowledgeAreaName".
+
+Изменение в SelectModel для поля TrainingDirection приводят к тому, что вместо просто названия TrainingDirection в списке опций будет показано название в виде "KnowledgeArea - TrainingDirection"
+
+{{{
+package test.web.licensing.transformers;
+
+public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTransformer {
+
+    private final EntityService es;
+
+    public LicenseRecordTapestryDataTransformer(EntityService es) {
+        this.es = es;
+    }
+    
+    @Override
+    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model) {
+        return transform(model);
+    }
+
+    @Override
+    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model, Messages messages) {
+        return transform(model);
+    }
+
+    @Override
+    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model) {
+        return transform(model);
+    }
+
+    @Override
+    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model, Messages messages) {
+        return transform(model);
+    }
+
+    private <T> BeanModel<T> transform(BeanModel<T> model) {
+        model.exclude("KnowledgeAreaCode", "KnowledgeAreaName");
+        return model;
+    }
+
+    @Override
+    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
+        if ("TrainingDirection".equalsIgnoreCase(property)) {
+            ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
+            while(it.hasNext()){
+                OptionModel om=it.next();
+                final TrainingDirection tdos=(TrainingDirection) om.getValue();
+                it.set(new AbstractOptionModel() {
+
+                @Override
+                public String getLabel() {
+                    return es.getStringValue(tdos.getKnowledgeArea())+" - "+es.getStringValue(tdos);
+                }
+
+                @Override
+                public Object getValue() {
+                    return tdos;
+                }
+            });
+            }
+        }
+        return model;
+    }
+}
+}}}
