@@ -29,10 +29,10 @@
                 </th></tr>
             <t:ajaxformloop t:id="eduPlanDisciplineCycles">
                 <tr>
-                    <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td>
+           <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
                     <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
                     <td><t:checkbox t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
-                    <td><t:textfield t:id="cycleTotalCredits" value="eduPlanDisciplineCycle.cycleTotalCredits"/></td>
+                    <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
                 </tr>
                 <t:removerowlink>${message:remove}</t:removerowlink>
             </t:ajaxformloop>
