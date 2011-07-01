@@ -2,8 +2,8 @@ package ua.orion.cpu.core.employees.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import ua.orion.cpu.core.orgunits.entities.Post;
 import ua.orion.core.persistence.AbstractEntity;
+import ua.orion.cpu.core.orgunits.entities.OrgUnitPost;
 
 /**
  *
@@ -14,13 +14,19 @@ import ua.orion.core.persistence.AbstractEntity;
 @UniqueConstraint(columnNames = {"post", "employee"}))
 public class EmployeePost extends AbstractEntity<EmployeePost> {
 
-    private Post post;
+    /**
+     * Связь с штатным расписанием подразделения
+     */
+    private OrgUnitPost orgUnitPost;
     /**
      * Основная должность или совмещение
      */
     private Boolean isMain;
+    /**
+     * Связь с сотрудником
+     */
     private Employee employee;
-
+    
     @NotNull
     @ManyToOne
     public Employee getEmployee() {
@@ -42,23 +48,23 @@ public class EmployeePost extends AbstractEntity<EmployeePost> {
 
     @NotNull
     @ManyToOne
-    public Post getPost() {
-        return post;
+    public OrgUnitPost getOrgUnitPost() {
+        return orgUnitPost;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setOrgUnitPost(OrgUnitPost orgUnitPost) {
+        this.orgUnitPost = orgUnitPost;
     }
-
+    
     @Override
     protected boolean entityEquals(EmployeePost obj) {
-        return aEqualsField(post, obj.post)
+        return aEqualsField(orgUnitPost, obj.orgUnitPost)
                 && aEqualsField(isMain, obj.isMain)
                 && aEqualsField(employee, obj.employee);
     }
 
     @Override
     public int compareTo(EmployeePost o) {
-        return post.compareTo(o.getPost());
+        return orgUnitPost.compareTo(o.getOrgUnitPost());
     }
 }

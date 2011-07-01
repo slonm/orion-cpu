@@ -30,7 +30,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     //ПОКА НЕ ИСПОЛЬЗУЮ
 //    //Набор семестров данного учебного плана, в которых читается дисциплина
 //    private SortedSet<EduPlanSemester> eduPlanSemesters = new TreeSet<EduPlanSemester>();
-    @DataType("EduPlanDisciplineCycle")
+    @DataType("EduPlanDisciplineCycles")
     private SortedSet<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new TreeSet<EduPlanDisciplineCycle>();
 
     public EduPlan() {
@@ -194,11 +194,11 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      */
     @Sort(type = SortType.NATURAL)
     @OneToMany(mappedBy="eduPlan", cascade= CascadeType.ALL)
-    public SortedSet<EduPlanDisciplineCycle> getEduPlanDisciplineCycle() {
+    public SortedSet<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
         return eduPlanDisciplineCycles;
     }
 
-    public void setEduPlanDisciplineCycle(SortedSet<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
+    public void setEduPlanDisciplineCycles(SortedSet<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
         this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
     }
 

@@ -195,7 +195,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     @Override
     public String toString() {
-        return getCode();
+        return getCode()+"-"+getKnowledgeAreaOrTrainingDirectionName()+"-"+getTrainingDirectionOrSpeciality();
     }
 
     @Override

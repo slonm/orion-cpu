@@ -17,6 +17,9 @@ import javax.validation.constraints.Size;
 public class Employee extends Person {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Должности на которых работает работник
+     */
     @Size(min=1)
     @OneToMany(cascade=CascadeType.ALL, mappedBy="employee")
     private Set<EmployeePost> employeePosts;
