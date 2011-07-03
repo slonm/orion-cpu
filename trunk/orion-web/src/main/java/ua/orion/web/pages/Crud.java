@@ -1,6 +1,5 @@
 package ua.orion.web.pages;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.SymbolConstants;
@@ -85,7 +84,6 @@ public class Crud {
                 return startPageName;
             }
         }
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
         return null;
     }
 }
