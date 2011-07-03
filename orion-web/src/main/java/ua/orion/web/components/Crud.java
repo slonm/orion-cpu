@@ -62,6 +62,10 @@ public class Crud {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
 
+    void setupRender(){
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
+    }
+    
     /**
      * Задано явно для возможности вызова из других классов
      */
