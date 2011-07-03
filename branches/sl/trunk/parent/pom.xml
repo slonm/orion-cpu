@@ -23,6 +23,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20090211</version>
+            </dependency>
+            <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>1.8.0</version>
@@ -46,6 +51,11 @@
             <dependency>
                 <groupId>ua.orion</groupId>
                 <artifactId>orion-menu</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>ua.orion</groupId>
+                <artifactId>orion-grid</artifactId>
                 <version>0.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>

@@ -4,18 +4,9 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
-import org.apache.tapestry5.ioc.annotations.ServiceId;
 import org.apache.tapestry5.services.LibraryMapping;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.impl.GridFieldBoolean;
-import orion.tapestry.grid.lib.field.impl.GridFieldDate;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberByte;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberDouble;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberFloat;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberInteger;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberLong;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberShort;
-import orion.tapestry.grid.lib.field.impl.GridFieldString;
+import orion.tapestry.grid.lib.field.impl.*;
 
 /**
  * @author Gennadiy Dobrovolsky
@@ -30,10 +21,6 @@ public class CpuGridModule {
         configuration.add(new LibraryMapping("grid", "orion.tapestry.grid"));
     }
 
-    public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
-        configuration.add("grid-1.0", "orion.tapestry.grid");
-    }
-
     /**
      * Создаёт сервис-контейнер,
      * хранящий соответствие между типом данных в Java
@@ -41,7 +28,6 @@ public class CpuGridModule {
      * @param configuration  registry of field types
      * @return GridTypeMap object
      */
-    @ServiceId("TypeMap")
     public static GridTypeMap buildTypeMap(Map<String, Class> configuration) {
         return new GridTypeMapImpl(configuration);
     }
