@@ -1,6 +1,6 @@
 =Сервис TapestryDataSource=
 
-Сервис является источником для ориентированных на сущности источников данных и моделей данных для компонентов библиотеки Tapestry core. Каждый запрашиваемый объект создается с помощью сервиса TapestryDataFactory и проходит по цепочке фильтров типа TapestryDataTransformer, которые являются вкладом в TapestryDataSource. Последнее звено цепочки TapestryDataTransformer это EntityTapestryDataTransformer. Этот трансформер ищет во всех _библиотеках компонентов_ в подпакете transformers класс реализующий TapestryDataTransformer с именем `Entity`TapestryDataTransformer, где `Entity` - имя сущности, для которой запрашивается объект. Если такой трансформер будет найден, то он будет задействован. При написании своего TapestryDataTransformer рекомендуется расширять абстрактный класс AbstractTapestryDataTransformer и переопределять в нем только нужные методы.
+Сервис является источником для ориентированных на сущности источников данных и моделей данных для компонентов библиотеки Tapestry core. Каждый запрашиваемый объект создается с помощью сервиса `TapestryDataFactory` и проходит по цепочке фильтров типа `TapestryDataTransformer`, которые являются вкладом в `TapestryDataSource`. Последнее звено цепочки `TapestryDataTransformer` это `EntityTapestryDataTransformer`. Этот трансформер ищет во всех _библиотеках компонентов_ в подпакете transformers класс реализующий `TapestryDataTransformer` с именем `Entity``TapestryDataTransformer`, где `Entity` - имя сущности, для которой запрашивается объект. Если такой трансформер будет найден, то он будет задействован. При написании своего `TapestryDataTransformer` рекомендуется расширять абстрактный класс `AbstractTapestryDataTransformer` и переопределять в нем только нужные методы.
 
 =Пример трансформера=
 
@@ -41,19 +41,19 @@ public class KnowledgeArea {
 }
 }}}
 
-При отображении LicenseRecord нужно видеть код и название KnowledgeArea. 
-При заполнении LicenseRecord не нужно видеть код и название KnowledgeArea, но нужно выбирать подходящий TrainingDirection, причем видеть к какому KnowledgeArea он относится.
+При отображении `LicenseRecord` нужно видеть код и название `KnowledgeArea`. 
+При заполнении `LicenseRecord` не нужно видеть код и название `KnowledgeArea`, но нужно выбирать подходящий `TrainingDirection`, причем видеть к какому `KnowledgeArea` он относится.
 
-Для непосредственного доступа к значениям кода и названия KnowledgeArea введены вычислимые поля knowledgeAreaCode и knowledgeAreaName.
-Т.е. в BeanModel для отображения они будут присутствовать, но так же они будут присутствовать и в BeanModel для ввода/редактирования.
+Для непосредственного доступа к значениям кода и названия `KnowledgeArea` введены вычислимые поля `knowledgeAreaCode` и `knowledgeAreaName`.
+Т.е. в `BeanModel` для отображения они будут присутствовать, но так же они будут присутствовать и в BeanModel для ввода/редактирования.
 
-Кроме этого в списке вариантов TrainingDirection будет видно только имя TrainingDirection, а к какому KnowledgeArea он принадлежит - нет.
+Кроме этого в списке вариантов `TrainingDirection` будет видно только имя `TrainingDirection`, а к какому `KnowledgeArea` он принадлежит - нет.
 
-Сделаем TapestryDataTransformer для LicenseRecord. Имя будет LicenseRecordTapestryDataTransformer, а пакет это подпакет transformers любой библиотеки компонентов Tapestry.
+Сделаем `TapestryDataTransformer` для `LicenseRecord`. Имя будет `LicenseRecordTapestryDataTransformer`, а пакет это подпакет transformers любой библиотеки компонентов Tapestry.
 
-Трансформер для всех методов возвращающих BeanModel для редактирования удаляет свойства "KnowledgeAreaCode" и "KnowledgeAreaName".
+Трансформер для всех методов возвращающих `BeanModel` для редактирования удаляет свойства `"KnowledgeAreaCode"` и `"KnowledgeAreaName"`.
 
-Изменение в SelectModel для поля TrainingDirection приводят к тому, что вместо просто названия TrainingDirection в списке опций будет показано название в виде "KnowledgeArea - TrainingDirection"
+Изменение в `SelectModel` для поля `TrainingDirection` приводят к тому, что вместо просто названия `TrainingDirection` в списке опций будет показано название в виде `"KnowledgeArea - TrainingDirection"`
 
 {{{
 package test.web.licensing.transformers;
