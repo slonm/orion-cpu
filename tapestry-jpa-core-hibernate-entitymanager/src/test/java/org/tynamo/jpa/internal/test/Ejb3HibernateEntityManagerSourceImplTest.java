@@ -52,7 +52,7 @@ public class Ejb3HibernateEntityManagerSourceImplTest extends IOCTestCase {
         ClassNameLocator classNameLocator=new ClassNameLocatorImpl(new ClasspathURLConverterImpl());
         List<Ejb3HibernateConfigurer> filters = Arrays.asList(
                 new PackageNameEjb3HibernateConfigurer(packageManager, classNameLocator),
-                new DatabaseSchemaObjectCreator(log,packageManager, classNameLocator, "CREATE SCHEMA %s AUTHORIZATION SA"));
+                new DatabaseSchemaObjectCreator(log,packageManager, classNameLocator, "CREATE SCHEMA %s AUTHORIZATION SA", "hibernate.cfg.xml"));
 //        replay();
 
         JPAEntityManagerSource source = new Ejb3HibernateEntityManagerSourceImpl(log, "hibernate.cfg.xml", true, filters);

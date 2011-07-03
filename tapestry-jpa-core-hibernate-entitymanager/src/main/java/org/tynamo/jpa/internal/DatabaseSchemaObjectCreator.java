@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import javax.persistence.Table;
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ClassNameLocator;
 import org.hibernate.*;
@@ -32,14 +31,17 @@ public class DatabaseSchemaObjectCreator implements Ejb3HibernateConfigurer {
     private final JPAEntityPackageManager packageManager;
     private final ClassNameLocator classNameLocator;
     private final String createSchemaStatement;
+    private final String hibernateCfgLocation;
 
     public DatabaseSchemaObjectCreator(Logger logger, JPAEntityPackageManager packageManager,
             ClassNameLocator classNameLocator,
-            @Inject @Symbol(Ejb3HibernateSymbols.CREATE_SCHEMA_STATEMENT) String createSchemaStatement) {
+            @Symbol(Ejb3HibernateSymbols.CREATE_SCHEMA_STATEMENT) String createSchemaStatement,
+            @Symbol(Ejb3HibernateSymbols.HIBERNATE_CONFIG_LOCATION) String hibernateCfgLocation) {
         this.LOG = logger;
         this.packageManager = packageManager;
         this.classNameLocator = classNameLocator;
         this.createSchemaStatement = createSchemaStatement;
+        this.hibernateCfgLocation = hibernateCfgLocation;
     }
 
     /**
@@ -65,11 +67,11 @@ public class DatabaseSchemaObjectCreator implements Ejb3HibernateConfigurer {
             }
         }
         if (schemas.size() > 0) {
-            Configuration cfg = new Configuration().configure();
+            Configuration cfg = new Configuration().configure(hibernateCfgLocation);
 
             SessionFactory sessionFactory = cfg.buildSessionFactory();
             Session session = sessionFactory.openSession();
-            session.doWork(new Work()        {
+            session.doWork(new Work() {
 
                 @Override
                 public void execute(Connection connection) throws SQLException {
@@ -117,8 +119,8 @@ public class DatabaseSchemaObjectCreator implements Ejb3HibernateConfigurer {
                             }
                         }
                         rs.close();
-                        
-                        connection.setAutoCommit(true);    
+
+                        connection.setAutoCommit(true);
                         Statement st = connection.createStatement();
                         String quotes = mData.getIdentifierQuoteString();
                         for (String schema : schemas) {
