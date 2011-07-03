@@ -4,6 +4,7 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
@@ -137,27 +138,24 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
     // определяем операторы - начало
     @Override
     public RestrictionEditorInterface<CriteriaQuery<T>> and() {
-        Object op1, op2;
-        op1 = this.pop();
-        op2 = this.pop();
-        this.expression.add(Restrictions.and((Criterion) op1, (Criterion) op2));
+        Expression<Boolean> op1 = (Expression<Boolean>) this.pop();
+        Expression<Boolean> op2 = (Expression<Boolean>) this.pop();
+        this.expression.add(cb.and(op1, op2));
         return this;
     }
 
     @Override
     public RestrictionEditorInterface<CriteriaQuery<T>> or() {
-        Object op1, op2;
-        op1 = this.pop();
-        op2 = this.pop();
-        this.expression.add(Restrictions.or((Criterion) op1, (Criterion) op2));
+        Expression<Boolean> op1 = (Expression<Boolean>) this.pop();
+        Expression<Boolean> op2 = (Expression<Boolean>) this.pop();
+        this.expression.add(cb.or(op1, op2));
         return this;
     }
 
     @Override
     public RestrictionEditorInterface<CriteriaQuery<T>> not() {
-        Object op1;
-        op1 = this.pop();
-        this.expression.add(Restrictions.not((Criterion) op1));
+        Expression<Boolean> op1 = (Expression<Boolean>) this.pop();
+        this.expression.add(cb.not(op1));
         return this;
     }
 
@@ -169,7 +167,7 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
 
         //  op1 - атрибут    и  op2 - константа => программируем как op1 > op2
         if (isAttribute(op1) && isOneValue(op2)) {
-            this.expression.add(Restrictions.gt(op1.toString(), ((OneValue) op2).value));
+            this.expression.add(cb.gt((Expression<Long>)op1.toString(), Long.parseLong(((OneValue) op2).value.toString())));
             return this;
         }
 
