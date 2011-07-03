@@ -37,7 +37,8 @@ public class KnowledgeArea {
     @Id private Integer id;
     private String code;
     private String name;
-
+    ...
+}
 }}}
 
 При отображении LicenseRecord нужно видеть код и название KnowledgeArea. 
