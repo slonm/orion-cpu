@@ -150,5 +150,10 @@ public abstract class ServletConfigWrapper implements ServletConfig {
         public Object getAttribute(String name) {
             return servletContext.getAttribute(name);
         }
+
+        @Override
+        public String getContextPath() {
+            return servletContext.getContextPath();
+        }
     };
 }

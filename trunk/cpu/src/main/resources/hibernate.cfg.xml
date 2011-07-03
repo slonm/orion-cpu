@@ -2,12 +2,14 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+    <!--For enable SQL Logging comment native hibernate.connection.driver_class entry and uncomment com.p6spy.engine.spy.P6SpyDriver entry-->    
     <!--property name="hibernate.connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property-->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost/cpu</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">postgres</property>
+        <property name="hibernate.default_schema">public</property>
         <property name="hbm2ddl.auto">update</property>
         <property name="hibernate.connection.charSet">UTF-8</property>
         <property name="hibernate.show_sql">false</property>
