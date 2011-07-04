@@ -2,7 +2,6 @@ package ua.orion.cpu.web.eduprocplanning.pages;
 
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.naming.event.EventContext;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
@@ -40,7 +39,7 @@ public class PropertyBlocks {
     //В параметрах компонента указаны: в source - метод EduPlanDisciplineCyclesLoop(), возвращающий
     //набор циклов дисциплины; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте Loop
-    @Component(parameters = {"source=EduPlanDisciplineCyclesLoop", "value=eduPlanDisciplineCycle"})
+    @Component(parameters = {"source=EduPlanDisciplineCyclesD", "value=eduPlanDisciplineCycle"})
     private Loop eduPlanDisciplineCyclesLoop;
     //Свойство, необходимое для установления текущего значения при выводе
     //элементов набора в гриде в компоненте Loop
@@ -52,26 +51,21 @@ public class PropertyBlocks {
     //В параметрах компонента указаны: в source - метод getEduPlanDisciplineCycles(), возвращающий
     //набор циклов дисциплины; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте AjaxFormLoop
-    @Component(parameters = {"source=EduPlanDisciplineCycles", "value=eduPlanDisciplineCycle"})
+    @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle"})
     private AjaxFormLoop eduPlanDisciplineCycles;
 
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
      */
-    public Set getEduPlanDisciplineCyclesLoop() {
+    public Set getEduPlanDisciplineCyclesD() {
         tmpSet=(SortedSet<EduPlanDisciplineCycle>) displayContext.getPropertyValue();
         return tmpSet;
     }
     
-    public void setEduPlanDisciplineCyclesLoop(EduPlanDisciplineCycle eduPlanDisciplineCycle){
-        SortedSet<EduPlanDisciplineCycle> tempSet = new TreeSet<EduPlanDisciplineCycle>();
-        tempSet.add(eduPlanDisciplineCycle);
-    }
-
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в AjaxFormLoop
      */
-    public Set getEduPlanDisciplineCycles() {
+    public Set getEduPlanDisciplineCyclesE() {
         return (SortedSet<EduPlanDisciplineCycle>) editContext.getPropertyValue();
     }
 
@@ -81,16 +75,13 @@ public class PropertyBlocks {
     public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
         return eduPlanDisciplineCycle;
     }
-
-    /**
-     * Сеттер поля eduPlanDisciplineCycle данного класса
-     */
+    
     public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
         this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
     }
     
     public Double getCycleTotalCredits(){
-        return eduPlanDisciplineCycle.getePPCycleTotalCredits();
+        return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
     }
     /**
      * Запрещает явное открытие этой псевдо-страницы.
@@ -101,4 +92,6 @@ public class PropertyBlocks {
     public String onActivate(EventContext ec) {
         return "";
     }
+
+    
 }

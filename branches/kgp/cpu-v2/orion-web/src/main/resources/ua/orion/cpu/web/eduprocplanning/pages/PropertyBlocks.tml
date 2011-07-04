@@ -4,15 +4,13 @@
     используемый в гриде при отображении списка учебных планов-->
     <t:block id="DisplayEduPlanDisciplineCycle">
         <!--параметры source и value вынесены в аннотацию @Component в класс
-        параметр t:id содержит имя свойства класса-компонента типа AjaxFormLoop-->
+        параметр t:id содержит имя свойства класса-компонента типа Loop-->
         <table>
             <t:loop t:id="eduPlanDisciplineCyclesLoop">
                 <tr>
                     <!--для каждого элемента набора EduPlanDisciplineCycles возвращается 
                     имя объекта eduPlanDisciplineCycle.ePPCycle,
-                    являющегося полем класса и указанным в свойстве value компонента,
-                    и соответствующее количество лицензий, определённое методом
-                    Integer getEduFormLicenseQuantities() класса-->
+                    являющегося полем класса и указанным в свойстве value компонента, -->
                     <td>${eduPlanDisciplineCycle.ePPCycle}</td>
                 </tr>
             </t:loop>
