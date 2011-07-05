@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -39,6 +40,7 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
     private Map<String, Class> configuration;
     private EntityManager em;
     private CriteriaBuilder cb;
+    protected RestrictionEditorJPACriteria restrictionEditor;
     /**
      * Адаптер для извлечения полей записи
      */
@@ -108,25 +110,21 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
     @Override
     public List<GridRow> getRows() throws RestrictionEditorException {
 
-        // вычисляем количество найденных строк
-
-        this.filterAggregator.applyRestriction(this.getFilter(), this.restrictionEditor);
-        CriteriaQuery<Long> nRowsQuery = cb.createQuery(Long.class);
-                //(CriteriaQuery<T>) this.restrictionEditor.getValue();
-        applyAdditionalConstraints(nRowsQuery);
-        
-//        Root<T> root = nRowsQuery.from(forClass);
-//        nRowsQuery.select(cb.count(root));
-        Long result = em.createQuery(nRowsQuery).getSingleResult();
-        this.pager.setRowsFound(result.intValue());
-
         // используем условие фильтрации
         this.filterAggregator.applyRestriction(this.getFilter(), this.restrictionEditor);
         CriteriaQuery<T> query = this.restrictionEditor.getValue();
-        Root<T> root = query.from(forClass);
-
+        
         // здесь можно добавить дополнительное условие сортировки
         applyAdditionalConstraints(query);
+
+        // вычисляем количество найденных строк
+        CriteriaQuery<Long> nRowsQuery = cb.createQuery(Long.class);
+        nRowsQuery.where(query.getRestriction());
+        Root<?> root = nRowsQuery.from(forClass);
+        nRowsQuery.select(cb.count(root));
+        Long result = em.createQuery(nRowsQuery).getSingleResult();
+//        Long result = 2L;
+        this.pager.setRowsFound(result.intValue());
 
         //  используем условие сортировки
         for (GridFieldSort fs : this.fieldSortList) {
@@ -141,7 +139,7 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
         }
 
         // Выбираем страницу с заданным номером
-        TypedQuery<T> tQuery=em.createQuery(query);
+        TypedQuery<?> tQuery=em.createQuery(query);
         tQuery.setFirstResult(this.pager.getVisiblePage().getFirstRow()).setMaxResults(this.pager.getRowsPerPage());
 
         // выбираем строки из БД
