@@ -21,6 +21,11 @@ class GridFieldFactoryMethodAdvice implements MethodAdvice {
     private final ModelLabelSource mls;
     private final ApplicationMessagesSource ams;
 
+    public GridFieldFactoryMethodAdvice(ModelLabelSource mls, ApplicationMessagesSource ams) {
+        this.mls = mls;
+        this.ams = ams;
+    }
+
     @Override
     public void advise(Invocation invocation) {
         invocation.proceed();
