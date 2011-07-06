@@ -16,7 +16,7 @@ import ua.orion.core.services.ModelLabelSource;
  *
  * @author slobodyanuk
  */
-class GridFieldFactoryMethodAdvice implements MethodAdvice {
+public class GridFieldFactoryMethodAdvice implements MethodAdvice {
 
     private final ModelLabelSource mls;
     private final ApplicationMessagesSource ams;
@@ -35,7 +35,12 @@ class GridFieldFactoryMethodAdvice implements MethodAdvice {
             Iterator<GridFieldAbstract> it = list.listIterator();
             while (it.hasNext()) {
                 GridFieldAbstract field = it.next();
-                field.setLabel(mls.getPropertyLabel(forClass, field.getAttributeName(), ams.getMessages()));
+                String label = mls.getPropertyLabel(forClass, field.getAttributeName(), ams.getMessages());
+                if (label != null) {
+                    field.setLabel(label);
+                    field.getFieldView().setLabel(label);
+                    field.getFieldSort().setLabel(label);
+                }
             }
         }
     }
