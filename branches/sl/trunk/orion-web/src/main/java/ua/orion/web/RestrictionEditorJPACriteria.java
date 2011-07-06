@@ -29,6 +29,7 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
      * класс сущности ORM
      */
     private Class<T> forClass;
+    private boolean isCountQuery;
     private EntityManager em;
     private CriteriaBuilder cb;
     /**
@@ -40,10 +41,12 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
     /**
      * Конструктор
      * @param _forClass класс сущности ORM
+     * @param _returnClass класс сущности ORM
      * @param entityManager EntityManager
      */
-    public RestrictionEditorJPACriteria(Class _forClass, EntityManager entityManager) {
+    public RestrictionEditorJPACriteria(Class _forClass, boolean isCountQuery, EntityManager entityManager) {
         this.forClass = _forClass;
+        this.isCountQuery = isCountQuery;
         this.em = entityManager;
         cb = em.getCriteriaBuilder();
         this.createEmpty();
@@ -55,7 +58,11 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
     @Override
     public void createEmpty() {
         this.expression = new ArrayList();
-        this.criteriaQuery = cb.createQuery(forClass);
+        if (isCountQuery) {
+            this.criteriaQuery = (CriteriaQuery<T>)cb.createQuery(Long.class);
+        } else {
+            this.criteriaQuery = cb.createQuery(forClass);
+        }
         root = criteriaQuery.from(forClass);
     }
 
@@ -437,12 +444,12 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
 
         // op1 - атрибут и op2 - константа => программируем как op1 like op2
         if (isAttribute(op1) && isOneValue(op2)) {
-            expression.add(cb.like((Expression<String>) (Object) root.get(op1.toString()), "%" +((OneValue) op2).value.toString()+ "%"));
+            expression.add(cb.like((Expression<String>) (Object) root.get(op1.toString()), "%" + ((OneValue) op2).value.toString() + "%"));
             return this;
         }
         //  op1 - константа и  op2 - атрибут => программируем как op2 like op1
         if (isOneValue(op1) && isAttribute(op2)) {
-            expression.add(cb.like((Expression<String>) (Object) root.get(op2.toString()), "%" +((OneValue) op1).value.toString()+ "%"));
+            expression.add(cb.like((Expression<String>) (Object) root.get(op2.toString()), "%" + ((OneValue) op1).value.toString() + "%"));
             return this;
         }
         // op1 - атрибут и op2 - атрибут
@@ -483,16 +490,21 @@ public class RestrictionEditorJPACriteria<T> implements RestrictionEditorInterfa
         if (expression.size() > 0) {
             this.criteriaQuery.where((Predicate) this.expression.get(0));
         }
-        return this.criteriaQuery.select(root);
-    }
-
-    public CriteriaQuery<Long> getValueCount() {
-        if (expression.size() > 0) {
-            this.criteriaQuery.where((Predicate) this.expression.get(0));
+        if (isCountQuery) {
+            return (CriteriaQuery<T>)((CriteriaQuery<Long>) criteriaQuery).select(cb.count(root));
+        } else {
+            return this.criteriaQuery.select(root);
         }
-        return this.criteriaQuery.select(root);
+    }
+    
+    public CriteriaQuery<Long> getValueCount() {
+        return (CriteriaQuery<Long>)getValue();
     }
 
+    public Root<T> getRoot() {
+        return root;
+    }
+    
     @Override
     public int size() {
         return this.expression.size();

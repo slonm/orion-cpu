@@ -14,7 +14,7 @@ import orion.tapestry.grid.lib.field.impl.*;
 public class CpuGridModule {
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(GridFieldFactory.class);
+        binder.bind(GridFieldFactory.class, GridFieldFactoryImpl.class);
     }
     
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {

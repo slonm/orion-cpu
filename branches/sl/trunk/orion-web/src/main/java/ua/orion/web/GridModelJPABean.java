@@ -81,11 +81,6 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
         this.filterAggregator = new FilterAggregator(this.getFilterElementList());
 
         /**
-         * этот агрегатор используется для фильтрации строк в таблице
-         */
-        this.restrictionEditor = new RestrictionEditorJPACriteria(this.forClass, em);
-
-        /**
          * этот агрегатор используется для отображения условия фильтрации
          */
         this.restrictionEditorHumanReadable = new RestrictionEditorHumanReadable();
@@ -110,6 +105,21 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
     @Override
     public List<GridRow> getRows() throws RestrictionEditorException {
 
+        /**
+         * этот агрегатор используется для фильтрации строк в таблице
+         */
+        this.restrictionEditor = new RestrictionEditorJPACriteria(this.forClass, true, em);
+
+        // используем условие фильтрации
+        this.filterAggregator.applyRestriction(this.getFilter(), this.restrictionEditor);
+
+        // вычисляем количество найденных строк
+        CriteriaQuery<Long> nRowsQuery = this.restrictionEditor.getValueCount();
+        applyAdditionalConstraints(nRowsQuery);
+        Long result = em.createQuery(nRowsQuery).getSingleResult();
+        this.pager.setRowsFound(result.intValue());
+
+        this.restrictionEditor = new RestrictionEditorJPACriteria(this.forClass, false, em);
         // используем условие фильтрации
         this.filterAggregator.applyRestriction(this.getFilter(), this.restrictionEditor);
         CriteriaQuery<T> query = this.restrictionEditor.getValue();
@@ -117,23 +127,14 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
         // здесь можно добавить дополнительное условие сортировки
         applyAdditionalConstraints(query);
 
-        // вычисляем количество найденных строк
-        CriteriaQuery<Long> nRowsQuery = cb.createQuery(Long.class);
-        nRowsQuery.where(query.getRestriction());
-        Root<?> root = nRowsQuery.from(forClass);
-        nRowsQuery.select(cb.count(root));
-        Long result = em.createQuery(nRowsQuery).getSingleResult();
-//        Long result = 2L;
-        this.pager.setRowsFound(result.intValue());
-
         //  используем условие сортировки
         for (GridFieldSort fs : this.fieldSortList) {
             switch (fs.getSortType()) {
                 case ASC:
-                    query.orderBy(cb.asc(root.get(fs.getAttributeName())));
+                    query.orderBy(cb.asc(restrictionEditor.getRoot().get(fs.getAttributeName())));
                     break;
                 case DESC:
-                    query.orderBy(cb.desc(root.get(fs.getAttributeName())));
+                    query.orderBy(cb.desc(restrictionEditor.getRoot().get(fs.getAttributeName())));
                     break;
             }
         }
@@ -172,6 +173,6 @@ public class GridModelJPABean<T> extends GridModelAdapter<CriteriaQuery<T>> {
      * этот метод следует перекрывать
      * @param criteria 
      */
-    protected void applyAdditionalConstraints(CriteriaQuery<T> criteria) {
+    protected void applyAdditionalConstraints(CriteriaQuery<?> criteria) {
     }
 }
