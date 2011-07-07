@@ -1,16 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-              xmlns:p="tapestry:parameter"
-              xmlns:s="tapestry-library:security">
+     xmlns:p="tapestry:parameter"
+     xmlns:s="tapestry-library:security">
     <t:zone t:id="listZone">
         <t:if test="error">
             <div class="t-error">${error}</div>
         </t:if>
         <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--для вызова метода скрытия окна-->
-        <t:grid.Grid gridModel="gridModel" currentField="currentField" currentRow="currentRow"
-                source="objects" row="object" inplace="true" add="action"
-                model="dataSource.getBeanModelForList(objectClass,messages)">
-            <p:actionCell>
+        <t:grid.Grid gridModel="gridModel" currentField="currentField" currentRow="currentRow">
+            <p:rowActionsCell>
                 <div class="crud-links">
                     <s:HasPermission permission="${objectClass.simpleName}:update:${object.id}">
                         <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="popupZone" title="message:action.edit"/>
@@ -22,7 +20,7 @@
                         <t:EventLink class="crud-del-pic" t:event="trydelete" context="${object.id}" zone="popupZone" title="message:action.del"/>
                     </s:HasPermission>
                 </div>
-            </p:actionCell>
+            </p:rowActionsCell>
         </t:grid.Grid>
     </t:zone>
     <s:HasPermission permission="${objectClass.simpleName}:insert">

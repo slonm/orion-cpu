@@ -1,6 +1,7 @@
 package ua.orion.web.components;
 
 import java.beans.IntrospectionException;
+import java.io.Serializable;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.*;
@@ -47,7 +48,6 @@ public class CrudEx {
      * Временная переменная для цикла по строкам
      * Цикл объявлен в шаблоне
      */
-    @Property                   // <= чтобы не писать примитивные методы get...() и set...()
     private GridRow currentRow;
     
     @Inject
@@ -56,6 +56,15 @@ public class CrudEx {
     private GridFieldFactory gridFieldFactory;
     @Inject
     private Logger LOG;
+
+    public GridRow getCurrentRow() {
+        return currentRow;
+    }
+
+    public void setCurrentRow(GridRow currentRow) {
+        this.currentRow = currentRow;
+        object=entityService.find(objectClass, (Serializable)this.currentRow.getValue("id"));
+    }
     /**
      * @return Модель данных для grid
      */
