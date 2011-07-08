@@ -88,6 +88,18 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <type>jar</type>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tapestry</groupId>
+            <artifactId>tapestry-json</artifactId>
+            <version>5.2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.chenillekit</groupId>
+            <artifactId>chenillekit-google</artifactId>
+            <version>1.3.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <finalName>cpu-grid</finalName>
