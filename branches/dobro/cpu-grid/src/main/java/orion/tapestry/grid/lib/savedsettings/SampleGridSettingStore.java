@@ -2,8 +2,8 @@
 package orion.tapestry.grid.lib.savedsettings;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +12,8 @@ import org.json.JSONObject;
  * @author dobro
  */
 public class SampleGridSettingStore implements IGridSettingStore {
+
+    private Logger logger = LoggerFactory.getLogger(SampleGridSettingStore.class);
 
     // construct sample store
     HashMap<Long, SampleGridSettingStoreRecord> sampleStore = new HashMap<Long, SampleGridSettingStoreRecord>();
@@ -36,7 +38,7 @@ public class SampleGridSettingStore implements IGridSettingStore {
                 s.append(recJSON.toString());
                 delim=",";
             } catch (JSONException ex) {
-                Logger.getLogger(SampleGridSettingStore.class.getName()).log(Level.SEVERE, null, ex);
+                logger.info(ex.getMessage());
             }
 
         }

@@ -3,8 +3,8 @@ package orion.tapestry.grid.lib.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
@@ -79,6 +79,7 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
     protected RestrictionEditorInterface<String> restrictionEditorHumanReadable;
 
 
+    private Logger logger=LoggerFactory.getLogger(GridModelAdapter.class);
     // =============================================================================
     // Эти методы надо заменять своими
     /**
@@ -243,7 +244,7 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
                 JSONObject root = new JSONObject(customFilter);
                 this.filterJSON = "{\"type\": \"NodeAND\", \"isactive\": \"1\", \"children\": {\"filterNodeUser\":"+this.filterJSON+",\"filterNodeSys\":"+customFilter+"}}";
             } catch (JSONException ex) {
-                Logger.getLogger(GridModelAdapter.class.getName()).log(Level.SEVERE, null, ex);
+                logger.info(ex.getMessage()+" : "+_filterJSON);
             }
         }
     }
@@ -260,7 +261,7 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
             this.filterAggregator.applyRestriction(this.filterJSON, this.restrictionEditorHumanReadable);
             ret = this.restrictionEditorHumanReadable.getValue();
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(GridModelAdapter.class.getName()).log(Level.SEVERE, null, ex);
+            logger.info(ex.getMessage());
         }
         return ret;
     }
