@@ -3,8 +3,8 @@ package orion.tapestry.grid.lib.field.filter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.chenillekit.google.utils.JSONException;
-import org.chenillekit.google.utils.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 

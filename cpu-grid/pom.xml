@@ -95,10 +95,9 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.chenillekit</groupId>
-            <artifactId>chenillekit-google</artifactId>
-            <version>1.3.2</version>
-            <type>jar</type>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
         </dependency>
     </dependencies>
     <build>
@@ -201,6 +200,13 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </reporting>
 
     <repositories>
+        <repository>
+            <id>repo1.maven.org</id>
+            <url>http://repo1.maven.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
 
         <repository>
             <id>localhost.nu</id>
