@@ -231,6 +231,10 @@ span.menutitle a{
 .menuitems{
     z-index: 3;
 }
+/* Всплывающие подсказки валидации */
+.t-error-popup{
+    z-index: 100;
+}
 
 /* ЧАСТЬ 7 Работа с PropertyBlocks */
 /* ЧАСТЬ 7.1 Стили для PropertyBlocks */
