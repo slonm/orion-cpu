@@ -3,8 +3,8 @@ package orion.tapestry.grid.components;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.regex.Matcher;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.PropertyOverrides;
@@ -273,6 +273,8 @@ public class Grid {
     @Property
     private IGridSettingStore gridSettingStore;
 
+
+    private Logger logger=LoggerFactory.getLogger(Grid.class);
     /**
      * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
      * Если параметр с именем <b>currentField.getUid() + "Header"</b> существует,
@@ -379,7 +381,7 @@ public class Grid {
             // здесь извлекаются строки и обновляется количество найденных строк
             this.rows = gridModel.getRows();
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
         // ------------- список строк - конец ----------------------------------
     }
@@ -620,7 +622,7 @@ public class Grid {
                 }
             }
         } catch (JSONException ex) {
-            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
+            logger.debug(ex+" "+_sortJSON);
         }
     }
 }

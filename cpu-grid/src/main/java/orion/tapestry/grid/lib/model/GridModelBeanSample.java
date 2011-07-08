@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import java.util.Map;
 import orion.tapestry.grid.lib.field.sort.GridFieldSort;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.GridFieldFactory;
 import orion.tapestry.grid.lib.field.filter.FilterAggregator;
 import orion.tapestry.grid.lib.paging.Pager;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorHumanReadable;

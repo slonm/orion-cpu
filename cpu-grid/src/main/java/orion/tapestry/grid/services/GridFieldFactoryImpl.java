@@ -4,19 +4,19 @@
  */
 package orion.tapestry.grid.services;
 
-import java.beans.BeanInfo;
+//import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
+//import java.beans.Introspector;
+//import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+//import java.util.Arrays;
+//import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.apache.tapestry5.beaneditor.NonVisual;
-import org.apache.tapestry5.ioc.internal.services.ClassPropertyAdapterImpl;
-import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
+//import org.apache.tapestry5.ioc.internal.services.ClassPropertyAdapterImpl;
+//import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.ioc.services.PropertyAdapter;

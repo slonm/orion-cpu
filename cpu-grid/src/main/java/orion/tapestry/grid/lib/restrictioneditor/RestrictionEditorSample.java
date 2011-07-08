@@ -2,8 +2,8 @@ package orion.tapestry.grid.lib.restrictioneditor;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Пример составителя выражений для условия выборки строк.
@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class RestrictionEditorSample implements RestrictionEditorInterface<String> {
 
     private ArrayList<Item> expression;
+    private static Logger logger = LoggerFactory.getLogger(RestrictionEditorSample.class);
 
     public RestrictionEditorSample() {
         this.expression = new ArrayList();
@@ -114,8 +115,6 @@ public class RestrictionEditorSample implements RestrictionEditorInterface<Strin
         return this;
     }
 
-
-
     @Override
     public RestrictionEditorInterface<String> constValueList(Object... value) {
         this.expression.add(new RestrictionEditorSample.ItemValueList(value));
@@ -163,7 +162,6 @@ public class RestrictionEditorSample implements RestrictionEditorInterface<Strin
         this.operator2(" like ");
         return this;
     }
-
 
     @Override
     public RestrictionEditorInterface<String> isNull() {
@@ -279,24 +277,24 @@ public class RestrictionEditorSample implements RestrictionEditorInterface<Strin
         try {
             rs.eq();
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(RestrictionEditorSample.class.getName()).log(Level.SEVERE, null, ex);
+            logger.info(ex.getMessage());
         }
         rs.constValue(10);
         rs.constField("fld2");
         try {
             rs.ge();
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(RestrictionEditorSample.class.getName()).log(Level.SEVERE, null, ex);
+            logger.info(ex.getMessage());
         }
         try {
             rs.and();
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(RestrictionEditorSample.class.getName()).log(Level.SEVERE, null, ex);
+            logger.info(ex.getMessage());
         }
         try {
             System.out.println(rs.getValue());
         } catch (RestrictionEditorException ex) {
-            Logger.getLogger(RestrictionEditorSample.class.getName()).log(Level.SEVERE, null, ex);
+            logger.info(ex.getMessage());
         }
     }
 }
