@@ -191,7 +191,7 @@ public class GridModelJPABean extends GridModelAdapter<CriteriaQuery> {
         /**
          * Адаптер для извлечения полей записи
          */
-        //this.сlassPropertyAdapter = gridFieldFactory.getClassPropertyAdapter(forClass);
+        this.сlassPropertyAdapter = gridFieldFactory.getClassPropertyAdapter(forClass);
     }
 
     /**
