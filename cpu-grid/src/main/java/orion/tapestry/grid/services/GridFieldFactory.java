@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package orion.tapestry.grid.services;
 
 import java.beans.IntrospectionException;
 import java.util.List;
+import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
 
 /**
@@ -22,4 +19,9 @@ public interface GridFieldFactory {
      * @throws IntrospectionException возникает только если не удалось получить информацию из класса forClass
      */
     public List<GridFieldAbstract> getFields(Class forClass) throws IntrospectionException;
+
+    /**
+     * возвращает обьект для доступа к атрибутам класса сущности
+     */
+    public ClassPropertyAdapter getClassPropertyAdapter(Class forClass);
 }
