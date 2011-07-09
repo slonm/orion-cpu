@@ -157,17 +157,11 @@ public class GridFieldFactoryImpl implements GridFieldFactory {
         return fields;
     }
 
-//    public ClassPropertyAdapter getClassPropertyAdapter(Class forClass) throws IntrospectionException {
-//        BeanInfo info = Introspector.getBeanInfo(forClass);
-//        List<PropertyDescriptor> descriptors = CollectionFactory.newList();
-//        addAll(descriptors, info.getPropertyDescriptors());
-//
-//        if (forClass.isInterface()) {
-//            addPropertiesFromExtendedInterfaces(forClass, descriptors);
-//        }
-//        ClassPropertyAdapter cpa = propertyAccess.getAdapter(forClass);
-//        return cpa;
-//    }
+    @Override
+    public ClassPropertyAdapter getClassPropertyAdapter(Class forClass) {
+        ClassPropertyAdapter cpa = this.propertyAccess.getAdapter(forClass);
+        return cpa;
+    }
 //
 //    private <T> void addAll(List<T> list, T[] array) {
 //        list.addAll(Arrays.asList(array));
