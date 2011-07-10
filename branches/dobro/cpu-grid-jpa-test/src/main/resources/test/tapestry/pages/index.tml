@@ -1,0 +1,35 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Index</title>
+</head>
+<body>
+
+
+
+<t:grid.Grid gridModel="gridModel" currentField="currentField" currentRow="currentRow">
+    <!--  gridSettingStore="gridSettingStore" -->
+    <!-- код, который надо вставить перед таблицей
+    <t:parameter name="beforeTable">
+    <t:outputraw value="literal:&lt;form style=&quot;border:1px solid red;&quot;&gt;"/>
+    </t:parameter>
+     -->
+    <!-- код, который надо вставить после таблицы
+    <t:parameter name="afterTable">
+    <t:outputraw value="literal:&lt;/form&gt;"/>
+    </t:parameter>
+     -->
+    <!-- Так можно перекрыть загловок колонки
+    <t:parameter name="id3Header">
+    ${currentField.UID} -+
+    </t:parameter>
+     -->
+
+    <!-- Так можно перекрыть ячейку в таблице
+    <t:parameter name="id3Cell">
+    <div style="color:yellow;background-color:black;">${currentField.getStringValue(currentRow)}</div>
+    </t:parameter>
+     -->
+</t:grid.Grid>
+</body>
+</html>
