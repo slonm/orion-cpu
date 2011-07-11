@@ -161,3 +161,5 @@ public class Crud {
     </t:ck.Window>
 </t:layout>
 }}}
+
+Альтернативный вариант решения этой задачи [http://tawus.wordpress.com/2011/07/02/a-modal-dialog-for-tapestry/ тут]
