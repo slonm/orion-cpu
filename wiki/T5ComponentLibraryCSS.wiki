@@ -1,0 +1,33 @@
+#summary Добавление стилей библиотек
+
+= CSS для библиотек компонентов =
+
+Если требуется добавить какие-то стили, используемые в библиотеке модели, то достаточно создать файл стиля с именем `<LibName>`.css в директорию ua/orion/web. Стили могут быть локализованы по общим правилам добавлением суффикса к имени файла. *Все* такие стили будут включены во *все* страницы, поэтому злоупотреблять ими не следует и использовать только при необходимости.
+
+Так как для каждой библиотеки модели создается своя библиотека компонентов, то в эти стили может включаться что-то специфичное для модели данных. Например локализованные перечисления значений.
+
+= Реализация =
+
+Эту функциональность целиком реализует следующий метод в модуле конфигурации IOC библиотеки orion-web:
+{{{
+    public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
+            final AssetSource assetSource, final Environment environment,
+            final ModelLibraryService modelLibraryService) {
+        for (ModelLibraryInfo modelLibraryInfo : modelLibraryService.getModelLibraryInfos()) {
+            try {
+                final Asset stylesheet = assetSource.getClasspathAsset("ua/orion/web/" + modelLibraryInfo.getLibraryName() + ".css");
+                MarkupRendererFilter injectDefaultStylesheet = new MarkupRendererFilter() {
+
+                    public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
+                        DocumentLinker linker = environment.peekRequired(DocumentLinker.class);
+                        linker.addStylesheetLink(new StylesheetLink(stylesheet.toClientURL()));
+                        renderer.renderMarkup(writer);
+                    }
+                };
+                configuration.add("Inject" + modelLibraryInfo.getLibraryName() + "Styleheet",
+                        injectDefaultStylesheet, "after:InjectDefaultStyleheet");
+            } catch (RuntimeException e) {
+            }
+        }
+    }
+}}}
