@@ -29,7 +29,7 @@ org-netbeans-modules-tapestry.nbm
 org-netbeans-modules-tapestry-codetemplates.nbm 
 org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://orion-cpu.googlecode.com/files/nbtapestrysupport.zip тут])
 (версии файлов актуальны на 18.09.2009, в версии Netbeans 7.0 эти плагины могут не устанавливаться - новые версии смотреть на  [nbtapestrysupport.dev.java.net nbtapestrysupport.dev.java.net]). 
-Перегрузить NetBeans. Установленные модули будут перечислены в
+Перезапустить `NetBeans`. Установленные модули будут перечислены в
  Tools > Plugins > Installed > User Installed Plugins
 
  * Выбрать ''Tools > Plugins''. Вкладка Installed.
