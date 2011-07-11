@@ -1,10 +1,7 @@
 package orion.tapestry.grid.lib.field.filter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.*;
+import org.apache.tapestry5.json.JSONObject;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 
@@ -37,36 +34,34 @@ public class FilterAggregator {
             String filterJSON,
             RestrictionEditorInterface restrictionEditor)
             throws RestrictionEditorException {
-        try {
-            // создаём пустое выражение
-            restrictionEditor.createEmpty();
+        // создаём пустое выражение
+        restrictionEditor.createEmpty();
 
-            if (filterJSON == null || filterJSON.isEmpty()) {
-                return;
-            }
-
-            // создаём объект из строки
-            // System.out.println("filterJSON="+filterJSON);
-            JSONObject root = new JSONObject(filterJSON);
-
-            // выполняем операции, описанные объектом root, в редакторе restrictionEditor
-            this.modifyRestriction(root, restrictionEditor);
-        } catch (JSONException ex) {
-            //Logger.getLogger(FilterAggregator.class.getName()).log(Level.SEVERE, null, ex);
+        if (filterJSON == null || filterJSON.isEmpty()) {
+            return;
         }
+
+        // создаём объект из строки
+        // System.out.println("filterJSON="+filterJSON);
+        JSONObject root = new JSONObject(filterJSON);
+
+        // выполняем операции, описанные объектом root, в редакторе restrictionEditor
+        this.modifyRestriction(root, restrictionEditor);
     }
 
     /**
      * Изменение условия фильтрации
      */
-    public <T> int modifyRestriction(JSONObject node, RestrictionEditorInterface<T> restrictionEditor) throws JSONException, RestrictionEditorException {
+    public <T> int modifyRestriction(JSONObject node, RestrictionEditorInterface<T> restrictionEditor) throws RestrictionEditorException {
         // отмечен ли флажок "условие активно"
         boolean isActive = true;
         if (node.has("isactive")) {
             isActive = node.getString("isactive").startsWith("1");
         }
 
-        if(!isActive) return 0;
+        if (!isActive) {
+            return 0;
+        }
 
         //System.out.println(node.toString());
 
@@ -76,7 +71,7 @@ public class FilterAggregator {
         int nModifications = 0;
         if (node.has("children")) {
             JSONObject children = node.getJSONObject("children");
-            String[] keyList = JSONObject.getNames(children);
+            Set<String> keyList = children.keys();
             if (keyList != null) {
                 for (String key : keyList) {
                     nModifications += this.modifyRestriction(children.getJSONObject(key), restrictionEditor);
@@ -101,7 +96,7 @@ public class FilterAggregator {
             // вызываем метод для модификации условия фильтрации
             if (fElement.modifyRestriction(restrictionEditor, value, isActive, nModifications)) {
                 //nModifications++;
-                nModifications=1;
+                nModifications = 1;
             }
         }
         return nModifications;

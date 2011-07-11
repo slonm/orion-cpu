@@ -8,17 +8,14 @@ import org.apache.tapestry5.Block;
 import org.apache.tapestry5.PropertyOverrides;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Import;
-import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
-import org.apache.tapestry5.annotations.IncludeStylesheet;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.tapestry5.json.JSONArray;
+import org.apache.tapestry5.json.JSONObject;
 import org.slf4j.Logger;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
 import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
@@ -133,8 +130,8 @@ import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
  * <b>rowActions</b> - уникальный (в пределах таблицы) идентификатор колонки.
  * @author Gennadiy Dobrovolsky
  */
-@Import(stylesheet={"grid.css", "gridfilter.css", "dateselector.css"},
-    library={"grid.js", "dateselector.js", "gridfilter.js",
+@Import(stylesheet = {"grid.css", "gridfilter.css", "dateselector.css"},
+library = {"grid.js", "dateselector.js", "gridfilter.js",
     "${tapestry.scriptaculous}/dragdrop.js"})
 @SupportsInformalParameters
 public class Grid {
@@ -264,16 +261,15 @@ public class Grid {
      */
     @Inject
     private Block afterTable;
-
     /**
      * обьект для доступа к сохранённым наборам настроек
      */
     @Parameter
     @Property
     private IGridSettingStore gridSettingStore;
-
     @Inject
     private Logger log;
+
     /**
      * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
      * Если параметр с именем <b>currentField.getUid() + "Header"</b> существует,
@@ -539,25 +535,20 @@ public class Grid {
             return;
         }
 
-        try {
-            //System.out.println("Parsing " + _viewJSON);
-            JSONArray root = new JSONArray(_viewJSON);
-            int cnt = root.length();
-            JSONObject node;
+        JSONArray root = new JSONArray(_viewJSON);
+        int cnt = root.length();
+        JSONObject node;
 
-            String uid;
-            for (int i = 0; i < cnt; i++) {
-                node = root.getJSONObject(i);
-                uid = node.getString("uid");
-                for (GridFieldView gfv : fvl) {
-                    if (uid.equals(gfv.getUid())) {
-                        gfv.setOrdering(node.optInt("ordering", 0));
-                        gfv.setIsVisible(node.optBoolean("isVisible", true));
-                    }
+        String uid;
+        for (int i = 0; i < cnt; i++) {
+            node = root.getJSONObject(i);
+            uid = node.getString("uid");
+            for (GridFieldView gfv : fvl) {
+                if (uid.equals(gfv.getUid())) {
+                    gfv.setOrdering(node.has("ordering") ? node.getInt("ordering") : 0);
+                    gfv.setIsVisible(node.has("isVisible") ? node.getBoolean("isVisible") : true);
                 }
             }
-        } catch (JSONException ex) {
-            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -604,24 +595,19 @@ public class Grid {
         if (_sortJSON == null || _sortJSON.isEmpty()) {
             return;
         }
-        try {
-            //System.out.println("Parsing " + _viewJSON);
-            JSONArray root = new JSONArray(_sortJSON);
-            int cnt = root.length();
-            JSONObject node;
-            String uid;
-            for (int i = 0; i < cnt; i++) {
-                node = root.getJSONObject(i);
-                uid = node.getString("uid");
-                for (GridFieldSort gfs : fsl) {
-                    if (gfs.getUid().equals(uid)) {
-                        gfs.setOrdering(node.optInt("ordering", 0));
-                        gfs.setSortType(GridFieldSortType.valueOf(node.optString("sortType", "NONE")));
-                    }
+        JSONArray root = new JSONArray(_sortJSON);
+        int cnt = root.length();
+        JSONObject node;
+        String uid;
+        for (int i = 0; i < cnt; i++) {
+            node = root.getJSONObject(i);
+            uid = node.getString("uid");
+            for (GridFieldSort gfs : fsl) {
+                if (gfs.getUid().equals(uid)) {
+                    gfs.setOrdering(node.has(uid) ? node.getInt(uid) : 0);
+                    gfs.setSortType(GridFieldSortType.valueOf(node.has("sortType") ? node.getString("sortType") : "NONE"));
                 }
             }
-        } catch (JSONException ex) {
-            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

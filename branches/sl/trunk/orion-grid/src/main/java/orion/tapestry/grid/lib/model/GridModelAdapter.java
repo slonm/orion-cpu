@@ -1,10 +1,7 @@
 package orion.tapestry.grid.lib.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.*;
+import org.apache.tapestry5.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import orion.tapestry.grid.lib.field.GridFieldAbstract;
@@ -28,7 +25,7 @@ import orion.tapestry.grid.lib.rows.GridRow;
  */
 public abstract class GridModelAdapter<S> implements GridModelInterface {
 
-    private static final Logger log=LoggerFactory.getLogger(GridModelAdapter.class); 
+    private static final Logger log = LoggerFactory.getLogger(GridModelAdapter.class);
     /**
      * Список полей
      */
@@ -239,12 +236,7 @@ public abstract class GridModelAdapter<S> implements GridModelInterface {
         this.filterJSON = _filterJSON;
         String customFilter = this.customFilterJSON();
         if (customFilter != null) {
-            try {
-                JSONObject root = new JSONObject(customFilter);
-                this.filterJSON = "{\"type\": \"NodeAND\", \"isactive\": \"1\", \"children\": {\"filterNodeUser\":" + this.filterJSON + ",\"filterNodeSys\":" + customFilter + "}}";
-            } catch (JSONException ex) {
-                log.warn(ex.getMessage());
-            }
+            this.filterJSON = "{\"type\": \"NodeAND\", \"isactive\": \"1\", \"children\": {\"filterNodeUser\":" + this.filterJSON + ",\"filterNodeSys\":" + customFilter + "}}";
         }
     }
 
