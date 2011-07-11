@@ -314,5 +314,10 @@ public class OrionWebIOCModule {
         configuration.add("JPAAnnotation", new JPAAnnotationsConstraintGenerator());
         configuration.add("JSR303Annotation", new JSR303AnnotationsConstraintGenerator());
     }
+    @Match("GridFieldFactory")
+    public static void adviseGridFieldFactoryWithFieldLabel(MethodAdviceReceiver receiver, 
+    @Autobuild GridFieldFactoryMethodAdvice advice) {
+        receiver.adviseAllMethods(advice);
+    }
 
 }

@@ -21,8 +21,6 @@ public class BirtConnection {
         for (Class<?> clasz : services) {
             params.put(clasz.getSimpleName(), LOCATOR.getService(clasz));
         }
-//        locator.getService(ExtendedAuthorizer.class).storeUserAndRole(User.SYSTEM_USER, null);
-//        params.put(User.class.getSimpleName(), locator.getService(ExtendedAuthorizer.class).getUser());
         return params;
     }
 
