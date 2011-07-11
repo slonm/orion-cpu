@@ -1,0 +1,33 @@
+<div xml:space="default" 
+     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+     xmlns:p="tapestry:parameter">
+
+    <t:block id="displayBooleanText">
+        <t:if test="prop:outputContext.propertyValue">
+            ${message:true}
+            <p:else>
+                ${message:false}
+            </p:else>
+        </t:if>
+    </t:block>
+
+    <t:block id="displayBooleanCheck">
+        <t:if test="prop:outputContext.propertyValue">
+            <img src="${asset:../images/checked.gif}" alt="V"/>
+        </t:if>
+    </t:block>
+
+    <t:block id="editBooleanSelect">
+        <t:label for="booleanSelect"/>
+        <input t:id="booleanSelect"/>
+    </t:block>
+
+    <t:block id="displayEntity">
+        ${prop:entity}
+    </t:block>
+
+    <t:block id="editEntity">
+        <t:label for="entitySelect"/>
+        <t:select t:id="entitySelect"/>
+    </t:block>
+</div>
