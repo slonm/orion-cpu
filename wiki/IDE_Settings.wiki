@@ -1,5 +1,8 @@
+#summary Настройка среды разработки
 #labels Phase-Implementation
-= Для настройки среды программирования на языке Java необходимо: =
+= Настройка среды разработки =
+
+Для настройки среды программирования на языке Java необходимо:
 
 == Установить Java Development Kit ==
  * Скачать и установить [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java Development Kit]
@@ -14,8 +17,7 @@
  * Скачать и распаковать [http://maven.apache.org/download.html Maven] в C:\apache-maven.
 
  * Создать каталог C:\maven-repo.
- * В файле C:\apache-maven\conf\settings.xml в теге settings добавить тег ` 
-<localRepository>C:\maven-repo</localRepository>`
+ * В файле C:\apache-maven\conf\settings.xml в теге settings добавить тег `<localRepository>C:\maven-repo</localRepository>`
 
 == Установить `NetBeans` ==
  * Скачать и установить [http://www.netbeans.org/downloads/index.html NetBeans] из дистрибутива с конфигурацией, включающей JavaEE (Java или Все). 
