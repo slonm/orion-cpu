@@ -5,13 +5,14 @@
     <t:block id="DisplayEduPlanDisciplineCycle">
         <!--параметры source и value вынесены в аннотацию @Component в класс
         параметр t:id содержит имя свойства класса-компонента типа Loop-->
-        <table>
+        <table class="nb">
             <t:loop t:id="eduPlanDisciplineCyclesLoop">
                 <tr>
                     <!--для каждого элемента набора EduPlanDisciplineCycles возвращается 
                     имя объекта eduPlanDisciplineCycle.ePPCycle,
                     являющегося полем класса и указанным в свойстве value компонента, -->
-                    <td>${eduPlanDisciplineCycle.ePPCycle}</td>
+                    <td><t:pagelink page="eduprocplanning/EduPlanDisciplineCycleWeb" context="eduPlanDisciplineCycle.id">${eduPlanDisciplineCycle}</t:pagelink></td>
+ <!--                   <td>${eduPlanDisciplineCycle.ePPCycle}</td> -->
                 </tr>
             </t:loop>
         </table>
@@ -22,9 +23,14 @@
     <t:block id="EditEduPlanDisciplineCycle">
         <!--Отображать PropertyBlock для объемов необходимо в таблице-->
         <table class="t-loop">
-            <tr><th class="f-left">
-                    ${message:property.LicenseRecord.LicenseQuantityByEducationForm}<br/>
-                </th></tr>
+                
+            <tr><th class="f-left">${message:property.EduPlan.EduPlanDisciplineCycles}<br/> 
+              <!--      <td>${message:entity.EPPCycle}</td> -->
+                    <td>${message:property.EduPlanDisciplineCycle.EduPlanDisciplineCycleNumber}</td>
+                    <td>${message:property.EduPlanDisciplineCycle.IsRegulatory}</td>
+                    <td>${message:property.EduPlanDisciplineCycle.EPPCycleTotalCredits}</td> 
+                </th>
+            </tr>
             <t:ajaxformloop t:id="eduPlanDisciplineCycles">
                 <tr>
            <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
@@ -32,7 +38,7 @@
                     <td><t:checkbox t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
                     <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
                 </tr>
-                <t:removerowlink>${message:remove}</t:removerowlink>
+                <t:removerowlink>${message:action.removeCycle}</t:removerowlink>
             </t:ajaxformloop>
         </table>
     </t:block> 
