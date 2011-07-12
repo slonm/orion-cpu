@@ -1,7 +1,5 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.core.utils.Defense;
@@ -16,8 +14,6 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     private static long serialVersionUID = 1L;
     
-    //Поле связи с циклом учебного плана, к которому принадлежит дисциплина
-    private EduPlanDisciplineCycle eduPlanDisciplineCycle;
     //является ли дисциплина обязательной или выборочной (она может принадлежать 
     //как к нормативным, так и к выборочным циклас)
     private Boolean isMandatory;
@@ -51,16 +47,15 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     //ПОКА НЕ ИСПОЛЬЗУЮ
     //Набор дисциплин данного учебного плана, которые должны предшествовать изучению данной дисциплины
-//    private SortedSet<EduPlanDiscipline> eduPlanDisciplinePrevious = new TreeSet<EduPlanDiscipline>();
+//    private Set<EduPlanDiscipline> eduPlanDisciplinePrevious = new HashSet<EduPlanDiscipline>();
     
     public EduPlanDiscipline() {
     }
 
-     public EduPlanDiscipline(EduPlanDisciplineCycle eduPlanDisciplineCycle, Boolean isMandatory, 
+     public EduPlanDiscipline(Boolean isMandatory, 
              String disciplineNumber, Discipline discipline, Double ectsCreditAmount, String examSemestr, 
              String creditSemester, String courseWorkSemester, String controlWorkSemester, 
              Integer lecturesHours, Integer labsHours, Integer practicesHours) {
-        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
         this.isMandatory = isMandatory;
         this.disciplineNumber = disciplineNumber;
         this.discipline = discipline;
@@ -74,16 +69,6 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         this.practicesHours = practicesHours;
     }
     
-    //Двунаправленная ассоциация с циклом, к которому принадлежит данная дисциплина
-    @ManyToOne
-    public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
-        return eduPlanDisciplineCycle;
-    }
-
-    public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
-    }
-
     public Boolean getIsMandatory() {
         return isMandatory;
     }
@@ -202,11 +187,11 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 //    /**
 //     * @return Набор дисциплин, которые обязательно должны предшествовать изучению данной дисциплины
 //     */
-//    public SortedSet<EduPlanDiscipline> getEduPlanDisciplinePrevious() {
+//    public Set<EduPlanDiscipline> getEduPlanDisciplinePrevious() {
 //        return eduPlanDisciplinePrevious;
 //    }
 //
-//    public void setEduPlanDisciplinePrevious(SortedSet<EduPlanDiscipline> eduPlanDisciplinePrevious) {
+//    public void setEduPlanDisciplinePrevious(Set<EduPlanDiscipline> eduPlanDisciplinePrevious) {
 //        this.eduPlanDisciplinePrevious = eduPlanDisciplinePrevious;
 //    }
 
@@ -219,15 +204,17 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         } catch (NullPointerException e) {
         }
         try {
-            eduPlan = eduPlanDisciplineCycle.getEduPlan().toString();
+//            eduPlan = eduPlanDisciplineCycle.getEduPlan().toString();
         } catch (NullPointerException e) {
         }
-        return name + " " + eduPlan;
+//        return name + " " + eduPlan;
+        return name;
     }
 
     @Override
     protected boolean entityEquals(EduPlanDiscipline obj) {
-        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlanDisciplineCycle.getEduPlan(), obj.eduPlanDisciplineCycle.getEduPlan());
+//        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlanDisciplineCycle.getEduPlan(), obj.eduPlanDisciplineCycle.getEduPlan());
+        return aEqualsField(this.discipline.getName(), obj.discipline.getName());
     }
 
     @Override

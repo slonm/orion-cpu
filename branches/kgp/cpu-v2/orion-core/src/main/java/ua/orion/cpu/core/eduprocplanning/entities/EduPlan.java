@@ -1,12 +1,10 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
 import java.util.Calendar;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.core.utils.Defense;
 import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
@@ -14,7 +12,7 @@ import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
 
 /**
- * Сущность-учебный план подготовки по специальности (идентификатор и шапка)
+ * Сущность-учебный план подготовки по специальности (шапка)
  * @author kgp
  */
 @Entity
@@ -27,21 +25,20 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Double trainingTerm;
     private Qualification qualification;
     private Calendar introducingDate;
-    //ПОКА НЕ ИСПОЛЬЗУЮ
-//    //Набор семестров данного учебного плана, в которых читается дисциплина
-//    private SortedSet<EduPlanSemester> eduPlanSemesters = new TreeSet<EduPlanSemester>();
+    //Пользовательский тип данных для вывода списка циклов учебного плана в гриде
     @DataType("EduPlanDisciplineCycles")
-    private SortedSet<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new TreeSet<EduPlanDisciplineCycle>();
+    private Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new HashSet<EduPlanDisciplineCycle>();
 
     public EduPlan() {
     }
 
     public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
-            Calendar introducingDate) {
+            Calendar introducingDate, Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
         this.introducingDate = introducingDate;
+        this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
     }
 
     /**
@@ -60,10 +57,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
         }
     }
 
-    /**
-     * @param запись лиценизии, привязанная к данному учебному плану
-     */
-    public void setLicenseRecord(LicenseRecord licenseRecord) {
+      public void setLicenseRecord(LicenseRecord licenseRecord) {
         this.licenseRecord = Defense.notNull(licenseRecord, "licenseRecord");
     }
 
@@ -160,10 +154,6 @@ public class EduPlan extends AbstractEntity<EduPlan> {
         return qualification;
     }
 
-    /**
-     * Привязывает название квалификации к данному учебному плану
-     * @param qualification
-     */
     public void setQualification(Qualification qualification) {
         this.qualification = qualification;
     }
@@ -177,28 +167,20 @@ public class EduPlan extends AbstractEntity<EduPlan> {
         this.introducingDate = introducingDate;
     }
     
-//    //Двунаправленная ассоциация с семестрами учебного плана, в которых читается 
-//    //данная дисциплина
-//    public SortedSet<EduPlanSemester> getEduPlanSemesters() {
-//        return eduPlanSemesters;
-//    }
-//
-//    public void setEduPlanSemesters(SortedSet<EduPlanSemester> eduPlanSemesters) {
-//        this.eduPlanSemesters = eduPlanSemesters;
-//    }
-
     //TODO Написать компаратор, выводящий циклы в порядке возрастания их номера в учебном плане (eduPlanDisciplineCycleNumber)
     /**
-     * Двунаправленная ассоциация с EduPlanDisciplineCycle
+     * Однонаправленная ассоциация с EduPlanDisciplineCycle
      * @return набор циклов дисциплин данного учебного плана
      */
-    @Sort(type = SortType.NATURAL)
-    @OneToMany(mappedBy="eduPlan", cascade= CascadeType.ALL)
-    public SortedSet<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
+//    @Sort(type = SortType.COMPARATOR, comparator=EduPlanDisciplineCycle.EduPlanDisciplineCycleComparator.class)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(schema="uch", joinColumns = { @JoinColumn(name = "EDUPLAN_ID") }, inverseJoinColumns = { @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID") })
+//    @JoinColumn(name = "EDUPLAN_ID")
+    public Set<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
         return eduPlanDisciplineCycles;
     }
 
-    public void setEduPlanDisciplineCycles(SortedSet<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
+    public void setEduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
         this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
     }
 

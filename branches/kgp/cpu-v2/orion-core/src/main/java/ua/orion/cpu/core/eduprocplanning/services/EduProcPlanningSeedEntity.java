@@ -1,5 +1,7 @@
 package ua.orion.cpu.core.eduprocplanning.services;
 
+import java.util.HashSet;
+import java.util.Set;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDiscipline;
 import ua.orion.cpu.core.eduprocplanning.entities.Discipline;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
@@ -35,7 +37,7 @@ public class EduProcPlanningSeedEntity {
             EPPCycle mathnatsci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл математичної, природничо-наукової підготовки", "ЦМПНП"));
             EPPCycle prof_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної та практичної підготовки", "ЦППП"));
             EPPCycle sochumekonom_DC = es.findUniqueOrPersist(new EPPCycle("Цикл гуманітарних та соціально-економічних дисциплін", "ЦГСЕД"));
-            EPPCycle natursci_DC = es.findUniqueOrPersist(new EPPCycle("ЦЦикл природничо-наукової підготовки", "ЦПНП"));
+            EPPCycle natursci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл природничо-наукової підготовки", "ЦПНП"));
             EPPCycle profnd_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної підготовки (нормативні дисципліни)", "ЦППНД"));
             //---------Квалификации----------
             Qualification fRTPZ = es.findUniqueOrPersist(new Qualification("фахівець з розробки та тестування програмного забезпечення", ""));
@@ -102,34 +104,78 @@ public class EduProcPlanningSeedEntity {
             lrSampleSA.setTermination(DateTimeUtils.createCalendar(1, 7, 2015));
             LicenseRecord sABach = es.findUniqueOrPersist(lrSampleSA);
 
-            //--Заполнение экземпляра учебных планов (для бакалавров ПИ 2009г утверждения)
-            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009)));
-            EduPlan sABach2009 = es.findUniqueOrPersist(new EduPlan(sABach, 4.0, tFGPNT, DateTimeUtils.createCalendar(1, 9, 2009)));
+            //--Создание дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) и их сохранение
+            EduPlanDiscipline foreignLangPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
+            EduPlanDiscipline pravoznavstvoPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "02", pravoznavstvo, 2.25, "", "7", "", "", 16, 0, 16));
+            EduPlanDiscipline mathAnalysisPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 32, 0, 32));
+            EduPlanDiscipline physicsPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "03", physics, 4.0, "1", "", "", "1", 16, 40, 0));
+            EduPlanDiscipline compDiscrMathPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "01", compDiscrMath, 5.0, "2", "", "", "2", 32, 32, 0));
+            EduPlanDiscipline discrStrucPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "02", discrStruc, 3.5, "3", "", "", "3", 16, 32, 0));
+            //--Создание дисциплин учебных планов (для бакалавров СА 2009г утверждения)
+            EduPlanDiscipline ukrainianLangSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "1", ukrainianLang, 3.0, "5", "3,4", "", "", 16, 0, 56));
+            EduPlanDiscipline politologiyaSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "4", politologiya, 1.5, "", "3", "", "", 16, 0, 8));
+            EduPlanDiscipline algGeomSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "2", algGeom, 11.0, "1,2", "", "", "", 56, 0, 88));
+            EduPlanDiscipline funcAnalysSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "6", funcAnalys, 3.0, "", "5", "", "", 24, 0, 16));
+            EduPlanDiscipline programSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "3", program, 10.5, "1,2", "", "", "", 32, 96, 16));
+            EduPlanDiscipline modelSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(true, "6", model, 4.0, "8", "", "", "8", 12, 36, 0));
 
-            //--Заполнение циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) - привязка их к учебным планам
-            EduPlanDisciplineCycle pIBach2009HumSocEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, humsocecon_DC, "1", true, 24.0));
-            EduPlanDisciplineCycle pIBach2009MathNatSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, mathnatsci_DC, "2", true, 23.5));
-            EduPlanDisciplineCycle pIBach2009Prof = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, prof_DC, "3", true, 104.0));
+            //--Создание набороа дисциплин, которые ыходят в циклы плана  (для бакалавров ПИ 2009г утверждения)
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinesPIBach2009HumSocEconom = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinesPIBach2009HumSocEconom.add(foreignLangPI2009);
+            eduPlanCycleDisciplinesPIBach2009HumSocEconom.add(pravoznavstvoPI2009);
+            
+            
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinespIBach2009MathNatSci = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinespIBach2009MathNatSci.add(mathAnalysisPI2009);
+            eduPlanCycleDisciplinespIBach2009MathNatSci.add(physicsPI2009);
+            
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinespIBach2009Prof = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinespIBach2009Prof.add(compDiscrMathPI2009);
+            eduPlanCycleDisciplinespIBach2009Prof.add(discrStrucPI2009);
+            
+            //--Создание циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения), 
+            //привязка к ним наборов дисциплин и сохранение
+            EduPlanDisciplineCycle pIBach2009HumSocEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(humsocecon_DC, "1", true, 24.0, eduPlanCycleDisciplinesPIBach2009HumSocEconom));
+            EduPlanDisciplineCycle pIBach2009MathNatSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(mathnatsci_DC, "2", true, 23.5, eduPlanCycleDisciplinespIBach2009MathNatSci));
+            EduPlanDisciplineCycle pIBach2009Prof = es.findUniqueOrPersist(new EduPlanDisciplineCycle(prof_DC, "3", true, 104.0, eduPlanCycleDisciplinespIBach2009Prof));
 
-            //--Заполнение циклов дисциплин учебных планов (для бакалавров СА 2009г)
-            EduPlanDisciplineCycle pMBach2009SocHumEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(sABach2009, sochumekonom_DC, "1", true, 24.0));
-            EduPlanDisciplineCycle pMBach2009NaturSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(sABach2009, natursci_DC, "2", true, 60.75));
-            EduPlanDisciplineCycle pMBach2009ProfND = es.findUniqueOrPersist(new EduPlanDisciplineCycle(sABach2009, profnd_DC, "3", true, 57.5));
+            //--Создание наборов дисциплин, которые ыходят в циклы плана  (для бакалавров СА 2009г утверждения)
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinespMBach2009SocHumEconom = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinespMBach2009SocHumEconom.add(ukrainianLangSA2009);
+            eduPlanCycleDisciplinespMBach2009SocHumEconom.add(politologiyaSA2009);
+            
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinespMBach2009NaturSci = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinespMBach2009NaturSci.add(algGeomSA2009);
+            eduPlanCycleDisciplinespMBach2009NaturSci.add(funcAnalysSA2009);
+            
+            Set<EduPlanDiscipline> eduPlanCycleDisciplinespMBach2009ProfND = new HashSet<EduPlanDiscipline>();
+            eduPlanCycleDisciplinespMBach2009ProfND.add(programSA2009);
+            eduPlanCycleDisciplinespMBach2009ProfND.add(modelSA2009);
+            
+            //--Создание циклов дисциплин учебных планов (для бакалавров СА 2009г)
+            //привязка к ним наборов дисциплин и сохранение
+            EduPlanDisciplineCycle pMBach2009SocHumEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(sochumekonom_DC, "1", true, 24.0, eduPlanCycleDisciplinespMBach2009SocHumEconom));
+            EduPlanDisciplineCycle pMBach2009NaturSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(natursci_DC, "2", true, 60.75, eduPlanCycleDisciplinespMBach2009NaturSci));
+            EduPlanDisciplineCycle pMBach2009ProfND = es.findUniqueOrPersist(new EduPlanDisciplineCycle(profnd_DC, "3", true, 57.5, eduPlanCycleDisciplinespMBach2009ProfND));
 
-            //--Заполнение дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) - привязка их к циклам
-            EduPlanDiscipline foreignLangPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009HumSocEconom, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
-            EduPlanDiscipline pravoznavstvoPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009HumSocEconom, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 16, 0, 16));
-            EduPlanDiscipline mathAnalysisPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009MathNatSci, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 32, 0, 32));
-            EduPlanDiscipline physicsPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009MathNatSci, true, "03", physics, 4.0, "1", "", "", "1", 16, 40, 0));
-            EduPlanDiscipline compDiscrMathPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009Prof, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 32, 32, 0));
-            EduPlanDiscipline discrStrucPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009Prof, true, "02", discrStruc, 3.5, "3", "", "", "3", 16, 32, 0));
-
-            EduPlanDiscipline ukrainianLangSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009SocHumEconom, true, "1", ukrainianLang, 3.0, "5", "3,4", "", "", 16, 0, 56));
-            EduPlanDiscipline politologiyaSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009SocHumEconom, true, "4", politologiya, 1.5, "", "3", "", "", 16, 0, 8));
-            EduPlanDiscipline algGeomSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009NaturSci, true, "2", algGeom, 11.0, "1,2", "", "", "", 56, 0, 88));
-            EduPlanDiscipline funcAnalysSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009NaturSci, true, "6", funcAnalys, 3.0, "", "5", "", "", 24, 0, 16));
-            EduPlanDiscipline programSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009ProfND, true, "3", program, 10.5, "1,2", "", "", "", 32, 96, 16));
-            EduPlanDiscipline modelSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pMBach2009ProfND, true, "6", model, 4.0, "8", "", "", "8", 12, 36, 0));
+            //--Создание набров циклов дисциплин учебного плана (для бакалавров ПИ 2009г утверждения)
+            Set<EduPlanDisciplineCycle> eduPlanDisciplineCyclespIBach2009 = new HashSet<EduPlanDisciplineCycle>();
+            eduPlanDisciplineCyclespIBach2009.add(pIBach2009HumSocEconom);
+            eduPlanDisciplineCyclespIBach2009.add(pIBach2009MathNatSci);
+            eduPlanDisciplineCyclespIBach2009.add(pIBach2009Prof);
+            //--Создание экземпляра учебного планв (для бакалавров ПИ 2009г утверждения)
+            //привязка к нему набора циклов и сохранение
+            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), eduPlanDisciplineCyclespIBach2009));
+            
+            //--Создание набров циклов дисциплин учебного плана (для бакалавров ПИ 2009г утверждения)
+            Set<EduPlanDisciplineCycle> eduPlanDisciplineCyclessABach2009 = new HashSet<EduPlanDisciplineCycle>();
+            eduPlanDisciplineCyclessABach2009.add(pMBach2009SocHumEconom);
+            eduPlanDisciplineCyclessABach2009.add(pMBach2009NaturSci);
+            eduPlanDisciplineCyclessABach2009.add(pMBach2009ProfND);
+            
+            //--Создание экземпляра учебного планв (для бакалавров СА 2009г утверждения)
+            //привязка к нему набора циклов и сохранение
+            EduPlan sABach2009 = es.findUniqueOrPersist(new EduPlan(sABach, 4.0, tFGPNT, DateTimeUtils.createCalendar(1, 9, 2009), eduPlanDisciplineCyclessABach2009));
         }
     }
 }

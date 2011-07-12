@@ -1,18 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.cpu.core.eduprocplanning.entities;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
 import ua.orion.core.persistence.AbstractEntity;
 
 /**
- * Цикл дисциплин в привязке к конкретномуучебному плану
+ * Цикл дисциплин в привязке к конкретному учебному плану
  * @author kgp
  */
 @Entity
@@ -20,9 +14,6 @@ import ua.orion.core.persistence.AbstractEntity;
 public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycle> {
 
     private static final long serialVersionUID = 1L;
-    
-    //Поле связи с учебным планом
-    private EduPlan eduPlan;
     //Название цикла дисциплин (берётся из справочника)
     private EPPCycle ePPCycle;
     //Порядковый номер цикла дисциплин (берется из ОПП)
@@ -34,30 +25,20 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     //Общее количество кредитов на дисциплины цикла
     private Double cycleTotalCredits;
     //Дисциплины цикла учебного плана
-    private SortedSet<EduPlanDiscipline> eduPlanCycleDisciplines = new TreeSet<EduPlanDiscipline>();
+    private Set<EduPlanDiscipline> eduPlanCycleDisciplines = new HashSet<EduPlanDiscipline>();
 
     public EduPlanDisciplineCycle() {
     }
 
-    public EduPlanDisciplineCycle(EduPlan eduPlan, EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber, 
-            Boolean isRegulatory, Double cycleTotalCredits) {
-        this.eduPlan = eduPlan;
+    public EduPlanDisciplineCycle(EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
+            Boolean isRegulatory, Double cycleTotalCredits, Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
         this.ePPCycle = ePPCycle;
         this.eduPlanDisciplineCycleNumber = eduPlanDisciplineCycleNumber;
         this.isRegulatory = isRegulatory;
         this.cycleTotalCredits = cycleTotalCredits;
+        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
     }
 
-    //Двунаправленная ассоциация с учебным планом
-    @ManyToOne(optional=false)
-    public EduPlan getEduPlan() {
-        return eduPlan;
-    }
-
-    public void setEduPlan(EduPlan eduPlan) {
-        this.eduPlan = eduPlan;
-    }
-    
     //Однонаправленная ассоциация со справочником циклов освітньо-професійних програм
     @JoinColumn(nullable = false)
     @ManyToOne
@@ -93,23 +74,25 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
         this.cycleTotalCredits = ePPCycleTotalCredits;
     }
 
-     /**
+    /**
      * Геттер для отображения общего количества часов цикла дисциплины в гриде 
      * (сеттер для вычислимого поля, как и само поле, не нужны)
      */
     @Transient
     public Double getCycleTotalHours() {
-        return cycleTotalCredits*NormativeValue.ECTSCREDIT;
+        return cycleTotalCredits * NormativeValue.ECTSCREDIT;
     }
 
-    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
-    @Sort(type = SortType.NATURAL)
-    @OneToMany(mappedBy = "eduPlanDisciplineCycle")
-    public SortedSet<EduPlanDiscipline> getEduPlanCycleDisciplines() {
+    //Однонаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(schema = "uch", joinColumns = {
+        @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "EDUPLANDISCIPLINE_ID")})
+    public Set<EduPlanDiscipline> getEduPlanCycleDisciplines() {
         return eduPlanCycleDisciplines;
     }
 
-    public void setEduPlanCycleDisciplines(SortedSet<EduPlanDiscipline> eduPlanCycleDisciplines) {
+    public void setEduPlanCycleDisciplines(Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
         this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
     }
 
