@@ -14,6 +14,7 @@ import ua.orion.core.persistence.AbstractEntity;
 public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycle> {
 
     private static final long serialVersionUID = 1L;
+    private EduPlan eduPlan;
     //Название цикла дисциплин (берётся из справочника)
     private EPPCycle ePPCycle;
     //Порядковый номер цикла дисциплин (берется из ОПП)
@@ -37,6 +38,16 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
         this.isRegulatory = isRegulatory;
         this.cycleTotalCredits = cycleTotalCredits;
         this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
+    }
+
+    //Двунаправленная связь с учебным планом
+    @ManyToOne
+    public EduPlan getEduPlan() {
+        return eduPlan;
+    }
+
+    public void setEduPlan(EduPlan eduPlan) {
+        this.eduPlan = eduPlan;
     }
 
     //Однонаправленная ассоциация со справочником циклов освітньо-професійних програм
@@ -83,7 +94,7 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
         return cycleTotalCredits * NormativeValue.ECTSCREDIT;
     }
 
-    //Однонаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
+    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(schema = "uch", joinColumns = {
         @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {

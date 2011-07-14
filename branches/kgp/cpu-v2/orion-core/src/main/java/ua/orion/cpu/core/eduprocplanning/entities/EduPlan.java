@@ -169,13 +169,12 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     
     //TODO Написать компаратор, выводящий циклы в порядке возрастания их номера в учебном плане (eduPlanDisciplineCycleNumber)
     /**
-     * Однонаправленная ассоциация с EduPlanDisciplineCycle
+     * Двунаправленная ассоциация с EduPlanDisciplineCycle
      * @return набор циклов дисциплин данного учебного плана
      */
 //    @Sort(type = SortType.COMPARATOR, comparator=EduPlanDisciplineCycle.EduPlanDisciplineCycleComparator.class)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(schema="uch", joinColumns = { @JoinColumn(name = "EDUPLAN_ID") }, inverseJoinColumns = { @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID") })
-//    @JoinColumn(name = "EDUPLAN_ID")
     public Set<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
         return eduPlanDisciplineCycles;
     }

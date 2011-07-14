@@ -14,6 +14,8 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     private static long serialVersionUID = 1L;
     
+    //Поле связи с циклом учебного плана, к которому принадлежит дисциплина
+    private EduPlanDisciplineCycle eduPlanDisciplineCycle;
     //является ли дисциплина обязательной или выборочной (она может принадлежать 
     //как к нормативным, так и к выборочным циклас)
     private Boolean isMandatory;
@@ -69,7 +71,17 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         this.practicesHours = practicesHours;
     }
     
-    public Boolean getIsMandatory() {
+    //Двунаправленная ассоциация с циклом, к которому принадлежит данная дисциплина
+    @ManyToOne
+    public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
+        return eduPlanDisciplineCycle;
+    }
+
+    public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
+        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
+    }
+    
+     public Boolean getIsMandatory() {
         return isMandatory;
     }
 
@@ -204,17 +216,15 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         } catch (NullPointerException e) {
         }
         try {
-//            eduPlan = eduPlanDisciplineCycle.getEduPlan().toString();
+            eduPlan = eduPlanDisciplineCycle.getEduPlan().toString();
         } catch (NullPointerException e) {
         }
-//        return name + " " + eduPlan;
-        return name;
+        return name + " " + eduPlan;
     }
 
     @Override
     protected boolean entityEquals(EduPlanDiscipline obj) {
-//        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlanDisciplineCycle.getEduPlan(), obj.eduPlanDisciplineCycle.getEduPlan());
-        return aEqualsField(this.discipline.getName(), obj.discipline.getName());
+        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlanDisciplineCycle.getEduPlan(), obj.eduPlanDisciplineCycle.getEduPlan());
     }
 
     @Override
