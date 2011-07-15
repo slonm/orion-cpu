@@ -5,3 +5,7 @@ table.t-data-grid tbody tr td.isObsolete {
 table.t-data-grid tbody tr td.rang {
     text-align: right;
 }
+
+DIV.t-error-popup {
+    z-index: 9999
+}
