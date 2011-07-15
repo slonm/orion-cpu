@@ -9,7 +9,6 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
-import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -45,9 +44,9 @@ public class Crud {
     private ComponentEventLinkEncoder componentEventLinkEncoder;
     //---Locals---
     @Parameter(allowNull=false)
-    private Class<? extends IEntity> objectClass;
+    private Class<?> objectClass;
     @Persist
-    private IEntity object;
+    private Object object;
     @Persist
     @Property(write = false)
     private String mode;
@@ -69,14 +68,18 @@ public class Crud {
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public IEntity getObject() {
+    public Object getObject() {
         return object;
     }
 
+    public String getId(){
+        return entityService.getPrimaryKey(object).toString();
+    }
+    
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public void setObject(IEntity object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 
@@ -90,7 +93,7 @@ public class Crud {
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public void setObjectClass(Class<? extends IEntity> objectClass) {
+    public void setObjectClass(Class<?> objectClass) {
         this.objectClass = objectClass;
     }
 
@@ -150,6 +153,7 @@ public class Crud {
     }
 
     public Object onDelete(Integer id) {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         error = null;
         try {
             object = entityService.find(objectClass, id);
