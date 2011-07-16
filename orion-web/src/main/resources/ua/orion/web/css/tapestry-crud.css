@@ -19,6 +19,7 @@ a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic  {
 
 div.crud-links {
     float: left;
+    white-space: nowrap;
 } 
 .crud-view-pic{
     background-image: url(../images/view.png);
@@ -36,7 +37,11 @@ div.crud-links {
     display: block;
 }
 
-form label, form input {
+label:after {
+    content: ":";
+}
+
+/*form label, form input {
     display: block;
     padding: 0;
     margin: 0;
@@ -54,12 +59,9 @@ form label, form div.t-submit input {
     float: left;
     clear: both;
 }
+*/
 
-label:after {
-    content: ":";
-}
-
-form input[type="submit"] {
+/*form input[type="submit"] {
     margin-left: 13em;
     width: auto;	
 }
@@ -168,7 +170,7 @@ ul.t-crud-tree-select li.disabled {
 ul.t-crud-tree-select li.checked ul input, ul.t-crud-tree-select li.checked ul label {
     background-color: white;
 }
-
+*/
 :checked {
     background-color: blue;
 }
