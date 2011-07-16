@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-              xmlns:p="tapestry:parameter"
-              xmlns:s="tapestry-library:security">
+     xmlns:p="tapestry:parameter"
+     xmlns:s="tapestry-library:security">
     <t:zone t:id="listZone">
         <t:if test="error">
             <div class="t-error">${error}</div>
         </t:if>
-        <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--для вызова метода скрытия окна-->
+        <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--вызов скрытия окна-->
         <t:grid source="objects" row="object" inplace="true" add="action"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
@@ -29,22 +29,22 @@
     </s:HasPermission>
     <t:block id="editBlock">
         <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" /><!--для вызова метода показа окна-->
+            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" /><!--вызов показа окна-->
             <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                             zone="listZone" context="object" submitLabel="message:action.edit"/>
             <p:else>
-                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" /><!--для вызова метода показа окна-->
+                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" /><!--вызов показа окна-->
                 <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                 zone="listZone" submitLabel="message:action.add"/>
             </p:else>    
         </t:if>
     </t:block>
     <t:block id="viewBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" /><!--для вызова метода показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" /><!--вызов показа окна-->
         <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
     </t:block>
     <t:block id="deleteBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" /><!--для вызова метода показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" /><!--вызов показа окна-->
         <table>
             <tr>
                 <td>
@@ -59,7 +59,9 @@
     <t:ck.Window t:id="popupWindow" t:style="bluelighting" show="false"
                  modal="true" title="mode"
                  width="900" height="500" style="z-index:-1">
-        <t:zone t:id="popupZone"/>
-        <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
+        <div class="window-content">
+            <t:zone t:id="popupZone"/>
+            <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
+        </div>
     </t:ck.Window>
 </div>

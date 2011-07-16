@@ -9,3 +9,12 @@ table.t-data-grid tbody tr td.rang {
 DIV.t-error-popup {
     z-index: 9999
 }
+
+div.t-beaneditor-row {
+    white-space: nowrap;
+}
+
+div.window-content {
+    font: 15px Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
