@@ -10,17 +10,25 @@
         <t:grid source="objects" row="object" inplace="true" add="action"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
-                <div class="crud-links">
-                    <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
-                        <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
-                    </s:HasPermission>
-                    <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                        <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
-                    </s:HasPermission>
-                    <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
-                        <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
-                    </s:HasPermission>
-                </div>
+                <table class="crud-links">
+                    <tr>
+                        <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
+                            <td>
+                                <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
+                            </td>
+                        </s:HasPermission>
+                        <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                            <td>
+                                <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
+                            </td>
+                        </s:HasPermission>
+                        <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
+                            <td>
+                                <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
+                            </td>
+                        </s:HasPermission>
+                    </tr>
+                </table>
             </p:actionCell>
         </t:grid>
     </t:zone>

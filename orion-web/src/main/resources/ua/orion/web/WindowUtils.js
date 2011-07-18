@@ -18,7 +18,12 @@ Tapestry.Initializer.showCkWindow = function(opt){
     if(opt.atCenter!==false) win.showCenter(opt.modal);
     else win.show(opt.modal);
     if(opt.title) win.setTitle(opt.title);
-    
+}
+
+Tapestry.Initializer.updateCkWindow = function(opt){
+    var win=$(opt.window).getStorage().ck_window;
+    win.updateWidth();
+    win.updateHeight();
 }
 
 Tapestry.Initializer.closeCkWindow = function(opt){

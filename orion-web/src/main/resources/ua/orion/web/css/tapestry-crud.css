@@ -17,10 +17,10 @@ a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic  {
     float: left;
 }
 
-div.crud-links {
-    float: left;
-    white-space: nowrap;
-} 
+TABLE.crud-links TBODY TR TD {
+    border: 0px;
+}
+
 .crud-view-pic{
     background-image: url(../images/view.png);
 }
