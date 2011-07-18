@@ -8,6 +8,7 @@ import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 /**
@@ -37,6 +38,15 @@ public class InitCall {
      */
     @Parameter(value = "true", defaultPrefix = BindingConstants.LITERAL, allowNull = false)
     private boolean ajax;
+    
+    /**
+     * Sets the priority for JavaScript initialization scripting. InitializationPriority allows coarse-grained control
+     * over the order in which initialization occurs on the client. The default is normally {@link #NORMAL}.
+     * Valid values: IMMEDIATE,EARLY,NORMAL,LATE
+     */
+    @Parameter(value = "NORMAL", defaultPrefix = BindingConstants.LITERAL, allowNull = false)
+    private String priority;
+    
     @Environmental
     private JavaScriptSupport javascriptSupport;
     @Inject
@@ -50,7 +60,7 @@ public class InitCall {
             for (String name : resources.getInformalParameterNames()) {
                 options.put(name, resources.getInformalParameter(name, String.class));
             }
-            javascriptSupport.addInitializerCall(function, options);
+            javascriptSupport.addInitializerCall(InitializationPriority.valueOf(priority), function, options);
         }
         return false;
     }
