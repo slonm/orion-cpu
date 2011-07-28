@@ -15,6 +15,7 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
+import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
@@ -28,6 +29,7 @@ import ua.orion.web.CompositeMessages;
 import ua.orion.web.JPAAnnotationsConstraintGenerator;
 import ua.orion.web.JSR303AnnotationsConstraintGenerator;
 import ua.orion.web.OrionWebSymbols;
+import ua.orion.web.data.FieldSetMode;
 
 /**
  *
@@ -188,6 +190,7 @@ public class OrionWebIOCModule {
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
             @InjectService("MetaLinkCoercion") Coercion coercion) {
+        configuration.add(CoercionTuple.create(String.class, FieldSetMode.class, StringToEnumCoercion.create(FieldSetMode.class)));
         addTuple(configuration, IMenuLink.class, Class.class, coercion);
         addTuple(configuration, EventContext.class, Object[].class,
                 new Coercion<EventContext, Object[]>() {
@@ -242,6 +245,8 @@ public class OrionWebIOCModule {
 //        configuration.add(new DisplayBlockContribution("boolean", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new DisplayBlockContribution("booleanSelect", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new EditBlockContribution("booleanSelect", "ori/PropertyBlocks", "editBooleanSelect"));
+        
+        configuration.add(new DisplayBlockContribution("number", "ori/PropertyBlocks", "displayNumber"));
     }
 
     /*
@@ -314,5 +319,5 @@ public class OrionWebIOCModule {
         configuration.add("JPAAnnotation", new JPAAnnotationsConstraintGenerator());
         configuration.add("JSR303Annotation", new JSR303AnnotationsConstraintGenerator());
     }
-
+    
 }

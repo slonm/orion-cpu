@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
+import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
@@ -23,6 +24,15 @@ public class Layout {
     @Property
     @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
     private String title;
+    @Property
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private Block head;
+    @Property
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private Block style;
+    @Property
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private Block script;
     /**
      * Page navigation menu
      */
@@ -39,7 +49,7 @@ public class Layout {
     public String getRole() {
         return thRole.getRole();
     }
-    
+
     public Object getMenudata() {
         return defaultMenudata();
     }
@@ -62,5 +72,4 @@ public class Layout {
         response.sendRedirect(request.getContextPath());
         return false;
     }
-
 }
