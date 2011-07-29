@@ -135,7 +135,7 @@ public class Crud {
 //            return BaseEntity.getFullClassName(getEntityClass());
 //        }
 //        return null;
-//    }
+//    }  
     public Object onActivate(EventContext context) {
         if (!isComponentEventRequst()) {
             try {

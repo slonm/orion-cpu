@@ -12,7 +12,7 @@
                     имя объекта eduPlanDisciplineCycle.ePPCycle,
                     являющегося полем класса и указанным в свойстве value компонента, -->
                     <td><t:pagelink page="eduprocplanning/EduPlanDisciplineCycleWeb" context="eduPlanDisciplineCycle.id">${eduPlanDisciplineCycle}</t:pagelink></td>
- <!--                   <td>${eduPlanDisciplineCycle.ePPCycle}</td> -->
+                <!--                   <td>${eduPlanDisciplineCycle.ePPCycle}</td> -->
                 </tr>
             </t:loop>
         </table>
@@ -22,25 +22,28 @@
     учебного плана -->
     <t:block id="EditEduPlanDisciplineCycle">
         <!--Отображать PropertyBlock для объемов необходимо в таблице-->
-        <table class="t-loop">
-                
-            <tr><th class="f-left">${message:property.EduPlan.EduPlanDisciplineCycles}<br/> 
-              <!--      <td>${message:entity.EPPCycle}</td> -->
-                    <td>${message:property.EduPlanDisciplineCycle.EduPlanDisciplineCycleNumber}</td>
-                    <td>${message:property.EduPlanDisciplineCycle.IsRegulatory}</td>
-                    <td>${message:property.EduPlanDisciplineCycle.EPPCycleTotalCredits}</td> 
-                </th>
-            </tr>
-            <t:ajaxformloop t:id="eduPlanDisciplineCycles">
-                <tr>
-           <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
-                    <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
-                    <td><t:checkbox t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
+        <div id="eduPlanPBContainer">
+            <table class="t-loop t-data-grid" id="eduPlanPBContainerTable" style="text-align: center"><thead>
+                    <tr><th>${message:property.EduPlan.EduPlanDisciplineCycles}</th>
+                        <!--      <td>${message:entity.EPPCycle}</td> -->
+                        <th>${message:property.EduPlanDisciplineCycle.EduPlanDisciplineCycleNumber}</th>
+                        <th>${message:property.EduPlanDisciplineCycle.IsRegulatory}</th>
+                        <th>${message:property.EduPlanDisciplineCycle.EPPCycleTotalCredits}</th> 
+                        <th></th>
+                    </tr></thead><tbody>
+                <t:ajaxformloop t:id="eduPlanDisciplineCycles">
+                    <tr>
+                        <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
+                        <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
+                    <td><t:checkbox style="margin-left: auto; margin-right: auto" t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
                     <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
-                </tr>
-                <t:removerowlink>${message:action.removeCycle}</t:removerowlink>
-            </t:ajaxformloop>
-        </table>
+                    <td></td>
+                    <td><t:removerowlink class="crud-del-pic"/></td>
+                    </tr>
+                </t:ajaxformloop>
+                </tbody>
+            </table>
+        </div>
     </t:block> 
 
 </div>

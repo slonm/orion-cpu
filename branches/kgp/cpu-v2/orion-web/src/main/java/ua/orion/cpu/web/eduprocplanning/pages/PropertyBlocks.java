@@ -78,8 +78,17 @@ public class PropertyBlocks {
         return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
     }
 
+    /*
+     * Добавил сеттер, но почему то в него не заходит
+     */
+    public void seteduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
+        tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+        tmpSet = eduPlanDisciplineCycles;
+    }
+
     /**
      * Геттер поля eduPlanDisciplineCycle данного класса
+     * @return 
      */
     public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
         return eduPlanDisciplineCycle;
@@ -91,6 +100,11 @@ public class PropertyBlocks {
 
     public Double getCycleTotalCredits(){
         return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
+    }
+
+    
+    public void setCycleTotalCredits(Double cycleTotalCredits) {
+        this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
     }
 
     /**
