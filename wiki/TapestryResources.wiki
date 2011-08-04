@@ -8,3 +8,8 @@
   * [http://wiki.apache.org/tapestry/Tapestry5HowTos Tapestry5HowTos]
   * [http://jumpstart.doublenegative.com.au/jumpstart JumpStart]
   * [https://builds.apache.org/job/tapestry-trunk-freestyle/ tapestry-trunk on Jankins]
+
+
+==Библиотеки компонентов==
+
+  * Weaves [http://intercommitweavesdemo.intercommit.cloudbees.net/editableselectboxdemo demo] [https://github.com/intercommit/Weaves source]
