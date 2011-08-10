@@ -14,3 +14,4 @@
 
   * Weaves [http://intercommitweavesdemo.intercommit.cloudbees.net/editableselectboxdemo demo] [https://github.com/intercommit/Weaves source]
   * [https://github.com/argoyle/tapestry-tagselect tapestry-tagselect]
+  * [http://code.google.com/p/tapestry5-treegrid/ tapestry5-treegrid]
