@@ -23,21 +23,24 @@
     <t:block id="EditEduPlanDisciplineCycle">
         <!--Отображать PropertyBlock для объемов необходимо в таблице-->
         <div id="eduPlanPBContainer">
-            <table class="t-loop t-data-grid" id="eduPlanPBContainerTable" style="text-align: center"><thead>
-                    <tr><th>${message:property.EduPlan.EduPlanDisciplineCycles}</th>
+            <b>${message:property.EduPlan.EduPlanDisciplineCycles}:</b>
+            <table class="t-loop t-data-grid" id="eduPlanPBContainerTable" style="text-align: center">
+                <thead>
+                    <tr>
                         <!--      <td>${message:entity.EPPCycle}</td> -->
                         <th>${message:property.EduPlanDisciplineCycle.EduPlanDisciplineCycleNumber}</th>
                         <th>${message:property.EduPlanDisciplineCycle.IsRegulatory}</th>
                         <th>${message:property.EduPlanDisciplineCycle.EPPCycleTotalCredits}</th> 
                         <th></th>
-                    </tr></thead><tbody>
+                    </tr>
+                </thead>
+                <tbody>
                 <t:ajaxformloop t:id="eduPlanDisciplineCycles">
                     <tr>
                         <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
                         <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
                     <td><t:checkbox style="margin-left: auto; margin-right: auto" t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
                     <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
-                    <td></td>
                     <td><t:removerowlink class="crud-del-pic"/></td>
                     </tr>
                 </t:ajaxformloop>
