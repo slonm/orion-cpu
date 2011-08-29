@@ -29,6 +29,7 @@
                     <tr>
                         <!--      <td>${message:entity.EPPCycle}</td> -->
                         <th>${message:property.EduPlanDisciplineCycle.EduPlanDisciplineCycleNumber}</th>
+                        <th>${message:property.EduPlanDisciplineCycle.ePPCycle}</th>
                         <th>${message:property.EduPlanDisciplineCycle.IsRegulatory}</th>
                         <th>${message:property.EduPlanDisciplineCycle.EPPCycleTotalCredits}</th> 
                         <th></th>
@@ -39,9 +40,10 @@
                     <tr>
                         <!--         <td><t:select t:id="ePPCycle" value="eduPlanDisciplineCycle.ePPCycle"/></td> -->
                         <td><t:textfield t:id="number" value="eduPlanDisciplineCycle.eduPlanDisciplineCycleNumber"/></td>
-                    <td><t:checkbox style="margin-left: auto; margin-right: auto" t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
-                    <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
-                    <td><t:removerowlink class="crud-del-pic"/></td>
+                        <td><t:select t:id="ePPCycleNameSelect" model="ePPCycleNameSelectModel" value="ePPCycleName"/></td>
+                        <td><t:checkbox style="margin-left: auto; margin-right: auto" t:id="isRegulatory" value="eduPlanDisciplineCycle.isRegulatory"/></td>
+                        <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
+                        <td><t:removerowlink class="crud-del-pic"/></td>
                     </tr>
                 </t:ajaxformloop>
                 </tbody>

@@ -1,21 +1,27 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.naming.event.EventContext;
+import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.AjaxFormLoop;
 import org.apache.tapestry5.corelib.components.Loop;
+import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
 import org.tynamo.jpa.annotations.CommitAfter;
 import ua.orion.core.services.EntityService;
+import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  * Блоки для beaneditor
@@ -28,6 +34,9 @@ public class PropertyBlocks {
     private Messages messages;
     @Inject
     private EntityService es;
+    @Inject
+    @Property(write = false)
+    private TapestryDataSource dataSource;
     //@Environmental определяет поле, которое в runtime заменяется read-only значением,
     //полученным от службы Environment (Обеспечивает доступ к объектам окружения,
     //создаваемыми используемыми в классе компонентами - форма позднего связывания.)
@@ -62,7 +71,12 @@ public class PropertyBlocks {
     //из которого извлекаются значения для отображением в гриде в компоненте AjaxFormLoop
     @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle"})
     private AjaxFormLoop eduPlanDisciplineCycles;
-
+    @Component(parameters = {
+        "model=prop:ePPCycleNameSelectModel"
+     })
+    private Select ePPCycleNameSelect;
+    
+ 
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
      */
@@ -137,5 +151,14 @@ public class PropertyBlocks {
      */
     public String onActivate(EventContext ec) {
         return "";
+    }
+
+
+    public String getEPPCycleName(){
+        return eduPlanDisciplineCycle.getEPPCycle().getName();
+    }
+    
+    public SelectModel getEPPCycleNameSelectModel() {
+        return dataSource.getSelectModel(EPPCycle.class, "name");
     }
 }

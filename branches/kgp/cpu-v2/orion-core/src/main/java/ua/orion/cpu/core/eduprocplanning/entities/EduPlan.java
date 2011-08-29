@@ -27,6 +27,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Calendar introducingDate;
     //Пользовательский тип данных для вывода списка циклов учебного плана в гриде
     @DataType("EduPlanDisciplineCycles")
+    @OrderBy("eduPlanDisciplineCycleNumber")
     private Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new HashSet<EduPlanDisciplineCycle>();
 
     public EduPlan() {

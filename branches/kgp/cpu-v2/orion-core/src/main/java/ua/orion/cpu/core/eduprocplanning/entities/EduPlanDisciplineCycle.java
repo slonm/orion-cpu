@@ -121,8 +121,9 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
         return aEqualsField(ePPCycle, obj.ePPCycle);
     }
 
+    
     @Override
     public int compareTo(EduPlanDisciplineCycle o) {
-        return o.toString().compareTo(o.toString());
+        return o.eduPlanDisciplineCycleNumber.compareTo(o.eduPlanDisciplineCycleNumber);
     }
 }
