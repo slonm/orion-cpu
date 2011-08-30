@@ -19,6 +19,7 @@ public abstract class AbstractNamedEntity<T extends AbstractNamedEntity<?>> exte
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }

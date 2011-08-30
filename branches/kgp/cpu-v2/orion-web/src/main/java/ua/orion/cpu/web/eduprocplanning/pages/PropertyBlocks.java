@@ -1,7 +1,5 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import javax.naming.event.EventContext;
 import org.apache.tapestry5.SelectModel;
@@ -35,7 +33,6 @@ public class PropertyBlocks {
     @Inject
     private EntityService es;
     @Inject
-    @Property(write = false)
     private TapestryDataSource dataSource;
     //@Environmental определяет поле, которое в runtime заменяется read-only значением,
     //полученным от службы Environment (Обеспечивает доступ к объектам окружения,
@@ -72,32 +69,31 @@ public class PropertyBlocks {
     @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle"})
     private AjaxFormLoop eduPlanDisciplineCycles;
     @Component(parameters = {
-        "model=prop:ePPCycleNameSelectModel"
-     })
+	"model=prop:ePPCycleNameSelectModel"
+    })
     private Select ePPCycleNameSelect;
-    
- 
+
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
      */
     public Set getEduPlanDisciplineCyclesD() {
-        tmpSet = (Set<EduPlanDisciplineCycle>) displayContext.getPropertyValue();
-        return tmpSet;
+	tmpSet = (Set<EduPlanDisciplineCycle>) displayContext.getPropertyValue();
+	return tmpSet;
     }
 
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в AjaxFormLoop
      */
     public Set getEduPlanDisciplineCyclesE() {
-        return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+	return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
     }
 
     /*
      * Добавил сеттер, но почему то в него не заходит
      */
     public void seteduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
-        tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
-        tmpSet = eduPlanDisciplineCycles;
+	tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+	tmpSet = eduPlanDisciplineCycles;
     }
 
     /**
@@ -105,20 +101,19 @@ public class PropertyBlocks {
      * @return 
      */
     public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
-        return eduPlanDisciplineCycle;
+	return eduPlanDisciplineCycle;
     }
 
     public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
+	this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
     }
 
-    public Double getCycleTotalCredits(){
-        return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
+    public Double getCycleTotalCredits() {
+	return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
     }
 
-    
     public void setCycleTotalCredits(Double cycleTotalCredits) {
-        this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
+	this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
     }
 
     /**
@@ -127,11 +122,11 @@ public class PropertyBlocks {
      */
     @CommitAfter
     Object onAddRow() {
-        EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
-        eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
-        //т.к. ассоциаиция однонаправленная - нужно раскомментрировать для двунаправленной ассоциации
+	EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
+	eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
+	//т.к. ассоциаиция однонаправленная - нужно раскомментрировать для двунаправленной ассоциации
 //    eduPlanDisciplineCycle.setEduPlan(eduPlan);
-        return ePDCycle;
+	return ePDCycle;
     }
 
     /**
@@ -140,7 +135,7 @@ public class PropertyBlocks {
      */
     @CommitAfter
     void onRemoveRow(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        es.remove(eduPlanDisciplineCycle);
+	es.remove(eduPlanDisciplineCycle);
     }
 
     /**
@@ -150,15 +145,29 @@ public class PropertyBlocks {
      * @author sl
      */
     public String onActivate(EventContext ec) {
-        return "";
+	return "";
     }
 
-
-    public String getEPPCycleName(){
-        return eduPlanDisciplineCycle.getEPPCycle().getName();
-    }
     
+    /**
+     * Метод получения цикла дисциплин. 
+     * Выполняется для каждого цикла дисциплин в учебном плане. 
+     * Используется для того, чтобы определить текущий справочник в цикле. 
+     * @return Цикл дисциплин, поступающих из освтньо-професійних програм
+     */
+    public EPPCycle getEPPCycleName() {
+	return eduPlanDisciplineCycle.getEPPCycle();
+    }
+
+    /**
+     * Сохранение цикла дисциплин для определенного учебного плана.
+     * @param cycle - выбранный цикл.
+     */
+    public void setEPPCycleName(EPPCycle cycle) {
+	eduPlanDisciplineCycle.setEPPCycle(cycle);
+    }
+
     public SelectModel getEPPCycleNameSelectModel() {
-        return dataSource.getSelectModel(EPPCycle.class, "name");
+	return dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
     }
 }

@@ -253,9 +253,19 @@ span.menutitle a{
     margin-left: auto;
     margin-right: auto;
     width: 500px;
+    height: 170px;
+    overflow-x: scroll;
+    border-style: solid;
+    border-color: cornflowerblue;
+    background-color: #99ccff;
 }
 
+/* Таблица, содержащая циклы в пл.уч.процесса */
 #eduPlanPBContainerTable{
     width: 100%;
-    overflow-x: scroll;
+}
+
+/* Системные надписи на форме. Например, 'AddRow' */
+.t-forminjector{
+   font-weight: bold;
 }
