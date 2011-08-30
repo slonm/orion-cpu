@@ -1,7 +1,11 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import javax.naming.event.EventContext;
+import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
@@ -10,6 +14,7 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.AjaxFormLoop;
 import org.apache.tapestry5.corelib.components.Loop;
 import org.apache.tapestry5.corelib.components.Select;
+import org.apache.tapestry5.internal.SelectModelImpl;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PropertyEditContext;
@@ -148,7 +153,6 @@ public class PropertyBlocks {
 	return "";
     }
 
-    
     /**
      * Метод получения цикла дисциплин. 
      * Выполняется для каждого цикла дисциплин в учебном плане. 
@@ -168,6 +172,16 @@ public class PropertyBlocks {
     }
 
     public SelectModel getEPPCycleNameSelectModel() {
-	return dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
+	SelectModel selectModel = dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
+	List<OptionModel> models = selectModel.getOptions();
+	Collections.sort(models, new Comparator<OptionModel>() {
+
+	    @Override
+	    public int compare(OptionModel o1, OptionModel o2) {
+		return o1.getValue().toString().compareTo(o2.getValue().toString());
+	    }
+	});
+	SelectModel a = new SelectModelImpl(selectModel.getOptionGroups(), models);
+	return a;
     }
 }

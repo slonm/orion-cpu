@@ -63,12 +63,16 @@ table.t-data-grid tbody tr:hover td{
 }
 /* Выделение ячейки с классом name, disciplineNumber в Grid */
 table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
-    background-color: #d8e3f9
+    background-color: #d8e3f9;
 }
 /* Выделение серым цветом ячейки с кнопками в Grid */
 table.t-data-grid td.action{
     background-color: #d7d7d7;
 }
+/*
+table.t-data-grid tr:nth-child(even) {
+    background-color: #d8e3f9;
+}*/
 /* Выравнивание данных в некоторых колонках Grid по центру */
 .t-data-grid .code,                          .t-data-grid .isObsolete,
 .t-data-grid .isTrainingDirection,           .t-data-grid .isKnowledgeArea,
@@ -267,5 +271,5 @@ span.menutitle a{
 
 /* Системные надписи на форме. Например, 'AddRow' */
 .t-forminjector{
-   font-weight: bold;
+    font-weight: bold;
 }
