@@ -90,6 +90,7 @@ public class Crud {
      */
     private Integer formWidth;
 
+    //TODO Написать документацию
     public boolean isComponentEventRequst() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
@@ -137,7 +138,7 @@ public class Crud {
 //        return null;
 //    }  
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+         if (!isComponentEventRequst()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();

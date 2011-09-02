@@ -1,3 +1,43 @@
-<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-
-    there will be page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<t:ori.layout title="prop:title"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter"
+              xmlns:s="tapestry-library:security">
+    <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+    <table id="crudtable">
+        <tr>
+            <td>    
+                <s:HasPermission permission="${objectClass.simpleName}:insert">
+                    <t:EventLink class="crud-add btn btnm" t:event="add" zone="popupZone"><span></span>${message:action.add}</t:EventLink><br/>
+                </s:HasPermission>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <t:zone t:id="listZone">
+                    <t:if test="error">
+                        <div class="t-error">${error}</div>
+                    </t:if>
+                    <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--для вызова метода скрытия окна-->
+                    <t:grid source="objects" row="object" inplace="true" add="action"
+                            model="dataSource.getBeanModelForList(objectClass,messages)">
+                        <p:actionCell>
+                            <div class="crud-links">
+                                <s:HasPermission permission="${objectClass.simpleName}:update:${object.id}">
+                                    <t:EventLink class="crud-edit-pic" t:event="edit" context="${object.id}" zone="popupZone" title="message:action.edit"/>
+                                </s:HasPermission>
+                                <s:HasPermission permission="${objectClass.simpleName}:read:${object.id}">
+                                    <t:EventLink class="crud-view-pic" t:event="view" context="${object.id}" zone="popupZone" title="message:action.view"/>
+                                </s:HasPermission>
+                                <s:HasPermission permission="${objectClass.simpleName}:delete:${object.id}">
+                                    <t:EventLink class="crud-del-pic" t:event="trydelete" context="${object.id}" zone="popupZone" title="message:action.del"/>
+                                </s:HasPermission>
+                            </div>
+                        </p:actionCell>
+                    </t:grid>
+                </t:zone>
+            </td>
+        </tr>
+    </table>
+</t:ori.layout>

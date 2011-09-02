@@ -104,15 +104,15 @@ public class PropertyBlocks {
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в AjaxFormLoop
      */
     public Set getEduPlanDisciplineCyclesE() {
-	return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+        return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
     }
 
     /*
      * Добавил сеттер, но почему то в него не заходит
      */
     public void seteduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
-	tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
-	tmpSet = eduPlanDisciplineCycles;
+        tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+        tmpSet = eduPlanDisciplineCycles;
     }
 
     /**
@@ -120,19 +120,19 @@ public class PropertyBlocks {
      * @return 
      */
     public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
-	return eduPlanDisciplineCycle;
+        return eduPlanDisciplineCycle;
     }
 
     public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-	this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
+        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
     }
 
     public Double getCycleTotalCredits() {
-	return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
+        return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
     }
 
     public void setCycleTotalCredits(Double cycleTotalCredits) {
-	this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
+        this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
     }
 
     /**
@@ -141,11 +141,11 @@ public class PropertyBlocks {
      */
     @CommitAfter
     Object onAddRow() {
-	EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
-	eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
-	//т.к. ассоциаиция однонаправленная - нужно раскомментрировать для двунаправленной ассоциации
+        EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
+        eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
+        //т.к. ассоциаиция однонаправленная - нужно раскомментрировать для двунаправленной ассоциации
 //    eduPlanDisciplineCycle.setEduPlan(eduPlan);
-	return ePDCycle;
+        return ePDCycle;
     }
 
     /**
@@ -154,7 +154,7 @@ public class PropertyBlocks {
      */
     @CommitAfter
     void onRemoveRow(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-	es.remove(eduPlanDisciplineCycle);
+        es.remove(eduPlanDisciplineCycle);
     }
 
     /**
@@ -164,7 +164,7 @@ public class PropertyBlocks {
      * @author sl
      */
     public String onActivate(EventContext ec) {
-	return "";
+        return "";
     }
 
     /**
@@ -174,7 +174,7 @@ public class PropertyBlocks {
      * @return Цикл дисциплин, поступающих из освтньо-професійних програм
      */
     public EPPCycle getEPPCycleName() {
-	return eduPlanDisciplineCycle.getEPPCycle();
+        return eduPlanDisciplineCycle.getEPPCycle();
     }
 
     /**
@@ -182,7 +182,7 @@ public class PropertyBlocks {
      * @param cycle - выбранный цикл.
      */
     public void setEPPCycleName(EPPCycle cycle) {
-	eduPlanDisciplineCycle.setEPPCycle(cycle);
+        eduPlanDisciplineCycle.setEPPCycle(cycle);
     }
 
     public SelectModel getEPPCycleNameSelectModel() {
