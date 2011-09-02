@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,6 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
 public class EduPlan extends AbstractEntity<EduPlan> {
 
     private static final long serialVersionUID = 1L;
-    
     private LicenseRecord licenseRecord;
     private Double trainingTerm;
     private Qualification qualification;
@@ -58,7 +58,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
         }
     }
 
-      public void setLicenseRecord(LicenseRecord licenseRecord) {
+    public void setLicenseRecord(LicenseRecord licenseRecord) {
         this.licenseRecord = Defense.notNull(licenseRecord, "licenseRecord");
     }
 
@@ -167,7 +167,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     public void setIntroducingDate(Calendar introducingDate) {
         this.introducingDate = introducingDate;
     }
-    
+
     //TODO Написать компаратор, выводящий циклы в порядке возрастания их номера в учебном плане (eduPlanDisciplineCycleNumber)
     /**
      * Двунаправленная ассоциация с EduPlanDisciplineCycle
@@ -175,7 +175,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      */
 //    @Sort(type = SortType.COMPARATOR, comparator=EduPlanDisciplineCycle.EduPlanDisciplineCycleComparator.class)
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(schema="uch", joinColumns = { @JoinColumn(name = "EDUPLAN_ID") }, inverseJoinColumns = { @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID") })
+    @JoinTable(schema = "uch", joinColumns = {
+        @JoinColumn(name = "EDUPLAN_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID")})
     public Set<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
         return eduPlanDisciplineCycles;
     }
@@ -186,7 +188,8 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     @Override
     public String toString() {
-        return (getCode() + " " + getIntroducingDate());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return (getCode() + " - " + formatter.format(getIntroducingDate().getTime()));
     }
 
     @Override
