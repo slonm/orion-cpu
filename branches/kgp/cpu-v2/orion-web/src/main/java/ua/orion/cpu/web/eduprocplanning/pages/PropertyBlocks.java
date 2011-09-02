@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import javax.naming.event.EventContext;
+import org.apache.tapestry5.Block;
 import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.Component;
@@ -62,28 +63,41 @@ public class PropertyBlocks {
     @PageActivationContext
     @Property
     private EduPlan eduPlan;
-//    @Property
+//  @Property
     private EduPlanDisciplineCycle eduPlanDisciplineCycle;
-//    //Используемый методами этого класса набор
+    //Используемый методами этого класса набор
     private Set<EduPlanDisciplineCycle> tmpSet = null;
+    //На шаблоне создан новый блок, который заменяет стандартную ссылку добавления записи компонента ajaxformloop
+    @Inject
+    private Block addRowBlock;
     //Компонент AjaxFormLoop, выводящий в бинэдитор все элементы Set<EduPlanDisciplineCycle> 
     //eduPlanDisciplineCycles
     //В параметрах компонента указаны: в source - метод getEduPlanDisciplineCycles(), возвращающий
     //набор циклов дисциплины; в value - поле текущего класса,
-    //из которого извлекаются значения для отображением в гриде в компоненте AjaxFormLoop
-    @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle"})
+    //из которого извлекаются значения для отображsением в гриде в компоненте AjaxFormLoop
+    @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle", "addRow=prop:addRowBlock"})
     private AjaxFormLoop eduPlanDisciplineCycles;
-    @Component(parameters = {
-	"model=prop:ePPCycleNameSelectModel"
-    })
-    private Select ePPCycleNameSelect;
 
     /**
+     * Метод получения блока, заменяющего стандартную ссылку добавления записи компонента ajaxformloop
+     * Используется для получения параметра addRow в ajaxformloop. Например: addRow=prop:addRowBlock
+     * @return Блок, заменющий стандартную ссылку добавления записи компонента ajaxformloop
+     */
+    public Block getAddRowBlock() {
+	return addRowBlock;
+    }
+
+    public void setAddRowBlock(Block addRowBlock) {
+	this.addRowBlock = addRowBlock;
+    }
+    
+    /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
+     * @return 
      */
     public Set getEduPlanDisciplineCyclesD() {
 	tmpSet = (Set<EduPlanDisciplineCycle>) displayContext.getPropertyValue();
-	return tmpSet;
+	return Collections.unmodifiableSet(tmpSet);
     }
 
     /**

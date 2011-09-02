@@ -256,8 +256,8 @@ span.menutitle a{
 #eduPlanPBContainer{
     margin-left: auto;
     margin-right: auto;
-    width: 500px;
-    height: 170px;
+    width: 85%;
+    height: 200px;
     overflow-x: scroll;
     border-style: solid;
     border-color: cornflowerblue;
@@ -272,4 +272,34 @@ span.menutitle a{
 /* Системные надписи на форме. Например, 'AddRow' */
 .t-forminjector{
     font-weight: bold;
+}
+
+/* Заголовок таблицы в PropertyBlocks  */
+#headerfortableinpb{
+    background: url(../images/panelbg_1.png) 0 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Кнопка_1 */
+.bbutton{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    width: 102px;
+    height: 32px;
+    background: url(../images/buttonbg_1.png) 0 0 no-repeat;
+    border-style:none;
+    padding-top: 1px;
+    text-decoration: none;
+}
+/* Кнопка_1 при наведении */
+.bbutton:hover {
+    background: url(../images/buttonbg_1_hover.png) 0 0 no-repeat;
+}
+/* Ссылка на добавление цикла при редактировании учебного плана */
+#eduPlanAddCycleLink{
+    margin-top: 4px;
+    margin-left: 4px;
 }
