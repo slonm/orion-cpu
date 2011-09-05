@@ -26,7 +26,7 @@ public class Layout {
     private String title;
     @Property
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private Block head;
+    private Block meta;
     @Property
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private Block style;
