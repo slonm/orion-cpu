@@ -17,3 +17,7 @@
   * [http://code.google.com/p/tapestry5-treegrid/ tapestry5-treegrid]
   * [http://code.google.com/p/gsoc2011-csrf-protection/ GSoC2011 Cross-site script request forgery protection for Apache Tapestry 5]
   * [https://github.com/argoyle/tapestry-breadcrumbs BreadCrumb]
+
+==Проекты на базе Tapestry==]
+
+  * [http://www.linpki.org/projects/linshare LinShare]
