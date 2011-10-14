@@ -1,5 +1,6 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
+import java.lang.Class;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
@@ -62,6 +63,9 @@ public class EduPlanDisciplineCycleWeb extends Crud {
                 }
                 eduPlanDisciplineCycle = new EduPlanDisciplineCycle();
                 //            Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
+                
+                String id = context.get(String.class, 0);
+                eduPlanDisciplineCycle=entityService.find(EduPlanDisciplineCycle.class, id);
 
                 Class<? extends IEntity> objClass = eduPlanDisciplineCycle.getClass();
                 //Если страница вызвана для класса сущности, отличного от предыдущего
@@ -73,7 +77,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
                 }
                 setObjectClass(objClass);
 
-                String id = context.get(String.class, 0);
+                
 super.getObject();
                 entityService.find(getObjectClass(), id);
                 eduPlan = ((EduPlanDisciplineCycle) getObject()).getEduPlan();

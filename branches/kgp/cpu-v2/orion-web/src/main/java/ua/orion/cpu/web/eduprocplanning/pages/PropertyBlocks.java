@@ -139,7 +139,7 @@ public class PropertyBlocks {
      * Обработчик события добавления строки в AjaxFormLoop
      * @return объект класса eduPlanDisciplineCycle, добавляемый в AjaxFormLoop
      */
-    @CommitAfter
+//    @CommitAfter
     Object onAddRow() {
         EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
         eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
@@ -152,7 +152,7 @@ public class PropertyBlocks {
      * Обработчик события удаления строки в AjaxFormLoop
      * @return объект класса eduPlanDisciplineCycle, удаляемый из AjaxFormLoop
      */
-    @CommitAfter
+//    @CommitAfter
     void onRemoveRow(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
         es.remove(eduPlanDisciplineCycle);
     }
