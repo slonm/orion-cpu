@@ -7,7 +7,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  * Базовая абстрактная сущность.
- * Содержит только поле id
+ * Содержит только поле id и метку времени
  * @author sl
  */
 @MappedSuperclass
@@ -18,20 +18,6 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
     private Integer id;
     private Timestamp lastChange;
 
-    @Version
-    @NonVisual
-    public Timestamp getLastChange() {
-        return lastChange;
-    }
-
-    public void setLastChange(Timestamp lastChange) {
-        this.lastChange = lastChange;
-    }
-
-    /**
-     * Returns the value of the <code>id</code> property.
-     * @return a {@link Integer}.
-     */
     @Id
     @GeneratedValue
     @NonVisual
@@ -41,6 +27,16 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Version
+    @NonVisual
+    public Timestamp getLastChange() {
+        return lastChange;
+    }
+
+    public void setLastChange(Timestamp lastChange) {
+        this.lastChange = lastChange;
     }
 
     /**
@@ -77,7 +73,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
         }
         throw new RuntimeException();
     }
-    
+
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
@@ -109,7 +105,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
 
     @Override
     public int hashCode() {
-        if (id==null) {
+        if (id == null) {
             return System.identityHashCode(this);
         } else {
             return id;

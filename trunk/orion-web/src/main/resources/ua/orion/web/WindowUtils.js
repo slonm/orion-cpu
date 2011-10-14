@@ -11,13 +11,22 @@
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  */
-
 Tapestry.Initializer.showCkWindow = function(opt){
     var win=$(opt.window).getStorage().ck_window;
+    //Создаем декорацию для кнопки в Bean Editor
+    decorateButtonInBeanEditor();
+    //Получаем высоту окна из параметра
+    win.height=opt.height;
+    //Получаем ширину окна из параметра
+    win.width=opt.width;
     opt.modal=opt.modal!==false?true:false;
     if(opt.atCenter!==false) win.showCenter(opt.modal);
     else win.show(opt.modal);
     if(opt.title) win.setTitle(opt.title);
+    //Создание подсказок
+    if (opt.showhints=="true"){
+        createToolTips();
+    }
 }
 
 Tapestry.Initializer.updateCkWindow = function(opt){

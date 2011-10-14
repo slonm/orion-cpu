@@ -6,7 +6,8 @@ import javax.validation.constraints.*;
 import ua.orion.cpu.core.entities.Document;
 
 /**
- * Сущность, хранящая общие сведения (шапку) лицензий
+ * Сущность, хранящая серию и номер лицензий, 
+ * а также набор лицензионных записей
  * @author kgp
  */
 @Entity

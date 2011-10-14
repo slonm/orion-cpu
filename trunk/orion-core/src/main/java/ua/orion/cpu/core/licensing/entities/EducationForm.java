@@ -8,7 +8,7 @@ import ua.orion.core.persistence.AbstractReferenceEntity;
 import ua.orion.core.persistence.IRangable;
 
 /**
- *Сущность-справочник EducationForm
+ * Справочник форм обучения
  * @author kgp
  */
 @Entity
@@ -49,6 +49,10 @@ public class EducationForm extends AbstractReferenceEntity<EducationForm>
         this.rang=rang;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     @DataType("rang")
     @NotNull

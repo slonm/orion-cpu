@@ -1,14 +1,12 @@
 package ua.orion.cpu.core.licensing.entities;
 
-
-
 import ua.orion.core.persistence.AbstractReferenceEntity;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.apache.tapestry5.beaneditor.DataType;
 
 /**
- * Сущность TrainingDirectionOrSpeciality
+ * Справочник направлений обучения или специальностей (старая/новая классификация)
  * @author sl
  */
 @Entity
@@ -48,7 +46,9 @@ public class TrainingDirectionOrSpeciality extends AbstractReferenceEntity<Train
     public void setCode(String code) {
         this.code = code;
     }
-
+     /**
+     * Позволяет в бинэдиторе и гриде выводить вместо true TrainingDirectionOrSpeciality
+     */
     @DataType("TrainingDirectionOrSpeciality")
     @NotNull
     public Boolean getIsTrainingDirection() {

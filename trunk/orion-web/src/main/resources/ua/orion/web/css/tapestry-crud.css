@@ -174,3 +174,7 @@ ul.t-crud-tree-select li.checked ul input, ul.t-crud-tree-select li.checked ul l
 :checked {
     background-color: blue;
 }
+
+table.nb tbody tr td{
+    border: none;
+}

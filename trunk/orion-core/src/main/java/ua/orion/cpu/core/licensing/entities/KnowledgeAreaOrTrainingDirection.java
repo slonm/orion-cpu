@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import org.apache.tapestry5.beaneditor.DataType;
 
 /**
- * Сущность KnowledgeAreaOrTrainingDirection
+ * Справочник областей знаний или направлений обучения (старая/новая классификация)
  * @author sl
  */
 @Entity
@@ -45,6 +45,9 @@ public class KnowledgeAreaOrTrainingDirection extends AbstractReferenceEntity<Kn
     }
 
     @NotNull
+    /**
+     * Позволяет в бинэдиторе и гриде выводить вместо true KnowledgeAreaOrTrainingDirection
+     */
     @DataType("KnowledgeAreaOrTrainingDirection")
     public Boolean getIsKnowledgeArea() {
         return isKnowledgeArea;

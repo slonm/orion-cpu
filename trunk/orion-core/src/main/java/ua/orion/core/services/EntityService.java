@@ -129,7 +129,7 @@ public interface EntityService {
      * Фасад для EntityStringValueProvider#getStringValue(Object)
      */
     String getStringValue(Object entity);
-    
+
     /*
      * Устанавливает UniqueKey у entity
      * Если UKey не поддерживается или entity не сущность,
