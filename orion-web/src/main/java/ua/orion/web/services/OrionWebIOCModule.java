@@ -246,7 +246,7 @@ public class OrionWebIOCModule {
         configuration.add(new DisplayBlockContribution("booleanSelect", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new EditBlockContribution("booleanSelect", "ori/PropertyBlocks", "editBooleanSelect"));
         
-        configuration.add(new DisplayBlockContribution("number", "ori/PropertyBlocks", "displayNumber"));
+//        configuration.add(new DisplayBlockContribution("number", "ori/PropertyBlocks", "displayNumber"));
     }
 
     /*

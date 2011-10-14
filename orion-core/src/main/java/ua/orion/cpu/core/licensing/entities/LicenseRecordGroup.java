@@ -4,7 +4,7 @@ import javax.persistence.*;
 import ua.orion.core.persistence.AbstractReferenceEntity;
 
 /**
- *
+ * Справочник названий груп лицензионных записей (их назначения)
  * @author kgp
  */
 @Entity

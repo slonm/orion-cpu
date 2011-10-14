@@ -23,6 +23,7 @@ public class LicensingSeedEntity {
     public LicensingSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(LicensingSymbols.LICENSING_LIB));
+        //---------Заполнение справочников---------
         //---------Формы обучения---------
         EducationForm stat_EF = es.findUniqueOrPersist(new EducationForm("Денна", "Ден.", EducationForm.STATIONARY_UKEY, 1));
         EducationForm corr_EF = es.findUniqueOrPersist(new EducationForm("Заочна", "Заоч.", EducationForm.CORRESPONDENCE_UKEY, 2));
@@ -39,8 +40,16 @@ public class LicensingSeedEntity {
         LicenseRecordGroup jstrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка молодших спеціалістів", LicenseRecordGroup.JUN_SPEC_TRAINING_UKEY));
         if (testData) {
             //---Списки доступа----------
-            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EducationForm:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
+            //---------Роли----------
+            //LicenseReader
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecordGroup:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "License:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecord:read,menu"));
+            
+             //LicenseAppender
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "License:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecord:read,insert,update,menu"));
             //---------Области знаний или направления подготовки----------
             KnowledgeAreaOrTrainingDirection kaotdCompSci = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Комп'ютерні науки", null, "0804", false, false));
             KnowledgeAreaOrTrainingDirection kaotdInfComp = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Інформатика та обчислювальна техніка", null, "0501", true, false));
@@ -56,14 +65,14 @@ public class LicensingSeedEntity {
             TrainingDirectionOrSpeciality tdosSA_B = es.findUniqueOrPersist(new TrainingDirectionOrSpeciality("Системний аналіз та управління", "СА", "03", true, kaotdSysSciCyber, false));
 
             //---Серия, номер и дата выдачи лицензии----------
-            License licenseCPU = es.findUniqueOrPersist(new License("АВ", "420720", createCalendar(21, 10, 2008)));
+            License licenseCPU = es.findUniqueOrPersist(new License("АВ", "529699", createCalendar(5, 11, 2010)));
             
             //---Кафедры, выполняющие обучение по лицензиям----------
-            Chair kafPIT = es.findByName(Chair.class, "кафедра програмування та інформаційних технологій");
+            Chair kafPIT = es.findByName(Chair.class, "Кафедра програмування та інформаційних технологій");
             assert kafPIT!=null;
-            Chair kafEICPHS = es.findByName(Chair.class, "кафедра управління навчальними закладами та педагогіки вищої школи");
+            Chair kafEICPHS = es.findByName(Chair.class, "Кафедра управління навчальними закладами та педагогіки вищої школи");
             assert kafEICPHS!=null;
-            Chair kafSAVM = es.findByName(Chair.class, "кафедра системного аналізу та вищої математики");
+            Chair kafSAVM = es.findByName(Chair.class, "Кафедра системного аналізу та вищої математики");
             assert kafSAVM!=null;
             //Термін закінчення ліцензій ПЗАС та ПІ
             Calendar lrCal20100701 = createCalendar(1, Calendar.JULY, 2010);
@@ -72,51 +81,39 @@ public class LicensingSeedEntity {
             
             //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
             //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно
-            //stat_EF, corr_EF обозначают дневную и заочн формы обучения----------
-
-            //Програмне забезпечення автоматизованих систем - молодші спеціалісти, заочна
-            //Эта карта будет передана в сущность по ссылке, поэтому ее нельзя использовать повторно
-            Map<EducationForm, Integer> pZASJSpecLicQuantity=new HashMap();
-            pZASJSpecLicQuantity.put(corr_EF, 30);
-            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPECTAS_JS, jSpec_EQL, pZASJSpecLicQuantity, lrCal20100701, kafPIT, forcol_LRG));
-            
-            //Програмне забезпечення автоматизованих систем - бакалаври
-            Map<EducationForm, Integer> pZASBachLicQuantity=new HashMap();
-            pZASBachLicQuantity.put(stat_EF, 60);
-            pZASBachLicQuantity.put(corr_EF, 60);
-            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_B, bach_EQL, pZASBachLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
+            //суффиксы _D, _Z обозначают дневную и заочн формы обучения----------
 
             //Програмне забезпечення автоматизованих систем - специалісти
-            Map<EducationForm, Integer> pZASSpecLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> pZASSpecLicQuantity=new TreeMap();
             pZASSpecLicQuantity.put(stat_EF, 30);
             pZASSpecLicQuantity.put(corr_EF, 30);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, spec_EQL, pZASSpecLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
 
             //Програмне забезпечення автоматизованих систем - магістри
-            Map<EducationForm, Integer> pZASMasterLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> pZASMasterLicQuantity=new TreeMap();
             pZASMasterLicQuantity.put(stat_EF, 10);
             pZASMasterLicQuantity.put(corr_EF, 10);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, master_EQL, pZASMasterLicQuantity, lrCal20100701, kafPIT, bsmtrain_LRG));
 
             //Розробка програмного забезпечення - молодші спеціалісти
-            Map<EducationForm, Integer> pPZJSpecLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> pPZJSpecLicQuantity=new TreeMap();
             pPZJSpecLicQuantity.put(corr_EF, 30);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosRPZ_JS, jSpec_EQL, pPZJSpecLicQuantity, lrCal20100701, kafPIT, jstrain_LRG));
             
             //Програмна інженерія- бакалаври, денна
-            Map<EducationForm, Integer> pIBachLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> pIBachLicQuantity=new TreeMap();
             pIBachLicQuantity.put(stat_EF, 60);
             pIBachLicQuantity.put(corr_EF, 60);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPI_B, bach_EQL, pIBachLicQuantity, lrCal20100701, kafPIT, jstrain_LRG));
 
             //Педагогіка вищої школи- магістри
-            Map<EducationForm, Integer> pVSHMasterLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> pVSHMasterLicQuantity=new TreeMap();
             pVSHMasterLicQuantity.put(stat_EF, 30);
             pVSHMasterLicQuantity.put(corr_EF, 30);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPVSH_SM, master_EQL, pVSHMasterLicQuantity, lrCal20090701, kafEICPHS, bsmtrain_LRG));
             
             //Програмна інженерія- бакалаври, денна
-            Map<EducationForm, Integer> sABachLicQuantity=new HashMap();
+            SortedMap<EducationForm, Integer> sABachLicQuantity=new TreeMap();
             sABachLicQuantity.put(stat_EF, 30);
             sABachLicQuantity.put(corr_EF, 30);
             es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSA_B, bach_EQL, sABachLicQuantity, lrCal20090701, kafSAVM, btrain_LRG));

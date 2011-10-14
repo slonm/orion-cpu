@@ -41,7 +41,7 @@ public class Crud {
     //---Locals---
     @Persist
     private Class<? extends IEntity> objectClass;
-
+    
     public boolean isComponentEventRequst() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
@@ -65,7 +65,7 @@ public class Crud {
     }
 
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+         if (!isComponentEventRequst()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
@@ -74,11 +74,11 @@ public class Crud {
                 //Если страница вызвана для класса сущности, отличного от предыдущего
                 //вызова, то сбросим все Persistent поля и отправим редирект на эту же страницу,
                 //т.к. сброс произойдеи только при следующем запросе страницы
-                if(!objClass.equals(objectClass)&&objectClass!=null){
+                if (!objClass.equals(objectClass) && objectClass != null) {
                     resources.discardPersistentFieldChanges();
                     return lastPageHolder.getLastPage();
                 }
-                objectClass=objClass;
+                objectClass = objClass;
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return startPageName;
@@ -86,4 +86,4 @@ public class Crud {
         }
         return null;
     }
-}
+    }

@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 import ua.orion.core.persistence.AbstractReferenceEntity;
 
 /**
- * Сущность-справочник EducationalQualificationLevel
+ * Справочник образовательно-квалификационных уровней
  * @author kgp
  */
 @Entity

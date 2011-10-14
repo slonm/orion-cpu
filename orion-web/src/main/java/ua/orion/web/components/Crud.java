@@ -7,9 +7,11 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import ua.orion.core.services.EntityService;
+import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -45,6 +47,13 @@ public class Crud {
     //---Locals---
     @Parameter(allowNull=false)
     private Class<?> objectClass;
+    /*
+     * Свойство, отвечающее за отображение всплывающих подсказок
+     */
+    @Inject
+    @Symbol(OrionCPUSymbols.SHOW_HINTS)
+    @Property
+    private String showHints;
     @Persist
     private Object object;
     @Persist

@@ -1,7 +1,5 @@
 package ua.orion.cpu.core.persons.entities;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,10 +15,23 @@ public class Person extends AbstractNamedEntity<Person> {
 
     private static final long serialVersionUID = 1L;
     private String firstName;
-    private String secondName;
-    private String surename;
+    private String patronymicName;
+    private String surname;
     private ScientificDegree scientificDegree;
+    private ScienceArea scienceArea;
     private AcademicRank academicRank;
+
+    public Person() {
+    }
+
+    public Person(String firstName, String patronymicName, String surname, ScientificDegree scientificDegree, ScienceArea scienceArea, AcademicRank academicRank) {
+        this.firstName = firstName;
+        this.patronymicName = patronymicName;
+        this.surname = surname;
+        this.scientificDegree = scientificDegree;
+        this.scienceArea = scienceArea;
+        this.academicRank = academicRank;
+    }
 
     @Size(min = 2)
     @NotNull
@@ -33,25 +44,29 @@ public class Person extends AbstractNamedEntity<Person> {
     }
 
     @Size(min = 2)
-    public String getSecondName() {
-        return secondName;
+    public String getPatronymicName() {
+        return patronymicName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = capitalize(secondName);
+    public void setPatronymicName(String patronymicName) {
+        this.patronymicName = capitalize(patronymicName);
     }
 
     @Size(min = 2)
     @NotNull
-    public String getSurename() {
-        return surename;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurename(String surename) {
-        this.surename = capitalize(surename);
+    public void setSurname(String surname) {
+        this.surname = capitalize(surname);
     }
 
-    @Enumerated(EnumType.STRING)
+    /*TODO Добавить валидатор, указывающий на недопустимость пустого значения scientificDegree 
+     *при непустом scienceArea и наоборот пустого scienceArea при непустом scientificDegree
+     *if(!scientificDegree.equals(null) ^ !(scienceArea)) {нельзя!!!}
+     */
+    @ManyToOne
     public ScientificDegree getScientificDegree() {
         return scientificDegree;
     }
@@ -60,7 +75,16 @@ public class Person extends AbstractNamedEntity<Person> {
         this.scientificDegree = scientificDegree;
     }
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    public ScienceArea getScienceArea() {
+        return scienceArea;
+    }
+
+    public void setScienceArea(ScienceArea scienceArea) {
+        this.scienceArea = scienceArea;
+    }
+
+    @ManyToOne
     public AcademicRank getAcademicRank() {
         return academicRank;
     }
@@ -82,12 +106,12 @@ public class Person extends AbstractNamedEntity<Person> {
     @Transient
     public String getFullNameRu() {
         StringBuilder sb = new StringBuilder();
-        sb.append(surename);
+        sb.append(surname);
         sb.append(" ");
         sb.append(firstName);
-        if (secondName != null) {
+        if (patronymicName != null) {
             sb.append(" ");
-            sb.append(secondName);
+            sb.append(patronymicName);
         }
         return sb.toString();
     }
@@ -95,12 +119,12 @@ public class Person extends AbstractNamedEntity<Person> {
     @Transient
     public String getInitialsNameRu() {
         StringBuilder sb = new StringBuilder();
-        sb.append(surename);
+        sb.append(surname);
         sb.append(" ");
         sb.append(firstName.substring(0, 1));
         sb.append(".");
-        if (secondName != null) {
-            sb.append(secondName.substring(0, 1));
+        if (patronymicName != null) {
+            sb.append(patronymicName.substring(0, 1));
             sb.append(".");
         }
         return sb.toString();
@@ -111,8 +135,31 @@ public class Person extends AbstractNamedEntity<Person> {
         StringBuilder sb = new StringBuilder();
         sb.append(firstName);
         sb.append(" ");
-        sb.append(surename);
+        sb.append(surname);
         return sb.toString();
+    }
+
+    @Transient
+    public String getSciDegreeSciAreaFull() {
+        if (scientificDegree != null && scienceArea != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(scientificDegree);
+            sb.append(" ");
+            sb.append(scienceArea);
+            return sb.toString();
+        }
+        return "";
+    }
+
+    @Transient
+    public String getSciDegreeSciAreaShort() {
+        if (scientificDegree.getShortName() != null && scienceArea.getShortName() != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(scientificDegree.getShortName());
+            sb.append(scienceArea.getShortName());
+            return sb.toString();
+        }
+        return "";
     }
 
     @Override

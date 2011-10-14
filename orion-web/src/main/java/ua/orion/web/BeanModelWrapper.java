@@ -29,6 +29,7 @@ import org.apache.tapestry5.beaneditor.RelativePosition;
  * @author sl
  */
 public class BeanModelWrapper<T> implements BeanModel<T>{
+    
     private final BeanModel<T> model;
 
     public BeanModelWrapper(BeanModel<T> model) {

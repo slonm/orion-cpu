@@ -2,34 +2,36 @@ package ua.orion.cpu.web.services;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;
-import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.Match;
-import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.SubModule;
-import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.ComponentClassResolver;
-import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
-import org.tynamo.jpa.Ejb3HibernateSymbols;
-import ua.orion.core.utils.IOCUtils;
-import ua.orion.cpu.core.OrionCPUSymbols;
+import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule;
 import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
 import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
+import ua.orion.cpu.core.persons.services.PersonsIOCModule;
 import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
-import ua.orion.cpu.web.licensing.pages.LicensingWebIOCModule;
+import ua.orion.cpu.web.eduprocplanning.services.EduProcPlanningWebIOCModule;
+import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
+import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
+import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
 import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
  * Модуль конфигурирования IOC
  */
 @SubModule({
-    LicensingIOCModule.class,
     OrionSecurityIOCModule.class,
-    OrgUnitsIOCModule.class,
     OrionCpuIOCModule.class,
+    LicensingIOCModule.class,
+    EduProcPlanningIOCModule.class,
+    OrgUnitsIOCModule.class,
+    PersonsIOCModule.class,
+    OrionSecurityWebIOCModule.class,
     LicensingWebIOCModule.class,
-    OrionSecurityWebIOCModule.class
+    EduProcPlanningWebIOCModule.class,
+    OrgUnitsWebIOCModule.class,
+    PersonsWebIOCModule.class
+    
 })
 public class AppModule {
 
