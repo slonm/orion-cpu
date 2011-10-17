@@ -42,14 +42,14 @@ public class LicensingSeedEntity {
             //---Списки доступа----------
             //---------Роли----------
             //LicenseReader
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecordGroup:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "License:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecord:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "LicenseRecordGroup:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "License:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "LicenseRecord:read,menu"));
             
              //LicenseAppender
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "License:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "LicenseRecord:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "License:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "LicenseRecord:read,insert,update,menu"));
             //---------Области знаний или направления подготовки----------
             KnowledgeAreaOrTrainingDirection kaotdCompSci = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Комп'ютерні науки", null, "0804", false, false));
             KnowledgeAreaOrTrainingDirection kaotdInfComp = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Інформатика та обчислювальна техніка", null, "0501", true, false));
