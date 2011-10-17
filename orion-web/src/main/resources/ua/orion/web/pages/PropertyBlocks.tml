@@ -26,6 +26,12 @@
         ${prop:entity}
     </t:block>
 
+    <t:block id="displayNumber">
+        <p align = "right">
+        ${prop:outputContext.propertyValue}    
+        </p>
+    </t:block>
+
     <t:block id="editEntity">
         <t:label for="entitySelect"/>
         <t:select t:id="entitySelect"/>
