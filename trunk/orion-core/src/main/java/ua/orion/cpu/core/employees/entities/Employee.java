@@ -24,4 +24,12 @@ public class Employee extends Person {
     @OneToMany(cascade=CascadeType.ALL, mappedBy="employee")
     private Set<EmployeePost> employeePosts;
 
+    public Set<EmployeePost> getEmployeePosts() {
+        return employeePosts;
+    }
+
+    public void setEmployeePosts(Set<EmployeePost> employeePosts) {
+        this.employeePosts = employeePosts;
+    }
+
 }
