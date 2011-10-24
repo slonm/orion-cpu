@@ -63,19 +63,19 @@ public class EduProcPlanningSeedEntity {
             //---Списки доступа----------
             //---------Роли----------
             //LicenseReader
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlan:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanDiscipline:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanRecord:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlan:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanDiscipline:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanRecord:read,menu"));
 
             //LicenseAppender
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseAppender", SubjectType.ROLE, "Qualification:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanDisciplineCycle:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "ePPCycle:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "Discipline:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlan:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanDiscipline:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanRecord:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "EduPlanSemester:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "Qualification:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanDisciplineCycle:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "ePPCycle:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "Discipline:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlan:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanDiscipline:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanRecord:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanSemester:read,insert,update,menu"));
 
             //---------Учебные планы----------
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
