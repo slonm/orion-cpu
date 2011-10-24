@@ -23,8 +23,8 @@ public class OrgUnitsSeedEntity {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(OrgUnitsSymbols.ORG_UNITS_LIB));
         if (testData) {
             //---Списки доступа----------
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader", SubjectType.ROLE, "Chair:read,menu"));
-            es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseAppender", SubjectType.ROLE, "Chair:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "Chair:read,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "Chair:read,insert,update,menu"));
 
             //Структура КПУ відповідно до наказів ректора #67 від 16.05.2011 та #74 від 16.05.2011
             //---Университет
