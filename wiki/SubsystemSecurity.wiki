@@ -22,7 +22,7 @@
 Полномочия хранятся в сущности Acl. Она построена по принципу максимальной универсальности. Сущность содержит три атрибута:
  * *subject* субъект полномочий. Это пользователь, роль или группа полномочий.
  * *subjectType* тип субъекта.
- * *permission* полномочие в формате WirdcardPermission Shiro
+ * *permission* полномочие в формате [http://shiro.apache.org/static/current/apidocs/org/apache/shiro/authz/permission/WildcardPermission.html Shiro WirdcardPermission]
 
 == Виды полномочий и именование полномочий==
 
