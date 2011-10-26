@@ -18,6 +18,8 @@ import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.utils.IOCUtils;
 import ua.orion.core.validation.UniqueConstraintValidator;
 import ua.orion.core.persistence.MetaEntity;
+import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningService;
+import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningServiceImpl;
 
 /**
  *
@@ -37,6 +39,7 @@ public class OrionCoreIOCModule {
         binder.bind(InheritedAnnotationProviderSource.class, InheritedAnnotationProviderSourceImpl.class);
         binder.bind(EntityService.class, EntityServiceImpl.class);
         binder.bind(ModelLabelSource.class, ModelLabelSourceImpl.class);
+        binder.bind(EduProcPlanningService.class, EduProcPlanningServiceImpl.class);
     }
 
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
