@@ -56,9 +56,9 @@ public class LicensingSeedEntity {
         Chair kafSAVM = es.findByName(Chair.class, "кафедра системного аналізу та вищої математики");
         assert kafSAVM != null;
         //Термін закінчення ліцензій ПЗАС та ПІ
-        Calendar lrCal20100701 = createCalendar(1, Calendar.JULY, 2010);
+        Calendar lrCal20100701 = createCalendar(1, 7, 2010);
         //Термін закінчення ліцензій ПВШ
-        Calendar lrCal20090701 = createCalendar(1, Calendar.JULY, 2009);
+        Calendar lrCal20090701 = createCalendar(1, 7, 2009);
 
         //---Записи лицензии-суффиксы _JS, _B, _S, _M обозначают
         //квалификационные уровни младшего специалиста, бакалавра, специалиста, магистра, соответственно

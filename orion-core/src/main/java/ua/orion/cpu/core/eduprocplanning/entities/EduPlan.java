@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.utils.Defense;
 import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
@@ -59,7 +58,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     public void setLicenseRecord(LicenseRecord licenseRecord) {
-        this.licenseRecord = Defense.notNull(licenseRecord, "licenseRecord");
+        this.licenseRecord = licenseRecord;
     }
 
     /**
