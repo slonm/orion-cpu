@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.services;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -31,7 +32,6 @@ public class EduProcPlanningSeedEntity {
 
 //    @Inject
 //    EduProcPlanningService epps;
-
     public EduProcPlanningSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
             EntityService es, EduProcPlanningService epps) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(EduProcPlanningSymbols.EDUPROC_PLANNING_LIB));
@@ -83,29 +83,14 @@ public class EduProcPlanningSeedEntity {
 
             //---------Учебные планы----------
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
-            EducationalQualificationLevel bach = es.findByUKey(EducationalQualificationLevel.class, EducationalQualificationLevel.BACHELOR_UKEY);
-            TrainingDirectionOrSpeciality tdosPI_B = es.findByName(TrainingDirectionOrSpeciality.class, "Програмна інженерія");
-            TrainingDirectionOrSpeciality tdosSA_B = es.findByName(TrainingDirectionOrSpeciality.class, "Системний аналіз");
 
-            //ПРИ ИСПОЛЬЗОВАНИИ ПОИСКА ПО ОБРАЗЦУ НЕОБХОДИМО В ОБРАЗЦЕ ЗАПОЛНЯТЬ ПОЛЯ,
-            //ПОМЕЧЕННЫЕ АННОТАЦИЕЙ @NotNull!!!
-
-//            LicenseRecord lrSamplePI = new LicenseRecord();
-//            lrSamplePI.setLicense(es.findUniqueOrPersist(new License("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010))));
-//            lrSamplePI.setEducationalQualificationLevel(bach);
-//            lrSamplePI.setTrainingDirectionOrSpeciality(tdosPI_B);
-//            lrSamplePI.setLicenseRecordGroup(es.findByName(LicenseRecordGroup.class, "Підготовка бакалаврів"));
-//            lrSamplePI.setOrgUnit(es.findByName(OrgUnit.class, "Кафедра програмування та інформаційних технологій"));
-//            lrSamplePI.setTermination(DateTimeUtils.createCalendar(1, 7, 2015));
-//            LicenseRecord pIBach = es.findUniqueOrPersist(lrSamplePI);
-
-            LicenseRecord pIBach =epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010), 
-                    bach, tdosSA_B, "Підготовка бакалаврів", "Кафедра програмування та інформаційних технологій", 
+            LicenseRecord pIBach = epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+                    EducationalQualificationLevel.BACHELOR_UKEY, "Програмна інженерія",
                     DateTimeUtils.createCalendar(1, 7, 2015));
-            LicenseRecord sABach =epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010), 
-                    bach, tdosSA_B, "Підготовка бакалаврів", "Кафедра системного аналізу та вищої математики", 
+            LicenseRecord sABach = epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+                    EducationalQualificationLevel.BACHELOR_UKEY, "Системний аналіз",
                     DateTimeUtils.createCalendar(1, 7, 2015));
-                    
+
 //                    LicenseRecord lrSampleSA = new LicenseRecord();
 //            lrSampleSA.setLicense(es.findUniqueOrPersist(new License("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010))));
 //            lrSampleSA.setEducationalQualificationLevel(bach);
