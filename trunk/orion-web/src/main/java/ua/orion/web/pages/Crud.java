@@ -2,11 +2,9 @@ package ua.orion.web.pages;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
@@ -35,9 +33,6 @@ public class Crud {
     private Logger LOG;
     @Inject
     private ComponentEventLinkEncoder componentEventLinkEncoder;
-    @Inject
-    @Symbol(SymbolConstants.START_PAGE_NAME)
-    private String startPageName;
     //---Locals---
     @Persist
     private Class<? extends IEntity> objectClass;
@@ -81,7 +76,7 @@ public class Crud {
                 objectClass = objClass;
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
-                return startPageName;
+                return "";
             }
         }
         return null;

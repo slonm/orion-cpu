@@ -1,6 +1,7 @@
 package ua.orion.cpu.web.eduprocplanning.transformers;
 
-import java.util.ListIterator;
+import java.util.*;
+import java.util.Arrays;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
@@ -24,12 +25,20 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
 
     @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
-        return transformView(model);
+        Set<String> existProps = new HashSet(model.getPropertyNames());
+        List<String> requiredProps = Arrays.asList("code",
+                "knowledgeAreaOrTrainingDirection", "trainingDirectionOrSpeciality",
+                "educationalQualificationLevel", "trainingTerm",
+                "qualification", "introducingDate");
+        existProps.removeAll(requiredProps);
+        model.exclude(existProps.toArray(new String[]{}));
+        model.reorder(requiredProps.toArray(new String[]{}));
+        return model;
     }
 
     @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return transformView(model);
+        return transformBeanModelForList(model);
     }
 
     @Override
@@ -53,38 +62,39 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
     }
 
     private <T> BeanModel<T> transformView(BeanModel<T> model) {
-        model.exclude("licenseRecord");
-        return model;
-    }
-    
-    private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
-        model.exclude("KnowledgeAreaOrTrainingDirectionCode",
-                "KnowledgeAreaOrTrainingDirectionName",
-                "code");
         return model;
     }
 
-    @Override
+    private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
+        return model;
+    }
+
+/*    @Override
     public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
         if ("TrainingDirectionOrSpeciality".equalsIgnoreCase(property)) {
             ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
-            while(it.hasNext()){
-                OptionModel om=it.next();
-                final TrainingDirectionOrSpeciality tdos=(TrainingDirectionOrSpeciality) om.getValue();
+            while (it.hasNext()) {
+                OptionModel om = it.next();
+                final TrainingDirectionOrSpeciality tdos = (TrainingDirectionOrSpeciality) om.getValue();
                 it.set(new AbstractOptionModel() {
 
-                @Override
-                public String getLabel() {
-                    return es.getStringValue(tdos.getKnowledgeAreaOrTrainingDirection())+" - "+es.getStringValue(tdos);
-                }
+                    @Override
+                    public String getLabel() {
+                        return es.getStringValue(tdos.getKnowledgeAreaOrTrainingDirection()) + " - " + es.getStringValue(tdos);
+                    }
 
-                @Override
-                public Object getValue() {
-                    return tdos;
-                }
-            });
+                    @Override
+                    public Object getValue() {
+                        return tdos;
+                    }
+                });
             }
         }
         return model;
+    }
+*/
+    @Override
+    public String transformCrudPage(String page, Class<?> entityClass) {
+        return "EduProcPlanning/EduPlans";
     }
 }

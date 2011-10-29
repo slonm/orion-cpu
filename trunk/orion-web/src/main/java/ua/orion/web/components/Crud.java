@@ -8,8 +8,6 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
-import org.apache.tapestry5.services.Request;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.web.services.TapestryDataSource;
@@ -36,14 +34,10 @@ public class Crud {
     private Messages messages;
     //---Services---
     @Inject
-    private Request request;
-    @Inject
     private EntityService entityService;
     @Inject
     @Property(write = false)
     private TapestryDataSource dataSource;
-    @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
     //---Locals---
     @Parameter(allowNull=false)
     private Class<?> objectClass;
@@ -65,10 +59,6 @@ public class Crud {
     private static final String ADD = "add";
     private static final String VIEW = "view";
     private static final String DEL = "del";
-
-    public boolean isComponentEventRequst() {
-        return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
-    }
 
     void setupRender(){
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
