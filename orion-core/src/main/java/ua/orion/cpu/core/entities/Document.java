@@ -72,7 +72,6 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
      * @return the licenseIssueDate
      */
     @Temporal(javax.persistence.TemporalType.DATE)
-    @NotNull
     public Calendar getIssue() {
         return issue;
     }

@@ -25,7 +25,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Qualification qualification;
     private Calendar introducingDate;
     //Пользовательский тип данных для вывода списка циклов учебного плана в гриде
-    @DataType("EduPlanDisciplineCycles")
+    //@DataType("EduPlanDisciplineCycles")
     @OrderBy("eduPlanDisciplineCycleNumber")
     private Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new HashSet<EduPlanDisciplineCycle>();
 
@@ -187,8 +187,12 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     @Override
     public String toString() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return (getCode() + " - " + formatter.format(getIntroducingDate().getTime()));
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return (getCode() + " - " + formatter.format(getIntroducingDate().getTime()));
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     @Override
