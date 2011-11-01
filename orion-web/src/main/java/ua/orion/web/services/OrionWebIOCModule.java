@@ -46,7 +46,7 @@ public class OrionWebIOCModule {
 
     public static void contributeTapestryDataSource(
             OrderedConfiguration<TapestryDataTransformer> configuration) {
-        
+
         configuration.addInstance("entity", EntityTapestryDataTransformer.class, "after:*");
     }
 
@@ -245,7 +245,7 @@ public class OrionWebIOCModule {
 //        configuration.add(new DisplayBlockContribution("boolean", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new DisplayBlockContribution("booleanSelect", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new EditBlockContribution("booleanSelect", "ori/PropertyBlocks", "editBooleanSelect"));
-        
+
 //        configuration.add(new DisplayBlockContribution("number", "ori/PropertyBlocks", "displayNumber"));
     }
 
@@ -276,8 +276,8 @@ public class OrionWebIOCModule {
 
             @Override
             public void advise(Invocation invocation) {
-                String page=invocation.getParameter(0).toString();
-                if ("".equals(page)||"index".equalsIgnoreCase(page)) {
+                String page = invocation.getParameter(0).toString();
+                if ("".equals(page) || "index".equalsIgnoreCase(page)) {
                     invocation.override(0, "ori/index");
                 }
                 invocation.proceed();
@@ -309,7 +309,7 @@ public class OrionWebIOCModule {
             }
         }
     }
-    
+
     /**
      * Регистация обработчика аннотаций JPA для валидации в Beaneditor
      * @param configuration
@@ -319,5 +319,4 @@ public class OrionWebIOCModule {
         configuration.add("JPAAnnotation", new JPAAnnotationsConstraintGenerator());
         configuration.add("JSR303Annotation", new JSR303AnnotationsConstraintGenerator());
     }
-    
 }

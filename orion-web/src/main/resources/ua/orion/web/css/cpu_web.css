@@ -34,41 +34,23 @@ dt{
 /* ЧАСТЬ 1 Grid */
 /* ЧАСТЬ 1.1 Ячейки Grid */
 /* Форматирование ячеек заголовков для Grid, выбора страниц в Grid */
-table.t-data-grid thead tr th,
+table.t-data-grid,
 .t-data-grid-pager a,
-.topusername,
-.td-user-logout,
 .t-palette-title{
     text-decoration: none;
-    background-image: url(../images/table_head.png);
-    color: #15428b;
     white-space: normal;
 }
 /* Форматирование текста заголовков для Grid */
 table.t-data-grid thead tr th a,
 .t-palette-title{
     font-size: 10pt;
-    color: #15428b;
     text-decoration: none; 
 }
 /* Форматирование ячеек Grid */
 table.t-data-grid tbody tr td{
     font-size: 9pt;
-    color: black;
-    background-color: #e5ecf5;
 }
-/* Выделение строки в Grid при наведении курсора мыши */
-table.t-data-grid tbody tr:hover td{
-    background-color: #fffff3;
-}
-/* Выделение ячейки с классом name, disciplineNumber в Grid */
-table.t-data-grid td.name, table.t-data-grid td.disciplineNumber{
-    background-color: #d8e3f9;
-}
-/* Выделение серым цветом ячейки с кнопками в Grid */
-table.t-data-grid td.action{
-    background-color: #d7d7d7;
-}
+
 /*
 table.t-data-grid tr:nth-child(even) {
     background-color: #d8e3f9;
@@ -94,7 +76,7 @@ table.t-data-grid tr:nth-child(even) {
 }
 /* Выравнивание кнопок в Grid */
 .t-data-grid .action{
-    min-width: 133px;
+    min-width: 60px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;  
@@ -110,16 +92,6 @@ table.t-data-grid tr:nth-child(even) {
 
 /* ЧАСТЬ 2 BeanEditor */
 /* ЧАСТЬ 2.1 Кнопки в BeanEditor, BeanDisplay */
-/* Формат кнопки в BeanEditor (Добавить/Изменить) */
-.btnbe{
-    padding:0 10px 0 10px;
-    height: 25px;
-    color: green;
-}
-/* Иконка для кнопки закрытия окна */
-.btn.close span {
-    background-image:url(../images/close.png);
-}
 /* ЧАСТЬ 2.2 Блоки в BeanEditor и BeanDisplay */
 /* После input контент не должен переносится на новую строку */
 .t-beaneditor-row input[type="text"]{
@@ -137,7 +109,6 @@ DIV.t-beaneditor{
 /* Размер шрифта и цвет для BeanDisplay */
 dl.t-beandisplay{
     font-size: 9pt;
-    background-color: white;
 }
 
 /* ЧАСТЬ 3 Кнопки */
@@ -158,47 +129,6 @@ dl.t-beandisplay{
     border-radius:8px;
     text-decoration: none;
 }
-/* Определение стиля кнопок */
-.btnm {
-    padding:0 10px 0 50px;
-    height:44px;
-    line-height:44px;
-    color:#999;
-}
-/* Определение стиль для кнопок, на которые наведена мышь */
-.btn:hover {
-    border-color:black;
-    background:#F8F8F8;
-}
-/* ЧАСТЬ 3.2 Формат иконок */
-/* Определение стиля иконок */
-.btn span {
-    display:block;
-    position:absolute;
-    top:6px;
-    left:9px;
-    width:32px;
-    height:32px;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-/* Иконка для кнопки подтверждения удаления записи */
-.btn.delete span {
-    background-image:url(../images/delete_web.png);
-}
-/* Иконка для кнопки отмены удаления записи */
-.btn.cancel span {
-    background-image:url(../images/undo.png);
-}
-/* Иконка для кнопки редактирования записи */
-.btn.edit span {
-    background-image:url(../images/edit_web.png);
-}
-/* Иконка для кнопки дабавления записи */
-.crud-add span {
-    background-image:url(../images/gtk-add.png);
-}
-
 /* ЧАСТЬ 4 Меню */
 /* ЧАСТЬ 4.1 Формат меню */
 /* Формат пунктов меню */
@@ -302,4 +232,48 @@ span.menutitle a{
 #eduPlanAddCycleLink{
     margin-top: 4px;
     margin-left: 4px;
+}
+
+/* Оформление блока для beaneditor и beandisplay */
+DIV.t-beaneditor, dl.t-beandisplay
+{
+    border: 2px solid green;
+    padding: 2px;
+    border-style: ridge;
+    border-color: cornflowerblue;
+}
+
+/* Оформление submit в beaneditor */
+input.t-beaneditor-submit
+{
+    position: relative;
+    left: 150px;
+}
+
+/* Ширина поля выбора в beaneditor */
+.t-beaneditor-row select{
+    width: 400px;
+}
+
+/* Заголовки в grid */
+table.t-data-grid thead tr th{
+    border-style: ridge;
+    border-width: 1px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    background-position: 100% 100%;
+    white-space: normal;
+}
+
+/* Установка переднего плана для календаря */
+.datePicker{
+    z-index: 1;
+}
+
+#popupZone{
+    background-color: transparent;
+}
+
+.no-background{
+    background-image: none;
 }

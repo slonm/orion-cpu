@@ -8,6 +8,8 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.web.services.TapestryDataSource;
@@ -21,6 +23,7 @@ stylesheet = "../css/tapestry-crud.css")
 @SuppressWarnings("unused")
 public class Crud {
     //---Components and component's resources---
+
     @Component
     private Zone listZone;
     @Inject
@@ -39,8 +42,10 @@ public class Crud {
     @Property(write = false)
     private TapestryDataSource dataSource;
     //---Locals---
-    @Parameter(allowNull=false)
+    @Parameter(allowNull = false)
     private Class<?> objectClass;
+    @Environmental
+    private JavaScriptSupport javascriptSupport;
     /*
      * Свойство, отвечающее за отображение всплывающих подсказок
      */
@@ -60,10 +65,10 @@ public class Crud {
     private static final String VIEW = "view";
     private static final String DEL = "del";
 
-    void setupRender(){
+    void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
     }
-    
+
     /**
      * Задано явно для возможности вызова из других классов
      */
@@ -71,10 +76,10 @@ public class Crud {
         return object;
     }
 
-    public String getId(){
+    public String getId() {
         return entityService.getPrimaryKey(object).toString();
     }
-    
+
     /**
      * Задано явно для возможности вызова из других классов
      */
@@ -97,6 +102,8 @@ public class Crud {
     }
 
     public GridDataSource getObjects() {
+        //Инициализация иконок при изменениях в получении данных
+        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "initializeIcons", "");
         return dataSource.getGridDataSource(objectClass);
     }
 

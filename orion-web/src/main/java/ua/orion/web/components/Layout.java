@@ -1,20 +1,25 @@
 package ua.orion.web.components;
 
 import java.io.IOException;
+import java.util.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.security.services.ThreadRole;
 
 /**
  * Layout component for pages.
  */
-@Import(stylesheet = {"layout/layout.css", "../css/cpu_web.css"}, library = {"../jquery.js", "../easyTooltip.js", "../cpu_effects.js"})
+@Import(stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/cupertino/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
 @SuppressWarnings("unused")
 public class Layout {
 
@@ -33,6 +38,38 @@ public class Layout {
     @Property
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private Block script;
+    @Environmental
+    private JavaScriptSupport javaScriptSupport;
+    //Подключение javascript. Используется Inject, а не import для того, чтобы 
+    //в дальнейшем подключить их в правильном порядке
+    @Inject
+    @Path("../jquery.js")
+    private Asset jQueryLibrary;
+    @Inject
+    @Path("context:webcontent/jquery-ui/js/jquery-ui-1.8.16.custom.min.js")
+    private Asset jQueryUILibrary;
+    @Inject
+    @Path("context:webcontent/jquery-ui/js/jquery.ui.selectmenu.js")
+    private Asset jQueryUISelectMenu;
+    @Inject
+    @Path("context:webcontent/jquery-ui/js/jquery-ui-i18n.js")
+    private Asset jQueryUILocalization;
+    @Inject
+    @Path("../jquery.noconflict.js")
+    private Asset jQueryNoConflictLibrary;
+    @Inject
+    @Path("../ui-interface.js")
+    private Asset jQueryUIInterfaceLibrary;
+    @Inject
+    @Path("../easyTooltip.js")
+    private Asset jQueryToolTipLibrary;
+    @Inject
+    @Path("../cpu_effects.js")
+    private Asset jQueryCPUEffectsLibrary;
+    @Inject
+    @Symbol(OrionCPUSymbols.UI_INTERFACE)
+    @Property
+    private String uiInterface;
     /**
      * Page navigation menu
      */
@@ -45,7 +82,7 @@ public class Layout {
     private Response response;
     @Inject
     private ThreadRole thRole;
-    
+
     public String getRole() {
         return thRole.getRole();
     }
@@ -61,6 +98,15 @@ public class Layout {
     public String getUser() {
         //TODO Возвращать ФИО
         return SecurityUtils.getSubject().getPrincipals().oneByType(String.class);
+    }
+
+    //Подключение библиотек при старте ренрдеринга 
+    @SetupRender
+    public void SetupRender() {
+        List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
+        for (Asset library : libraries) {
+            javaScriptSupport.importJavaScriptLibrary(library);
+        }
     }
 
     /**
