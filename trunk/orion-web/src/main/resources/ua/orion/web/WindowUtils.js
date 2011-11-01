@@ -13,8 +13,10 @@
  */
 Tapestry.Initializer.showCkWindow = function(opt){
     var win=$(opt.window).getStorage().ck_window;
-    //Создаем декорацию для кнопки в Bean Editor
-    decorateButtonInBeanEditor();
+    //Инициализация ui-интерфейса для формы 
+    if (jQuery("ui#interface").text()=="true"){
+        initializeUIComponents();
+    }
     //Получаем высоту окна из параметра
     win.height=opt.height;
     //Получаем ширину окна из параметра

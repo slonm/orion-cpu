@@ -13,18 +13,18 @@
                 <table class="crud-links">
                     <tr>
                         <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
-                            <td>
-                                <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
+                            <td class="no-background">
+                                <t:EventLink t:event="edit" context="object" zone="popupZone"><button class="ui-button-edit-tfalse">${message:action.edit}</button></t:EventLink>
                             </td>
                         </s:HasPermission>
                         <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                            <td>
-                                <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
+                            <td class="no-background">
+                                <t:EventLink t:event="view" context="object" zone="popupZone" title="message:action.view"><button class="ui-button-view-tfalse">${message:action.view}</button></t:EventLink>
                             </td>
                         </s:HasPermission>
                         <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
-                            <td>
-                                <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
+                            <td class="no-background">
+                                <t:EventLink t:event="trydelete" context="object" zone="popupZone" title="message:action.del"><button class="ui-button-del-tfalse">${message:action.del}</button></t:EventLink>
                             </td>
                         </s:HasPermission>
                     </tr>
@@ -33,43 +33,45 @@
         </t:grid>
     </t:zone>
     <s:HasPermission permission="${objectClass.simpleName}:insert">
-        <t:EventLink class="crud-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
+        <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add" style="margin-top: 5px">${message:action.add}</button></t:EventLink>
     </s:HasPermission>
     <t:block id="editBlock">
         <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}"/><!--вызов показа окна-->
+            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/><!--вызов показа окна-->
             <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                             zone="listZone" context="object" submitLabel="message:action.edit"/>
             <p:else>
-                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" /><!--вызов показа окна-->
+                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" /><!--вызов показа окна-->
                 <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                 zone="listZone" submitLabel="message:action.add"/>
             </p:else>    
         </t:if>
     </t:block>
     <t:block id="viewBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" /><!--вызов показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" width="750"/><!--вызов показа окна-->
         <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
     </t:block>
     <t:block id="deleteBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" /><!--вызов показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" width="192"/><!--вызов показа окна-->
         <table>
             <tr>
                 <td>
-                    <t:EventLink t:event="delete" context="object" zone="listZone">${message:action.del}</t:EventLink>
+                    <t:EventLink t:event="delete" context="object" zone="listZone"><button class="ui-button-del">${message:action.del}</button></t:EventLink>
                 </td>
                 <td>
-                    <a href="#" onclick="Windows.close('popupWindow')">${message:action.cancel}</a>
+                    <a href="#" onclick="Windows.close('popupWindow')"><button class="ui-button-cancel">${message:action.cancel}</button></a>
                 </td>
             </tr>
         </table>
     </t:block>
-    <t:ck.Window t:id="popupWindow" t:style="bluelighting" show="false"
+    <t:ck.Window t:id="popupWindow" t:style="alphacube" show="false"
                  modal="true" title="mode"
                  width="900" height="500" style="z-index:-1">
         <div class="window-content">
             <t:zone t:id="popupZone"/>
-            <a href="#" onclick="Windows.close('popupWindow')">${message:action.closewindow}</a>        
+            <a href="#" onclick="Windows.close('popupWindow')">
+                <button class="ui-button-close" style="margin-top: 5px">${message:action.closewindow}</button>
+            </a>        
         </div>
     </t:ck.Window>
 </div>

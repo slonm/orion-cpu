@@ -8,7 +8,7 @@
         <table>
             <tr>
                 <!--Логотип университета-->
-                <td><div id="sp_logo1"></div></td>
+                <td><div class="ui-corner-all" id="sp_logo1"></div></td>
             </tr>
         </table>
     </center>
