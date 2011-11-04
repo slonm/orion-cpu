@@ -4,6 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
@@ -11,8 +12,12 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
+import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -56,6 +61,15 @@ public class EduPlans {
     private static final String EDIT = "edit";
     private static final String ADD = "add";
     private static final String DEL = "del";
+    @Environmental
+    private JavaScriptSupport javascriptSupport;
+    /*
+     * Свойство, отвечающее за отображение всплывающих подсказок
+     */
+    @Inject
+    @Symbol(OrionCPUSymbols.SHOW_HINTS)
+    @Property
+    private String showHints;
 
     public Class<?> getObjectClass() {
         return objectClass;
@@ -66,11 +80,13 @@ public class EduPlans {
         return null;
     }
 
-    public String getId(){
+    public String getId() {
         return entityService.getPrimaryKey(object).toString();
     }
-    
+
     public GridDataSource getObjects() {
+        //Инициализация иконок при изменениях в получении данных
+        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "initializeIcons", "");
         return dataSource.getGridDataSource(objectClass);
     }
 
@@ -132,5 +148,4 @@ public class EduPlans {
     public boolean getIsEdit() {
         return EDIT.equals(mode);
     }
-   
 }
