@@ -23,6 +23,7 @@ import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
 import ua.orion.core.utils.IOCUtils;
+import ua.orion.cpu.core.security.entities.Acl;
 import ua.orion.web.BeanModelWrapper;
 import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.CompositeMessages;
@@ -109,6 +110,8 @@ public class OrionWebIOCModule {
                 configuration.add(path, mlb.buildCrudPageMenuLink(e, path));
             }
         }
+        path = "Start>Admin>Security>Acl";
+        configuration.add(path, mlb.buildCrudPageMenuLink(Acl.class, path));
     }
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
