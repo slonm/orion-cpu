@@ -2,16 +2,17 @@ package ua.orion.web.components;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.javascript.InitializationPriority;
-import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import org.apache.tapestry5.services.Environment;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.OrionCPUSymbols;
+import ua.orion.web.CurrentBeanContext;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -39,13 +40,32 @@ public class Crud {
     @Inject
     private EntityService entityService;
     @Inject
+    private ComponentResources resources;
+    @Inject
     @Property(write = false)
     private TapestryDataSource dataSource;
+    @Inject
+    private Environment environment;
     //---Locals---
     @Parameter(allowNull = false)
     private Class<?> objectClass;
-    @Environmental
-    private JavaScriptSupport javascriptSupport;
+    @Parameter(allowNull = false)
+    private GridDataSource source;
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showEditButton;
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showViewButton;
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showDelButton;
+    @Parameter(defaultPrefix="literal")
+    @Property
+    private String detailPage;
+    @Parameter(defaultPrefix="literal")
+    @Property
+    private String listPage;
     /*
      * Свойство, отвечающее за отображение всплывающих подсказок
      */
@@ -67,6 +87,27 @@ public class Crud {
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
+        environment.push(CurrentBeanContext.class, new CurrentBeanContext() {
+
+            @Override
+            public Object getCurrentBean() {
+                return object;
+            }
+
+            @Override
+            public Class<?> getBeanType() {
+                return objectClass;
+            }
+
+            @Override
+            public String getCurrentBeanId() {
+                return getId();
+            }
+        });
+    }
+
+    final void afterRender() {
+        environment.pop(CurrentBeanContext.class);
     }
 
     /**
@@ -101,10 +142,12 @@ public class Crud {
         this.objectClass = objectClass;
     }
 
-    public GridDataSource getObjects() {
-        //Инициализация иконок при изменениях в получении данных
-        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "initializeIcons", "");
-        return dataSource.getGridDataSource(objectClass);
+    public GridDataSource getSource() {
+        if (resources.isBound("source")) {
+            return source;
+        } else {
+            return dataSource.getGridDataSource(objectClass);
+        }
     }
 
     public Object onSuccessFromEditForm() {

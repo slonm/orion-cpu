@@ -7,26 +7,39 @@
             <div class="t-error">${error}</div>
         </t:if>
         <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--вызов скрытия окна-->
-        <t:grid source="objects" row="object" inplace="true" add="action"
+        <t:grid source="source" row="object" inplace="true" add="action"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
                 <table class="crud-links">
                     <tr>
-                        <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
-                            <td class="no-background">
-                                <t:EventLink t:event="edit" context="object" zone="popupZone"><button class="ui-button-edit-tfalse">${message:action.edit}</button></t:EventLink>
-                            </td>
-                        </s:HasPermission>
-                        <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                            <td class="no-background">
-                                <t:EventLink t:event="view" context="object" zone="popupZone" title="message:action.view"><button class="ui-button-view-tfalse">${message:action.view}</button></t:EventLink>
-                            </td>
-                        </s:HasPermission>
-                        <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
-                            <td class="no-background">
-                                <t:EventLink t:event="trydelete" context="object" zone="popupZone" title="message:action.del"><button class="ui-button-del-tfalse">${message:action.del}</button></t:EventLink>
-                            </td>
-                        </s:HasPermission>
+                        <t:if test="detailPage">
+                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                                <td>
+                                    <t:PageLink class="crud-detail-pic" t:page="prop:detailPage" context="object" title="message:action.detail"/>
+                                </td>
+                            </s:HasPermission>
+                        </t:if>    
+                        <t:if test="showEditButton">
+                            <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
+                                <td>
+                                    <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
+                                </td>
+                            </s:HasPermission>
+                        </t:if>    
+                        <t:if test="showViewButton">
+                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                                <td>
+                                    <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
+                                </td>
+                            </s:HasPermission>
+                        </t:if>    
+                        <t:if test="showDelButton">
+                            <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
+                                <td>
+                                    <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
+                                </td>
+                            </s:HasPermission>
+                        </t:if>    
                     </tr>
                 </table>
             </p:actionCell>
@@ -35,6 +48,9 @@
     <s:HasPermission permission="${objectClass.simpleName}:insert">
         <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add" style="margin-top: 5px">${message:action.add}</button></t:EventLink>
     </s:HasPermission>
+    <t:if test="listPage">
+        <t:PageLink class="crud-list" t:page="prop:listPage">${message:action.list}</t:PageLink>
+    </t:if>    
     <t:block id="editBlock">
         <t:if test="isedit">
             <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/><!--вызов показа окна-->

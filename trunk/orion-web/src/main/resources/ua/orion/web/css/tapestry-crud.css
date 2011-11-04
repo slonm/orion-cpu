@@ -1,9 +1,9 @@
 /*TODO add alt text same to http://dimox.name/alt_text_for_images_with_css/*/
-a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic  {
+a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud-detail-pic  {
     border: 1px solid black;
 }
 
-.crud-del-pic, .crud-edit-pic, .crud-view-pic  {
+.crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
     background: no-repeat center transparent;
     display: block;
     width: 32px;
@@ -19,6 +19,10 @@ a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic  {
 
 TABLE.crud-links TBODY TR TD {
     border: 0px;
+}
+
+.crud-detail-pic{
+    background-image: url(../images/detail.png);
 }
 
 .crud-view-pic{

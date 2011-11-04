@@ -1,16 +1,19 @@
 package ua.orion.cpu.core.entities;
 
-
-
 import ua.orion.core.persistence.AbstractEntity;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.ScriptAssert;
+
 /**
  * Абстрактная реализация документа.
  * Реализует общие для всех документов поля: Серия, Номер, Дата издания, тело в
- * виде текста.
+ * виде текста. Если у документа не присвоена дата выхода, то это проект документа
+ * В классе не предусмотрены ограничения на значения Серии, Номера и Дата издания,
+ * т.к. в зависимости от конкретного документа они могут иметь разные форматы и 
+ * признаки обязательности. Если допусается создавать проект документа эти три поля
+ * должны иметь возможность быть не заполненными.
  * @param <T>
  * @author kgp
  */
@@ -20,8 +23,8 @@ import org.hibernate.validator.constraints.ScriptAssert;
     @UniqueConstraint(columnNames = {"serial", "number", "issue"})
 })
 @Inheritance(strategy = InheritanceType.JOINED)
-@ScriptAssert(lang = "javascript", 
-        script = "_this.serial!=null||_this.number!=null")
+//@ScriptAssert(lang = "javascript", 
+//        script = "_this.serial!=null||_this.number!=null")
 public abstract class Document<T extends Document<?>> extends AbstractEntity<T> {
 
     private String serial;
@@ -41,7 +44,7 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
     /**
      * @return the Serial
      */
-    @Size(min=1)
+    @Size(min = 1)
     public String getSerial() {
         return serial;
     }
@@ -54,9 +57,9 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
     }
 
     /**
-     * @return the licenseNumber
+     * @return the document number
      */
-    @Size(min=1)
+    @Size(min = 1)
     public String getNumber() {
         return number;
     }
@@ -69,7 +72,7 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
     }
 
     /**
-     * @return the licenseIssueDate
+     * @return the document Issue Date
      */
     @Temporal(javax.persistence.TemporalType.DATE)
     public Calendar getIssue() {
@@ -88,7 +91,7 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
      */
     @Override
     public String toString() {
-        return (serial + number + " (" + issue+ ")");
+        return serial + number + (issue != null ? (" (" + issue.getTime().toString() + ")") : "");
     }
 
     @Override
