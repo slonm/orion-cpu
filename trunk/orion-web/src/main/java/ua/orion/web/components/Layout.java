@@ -19,7 +19,7 @@ import ua.orion.cpu.core.security.services.ThreadRole;
 /**
  * Layout component for pages.
  */
-@Import(stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/cupertino/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
+@Import(stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
 @SuppressWarnings("unused")
 public class Layout {
 
