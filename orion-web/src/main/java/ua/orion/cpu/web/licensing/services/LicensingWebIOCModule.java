@@ -1,7 +1,9 @@
 package ua.orion.cpu.web.licensing.services;
 
 import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.*;
+import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.*;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.services.MenuLinkBuilder;
@@ -41,9 +43,9 @@ public class LicensingWebIOCModule {
         path = "Start>Licensing>License";
         configuration.add(path, mlb.buildCrudPageMenuLink(License.class, path));
 
-        path = "Start>Licensing>LicenseRecord";
-        configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecord.class, path));
-        
+//        path = "Start>Licensing>LicenseRecord";
+//        configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecord.class, path));
+
         path = "Start>Licensing>Reference";
 
         path = "Start>Licensing>Reference>KnowledgeAreaOrTrainingDirection";
@@ -58,5 +60,23 @@ public class LicensingWebIOCModule {
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
         configuration.add(new LibraryMapping("licensing", "ua.orion.cpu.web.licensing"));
+    }
+
+    public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration,
+            final EntityService entityService) {
+        configuration.add(new Coercion<IMenuLink, Class<License>>() {
+
+            @Override
+            public Class<License> coerce(IMenuLink input) {
+                try {
+                    return ("licensing/Licenses".equalsIgnoreCase(input.getPage())
+                            || "licensing/License".equalsIgnoreCase(input.getPage()))
+                            ? License.class
+                            : null;
+                } catch (Exception ex) {
+                }
+                return null;
+            }
+        });
     }
 }

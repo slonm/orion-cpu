@@ -47,6 +47,16 @@ public class License extends Document<License> {
         return super.getNumber();
     }
 
+    /**
+     * @return the licenseIssueDate
+     */
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @NotNull
+    @Override
+    public Calendar getIssue() {
+        return super.getIssue();
+    }
+    
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="license")
     public Set<LicenseRecord> getLicenseRecords(){
         return licenseRecords;

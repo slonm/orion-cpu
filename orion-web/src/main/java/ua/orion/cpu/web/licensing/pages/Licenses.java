@@ -1,4 +1,4 @@
-package ua.orion.cpu.web.eduprocplanning.pages;
+package ua.orion.cpu.web.licensing.pages;
 
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -7,11 +7,11 @@ import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 
 /**
- *
- * @author sl
+ * Страница, которая предоставляет CRUD лицензий
+ * @author slobodyanuk
  */
 @SuppressWarnings("unused")
-public class EduPlans {
+public class Licenses {
     //---Services---
 
     @Inject
@@ -26,7 +26,7 @@ public class EduPlans {
     }
 
     public Class<?> getObjectClass() {
-        return ua.orion.cpu.core.eduprocplanning.entities.EduPlan.class;
+        return ua.orion.cpu.core.licensing.entities.License.class;
     }
 
     public Object onActivate(EventContext context) {
@@ -42,5 +42,4 @@ public class EduPlans {
         }
         return null;
     }
-
 }

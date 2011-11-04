@@ -13,8 +13,8 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
-import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.cpu.core.security.services.ThreadRole;
+import ua.orion.web.OrionWebSymbols;
 
 /**
  * Layout component for pages.
@@ -67,15 +67,15 @@ public class Layout {
     @Path("../cpu_effects.js")
     private Asset jQueryCPUEffectsLibrary;
     @Inject
-    @Symbol(OrionCPUSymbols.UI_INTERFACE)
+    @Symbol(OrionWebSymbols.UI_INTERFACE)
     @Property
     private String uiInterface;
     /**
      * Page navigation menu
      */
-//    @Parameter(required = true)
-//    @Property(write = false)
-//    private Object menudata;
+    @Parameter(required = true, defaultPrefix="literal")
+    @Property(write = false)
+    private Object menudata;
     @Inject
     private Request request;
     @Inject
@@ -87,9 +87,9 @@ public class Layout {
         return thRole.getRole();
     }
 
-    public Object getMenudata() {
-        return defaultMenudata();
-    }
+//    public Object getMenudata() {
+//        return defaultMenudata();
+//    }
 
     Object defaultMenudata() {
         return request.getParameter("menupath") == null ? "Start" : request.getParameter("menupath");

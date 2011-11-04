@@ -101,7 +101,7 @@ public class PropertyBlocks {
     public SelectModel getTrainingDirectionOrSpecialitySelectModel() {
         return new BooleanSelectModel(messages.get("TrainingDirectionOrSpeciality-true"), messages.get("TrainingDirectionOrSpeciality-false"));
     }
-    
+
     /**
      * Метод, возвращающий количество лицензий для записи с ключом eduForm
      * (используется в компонентах Loop в шаблоне)
@@ -145,7 +145,7 @@ public class PropertyBlocks {
         mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
         return mp.keySet();
     }
-    
+
     /**
      * Метод для получения ключей мэпа "форма обучения - лицензированный объем"
      * (используется параметром source компонентов Loop для редактирования в BeanEditor)
@@ -154,12 +154,11 @@ public class PropertyBlocks {
     public Set getEduFormsE() {
         mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
         if (mp.isEmpty()) {
-                    mp.put(stationary, 0);
-                    mp.put(correspondence, 0);
-                }
+            mp.put(stationary, 0);
+            mp.put(correspondence, 0);
+        }
         return mp.keySet();
     }
-
 
     /**
      * Запрещает явное открытие этой псевдо-страницы.
