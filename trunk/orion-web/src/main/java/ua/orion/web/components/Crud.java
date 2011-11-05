@@ -11,8 +11,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Environment;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.OrionCPUSymbols;
 import ua.orion.web.CurrentBeanContext;
+import ua.orion.web.OrionWebSymbols;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -70,7 +70,7 @@ public class Crud {
      * Свойство, отвечающее за отображение всплывающих подсказок
      */
     @Inject
-    @Symbol(OrionCPUSymbols.SHOW_HINTS)
+    @Symbol(OrionWebSymbols.SHOW_HINTS)
     @Property
     private String showHints;
     @Persist
