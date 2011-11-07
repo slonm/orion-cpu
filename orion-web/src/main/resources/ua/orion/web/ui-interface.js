@@ -1,8 +1,8 @@
 //Инициализация классов кнопок, к которым присоеденяются иконки
 //tfalse в конце используется для того, чтобы сделать кнопку без текста. 
-var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse");
+var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist");
 //Инициализация классов иконок, для кнопок в массиве elements
-var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash");
+var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n");
     
 //Инициализация иконок на кнопках
 //ec - класс элемента HTML, ic - класс иконик (из jquery-ui)

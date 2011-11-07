@@ -38,7 +38,7 @@ TABLE.crud-links TBODY TR TD {
 }
 
 .crud-edit, .crud-view, .crud-del, .crud-add, .crud-list {
-    display: block;
+    display: inline;
 }
 
 label:after {

@@ -111,24 +111,6 @@ dl.t-beandisplay{
     font-size: 9pt;
 }
 
-/* ЧАСТЬ 3 Кнопки */
-/* ЧАСТЬ 3.1 Формат кнопок */
-/* Определение общего стиля кнопок */
-.btn {
-    float:left;
-    display:inline-block;
-    background:url(../images/white000.jpg) repeat-x;
-    font-weight:bold;
-    font-size:13px;
-    text-shadow:0 1px 0 #fff;
-    position:relative;
-    border:1px solid black;
-    margin:0 10px 10px 0;
-    -moz-border-radius:8px;
-    -webkit-border-radius:8px;
-    border-radius:8px;
-    text-decoration: none;
-}
 /* ЧАСТЬ 4 Меню */
 /* ЧАСТЬ 4.1 Формат меню */
 /* Формат пунктов меню */
@@ -204,30 +186,6 @@ span.menutitle a{
     font-weight: bold;
 }
 
-/* Заголовок таблицы в PropertyBlocks  */
-#headerfortableinpb{
-    background: url(../images/panelbg_1.png) 0 0;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Кнопка_1 */
-.bbutton{
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    width: 102px;
-    height: 32px;
-    background: url(../images/buttonbg_1.png) 0 0 no-repeat;
-    border-style:none;
-    padding-top: 1px;
-    text-decoration: none;
-}
-/* Кнопка_1 при наведении */
-.bbutton:hover {
-    background: url(../images/buttonbg_1_hover.png) 0 0 no-repeat;
-}
 /* Ссылка на добавление цикла при редактировании учебного плана */
 #eduPlanAddCycleLink{
     margin-top: 4px;
@@ -281,4 +239,17 @@ table.t-data-grid thead tr th{
 textarea{
     width: 398px;
     height: 50px;
+}
+
+.ui-button{
+    display: inline;
+}
+
+/* Индикатор загрузки всплывающего окна */
+div.ajax-state-grid{
+    width: 80px;
+    height: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url(../images/ajax-state-80x12-windows.gif);
 }
