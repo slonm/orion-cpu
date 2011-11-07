@@ -44,7 +44,7 @@ function initializeCheckboxes(){
 }
 //Создание ui-текстовых полей
 function initializeTextFields(){
-    jQuery("input[type=text]").each(function(){
+    jQuery("input[type=text], textarea").each(function(){
         bindTextElements(this);
     })
 }
