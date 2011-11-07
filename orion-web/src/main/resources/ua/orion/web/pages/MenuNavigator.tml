@@ -1,5 +1,5 @@
 <t:ori.layout t:title="prop:Title"
-          t:menudata="CpuMenu"
+          t:menudata="prop:CpuMenu"
           mode="activationContext"
           xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
           xmlns:p="tapestry:parameter">
