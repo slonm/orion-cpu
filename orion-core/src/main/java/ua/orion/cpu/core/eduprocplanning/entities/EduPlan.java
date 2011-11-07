@@ -24,6 +24,8 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Double trainingTerm;
     private Qualification qualification;
     private Calendar introducingDate;
+    private Calendar confirmationDate;
+    private String confirmationPerson;
     //Пользовательский тип данных для вывода списка циклов учебного плана в гриде
     //@DataType("EduPlanDisciplineCycles")
     @OrderBy("eduPlanDisciplineCycleNumber")
@@ -32,13 +34,14 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     public EduPlan() {
     }
 
-    public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
-            Calendar introducingDate, Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
+    public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification, Calendar introducingDate, Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles, Calendar confirmationDate, String confirmationPerson) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
         this.introducingDate = introducingDate;
         this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
+        this.confirmationDate = confirmationDate;
+        this.confirmationPerson = confirmationPerson;
     }
 
     /**
@@ -183,6 +186,30 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     public void setEduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
         this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
+    }
+
+    /**
+     * @return Дата затвердження 
+     */
+    @Temporal(javax.persistence.TemporalType.DATE)
+    public Calendar getConfirmationDate() {
+        return confirmationDate;
+    }
+
+    public void setConfirmationDate(Calendar confirmationDate) {
+        this.confirmationDate = confirmationDate;
+    }
+
+    /**
+     * @return Кто затвердив
+     */
+    @DataType("longtext")
+    public String getConfirmationPerson() {
+        return confirmationPerson;
+    }
+
+    public void setConfirmationPerson(String confirmationPerson) {
+        this.confirmationPerson = confirmationPerson;
     }
 
     @Override

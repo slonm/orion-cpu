@@ -277,3 +277,8 @@ table.t-data-grid thead tr th{
 .no-background{
     background-image: none;
 }
+/* Текстовые поля */
+textarea{
+    width: 398px;
+    height: 50px;
+}

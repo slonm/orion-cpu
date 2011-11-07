@@ -2,13 +2,9 @@ package ua.orion.cpu.web.eduprocplanning.transformers;
 
 import java.util.*;
 import java.util.Arrays;
-import org.apache.tapestry5.AbstractOptionModel;
-import org.apache.tapestry5.OptionModel;
-import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
 import ua.orion.web.AbstractTapestryDataTransformer;
 
 /**
@@ -29,7 +25,7 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
         List<String> requiredProps = Arrays.asList("code",
                 "knowledgeAreaOrTrainingDirection", "trainingDirectionOrSpeciality",
                 "educationalQualificationLevel", "trainingTerm",
-                "qualification", "introducingDate");
+                "qualification", "introducingDate","confirmationDate", "confirmationPerson");
         existProps.removeAll(requiredProps);
         model.exclude(existProps.toArray(new String[]{}));
         model.reorder(requiredProps.toArray(new String[]{}));

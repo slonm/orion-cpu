@@ -195,7 +195,7 @@ public class EduProcPlanningSeedEntity {
             eduPlanDisciplineCyclespIBach2009.add(pIBach2009Prof);
             //--Создание экземпляра учебного планв (для бакалавров ПИ 2009г утверждения)
             //привязка к нему набора циклов и сохранение
-            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), eduPlanDisciplineCyclespIBach2009));
+            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), eduPlanDisciplineCyclespIBach2009, DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко"));
             //Привязка циклов к учебному плану
             pIBach2009HumSocEconom.setEduPlan(pIBach2009);
             es.persist(pIBach2009HumSocEconom);
