@@ -12,6 +12,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 Tapestry.Initializer.showCkWindow = function(opt){
+    Tapestry.Initializer.hideGridAjax();
     var win=$(opt.window).getStorage().ck_window;
     //Инициализация ui-интерфейса для формы 
     if (jQuery("ui#interface").text()=="true"){
@@ -39,4 +40,19 @@ Tapestry.Initializer.updateCkWindow = function(opt){
 
 Tapestry.Initializer.closeCkWindow = function(opt){
     Windows.close(opt.window);
+}
+
+/**
+ * Показать полосу загрузки в шапке actioncell по нажатию на следующие кнопки
+ */
+Tapestry.Initializer.showGridAjax = function(opt){
+    jQuery(".crud-edit-pic, .crud-view-pic, .crud-del-pic, .crud-add").click(function(){
+        jQuery("th.t-last").html("<div class=\"ajax-state-grid\"></div>");
+    });     
+}
+/**
+ * Скрыть полосу загрузки в шапке actioncell
+ */
+Tapestry.Initializer.hideGridAjax = function(opt){
+    jQuery("th.t-last").html("");    
 }

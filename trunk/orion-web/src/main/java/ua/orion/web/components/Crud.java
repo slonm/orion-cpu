@@ -10,6 +10,8 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Environment;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.CurrentBeanContext;
 import ua.orion.web.OrionWebSymbols;
@@ -60,10 +62,10 @@ public class Crud {
     @Parameter(value = "true", autoconnect = true)
     @Property
     private boolean showDelButton;
-    @Parameter(defaultPrefix="literal")
+    @Parameter(defaultPrefix = "literal")
     @Property
     private String detailPage;
-    @Parameter(defaultPrefix="literal")
+    @Parameter(defaultPrefix = "literal")
     @Property
     private String listPage;
     /*
@@ -84,6 +86,8 @@ public class Crud {
     private static final String ADD = "add";
     private static final String VIEW = "view";
     private static final String DEL = "del";
+    @Environmental
+    private JavaScriptSupport javascriptSupport;
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
@@ -143,6 +147,7 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
+        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "showGridAjax", "");
         if (resources.isBound("source")) {
             return source;
         } else {
