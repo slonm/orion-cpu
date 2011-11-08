@@ -54,18 +54,24 @@
     <t:block id="editBlock">
         <t:if test="isedit">
             <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/><!--вызов показа окна-->
-            <t:beaneditform t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
-                            zone="listZone" context="object" submitLabel="message:action.edit"/>
+            <t:ori.beaneditformext t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
+                                   zone="listZone" context="object" submitLabel="message:action.edit" buttons="buttons"/>
             <p:else>
                 <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" /><!--вызов показа окна-->
-                <t:beaneditform t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
-                                zone="listZone" submitLabel="message:action.add"/>
+                <t:ori.beaneditformext t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
+                                       zone="listZone" submitLabel="message:action.add" buttons="buttons"/>
             </p:else>    
         </t:if>
+    </t:block>
+    <t:block id="buttons">
+        <a href="#" onclick="Windows.close('popupWindow')">
+            <button class="ui-button-close" style="margin-top: 5px">${message:action.cancel}</button>
+        </a>        
     </t:block>
     <t:block id="viewBlock">
         <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" width="750"/><!--вызов показа окна-->
         <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
+        <t:delegate to="buttons"/>
     </t:block>
     <t:block id="deleteBlock">
         <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" width="192"/><!--вызов показа окна-->
@@ -85,9 +91,6 @@
                  width="900" height="500" style="z-index:-1">
         <div class="window-content">
             <t:zone t:id="popupZone"/>
-            <a href="#" onclick="Windows.close('popupWindow')">
-                <button class="ui-button-close" style="margin-top: 5px">${message:action.closewindow}</button>
-            </a>        
         </div>
     </t:ck.Window>
 </div>
