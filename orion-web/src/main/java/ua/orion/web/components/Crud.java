@@ -30,6 +30,9 @@ public class Crud {
     @Component
     private Zone listZone;
     @Inject
+    @Property(write = false)
+    private Block buttons;
+    @Inject
     private Block editBlock;
     @Inject
     private Block viewBlock;
