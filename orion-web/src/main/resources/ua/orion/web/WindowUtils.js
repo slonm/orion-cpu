@@ -16,6 +16,8 @@ Tapestry.Initializer.showCkWindow = function(opt){
     var win=$(opt.window).getStorage().ck_window;
     //Инициализация ui-интерфейса для формы 
     if (jQuery("ui#interface").text()=="true"){
+        //Кнопки в beaneditor справа
+        jQuery(".t-beaneditor-row:last").css({'float':'right'});
         initializeUIComponents();
     }
     //Получаем высоту окна из параметра
