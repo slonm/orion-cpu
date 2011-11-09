@@ -74,7 +74,7 @@
         <t:delegate to="buttons"/>
     </t:block>
     <t:block id="deleteBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" width="192"/><!--вызов показа окна-->
+        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" width="215"/><!--вызов показа окна-->
         <table>
             <tr>
                 <td>
