@@ -59,6 +59,7 @@ function initializeUIComponents(){
     //Создание выпадающего списка из select
     jQuery("select").selectmenu();
     initializeCheckboxes();
+    jQuery("button").parent('a').css({'text-decoration':'none'})
 }
 //Инициализация календаря
 function initializeCalendar(){
