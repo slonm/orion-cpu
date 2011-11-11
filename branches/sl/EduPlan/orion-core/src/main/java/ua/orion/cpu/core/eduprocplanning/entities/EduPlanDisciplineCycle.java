@@ -1,17 +1,15 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
-import ua.orion.core.persistence.AbstractEntity;
 
 /**
  * Цикл дисциплин в привязке к конкретному учебному плану
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
-public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycle> {
+@Table(schema = "uch", uniqueConstraints =
+@UniqueConstraint(columnNames = {"eduPlan", "EPPCycle"}))
+public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDisciplineCycle> {
 
     private static final long serialVersionUID = 1L;
     private EduPlan eduPlan;
@@ -31,8 +29,9 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     public EduPlanDisciplineCycle() {
     }
 
-    public EduPlanDisciplineCycle(EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
+    public EduPlanDisciplineCycle(EduPlan eduPlan, EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
             Boolean isRegulatory, Double cycleTotalCredits) {
+        this.eduPlan = eduPlan;
         this.ePPCycle = ePPCycle;
         this.eduPlanDisciplineCycleNumber = eduPlanDisciplineCycleNumber;
         this.isRegulatory = isRegulatory;
@@ -40,8 +39,9 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
 //        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
     }
 
-    //Двунаправленная связь с учебным планом
+    //Связь с учебным планом
     @ManyToOne
+    @JoinColumn(name="eduPlan")
     public EduPlan getEduPlan() {
         return eduPlan;
     }
@@ -51,7 +51,7 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     }
 
     //Однонаправленная ассоциация со справочником циклов освітньо-професійних програм
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name="EPPCycle")
     @ManyToOne
     public EPPCycle getEPPCycle() {
         return ePPCycle;

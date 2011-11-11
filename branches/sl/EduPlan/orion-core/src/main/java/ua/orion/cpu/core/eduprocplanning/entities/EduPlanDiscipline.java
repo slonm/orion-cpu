@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import java.util.*;
 import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.core.utils.Defense;
@@ -47,6 +48,9 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     //Количество часов практических занятий, семинаров по дисциплине
     private Integer practicesHours;
 
+    //Теги дисциплины
+    private Set<EduPlanDisciplineTag> eduPlanDisciplineTags = new HashSet();
+    
     //ПОКА НЕ ИСПОЛЬЗУЮ
     //Набор дисциплин данного учебного плана, которые должны предшествовать изучению данной дисциплины
 //    private Set<EduPlanDiscipline> eduPlanDisciplinePrevious = new HashSet<EduPlanDiscipline>();
@@ -195,6 +199,19 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     @Transient
     public Integer getStudentIndependWorkHours() {
         return this.getTotalHours()-lecturesHours-labsHours-practicesHours;
+    }
+    
+    //Двунаправленная ассоциация с тегами дисциплин
+    @ManyToMany
+    @JoinTable(schema = "uch", joinColumns = {
+        @JoinColumn(name = "EDUPLAN_DISCIPLINE")}, inverseJoinColumns = {
+        @JoinColumn(name = "EDUPLAN_DISCIPLINE_Tag")})
+    public Set<EduPlanDisciplineTag> getEduPlanDisciplineTags() {
+        return eduPlanDisciplineTags;
+    }
+
+    public void setEduPlanDisciplineTags(Set<EduPlanDisciplineTag> eduPlanDisciplineTags) {
+        this.eduPlanDisciplineTags = eduPlanDisciplineTags;
     }
     
 //    /**
