@@ -153,11 +153,14 @@ public class Person extends AbstractNamedEntity<Person> {
 
     @Transient
     public String getSciDegreeSciAreaShort() {
-        if (scientificDegree.getShortName() != null && scienceArea.getShortName() != null) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(scientificDegree.getShortName());
-            sb.append(scienceArea.getShortName());
-            return sb.toString();
+        try {
+            if (scientificDegree.getShortName() != null && scienceArea.getShortName() != null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(scientificDegree.getShortName());
+                sb.append(scienceArea.getShortName());
+                return sb.toString();
+            }
+        } catch (Exception e) {
         }
         return "";
     }

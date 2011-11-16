@@ -40,6 +40,7 @@ public class PersonsSeedEntity {
             AcademicRank ar_Prof = es.findUniqueOrPersist(new AcademicRank("професор", "проф."));
             //---Персоны
             Person p_TestPerson1 = es.findUniqueOrPersist(new Person("Іван", "Іванович", "Іванов", sd_Cand, sa_PhysMath, ar_ProfAssist));
+            Person p_TestPerson2 = es.findUniqueOrPersist(new Person("Петро", "Олександрович", "Коваленко", null, null, null));
         }
     }
 }
