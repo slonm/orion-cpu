@@ -47,6 +47,19 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                         <t:body/>
                     </div>
                 </div>
+                <!-- Диалог с выбором темы (Начало) -->
+                <button id="ui-show-select-theme-dialog-button" class="ui-button">UI Theme</button>
+                <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
+                        <option>cupertino</option>
+                        <option>humanity</option>
+                        <option>pepper-grinder</option>
+                        <option>smoothness</option>
+                        <option>sunny</option>
+                        <option>swanky-purse</option>
+                        <option>ui-darkness</option>
+                    </select><button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
+                </div>
+                <!-- Диалог с выбором темы (Конец) -->
             </div>
             <!-- end content -->
             <br style="clear: both;"/>
