@@ -9,7 +9,7 @@
             <tr>
                 <!--Логотип университета-->
                 <td><div class="ui-corner-all" id="sp_logo1"></div></td>
-            </tr>
+            </tr>           
         </table>
     </center>
 </t:ori.layout>

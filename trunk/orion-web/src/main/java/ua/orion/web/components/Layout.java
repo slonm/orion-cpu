@@ -58,6 +58,9 @@ public class Layout {
     @Path("../jquery.noconflict.js")
     private Asset jQueryNoConflictLibrary;
     @Inject
+    @Path("../jquery.cookie.js")
+    private Asset jQueryCookieLibrary;
+    @Inject
     @Path("../ui-interface.js")
     private Asset jQueryUIInterfaceLibrary;
     @Inject
@@ -73,7 +76,7 @@ public class Layout {
     /**
      * Page navigation menu
      */
-    @Parameter(required = true, defaultPrefix="literal")
+    @Parameter(required = true, defaultPrefix = "literal")
     @Property(write = false)
     private Object menudata;
     @Inject
@@ -90,7 +93,6 @@ public class Layout {
 //    public Object getMenudata() {
 //        return defaultMenudata();
 //    }
-
     Object defaultMenudata() {
         return request.getParameter("menupath") == null ? "Start" : request.getParameter("menupath");
     }
@@ -103,7 +105,7 @@ public class Layout {
     //Подключение библиотек при старте ренрдеринга 
     @SetupRender
     public void SetupRender() {
-        List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
+        List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
         for (Asset library : libraries) {
             javaScriptSupport.importJavaScriptLibrary(library);
         }

@@ -51,6 +51,7 @@ function initializeTextFields(){
 
 //Инициализация компонентов
 function initializeUIComponents(){
+    putCookieThemeToSelect();
     initializeTextFields();
     initializeCalendar();
     initializeButtons();
@@ -59,7 +60,10 @@ function initializeUIComponents(){
     //Создание выпадающего списка из select
     jQuery("select").selectmenu();
     initializeCheckboxes();
-    jQuery("button").parent('a').css({'text-decoration':'none'})
+    jQuery("button").parent('a').css({
+        'text-decoration':'none'
+    })
+    applyCookieTheme();
 }
 //Инициализация календаря
 function initializeCalendar(){
@@ -129,3 +133,36 @@ function bindCheckBoxes(element){
 Tapestry.Initializer.initializeIcons = function(opt){
     initializeIcons();
 }
+
+//Установка начального значения выбранной темы в select
+function putCookieThemeToSelect(){
+    jQuery("#ui-select-theme option").each(function(){
+        if (jQuery(this).html()==jQuery.cookie("ui-theme")){
+            jQuery(this).attr("selected", "selected");
+        }
+    })
+}
+
+//Применение темы
+function applyCookieTheme(){
+    if (jQuery.cookie("ui-theme")!=null){
+        var what = "css/.*/jquery-ui-1.8.16.custom.css";
+        var to = "css/"+jQuery.cookie("ui-theme")+"/jquery-ui-1.8.16.custom.css";
+        jQuery("head link").each(function(){
+            if (jQuery(this).attr("href").indexOf("jquery-ui-1.8.16.custom.css")>-1) {
+                jQuery(this).attr("href",jQuery(this).attr("href").replace(new RegExp (what, 'g'), to));
+            }
+        });
+    }
+}
+
+//При полностью загруженной структуре DOM
+jQuery(document).ready(function(){
+    jQuery("#select-theme-button").click(function(){
+        jQuery.cookie("ui-theme", jQuery("#ui-select-theme option:selected").text());
+        applyCookieTheme();
+    })
+    jQuery("#ui-show-select-theme-dialog-button").click(function(){
+        jQuery("#ui-select-theme-dialog").dialog()
+    })
+})
