@@ -31,7 +31,7 @@ public class PersonsWebIOCModule {
             MenuLinkBuilder mlb) {
         String path;
 
-        path = "Start>Persons>Person";
+        path = "Start>Persons>1Person";
         configuration.add(path, mlb.buildCrudPageMenuLink(Person.class, path));
         
         path = "Start>Persons>Reference";

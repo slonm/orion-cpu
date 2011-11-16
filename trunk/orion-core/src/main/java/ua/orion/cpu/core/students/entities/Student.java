@@ -28,6 +28,15 @@ public class Student extends AbstractEntity<Student> {
     @ManyToOne
     private AcademicGroup academicGroup;
 
+    public Student() {
+    }
+
+    public Student(Person person, AcademicStream academicStream, AcademicGroup academicGroup) {
+        this.person = person;
+        this.academicStream = academicStream;
+        this.academicGroup = academicGroup;
+    }
+    
     public AcademicGroup getAcademicGroup() {
         return academicGroup;
     }

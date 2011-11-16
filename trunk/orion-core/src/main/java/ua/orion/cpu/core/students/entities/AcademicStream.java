@@ -22,6 +22,21 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
     @ManyToOne
     private EducationForm educationForm;
     private Integer cource;
+    
+    /**
+     * Создание учебного потока
+     * @param trainingDirectionOrSpeciality - Направление или специальность
+     * @param educationForm - Форма обучения
+     * @param cource - Курс
+     */
+    public AcademicStream(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality, EducationForm educationForm, Integer cource) {
+        this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
+        this.educationForm = educationForm;
+        this.cource = cource;
+    }
+
+    public AcademicStream() {
+    }
 
     public Integer getCource() {
         return cource;
@@ -49,10 +64,7 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
 
     @Override
     public String toString() {
-        return "AcademicStream{" + "trainingDirectionOrSpeciality="
-                + String.valueOf(trainingDirectionOrSpeciality)
-                + ", educationForm=" + String.valueOf(educationForm) + ", cource="
-                + String.valueOf(cource) + '}';
+        return String.valueOf(trainingDirectionOrSpeciality) + " " + String.valueOf(educationForm) + " " + String.valueOf(cource);
     }
 
     //Недостаточно информации для проверки эквивалентности
