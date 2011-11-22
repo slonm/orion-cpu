@@ -7,7 +7,7 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 import ua.orion.web.AbstractTapestryDataTransformer;
 
 /**
@@ -70,12 +70,12 @@ public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTr
             ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
             while(it.hasNext()){
                 OptionModel om=it.next();
-                final TrainingDirectionOrSpeciality tdos=(TrainingDirectionOrSpeciality) om.getValue();
+                final TrainingDirection tdos=(TrainingDirection) om.getValue();
                 it.set(new AbstractOptionModel() {
 
                 @Override
                 public String getLabel() {
-                    return es.getStringValue(tdos.getKnowledgeAreaOrTrainingDirection())+" - "+es.getStringValue(tdos);
+                    return es.getStringValue(tdos.getKnowledgeArea())+" - "+es.getStringValue(tdos);
                 }
 
                 @Override

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 
 /**
  * Учебный поток (место поступления).
@@ -17,7 +17,7 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
     private static final long serialVersionUID = 1L;
     @NotNull
     @ManyToOne
-    private TrainingDirectionOrSpeciality trainingDirectionOrSpeciality;
+    private TrainingDirection trainingDirectionOrSpeciality;
     @NotNull
     @ManyToOne
     private EducationForm educationForm;
@@ -39,11 +39,11 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
         this.educationForm = educationForm;
     }
 
-    public TrainingDirectionOrSpeciality getTrainingDirectionOrSpeciality() {
+    public TrainingDirection getTrainingDirectionOrSpeciality() {
         return trainingDirectionOrSpeciality;
     }
 
-    public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality) {
+    public void setTrainingDirectionOrSpeciality(TrainingDirection trainingDirectionOrSpeciality) {
         this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
     }
 
