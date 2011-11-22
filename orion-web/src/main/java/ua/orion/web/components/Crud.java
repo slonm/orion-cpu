@@ -150,7 +150,8 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
-        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "showGridAjax", "");
+        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS. 
+        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "updateGrid", "");
         if (resources.isBound("source")) {
             return source;
         } else {

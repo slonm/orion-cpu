@@ -48,9 +48,17 @@ function initializeTextFields(){
         bindTextElements(this);
     })
 }
+/**
+ * Добавление UI-классов к элементам beaneditor и beandisplay
+ */
+function addUIClassesToBeanEditView(){
+    jQuery("DIV.t-beaneditor").addClass("ui-widget-content").removeClass("t-beaneditor");
+    jQuery("dl.t-beandisplay").addClass("ui-widget-content").removeClass("t-beandisplay");
+}
 
 //Инициализация компонентов
 function initializeUIComponents(){
+    addUIClassesToBeanEditView();
     putCookieThemeToSelect();
     initializeTextFields();
     initializeCalendar();
@@ -132,6 +140,7 @@ function bindCheckBoxes(element){
 
 Tapestry.Initializer.initializeIcons = function(opt){
     initializeIcons();
+    initializeUIClasses();
 }
 
 //Установка начального значения выбранной темы в select
@@ -154,6 +163,16 @@ function applyCookieTheme(){
             }
         });
     }
+}
+/**
+ * Добавление UI-классов к элементам интерфейса
+ */
+function updateCSS(){
+    jQuery("table.t-data-grid tbody tr td[class!='action']").addClass("ui-widget-content");
+    jQuery("table.t-data-grid thead tr th[class!='action t-last']").addClass("ui-state-default");
+    jQuery("div.t-data-grid-pager a").addClass("ui-corner-all ui-state-default");
+    jQuery("div.t-data-grid-pager span.current").addClass("ui-corner-all ui-state-active");
+    jQuery(".ui-grid-cell-action-tip").addClass("ui-corner-bl ui-corner-br ui-state-default");
 }
 
 //При полностью загруженной структуре DOM

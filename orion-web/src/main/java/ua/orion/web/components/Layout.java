@@ -60,6 +60,13 @@ public class Layout {
     @Inject
     @Path("../jquery.cookie.js")
     private Asset jQueryCookieLibrary;
+    /**
+     * Используется для генерирования красивых ToolTip-ов
+     * Библиотека загружена лишь с этой функциональностью. Нужно больше - http://flowplayer.org/tools/. Сохранить с тем же именем.
+     */
+    @Inject
+    @Path("../jquery.tools.min.js")
+    private Asset jQueryToolsLibrary;
     @Inject
     @Path("../ui-interface.js")
     private Asset jQueryUIInterfaceLibrary;
@@ -105,7 +112,7 @@ public class Layout {
     //Подключение библиотек при старте ренрдеринга 
     @SetupRender
     public void SetupRender() {
-        List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
+        List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryToolsLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
         for (Asset library : libraries) {
             javaScriptSupport.importJavaScriptLibrary(library);
         }

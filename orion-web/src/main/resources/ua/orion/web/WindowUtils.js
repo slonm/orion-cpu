@@ -17,9 +17,15 @@ Tapestry.Initializer.showCkWindow = function(opt){
     //Инициализация ui-интерфейса для формы 
     if (jQuery("ui#interface").text()=="true"){
         //Кнопки в beaneditor справа
-        jQuery(".t-beaneditor-row:last").css({'float':'right'});
+        jQuery(".t-beaneditor-row:last").css({
+            'float':'right'
+        });
         initializeUIComponents();
     }
+    //Показывать диалог загрузки при сохранении
+    jQuery("form[action*='editform'] div div>button[type='submit'], form[action*='addform'] div div>button[type='submit']").click(function(){
+        Tapestry.Initializer.showGridAjaxSave();
+    })
     //Получаем высоту окна из параметра
     win.height=opt.height;
     //Получаем ширину окна из параметра
@@ -44,17 +50,44 @@ Tapestry.Initializer.closeCkWindow = function(opt){
     Windows.close(opt.window);
 }
 
+Tapestry.Initializer.updateGrid = function(opt){
+    jQuery(".crud-links a, #crud-add-record-button").click(function(){
+        Tapestry.Initializer.showGridAjax();
+    })
+    Tapestry.Initializer.hideGridAjax();
+    updateCSS();
+    initializeGridToolTip();
+}
+
 /**
  * Показать полосу загрузки в шапке actioncell по нажатию на следующие кнопки
  */
-Tapestry.Initializer.showGridAjax = function(opt){
-    jQuery(".crud-edit-pic, .crud-view-pic, .crud-del-pic, .crud-add").click(function(){
-        jQuery("th.t-last").html("<div class=\"ajax-state-grid\"></div>");
-    });     
+Tapestry.Initializer.showGridAjax = function(){
+    jQuery("#ui-ajax-loading-window-load-text").css({
+        'display':'block'
+    });
+    jQuery('#ui-ajax-loading-window').dialog("open");     
 }
+
+/**
+ * Показать полосу загрузки в шапке actioncell по нажатию на следующие кнопки
+ */
+Tapestry.Initializer.showGridAjaxSave = function(){
+    jQuery("#ui-ajax-loading-window-save-text").css({
+        'display':'block'
+    });
+    jQuery('#ui-ajax-loading-window').dialog("open");     
+}
+
 /**
  * Скрыть полосу загрузки в шапке actioncell
  */
-Tapestry.Initializer.hideGridAjax = function(opt){
-    jQuery("th.t-last").html("");    
+Tapestry.Initializer.hideGridAjax = function(){
+    jQuery("#ui-ajax-loading-window-load-text").css({
+        'display':'none'
+    });
+    jQuery("#ui-ajax-loading-window-save-text").css({
+        'display':'none'
+    });
+    jQuery('#ui-ajax-loading-window').dialog("close");   
 }
