@@ -76,10 +76,10 @@ table.t-data-grid tr:nth-child(even) {
 }
 /* Выравнивание кнопок в Grid */
 .t-data-grid .action{
-    min-width: 60px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;  
+    border-style: none;
 }
 /* Форматирование ячеек для названий организационных едениц */
 .t-data-grid .orgUnit{
@@ -142,6 +142,9 @@ span.menutitle a{
 /* Кнопки в Grid */
 .crud-links{
     z-index: 1;
+    background-color: transparent;
+    margin-left: auto;
+    margin-right: auto;
 }
 /* Элементы меню */
 .menuitems{
@@ -252,4 +255,47 @@ div.ajax-state-grid{
     margin-left: auto;
     margin-right: auto;
     background-image: url(../images/ajax-state-80x12-windows.gif);
+}
+
+/* Стиль всплывающих кнопок в grid */
+.ui-grid-cell-action-tip {
+    display:none;
+    font-size:12px;
+    height:30px;
+    color:#fff;	
+    margin-left: 30px;
+    margin-top: 10px;
+    z-index: 1;
+}
+/* Небольшой фикс стандартного стиля */
+TABLE.crud-links TBODY TR TD{
+    background-color: transparent;
+    background-image: none;
+}
+/* Окно загрузки Ajax */
+#ui-ajax-loading-window{
+    display: none;
+}
+/* Контейнер с картинкой в окне загрузки */
+#ui-ajax-loading-window span div{
+    float: right;
+}
+/* Картинка в окне загрузки Ajax */
+.ui-ajax-loading-window-icon{
+    background-image: url(../images/database_refresh.png);
+    height: 32px;
+    width: 32px;
+}
+/* Полоса загрузки в окне загрузки */
+.ui-ajax-loading-window-load{
+    margin-top:5px;
+    background-image: url(../images/ajax/ajax-state-78x7.gif);
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 10px;
+}
+
+/* Скрытие шабки над actioncell */
+th.action{
+    display: none;
 }

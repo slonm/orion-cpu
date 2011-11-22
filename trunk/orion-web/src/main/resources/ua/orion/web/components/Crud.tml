@@ -10,43 +10,45 @@
         <t:grid source="source" row="object" inplace="true" add="action"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
-                <table class="crud-links">
-                    <tr>
-                        <t:if test="detailPage">
-                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                                <td>
-                                    <t:PageLink class="crud-detail-pic" t:page="prop:detailPage" context="object" title="message:action.detail"/>
-                                </td>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showEditButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
-                                <td>
-                                    <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
-                                </td>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showViewButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                                <td>
-                                    <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
-                                </td>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showDelButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
-                                <td>
-                                    <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
-                                </td>
-                            </s:HasPermission>
-                        </t:if>    
-                    </tr>
-                </table>
+                <div class="ui-grid-cell-action-tip" style="display: none">
+                    <table class="crud-links">
+                        <tr>
+                            <t:if test="detailPage">
+                                <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                                    <td>
+                                        <t:PageLink class="crud-detail-pic" t:page="prop:detailPage" context="object" title="message:action.detail"/>
+                                    </td>
+                                </s:HasPermission>
+                            </t:if>    
+                            <t:if test="showEditButton">
+                                <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
+                                    <td>
+                                        <t:EventLink class="crud-edit-pic" t:event="edit" context="object" zone="popupZone" title="message:action.edit"/>
+                                    </td>
+                                </s:HasPermission>
+                            </t:if>    
+                            <t:if test="showViewButton">
+                                <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                                    <td>
+                                        <t:EventLink class="crud-view-pic" t:event="view" context="object" zone="popupZone" title="message:action.view"/>
+                                    </td>
+                                </s:HasPermission>
+                            </t:if>    
+                            <t:if test="showDelButton">
+                                <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
+                                    <td>
+                                        <t:EventLink class="crud-del-pic" t:event="trydelete" context="object" zone="popupZone" title="message:action.del"/>
+                                    </td>
+                                </s:HasPermission>
+                            </t:if>    
+                        </tr>
+                    </table>
+                </div>
             </p:actionCell>
         </t:grid>
     </t:zone>
     <s:HasPermission permission="${objectClass.simpleName}:insert">
-        <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add" style="margin-top: 5px">${message:action.add}</button></t:EventLink>
+        <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add" style="margin-top: 5px"  id="crud-add-record-button">${message:action.add}</button></t:EventLink>
     </s:HasPermission>
     <t:if test="listPage">
         <t:PageLink class="crud-list" t:page="prop:listPage"><button class="ui-button-tolist" style="margin-top: 5px">${message:action.list}</button></t:PageLink>
@@ -93,4 +95,13 @@
             <t:zone t:id="popupZone"/>
         </div>
     </t:ck.Window>
+    <div id="ui-ajax-loading-window" title="${message:label.system-message}">
+        <span>
+            <div class="ui-ajax-loading-window-icon"></div>
+        </span>
+        <text id="ui-ajax-loading-window-load-text" style="display: none">${message:label.ajax-load-crud}</text>
+        <text id="ui-ajax-loading-window-save-text" style="display: none">${message:label.ajax-save-crud}</text>
+        <br/>
+        <div class="ui-ajax-loading-window-load"></div>
+    </div>
 </div>
