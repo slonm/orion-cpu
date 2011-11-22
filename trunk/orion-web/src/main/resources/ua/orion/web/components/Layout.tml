@@ -51,6 +51,7 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                 <button id="ui-show-select-theme-dialog-button" class="ui-button">UI Theme</button>
                 <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
                         <option>cupertino</option>
+                        <option>maven-quickstart</option>
                         <option>humanity</option>
                         <option>pepper-grinder</option>
                         <option>smoothness</option>
