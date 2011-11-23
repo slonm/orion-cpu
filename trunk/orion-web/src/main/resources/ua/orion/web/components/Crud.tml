@@ -7,7 +7,7 @@
             <div class="t-error">${error}</div>
         </t:if>
         <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--вызов скрытия окна-->
-        <t:grid source="source" row="object" inplace="true" add="action"
+        <t:grid source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(objectClass,messages)">
             <p:actionCell>
                 <div class="ui-grid-cell-action-tip" style="display: none">
@@ -44,6 +44,7 @@
                         </tr>
                     </table>
                 </div>
+                <button class="ui-button-right-list-tfalse"></button>
             </p:actionCell>
         </t:grid>
     </t:zone>

@@ -48,12 +48,12 @@ function createToolTips(){
  */
 function initializeGridToolTip(){
     //При наведении на строку появляется tooltip
-    jQuery("table.t-data-grid tbody tr").each(function(){
+    jQuery("table.t-data-grid tbody tr td .ui-button-right-list-tfalse").each(function(){
         jQuery(this).tooltip({
             effect: 'slide', //Тип эффекта
             delay: '150', //Время исчезновения при отведении мыши
-            tip: jQuery(this).find(".ui-grid-cell-action-tip"), //Элемент с подсказкой
-            position: 'bottom center' //Позиция
+            tip: jQuery(this).parent().parent().find(".ui-grid-cell-action-tip"), //Элемент с подсказкой
+            position: 'center right' //Позиция
         });
     })   
     //Настройки изменения стилей при наведении и отведении мыши
