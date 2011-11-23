@@ -57,6 +57,7 @@ Tapestry.Initializer.updateGrid = function(opt){
     Tapestry.Initializer.hideGridAjax();
     updateCSS();
     initializeGridToolTip();
+    
 }
 
 /**
