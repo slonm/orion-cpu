@@ -1,410 +1,379 @@
 package orion.tapestry.grid.components;
 
+import org.apache.tapestry5.corelib.components.Form;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.regex.Matcher;
+import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.PropertyOverrides;
 import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
-import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
-import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.beaneditor.BeanModel;
+import org.apache.tapestry5.corelib.components.Delegate;
+import org.apache.tapestry5.corelib.components.GridRows;
+import org.apache.tapestry5.corelib.data.GridPagerPosition;
+import org.apache.tapestry5.grid.GridDataSource;
+import org.apache.tapestry5.grid.GridModel;
+import org.apache.tapestry5.grid.GridSortModel;
+import org.apache.tapestry5.grid.SortConstraint;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.filter.FieldFilterElementDataType;
-import orion.tapestry.grid.lib.model.GridModelInterface;
-import orion.tapestry.grid.lib.paging.Pager;
-import orion.tapestry.grid.lib.field.sort.GridFieldSort;
-import orion.tapestry.grid.lib.field.view.GridFieldView;
-import orion.tapestry.grid.lib.field.view.GridFieldViewComparator;
-import orion.tapestry.grid.lib.field.filter.FilterElementAbstract;
-import orion.tapestry.grid.lib.field.sort.GridFieldSortType;
+import orion.tapestry.grid.lib.datasource.DataSource;
+import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
-import orion.tapestry.grid.lib.rows.GridRow;
+import orion.tapestry.grid.services.GridBeanModelSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import orion.tapestry.grid.lib.model.filter.GridFilterModel;
+import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
+import orion.tapestry.grid.lib.model.sort.GridSortModelImpl;
+import orion.tapestry.grid.lib.model.view.GridPropertyViewModel;
+import orion.tapestry.grid.lib.paging.Page;
+import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorHumanReadable;
 import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 
 /**
  * Основной класс компоненты
- *
- *
- * <h3>Чтобы  по-своему оформить заголовок колонки, надо</h3>
- * <p>
- * 1) В шаблоне страницы внутри компоненты добавить параметр
- * с именем &lt;UID поля&gt;Header, , а в стартовом теге компоненты добавить атрибут
- * <b>currentField="tmpFieldObject"</b>
- * например:
- * <pre>
- * &lt;t:Grid gridModel="PageGridModel" <span style="color:blue;background-color:yellow;">currentField="tmpFieldObject"</span>&gt;
- *    <span style="color:blue;background-color:yellow;">&lt;t:parameter name="id3Header"&gt;
- *       ${currentField.UID} что-то особенное
- *    &lt;/t:parameter&gt;</span>
- * &lt;/t:Grid&gt;
- * </pre>
- * здесь <b>id3</b> - уникальный идентификатор поля, который был придуман в GridModel;
- * <b>id3Header</b> - имя параметра, по которому компонента поймёт, какой именно заголовок надо заменять
- * Между &lt;t:parameter name="id3Header"&gt; и &lt;/t:parameter&gt;> надо вписать шаблон заголовка колонки
- * </p>
- * <p>
- * 2) В классе страницы надо добавить атрибут tmpFieldObject
- * <pre>
- *    {@literal @SuppressWarnings("unused")}
- *    {@literal @Property}
- *    private GridField tmpFieldObject;
- * </pre>
- * значение этого атрибута нельзя изменять, если вы точно не представляете, что именно делаете.
- * <p>
- * <b>tmpFieldObject</b> можно заменить любым другим именем переменной
- * </p>
- * 
- * 
- * 
- * 
- *
- * <h3>Чтобы  по-своему оформить ячейку, надо</h3>
- * <p>
- * 1) В шаблоне страницы внутри компоненты добавить параметр
- * с именем &lt;UID поля&gt;Cell, а в стартовом теге компоненты добавить атрибуты
- * <b>currentField="tmpFieldObject"  currentRow="tmpRowObject"</b>
- * например:
- * <pre>
- * &lt;t:Grid gridModel="PageGridModel"<span style="color:blue;background-color:yellow;"> currentField="tmpFieldObject"  currentRow="tmpRowObject"</span>&gt;
- *   <span style="color:blue;background-color:yellow;"> &lt;t:parameter name="id3Cell"&gt;
- *       ${currentField.getStringValue(currentRow)}
- *    &lt;/t:parameter&gt;</span>
- * &lt;/t:Grid&gt;
- * </pre>
- * здесь <b>id3</b> - уникальный идентификатор поля, который был придуман в GridModel;
- * <b>id3Cell</b> - имя параметра, по которому компонента поймёт, какую именно ячейку надо заменять
- * Между &lt;t:parameter name="id3Cell"&gt; и &lt;/t:parameter&gt; надо вписать шаблон ячейки
- * </p>
- * <p>
- * 2) В классе страницы надо добавить атрибуты tmpFieldObject и tmpRowObject
- * <pre>
- *    {@literal @SuppressWarnings("unused")}
- *    {@literal @Property}
- *    private GridField tmpFieldObject;
- *
- *    {@literal @SuppressWarnings("unused")}
- *    {@literal @Property}
- *    private GridRow tmpRowObject;
- * </pre>
- * значение этих атрибутов нельзя изменять, если вы точно не представляете, что именно делаете.
- * <p>
- * <b>tmpFieldObject</b> и <b>tmpRowObject</b> можно заменить любым другим именем переменной
- * </p>
- *
- *
- * <h3>Чтобы вставить что-нибудь перед таблицей</h3>
- * Hадо добавить в шаблон параметр:
- * <pre>
- * &lt;t:parameter name="beforeTable"&gt;
- * &lt;t:pagelink class="grid-page-link grid-page-link-edit" target="_blank" page="CrudEdit" context="entityClassName"&gt;${message:crud-create}&lt;/t:pagelink&gt;
- * &lt;/t:parameter&gt;
- * </pre>
- *
- * <h3>Чтобы добавить колонку</h3>
- * Надо
- * <p>
- * 1) при создании модели добавить в неё дополнительное поле типа GridFieldCalculable
- * <pre>
- *    GridFieldCalculable extraField;
- *    extraField = new GridFieldCalculable("rowActions");
- *    gridmodel.addField(extraField);
- * </pre>
- * </p>
- * <p>
- * 2) в шаблон добавить параметр
- * <pre>
- * &lt;t:parameter name="rowActionsCell">
- * &lt;t:actionlink class="grid-page-link" t:id="CRUDDelete" context="currentRowContext"&gt;${message:crud-delete}&lt;/t:actionlink&gt;
- * &lt;t:pagelink class="grid-page-link grid-page-link-edit" t:id="CRUDEdit" target="_blank" page="CrudEdit" context="currentRowContext"&gt;${message:crud-edit}&lt;/t:pagelink&gt;
- * &lt;/t:parameter&gt;
- * </pre>
- * <b>rowActions</b> - уникальный (в пределах таблицы) идентификатор колонки.
  * @author Gennadiy Dobrovolsky
  */
-@IncludeStylesheet({"grid.css", "gridfilter.css", "dateselector.css"})
-@IncludeJavaScriptLibrary({"grid.js", "dateselector.js", "gridfilter.js",
-    "${tapestry.scriptaculous}/dragdrop.js"})
+@Import(stylesheet = {"grid.css"}, library = {"grid.js"})
 @SupportsInformalParameters
-public class Grid {
+public class Grid implements GridModel {
 
+    private Logger logger = LoggerFactory.getLogger(Grid.class);
     /**
-     * Источник метаданных таблицы
-     * Обязательный параметр компоненты,
-     * входные данные
+     * The source of data for the Grid to display.
+     * This will usually be a List or array but can also be an explicit
+     * {@link DataSource}. For Lists and object arrays,
+     * a DataSource is created automatically as a wrapper
+     * around the underlying List.
      */
-    @Parameter(principal = true, required = true)
+    @Parameter(name = "source", principal = true, required = true, autoconnect = true)
+    private DataSource source;
+    /**
+     * A wrapper around the provided DataSource that caches access to the availableRows property. This is the source
+     * provided to sub-components.
+     */
     @Property
-    private GridModelInterface gridModel;
+    private DataSource cachedSource;
+    /**
+     * The model used to identify the properties to be presented and the order of presentation. The model may be
+     * omitted, in which case a default model is generated from the first object in the data source (this implies that
+     * the objects provided by the source are uniform). The model may be explicitly specified to override the default
+     * behavior, say to reorder or rename columns or add additional columns. The add, include,
+     * exclude and reorder
+     * parameters are <em>only</em> applied to a default model, not an explicitly provided one.
+     */
+    @Parameter
+    private GridBeanModel model;
+    /**
+     * The model parameter after modification due to the add, include, exclude and reorder parameters.
+     */
+    @Persist
+    private GridBeanModel gridBeanModel;
+    /**
+     * Сервис для создания модели, описывающей таблицу
+     */
+    @Inject
+    private GridBeanModelSource gridBeanModelSource;
+    /**
+     * Ссылка на фрагмент шаблона, у которого установлен t:id="gridfilter"
+     * используется для сообщений об ошибках
+     */
+    @Component(id = "gridfilter")
+    private GridFilter gridFilter;
+    /**
+     * model to show filter settings form
+     */
+    @Property
+    private GridFilterModel filterModel;
+    /**
+     * Ссылка на фрагмент шаблона, у которого установлен t:id="gridfilter"
+     * используется для сообщений об ошибках
+     */
+    @Component(id = "gridview")
+    private GridView gridView;
+    /**
+     * model to show view settings form
+     */
+    @Property
+    private GridPropertyViewModel viewModel;
+    /**
+     * model to show sorting settings form
+     */
+    private GridSortModel sortModel;
+    /**
+     * Ссылка на фрагмент шаблона, у которого установлен t:id="gridfilter"
+     * используется для сообщений об ошибках
+     */
+    @Component(id = "gridsort")
+    private GridSort gridSort;
+    /**
+     * The number of rows of data displayed on each page. If there are more rows than will fit, the Grid will divide up
+     * the rows into "pages" and (normally) provide a pager to allow the user to navigate within the overall result
+     * set.
+     */
+    @Parameter("25")
+    @Property
+    private int rowsPerPage;
+    @Property
+    @Persist
+    private Integer nRowsPerPage;
     /**
      * Ссылка на фрагмент шаблона, у которого установлен t:id="gridfilterform"
      * используется для сообщений об ошибках
      */
-    @Component(id = "gridpropertiesform")
+    @Component(id = "grid_properties_form")
     private Form _form;
     /**
-     * Строка, которая хранит всё условие фильтрации
+     * A Block to render instead of the table (and pager, etc.) when the source is empty. The default is simply the text
+     * "There is no data to display". This parameter is used to customize that message, possibly including components to
+     * allow the user to create new objects.
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private String filterJSON;
+    @Parameter(value = "block:empty", defaultPrefix = BindingConstants.LITERAL)
+    private Block empty;
     /**
-     * Строительные элементы фильтра для источника данных
+     * Сообщения интерфейса
      */
-    private List<FilterElementAbstract> filterElementList;
+    @Inject
+    private Messages messages;
     /**
-     * Строка, которая хранит описание видимости полей
+     * Defines where the pager (used to navigate within the "pages" of results) should be displayed: "top", "bottom",
+     * "both" or "none".
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private String viewJSON;
+    @Parameter(value = "top", defaultPrefix = BindingConstants.LITERAL)
+    private GridPagerPosition pagerPosition;
     /**
-     * Строка, которая хранит ширину колонок
+     * Блок со списком страниц
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private String widthJSON;
+    @Component(parameters = {"source=cachedSource", "rowsPerPage=nRowsPerPage", "currentPage=currentPage"})
+    private GridPager pager;
     /**
-     *  данные о видимости и последовательности колонок (полей) в таблице
+     * Блок, который делегирует свои обязанности
      */
-    private List<GridFieldView> fieldViewList;
+    @Component(parameters = "to=pagerTop")
+    private Delegate pagerTop;
     /**
-     * Строка, которая хранит описание видимости полей
+     * Блок, который делегирует свои обязанности
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private String sortJSON;
+    @Component(parameters = "to=pagerBottom")
+    private Delegate pagerBottom;
     /**
-     * Строка, которая хранит число - количество строк на странице
+     * Номер текущей страницы
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private Integer rowsPerPage;
+    @Persist
+    @Property
+    private Integer currentPage;
     /**
-     * Строка, которая хранит число - количество строк на странице
+     * Defines where block and label overrides are obtained from. By default, the Grid component provides block
+     * overrides (from its block parameters).
      */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private Integer pageNumber;
-    /**
-     *  данные о сортировке строк списка
-     */
-    private List<GridFieldSort> fieldSortList;
-    /**
-     *  данные о страницах списка
-     */
-    @Property  // <= чтобы не писать get... и set...
-    @Persist   // <= чтобы данные из формы остались
-    private Pager pager;
-    /**
-     * Временная переменная для цикла по колонкам
-     * Цикл объявлен в шаблоне
-     */
-    @Parameter(principal = true)
-    @SuppressWarnings("unused") // <= меньше мусора при компиляции
-    @Property                   // <= чтобы не писать примитивные методы get...() и set...()
-    private GridFieldAbstract currentField;
-    /**
-     * Временная переменная для цикла по строкам
-     * Цикл объявлен в шаблоне
-     */
-    @Parameter(principal = true)
-    @SuppressWarnings("unused") // <= меньше мусора при компиляции
-    @Property                   // <= чтобы не писать примитивные методы get...() и set...()
-    private GridRow currentRow;
-    /**
-     * Извлечённые из источника данных записи
-     */
-    @SuppressWarnings("unused") // <= меньше мусора при компиляции
-    @Property                   // <= чтобы не писать примитивные методы get...() и set...()
-    private List<GridRow> rows;
-    /**
-     * Правильно упорядоченный список видимых полей
-     */
-    private List<GridFieldAbstract> visibleFieldList;
-    /**
-     * Where to look for informal parameter Blocks used to override column headers.  The default is to look for such
-     * overrides in the GridColumns component itself, but this is usually overridden.
-     */
-    @Parameter("this")
+    @Parameter(value = "this", allowNull = false)
+    @Property(write = false)
     private PropertyOverrides overrides;
     /**
-     * Блок, который содержит заголовки колонок
-     * Этот блок нужен для того, чтобы можно было его перекрыть 
-     * своим форматом
+     * Optional output parmeter used to identify the index of the column being rendered.
      */
-    @Inject
-    private Block standardColumnHeader;
+    @Parameter
+    private int columnIndex;
+    @Component(parameters = {"index=inherit:columnIndex", "overrides=overrides", "columnList=columnList"})
+    private GridColumns columns;
     /**
-     * Блок, который содержит стандартное форматирование ячейки
-     * Этот блок нужен для того, чтобы можно было его перекрыть своим форматом
+     * Used to store the current object being rendered (for the current row). This is used when parameter blocks are
+     * provided to override the default cell renderer for a particular column ... the components within the block can
+     * use the property bound to the row parameter to know what they should render.
      */
-    @Inject
-    private Block standardCell;
-    /**
-     * Блок, который размещается непосредственно перед таблицей с данными
-     * По умолчанию он пустой, но его можно перекрыть своим
-     */
-    @Inject
-    private Block beforeTable;
-    /**
-     * Блок, который размещается непосредственно после таблицы с данными
-     * По умолчанию он пустой, но его можно перекрыть своим
-     */
-    @Inject
-    private Block afterTable;
-
+    @Parameter(principal = true)
+    @Property
+    private Object row;
+    @Component(parameters = {"columnIndex=inherit:columnIndex", "rowsPerPage=nRowsPerPage", "currentPage=currentPage", "row=row",
+        "overrides=overrides"}, publishParameters = "rowIndex,rowClass,volatile,encoder,lean")
+    private GridRows rows;
     /**
      * обьект для доступа к сохранённым наборам настроек
      */
     @Parameter
     @Property
     private IGridSettingStore gridSettingStore;
-
-
-    private Logger logger=LoggerFactory.getLogger(Grid.class);
     /**
-     * Проверяет, был ли перекрыт блок "Заголовок колонки" для текущего поля
-     * Если параметр с именем <b>currentField.getUid() + "Header"</b> существует,
-     * то возвращается ссылка на него, иначе возвращается ссылка на блок по умолчанию
-     * @return часть компоненты (объект типа Block), которую надо использовать для рисования заголовка колонки
+     * A comma-seperated list of property names to be added to the {@link org.apache.tapestry5.beaneditor.BeanModel}.
+     * Cells for added columns will be blank unless a cell override is provided. This parameter is only used
+     * when a default model is created automatically.
      */
-    public Block getBlockColumnHeader() {
-        Block override = overrides.getOverrideBlock(currentField.getUid() + "Header");
-        if (override != null) {
-            return override;
-        }
-
-        return standardColumnHeader;
-    }
-
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String add;
     /**
-     * Проверяет, был ли перекрыт блок "Ячейка" для текущего поля
-     * Если параметр с именем <b>currentField.getUid() + "Cell"</b> существует,
-     * то возвращается ссылка на него, иначе возвращается ссылка на блок по умолчанию
-     * @return часть компоненты (объект типа Block), которую надо использовать для рисования ячейки таблицы
+     * A comma-separated list of property names to be retained from the
+     * {@link org.apache.tapestry5.beaneditor.BeanModel}.
+     * Only these properties will be retained, and the properties will also be reordered. The names are
+     * case-insensitive. This parameter is only used
+     * when a default model is created automatically.
      */
-    public Block getBlockCell() {
-        Block override = overrides.getOverrideBlock(currentField.getUid() + "Cell");
-        if (override != null) {
-            return override;
-        }
-
-        return standardCell;
-    }
-
+    @SuppressWarnings("unused")
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String include;
     /**
-     * Проверяет, был ли перекрыт блок "Перед таблицей"
-     * Если параметр с именем <b>beforeTable</b> существует,
-     * то возвращается ссылка на него, иначе возвращается ссылка на блок по умолчанию
-     * @return часть компоненты (объект типа Block), которую надо использовать для рисования ячейки таблицы
+     * A comma-separated list of property names to be removed from the {@link org.apache.tapestry5.beaneditor.BeanModel}
+     * .
+     * The names are case-insensitive. This parameter is only used
+     * when a default model is created automatically.
      */
-    public Block getBlockBeforeTable() {
-        Block override = overrides.getOverrideBlock("beforeTable");
-        if (override != null) {
-            return override;
-        }
-        return beforeTable;
-    }
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String exclude;
+    /**
+     * A comma-separated list of property names indicating the order in which the properties should be presented. The
+     * names are case insensitive. Any properties not indicated in the list will be appended to the end of the display
+     * order. This parameter is only used
+     * when a default model is created automatically.
+     */
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String reorder;
+    /**
+     * Restriction editor to create visible search condition
+     */
+    private RestrictionEditorHumanReadable restrictionEditorHumanReadable;
 
     /**
-     * Проверяет, был ли перекрыт блок "После таблицы"
-     * Если параметр с именем <b>afterTable</b> существует,
-     * то возвращается ссылка на него, иначе возвращается ссылка на блок по умолчанию
-     * @return часть компоненты (объект типа Block), которую надо использовать для рисования ячейки таблицы
+     * подготовка к загрузке страницы
      */
-    public Block getBlockAfterTable() {
-        Block override = overrides.getOverrideBlock("afterTable");
-        if (override != null) {
-            return override;
-        }
-        return afterTable;
-    }
+    Object setupRender() {
+        // при первой загрузке страницы создаём модель
+        if (gridBeanModel == null) {
+            if (model == null) {
+                // если модель не была задана в параметрах, опрашиваем источник данных
+                gridBeanModel = source.getRowType() != null ? gridBeanModelSource.createDisplayModel(source.getRowType(), messages) : null;
+            } else {
+                // если модель была задана в параметрах
+                gridBeanModel = model;
+            }
+            // если модель была создана/прочитана
+            if (gridBeanModel != null) {
 
-    /**
-     * Подготовка к созданию страницы
-     */
-    void setupRender() {
-
-        // ------------- create filter list - begin ----------------------------
-        // load list of possible filter elements
-        this.filterElementList = gridModel.getFilterElementList();
-        gridModel.setFilter(this.filterJSON);
-        // ------------- create filter list - end ------------------------------
-
-        // ------------- данные о сортировке строк - begin ---------------------
-        this.fieldSortList = this.gridModel.getFieldSortList();
-        if (this.sortJSON != null) {
-            this.loadSortJSON(this.sortJSON, this.fieldSortList);
-        }
-        this.sortJSON = jsonFromFieldSortList(this.fieldSortList);
-        // ------------- данные о сортировке строк - end -----------------------
-
-        // ------------- данные о видимости колонок - begin --------------------
-        // данные определяется в модели таблицы
-        this.fieldViewList = gridModel.getFieldViewList();
-        if (this.viewJSON != null) {
-            this.loadViewJSON(this.viewJSON, this.fieldViewList);
-        }
-        this.viewJSON = this.jsonFromFieldViewList(fieldViewList);
-        // ------------- данные о видимости колонок - end ----------------------
-
-
-        // ------------- данные о разбивке на страницы - begin -----------------
-        // pager обязательно должен создаваться после установки
-        // всех остальных параметров таблицы
-        if (this.pager == null) {
-            // Если это первая загрузка страницы, то создаём pager
-            this.pager = this.gridModel.getPager();
-            this.rowsPerPage = 10;
-            this.pageNumber = 1;
-        } else {
-            this.gridModel.setPager(this.pager);
-        }
-        this.pager.setRowsPerPage(this.rowsPerPage);
-        this.pager.setVisiblePage(this.pageNumber);
-
-        // ------------- список строк - начало ---------------------------------
-        try {
-            // здесь извлекаются строки и обновляется количество найденных строк
-            this.rows = gridModel.getRows();
-        } catch (RestrictionEditorException ex) {
-            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // ------------- список строк - конец ----------------------------------
-    }
-
-    /**
-     * Возвращает правильно упорядоченный список видимых полей
-     * При первом вызове прочитывает данные формы,
-     * создаёт и запоминает список
-     * @return Список полей
-     */
-    public List<GridFieldAbstract> getVisibleFields() {
-        if (this.visibleFieldList == null) {
-            this.visibleFieldList = new ArrayList<GridFieldAbstract>();
-            Collections.sort(this.fieldViewList, new GridFieldViewComparator());
-            for (GridFieldView fw : this.fieldViewList) {
-                for (GridFieldAbstract f : gridModel.getFields()) {
-                    if (fw.getUid().equals(f.getUid()) && f.getFieldView().getIsVisible()) {
-                        this.visibleFieldList.add(f);
+                // добавляем колонки
+                if (add != null) {
+                    for (String name : split(add)) {
+                        gridBeanModel.add(name);
                     }
                 }
+                // исключаем колонки
+                if (exclude != null) {
+                    gridBeanModel.exclude(split(exclude));
+                }
+                // включаем колонки
+                if (include != null) {
+                    gridBeanModel.include(split(include));
+                }
+                // упорядочиваем колонки
+                if (reorder != null) {
+                    gridBeanModel.reorder(split(reorder));
+                }
+            }
+            // stop if the grid bean model cannot be defined
+            if (gridBeanModel == null) {
+                return empty;
             }
         }
-        return this.visibleFieldList;
+
+        // create model to show "view settings" form
+        viewModel = gridBeanModel.getGridPropertyViewModel();
+
+        // create model to show "filter settings" form
+        filterModel = gridBeanModel.getGridFilterModel();
+
+        // create model to show "sorting settings" form
+        sortModel = gridBeanModel.getGridSortModelImpl();
+
+        this.restrictionEditorHumanReadable = new RestrictionEditorHumanReadable();
+
+        // TAP5-34: We pass the source into the CachedDataSource now; previously
+        // we were accessing source directly, but during submit the value wasn't
+        // cached, and therefore access was very inefficient, and sorting was
+        // very inconsistent during the processing of the form submission.
+
+        // set default value
+        if (nRowsPerPage == null) {
+            nRowsPerPage = rowsPerPage;
+        }
+
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+
+        // декорируем источник данных кешированием
+        cachedSource = new CachedDataSource(source);
+
+        // выборка данных
+        Page visiblePage = new Page(currentPage, nRowsPerPage);
+        
+        cachedSource.prepare(visiblePage.getFirstRow(), visiblePage.getLastRow(), GridSortModelImpl.importJSONString(gridBeanModel, this.gridSort.getGridSortJSON()).getSortConstraints(), this.gridFilter.getGridFilterJSON());
+
+        int availableRows = cachedSource.getAvailableRows();
+
+        visiblePage.setMaxRowNumber(availableRows);
+
+        if (availableRows == 0) {
+            return null;
+        }
+
+        // If there's no rows, display the empty block placeholder.
+        return cachedSource.getAvailableRows() == 0 ? empty : null;
+
+    }
+
+    public Object getPagerTop() {
+        return pagerPosition.isMatchTop() ? pager : null;
+    }
+
+    public Object getPagerBottom() {
+        return pagerPosition.isMatchBottom() ? pager : null;
+    }
+
+    /**
+     * Для отображения заголовков колонок нужен список моделей
+     */
+    public List<GridPropertyModelInterface> getColumnList() {
+        List<GridPropertyModelInterface> columnList = new ArrayList<GridPropertyModelInterface>();
+        for (Object name : this.gridBeanModel.getPropertyNames()) {
+            GridPropertyModelInterface vi = this.gridBeanModel.get(name.toString());
+            if (vi.getGridPropertyView() != null) {
+                columnList.add(vi);
+            }
+        }
+        return columnList;
+    }
+
+    @Override
+    public BeanModel getDataModel() {
+        return gridBeanModel;
+    }
+
+    @Override
+    public GridDataSource getDataSource() {
+        return cachedSource;
+    }
+
+    @Override
+    public GridSortModel getSortModel() {
+        return sortModel;
+    }
+
+    public void getSortModel(GridSortModel _sortModel) {
+        sortModel = _sortModel;
+    }
+
+    static String[] split(String propertyNames) {
+        String trimmed = propertyNames.trim();
+
+        if (trimmed.length() == 0) {
+            return null;
+        }
+        return trimmed.split("\\s*,\\s*");
     }
 
     /**
@@ -412,217 +381,61 @@ public class Grid {
      * @return строка, которая отображает понятное человеку условия фильтрации
      */
     public String getHumanReadableFilterInfo() {
-        return this.gridModel.getHumanReadableFilterInfo();
-    }
-
-    // Это временнные информеры
-    public String getPagerInfo() {
-        return "Page " + this.pager.getVisiblePage().getPageNumber() + " : from " + this.pager.getVisiblePage().getFirstRow() + " : from " + this.pager.getVisiblePage().getLastRow();
-    }
-
-    public String getSortConstraints() {
-        return "no sorting";
-    }
-
-    /**
-     * Составляет список элементов для редактора фильтра
-     */
-    public String getJSFilterElements() {
-        // В зависимости от типа элемента, выдаём разный JavaScript
-        StringBuilder s = new StringBuilder();
-        for (FilterElementAbstract fe : this.filterElementList) {
-            //System.out.println(fe.getUid() + "  "+fe.getType());
-            switch (fe.getType()) {
-                case TEXT: {
-                    s.append("filterNodeType['");
-                    s.append(fe.getUid());
-                    s.append("']=function(){var tmp=new NodeText('");
-                    s.append(fe.getLabel());
-                    s.append("','");
-                    s.append(fe.getUid());
-                    s.append("','',");
-                    FieldFilterElementDataType validator;
-                    validator = fe.getDatatype();
-                    if (validator == null) {
-                        s.append("null");
-                    } else {
-                        s.append(validator.getJSValidator());
-                    }
-                    s.append(");for(var i in tmp) this[i]=tmp[i];};\n");
-
-                    s.append("filterNodeTypeLabel['");
-                    s.append(fe.getUid());
-                    s.append("']='");
-                    s.append(fe.getLabel());
-                    s.append("';\n");
-                    break;
-                }
-                case CHECKBOX: {
-                    s.append("filterNodeType['");
-                    s.append(fe.getUid());
-                    s.append("']=function(){var tmp=new NodeCheckbox('");
-                    s.append(fe.getLabel());
-                    s.append("','");
-                    s.append(fe.getUid());
-                    s.append("','');for(var i in tmp) this[i]=tmp[i];};\n");
-
-                    s.append("filterNodeTypeLabel['");
-                    s.append(fe.getUid());
-                    s.append("']='");
-                    s.append(fe.getLabel());
-                    s.append("';\n");
-                    break;
-                }
-                case DATE: {
-                    s.append("filterNodeType['");
-                    s.append(fe.getUid());
-                    s.append("']=function(){var tmp=new NodeDate('");
-                    s.append(fe.getLabel());
-                    s.append("','");
-                    s.append(fe.getUid());
-                    s.append("','',");
-                    FieldFilterElementDataType validator2;
-                    validator2 = fe.getDatatype();
-                    if (validator2 == null) {
-                        s.append("null");
-                    } else {
-                        s.append(validator2.getJSValidator());
-                    }
-                    s.append(");for(var i in tmp) this[i]=tmp[i];};\n");
-
-                    s.append("filterNodeTypeLabel['");
-                    s.append(fe.getUid());
-                    s.append("']='");
-                    s.append(fe.getLabel());
-                    s.append("';\n");
-                    break;
-                }
-            }
-        }
-        return s.toString();
-    }
-
-    /**
-     * TODO add JavaDoc
-     */
-    public String jsonFromFieldViewList(List<GridFieldView> fvl) {
-        StringBuilder s = new StringBuilder("[");
-        int n = 0;
-        for (GridFieldView gfw : fvl) {
-            if (n > 0) {
-                s.append(",");
-            }
-            n++;
-            s.append("{\"uid\":\"");
-            s.append(gfw.getUid());
-            s.append("\",\"isVisible\":\"");
-            s.append(gfw.getIsVisible());
-            s.append("\",\"ordering\":\"");
-            s.append(gfw.getOrdering());
-            s.append("\",\"label\":\"");
-            s.append(gfw.getLabel().replaceAll("\"", Matcher.quoteReplacement("\\\"")));
-            s.append("\"}");
-            // System.out.println(s.toString());
-        }
-        s.append("]");
-        return s.toString();
-    }
-
-    /**
-     * Получает строку, которая хранит информацию
-     * о видимости и порядке столбцов в таблице.
-     * set default value if _viewJSON is null
-     * @param _viewJSON новая строка с информацией о видимости и порядке столбцов
-     */
-    public void loadViewJSON(String _viewJSON, List<GridFieldView> fvl) {
-        // set default value if this.viewJSON is null
-        if (_viewJSON == null || _viewJSON.isEmpty()) {
-            return;
-        }
-
-        try {
-            //System.out.println("Parsing " + _viewJSON);
-            JSONArray root = new JSONArray(_viewJSON);
-            int cnt = root.length();
-            JSONObject node;
-
-            String uid;
-            for (int i = 0; i < cnt; i++) {
-                node = root.getJSONObject(i);
-                uid = node.getString("uid");
-                for (GridFieldView gfv : fvl) {
-                    if (uid.equals(gfv.getUid())) {
-                        gfv.setOrdering(node.optInt("ordering", 0));
-                        gfv.setIsVisible(node.optBoolean("isVisible", true));
-                    }
-                }
-            }
-        } catch (JSONException ex) {
-            //Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * TODO add JavaDoc
-     */
-    public String jsonFromFieldSortList(List<GridFieldSort> fsl) {
-        StringBuilder s = new StringBuilder("[");
-        int n = 0;
-        for (GridFieldSort gfs : fsl) {
-            if (n > 0) {
-                s.append(",");
-            }
-            n++;
-
-            s.append("{\"attributeName\":\"");
-            s.append(gfs.getAttributeName());
-            s.append("\",\"label\":\"");
-            s.append(gfs.getLabel().replaceAll("\"", Matcher.quoteReplacement("\\\"")));
-            s.append("\",\"ordering\":\"");
-            s.append(gfs.getOrdering());
-            s.append("\",\"sortType\":\"");
-            s.append(gfs.getSortType());
-            s.append("\",\"sortTypeAsc\":\"");
-            s.append(gfs.getSortTypeValueAsc());
-            s.append("\",\"sortTypeDesc\":\"");
-            s.append(gfs.getSortTypeValueDesc());
-            s.append("\",\"sortTypeNone\":\"");
-            s.append(gfs.getSortTypeValueNone());
-            s.append("\",\"uid\":\"");
-            s.append(gfs.getUid());
-            s.append("\"}");
-            // System.out.println(s.toString());
-        }
-        s.append("]");
-        return s.toString();
-    }
-
-    /**
-     * TODO Add JavaDoc here
-     */
-    public void loadSortJSON(String _sortJSON, List<GridFieldSort> fsl) {
-        // set default value if this.viewJSON is null
-        if (_sortJSON == null || _sortJSON.isEmpty()) {
-            return;
+        if (this.restrictionEditorHumanReadable == null) {
+            return "";
         }
         try {
-            //System.out.println("Parsing " + _viewJSON);
-            JSONArray root = new JSONArray(_sortJSON);
-            int cnt = root.length();
-            JSONObject node;
-            String uid;
-            for (int i = 0; i < cnt; i++) {
-                node = root.getJSONObject(i);
-                uid = node.getString("uid");
-                for (GridFieldSort gfs : fsl) {
-                    if (gfs.getUid().equals(uid)) {
-                        gfs.setOrdering(node.optInt("ordering", 0));
-                        gfs.setSortType(GridFieldSortType.valueOf(node.optString("sortType", "NONE")));
-                    }
-                }
+            if (this.gridFilter != null && this.filterModel != null) {
+                this.filterModel.modifyRestriction(this.gridFilter.getGridFilterJSON(), this.restrictionEditorHumanReadable);
+                logger.info(this.gridFilter.getGridFilterJSON());
             }
+        } catch (RestrictionEditorException ex) {
         } catch (JSONException ex) {
-            logger.debug(ex+" "+_sortJSON);
+        }
+        return this.restrictionEditorHumanReadable.getValue();
+    }
+
+    /**
+     * A version of DataSource that caches the availableRows property. This addresses TAPESTRY-2245.
+     */
+    static class CachedDataSource implements DataSource {
+
+        private final DataSource delegate;
+        private boolean availableRowsCached;
+        private int availableRows;
+        private String filterJSON;
+
+        CachedDataSource(DataSource delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public int getAvailableRows() {
+            if (!availableRowsCached) {
+                availableRows = delegate.getAvailableRows();
+                availableRowsCached = true;
+            }
+            return availableRows;
+        }
+
+        @Override
+        public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints) {
+            delegate.prepare(startIndex, endIndex, sortConstraints);
+        }
+
+        @Override
+        public Object getRowValue(int index) {
+            return delegate.getRowValue(index);
+        }
+
+        @Override
+        public Class getRowType() {
+            return delegate.getRowType();
+        }
+
+        @Override
+        public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints, String filterJSON) {
+            delegate.prepare(startIndex, endIndex, sortConstraints, filterJSON);
         }
     }
 }
