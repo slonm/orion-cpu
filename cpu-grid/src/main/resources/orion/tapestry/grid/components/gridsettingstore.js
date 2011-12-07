@@ -15,20 +15,23 @@ function load_setting(data){
        for(var i in data){
            $(i).value=data[i];
        }
-       $('gridpropertiesform').submit();
+       $('grid_properties_form').submit();
     }
 }
 
 function update_settings(){
-        var newGridPropertiesValue={"sortJSON":$("sortJSON").value,"widthJSON":$("widthJSON").value,"viewJSON":$("viewJSON").value,"filterJSON":$("filterJSON").value};
+        var newGridPropertiesValue={
+            "gridFilterJSON":$("gridFilterJSON").value,
+            "gridPropertyViewJSON":$("gridPropertyViewJSON").value,
+            "gridSortJSON":$("gridSortJSON").value,
+            "nRowsPerPage":$("nRowsPerPage").value};
         $('newGridPropertiesValue').value=Object.toJSON(newGridPropertiesValue);
 }
 Event.observe(window, 'load',function(){
     update_settings();
-    Event.observe($('sortJSON'),'change',update_settings);
-    Event.observe($('widthJSON'),'change',update_settings);
-    Event.observe($('viewJSON'),'change',update_settings);
-    Event.observe($('filterJSON'),'change',update_settings);
+    Event.observe($('gridFilterJSON'),'change',update_settings);
+    Event.observe($('gridPropertyViewJSON'),'change',update_settings);
+    Event.observe($('gridSortJSON'),'change',update_settings);
 });
 
 

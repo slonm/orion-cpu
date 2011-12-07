@@ -1,6 +1,8 @@
 package orion.tapestry.grid.lib.restrictioneditor;
 
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Пример составителя выражений для условия выборки строк.
@@ -9,6 +11,8 @@ import java.util.ArrayList;
  */
 public class RestrictionEditorHumanReadable implements RestrictionEditorInterface<String> {
 
+    private static Logger logger = LoggerFactory.getLogger(RestrictionEditorHumanReadable.class);
+    
     private ArrayList<Item> expression;
 
     public RestrictionEditorHumanReadable() {
@@ -55,7 +59,7 @@ public class RestrictionEditorHumanReadable implements RestrictionEditorInterfac
 
         @Override
         public String getDbExpression() {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             String div = "";
             for (Object s : this.value) {
                 sb.append(div);
@@ -189,8 +193,8 @@ public class RestrictionEditorHumanReadable implements RestrictionEditorInterfac
         RestrictionEditorHumanReadable.Item op2;
         op1 = this.expression.get(size - 1);
         op2 = this.expression.get(size - 2);
-        System.out.println(op1.getDbExpression());
-        System.out.println(op2.getDbExpression());
+        //System.out.println(op1.getDbExpression());
+        //System.out.println(op2.getDbExpression());
         this.expression.add(new RestrictionEditorHumanReadable.ItemExpression(this.brakets(op1.getDbExpression()) + " IN (" + op2.getDbExpression() + ")"));
         this.expression.remove(size - 1);
         this.expression.remove(size - 2);
