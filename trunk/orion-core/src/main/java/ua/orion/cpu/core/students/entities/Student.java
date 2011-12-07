@@ -1,42 +1,41 @@
 package ua.orion.cpu.core.students.entities;
 
-
-
-import ua.orion.cpu.core.persons.entities.Person;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import ua.orion.cpu.core.persons.entities.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import ua.orion.core.persistence.AbstractEntity;
 
 /**
  * Студенты.
+ *
  * @author sl
  */
 @Entity
 @Table(schema = "stu")
-public class Student extends AbstractEntity<Student> {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Student extends Person {
+
     private static final long serialVersionUID = 1L;
-
     @NotNull
-    @ManyToOne
-    private Person person;
-    
-    @NotNull
-    @ManyToOne
     private AcademicStream academicStream;
-
     @NotNull
-    @ManyToOne
     private AcademicGroup academicGroup;
+        private Education education;
+    private Set<EducationStudent> educationStudent = new HashSet();
 
     public Student() {
     }
 
-    public Student(Person person, AcademicStream academicStream, AcademicGroup academicGroup) {
-        this.person = person;
+    public Student(AcademicStream academicStream, AcademicGroup academicGroup, Education education, String firstName, String patronymicName, String surname, Calendar birthday, Sex sex, Citizenship citizenship, String handle, Passport passport, Calendar datePhliugraphia, String notes) {
+        super(firstName, patronymicName, surname, birthday, sex, citizenship, handle, passport, datePhliugraphia, notes);
         this.academicStream = academicStream;
         this.academicGroup = academicGroup;
+        this.education = education;
     }
-    
+
+    @ManyToOne
     public AcademicGroup getAcademicGroup() {
         return academicGroup;
     }
@@ -45,6 +44,7 @@ public class Student extends AbstractEntity<Student> {
         this.academicGroup = academicGroup;
     }
 
+    @ManyToOne
     public AcademicStream getAcademicStream() {
         return academicStream;
     }
@@ -53,29 +53,21 @@ public class Student extends AbstractEntity<Student> {
         this.academicStream = academicStream;
     }
 
-    public Person getPerson() {
-        return person;
+    @ManyToOne
+    public Education getEducation() {
+        return education;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setEducation(Education education) {
+        this.education = education;
     }
 
-    @Override
-    protected boolean entityEquals(Student obj) {
-        return aEqualsField(person, obj.person)
-                && aEqualsField(academicStream, obj.academicStream)
-                && aEqualsField(academicGroup, obj.academicGroup);
+    @OneToMany
+    public Set<EducationStudent> getEducationStudent() {
+        return educationStudent;
     }
 
-    @Override
-    public int compareTo(Student o) {
-        return o == null ? -1 : toString().compareToIgnoreCase(o.toString());
+    public void setEducationStudent(Set<EducationStudent> educationStudent) {
+        this.educationStudent = educationStudent;
     }
-
-    @Override
-    public String toString() {
-        return "Student{" + "person=" + person + ", academicStream=" + academicStream + ", academicGroup=" + academicGroup + '}';
-    }
-
 }

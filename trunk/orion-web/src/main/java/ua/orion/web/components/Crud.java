@@ -21,8 +21,7 @@ import ua.orion.web.services.TapestryDataSource;
  * Компонент, который предоставляет CRUD для сущностей
  * @author slobodyanuk
  */
-@Import(library = "../WindowUtils.js",
-stylesheet = "../css/tapestry-crud.css")
+@Import(library = "../WindowUtils.js",stylesheet = "../css/tapestry-crud.css")
 @SuppressWarnings("unused")
 public class Crud {
     //---Components and component's resources---

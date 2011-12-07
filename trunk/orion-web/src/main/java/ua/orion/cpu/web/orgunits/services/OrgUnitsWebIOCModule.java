@@ -19,7 +19,6 @@ public class OrgUnitsWebIOCModule {
 //     */
 //    public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
 //    }
-    
     /**
      * Add menu item to configuration
      * @param configuration
@@ -28,7 +27,7 @@ public class OrgUnitsWebIOCModule {
     public static void contributeOrionMenuService(MappedConfiguration<String, IMenuLink> configuration,
             MenuLinkBuilder mlb) {
         String path;
-        
+
         path = "Start>OrgUnits>Institute";
         configuration.add(path, mlb.buildCrudPageMenuLink(Institute.class, path));
 
@@ -37,6 +36,12 @@ public class OrgUnitsWebIOCModule {
 
         path = "Start>OrgUnits>Department";
         configuration.add(path, mlb.buildCrudPageMenuLink(Department.class, path));
+
+        path = "Start>OrgUnits>OrgUnitPost";
+        configuration.add(path, mlb.buildCrudPageMenuLink(OrgUnitPost.class, path));
+
+        path = "Start>OrgUnits>Post";
+        configuration.add(path, mlb.buildCrudPageMenuLink(Post.class, path));
     }
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
