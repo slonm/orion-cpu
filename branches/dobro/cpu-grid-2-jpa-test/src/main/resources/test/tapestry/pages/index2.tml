@@ -1,0 +1,31 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Index 2</title>
+</head>
+<body>
+
+
+<t:grid.Grid source="dataSource"
+             gridSettingStore="settingStore"
+             row="currentRow">
+<!-- 
+
+        <p:lastNameCell>
+            <b>${currentRow.lastname}</b>
+        </p:lastNameCell>
+
+        <p:menuCell>
+            menu #${currentRow.id}
+        </p:menuCell>
+ -->
+        <p:empty>
+          <p>There are no rows to display;</p>
+        </p:empty>
+</t:grid.Grid>
+
+-------------<br/>
+${RowCount} rows<br/>
+${FirstRow}
+</body>
+</html>
