@@ -1,3 +1,97 @@
+a.grid-page-link, span.grid-page-link{
+    display:inline-block;
+    vertical-align: top;
+    padding:3pt;
+    margin-right:1pt;
+}
+a.grid-page-link{
+    background-color:yellow;
+    opacity:0.4;
+}
+a.grid-page-link:hover{
+    opacity:1;
+}
+span.grid-page-link{
+    background-color:lime;
+}
+span.grid-page-link:hover{
+    opacity:1;
+}
+
+
+
+
+span.grid-form-block{
+    display:inline-block;
+    vertical-align:top;
+}
+.filter{width:50%;}
+.sort{width:24%;}
+.view{width:24%;}
+
+table#gridTable td{
+    overflow:hidden;
+    width:150px;
+}
+
+div#grid_properties_header{
+    background-color:#99ccff;
+    padding:3px;
+    font-size:11pt;
+}
+
+a#show_grid_properties,
+a#hide_grid_properties{
+    background-color: #99ccff;
+    color:white;
+    float:left;
+    font-family: monospace;
+    text-decoration:none;
+    padding:1px;
+    font-size:10pt;
+    margin-right:3pt;
+    width:18px;
+    text-align:center;
+}
+
+span.uparrow{
+    display: inline-block;
+    border-bottom: 16px solid white;
+    border-right: 8px solid #99ccff;
+    border-left: 8px solid #99ccff;
+}
+
+span.downarrow{
+    display: inline-block;
+    border-top: 16px solid white;
+    border-right: 8px solid #99ccff;
+    border-left: 8px solid #99ccff;
+}
+
+
+form.grid_properties_form{
+    margin-bottom: 0pt;
+}
+
+span.gridproperties{
+    display:inline-block;
+    width:100%;
+    padding:3px;
+    background-color:#c0c0c0;
+    font-size:11px;
+}
+
+table.cpuGrid th{
+    height:50px;
+    padding:0px;
+    overflow: hidden;
+}
+a.sortColumnHeaderLink{
+    height:20px;
+    overflow: hidden;
+}
+
+/*
 div#gridpropertiesheader{
     background-color:#99ccff;
     padding:3px;
@@ -44,8 +138,8 @@ span.downarrow{
     padding: 2pt;
     color:black;
     border:2px solid #99CCFF;
-  /*padding:10px;
-    background-color:#ffff66;*/
+  /-*padding:10px;
+    background-color:#ffff66;*-/
 }
 
 
@@ -136,7 +230,7 @@ div.grid-width-slider-right{
     width:6px;
     background-color:#0099cc;
     height:80px;
-    
+
 }
 
 div.grid-width-slider-right{
@@ -303,3 +397,4 @@ a.grid-page-link:hover{
     display:inline-block;
     margin-left:10px;
 }
+*/

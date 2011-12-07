@@ -22,6 +22,9 @@ public class Pager {
     private int rowsFound;
 
     public Page getVisiblePage() {
+        if(this.visiblePage==null){
+            setVisiblePage(1);
+        }
         return this.visiblePage;
     }
 
@@ -91,6 +94,7 @@ public class Pager {
         pgr.setRowsPerPage(10);
         pgr.setVisiblePage(15);
         for (Page p : pgr.getPageList()) {
+            if(p!=null)
             System.out.println("Page " + p.getPageNumber() + ": from " + p.getFirstRow() + " to " + p.getLastRow());
         }
     }
