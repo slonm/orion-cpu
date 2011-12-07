@@ -3,26 +3,25 @@ package orion.tapestry.grid.services;
 import java.util.Map;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.ServiceId;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.slf4j.Logger;
-import orion.tapestry.grid.lib.field.GridFieldAbstract;
-import orion.tapestry.grid.lib.field.impl.GridFieldBoolean;
-import orion.tapestry.grid.lib.field.impl.GridFieldDate;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberByte;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberDouble;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberFloat;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberInteger;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberLong;
-import orion.tapestry.grid.lib.field.impl.GridFieldNumberShort;
-import orion.tapestry.grid.lib.field.impl.GridFieldString;
+import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
+import orion.tapestry.grid.lib.model.property.impl.*;
+
 
 /**
  * @author Gennadiy Dobrovolsky
  */
 public class CpuGridModule {
+
+    public static void bind(ServiceBinder binder){
+        binder.bind(GridBeanModelSource.class, GridBeanModelSourceImpl.class);
+        binder.bind(GridPropertyModelSource.class,GridPropertyModelSourceImpl.class);
+    }
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
         configuration.add(new LibraryMapping("grid", "orion.tapestry.grid"));
@@ -32,45 +31,47 @@ public class CpuGridModule {
         configuration.add("grid-1.0", "orion.tapestry.grid");
     }
 
-
     /**
      * Конфигурация по умолчанию, соответствие между типом данных в Java и типом колонки в Grid
      * Add map Class => GridField type
      * @param configuration соответствие между типом данных в Java и типом колонки в Grid
      */
-    public static void contributeGridFieldFactory(MappedConfiguration<String, Class<? extends GridFieldAbstract>> configuration) {
-        configuration.add("java.lang.String", GridFieldString.class);
+    public static void contributeGridPropertyModelSource(MappedConfiguration<String, Class> configuration) {
+        configuration.add("java.lang.String", GridPropertyModelString.class);
 
-        configuration.add("byte", GridFieldNumberByte.class);
-        configuration.add("java.lang.Byte", GridFieldNumberByte.class);
+        configuration.add("byte", GridPropertyModelByte.class);
+        configuration.add("java.lang.Byte", GridPropertyModelByte.class);
 
-        configuration.add("short", GridFieldNumberShort.class);
-        configuration.add("java.lang.Short", GridFieldNumberShort.class);
+        configuration.add("short", GridPropertyModelShort.class);
+        configuration.add("java.lang.Short", GridPropertyModelShort.class);
 
-        configuration.add("int", GridFieldNumberInteger.class);
-        configuration.add("java.lang.Integer", GridFieldNumberInteger.class);
+        configuration.add("int", GridPropertyModelInteger.class);
+        configuration.add("java.lang.Integer", GridPropertyModelInteger.class);
 
-        configuration.add("long", GridFieldNumberLong.class);
-        configuration.add("java.lang.Long", GridFieldNumberLong.class);
+        configuration.add("long", GridPropertyModelLong.class);
+        configuration.add("java.lang.Long", GridPropertyModelLong.class);
 
-        configuration.add("float", GridFieldNumberFloat.class);
-        configuration.add("java.lang.Float", GridFieldNumberFloat.class);
+        configuration.add("float", GridPropertyModelFloat.class);
+        configuration.add("java.lang.Float", GridPropertyModelFloat.class);
 
-        configuration.add("double", GridFieldNumberDouble.class);
-        configuration.add("java.lang.Double", GridFieldNumberDouble.class);
+        configuration.add("double", GridPropertyModelDouble.class);
+        configuration.add("java.lang.Double", GridPropertyModelDouble.class);
 
-        configuration.add("java.util.Date", GridFieldDate.class);
+        configuration.add("java.util.Date", GridPropertyModelDate.class);
 
-        configuration.add("boolean", GridFieldBoolean.class);
-        configuration.add("java.lang.Boolean", GridFieldBoolean.class);
+        configuration.add("boolean", GridPropertyModelBoolean.class);
+        configuration.add("java.lang.Boolean", GridPropertyModelBoolean.class);
     }
 
-    @ServiceId("GridFieldFactory")
-    public static GridFieldFactory buildGridFieldFactory(
-            Map<String, Class> configuration,
-            Logger log,
-            @Inject PropertyAccess propertyAccess
-            ){
-        return new GridFieldFactoryImpl(configuration,log,propertyAccess);
-    }
+//    @ServiceId("GridPropertyModelSource")
+//    public static GridPropertyModelSource buildGridPropertyModelSource(
+//            Map<String, Class<? extends GridPropertyModelInterface>> configuration,
+//            Logger log,
+//            @Inject PropertyAccess propertyAccess
+//            ){
+//        return new GridPropertyModelSourceImpl(configuration,log);
+//
+//    }
+
+
 }
