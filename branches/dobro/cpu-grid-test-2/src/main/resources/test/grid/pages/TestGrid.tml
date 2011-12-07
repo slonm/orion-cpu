@@ -1,0 +1,18 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Sample form 4</title>
+</head>
+<body>
+
+
+<t:grid.Grid source="dataSource" gridSettingStore="settingStore">
+</t:grid.Grid>
+<!--
+<p>${Properties}</p>
+<form t:type="form">
+  <t:grid.GridFilter t:id="gridfilter" gridFilterModel="filterModel"/>
+</form>
+ -->
+</body>
+</html>
