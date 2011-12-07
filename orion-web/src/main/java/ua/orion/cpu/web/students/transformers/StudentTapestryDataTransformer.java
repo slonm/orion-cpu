@@ -12,11 +12,11 @@ import ua.orion.web.AbstractTapestryDataTransformer;
  *
  * @author sl
  */
-public class StudentsTapestryDataTransformer extends AbstractTapestryDataTransformer {
+public class StudentTapestryDataTransformer extends AbstractTapestryDataTransformer {
 
     private final EntityService es;
 
-    public StudentsTapestryDataTransformer(EntityService es) {
+    public StudentTapestryDataTransformer(EntityService es) {
         this.es = es;
     }
 
@@ -29,10 +29,14 @@ public class StudentsTapestryDataTransformer extends AbstractTapestryDataTransfo
 //        model.reorder(requiredProps.toArray(new String[]{}));
 //        return model;
 //    }
+    @Override
+    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
+        return transformView(model);
+    }
 
     @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return transformBeanModelForList(model);
+        return transformView(model);
     }
 
     @Override
@@ -56,15 +60,12 @@ public class StudentsTapestryDataTransformer extends AbstractTapestryDataTransfo
     }
 
     private <T> BeanModel<T> transformView(BeanModel<T> model) {
+        model.exclude("Name", "FullNameRu", "InitialsNameRu", "FullNameEn", "SciDegreeSciAreaFull");
         return model;
     }
 
     private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
+        model.exclude("Name");
         return model;
-    }
-
-    @Override
-    public String transformCrudPage(String page, Class<?> entityClass) {
-        return "Students/Student";
     }
 }

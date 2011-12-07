@@ -14,11 +14,21 @@ import ua.orion.core.persistence.AbstractEntity;
  */
 @Entity
 @Table(schema = "org")
-public class OrgUnitPost extends AbstractEntity<OrgUnitPost>{
-    
+public class OrgUnitPost extends AbstractEntity<OrgUnitPost> {
+
+    private static final long serialVersionUID = 1L;
     private OrgUnit orgUnit;
     private Post post;
     private Double postPercentageRate;
+
+    public OrgUnitPost(OrgUnit orgUnit, Post post, Double postPercentageRate) {
+        this.orgUnit = orgUnit;
+        this.post = post;
+        this.postPercentageRate = postPercentageRate;
+    }
+
+    public OrgUnitPost() {
+    }
 
     @ManyToOne
     public OrgUnit getOrgUnit() {
@@ -28,7 +38,8 @@ public class OrgUnitPost extends AbstractEntity<OrgUnitPost>{
     public void setOrgUnit(OrgUnit orgUnit) {
         this.orgUnit = orgUnit;
     }
-    
+
+    @ManyToOne
     public Post getPost() {
         return post;
     }
@@ -36,7 +47,7 @@ public class OrgUnitPost extends AbstractEntity<OrgUnitPost>{
     public void setPost(Post post) {
         this.post = post;
     }
-    
+
     public Double getPostPercentageRate() {
         return postPercentageRate;
     }
@@ -54,5 +65,4 @@ public class OrgUnitPost extends AbstractEntity<OrgUnitPost>{
     public int compareTo(OrgUnitPost o) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

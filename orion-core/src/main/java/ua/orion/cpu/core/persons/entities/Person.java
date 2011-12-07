@@ -1,11 +1,17 @@
 package ua.orion.cpu.core.persons.entities;
 
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.persistence.AbstractNamedEntity;
 
 /**
+ * Хранит базовую информацию о персоне.
+ *
  * @author sl
  */
 @Entity
@@ -13,24 +19,72 @@ import ua.orion.core.persistence.AbstractNamedEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person extends AbstractNamedEntity<Person> {
 
+    /**
+     * serialVersionUID необходим для динамической проверки возможности десери-
+     * ализации. Если у источника и приемника различные serialVersionUID, то
+     * среда выполнения в праве считать, что это разные классы, и поэтому и вы-
+     * бросит InvalidClassExceptions.
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Имя
+     */
     private String firstName;
+    /**
+     * Отчество
+     */
     private String patronymicName;
+    /**
+     * Фамилия
+     */
     private String surname;
-    private ScientificDegree scientificDegree;
-    private ScienceArea scienceArea;
-    private AcademicRank academicRank;
+    /**
+     * Дата рождения
+     */
+    private Calendar birthday;
+    /**
+     * Пол
+     */
+    private Sex sex;
+    /**
+     * Гражданство
+     */
+    private Citizenship citizenship;
+    /**
+     * ID
+     */
+    private String handle;
+    /**
+     * Пасспорт
+     */
+    private Passport passport;
+    /**
+     * Дата прохождения флюрографии
+     */
+    private Calendar datePhliugraphia;
+    /**
+     * Адреса
+     */
+    private Set<Address> address = new HashSet();
+    /**
+     * Заметки
+     */
+    private String notes;
 
     public Person() {
     }
 
-    public Person(String firstName, String patronymicName, String surname, ScientificDegree scientificDegree, ScienceArea scienceArea, AcademicRank academicRank) {
+    public Person(String firstName, String patronymicName, String surname, Calendar birthday, Sex sex, Citizenship citizenship, String handle, Passport passport, Calendar datePhliugraphia, String notes) {
         this.firstName = firstName;
         this.patronymicName = patronymicName;
         this.surname = surname;
-        this.scientificDegree = scientificDegree;
-        this.scienceArea = scienceArea;
-        this.academicRank = academicRank;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.citizenship = citizenship;
+        this.handle = handle;
+        this.passport = passport;
+        this.datePhliugraphia = datePhliugraphia;
+        this.notes = notes;
     }
 
     @Size(min = 2)
@@ -62,35 +116,77 @@ public class Person extends AbstractNamedEntity<Person> {
         this.surname = capitalize(surname);
     }
 
-    /*TODO Добавить валидатор, указывающий на недопустимость пустого значения scientificDegree 
-     *при непустом scienceArea и наоборот пустого scienceArea при непустом scientificDegree
-     *if(!scientificDegree.equals(null) ^ !(scienceArea)) {нельзя!!!}
-     */
+    @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Calendar birthday) {
+        this.birthday = birthday;
+    }
+
+    @NotNull
     @ManyToOne
-    public ScientificDegree getScientificDegree() {
-        return scientificDegree;
+    public Sex getSex() {
+        return sex;
     }
 
-    public void setScientificDegree(ScientificDegree scientificDegree) {
-        this.scientificDegree = scientificDegree;
-    }
-
-    @ManyToOne
-    public ScienceArea getScienceArea() {
-        return scienceArea;
-    }
-
-    public void setScienceArea(ScienceArea scienceArea) {
-        this.scienceArea = scienceArea;
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     @ManyToOne
-    public AcademicRank getAcademicRank() {
-        return academicRank;
+    public Citizenship getCitizenship() {
+        return citizenship;
     }
 
-    public void setAcademicRank(AcademicRank academicRank) {
-        this.academicRank = academicRank;
+    public void setCitizenship(Citizenship citizenship) {
+        this.citizenship = citizenship;
+    }
+
+    @OneToOne
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    public Calendar getDatePhliugraphia() {
+        return datePhliugraphia;
+    }
+
+    public void setDatePhliugraphia(Calendar datePhliugraphia) {
+        this.datePhliugraphia = datePhliugraphia;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
+    }
+
+    @OneToMany
+    public Set<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(Set<Address> address) {
+        this.address = address;
+    }
+
+    @DataType("longText")
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Transient
@@ -137,32 +233,6 @@ public class Person extends AbstractNamedEntity<Person> {
         sb.append(" ");
         sb.append(surname);
         return sb.toString();
-    }
-
-    @Transient
-    public String getSciDegreeSciAreaFull() {
-        if (scientificDegree != null && scienceArea != null) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(scientificDegree);
-            sb.append(" ");
-            sb.append(scienceArea);
-            return sb.toString();
-        }
-        return "";
-    }
-
-    @Transient
-    public String getSciDegreeSciAreaShort() {
-        try {
-            if (scientificDegree.getShortName() != null && scienceArea.getShortName() != null) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(scientificDegree.getShortName());
-                sb.append(scienceArea.getShortName());
-                return sb.toString();
-            }
-        } catch (Exception e) {
-        }
-        return "";
     }
 
     @Override

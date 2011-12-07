@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.orgunits.entities;
 
+import java.util.List;
 import javax.persistence.*;
 import ua.orion.core.annotations.UserPresentable;
 import ua.orion.core.persistence.AbstractReferenceEntity;
@@ -20,6 +21,8 @@ import ua.orion.core.persistence.AbstractReferenceEntity;
 public class Post extends AbstractReferenceEntity<Post> {
 
    private static final long serialVersionUID = 1L;
+    @OneToMany(mappedBy = "post")
+    private List<OrgUnitPost> orgUnitPosts;
    
    public Post() {
     }

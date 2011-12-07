@@ -56,11 +56,11 @@
     </t:if>    
     <t:block id="editBlock">
         <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/><!--вызов показа окна-->
+            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750" height="450"/><!--вызов показа окна-->
             <t:ori.beaneditformext t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                                    zone="listZone" context="object" submitLabel="message:action.edit" buttons="buttons"/>
             <p:else>
-                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" /><!--вызов показа окна-->
+                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" height="450"/><!--вызов показа окна-->
                 <t:ori.beaneditformext t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                        zone="listZone" submitLabel="message:action.add" buttons="buttons"/>
             </p:else>    

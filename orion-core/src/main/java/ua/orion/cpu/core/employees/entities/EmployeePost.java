@@ -1,5 +1,7 @@
 package ua.orion.cpu.core.employees.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import ua.orion.core.persistence.AbstractEntity;
@@ -10,10 +12,12 @@ import ua.orion.cpu.core.orgunits.entities.OrgUnitPost;
  * @author sl
  */
 @Entity
-@Table(schema = "emp", uniqueConstraints =
-@UniqueConstraint(columnNames = {"post", "employee"}))
+@Table(schema = "emp")
+//@Table(schema = "emp", uniqueConstraints =
+//@UniqueConstraint(columnNames = {"post", "employee"}))
 public class EmployeePost extends AbstractEntity<EmployeePost> {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Связь с штатным расписанием подразделения
      */
@@ -26,8 +30,16 @@ public class EmployeePost extends AbstractEntity<EmployeePost> {
      * Связь с сотрудником
      */
     private Employee employee;
-    
-    @NotNull
+
+    public EmployeePost() {
+    }
+
+    public EmployeePost(OrgUnitPost orgUnitPost, Boolean isMain) {
+        this.orgUnitPost = orgUnitPost;
+        this.isMain = isMain;
+    }
+
+ 
     @ManyToOne
     public Employee getEmployee() {
         return employee;
@@ -46,7 +58,7 @@ public class EmployeePost extends AbstractEntity<EmployeePost> {
         this.isMain = isMain;
     }
 
-    @NotNull
+
     @ManyToOne
     public OrgUnitPost getOrgUnitPost() {
         return orgUnitPost;
@@ -55,7 +67,7 @@ public class EmployeePost extends AbstractEntity<EmployeePost> {
     public void setOrgUnitPost(OrgUnitPost orgUnitPost) {
         this.orgUnitPost = orgUnitPost;
     }
-    
+
     @Override
     protected boolean entityEquals(EmployeePost obj) {
         return aEqualsField(orgUnitPost, obj.orgUnitPost)
