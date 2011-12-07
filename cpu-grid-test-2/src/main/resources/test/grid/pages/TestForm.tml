@@ -1,0 +1,118 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Sample form 5</title>
+<style>
+.ColumnHeaderText{
+  margin-right:6px;
+}
+span.grid-form-block{
+  display:inline-block;
+  vertical-align:top;
+}
+.filter{width:50%;}
+.sort{width:24%;}
+.view{width:24%;}
+</style>
+</head>
+<body>
+
+<form t:type="form">
+<span class="grid-form-block filter"><b>Filter:</b><br/><t:grid.GridFilter t:id="gridfilter" gridFilterModel="filterModel"/></span>
+<span class="grid-form-block view"><b>View:</b><br/><t:grid.GridView t:id="gridview" gridPropertyViewModel="viewModel"/></span>
+<span class="grid-form-block sort"><b>Sort:</b><br/><t:grid.GridSort t:id="gridsort" gridSortModel="sortModel"/></span>
+</form>
+
+
+<table id="gridTable" class="cpuGrid" border="1px">
+  <tr>
+    <th id="idColumnHeader"><div class="ColumnHeaderText">id</div></th>
+    <th id="birthDateColumnHeader"><div class="ColumnHeaderText">birthDate</div></th>
+    <th id="lastNameColumnHeader"><div class="ColumnHeaderText">lastName</div></th>
+    <th id="emailColumnHeader"><div class="ColumnHeaderText">email</div></th>
+    <th id="salaryColumnHeader"><div class="ColumnHeaderText">salary</div></th>
+    <th id="firstNameColumnHeader"><div class="ColumnHeaderText">firstName</div></th>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+</table>
+</body>
+</html>

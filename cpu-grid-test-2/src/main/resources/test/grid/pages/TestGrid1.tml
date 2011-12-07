@@ -1,0 +1,38 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Sample form 4</title>
+</head>
+<body>
+
+
+<t:grid.Grid source="dataSource" gridSettingStore="settingStore" row="currentRow" add="menu" exclude="salary">
+        <p:lastNameCell>
+            <b>${currentRow.lastname}</b>
+        </p:lastNameCell>
+
+        <p:menuCell>
+            menu #${currentRow.id}
+        </p:menuCell>
+        <p:empty>
+          <p>There are no rows to display;</p>
+        </p:empty>
+</t:grid.Grid>
+
+
+<!-- 
+<t:grid source="dataSource" row="currentRow" add="menu">
+        <p:lastNameCell>
+            <b>${currentRow.lastname}</b>
+        </p:lastNameCell>
+
+        <p:menuCell>
+            menu #${currentRow.id}
+        </p:menuCell>
+        <p:empty>
+          <p>There are no rows to display;</p>
+        </p:empty>
+</t:grid>
+ -->
+</body>
+</html>

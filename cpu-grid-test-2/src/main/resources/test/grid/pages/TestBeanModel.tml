@@ -1,0 +1,23 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Sample form 4</title>
+</head>
+<body>
+
+OK
+<p>${Properties}</p>
+
+<p>${PropertiesOld}</p>
+
+<p>${NewLastNameId}</p>
+
+<p>${OldLastNameId}</p>
+
+<p>${FilterModelInfo}</p>
+
+<p>${ViewModelInfo}</p>
+
+<p>${SortModelInfo}</p>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<head>
+<title>Sample form 5</title>
+<style>
+.ColumnHeaderText{
+  margin-right:6px;
+}
+</style>
+</head>
+<body>
+
+OK
+<p>${Properties}</p>
+<form t:type="form">
+  <t:grid.GridView t:id="gridview" gridPropertyViewModel="viewModel"/>
+</form>
+
+
+<table id="gridTable" class="cpuGrid" border="1px">
+  <tr>
+    <th id="idColumnHeader"><div class="ColumnHeaderText">id</div></th>
+    <th id="birthDateColumnHeader"><div class="ColumnHeaderText">birthDate</div></th>
+    <th id="lastNameColumnHeader"><div class="ColumnHeaderText">lastName</div></th>
+    <th id="emailColumnHeader"><div class="ColumnHeaderText">email</div></th>
+    <th id="salaryColumnHeader"><div class="ColumnHeaderText">salary</div></th>
+    <th id="firstNameColumnHeader"><div class="ColumnHeaderText">firstName</div></th>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+  <tr>
+    <td>id1</td>
+    <td>birthDate1</td>
+    <td>lastName1</td>
+    <td>email1</td>
+    <td>salary1</td>
+    <td>firstName1</td>
+  </tr>
+</table>
+</body>
+</html>
