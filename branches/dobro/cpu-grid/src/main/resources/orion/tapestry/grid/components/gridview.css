@@ -1,0 +1,39 @@
+
+tr#gridColumnDragger td{
+    background-color: chartreuse;
+    cursor:move;
+    font-size: 5pt;
+}
+input.viewElementWidth{
+    width:40pt;
+    margin-right:5pt;
+}
+.grid-width-slider{
+    border-left-color: transparent;
+    border-left-style: solid;
+    border-left-width: 16px;
+    border-top-color: blue;
+    border-top-style: solid;
+    border-top-width: 16px;
+    cursor: e-resize;
+    float: right;
+    height: 0px;
+    width: 0px;
+}
+div.grid-context-menu{
+    background-color: silver;
+    padding: 3pt;
+    position: absolute;
+}
+div.grid-context-menu a{
+    display: block;
+}
+div.grid-context-menu a:hover{
+    background-color: yellow;
+}
+
+#gridPropertyViewJSON{
+    height:1px;
+    width:1px;
+    border:none;
+}
