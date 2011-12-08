@@ -23,9 +23,9 @@ Tapestry.Initializer.showCkWindow = function(opt){
         initializeUIComponents();
     }
     //Показывать диалог загрузки при сохранении
-    jQuery("form[action*='editform'] div div>button[type='submit'], form[action*='addform'] div div>button[type='submit']").click(function(){
-        Tapestry.Initializer.showGridAjaxSave();
-    })
+//    jQuery("form[action*='editform'] div div>button[type='submit'], form[action*='addform'] div div>button[type='submit']").click(function(){
+//        Tapestry.Initializer.showGridAjaxSave();
+//    })
     //Получаем высоту окна из параметра
     win.height=opt.height;
     //Получаем ширину окна из параметра
