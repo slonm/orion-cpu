@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -64,7 +65,7 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         // запрос
         this.query = this.criteriaBuilder.createQuery(this.forClass);
 
-        // описание сущности
+        // корневая сущность запроса
         this.from = this.query.from(this.forClass);
 
         // запрос типа select
@@ -177,17 +178,20 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         // op1 - атрибут и op2 - константа => программируем как op1 == op2
         if (isAttribute(op1) && isOneValue(op2)) {
-            this.expression.add(this.criteriaBuilder.equal(from.get(op1.toString()), ((OneValue) op2).value));
+            //this.expression.add(this.criteriaBuilder.equal(from.get(op1.toString()), ((OneValue) op2).value));
+            this.expression.add(this.criteriaBuilder.equal(this.toExpression(op1.toString()), ((OneValue) op2).value));
             return this;
         }
         // op1 - константа и op2 - атрибут => программируем как op2 == op1
         if (isOneValue(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.equal(from.get(op2.toString()), ((OneValue) op1).value));
+            //this.expression.add(this.criteriaBuilder.equal(from.get(op2.toString()), ((OneValue) op1).value));
+            this.expression.add(this.criteriaBuilder.equal(this.toExpression(op2.toString()), ((OneValue) op1).value));
             return this;
         }
         // op1 - атрибут и op2 - атрибут=> программируем как op1 == op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.equal(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.equal(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.equal(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -203,7 +207,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - атрибут    и  op2 - константа => программируем как op1 > op2
         if (isAttribute(op1) && isOneValue(op2)) {
             if (((OneValue) op2).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.greaterThan(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                //this.expression.add(this.criteriaBuilder.greaterThan(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                this.expression.add(this.criteriaBuilder.greaterThan(this.toExpression(op1.toString()), (Comparable) ((OneValue) op2).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op2).value;
@@ -214,7 +219,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - константа и  op2 - атрибут => программируем как op2 < op1
         if (isOneValue(op1) && isAttribute(op2)) {
             if (((OneValue) op1).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.lessThan(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                //this.expression.add(this.criteriaBuilder.lessThan(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                this.expression.add(this.criteriaBuilder.lessThan(this.toExpression(op2.toString()), (Comparable) ((OneValue) op1).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op1).value;
@@ -224,7 +230,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - атрибут => программируем как op1 > op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.greaterThan(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.greaterThan(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.greaterThan(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -240,7 +247,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - атрибут    и  op2 - константа => программируем как op1 > op2
         if (isAttribute(op1) && isOneValue(op2)) {
             if (((OneValue) op2).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                // this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(this.toExpression(op1.toString()), (Comparable) ((OneValue) op2).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op2).value;
@@ -251,7 +259,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - константа и  op2 - атрибут => программируем как op2 < op1
         if (isOneValue(op1) && isAttribute(op2)) {
             if (((OneValue) op1).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                //this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(this.toExpression(op2.toString()), (Comparable) ((OneValue) op1).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op1).value;
@@ -261,7 +270,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - атрибут => программируем как op1 > op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -277,7 +287,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - атрибут    и  op2 - константа => программируем как op1 < op2
         if (isAttribute(op1) && isOneValue(op2)) {
             if (((OneValue) op2).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.lessThan(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                //this.expression.add(this.criteriaBuilder.lessThan(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                this.expression.add(this.criteriaBuilder.lessThan(this.toExpression(op1.toString()), (Comparable) ((OneValue) op2).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op2).value;
@@ -288,7 +299,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - константа и  op2 - атрибут => программируем как op2 > op1
         if (isOneValue(op1) && isAttribute(op2)) {
             if (((OneValue) op1).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.greaterThan(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                //this.expression.add(this.criteriaBuilder.greaterThan(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                this.expression.add(this.criteriaBuilder.greaterThan(this.toExpression(op2.toString()), (Comparable) ((OneValue) op1).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op1).value;
@@ -298,7 +310,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - атрибут => программируем как op1 < op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.lessThan(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.lessThan(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.lessThan(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -314,7 +327,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - атрибут    и  op2 - константа => программируем как op1 <= op2
         if (isAttribute(op1) && isOneValue(op2)) {
             if (((OneValue) op2).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                //this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op1.toString()), (Comparable) ((OneValue) op2).value));
+                this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(this.toExpression(op1.toString()), (Comparable) ((OneValue) op2).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op2).value;
@@ -325,7 +339,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         //  op1 - константа и  op2 - атрибут => программируем как op2 >= op1
         if (isOneValue(op1) && isAttribute(op2)) {
             if (((OneValue) op1).value instanceof Comparable) {
-                this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                //this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(from.get(op2.toString()), (Comparable) ((OneValue) op1).value));
+                this.expression.add(this.criteriaBuilder.greaterThanOrEqualTo(this.toExpression(op2.toString()), (Comparable) ((OneValue) op1).value));
                 return this;
             } else {
                 Object ob = ((OneValue) op1).value;
@@ -335,7 +350,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - атрибут => программируем как op1 <= op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.lessThanOrEqualTo(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -350,17 +366,20 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - константа => программируем как op1 != op2
         if (isAttribute(op1) && isOneValue(op2)) {
-            this.expression.add(this.criteriaBuilder.notEqual(from.get(op1.toString()), ((OneValue) op2).value));
+            // this.expression.add(this.criteriaBuilder.notEqual(from.get(op1.toString()), ((OneValue) op2).value));
+            this.expression.add(this.criteriaBuilder.notEqual(this.toExpression(op1.toString()), ((OneValue) op2).value));
             return this;
         }
         // op1 - константа  и  op2 - атрибут => программируем как op2 != op1
         if (isOneValue(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.notEqual(from.get(op2.toString()), ((OneValue) op1).value));
+            //this.expression.add(this.criteriaBuilder.notEqual(from.get(op2.toString()), ((OneValue) op1).value));
+            this.expression.add(this.criteriaBuilder.notEqual(this.toExpression(op2.toString()), ((OneValue) op1).value));
             return this;
         }
         // op1 - атрибут и op2 - атрибут=> программируем как op1 != op2
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(this.criteriaBuilder.notEqual(from.get(op1.toString()), from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.notEqual(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.notEqual(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // случай op1 - константа и op2 - константа  является ошибкой
@@ -375,26 +394,20 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         //  op1 - атрибут    и  op2 - константа
         if (isAttribute(op1) && isOneValue(op2)) {
-            this.expression.add(
-                    this.criteriaBuilder.like(
-                    from.get(op1.toString()),
-                    ((OneValue) op2).value.toString()));
+            //this.expression.add(this.criteriaBuilder.like(from.get(op1.toString()),((OneValue) op2).value.toString()));
+            this.expression.add(this.criteriaBuilder.like(this.toExpression(op1.toString()),((OneValue) op2).value.toString()));
             return this;
         }
         //  op1 - атрибут и  op2 - атрибут
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(
-                    this.criteriaBuilder.like(
-                    from.get(op1.toString()),
-                    from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.like(from.get(op1.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.like(this.toExpression(op1.toString()), this.toExpression(op2.toString())));
             return this;
         }
         //  op1 - константа  и op2 - атрибут
         if (isOneValue(op1) && isAttribute(op2)) {
-            this.expression.add(
-                    this.criteriaBuilder.like(
-                    this.criteriaBuilder.literal(((OneValue) op1).value.toString()),
-                    from.get(op2.toString())));
+            //this.expression.add(this.criteriaBuilder.like(this.criteriaBuilder.literal(((OneValue) op1).value.toString()), from.get(op2.toString())));
+            this.expression.add(this.criteriaBuilder.like(this.criteriaBuilder.literal(((OneValue) op1).value.toString()), this.toExpression(op2.toString())));
             return this;
         }
         // op1 - константа и op2 - константа  - это ошибка
@@ -409,29 +422,20 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         // op1 - атрибут и op2 - константа 
         if (isAttribute(op1) && isOneValue(op2)) {
-            this.expression.add(this.criteriaBuilder.gt(
-                    this.criteriaBuilder.locate(from.get(op1.toString()),
-                    ((OneValue) op2).value.toString()),
-                    0));
+            //this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(from.get(op1.toString()), ((OneValue) op2).value.toString()), 0));
+            this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(this.toExpression(op1.toString()), ((OneValue) op2).value.toString()), 0));
             return this;
         }
         //  op1 - константа и  op2 - атрибут 
         if (isOneValue(op1) && isAttribute(op2)) {
-            this.expression.add(
-                    this.criteriaBuilder.gt(
-                    this.criteriaBuilder.locate(
-                    this.criteriaBuilder.literal(((OneValue) op1).value.toString()),
-                    from.get(op2.toString())),
-                    0));
+            //this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(this.criteriaBuilder.literal(((OneValue) op1).value.toString()),from.get(op2.toString())),0));
+            this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(this.criteriaBuilder.literal(((OneValue) op1).value.toString()),this.toExpression(op2.toString())),0));
             return this;
         }
         // op1 - атрибут и op2 - атрибут
         if (isAttribute(op1) && isAttribute(op2)) {
-            this.expression.add(
-                    this.criteriaBuilder.gt(
-                    this.criteriaBuilder.locate(from.get(op1.toString()),
-                    from.get(op2.toString())),
-                    0));
+            //this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(from.get(op1.toString()),from.get(op2.toString())), 0));
+            this.expression.add(this.criteriaBuilder.gt(this.criteriaBuilder.locate(this.toExpression(op1.toString()),this.toExpression(op2.toString())), 0));
             return this;
         }
         // op1 - константа и op2 - константа  - это ошибка
@@ -443,7 +447,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         Object op1;
         op1 = this.pop();
         if (isAttribute(op1)) {
-            this.expression.add(this.criteriaBuilder.isNull(from.get(op1.toString())));
+            // this.expression.add(this.criteriaBuilder.isNull(from.get(op1.toString())));
+            this.expression.add(this.criteriaBuilder.isNull(this.toExpression(op1.toString())));
         } else {
             throw new RestrictionEditorException();
         }
@@ -455,7 +460,8 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         Object op1;
         op1 = this.pop();
         if (isAttribute(op1)) {
-            this.expression.add(this.criteriaBuilder.isNotNull(from.get(op1.toString())));
+            //this.expression.add(this.criteriaBuilder.isNotNull(from.get(op1.toString())));
+            this.expression.add(this.criteriaBuilder.isNotNull(this.toExpression(op1.toString())));
         } else {
             throw new RestrictionEditorException();
         }
@@ -470,7 +476,9 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
 
         // op1 - атрибут и op2 - cписок констант =>  программируем как op1 in op2
         if (isAttribute(op1) && isListOfValues(op2)) {
-            this.expression.add(from.get(op1.toString()).in(((RestrictionEditorJPACriteria.ListOfValues) op2).values));
+            //
+            //this.expression.add(from.get(op1.toString()).in(((RestrictionEditorJPACriteria.ListOfValues) op2).values));
+            this.expression.add(this.toExpression(op1.toString()).in(((RestrictionEditorJPACriteria.ListOfValues) op2).values));
             return this;
         }
         // op1 - атрибут и op2 - атрибут
@@ -530,8 +538,18 @@ public class RestrictionEditorJPACriteria implements RestrictionEditorInterface<
         return p instanceof RestrictionEditorJPACriteria.ListOfValues;
     }
 
+    public Path toExpression(String path) {
+        String[] attributes = path.split("\\.");
+        int cnt = attributes.length;
+        Path res = this.from.get(attributes[0].trim());
+        for (int i = 1; i < cnt; i++) {
+            res = res.get(attributes[i].trim());
+        }
+        return res;
+    }
     // Вспомогательные методы - конец
     // =========================================================================
+
     @Override
     public int size() {
         return this.expression.size();

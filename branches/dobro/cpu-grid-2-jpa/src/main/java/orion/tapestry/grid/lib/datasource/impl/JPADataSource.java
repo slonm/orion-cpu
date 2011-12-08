@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.json.JSONException;
@@ -29,7 +30,7 @@ public class JPADataSource extends DataSourceAdapter {
     private Class forClass;
     private GridBeanModel gridBeanModel;
     private int startIndex;
-
+    private Root from;
     public JPADataSource(GridBeanModel _gridBeanModel, EntityManager _entityManager, RestrictionEditorInterface _restrictionEditor) {
         this.entityManager = _entityManager;
         this.restrictionEditor = _restrictionEditor;
@@ -67,7 +68,7 @@ public class JPADataSource extends DataSourceAdapter {
 
         // create criteria builder
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
-        Root from;
+        
 
         // ---------- вычисляем количество найденных строк - begin -------------
         // apply filter if model is set
@@ -120,10 +121,10 @@ public class JPADataSource extends DataSourceAdapter {
             for (SortConstraint fs : sortConstraints) {
                 switch (fs.getColumnSort()) {
                     case ASCENDING:
-                        ordering.add(criteriaBuilder.asc(from.get(fs.getPropertyModel().getPropertyName())));
+                        ordering.add(criteriaBuilder.asc(toExpression(fs.getPropertyModel().getPropertyName())));
                         break;
                     case DESCENDING:
-                        ordering.add(criteriaBuilder.desc(from.get(fs.getPropertyModel().getPropertyName())));
+                        ordering.add(criteriaBuilder.desc(toExpression(fs.getPropertyModel().getPropertyName())));
                         break;
                 }
             }
@@ -155,5 +156,15 @@ public class JPADataSource extends DataSourceAdapter {
      * @param criteria
      */
     protected void applyAdditionalConstraints(CriteriaQuery criteria) {
+    }
+    
+    private Path toExpression(String path) {
+        String[] attributes = path.split("\\.");
+        int cnt = attributes.length;
+        Path res = this.from.get(attributes[0].trim());
+        for (int i = 1; i < cnt; i++) {
+            res = res.get(attributes[i].trim());
+        }
+        return res;
     }
 }
