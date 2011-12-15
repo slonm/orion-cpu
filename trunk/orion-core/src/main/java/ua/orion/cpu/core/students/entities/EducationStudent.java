@@ -3,6 +3,7 @@ package ua.orion.cpu.core.students.entities;
 import java.util.Calendar;
 import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
+import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 
@@ -18,7 +19,7 @@ public class EducationStudent extends AbstractEntity<EducationStudent> {
 
     private static final long serialVersionUID = 1L;
     @ManyToOne
-    private LicenseRecord licenseRecord;
+    private EduPlan eduPlan;
     @ManyToOne
     private EducationForm educationForm;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -33,31 +34,25 @@ public class EducationStudent extends AbstractEntity<EducationStudent> {
      * Создание записи о поступлении человека на определнную специальность на
      * основе:
      *
-     * @param licenseRecord - лицензионная запись
+     * @param eduPlan - учебный план
      * @param educationForm - форма обучения
      * @param entranceDate - дата поступления
      * @param contractStudent - контракт(договор)
      */
-    public EducationStudent(LicenseRecord licenseRecord, EducationForm educationForm, Calendar entranceDate, ContractStudent contractStudent) {
-        this.licenseRecord = licenseRecord;
+    public EducationStudent(EduPlan eduPlan, EducationForm educationForm, Calendar entranceDate, ContractStudent contractStudent) {
+        this.eduPlan = eduPlan;
         this.educationForm = educationForm;
         this.entranceDate = entranceDate;
         this.contractStudent = contractStudent;
     }
 
-    /**
-     * Лицензионная запись. Каждая запись в EducationStudent имеет ссылку на
-     * лицензионную запись, так как там хранится - специальность, кол-во мест,
-     * кафедры и т.д.
-     *
-     * @return
-     */
-    public LicenseRecord getLicenseRecord() {
-        return licenseRecord;
+
+    public EduPlan getEduPlan() {
+        return eduPlan;
     }
 
-    public void setLicenseRecord(LicenseRecord licenseRecord) {
-        this.licenseRecord = licenseRecord;
+    public void setEduPlan(EduPlan eduPlan) {
+        this.eduPlan = eduPlan;
     }
 
     /**
@@ -112,6 +107,6 @@ public class EducationStudent extends AbstractEntity<EducationStudent> {
      */
     @Override
     public String toString() {
-        return "Ліцензія: " + licenseRecord + ", Форма навчання: " + educationForm + ", Дата надходження: " + entranceDate.getTime().toString();
+        return "Навчальний план: " + eduPlan + ", Форма навчання: " + educationForm + ", Дата надходження: " + entranceDate.getTime().toString();
     }
 }
