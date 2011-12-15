@@ -21,16 +21,16 @@ import ua.orion.cpu.core.persons.entities.Sex;
 public class Student extends Person {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * Академ. поток
-     */
-    @NotNull
-    private AcademicStream academicStream;
+//    /**
+//     * Академ. поток
+//     */
+//    @NotNull
+//    private AcademicStream academicStream;
     /**
      * Академ. группа
      */
-    @NotNull
-    private AcademicGroup academicGroup;
+//    @NotNull
+//    private AcademicGroup academicGroup;
     /**
      * Образование студента. Например: Высшее образование, Среднее образование и
      * другие
@@ -68,15 +68,15 @@ public class Student extends Person {
      * @param datePhliugraphia - дата прохождения флюрографии
      * @param notes - заметки
      */
-    public Student(AcademicStream academicStream, AcademicGroup academicGroup,
+    public Student(/*AcademicStream academicStream, AcademicGroup academicGroup,*/
             Education education, String firstName, String patronymicName,
             String surname, Calendar birthday, Sex sex,
             Citizenship citizenship, String handle, Passport passport,
             Calendar datePhliugraphia, String notes) {
         super(firstName, patronymicName, surname, birthday, sex, citizenship,
                 handle, passport, datePhliugraphia, notes);
-        this.academicStream = academicStream;
-        this.academicGroup = academicGroup;
+//        this.academicStream = academicStream;
+//        this.academicGroup = academicGroup;
         this.education = education;
     }
 
@@ -85,38 +85,38 @@ public class Student extends Person {
      *
      * @return академ группа
      */
-    @ManyToOne
-    public AcademicGroup getAcademicGroup() {
-        return academicGroup;
-    }
+//    @ManyToOne
+//    public AcademicGroup getAcademicGroup() {
+//        return academicGroup;
+//    }
 
     /**
      * Установка академ группы
      *
      * @param academicGroup - академ. группа.
      */
-    public void setAcademicGroup(AcademicGroup academicGroup) {
-        this.academicGroup = academicGroup;
-    }
+//    public void setAcademicGroup(AcademicGroup academicGroup) {
+//        this.academicGroup = academicGroup;
+//    }
 
     /**
      * Получение академ потока
      *
      * @return академ. поток
      */
-    @ManyToOne
-    public AcademicStream getAcademicStream() {
-        return academicStream;
-    }
+//    @ManyToOne
+//    public AcademicStream getAcademicStream() {
+//        return academicStream;
+//    }
 
     /**
      * Установка академ. потока
      *
      * @param academicStream академ поток.
      */
-    public void setAcademicStream(AcademicStream academicStream) {
-        this.academicStream = academicStream;
-    }
+//    public void setAcademicStream(AcademicStream academicStream) {
+//        this.academicStream = academicStream;
+//    }
 
     /**
      * Получения образования студента

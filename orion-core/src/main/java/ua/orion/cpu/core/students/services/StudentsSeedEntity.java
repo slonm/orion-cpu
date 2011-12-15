@@ -50,8 +50,8 @@ public class StudentsSeedEntity {
             KnowledgeAreaOrTrainingDirection knowledgeAreaOrTrainingDirection = es.findUniqueOrPersist(new KnowledgeAreaOrTrainingDirection("Специфічні категорії", null, "0000", false, false));
             TrainingDirectionOrSpeciality trainingDirectionOrSpeciality = es.findUniqueOrPersist(new TrainingDirectionOrSpeciality("Педагогіка вищої школи", "ПВШ", "05", false, knowledgeAreaOrTrainingDirection, false));
             EducationForm educationForm = es.findUniqueOrPersist(new EducationForm("Денна", "Ден.", EducationForm.STATIONARY_UKEY, 1));
-            AcademicStream academicStream = es.findUniqueOrPersist(new AcademicStream(trainingDirectionOrSpeciality, educationForm, Integer.valueOf(3)));
-            AcademicGroup academicGroup = es.findUniqueOrPersist(new AcademicGroup("ПВ-107", academicStream));
+//            AcademicStream academicStream = es.findUniqueOrPersist(new AcademicStream(trainingDirectionOrSpeciality, educationForm, Integer.valueOf(3)));
+            AcademicGroup academicGroup = es.findUniqueOrPersist(new AcademicGroup("ПВ-107"));
             Education education = es.findUniqueOrPersist(new Education("Середня технічна"));
             es.findUniqueOrPersist(new Education("Вища"));
             es.findUniqueOrPersist(new Education("Повна загальна середня"));
@@ -60,7 +60,7 @@ public class StudentsSeedEntity {
             ContractStudent contractStudent = es.findUniqueOrPersist(new ContractStudent("3224141", DateTimeUtils.createCalendar(4, 5, 2005), kindPayer, "м. Львів. Ул. Правди 40"));
             Set<EducationStudent> educationStudent = new HashSet<EducationStudent>();
             educationStudent.add(es.findUniqueOrPersist(new EducationStudent(null, educationForm, DateTimeUtils.createCalendar(4, 5, 2005), contractStudent)));
-            Student student = new Student(academicStream, academicGroup, education, "Ольга", "Олександрівна", "Іванова", DateTimeUtils.createCalendar(4, 5, 1983), male, czship_ukr, "234124125412", pass_person, DateTimeUtils.createCalendar(4, 3, 2009), "");
+            Student student = new Student(  education, "Ольга", "Олександрівна", "Іванова", DateTimeUtils.createCalendar(4, 5, 1983), male, czship_ukr, "234124125412", pass_person, DateTimeUtils.createCalendar(4, 3, 2009), "");
             student.setEducationStudent(educationStudent);
             es.findUniqueOrPersist(student);
 

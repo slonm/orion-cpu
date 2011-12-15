@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 @Table(schema = "stu")
 public class AcademicGroup extends StudentGroup<AcademicGroup> {
 
-    @NotNull
-    @ManyToOne
-    private AcademicStream academicStream;
+//    @NotNull
+//    @ManyToOne
+//    private AcademicStream academicStream;
 
-    public AcademicStream getAcademicStream() {
-        return academicStream;
-    }
+//    public AcademicStream getAcademicStream() {
+//        return academicStream;
+//    }
     
     public AcademicGroup() {
     }
@@ -27,12 +27,12 @@ public class AcademicGroup extends StudentGroup<AcademicGroup> {
      * @param name - название (унаследовано то родителя - StudentGroup)
      * @param academicStream - учебный поток
      */
-    public AcademicGroup(String name, AcademicStream academicStream) {
+    public AcademicGroup(String name/*, AcademicStream academicStream*/) {
         setName(name);
-        this.academicStream = academicStream;
+//        this.academicStream = academicStream;
     }
 
-    public void setAcademicStream(AcademicStream academicStream) {
-        this.academicStream = academicStream;
-    }
+//    public void setAcademicStream(AcademicStream academicStream) {
+//        this.academicStream = academicStream;
+//    }
 }

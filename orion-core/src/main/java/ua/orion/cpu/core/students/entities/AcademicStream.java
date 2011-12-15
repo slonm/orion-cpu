@@ -8,6 +8,7 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
 
 /**
  * Учебный поток (место поступления).
+ *
  * @author sl
  */
 @Entity
@@ -22,9 +23,10 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
     @ManyToOne
     private EducationForm educationForm;
     private Integer cource;
-    
+
     /**
      * Создание учебного потока
+     *
      * @param trainingDirectionOrSpeciality - Направление или специальность
      * @param educationForm - Форма обучения
      * @param cource - Курс
