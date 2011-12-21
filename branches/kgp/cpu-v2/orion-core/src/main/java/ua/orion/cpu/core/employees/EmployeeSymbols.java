@@ -10,5 +10,5 @@ package ua.orion.cpu.core.employees;
  */
 public class EmployeeSymbols {
 
-    public static final String EMPLOYEE_LIB = "Employees";
+    public static final String EMPLOYEES_LIB = "Employees";
 }

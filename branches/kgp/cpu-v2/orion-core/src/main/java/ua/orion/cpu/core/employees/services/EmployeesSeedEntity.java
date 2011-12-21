@@ -27,7 +27,7 @@ import ua.orion.cpu.core.security.entities.SubjectType;
  *
  * @author molodec
  */
-@OrderLibrary("after:" + EmployeeSymbols.EMPLOYEE_LIB)
+@OrderLibrary("after:" + EmployeeSymbols.EMPLOYEES_LIB)
 public class EmployeesSeedEntity {
 
     public EmployeesSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
@@ -73,7 +73,7 @@ public class EmployeesSeedEntity {
             es.findUniqueOrPersist(new LabourRelations("Сумісник"));
             //---Пасспорт
             Passport pass_person = es.findUniqueOrPersist(new Passport("СК", "543543545", DateTimeUtils.createCalendar(16, 3, 2001), "Нов.-Волинським МРВ УМВС України в Житомирській обл."));
-            SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(EmployeeSymbols.EMPLOYEE_LIB));
+            SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(EmployeeSymbols.EMPLOYEES_LIB));
             University ou_CPU = es.findUniqueOrPersist(new University("Класичний приватний університет", "КПУ"));
             Post post = es.findUniqueOrPersist(new Post("Методист інституту управління", "МІУ"));
             OrgUnitPost orgUnitPost = es.findUniqueOrPersist(new OrgUnitPost(ou_CPU, post, Double.valueOf(20.0)));

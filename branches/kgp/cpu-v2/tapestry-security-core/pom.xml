@@ -9,7 +9,7 @@
 	<version>0.3.1.sl-SNAPSHOT</version>
 
 	<properties>
-		<tapestry-release-version>5.2.4</tapestry-release-version>
+		<tapestry-release-version>5.2.6</tapestry-release-version>
 	</properties>
 	
 	<!-- Developers section inherited from the parent pom -->
@@ -125,8 +125,8 @@
 		  <artifactId>maven-compiler-plugin</artifactId>
 		  <version>2.0.2</version>
 		  <configuration>
-		   <source>1.6</source>
-		   <target>1.6</target>
+		   <source>1.7</source>
+		   <target>1.7</target>
                     <encoding>UTF-8</encoding>
 		  </configuration>
 		 </plugin>

@@ -12,7 +12,7 @@
     <url>http://code.google.com/p/orion-cpu/</url>
     <properties>
         <slf4j-release-version>1.6.1</slf4j-release-version>
-        <tapestry-release-version>5.2.5</tapestry-release-version>
+        <tapestry-release-version>5.2.6</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.javaDocEncoding>UTF-8</project.build.javaDocEncoding>
         <project.build.sourceJavaVersion>1.6</project.build.sourceJavaVersion>
@@ -239,8 +239,8 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.0.2</version>
                 <configuration>
-                    <source>${project.build.sourceJavaVersion}</source>
-                    <target>${project.build.targetJavaVersion}</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <optimize>true</optimize>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
