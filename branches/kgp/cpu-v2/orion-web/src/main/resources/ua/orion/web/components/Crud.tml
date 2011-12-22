@@ -48,12 +48,14 @@
             </p:actionCell>
         </t:grid>
     </t:zone>
-    <s:HasPermission permission="${objectClass.simpleName}:insert">
-        <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add" style="margin-top: 5px"  id="crud-add-record-button">${message:action.add}</button></t:EventLink>
-    </s:HasPermission>
-    <t:if test="listPage">
-        <t:PageLink class="crud-list" t:page="prop:listPage"><button class="ui-button-tolist" style="margin-top: 5px">${message:action.list}</button></t:PageLink>
-    </t:if>    
+    <div id="crud-grid-buttons" class="ui-widget-header ui-corner-all">
+        <s:HasPermission permission="${objectClass.simpleName}:insert">
+            <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add"  id="crud-add-record-button">${message:action.add}</button></t:EventLink>
+        </s:HasPermission>
+        <t:if test="listPage">
+            <t:PageLink class="crud-list" t:page="prop:listPage"><button class="ui-button-tolist">${message:action.list}</button></t:PageLink>
+        </t:if>    
+    </div>
     <t:block id="editBlock">
         <t:if test="isedit">
             <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750" height="450"/><!--вызов показа окна-->
