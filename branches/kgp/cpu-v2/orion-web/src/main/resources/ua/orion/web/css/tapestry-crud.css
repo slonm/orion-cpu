@@ -193,5 +193,5 @@ table.nb tbody tr td{
 }
 
 #grid-container{
-    width: 95%; overflow-x: scroll; height: 500px; overflow-y: scroll;
+    width: 100%; overflow-x: scroll; height: 500px; overflow-y: scroll;
 }
