@@ -48,7 +48,7 @@ public class OrionCoreIOCModule {
         conf.add(new ModelLibraryInfo("OrionCore", "ua.orion.core"));
     }
 
-    public static void contributeJPAEntityPackageManager(Configuration<String> conf,
+    public static void contributeJpaEntityPackageManager(Configuration<String> conf,
             ModelLibraryService modelLibraryService, Logger LOG) {
         for (ModelLibraryInfo libInfo : modelLibraryService.getModelLibraryInfos()) {
             String libName = libInfo.getLibraryPackage() + ".entities";
@@ -71,7 +71,7 @@ public class OrionCoreIOCModule {
 
             @Override
             public void run() {
-                UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory("default"));
+                UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory(IOCUtils.getDefaultPersistenceUnitName(emSource)));
                 UniqueConstraintValidator.setPROPERTY_ACCESS(pAccess);
             }
         });

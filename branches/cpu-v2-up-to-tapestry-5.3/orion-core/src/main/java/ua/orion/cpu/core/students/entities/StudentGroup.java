@@ -8,7 +8,6 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author sl
  */
 @Entity
-@Table(schema = "stu")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class StudentGroup<T extends AbstractEnumerationEntity<?>> extends AbstractEnumerationEntity<T> {
 

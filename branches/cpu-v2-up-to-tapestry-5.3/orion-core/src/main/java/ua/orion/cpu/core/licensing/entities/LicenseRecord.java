@@ -16,7 +16,7 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch", uniqueConstraints =
+@Table(uniqueConstraints =
 @UniqueConstraint(columnNames = {"educationalQualificationLevel", 
     "trainingDirectionOrSpeciality", "termination", "license"}))
 public class LicenseRecord extends AbstractEntity<LicenseRecord> {
@@ -66,6 +66,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @ManyToOne
     @NotNull
+    @JoinColumn(name="license")
     public License getLicense() {
         return license;
     }
@@ -146,7 +147,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @return Ассоциированный массив форма обучения - лицензированный объем
      */
     @ElementCollection
-    @CollectionTable(schema = "uch")
+    @CollectionTable
     //Необходимый параметр для коллекции SortedMap
     @Sort(type = SortType.NATURAL)
     public SortedMap<EducationForm, Integer> getLicenseQuantityByEducationForm() {

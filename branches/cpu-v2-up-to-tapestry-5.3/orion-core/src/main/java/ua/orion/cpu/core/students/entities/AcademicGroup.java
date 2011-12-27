@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
  * @author slobodyanuk
  */
 @Entity
-@Table(schema = "stu")
 public class AcademicGroup extends StudentGroup<AcademicGroup> {
 
 //    @NotNull

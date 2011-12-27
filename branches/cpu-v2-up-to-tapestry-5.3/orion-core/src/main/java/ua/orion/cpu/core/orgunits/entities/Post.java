@@ -3,14 +3,14 @@ package ua.orion.cpu.core.orgunits.entities;
 import java.util.List;
 import javax.persistence.*;
 import ua.orion.core.annotations.UserPresentable;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Класс-справочник названий должностей сотрудников
  * @author kgp
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 @AttributeOverrides({
     @AttributeOverride(name = "name", column =
     @Column(unique = true)),

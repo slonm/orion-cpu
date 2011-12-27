@@ -16,7 +16,6 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
 public class EduPlan extends AbstractEntity<EduPlan> {
 
     private static final long serialVersionUID = 1L;
@@ -177,7 +176,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      */
 //    @Sort(type = SortType.COMPARATOR, comparator=EduPlanDisciplineCycle.EduPlanDisciplineCycleComparator.class)
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(schema = "uch", joinColumns = {
+    @JoinTable(joinColumns = {
         @JoinColumn(name = "EDUPLAN_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID")})
     public Set<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {

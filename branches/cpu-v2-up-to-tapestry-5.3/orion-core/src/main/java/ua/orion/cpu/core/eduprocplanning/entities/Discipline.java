@@ -2,14 +2,14 @@ package ua.orion.cpu.core.eduprocplanning.entities;
 
 import javax.persistence.*;
 import ua.orion.core.annotations.UserPresentable;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник названий дисциплин
  * @author kgp
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 @AttributeOverrides({
     @AttributeOverride(name = "name", column =
     @Column(unique = true)),

@@ -1,8 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
 import java.util.Calendar;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import ua.orion.cpu.core.entities.Document;
 
 /**
@@ -12,7 +11,6 @@ import ua.orion.cpu.core.entities.Document;
  * @author molodec
  */
 @Entity
-@Table(schema = "psn")
 public class Passport extends Document<Passport> {
 
     /**

@@ -15,7 +15,6 @@ import ua.orion.core.persistence.AbstractNamedEntity;
  * @author sl
  */
 @Entity
-@Table(schema = "psn")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person extends AbstractNamedEntity<Person> {
 

@@ -12,7 +12,6 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author sl
  */
 @Entity
-@Table(schema = "org")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class OrgUnit<T extends OrgUnit<?>> extends AbstractEnumerationEntity<T> {
 

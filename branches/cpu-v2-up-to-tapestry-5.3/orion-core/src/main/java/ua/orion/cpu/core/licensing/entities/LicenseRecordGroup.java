@@ -1,14 +1,14 @@
 package ua.orion.cpu.core.licensing.entities;
 
 import javax.persistence.*;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник названий груп лицензионных записей (их назначения)
  * @author kgp
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 @AttributeOverrides({
     @AttributeOverride(name = "name", column =
     @Column(unique = true)),

@@ -4,15 +4,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.annotations.UserPresentable;
-import ua.orion.core.persistence.AbstractReferenceEntity;
-import ua.orion.core.persistence.IRangable;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник форм обучения
  * @author kgp
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 @AttributeOverrides({
     @AttributeOverride(name = "name", column =
     @Column(unique = true)),

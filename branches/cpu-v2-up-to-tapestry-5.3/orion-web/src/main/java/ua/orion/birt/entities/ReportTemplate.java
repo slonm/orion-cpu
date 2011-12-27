@@ -10,7 +10,6 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author sl
  */
 @Entity
-@Table(schema = "sys")
 public class ReportTemplate extends AbstractEnumerationEntity<ReportTemplate> {
 
     /**

@@ -6,7 +6,7 @@
   <groupId>orion</groupId>
   <artifactId>orion-meta</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <name>Метапроект Orion</name>
   <url>http://code.google.com/p/orion-cpu/</url>
     <build>

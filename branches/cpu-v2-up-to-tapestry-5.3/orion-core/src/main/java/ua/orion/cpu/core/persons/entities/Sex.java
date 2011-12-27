@@ -1,8 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник - пол человека. Содержит уникальное имя.
@@ -10,7 +9,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Sex extends AbstractEnumerationEntity<Sex> {
 
     /**

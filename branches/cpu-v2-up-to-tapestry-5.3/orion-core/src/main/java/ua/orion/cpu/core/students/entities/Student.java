@@ -1,14 +1,8 @@
 package ua.orion.cpu.core.students.entities;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import ua.orion.cpu.core.persons.entities.Citizenship;
-import ua.orion.cpu.core.persons.entities.Passport;
-import ua.orion.cpu.core.persons.entities.Person;
-import ua.orion.cpu.core.persons.entities.Sex;
+import ua.orion.cpu.core.persons.entities.*;
 
 /**
  * Студенты.
@@ -16,7 +10,6 @@ import ua.orion.cpu.core.persons.entities.Sex;
  * @author sl
  */
 @Entity
-@Table(schema = "stu")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Student extends Person {
 

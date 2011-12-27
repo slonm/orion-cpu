@@ -1,10 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import javax.persistence.*;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - типы трудового договора
@@ -12,7 +9,7 @@ import ua.orion.core.persistence.AbstractReferenceEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class TypeAgreement extends AbstractReferenceEntity<TypeAgreement> {
 
     /**

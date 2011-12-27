@@ -1,10 +1,8 @@
 package ua.orion.cpu.core.persons.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import org.apache.tapestry5.beaneditor.DataType;
-import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - регион Хранит список регионов Регион — определённая
@@ -13,7 +11,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Region extends AbstractEnumerationEntity<Region> {
 
     /**

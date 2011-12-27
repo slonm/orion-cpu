@@ -7,12 +7,12 @@
     <groupId>ua.orion</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>КИС КПУ Orion parent</name>
     <url>http://code.google.com/p/orion-cpu/</url>
     <properties>
         <slf4j-release-version>1.6.1</slf4j-release-version>
-        <tapestry-release-version>5.3</tapestry-release-version>
+        <tapestry-release-version>5.3.1</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.javaDocEncoding>UTF-8</project.build.javaDocEncoding>
         <project.build.sourceJavaVersion>1.6</project.build.sourceJavaVersion>
@@ -45,7 +45,7 @@
             <dependency>
                 <groupId>ua.orion</groupId>
                 <artifactId>orion-menu</artifactId>
-                <version>0.0.2-SNAPSHOT</version>
+                <version>0.0.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>log4j</groupId>
@@ -81,7 +81,7 @@
             <dependency>
                 <groupId>ua.orion</groupId>
                 <artifactId>orion-web</artifactId>
-                <version>0.0.2-SNAPSHOT</version>
+                <version>0.0.3-SNAPSHOT</version>
             </dependency>
 <!--            <dependency>
                 <groupId>org.tynamo</groupId>
@@ -97,7 +97,7 @@
             <dependency>
                 <groupId>ua.orion</groupId>
                 <artifactId>orion-core</artifactId>
-                <version>0.0.2-SNAPSHOT</version>
+                <version>0.0.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.tynamo</groupId>
@@ -307,7 +307,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </repository>
         <repository>
             <id>chenillekit</id>
-            <url>https://gsoc2011-csrf-protection.googlecode.com/svn/maven/snapshot-repo/</url>
+            <url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>

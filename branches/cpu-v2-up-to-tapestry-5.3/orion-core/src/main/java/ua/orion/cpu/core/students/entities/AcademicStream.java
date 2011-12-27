@@ -12,7 +12,6 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
  * @author sl
  */
 @Entity
-@Table(schema = "uch")
 public class AcademicStream extends AbstractEntity<AcademicStream> {
 
     private static final long serialVersionUID = 1L;

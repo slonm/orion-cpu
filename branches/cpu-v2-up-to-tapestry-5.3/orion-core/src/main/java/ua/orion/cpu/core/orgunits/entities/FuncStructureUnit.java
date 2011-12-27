@@ -10,7 +10,6 @@ import ua.orion.core.persistence.AbstractEntity;
  */
 //TODO проработать
 @Entity
-@Table(schema = "org")
 public class FuncStructureUnit extends AbstractEntity<FuncStructureUnit> {
 
     private OrgUnit orgUnit;

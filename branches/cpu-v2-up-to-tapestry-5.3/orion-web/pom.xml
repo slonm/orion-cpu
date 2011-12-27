@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.orion</groupId>
     <artifactId>orion-web</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>ua.orion</groupId>
         <artifactId>parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <name>Orion web interface</name>

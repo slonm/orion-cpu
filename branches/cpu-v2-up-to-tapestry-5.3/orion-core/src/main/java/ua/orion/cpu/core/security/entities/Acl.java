@@ -11,7 +11,7 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author sl
  */
 @Entity
-@Table(schema="sec", uniqueConstraints=@UniqueConstraint(columnNames={"subject", "subjectType", "permission"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"subject", "subjectType", "permission"}))
 public class Acl extends AbstractEntity<Acl> {
 
     /**

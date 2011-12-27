@@ -2,8 +2,6 @@ package ua.orion.cpu.core.employees.entities;
 
 import java.util.Calendar;
 import java.util.HashSet;
-import ua.orion.cpu.core.persons.entities.AcademicRank;
-import ua.orion.cpu.core.persons.entities.Person;
 import java.util.Set;
 import javax.persistence.*;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
@@ -16,7 +14,6 @@ import ua.orion.cpu.core.persons.entities.*;
  * @author sl
  */
 @Entity
-@Table(schema = "emp")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Employee extends Person {
 

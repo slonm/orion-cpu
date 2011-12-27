@@ -4,14 +4,14 @@ package ua.orion.cpu.core.licensing.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник образовательно-квалификационных уровней
  * @author kgp
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 @AttributeOverrides({
     @AttributeOverride(name = "name", column = @Column(unique = true)),
     @AttributeOverride(name = "shortName", column = @Column(unique = true))})

@@ -17,7 +17,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * ЧТО-ТО ПОХОЖЕЕ БУДЕТ ИСПОЛЬЗОВАНО  В РАБОЧИХ УЧЕБНЫХ ПЛАНАХ
  */
 @Entity
-@Table(schema = "uch")
 public class EduPlanRecord extends AbstractEntity<EduPlanRecord> {
 //    /**
 //     * № дисциплины в учебном плане (для нормативных берется из ОПП)

@@ -19,6 +19,7 @@ import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
+import ua.orion.core.persistence.ReferenceBook;
 import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
@@ -104,8 +105,8 @@ public class OrionWebIOCModule {
 //        configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
         //add All Reference Book
         for (Class<?> e : entityService.getManagedEntities()) {
-            javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
-            if (a != null && "ref".equals(a.schema())) {
+            ReferenceBook a = e.getAnnotation(ReferenceBook.class);
+            if (a != null) {
                 path = "Start>Admin>Reference>" + e.getSimpleName();
                 configuration.add(path, mlb.buildCrudPageMenuLink(e, path));
             }
