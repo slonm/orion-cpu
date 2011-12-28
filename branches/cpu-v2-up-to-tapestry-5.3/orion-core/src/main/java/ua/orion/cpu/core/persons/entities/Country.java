@@ -69,6 +69,7 @@ public class Country extends AbstractEnumerationEntity<Country> {
      *
      * @return
      */
+    @Column(length=1000)
     public String getFormOfGovernment() {
         return formOfGovernment;
     }
@@ -97,6 +98,7 @@ public class Country extends AbstractEnumerationEntity<Country> {
      *
      * @return
      */
+    @Column(length=1000)
     public String getAddinitionalData() {
         return addinitionalData;
     }

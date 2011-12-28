@@ -1,5 +1,6 @@
 package ua.orion.core.services;
 
+import javax.persistence.EntityTransaction;
 import org.apache.tapestry5.ioc.ObjectLocator;
 import org.apache.tapestry5.jpa.EntityManagerManager;
 import org.apache.tapestry5.jpa.EntityManagerSource;
@@ -15,20 +16,22 @@ import ua.orion.core.utils.IOCUtils;
  */
 public class SeedEntity extends LibraryOrientedBeansFactory implements Runnable {
 
-    private EntityManagerManager transactionManager;
+    private EntityManagerManager entityManagerManager;
     private EntityManagerSource emSource;
 
     public SeedEntity(ModelLibraryService resolver, ObjectLocator locator,
-            EntityManagerManager transactionManager,
+            EntityManagerManager entityManagerManager,
             final EntityManagerSource emSource) {
         super(resolver, locator, "services", null, "SeedEntity");
-        this.transactionManager = transactionManager;
+        this.entityManagerManager = entityManagerManager;
         this.emSource = emSource;
     }
 
     @Override
     public void run() {
+        EntityTransaction transaction = entityManagerManager.getEntityManager(IOCUtils.getDefaultPersistenceUnitName(emSource)).getTransaction();
+        transaction.begin();
         this.create();
-        transactionManager.getEntityManager(IOCUtils.getDefaultPersistenceUnitName(emSource)).getTransaction().commit();
+        transaction.commit();
     }
 }

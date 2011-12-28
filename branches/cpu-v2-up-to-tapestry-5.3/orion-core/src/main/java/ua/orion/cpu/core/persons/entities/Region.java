@@ -85,6 +85,7 @@ public class Region extends AbstractEnumerationEntity<Region> {
      *
      * @return
      */
+    @Column(length=1000)
     public String getAddinitionalData() {
         return addinitionalData;
     }
