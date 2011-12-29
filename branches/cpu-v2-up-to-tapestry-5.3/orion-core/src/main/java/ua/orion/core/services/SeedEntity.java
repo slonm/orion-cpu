@@ -31,7 +31,17 @@ public class SeedEntity extends LibraryOrientedBeansFactory implements Runnable 
     public void run() {
         EntityTransaction transaction = entityManagerManager.getEntityManager(IOCUtils.getDefaultPersistenceUnitName(emSource)).getTransaction();
         transaction.begin();
-        this.create();
-        transaction.commit();
+        try {
+            this.create();
+        } catch (final RuntimeException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw new RuntimeException("SeedEntity exception", e);
+        }
+        if (transaction != null && transaction.isActive()) {
+            transaction.commit();
+        }
     }
 }
