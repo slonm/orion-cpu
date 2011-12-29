@@ -306,8 +306,8 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             </snapshots>
         </repository>
         <repository>
-            <id>chenillekit</id>
-            <url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
+            <id>codehaus-snapshots</id>
+            <url>https://nexus.codehaus.org/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
