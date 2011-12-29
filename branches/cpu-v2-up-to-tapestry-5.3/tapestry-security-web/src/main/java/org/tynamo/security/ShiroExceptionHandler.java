@@ -23,9 +23,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.util.WebUtils;
-import org.apache.tapestry5.internal.services.PageResponseRenderer;
-import org.apache.tapestry5.internal.services.RequestPageCache;
-import org.apache.tapestry5.internal.structure.Page;
+import org.apache.tapestry5.services.ComponentSource;
+import org.apache.tapestry5.services.ResponseRenderer;
 import org.apache.tapestry5.runtime.Component;
 import org.apache.tapestry5.services.ExceptionReporter;
 import org.apache.tapestry5.services.RequestGlobals;
@@ -43,20 +42,19 @@ import java.io.IOException;
 public class ShiroExceptionHandler
 {
 
-	private final PageResponseRenderer renderer;
-	private final RequestPageCache pageCache;
+	private final ResponseRenderer renderer;
+        private final ComponentSource componentSource;
 	private final SecurityService securityService;
 	private final PageService pageService;
 	private final RequestGlobals requestGlobals;
 	private final Response response;
 
-	public ShiroExceptionHandler(PageResponseRenderer renderer, RequestPageCache pageCache,
+	public ShiroExceptionHandler(ResponseRenderer renderer, ComponentSource componentSource,
 	                             SecurityService securityService, PageService pageService,
 	                             RequestGlobals requestGlobals, Response response)
 	{
-
-		this.renderer = renderer;
-		this.pageCache = pageCache;
+                this.renderer = renderer;
+		this.componentSource = componentSource;
 		this.securityService = securityService;
 		this.pageService = pageService;
 		this.requestGlobals = requestGlobals;
@@ -81,11 +79,11 @@ public class ShiroExceptionHandler
 				return;
 			}
 
-			Page page = pageCache.get(unauthorizedPage);
+			Component page = componentSource.getPage(unauthorizedPage);
 
 			reportExceptionIfPossible(exception, page);
 
-			renderer.renderPageResponse(page);
+			renderer.renderPageMarkupResponse(unauthorizedPage);
 
 		} else
 		{
@@ -100,18 +98,17 @@ public class ShiroExceptionHandler
 				}
 			}
 
-			Page page = pageCache.get(pageService.getLoginPage());
+			Component page = componentSource.getPage(pageService.getLoginPage());
 
 			reportExceptionIfPossible(exception, page);
 
-			renderer.renderPageResponse(page);
+			renderer.renderPageMarkupResponse(pageService.getLoginPage());
 
 		}
 	}
 
-	private void reportExceptionIfPossible(ShiroException exception, Page page)
+	private void reportExceptionIfPossible(ShiroException exception, Component rootComponent)
 	{
-		Component rootComponent = page.getRootComponent();
 		if (rootComponent instanceof ExceptionReporter)
 		{
 			((ExceptionReporter) rootComponent).reportException(exception);
