@@ -7,8 +7,8 @@
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/cpu" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="javax.persistence.jdbc.username" value="postgres" />
-            <property name="javax.persistence.jdbc.password" value="postgres" />
+            <property name="hibernate.connection.username" value="postgres" />
+            <property name="hibernate.connection.password" value="postgres" />
             <property name="hibernate.default_schema" value="public"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>            
