@@ -71,7 +71,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     @Transient
     public String getKATDCode() {
         try {
-            return licenseRecord.getKnowledgeAreaOrTrainingDirectionCode();
+            return licenseRecord.getKnowledgeAreaCode();
         } catch (NullPointerException e) {
             return null;
         }
@@ -85,7 +85,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     @Transient
     public String getKnowledgeAreaOrTrainingDirection() {
         try {
-            return licenseRecord.getKnowledgeAreaOrTrainingDirectionName();
+            return licenseRecord.getKnowledgeAreaName();
         } catch (NullPointerException e) {
             return null;
         }

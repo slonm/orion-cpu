@@ -40,7 +40,6 @@ public class LicensingSeedEntity {
         LicenseRecordGroup btrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка бакалаврів", LicenseRecordGroup.BACH_TRAINING_UKEY));
         LicenseRecordGroup jstrain_LRG = es.findUniqueOrPersist(new LicenseRecordGroup("Підготовка молодших спеціалістів", LicenseRecordGroup.JUN_SPEC_TRAINING_UKEY));
         if (testData) {
-            /*
             //---Списки доступа----------
             //---------Роли----------
             //LicenseReader
@@ -48,7 +47,7 @@ public class LicensingSeedEntity {
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "License:read,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "LicenseRecord:read,menu"));
 
-            //LicenseAppender
+           //LicenseAppender
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "EducationForm:read,insert,update,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "License:read,insert,update,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "LicenseRecord:read,insert,update,menu"));
@@ -300,369 +299,339 @@ public class LicensingSeedEntity {
 
             //Старая лицензия
             //Подготовка бакалавров, специалистов, магистров
-            saveOrUpdateLR(licenseCPU, tdosPVSH_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEICPHS, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPVSH_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEICPHS, bsmtrain_LRG));
             //Адміністративний менеджмент - магістри
-            saveOrUpdateLR(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafAMBA, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosAM_M, master_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafAMBA, bsmtrain_LRG));
             //Управління навчальним закладом - магістри
-            saveOrUpdateLR(licenseCPU, tdosUNZ_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEICPHS, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosUNZ_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEICPHS, bsmtrain_LRG));
             //Прикладна економіка - магістри
-            saveOrUpdateLR(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20120701, kafETNPE, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPE_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20120701, kafETNPE, bsmtrain_LRG));
             //Бізнес-адміністрування - магістри
-            saveOrUpdateLR(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafAMBA, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosBA_M, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafAMBA, bsmtrain_LRG));
 
             //Фізичне виховання і спорт
             //Фізичне виховання і спорт - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPVS_B, bach_EQL, stat_EF, 110, corr_EF, 110, lrCal20150701, kafTOFAV, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPVS_B, bach_EQL, stat_EF, 110, corr_EF, 110, lrCal20150701, kafTOFAV, bsmtrain_LRG));
             //Фізичне виховання - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafTOFAV, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafTOFAV, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafTOFAV, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysV_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafTOFAV, bsmtrain_LRG));
             //Фізична реабілітація - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFR, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFR, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFR, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFR, bsmtrain_LRG));
 
             //Журналістика
             //Журналістика - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosZhurn_B, bach_EQL, stat_EF, 110, corr_EF, 100, lrCal20150701, kafZSK, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafZSK, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafZSK, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZhurn_B, bach_EQL, stat_EF, 110, corr_EF, 100, lrCal20150701, kafZSK, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafZSK, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZhurn_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafZSK, bsmtrain_LRG));
 
             //Видавнича справа та редагування - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20110701, kafVSRUF, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosVSR_S, spec_EQL, stat_EF, 50, corr_EF, 50, lrCal20110701, kafVSRUF, bsmtrain_LRG));
 
             //Міжнародні відносини
             //Міжнародне право - бакалаври, спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosMP_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafMP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosMP_S, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafMP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMP_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafMP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMP_S, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafMP, bsmtrain_LRG));
 
             //Філологія
             //Філологія - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPhyl_B, bach_EQL, stat_EF, 80, corr_EF, 55, lrCal20150701, kafAFZL, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhyl_B, bach_EQL, stat_EF, 80, corr_EF, 55, lrCal20150701, kafAFZL, bsmtrain_LRG));
             //Мова та література(англійська) - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafAFZL, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, master_EQL, stat_EF, 12, corr_EF, 12, lrCal20150701, kafAFZL, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafAFZL, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosLangLit_SM, master_EQL, stat_EF, 12, corr_EF, 12, lrCal20150701, kafAFZL, bsmtrain_LRG));
             //Переклад - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTPP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafTPP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTPP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTransl_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafTPP, bsmtrain_LRG));
             //Літературна творчість - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosLT_B, bach_EQL, stat_EF, 25, corr_EF, 0, lrCal20100701, kafAFZL, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosLT_B, bach_EQL, stat_EF, 25, corr_EF, 0, lrCal20100701, kafAFZL, bsmtrain_LRG));
 
             //Психологія
             //Психологія - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPS_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPS_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPS_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, bsmtrain_LRG));
 
             //Соціологія
             //Соціальна робота - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafSSR, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20120701, kafSSR, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafSSR, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20120701, kafSSR, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, bsmtrain_LRG));
 
             //Економіка і підприємництво
             //Економіка і підприємництво - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosEIP_B, bach_EQL, stat_EF, 430, corr_EF, 460, lrCal20150701, kafEP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEIP_B, bach_EQL, stat_EF, 430, corr_EF, 460, lrCal20150701, kafEP, bsmtrain_LRG));
             //Економічна кібернетика - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, spec_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafEKS, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosEKib_SM, master_EQL, stat_EF, 25, corr_EF, 15, lrCal20150701, kafEKS, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEKib_SM, spec_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafEKS, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEKib_SM, master_EQL, stat_EF, 25, corr_EF, 15, lrCal20150701, kafEKS, bsmtrain_LRG));
             //Міжнародна економіка - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafME, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosME_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafME, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafME, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosME_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafME, bsmtrain_LRG));
             //Фінанси
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 30, corr_EF, 60, lrCal20150701, kafFK, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosF_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafFK, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 30, corr_EF, 60, lrCal20150701, kafFK, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosF_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafFK, bsmtrain_LRG));
             //Облік і аудит - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 100, corr_EF, 100, lrCal20150701, kafOA, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, master_EQL, stat_EF, 30, corr_EF, 80, lrCal20130701, kafOA, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 100, corr_EF, 100, lrCal20150701, kafOA, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOA_SM, master_EQL, stat_EF, 30, corr_EF, 80, lrCal20130701, kafOA, bsmtrain_LRG));
             //Банківська справа - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFK, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, master_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafFK, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafFK, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosBS_SM, master_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafFK, bsmtrain_LRG));
             //Економіка підприємства - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEP_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, bsmtrain_LRG));
             //Маркетинг - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosM_SM, spec_EQL, stat_EF, 30, corr_EF, 20, lrCal20150701, kafM, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosM_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafM, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosM_SM, spec_EQL, stat_EF, 30, corr_EF, 20, lrCal20150701, kafM, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosM_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafM, bsmtrain_LRG));
             //Прикладна статистика - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosES_SM, spec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafEKS, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosES_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafEKS, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosES_SM, spec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafEKS, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosES_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafEKS, bsmtrain_LRG));
 
             //Менеджмент
             //Менеджмент - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, lrCal20150701, kafMO, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, lrCal20150701, kafMO, bsmtrain_LRG));
             //Менеджмент організацій - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, lrCal20150701, kafMO, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafMO, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, lrCal20150701, kafMO, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafMO, bsmtrain_LRG));
             //Менеджмент зовнішньо-економічної діяльності - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMZD, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosMZED_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMZD, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMZED_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMZD, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMZED_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMZD, bsmtrain_LRG));
 
             //Туризм
             //Туризм - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosTR_B, bach_EQL, stat_EF, 90, corr_EF, 90, lrCal20130701, kafTGG, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosTR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTR_B, bach_EQL, stat_EF, 90, corr_EF, 90, lrCal20130701, kafTGG, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTR_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTR_SM, master_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, bsmtrain_LRG));
             //Готельне господарство - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20130701, kafTGG, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosGGos_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20130701, kafTGG, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosGGos_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20130701, kafTGG, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosGGos_SM, master_EQL, stat_EF, 15, corr_EF, 15, lrCal20130701, kafTGG, bsmtrain_LRG));
 
             //Право
             //Право - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPZ_B, bach_EQL, stat_EF, 150, corr_EF, 250, lrCal20150701, kafTZGP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZ_B, bach_EQL, stat_EF, 150, corr_EF, 250, lrCal20150701, kafTZGP, bsmtrain_LRG));
             //Правознавство - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, spec_EQL, stat_EF, 115, corr_EF, 210, lrCal20120701, kafTZGP, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPZ_SM, master_EQL, stat_EF, 40, corr_EF, 60, lrCal20150701, kafTZGP, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZ_SM, spec_EQL, stat_EF, 115, corr_EF, 210, lrCal20120701, kafTZGP, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZ_SM, master_EQL, stat_EF, 40, corr_EF, 60, lrCal20150701, kafTZGP, bsmtrain_LRG));
 
             //Геодезія, картографія та землевпорядкування
             //Землевпорядкування та кадастр - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafDUZK, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, corr_EF, 0, lrCal20150701, kafDUZK, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZK_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafDUZK, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZK_B, spec_EQL, stat_EF, 30, corr_EF, 0, lrCal20150701, kafDUZK, bsmtrain_LRG));
 
             //Прикладна математика
             //Прикладна математика - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosPM_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPM_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, bsmtrain_LRG));
             //Системний аналіз і управління - спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafSAVM, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosSAU_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafSAVM, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSAU_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafSAVM, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSAU_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafSAVM, bsmtrain_LRG));
             //Інформатика - бакалаври
-            saveOrUpdateLR(licenseCPU, tdosI_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafSAVM, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosI_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafSAVM, bsmtrain_LRG));
 
             //Комп'ютерні науки
             //Програмне забезпечення автоматизованих систем - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafPIT, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, master_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafPIT, bsmtrain_LRG));
 
             //Електроніка
             //Фізична та біомедична електроніка - бакалаври, спеціалісти, магістри
-            saveOrUpdateLR(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafSAVM, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafSAVM, bsmtrain_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, corr_EF, 0, lrCal20150701, kafSAVM, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosFBE_B, bach_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafSAVM, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosFBE_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafSAVM, bsmtrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosFBE_SM, master_EQL, stat_EF, 10, corr_EF, 0, lrCal20150701, kafSAVM, bsmtrain_LRG));
 
             //Державне управління
             //Державна служба - магістри
-            saveOrUpdateLR(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, corr_EF, 90, lrCal20120701, kafDUZK, bsmtrain_LRG, es);
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosDS_M, master_EQL, stat_EF, 60, corr_EF, 90, lrCal20120701, kafDUZK, bsmtrain_LRG));
 
 
             //Перепідготовка спеціалістів
             //Фізичне виховання і спорт
             //Фізичне виховання  - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTOFAV, sretrain_LRG, es);
-            //Фізична реабілітація  - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafFR, sretrain_LRG, es);
-
-            //Журналістика
-            //Журналістика - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafZSK, sretrain_LRG, es);
-
-            //Філологія
-            //Мова та література (англійська) - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafAFZL, sretrain_LRG, es);
-            //Переклад - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTPP, sretrain_LRG, es);
-
-            //Психологія
-            //Психологія - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafPP, sretrain_LRG, es);
-
-            //Соціологія
-            //Соціальна робота - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20120701, kafSSR, sretrain_LRG, es);
-
-            //Економіка і підприємництво
-            //Міжнародна економіка - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafME, sretrain_LRG, es);
-            //Фінанси - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafFK, sretrain_LRG, es);
-            //Облік і аудит - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafOA, sretrain_LRG, es);
-            //Банківська справа - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafFK, sretrain_LRG, es);
-            //Економіка підприємства - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafEP, sretrain_LRG, es);
-
-            //Менеджмент
-            //Менеджмент організацій - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, corr_EF, 40, lrCal20150701, kafMO, sretrain_LRG, es);
-
-            //Комп'ютерні науки
-            //Програмне забезпечення автоматизованих систем
-            saveOrUpdateLR(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafPIT, sretrain_LRG, es);
-
-
-            //Для коледжу КПУ
-            //Журналістика
-            //Видавнича справа та редагування - молодші спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosVSR_S, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafVSRUF, forcol_LRG, es);
-
-            //Соціологія
-            //Соціальна робота - спеціалісти
-            saveOrUpdateLR(licenseCPU, tdosSR_SM, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG, es);
-
-            //Економіка і підприємництво
-            //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEP_SM, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG, es);
-
-            //Менеджмент
-            //Організація обслуговування населення
-            saveOrUpdateLR(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafMO, forcol_LRG, es);
-
-            //Торгівля
-            //Товарознавство та комерційна діяльність
-            saveOrUpdateLR(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMO, forcol_LRG, es);
-
-            //Туризм
-            //Організація обслуговування в готелях та туристичних комплексах
-            saveOrUpdateLR(licenseCPU, tdosOOGTK_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafTGG, forcol_LRG, es);
-
-            //Прикладна математика
-            //Прикладна математика
-            saveOrUpdateLR(licenseCPU, tdosPM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20110701, kafSAVM, forcol_LRG, es);
-
-            //Комп'ютерні науки
-            //Програмування для електроно-обчислювальної техніки і автоматизованих систем
-            saveOrUpdateLR(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, forcol_LRG, es);
-
-            //Новая лицензия
-            //Подготовка бакалавров
-            //Фізичне виховання, спорт і здоров'я людини
-            //Фізичне виховання
-            saveOrUpdateLR(licenseCPU, tdosPhysV_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafTOFAV, btrain_LRG, es);
-            //Здоров'я людини
-            saveOrUpdateLR(licenseCPU, tdosZL_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafFR, btrain_LRG, es);
-
-            //Мистецтво
-            //Дизайн
-            saveOrUpdateLR(licenseCPU, tdosDZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20140701, kafTGG, btrain_LRG, es);
-
-            //Гуманітарні науки
-            //Філологія
-            saveOrUpdateLR(licenseCPU, tdosPhilol_B, bach_EQL, stat_EF, 105, corr_EF, 55, lrCal20150701, kafAFZL, btrain_LRG, es);
-
-            //Соціально-політичні науки
-            //Соціологія
-            saveOrUpdateLR(licenseCPU, tdosS_B, bach_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafSSR, btrain_LRG, es);
-            //Психологія
-            saveOrUpdateLR(licenseCPU, tdosPSH_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, btrain_LRG, es);
-
-            //Журналістика та інформація
-            //Журналістика
-            saveOrUpdateLR(licenseCPU, tdosZhu_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafZSK, btrain_LRG, es);
-            //Реклама і зв'язки з громадкістю (за видами)
-            saveOrUpdateLR(licenseCPU, tdosRZG_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafRZG, btrain_LRG, es);
-            //Видавнича справа та редагування
-            saveOrUpdateLR(licenseCPU, tdosVSR_B, bach_EQL, stat_EF, 30, corr_EF, 50, lrCal20110701, kafVSRUF, btrain_LRG, es);
-
-            //Право
-            //Право
-            saveOrUpdateLR(licenseCPU, tdosP_B, bach_EQL, stat_EF, 150, corr_EF, 250, lrCal20150701, kafTZGP, btrain_LRG, es);
-
-            //Економіка і підприємництво
-            //Економічна кібернетика
-            saveOrUpdateLR(licenseCPU, tdosEKib_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEKS, btrain_LRG, es);
-            //Міжнародна економіка
-            saveOrUpdateLR(licenseCPU, tdosME_B, bach_EQL, stat_EF, 50, corr_EF, 30, lrCal20150701, kafME, btrain_LRG, es);
-            //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEP_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafEP, btrain_LRG, es);
-            //Прикладна статистика
-            saveOrUpdateLR(licenseCPU, tdosPRS_B, bach_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafEKS, btrain_LRG, es);
-            //Маркетинг
-            saveOrUpdateLR(licenseCPU, tdosM_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafM, btrain_LRG, es);
-            //Фінанси і кредит
-            saveOrUpdateLR(licenseCPU, tdosFK_B, bach_EQL, stat_EF, 120, corr_EF, 120, lrCal20150701, kafFK, btrain_LRG, es);
-            //Облік і аудит
-            saveOrUpdateLR(licenseCPU, tdosOA_B, bach_EQL, stat_EF, 100, corr_EF, 150, lrCal20150701, kafOA, btrain_LRG, es);
-
-            //Менеджмент і адміністрування
-            //Менеджмент
-            saveOrUpdateLR(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, corr_EF, 250, lrCal20150701, kafMO, btrain_LRG, es);
-
-            //Системні науки та кібернетика
-            //Інформатика
-            saveOrUpdateLR(licenseCPU, tdosIF_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafSAVM, btrain_LRG, es);
-            //Системний аналіз
-            saveOrUpdateLR(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG, es);
-
-            //Інформатика та обчислювальна техніка
-            //Програмна інженерія
-            saveOrUpdateLR(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, btrain_LRG, es);
-
-            //Електроніка
-            //Мікро- та наноелектроніка
-            saveOrUpdateLR(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG, es);
-
-            //Геодезія та землеустрій
-            //Геодезія, картографія та землеустрій
-            saveOrUpdateLR(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20150701, kafDUZK, btrain_LRG, es);
-
-            //Соціальне забезпечення
-            //Соціальна робота
-            saveOrUpdateLR(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 40, corr_EF, 40, lrCal20150701, kafSSR, forcol_LRG, es);
-
-            //Сфера обслуговування
-            //Готельно-ресторанна справа
-            saveOrUpdateLR(licenseCPU, tdosGRS_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, forcol_LRG, es);
-            //Туризм
-            saveOrUpdateLR(licenseCPU, tdosT_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20130701, kafTGG, btrain_LRG, es);
-
-
-            //Подготовка младших специалистов
-            //Журналістика та інформація
-            //Видавнича справа та редагування
-            saveOrUpdateLR(licenseCPU, tdosVSTR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafVSRUF, forcol_LRG, es);
-
-            //Економіка та підприємництво
-            //Економіка підприємства
-            saveOrUpdateLR(licenseCPU, tdosEKP_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG, es);
-            //Товарознавство та комерційна діяльність
-            saveOrUpdateLR(licenseCPU, tdosTZKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG, es);
-
-            //Системні науки та кібернетика
-            //Прикладна математика
-            saveOrUpdateLR(licenseCPU, tdosPRM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20110701, kafSAVM, forcol_LRG, es);
-
-            //Інформатика та обчислювальна техника
-            //Розробка програмного забезпечення
-            saveOrUpdateLR(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, forcol_LRG, es);
-
-            //Соціальне забезпечення
-            //Соціальна робота
-            saveOrUpdateLR(licenseCPU, tdosSOCR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG, es);
-
-            //Сфера обслуговування
-            //Організація обслуговування населення
-            saveOrUpdateLR(licenseCPU, tdosOONAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG, es);
-            saveOrUpdateLR(licenseCPU, tdosTO_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG, es);
-       */ }
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysV_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTOFAV, sretrain_LRG));
+//            //Фізична реабілітація  - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafFR, sretrain_LRG));
+//
+//            //Журналістика
+//            //Журналістика - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZhurn_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafZSK, sretrain_LRG));
+//
+//            //Філологія
+//            //Мова та література (англійська) - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosLangLit_SM, spec_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafAFZL, sretrain_LRG));
+//            //Переклад - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTransl_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafTPP, sretrain_LRG));
+//
+//            //Психологія
+//            //Психологія - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafPP, sretrain_LRG));
+//
+//            //Соціологія
+//            //Соціальна робота - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20120701, kafSSR, sretrain_LRG));
+//
+//            //Економіка і підприємництво
+//            //Міжнародна економіка - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosME_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafME, sretrain_LRG));
+//            //Фінанси - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosF_SM, spec_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafFK, sretrain_LRG));
+//            //Облік і аудит - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOA_SM, spec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafOA, sretrain_LRG));
+//            //Банківська справа - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosBS_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafFK, sretrain_LRG));
+//            //Економіка підприємства - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEP_SM, spec_EQL, stat_EF, 25, corr_EF, 25, lrCal20150701, kafEP, sretrain_LRG));
+//
+//            //Менеджмент
+//            //Менеджмент організацій - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 40, corr_EF, 40, lrCal20150701, kafMO, sretrain_LRG));
+//
+//            //Комп'ютерні науки
+//            //Програмне забезпечення автоматизованих систем
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPZAS_SM, spec_EQL, stat_EF, 15, corr_EF, 15, lrCal20150701, kafPIT, sretrain_LRG));
+//
+//
+//            //Для коледжу КПУ
+//            //Журналістика
+//            //Видавнича справа та редагування - молодші спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosVSR_S, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafVSRUF, forcol_LRG));
+//
+//            //Соціологія
+//            //Соціальна робота - спеціалісти
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_SM, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG));
+//
+//            //Економіка і підприємництво
+//            //Економіка підприємства
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEP_SM, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG));
+//
+//            //Менеджмент
+//            //Організація обслуговування населення
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOON_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafMO, forcol_LRG));
+//
+//            //Торгівля
+//            //Товарознавство та комерційна діяльність
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafMO, forcol_LRG));
+//
+//            //Туризм
+//            //Організація обслуговування в готелях та туристичних комплексах
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOOGTK_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20150701, kafTGG, forcol_LRG));
+//
+//            //Прикладна математика
+//            //Прикладна математика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20110701, kafSAVM, forcol_LRG));
+//
+//            //Комп'ютерні науки
+//            //Програмування для електроно-обчислювальної техніки і автоматизованих систем
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPECTAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, forcol_LRG));
+//
+//            //Новая лицензия
+//            //Подготовка бакалавров
+//            //Фізичне виховання, спорт і здоров'я людини
+//            //Фізичне виховання
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhysV_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafTOFAV, btrain_LRG));
+//            //Здоров'я людини
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZL_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafFR, btrain_LRG));
+//
+//            //Мистецтво
+//            //Дизайн
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosDZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20140701, kafTGG, btrain_LRG));
+//
+//            //Гуманітарні науки
+//            //Філологія
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPhilol_B, bach_EQL, stat_EF, 105, corr_EF, 55, lrCal20150701, kafAFZL, btrain_LRG));
+//
+//            //Соціально-політичні науки
+//            //Соціологія
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosS_B, bach_EQL, stat_EF, 10, corr_EF, 10, lrCal20150701, kafSSR, btrain_LRG));
+//            //Психологія
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPSH_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPP, btrain_LRG));
+//
+//            //Журналістика та інформація
+//            //Журналістика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosZhu_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafZSK, btrain_LRG));
+//            //Реклама і зв'язки з громадкістю (за видами)
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosRZG_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafRZG, btrain_LRG));
+//            //Видавнича справа та редагування
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosVSR_B, bach_EQL, stat_EF, 30, corr_EF, 50, lrCal20110701, kafVSRUF, btrain_LRG));
+//
+//            //Право
+//            //Право
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosP_B, bach_EQL, stat_EF, 150, corr_EF, 250, lrCal20150701, kafTZGP, btrain_LRG));
+//
+//            //Економіка і підприємництво
+//            //Економічна кібернетика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEKib_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEKS, btrain_LRG));
+//            //Міжнародна економіка
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosME_B, bach_EQL, stat_EF, 50, corr_EF, 30, lrCal20150701, kafME, btrain_LRG));
+//            //Економіка підприємства
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEP_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafEP, btrain_LRG));
+//            //Прикладна статистика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPRS_B, bach_EQL, stat_EF, 20, corr_EF, 20, lrCal20150701, kafEKS, btrain_LRG));
+//            //Маркетинг
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosM_B, bach_EQL, stat_EF, 50, corr_EF, 50, lrCal20150701, kafM, btrain_LRG));
+//            //Фінанси і кредит
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosFK_B, bach_EQL, stat_EF, 120, corr_EF, 120, lrCal20150701, kafFK, btrain_LRG));
+//            //Облік і аудит
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOA_B, bach_EQL, stat_EF, 100, corr_EF, 150, lrCal20150701, kafOA, btrain_LRG));
+//
+//            //Менеджмент і адміністрування
+//            //Менеджмент
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMG_B, bach_EQL, stat_EF, 140, corr_EF, 250, lrCal20150701, kafMO, btrain_LRG));
+//
+//            //Системні науки та кібернетика
+//            //Інформатика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosIF_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafSAVM, btrain_LRG));
+//            //Системний аналіз
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG));
+//
+//            //Інформатика та обчислювальна техніка
+//            //Програмна інженерія
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, btrain_LRG));
+//
+//            //Електроніка
+//            //Мікро- та наноелектроніка
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosMNE_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG));
+//
+//            //Геодезія та землеустрій
+//            //Геодезія, картографія та землеустрій
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosGKZ_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20150701, kafDUZK, btrain_LRG));
+//
+//            //Соціальне забезпечення
+//            //Соціальна робота
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSR_B, bach_EQL, stat_EF, 40, corr_EF, 40, lrCal20150701, kafSSR, forcol_LRG));
+//
+//            //Сфера обслуговування
+//            //Готельно-ресторанна справа
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosGRS_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20130701, kafTGG, forcol_LRG));
+//            //Туризм
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosT_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20130701, kafTGG, btrain_LRG));
+//
+//
+//            //Подготовка младших специалистов
+//            //Журналістика та інформація
+//            //Видавнича справа та редагування
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosVSTR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafVSRUF, forcol_LRG));
+//
+//            //Економіка та підприємництво
+//            //Економіка підприємства
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosEKP_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG));
+//            //Товарознавство та комерційна діяльність
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTZKD_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafEP, forcol_LRG));
+//
+//            //Системні науки та кібернетика
+//            //Прикладна математика
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPRM_JS, jSpec_EQL, stat_EF, 0, corr_EF, 30, lrCal20110701, kafSAVM, forcol_LRG));
+//
+//            //Інформатика та обчислювальна техника
+//            //Розробка програмного забезпечення
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosRPZ_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafPIT, forcol_LRG));
+//
+//            //Соціальне забезпечення
+//            //Соціальна робота
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSOCR_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG));
+//
+//            //Сфера обслуговування
+//            //Організація обслуговування населення
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosOONAS_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG));
+//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosTO_JS, jSpec_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSSR, forcol_LRG));
+        }
     }
 
-    //---------Метод сохранения/обновления записи лицензии----------
-    private void saveOrUpdateLR(
-            License license,
-            TrainingDirection trainingDirectionOrSpeciality,
-            EducationalQualificationLevel educationalQualificationLevel,
-            EducationForm statEduForm,
-            int statLicenseQuantity,
-            EducationForm corrEduForm,
-            int corrLicenseQuantity,
-            //            Map<EducationForm, Integer> licenseQuantityByEducationForm,
-            Calendar terminationDate,
-            Chair chair,
-            LicenseRecordGroup licenseRecordGroup,
-            EntityService es) {
-
-        //---Создание образца записи лицензии
-        LicenseRecord lrSample = new LicenseRecord();
-        SortedMap<EducationForm, Integer> licenseQuantityByEducationForm = new TreeMap();
-        licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
-        licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
-        lrSample.setLicense(license);
-        lrSample.setTrainingDirection(trainingDirectionOrSpeciality);
-        lrSample.setEducationalQualificationLevel(educationalQualificationLevel);
-        lrSample.setLicenseQuantityByEducationForm(licenseQuantityByEducationForm);
-        lrSample.setTermination(terminationDate);
-        lrSample.setOrgUnit(chair);
-        lrSample.setLicenseRecordGroup(licenseRecordGroup);
-        //Сохранение лицензионной записи
-        es.findUniqueOrPersist(lrSample);
-    }
 }

@@ -4,7 +4,6 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.apache.tapestry5.beaneditor.DataType;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
@@ -35,49 +34,52 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     private Calendar termination;
     private OrgUnit orgUnit;
     private LicenseRecordGroup licenseRecordGroup;
-    //Добавляем свойство название области знаний/направления обучения для обеспечения 
-    //выборки с использованием @Formula, что нужно для сортировки по этому полю
-    private String knowledgeAreaName;
-    //Добавляем свойство код области знаний/направления обучения для обеспечения 
-    //выборки с использованием @Formula, что нужно для сортировки по этому полю
-    private String knowledgeAreaCode;
-    //Добавляем свойство составной шифр лицензионной записи для обеспечения 
-    //выборки с использованием @Formula, что нужно для сортировки по этому полю
-    private String code;
 
     public LicenseRecord() {
     }
 
-    public LicenseRecord(License license,
-            TrainingDirection trainingDirectionOrSpeciality,
+    public LicenseRecord(
+            License license,
+            TrainingDirection trainingDirection,
             EducationalQualificationLevel educationalQualificationLevel,
-            SortedMap<EducationForm, Integer> licenseQuantityByEducationForm,
-            Calendar termination,
+            EducationForm statEduForm,
+            int statLicenseQuantity,
+            EducationForm corrEduForm,
+            int corrLicenseQuantity,
+            Calendar terminationDate,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
+
+        licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
+        licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
         this.license = license;
-        this.trainingDirection = trainingDirectionOrSpeciality;
-        this.educationalQualificationLevel = educationalQualificationLevel;
-        this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
-        this.termination = termination;
-        this.orgUnit = orgUnit;
-        this.licenseRecordGroup = licenseRecordGroup;
+        this.trainingDirection=trainingDirection;
+        this.educationalQualificationLevel=educationalQualificationLevel;
+        this.termination=terminationDate;
+        this.orgUnit=orgUnit;
+        this.licenseRecordGroup=licenseRecordGroup;
     }
 
-    public LicenseRecord(License license,
+    public LicenseRecord(
+            License license,
             Speciality speciality,
             EducationalQualificationLevel educationalQualificationLevel,
-            SortedMap<EducationForm, Integer> licenseQuantityByEducationForm,
-            Calendar termination,
+            EducationForm statEduForm,
+            int statLicenseQuantity,
+            EducationForm corrEduForm,
+            int corrLicenseQuantity,
+            Calendar terminationDate,
             OrgUnit orgUnit,
             LicenseRecordGroup licenseRecordGroup) {
+
+        licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
+        licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
         this.license = license;
-        this.speciality = speciality;
-        this.educationalQualificationLevel = educationalQualificationLevel;
-        this.licenseQuantityByEducationForm = licenseQuantityByEducationForm;
-        this.termination = termination;
-        this.orgUnit = orgUnit;
-        this.licenseRecordGroup = licenseRecordGroup;
+        this.speciality=speciality;
+        this.educationalQualificationLevel=educationalQualificationLevel;
+        this.termination=terminationDate;
+        this.orgUnit=orgUnit;
+        this.licenseRecordGroup=licenseRecordGroup;
     }
 
     /**
@@ -94,30 +96,30 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         this.license = license;
     }
 
-    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
-    //для обеспечения сортировки по этому полю
-    @Formula("(select katd.code from ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
-    + "where tds.id=training_Direction_Or_Speciality)")
-    public String getKnowledgeAreaOrTrainingDirectionCode() {
-        return knowledgeAreaCode;
+    @Transient
+    public String getKnowledgeAreaCode() {
+        try {
+            return speciality.getKnowledgeArea().getCode();
+        } catch (NullPointerException e) {
+            try {
+                return trainingDirection.getKnowledgeArea().getCode();
+            } catch (NullPointerException e1) {
+                return null;
+            }
+        }
     }
 
-    public void setKnowledgeAreaOrTrainingDirectionCode(String knowledgeAreaOrTrainingDirectionCode) {
-        this.knowledgeAreaCode = knowledgeAreaOrTrainingDirectionCode;
-    }
-
-    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
-    //для обеспечения сортировки по этому полю
-    @Formula("(select katd.name from ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
-    + "where tds.id=training_Direction_Or_Speciality)")
-    public String getKnowledgeAreaOrTrainingDirectionName() {
-        return knowledgeAreaName;
-    }
-
-    public void setKnowledgeAreaOrTrainingDirectionName(String knowledgeAreaOrTrainingDirectionName) {
-        this.knowledgeAreaName = knowledgeAreaOrTrainingDirectionName;
+    @Transient
+    public String getKnowledgeAreaName() {
+        try {
+            return speciality.getKnowledgeArea().getName();
+        } catch (NullPointerException e) {
+            try {
+                return trainingDirection.getKnowledgeArea().getName();
+            } catch (NullPointerException e1) {
+                return null;
+            }
+        }
     }
 
     /**
@@ -135,26 +137,41 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         this.educationalQualificationLevel = educationalQualificationLevel;
     }
 
-    //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
-    //для обеспечения сортировки по этому полю
-    @Formula("(select eql.code||'.'||katd.code||tds.code from ref.educational_qualification_level eql, ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
-    + "where tds.id=training_Direction_Or_Speciality and educational_qualification_level=eql.id)")
+    @Transient
     public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append(educationalQualificationLevel.getCode());
+            sb.append(".");
+            sb.append(speciality.getKnowledgeArea().getCode());
+            sb.append(speciality.getTrainingDirection().getCode());
+            sb.append(speciality.getCode());
+            return sb.toString();
+        } catch (NullPointerException e) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                sb.append(educationalQualificationLevel.getCode());
+                sb.append(".");
+                sb.append(trainingDirection.getKnowledgeArea().getCode());
+                sb.append(trainingDirection.getCode());
+                return sb.toString();
+            } catch (NullPointerException e1) {
+                return null;
+            }
+        }
     }
 
     /**
      * @return название направления обучения/специальности
      */
     @ManyToOne
-    @NotNull
     @JoinColumn(name = "trainingDirection")
     public TrainingDirection getTrainingDirection() {
+        return trainingDirection;
+    }
+
+    @Transient
+    public TrainingDirection getRealTrainingDirection() {
         if (speciality != null) {
             return speciality.getTrainingDirection();
         }
@@ -166,7 +183,6 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     @ManyToOne
-    @NotNull
     @JoinColumn(name = "speciality")
     public Speciality getSpeciality() {
         return speciality;
@@ -232,8 +248,9 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     @Override
     public String toString() {
-        return getCode() + " - " + getKnowledgeAreaOrTrainingDirectionName() + " - "
-                + getTrainingDirection() + " (" + getLicenseRecordGroup() + ")";
+        return getCode() + " - " + " - "
+                + ((speciality != null) ? speciality : trainingDirection)
+                + " (" + getLicenseRecordGroup() + ")";
     }
 
     @Override
