@@ -1,0 +1,1 @@
+mvnDebug -Djetty.port=8080 -Djava.util.logging.config.file="logging.properties" jetty:run
