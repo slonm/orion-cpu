@@ -1,0 +1,32 @@
+<t:ori.layout title="message:label.project.name"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+    <p id="wlctocpu">${message:greeting}</p>
+        <table>
+            <tr>
+                <td style="vertical-align: top">    <div class="ui-widget-content" style="width: 250px; overflow-x: scroll">
+                        <div class="ui-widget-header">Меню сайта</div>
+                        <t:tree class="test-hook" t:id="tree" model="valueWrapperModel"   
+                                value="valueWrapper" label="block:renderTreeNodeLabel"/>  
+                        <t:block id="renderTreeNodeLabel">  
+                            <t:if test="valueWrapper.leaf">  
+                                <a href="#" t:type="PageLink" t:page="${valueWrapper.pageName}">  
+                                    ${valueWrapper.label}</a>  
+                                <p:else>  
+                                    ${valueWrapper.label}  
+                                </p:else>  
+                            </t:if>  
+                        </t:block>  
+                    </div></td>
+                <td style="vertical-align: top">
+                    <div class="ui-widget-content">
+                        <div class="ui-widget-header">Доступные действия</div>
+                        <div class="ui-corner-all" id="sp_logo1" style="margin-left: auto; margin-right: auto;">                       
+                        </div>  
+                    </div>
+                </td>
+            </tr>           
+        </table>
+</t:ori.layout>
