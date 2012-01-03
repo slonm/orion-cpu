@@ -1,9 +1,0 @@
-1.1
-* Added methods that return DAO and controller interface and class names to Module.
-* Added methods related to entity classes to Module.
-* Moved PrimaryKeyTypeService from Tapestry CRUD to Application Module.
-* Added the JPAPrimaryKeyTypeService.
-* Added the UserService.
-
-1.0
-* Initial version
