@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.tynamo.security.core.services.RealmSource;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.util.ClassUtils;
-import org.apache.tapestry5.internal.services.PageResponseRenderer;
-import org.apache.tapestry5.internal.services.RequestPageCache;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
@@ -152,8 +150,6 @@ public class SecurityModule {
      */
     @Match("RequestExceptionHandler")
     public static void adviseShiroRequestExceptionHandler(MethodAdviceReceiver receiver,
-            final PageResponseRenderer renderer,
-            final RequestPageCache pageCache,
             final Logger logger,
             final RequestGlobals requestGlobals,
             final Response response,

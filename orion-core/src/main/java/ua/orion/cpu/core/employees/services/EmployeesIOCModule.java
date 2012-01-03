@@ -15,6 +15,6 @@ import ua.orion.cpu.core.employees.EmployeeSymbols;
 public class EmployeesIOCModule {
 
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
-        conf.add(new ModelLibraryInfo(EmployeeSymbols.EMPLOYEE_LIB, "ua.orion.cpu.core.employees"));
+        conf.add(new ModelLibraryInfo(EmployeeSymbols.EMPLOYEES_LIB, "ua.orion.cpu.core.employees"));
     }
 }

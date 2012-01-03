@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.SubModule;
 import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule;
+import ua.orion.cpu.core.employees.services.EmployeesIOCModule;
 import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
 import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
 import ua.orion.cpu.core.persons.services.PersonsIOCModule;
@@ -12,6 +13,7 @@ import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
 import ua.orion.cpu.core.services.OrionCpuIOCModule;
 import ua.orion.cpu.core.students.services.StudentsIOCModule;
 import ua.orion.cpu.web.eduprocplanning.services.EduProcPlanningWebIOCModule;
+import ua.orion.cpu.web.employees.services.EmployeesWebIOCModule;
 import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
 import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
 import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
@@ -29,12 +31,14 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     OrgUnitsIOCModule.class,
     PersonsIOCModule.class,
     StudentsIOCModule.class,
+    EmployeesIOCModule.class,
     OrionSecurityWebIOCModule.class,
     LicensingWebIOCModule.class,
     EduProcPlanningWebIOCModule.class,
     OrgUnitsWebIOCModule.class,
     PersonsWebIOCModule.class,
-    StudentsWebIOCModule.class
+    StudentsWebIOCModule.class,
+    EmployeesWebIOCModule.class
 })
 public class AppModule {
 
@@ -55,7 +59,6 @@ public class AppModule {
             configuration.add(key, bundle.getString(key));
         }
     }
-
 //    public static void contributeComponentEventLinkTransformer(
 //            OrderedConfiguration<ComponentEventLinkTransformer> configuration)
 //    {
@@ -65,5 +68,4 @@ public class AppModule {
 //        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
 //        configuration.add(realm);
 //    }
-    
 }

@@ -1,17 +1,14 @@
 <span class="menu" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
-
-
-    <span class="menuheader">
-    <span class="menutitle">
-        <t:menu.menulink t:menuLink="MenuLink">${Localize(title, menuLink)} </t:menu.menulink>
-    </span>
-    <t:if test="subitems"><span class="menuarrow">V</span></t:if>
+    <span class="menuheader ui-state-default" style="border-style: none">
+        <span class="menutitle ui-state-default" style="font-size: 10pt; border-style: none">
+            <t:menu.menulink t:menuLink="MenuLink">${Localize(title, menuLink)} </t:menu.menulink>
+        </span>
+        <t:if test="subitems"><span class="menuarrow ui-state-default" style="font-size: 10pt; border-style: none">▼</span></t:if>
     </span>
 
-    <span   class="menuitems">
-        <div t:type="loop" t:source="items" t:value="Item">
-            <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Uid, Item.ItemLink)}</t:menu.menulink>
+    <span class="menuitems">
+        <div t:type="loop" t:source="items" t:value="Item" class="menuitem ui-state-default">
+            <t:menu.menulink t:menuLink="Item.itemLink" style="font-size: 8pt">${Localize(Item.Uid, Item.ItemLink)}</t:menu.menulink>
         </div>
     </span>
-
 </span>

@@ -22,7 +22,7 @@ import ua.orion.tapestry.menu.services.OrionMenuService;
  * @author Gennadiy Dobrovolsky
  */
 //TODO Может стоит вынести алгоритм формирования подписи в отдельный сервис?
-@Import(stylesheet={"menu.css"}, library={"topmenu-classic-prototype.js"})
+@Import(stylesheet = {"menu.css"}, library = {"topmenu-classic-prototype.js"})
 public class Menu {
 
     /**
@@ -31,8 +31,7 @@ public class Menu {
     @Parameter(name = "menudata", required = false, autoconnect = true)
     private MenuData menudata;
     /**
-     * Menu item
-     * used during iterations
+     * Menu item used during iterations
      */
     @Property
     private MenuItem _Item;
@@ -79,6 +78,7 @@ public class Menu {
 
     /**
      * Menu subitems
+     *
      * @return
      */
     public boolean getSubitems() {

@@ -10,7 +10,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
 public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycle> {
 
     private static final long serialVersionUID = 1L;
@@ -96,7 +95,7 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
 
     //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(schema = "uch", joinColumns = {
+    @JoinTable(joinColumns = {
         @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "EDUPLANDISCIPLINE_ID")})
     public Set<EduPlanDiscipline> getEduPlanCycleDisciplines() {

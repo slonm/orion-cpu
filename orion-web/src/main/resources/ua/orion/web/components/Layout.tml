@@ -22,58 +22,69 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
     </head>
     <body>
         <!-- start header -->
-        <div id="header">
-            <span id="menu"><t:menu.menubar menudata="menudata" /></span>
-        </div>
-        <br/>
-        <t:security.Authenticated>
-            ${message:label.user}: ${user} <t:if test="role">(${role})</t:if><t:ActionLink t:id="logout"><button class="ui-button-quit">${message:action.logout}</button></t:ActionLink>
-        </t:security.Authenticated>
-        <t:security.NotAuthenticated>
-            <t:pagelink page="security/login"><button class="ui-button-login">${message:action.login}</button></t:pagelink>
-        </t:security.NotAuthenticated>&nbsp;
-        <t:security.Authenticated>
-            <t:pagelink page="ori/selectRole"><button class="ui-button-refresh">${message:action.selectRolePage}</button></t:pagelink>
-        </t:security.Authenticated>
-        <!-- end header -->
-        <!-- start page -->
-        <div id="page">
-            <ui id="interface" style="display: none">${uiInterface}</ui>
-            <!-- start content -->
-            <div id="content">
-                <div class="post">
-                    <div class="title"><h2>${title}</h2></div>
-                    <div class="entry">
-                        <t:body/>
+        <div class="ui-widget-content">
+            <div style="min-height:100%;height:auto !important;height:100%;">
+                <div id="header" class="ui-state-default">
+                    <span id="menu"><t:menu.menubar menudata="menudata" /></span>
+                </div>
+                <!-- end header -->
+                <!-- start page -->
+                <div id="page"  >
+                    <ui id="interface" style="display: none">${uiInterface}</ui>
+                    <!-- start content -->
+                    <div id="content">
+                        <div class="post">
+                            <div class="title ui-widget-content ui-corner-all">
+                                <div class="ui-widget-header ui-corner-tl ui-corner-tr"> <h2>${title}</h2></div>
+                                <div class="entry">
+                                    <t:body/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="ui-state-highlight user-role-panel">
+                            <!-- Диалог с выбором темы (Начало) -->
+                            <button id="ui-show-select-theme-dialog-button" class="ui-button" style="float: left;">UI Theme</button>
+                            <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
+                                    <option>black-tie</option>
+                                    <option>cupertino</option>
+                                    <option>dot-luv</option>
+                                    <option>eggplant</option>
+                                    <option>maven-quickstart</option>
+                                    <option>hot-sneaks</option>
+                                    <option>humanity</option>
+                                    <option>pepper-grinder</option>
+                                    <option>smoothness</option>
+                                    <option>sunny</option>
+                                    <option>start</option>
+                                    <option>swanky-purse</option>
+                                    <option>ui-darkness</option>
+                                    <option>ui-lightness</option>
+                                </select><button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
+                            </div>
+                            <!-- Диалог с выбором темы (Конец) -->
+                            <t:security.Authenticated>
+                                ${message:label.user}: ${user} <t:if test="role">(${role})</t:if><t:ActionLink t:id="logout"><button class="ui-button-quit">${message:action.logout}</button></t:ActionLink>
+                            </t:security.Authenticated>
+                            <t:security.NotAuthenticated>
+                                <t:pagelink page="security/login"><button class="ui-button-login">${message:action.login}</button></t:pagelink>
+                            </t:security.NotAuthenticated>&nbsp;
+                            <t:security.Authenticated>
+                                <t:pagelink page="ori/selectRole"><button class="ui-button-refresh">${message:action.selectRolePage}</button></t:pagelink>
+                            </t:security.Authenticated></div>
+
                     </div>
+                    <!-- end content -->
+                    <br style="clear: both;"/>
                 </div>
-                <!-- Диалог с выбором темы (Начало) -->
-                <button id="ui-show-select-theme-dialog-button" class="ui-button">UI Theme</button>
-                <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
-                        <option>cupertino</option>
-                        <option>maven-quickstart</option>
-                        <option>humanity</option>
-                        <option>pepper-grinder</option>
-                        <option>smoothness</option>
-                        <option>sunny</option>
-                        <option>swanky-purse</option>
-                        <option>ui-darkness</option>
-                    </select><button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
-                </div>
-                <!-- Диалог с выбором темы (Конец) -->
             </div>
-            <!-- end content -->
-            <br style="clear: both;"/>
-        </div>
-        <!-- end page -->
-        <!-- start footer -->
-        <div id="footer">
-            <p class="legal">
-                <p>${message:message.cpu}</p>
-                <p>
-                    <a href="mailto:ido@zhu.edu.ua">${message:message.contact}</a>
-                </p>
-            </p>
+            <!-- end page -->
+            <!-- start footer -->
+            <div id="footer" class="ui-widget-content" style="text-align: center;">
+                <div class="ui-widget-header">${message:message.cpu}</div>
+                <span class="ui-icon ui-icon-mail-closed" style="display:inline-block"/>
+                <a href="mailto:ido@zhu.edu.ua">${message:message.contact}</a>
+            </div>
         </div>
         <!-- end footer -->
     </body>

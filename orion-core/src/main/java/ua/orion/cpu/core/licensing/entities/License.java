@@ -11,7 +11,6 @@ import ua.orion.cpu.core.entities.Document;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
 @Cacheable
 public class License extends Document<License> {
 

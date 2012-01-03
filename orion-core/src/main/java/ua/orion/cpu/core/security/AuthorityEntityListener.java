@@ -14,7 +14,7 @@ public class AuthorityEntityListener {
     public void onPostLoad(Object object) {
         //во время изменяющих операций можно читать из таблиц безопасности
         if (object != null) {
-            if (!object.getClass().getAnnotation(Table.class).schema().equals("sec")) {
+            if (!"sec".equals(object.getClass().getAnnotation(Table.class).schema())) {
                 Subject subject = SecurityUtils.getSubject();
                 if (subject != null) {
                     subject.checkPermission("read");

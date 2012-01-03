@@ -5,7 +5,6 @@ import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
-import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 
 /**
  * Здесь хранится информация о том, на какой специальности обучается студент,
@@ -14,7 +13,6 @@ import ua.orion.cpu.core.licensing.entities.LicenseRecord;
  * @author molodec
  */
 @Entity
-@Table(schema = "stu")
 public class EducationStudent extends AbstractEntity<EducationStudent> {
 
     private static final long serialVersionUID = 1L;

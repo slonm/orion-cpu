@@ -1,5 +1,7 @@
 package orion.tapestry.menu.lib;
 
+import org.apache.tapestry5.internal.services.LinkSecurity;
+import org.apache.tapestry5.services.pageload.ComponentResourceSelector;
 import ua.orion.tapestry.menu.lib.MenuItemPosition;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
@@ -268,6 +270,7 @@ public class MenuJUnitTest {
     }
 }
 
+
 class EmptyLink implements Link {
 
     private String URI;
@@ -338,6 +341,16 @@ class EmptyLink implements Link {
 
     @Override
     public String toAbsoluteURI(boolean secure) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void setSecurity(LinkSecurity newSecurity) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public LinkSecurity getSecurity() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
@@ -561,6 +574,11 @@ class cr implements ComponentResources {
 
     @Override
     public boolean isMixin() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ComponentResourceSelector getResourceSelector() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

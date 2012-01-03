@@ -57,7 +57,7 @@ Tapestry.Initializer.updateGrid = function(opt){
     Tapestry.Initializer.hideGridAjax();
     updateCSS();
     initializeGridToolTip();
-    
+    jQuery("table.t-data-grid").wrapAll("<div id=\"grid-container\"></div>")
 }
 
 /**

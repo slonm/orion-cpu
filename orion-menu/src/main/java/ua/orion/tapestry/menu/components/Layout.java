@@ -9,7 +9,7 @@ import ua.orion.tapestry.menu.lib.MenuData;
 /**
  * Layout component for pages of application mavenproject1.
  */
-@IncludeStylesheet({"layout.css"})
+@Import(stylesheet = {"layout.css"})
 public class Layout {
 
     /** 

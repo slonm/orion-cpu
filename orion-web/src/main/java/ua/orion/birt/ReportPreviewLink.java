@@ -1,7 +1,9 @@
 package ua.orion.birt;
 
 import java.util.*;
+
 import org.apache.tapestry5.Link;
+import org.apache.tapestry5.internal.services.LinkSecurity;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.services.Response;
 import ua.orion.core.utils.Defense;
@@ -140,5 +142,15 @@ public class ReportPreviewLink implements Link {
 
     public String toAbsoluteURI(boolean secure) {
         return absoluteURI;
+    }
+
+    @Override
+    public void setSecurity(LinkSecurity newSecurity) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public LinkSecurity getSecurity() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

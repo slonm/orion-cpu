@@ -8,10 +8,12 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.jpa.EntityManagerSource;
+import org.apache.tapestry5.jpa.JpaTransactionAdvisor;
 import org.apache.tapestry5.services.UpdateListenerHub;
 import org.slf4j.Logger;
-import org.tynamo.jpa.JPAEntityManagerSource;
-import org.tynamo.jpa.JPATransactionAdvisor;
+//import org.tynamo.jpa.JPAEntityManagerSource;
+//import org.tynamo.jpa.JPATransactionAdvisor;
 import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
@@ -46,7 +48,7 @@ public class OrionCoreIOCModule {
         conf.add(new ModelLibraryInfo("OrionCore", "ua.orion.core"));
     }
 
-    public static void contributeJPAEntityPackageManager(Configuration<String> conf,
+    public static void contributeJpaEntityPackageManager(Configuration<String> conf,
             ModelLibraryService modelLibraryService, Logger LOG) {
         for (ModelLibraryInfo libInfo : modelLibraryService.getModelLibraryInfos()) {
             String libName = libInfo.getLibraryPackage() + ".entities";
@@ -64,12 +66,12 @@ public class OrionCoreIOCModule {
     }
 
     public void contributeRegistryStartup(OrderedConfiguration<Runnable> conf,
-            final JPAEntityManagerSource emSource, final PropertyAccess pAccess) {
+            final EntityManagerSource emSource, final PropertyAccess pAccess) {
         conf.add("InitUniqueConstraintValidator", new Runnable() {
 
             @Override
             public void run() {
-                UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory());
+                UniqueConstraintValidator.setENTITY_MANAGER_FACTORY(emSource.getEntityManagerFactory(IOCUtils.getDefaultPersistenceUnitName(emSource)));
                 UniqueConstraintValidator.setPROPERTY_ACCESS(pAccess);
             }
         });
@@ -89,7 +91,7 @@ public class OrionCoreIOCModule {
     }
 
     @Match("*Service")
-    public static void adviseTransactions(JPATransactionAdvisor advisor, MethodAdviceReceiver receiver) {
+    public static void adviseTransactions(JpaTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
         advisor.addTransactionCommitAdvice(receiver);
     }
 

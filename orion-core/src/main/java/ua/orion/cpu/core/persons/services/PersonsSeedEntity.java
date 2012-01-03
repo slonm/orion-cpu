@@ -25,7 +25,6 @@ public class PersonsSeedEntity {
             EntityService es) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(PersonsSymbols.PERSONS_LIB));
         if (testData) {
-
             //---Списки доступа----------
             es.findUniqueOrPersist(new Acl("kis.Licensing.LicenseReader",
                     SubjectType.ROLE, "Person:read,menu"));
@@ -40,7 +39,7 @@ public class PersonsSeedEntity {
             Country country_ukraine =
                     es.findUniqueOrPersist(new Country("Україна", "Українська",
                     "Київ", "Президентсько-парламентська республіка", "Гривня",
-                    "До складу України входять 27 адміністративних одиниць"));
+                    ""));
             es.findUniqueOrPersist(new Country("Чехія"));
             es.findUniqueOrPersist(new Country("Вірменія"));
             es.findUniqueOrPersist(new Country("Дагестан"));

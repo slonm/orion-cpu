@@ -5,7 +5,8 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaQuery;
-import org.tynamo.jpa.annotations.CommitAfter;
+
+import org.apache.tapestry5.jpa.annotations.CommitAfter;
 import ua.orion.core.persistence.MetaEntity;
 
 /**

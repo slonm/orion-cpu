@@ -13,7 +13,6 @@ import ua.orion.core.persistence.PersistentSingleton;
  * @author sl
  */
 @Entity
-@Table(schema = "sys")
 @Cacheable
 public class SerializableSingleton extends AbstractEnumerationEntity<SerializableSingleton>
         implements PersistentSingleton<Serializable> {

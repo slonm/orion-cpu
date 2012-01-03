@@ -13,12 +13,17 @@ import org.apache.tapestry5.internal.services.DocumentLinker;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.*;
+import org.apache.tapestry5.model.ComponentModel;
+import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.*;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
+import org.apache.tapestry5.services.messages.ComponentMessagesSource;
+import org.apache.tapestry5.services.pageload.ComponentResourceSelector;
 import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
+import ua.orion.core.persistence.ReferenceBook;
 import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
@@ -104,8 +109,8 @@ public class OrionWebIOCModule {
 //        configuration.add(path, mlb.buildListPageMenuLink(PageTemplate.class, path));
         //add All Reference Book
         for (Class<?> e : entityService.getManagedEntities()) {
-            javax.persistence.Table a = e.getAnnotation(javax.persistence.Table.class);
-            if (a != null && "ref".equals(a.schema())) {
+            ReferenceBook a = e.getAnnotation(ReferenceBook.class);
+            if (a != null) {
                 path = "Start>Admin>Reference>" + e.getSimpleName();
                 configuration.add(path, mlb.buildCrudPageMenuLink(e, path));
             }
@@ -212,16 +217,17 @@ public class OrionWebIOCModule {
     @Match("ComponentMessagesSource")
     public static void adviseComponentMessagesSourceWithApplicationMessagesSource(MethodAdviceReceiver receiver,
             final ApplicationMessagesSource messagesSource) {
-        receiver.adviseAllMethods(new MethodAdvice() {
+
+        receiver.adviseMethod(IOCUtils.getMethod(ComponentMessagesSource.class, "getMessages",
+                ComponentModel.class, ComponentResourceSelector.class), new org.apache.tapestry5.plastic.MethodAdvice() {
 
             @Override
-            public void advise(Invocation invocation) {
+            public void advise(MethodInvocation invocation) {
                 invocation.proceed();
-                if (invocation.getMethodName().equals("getMessages")) {
-                    invocation.overrideResult(new CompositeMessages((Locale) invocation.getParameter(1),
-                            messagesSource.getMessages((Locale) invocation.getParameter(1)),
-                            (Messages) invocation.getResult()));
-                }
+                ComponentResourceSelector crs = (ComponentResourceSelector) invocation.getParameter(1);
+                invocation.setReturnValue(new CompositeMessages(crs.locale,
+                        messagesSource.getMessages(crs.locale),
+                        (Messages) invocation.getReturnValue()));
             }
         });
     }
@@ -248,7 +254,7 @@ public class OrionWebIOCModule {
 //        configuration.add(new DisplayBlockContribution("boolean", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new DisplayBlockContribution("booleanSelect", "ori/PropertyBlocks", "displayBooleanText"));
         configuration.add(new EditBlockContribution("booleanSelect", "ori/PropertyBlocks", "editBooleanSelect"));
-        
+
 
 //        configuration.add(new DisplayBlockContribution("number", "ori/PropertyBlocks", "displayNumber"));
     }

@@ -1,6 +1,6 @@
 package ua.orion.cpu.core.licensing.entities;
 
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.apache.tapestry5.beaneditor.DataType;
@@ -10,7 +10,8 @@ import org.apache.tapestry5.beaneditor.DataType;
  * @author sl
  */
 @Entity
-@Table(schema = "ref", uniqueConstraints = {
+@ReferenceBook
+@Table(uniqueConstraints = {
     @UniqueConstraint(columnNames={"name", "code", "isTrainingDirection"}),
     @UniqueConstraint(columnNames={"shortName", "code", "isTrainingDirection"})
 })

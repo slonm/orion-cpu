@@ -1,14 +1,15 @@
 package ua.orion.cpu.core.persons.entities;
 
 import javax.persistence.*;
-import ua.orion.core.persistence.AbstractReferenceEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник учёных званий
  * @author kgp
  */
 @Entity
-@Table(schema = "ref", uniqueConstraints = {
+@ReferenceBook
+@Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"})
 })
 public class AcademicRank extends AbstractReferenceEntity<AcademicRank> {

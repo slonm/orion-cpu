@@ -5,12 +5,12 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
-import org.tynamo.jpa.internal.JPAGridDataSource;
 
 /**
  * Страница, которая предоставляет CRUD для простых сущностей
@@ -45,7 +45,7 @@ public class License {
     }
 
     public GridDataSource getSource() {
-        return new JPAGridDataSource<LicenseRecord>(entityService.getEntityManager(), LicenseRecord.class) {
+        return new JpaGridDataSource<LicenseRecord>(entityService.getEntityManager(), LicenseRecord.class) {
 
             protected Expression<Boolean> additionalConstraints(CriteriaBuilder cb, Root<LicenseRecord> root) {
                 return cb.equal(root.get("license"), object);

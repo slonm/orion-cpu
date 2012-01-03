@@ -1,7 +1,6 @@
 package ua.orion.cpu.core.employees.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import ua.orion.core.persistence.AbstractEntity;
@@ -12,8 +11,7 @@ import ua.orion.cpu.core.orgunits.entities.OrgUnitPost;
  * @author sl
  */
 @Entity
-@Table(schema = "emp")
-//@Table(schema = "emp", uniqueConstraints =
+//@Table(uniqueConstraints =
 //@UniqueConstraint(columnNames = {"post", "employee"}))
 public class EmployeePost extends AbstractEntity<EmployeePost> {
 

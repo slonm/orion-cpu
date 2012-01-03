@@ -11,7 +11,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "psn")
 public class Address extends AbstractEntity<Address> {
 
     private static final long serialVersionUID = 1L;

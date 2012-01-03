@@ -1,10 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import javax.persistence.*;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - гражданство
@@ -12,7 +9,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Citizenship extends AbstractEnumerationEntity<Citizenship> {
 
     private static final long serialVersionUID = 1L;

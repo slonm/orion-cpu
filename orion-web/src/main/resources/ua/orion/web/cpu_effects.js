@@ -9,6 +9,11 @@ jQuery(document).ready(function(){
     if (jQuery("ui#interface").text()=="true"){
         initializeUIComponents();   
     }
+    jQuery(".ui-menunavigator-link").hover(function(){
+        jQuery(this).parent().attr("class","ui-state-focus");
+    },function(){
+        jQuery(this).parent().attr("class","ui-state-default");
+    })
     //Инициализация подсказок
     initializeGridToolTip();
     //Инициализация окна для отображения загрузки Ajax
@@ -20,8 +25,18 @@ jQuery(document).ready(function(){
         },
         resizable: false //возможность маштабирования отключена
     });
-        jQuery("#crud-add-record-button").click(function(){
+    jQuery("#crud-add-record-button").click(function(){
         Tapestry.Initializer.showGridAjax(); //При добавлении записи появляется окно загрузки
+    })
+    jQuery(".menuarrow, .menutitle").hover(function(){
+        jQuery(this).addClass("ui-state-active");
+    },function(){
+        jQuery(this).removeClass("ui-state-active");
+    })
+    jQuery(".menuitem").hover(function(){
+        jQuery(this).addClass("ui-state-active");
+    },function(){
+        jQuery(this).removeClass("ui-state-active");
     })
 })
 
@@ -60,11 +75,6 @@ function initializeGridToolTip(){
     jQuery(".ui-grid-cell-action-tip").css({
         'width':jQuery("table.t-data-grid").css("width")-2,
         'margin-left':jQuery("table.t-data-grid").css("margin-left")
-        });
-    jQuery("table.t-data-grid tbody tr td[class!='action']").bind("mouseenter", function(){
-        jQuery(this).parent().find("td[class!='action']").addClass("ui-state-highlight").removeClass("ui-widget-content");
     });
-    jQuery("table.t-data-grid tbody tr td[class!='action']").bind("mouseleave", function(){
-        jQuery(this).parent().find("td[class!='action']").addClass("ui-widget-content").removeClass("ui-state-highlight");
-    });	
+
 }

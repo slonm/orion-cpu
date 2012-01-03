@@ -16,7 +16,7 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch", uniqueConstraints =
+@Table(uniqueConstraints =
 @UniqueConstraint(columnNames = {"educationalQualificationLevel", 
     "trainingDirectionOrSpeciality", "termination", "license"}))
 public class LicenseRecord extends AbstractEntity<LicenseRecord> {
@@ -66,6 +66,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @ManyToOne
     @NotNull
+    @JoinColumn(name="license")
     public License getLicense() {
         return license;
     }
@@ -76,8 +77,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
     //для обеспечения сортировки по этому полю
-    @Formula("(select katd.code from ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+    @Formula("(select katd.code from Training_Direction_Or_Speciality tds "
+    + "join knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
     + "where tds.id=training_Direction_Or_Speciality)")
     public String getKnowledgeAreaOrTrainingDirectionCode() {
         return knowledgeAreaOrTrainingDirectionCode;
@@ -89,8 +90,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
     //для обеспечения сортировки по этому полю
-    @Formula("(select katd.name from ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+    @Formula("(select katd.name from Training_Direction_Or_Speciality tds "
+    + "join knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
     + "where tds.id=training_Direction_Or_Speciality)")
     public String getKnowledgeAreaOrTrainingDirectionName() {
         return knowledgeAreaOrTrainingDirectionName;
@@ -117,8 +118,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     //Вычислимое поле - выборкка строк из базы данных с помощью @Formula 
     //для обеспечения сортировки по этому полю
-    @Formula("(select eql.code||'.'||katd.code||tds.code from ref.educational_qualification_level eql, ref.Training_Direction_Or_Speciality tds "
-    + "join ref.knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
+    @Formula("(select eql.code||'.'||katd.code||tds.code from educational_qualification_level eql, Training_Direction_Or_Speciality tds "
+    + "join knowledge_Area_Or_Training_Direction katd on tds.knowledge_Area_Or_Training_Direction=katd.id "
     + "where tds.id=training_Direction_Or_Speciality and educational_qualification_level=eql.id)")
     public String getCode() {
         return code;
@@ -146,7 +147,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      * @return Ассоциированный массив форма обучения - лицензированный объем
      */
     @ElementCollection
-    @CollectionTable(schema = "uch")
+    @CollectionTable
     //Необходимый параметр для коллекции SortedMap
     @Sort(type = SortType.NATURAL)
     public SortedMap<EducationForm, Integer> getLicenseQuantityByEducationForm() {

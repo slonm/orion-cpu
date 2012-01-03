@@ -10,9 +10,9 @@ import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.util.AbstractSelectModel;
-import org.tynamo.jpa.internal.JPAGridDataSource;
 import ua.orion.core.services.*;
 
 /**
@@ -41,7 +41,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     @Override
     public GridDataSource createGridDataSource(Class<?> entityClass) {
-        return new JPAGridDataSource(es.getEntityManager(), entityClass);
+        return new JpaGridDataSource(es.getEntityManager(), entityClass);
     }
 
     @Override

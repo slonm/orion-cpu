@@ -1,10 +1,7 @@
 package ua.orion.cpu.core.students.entities;
 
 import java.util.Calendar;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.persistence.AbstractEntity;
 
@@ -14,7 +11,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "stu")
 public class ContractStudent extends AbstractEntity<ContractStudent> {
 
     private static final long serialVersionUID = 1L;

@@ -102,5 +102,15 @@ public class BeanModelWrapper<T> implements BeanModel<T>{
     public PropertyModel add(String propertyName) {
         return model.add(propertyName);
     }
+
+    @Override
+    public PropertyModel addExpression(String propertyName, String expression) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public PropertyModel addEmpty(String propertyName) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
    
 }

@@ -9,7 +9,6 @@ import ua.orion.core.utils.Defense;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
 public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     private static long serialVersionUID = 1L;

@@ -21,7 +21,6 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.BeanEditContext;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
-import org.tynamo.jpa.annotations.CommitAfter;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;

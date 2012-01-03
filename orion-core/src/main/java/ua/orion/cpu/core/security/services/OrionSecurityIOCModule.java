@@ -7,7 +7,6 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.tynamo.jpa.Ejb3HibernateConfigurer;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.cpu.core.security.AclActiveDirectoryRealm;
 import ua.orion.cpu.core.security.OrionSecuritySymbols;
@@ -26,9 +25,6 @@ public class OrionSecurityIOCModule {
         conf.add(new ModelLibraryInfo(OrionSecuritySymbols.SECURITY_LIB, "ua.orion.cpu.core.security"));
     }
 
-    public static void contributeEjb3HibernateEntityManagerSource(OrderedConfiguration<Ejb3HibernateConfigurer> config) {
-        //config.addInstance("AuthorityListener", HibernateAuthorityEventListener.class);
-    }
 
     public static void contributeRealmSource(Configuration<Realm> config,
             EntityManager em,

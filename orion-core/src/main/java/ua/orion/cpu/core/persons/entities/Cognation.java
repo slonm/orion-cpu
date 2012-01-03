@@ -1,9 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
-import ua.orion.cpu.core.persons.entities.*;
 import javax.persistence.*;
-import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - состав семьи
@@ -11,7 +9,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Cognation extends AbstractEnumerationEntity<Cognation> {
 
     private static final long serialVersionUID = 1L;

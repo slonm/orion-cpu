@@ -1,10 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
 import java.util.Calendar;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
 
 /**
@@ -13,7 +10,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "psn")
 public class StructureFamily extends AbstractEntity<StructureFamily> {
 
     /**

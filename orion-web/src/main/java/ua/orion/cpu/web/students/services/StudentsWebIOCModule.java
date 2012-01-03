@@ -1,6 +1,5 @@
 package ua.orion.cpu.web.students.services;
 
-import ua.orion.cpu.core.persons.entities.StructureFamily;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.services.*;
 import ua.orion.cpu.core.students.entities.*;

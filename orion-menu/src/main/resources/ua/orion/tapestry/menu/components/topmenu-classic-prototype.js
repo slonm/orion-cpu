@@ -36,7 +36,7 @@ function initApp()
                 function (event){
                     if(!menuIsOpen) return true;
                     // hide other menus
-                       allmenus.each(hm);
+                    allmenus.each(hm);
 
                     // show current menu
                     var a=Event.element(event);
@@ -46,7 +46,7 @@ function initApp()
 
                     return true;
                 }
-            );
+                );
 
         }
         );
@@ -63,24 +63,32 @@ function initApp()
 
 }
 function showMenus(e){
-  //e.adjacent('span.menuitems').each(
+    //e.adjacent('span.menuitems').each(
     e.getOffsetParent().getElementsByClassName('menuitems').each(
-    function(e){
-        e.setStyle({'display': 'inline-block'});
-    });
+        function(e){
+            e.setStyle({
+                'display': 'inline-block'
+            });
+        });
 }
 function hideMenus(e){
-  //e.adjacent('span.menuitems').each(
+    //e.adjacent('span.menuitems').each(
     e.getOffsetParent().getElementsByClassName('menuitems').each(
-    function(e){
-        e.setStyle({'display': 'none'});
-    });
+        function(e){
+            e.setStyle({
+                'display': 'none'
+            });
+        });
 }
 
 function hm(e){
-        e.setStyle({'display': 'none'});
+    e.setStyle({
+        'display': 'none'
+    });
 }
 function sm(e){
-        e.setStyle({'display': 'inline-block'});
+    e.setStyle({
+        'display': 'block'
+    });
 }
 // ------------------------ init menu application - end ------------------------

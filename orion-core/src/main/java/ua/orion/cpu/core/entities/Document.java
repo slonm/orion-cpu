@@ -4,7 +4,6 @@ import ua.orion.core.persistence.AbstractEntity;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.ScriptAssert;
 
 /**
  * Абстрактная реализация документа.

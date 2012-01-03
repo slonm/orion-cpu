@@ -1,10 +1,8 @@
 package ua.orion.cpu.core.persons.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import org.apache.tapestry5.beaneditor.DataType;
-import ua.orion.core.persistence.AbstractEntity;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - страна Хранит список стран Не наследует
@@ -13,7 +11,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Country extends AbstractEnumerationEntity<Country> {
 
     private static final long serialVersionUID = 1L;
@@ -21,7 +19,7 @@ public class Country extends AbstractEnumerationEntity<Country> {
     private String capital;
     private String formOfGovernment;
     private String currency;
-    @DataType("longtext")
+    
     private String addinitionalData;
 
     public Country() {
@@ -71,6 +69,7 @@ public class Country extends AbstractEnumerationEntity<Country> {
      *
      * @return
      */
+    @Column(length=1000)
     public String getFormOfGovernment() {
         return formOfGovernment;
     }
@@ -99,6 +98,7 @@ public class Country extends AbstractEnumerationEntity<Country> {
      *
      * @return
      */
+    @Column(length=1000)
     public String getAddinitionalData() {
         return addinitionalData;
     }

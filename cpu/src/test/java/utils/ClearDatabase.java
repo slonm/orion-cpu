@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public class ClearDatabase {
 
-    static String userid = "postgres", password = "postgres";
+    static String userid = "postgres", password = "service_pass_let_my_in";
     static String url = "jdbc:postgresql://localhost/cpu";
     static String db = "cpu";
     static Connection con = getPostgresqlJDBCConnection();

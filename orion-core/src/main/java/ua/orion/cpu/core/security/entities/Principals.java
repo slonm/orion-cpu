@@ -11,7 +11,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author sl
  */
 @Entity
-@Table(schema = "sec")
 public class Principals extends AbstractEntity<Principals> {
 
     private static final long serialVersionUID = 1L;
@@ -20,7 +19,7 @@ public class Principals extends AbstractEntity<Principals> {
     @Column(unique = true)
     private String primaryPrincipal;
 //    @ElementCollection
-//    @CollectionTable(schema = "sec")
+//    @CollectionTable
 //    @Size(min = 1)
 //    private Set<String> principals = new HashSet<String>();
 

@@ -17,10 +17,9 @@
     font-weight: bold;
     font-size: 10pt;
 }
-/* Ссылки в MenuNavigator при наведении */
-.post > .entry > div > a:hover{
-    color: dodgerblue;
-    text-decoration: underline;
+
+.ui-menunavigator-link{
+    display: block;
 }
 /* Название страницы */
 div.title h2{
@@ -50,30 +49,7 @@ table.t-data-grid thead tr th a,
 table.t-data-grid tbody tr td{
     font-size: 9pt;
 }
-
-/*
-table.t-data-grid tr:nth-child(even) {
-    background-color: #d8e3f9;
-}*/
-/* Выравнивание данных в некоторых колонках Grid по центру */
-.t-data-grid .code,                          .t-data-grid .isObsolete,
-.t-data-grid .isTrainingDirection,           .t-data-grid .isKnowledgeArea,
-.t-data-grid .stationaryStudentLicenseQuantity,
-.t-data-grid .correspondenseStudentLicenseQuantity,
-.t-data-grid .termination,                   .t-data-grid .eduPlanSemester,
-.t-data-grid .isExam,                        .t-data-grid .isCredit,
-.t-data-grid .isCourseWork,                  .t-data-grid .isControlWork,
-.t-data-grid .licenseQuantityByEducationForm,.t-data-grid .knowledgeAreaOrTrainingDirectionName,
-.t-data-grid .trainingDirectionOrSpeciality, .t-data-grid .shortName,
-.t-data-grid .serial,                        .t-data-grid .firstName,
-.t-data-grid .patronymicName,                .t-data-grid .surname,
-.t-data-grid .academicRank,                  .t-data-grid .knowledgeAreaOrTrainingDirection
-{
-    min-width: 45px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
+ 
 /* Выравнивание кнопок в Grid */
 .t-data-grid .action{
     text-align: center;
@@ -114,26 +90,15 @@ dl.t-beandisplay{
 /* ЧАСТЬ 4.1 Формат меню */
 /* Формат пунктов меню */
 span.menutitle{
-    padding: 10px;
     font: 12px Arial,Helvetica, sans-serif;
 }
 /* Формат ссылок в пунктах меню */
-span.menutitle a{
-    text-decoration: none;
-    color: #ffff99;
-}
 /* ЧАСТЬ 5 Дополнительные модули */
 /* ЧАСТЬ 5.1 Стиль отображения дополнительных модулей */
 /* Стиль для отображения подсказки */
 #easyTooltip{
     padding:5px;
-    color: white;
-    border:1px solid #ccc;
-    background: #99ccff;
     font-style: italic;
-    border-bottom-width: 1px;
-    border-color: #ffff99;
-    background-image: url(../images/ToolTipBg.gif);
 }
 
 /* ЧАСТЬ 6 Работа со слоями */
@@ -270,6 +235,7 @@ div.ajax-state-grid{
 TABLE.crud-links TBODY TR TD{
     background-color: transparent;
     background-image: none;
+    background: none;
 }
 /* Окно загрузки Ajax */
 #ui-ajax-loading-window{
@@ -294,3 +260,13 @@ TABLE.crud-links TBODY TR TD{
     height: 10px;
 }
 
+.user-role-panel{
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Переопределение стилей UI для универсальности тем */
+.ui-widget { font-size: 9pt; }
+.ui-button-icon-only { width: 1.8em; height: 1.8em; }
+button.ui-button-icon-only { width: 1.8em; height: 1.8em; } /

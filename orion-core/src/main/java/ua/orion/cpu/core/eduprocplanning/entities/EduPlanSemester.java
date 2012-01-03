@@ -9,7 +9,6 @@ import ua.orion.core.persistence.AbstractNamedEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "uch")
 public class EduPlanSemester extends AbstractNamedEntity<EduPlanSemester> {
 
     private static final long serialVersionUID = 1L;

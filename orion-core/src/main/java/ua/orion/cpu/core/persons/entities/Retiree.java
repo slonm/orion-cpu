@@ -1,8 +1,7 @@
 package ua.orion.cpu.core.persons.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import javax.persistence.*;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочный класс - типы пенсий. Примеры: Пенсіонер за віком, ветеран праці,
@@ -11,7 +10,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class Retiree extends AbstractEnumerationEntity<Retiree> {
 
     /**

@@ -13,7 +13,6 @@ import ua.orion.core.persistence.AbstractEntity;
  * @author kgp
  */
 @Entity
-@Table(schema = "org")
 public class OrgUnitPost extends AbstractEntity<OrgUnitPost> {
 
     private static final long serialVersionUID = 1L;

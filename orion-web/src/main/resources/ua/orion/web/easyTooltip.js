@@ -55,7 +55,7 @@ jQuery.noConflict();
                 content = (options.useElement != "") ? jQuery("#" + options.useElement).html() : content;
                 jQuery(this).attr("title","");	
                 if (content != "" && content != undefined){			
-                    jQuery("body").append("<div id='"+ options.tooltipId +"'>"+ content +"</div>");		
+                    jQuery("body").append("<div class=\"ui-state-focus\" id='"+ options.tooltipId +"'>"+ content +"</div>");		
                     jQuery("#" + options.tooltipId)
                     .css("position","absolute")
                     .css("top",(e.pageY - options.yOffset) + "px")

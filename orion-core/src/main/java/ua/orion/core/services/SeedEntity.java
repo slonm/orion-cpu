@@ -1,8 +1,11 @@
 package ua.orion.core.services;
 
+import javax.persistence.EntityTransaction;
 import org.apache.tapestry5.ioc.ObjectLocator;
-import org.tynamo.jpa.JPATransactionManager;
+import org.apache.tapestry5.jpa.EntityManagerManager;
+import org.apache.tapestry5.jpa.EntityManagerSource;
 import ua.orion.core.LibraryOrientedBeansFactory;
+import ua.orion.core.utils.IOCUtils;
 
 /**
  * Инициализатор персистентного хранилища
@@ -13,17 +16,32 @@ import ua.orion.core.LibraryOrientedBeansFactory;
  */
 public class SeedEntity extends LibraryOrientedBeansFactory implements Runnable {
 
-    private JPATransactionManager transactionManager;
+    private EntityManagerManager entityManagerManager;
+    private EntityManagerSource emSource;
 
     public SeedEntity(ModelLibraryService resolver, ObjectLocator locator,
-            JPATransactionManager transactionManager) {
+            EntityManagerManager entityManagerManager,
+            final EntityManagerSource emSource) {
         super(resolver, locator, "services", null, "SeedEntity");
-        this.transactionManager = transactionManager;
+        this.entityManagerManager = entityManagerManager;
+        this.emSource = emSource;
     }
 
     @Override
     public void run() {
-        this.create();
-        transactionManager.commit();
+        EntityTransaction transaction = entityManagerManager.getEntityManager(IOCUtils.getDefaultPersistenceUnitName(emSource)).getTransaction();
+        transaction.begin();
+        try {
+            this.create();
+        } catch (final RuntimeException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw new RuntimeException("SeedEntity exception", e);
+        }
+        if (transaction != null && transaction.isActive()) {
+            transaction.commit();
+        }
     }
 }

@@ -1,8 +1,7 @@
 package ua.orion.cpu.core.students.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import ua.orion.core.persistence.AbstractEnumerationEntity;
+import javax.persistence.*;
+import ua.orion.core.persistence.*;
 
 /**
  * Справочник - вид платильщика. Содержит уникальное имя. Например, юридическое
@@ -11,7 +10,7 @@ import ua.orion.core.persistence.AbstractEnumerationEntity;
  * @author molodec
  */
 @Entity
-@Table(schema = "ref")
+@ReferenceBook
 public class KindPayer extends AbstractEnumerationEntity<KindPayer> {
 
     private static final long serialVersionUID = 1L;
