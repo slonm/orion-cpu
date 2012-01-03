@@ -1,0 +1,9 @@
+<t:ori.layout title="message:label.project.name"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <t:form t:id="roleForm">
+        <t:label for="selectRole"/>
+        <t:select t:id="selectRole" label="message:label.selectRole" model="roleModel" blankOption="never" value="role"/><br/>
+        <t:submit value="message:action.selectRole" class="ui-submit"/>
+    </t:form>
+</t:ori.layout>
