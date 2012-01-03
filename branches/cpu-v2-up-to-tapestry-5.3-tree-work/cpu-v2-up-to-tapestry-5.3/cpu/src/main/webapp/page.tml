@@ -1,0 +1,5 @@
+<html title="message:label.project.name"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter">
+<t:pagelink page=""/>
+</html>
