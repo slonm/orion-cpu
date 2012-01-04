@@ -1,0 +1,10 @@
+<t:menu.layout t:title="prop:Title"
+          t:menudata="CpuMenu"
+          mode="activationContext"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter">
+
+<div t:type="loop" t:source="items" t:value="Item">
+    <t:menu.menulink t:menuLink="Item.itemLink">${Localize(Item.Uid)}</t:menu.menulink>
+</div>
+</t:menu.layout>
