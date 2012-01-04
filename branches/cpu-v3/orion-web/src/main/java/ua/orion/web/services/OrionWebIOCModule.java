@@ -314,7 +314,7 @@ public class OrionWebIOCModule {
                     }
                 };
                 configuration.add("Inject" + modelLibraryInfo.getLibraryName() + "Styleheet",
-                        injectDefaultStylesheet, "after:InjectDefaultStyleheet");
+                        injectDefaultStylesheet, "after:InjectDefaultStylesheet");
             } catch (RuntimeException e) {
             }
         }
