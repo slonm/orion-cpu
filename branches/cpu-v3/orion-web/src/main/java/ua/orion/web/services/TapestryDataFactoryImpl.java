@@ -1,5 +1,6 @@
 package ua.orion.web.services;
 
+import java.lang.reflect.Modifier;
 import java.util.*;
 import javax.persistence.criteria.CriteriaQuery;
 import org.apache.tapestry5.AbstractOptionModel;
@@ -7,9 +8,12 @@ import org.apache.tapestry5.OptionGroupModel;
 import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
+import org.apache.tapestry5.beaneditor.PropertyModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
+import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.ioc.services.PropertyAdapter;
 import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.util.AbstractSelectModel;
@@ -27,9 +31,9 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     private final ModelLabelSource modelLabelSource;
     private final PropertyAccess propertyAccess;
 
-    public TapestryDataFactoryImpl(EntityService entityService, 
-            BeanModelSource beanModelSource, 
-            ApplicationMessagesSource messagesSource, 
+    public TapestryDataFactoryImpl(EntityService entityService,
+            BeanModelSource beanModelSource,
+            ApplicationMessagesSource messagesSource,
             ModelLabelSource modelLabelSource,
             PropertyAccess propertyAccess) {
         this.es = entityService;
@@ -52,6 +56,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     @Override
     public <T> BeanModel<T> createBeanModelForList(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createDisplayModel(clasz, messages);
+        removeStaticFields(bm);
         setCellLabels(bm, messages);
         //TODO Hide some user defined fields
         return bm;
@@ -65,6 +70,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     @Override
     public <T> BeanModel<T> createBeanModelForView(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createDisplayModel(clasz, messages);
+        removeStaticFields(bm);
         setLabels(bm, messages);
         return bm;
     }
@@ -77,6 +83,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     @Override
     public <T> BeanModel<T> createBeanModelForEdit(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createEditModel(clasz, messages);
+        removeStaticFields(bm);
         setLabels(bm, messages);
         return bm;
     }
@@ -89,6 +96,24 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     @Override
     public <T> BeanModel<T> createBeanModelForAdd(Class<T> clasz, Messages messages) {
         return createBeanModelForEdit(clasz, messages);
+    }
+
+    private void removeStaticFields(BeanModel<?> model) {
+        ClassPropertyAdapter adapter = propertyAccess.getAdapter(model.getBeanType());
+        List<String> propertyNames = new ArrayList<String>();
+        for (String name : model.getPropertyNames()) {
+            PropertyAdapter pa = adapter.getPropertyAdapter(name);
+            if (isStaticFieldProperty(pa)) {
+                propertyNames.add(name);
+            }
+        }
+        if (!propertyNames.isEmpty()) {
+            model.exclude(propertyNames.toArray(new String[propertyNames.size()]));
+        }
+    }
+
+    private boolean isStaticFieldProperty(PropertyAdapter adapter) {
+        return adapter.isField() && Modifier.isStatic(adapter.getField().getModifiers());
     }
 
     private void setLabels(BeanModel<?> model, Messages messages) {
