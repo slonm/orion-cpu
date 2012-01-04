@@ -14,7 +14,7 @@
     <property name="hibernate.default_schema">public</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.connection.charSet">UTF-8</property>
-    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="javax.persistence.sharedCache.mode">ENABLE_SELECTIVE</property>
     <property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</property>
