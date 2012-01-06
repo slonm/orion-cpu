@@ -7,6 +7,7 @@ import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -83,7 +84,7 @@ public class Layout {
     /**
      * Page navigation menu
      */
-    @Parameter(required = true, defaultPrefix = "literal")
+    @Parameter(defaultPrefix = "literal")
     @Property(write = false)
     private Object menudata;
     @Inject
@@ -92,16 +93,10 @@ public class Layout {
     private Response response;
     @Inject
     private ThreadRole thRole;
-
+    @Inject
+    private ComponentResources cr;
     public String getRole() {
         return thRole.getRole();
-    }
-
-//    public Object getMenudata() {
-//        return defaultMenudata();
-//    }
-    Object defaultMenudata() {
-        return request.getParameter("menupath") == null ? "Start" : request.getParameter("menupath");
     }
 
     public String getUser() {
@@ -112,6 +107,10 @@ public class Layout {
     //Подключение библиотек при старте ренрдеринга 
     @SetupRender
     public void SetupRender() {
+        if (!cr.isBound("menudata")) {
+            menudata = request.getParameter("menupath") == null ? "Start" : 
+                    request.getParameter("menupath");
+        }
         List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryToolsLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
         for (Asset library : libraries) {
             javaScriptSupport.importJavaScriptLibrary(library);
