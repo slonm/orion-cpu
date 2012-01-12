@@ -1,15 +1,9 @@
 package orion.tapestry.grid.services;
 
-import java.util.Map;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.ServiceId;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.LibraryMapping;
-import org.slf4j.Logger;
-import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
 import orion.tapestry.grid.lib.model.property.impl.*;
 
 
@@ -62,16 +56,5 @@ public class CpuGridModule {
         configuration.add("boolean", GridPropertyModelBoolean.class);
         configuration.add("java.lang.Boolean", GridPropertyModelBoolean.class);
     }
-
-//    @ServiceId("GridPropertyModelSource")
-//    public static GridPropertyModelSource buildGridPropertyModelSource(
-//            Map<String, Class<? extends GridPropertyModelInterface>> configuration,
-//            Logger log,
-//            @Inject PropertyAccess propertyAccess
-//            ){
-//        return new GridPropertyModelSourceImpl(configuration,log);
-//
-//    }
-
 
 }

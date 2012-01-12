@@ -23,6 +23,8 @@ div.filterElementContainer a.childrenvariant:hover{
     width:100%;
     height:1px;
     border:none;
+    padding:0px;
+    color:#eee;
 }
 
 div.filterElementContainer a.calendar-link{
