@@ -25,7 +25,8 @@ function update_settings(){
             "gridPropertyViewJSON":$("gridPropertyViewJSON").value,
             "gridSortJSON":$("gridSortJSON").value,
             "nRowsPerPage":$("nRowsPerPage").value};
-        $('newGridPropertiesValue').value=Object.toJSON(newGridPropertiesValue);
+        var obj=$('newGridPropertiesValue');
+        if(obj) obj.value=Object.toJSON(newGridPropertiesValue);
 }
 Event.observe(window, 'load',function(){
     update_settings();

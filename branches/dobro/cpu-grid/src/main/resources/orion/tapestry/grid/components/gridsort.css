@@ -69,4 +69,6 @@ span.uparrow{
     height:1px;
     width:1px;
     border:none;
+    padding: 0px;
+    color:#eee;
 }

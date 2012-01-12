@@ -1,8 +1,12 @@
 
 tr#gridColumnDragger td{
-    background-color: chartreuse;
     cursor:move;
     font-size: 5pt;
+    background-color: #e0e0e0;
+    border-bottom: none;
+}
+tr#gridColumnDragger td:hover{
+    background-color: chartreuse;
 }
 input.viewElementWidth{
     width:40pt;
@@ -36,4 +40,6 @@ div.grid-context-menu a:hover{
     height:1px;
     width:1px;
     border:none;
+    padding:0px;
+    color:#eee;
 }
