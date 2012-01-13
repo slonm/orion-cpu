@@ -9,7 +9,7 @@ import org.tynamo.jpa.JPASymbols;
  * configure and extend Tapestry, or to place your own service definitions.
  */
 //Перечень дополнительных модулей
-@SubModule({orion.tapestry.grid.services.CpuGridModule.class})
+@SubModule({orion.tapestry.grid.services.CpuGridModule.class,orion.tapestry.grid.services.CpuGridJPA.class})
 public class TstModule {
 
     public static void contributeApplicationDefaults(MappedConfiguration<String, String> configuration) {
