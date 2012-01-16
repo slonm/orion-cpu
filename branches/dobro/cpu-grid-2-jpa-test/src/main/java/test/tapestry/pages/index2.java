@@ -17,7 +17,7 @@ import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorJPACriteria;
 import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 import orion.tapestry.grid.services.GridBeanModelSource;
-import test.entities.Person;
+import test.tapestry.entities.Person;
 
 /**
  *

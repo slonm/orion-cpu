@@ -13,7 +13,7 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorJPACriteria;
-import test.entities.Student;
+import test.tapestry.entities.Student;
 
 /**
  * Тестируем подключение в базе данных

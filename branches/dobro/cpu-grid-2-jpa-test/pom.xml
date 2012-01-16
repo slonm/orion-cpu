@@ -15,7 +15,7 @@
         <project.build.sourceJavaVersion>1.6</project.build.sourceJavaVersion>
         <project.build.targetJavaVersion>1.6</project.build.targetJavaVersion>
         <hibernate-version>3.6.0.Final</hibernate-version>
-        <tapestry-release-version>5.2.5</tapestry-release-version>
+        <tapestry-release-version>5.3.1</tapestry-release-version>
     </properties>
     <build>
         <plugins>
@@ -73,35 +73,29 @@
             <version>${tapestry-release-version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
                 </exclusion>
             </exclusions>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry5-annotations</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
-
-
-
-
         <dependency>
-            <groupId>org.tynamo</groupId>
+            <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry-jpa</artifactId>
-            <version>2.0.2-SNAPSHOT</version>
+            <version>${tapestry-release-version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javax.persistence</artifactId>
+                    <groupId>org.eclipse.persistence</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.tynamo</groupId>
-            <artifactId>tapestry-jpa-core</artifactId>
-            <version>2.0.2-SNAPSHOT</version>
-        </dependency>
+
+
 
 
 
@@ -109,6 +103,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate-version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>antlr</artifactId>
+                    <groupId>antlr</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -156,7 +156,11 @@
             <groupId>orion</groupId>
             <artifactId>cpu-grid</artifactId>
             <version>2.1-SNAPSHOT</version>
-            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
 
     </dependencies>
