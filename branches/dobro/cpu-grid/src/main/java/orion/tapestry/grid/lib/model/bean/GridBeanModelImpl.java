@@ -17,7 +17,6 @@ import org.apache.tapestry5.ioc.util.UnknownValueException;
 import org.apache.tapestry5.services.PropertyConduitSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import orion.tapestry.grid.lib.model.filter.GridFilterModel;
 import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
 import orion.tapestry.grid.lib.model.sort.GridSortModelImpl;
@@ -63,6 +62,7 @@ public class GridBeanModelImpl<T> implements GridBeanModel<T> {
     private GridSortModelImpl gridSortModelImpl;
     private GridFilterModel gridFilterModel;
     private final GridPropertyModelSource gridPropertyModelSource;
+    private static PropertyConduit NULL_PROPERTY_CONDUIT = null;
 
     public GridBeanModelImpl(Class<T> beanType,
             PropertyConduitSource propertyConduitSource,
@@ -331,4 +331,36 @@ public class GridBeanModelImpl<T> implements GridBeanModel<T> {
         }
         return this.gridFilterModel;
     }
+
+    /**
+     * Adds a new synthetic property to the model, returning its mutable model for further refinement. The property is added to
+     * the <em>end</em> of the list of properties.
+     *
+     * @param propertyName name of property to add
+     * @param expression   expression for the property
+     * @return the new property model (for further configuration)
+     * @throws RuntimeException if the property already exists
+     * @since 5.3
+     */
+    @Override
+    public PropertyModel addExpression(String propertyName, String expression) {
+        PropertyConduit conduit = createConduit(expression);
+        return add(propertyName, conduit);
+    }
+
+    /**
+     * Adds an empty property (one with no property conduit).
+     *
+     * @param propertyName name of property to add
+     * @return the new property model (for further configuration)
+     * @throws RuntimeException if the property already exists
+     * @since 5.3
+     */
+    @Override
+    public GridPropertyModelInterface addEmpty(String propertyName) {
+        return add(propertyName, NULL_PROPERTY_CONDUIT);
+    }
+    
+    
+    
 }
