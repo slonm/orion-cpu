@@ -81,7 +81,7 @@ public class index3 {
     void setupRender() {
         Person pe;
 
-        //this.entityManager.getTransaction().begin();
+        this.entityManager.getTransaction().begin();
         this.entityManager.createQuery("DELETE FROM Person").executeUpdate();
         for (long id = 0; id < 53; id++) {
             pe = new Person();
@@ -94,7 +94,7 @@ public class index3 {
             entityManager.persist(pe);
             entityManager.flush();
         }
-        //this.entityManager.getTransaction().commit();
+        this.entityManager.getTransaction().commit();
 
         dataSource = cpuGridDataSourceFactory.createDataSource(Person.class);
     }
