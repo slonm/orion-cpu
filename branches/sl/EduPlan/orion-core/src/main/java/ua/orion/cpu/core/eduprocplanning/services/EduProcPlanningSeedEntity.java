@@ -75,10 +75,10 @@ public class EduProcPlanningSeedEntity {
             //---------Учебные планы----------
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
 
-            LicenseRecord pIBach = epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+            LicenseRecord pIBach = epps.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.BACHELOR_UKEY, "Програмна інженерія",
                     DateTimeUtils.createCalendar(1, 7, 2015));
-            LicenseRecord sABach = epps.findLicenseRecordByExample("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+            LicenseRecord sABach = epps.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.BACHELOR_UKEY, "Системний аналіз",
                     DateTimeUtils.createCalendar(1, 7, 2015));
 

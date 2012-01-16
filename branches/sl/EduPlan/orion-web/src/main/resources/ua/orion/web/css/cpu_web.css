@@ -57,17 +57,16 @@ table.t-data-grid tr:nth-child(even) {
 }*/
 /* Выравнивание данных в некоторых колонках Grid по центру */
 .t-data-grid .code,                          .t-data-grid .isObsolete,
-.t-data-grid .isTrainingDirection,           .t-data-grid .isKnowledgeArea,
 .t-data-grid .stationaryStudentLicenseQuantity,
 .t-data-grid .correspondenseStudentLicenseQuantity,
 .t-data-grid .termination,                   .t-data-grid .eduPlanSemester,
 .t-data-grid .isExam,                        .t-data-grid .isCredit,
 .t-data-grid .isCourseWork,                  .t-data-grid .isControlWork,
-.t-data-grid .licenseQuantityByEducationForm,.t-data-grid .knowledgeAreaOrTrainingDirectionName,
-.t-data-grid .trainingDirectionOrSpeciality, .t-data-grid .shortName,
+.t-data-grid .licenseQuantityByEducationForm,
+.t-data-grid .shortName,
 .t-data-grid .serial,                        .t-data-grid .firstName,
 .t-data-grid .patronymicName,                .t-data-grid .surname,
-.t-data-grid .academicRank,                  .t-data-grid .knowledgeAreaOrTrainingDirection
+.t-data-grid .academicRank
 {
     min-width: 45px;
     text-align: center;
@@ -85,8 +84,8 @@ table.t-data-grid tr:nth-child(even) {
 .t-data-grid .orgUnit{
     min-width: 160px;
 }
-/* Форматирование ячеек для названий области знаний или направления */
-.t-data-grid .knowledgeAreaOrTrainingDirectionName{
+/* Форматирование ячеек для названий области знаний */
+.t-data-grid .knowledgeAreaName{
     max-width: 180px;
 }
 

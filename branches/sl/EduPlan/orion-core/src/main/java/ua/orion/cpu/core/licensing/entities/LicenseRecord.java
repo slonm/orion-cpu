@@ -14,10 +14,12 @@ import ua.orion.core.persistence.AbstractEntity;
  * с указанными в записи атрибутами)
  * @author kgp
  */
+//  Невозможно создать ограничение, что-бы trainingDirection не повторялось при speciality=null
+//  Но в таком случае записи бакалавров будут дублироваться
 @Entity
 @Table(schema = "uch", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"educationalQualificationLevel",
-        "trainingDirection", "termination", "license"}),
+//    @UniqueConstraint(columnNames = {"educationalQualificationLevel",
+//        "trainingDirection", "termination", "license"}),
     @UniqueConstraint(columnNames = {"educationalQualificationLevel",
         "speciality", "termination", "license"})
 })
@@ -53,11 +55,11 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
         licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
         this.license = license;
-        this.trainingDirection=trainingDirection;
-        this.educationalQualificationLevel=educationalQualificationLevel;
-        this.termination=terminationDate;
-        this.orgUnit=orgUnit;
-        this.licenseRecordGroup=licenseRecordGroup;
+        this.trainingDirection = trainingDirection;
+        this.educationalQualificationLevel = educationalQualificationLevel;
+        this.termination = terminationDate;
+        this.orgUnit = orgUnit;
+        this.licenseRecordGroup = licenseRecordGroup;
     }
 
     public LicenseRecord(
@@ -75,11 +77,25 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         licenseQuantityByEducationForm.put(statEduForm, statLicenseQuantity);
         licenseQuantityByEducationForm.put(corrEduForm, corrLicenseQuantity);
         this.license = license;
-        this.speciality=speciality;
-        this.educationalQualificationLevel=educationalQualificationLevel;
-        this.termination=terminationDate;
-        this.orgUnit=orgUnit;
-        this.licenseRecordGroup=licenseRecordGroup;
+        this.speciality = speciality;
+        this.educationalQualificationLevel = educationalQualificationLevel;
+        this.termination = terminationDate;
+        this.orgUnit = orgUnit;
+        this.licenseRecordGroup = licenseRecordGroup;
+    }
+
+    /**
+     * Применение ограничений на взаимно-зависимые поля
+     * 
+     */
+    @PrePersist
+    @PreUpdate
+    public void preSave() {
+        if (EducationalQualificationLevel.BACHELOR_UKEY.equals(educationalQualificationLevel.getUKey())) {
+            speciality = null;
+        } else {
+            trainingDirection = speciality.getTrainingDirection();
+        }
     }
 
     /**
@@ -99,26 +115,18 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     @Transient
     public String getKnowledgeAreaCode() {
         try {
-            return speciality.getKnowledgeArea().getCode();
-        } catch (NullPointerException e) {
-            try {
-                return trainingDirection.getKnowledgeArea().getCode();
-            } catch (NullPointerException e1) {
-                return null;
-            }
+            return trainingDirection.getKnowledgeArea().getCode();
+        } catch (NullPointerException e1) {
+            return null;
         }
     }
 
     @Transient
     public String getKnowledgeAreaName() {
         try {
-            return speciality.getKnowledgeArea().getName();
-        } catch (NullPointerException e) {
-            try {
-                return trainingDirection.getKnowledgeArea().getName();
-            } catch (NullPointerException e1) {
-                return null;
-            }
+            return trainingDirection.getKnowledgeArea().getName();
+        } catch (NullPointerException e1) {
+            return null;
         }
     }
 
@@ -143,21 +151,14 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
             StringBuilder sb = new StringBuilder();
             sb.append(educationalQualificationLevel.getCode());
             sb.append(".");
-            sb.append(speciality.getKnowledgeArea().getCode());
-            sb.append(speciality.getTrainingDirection().getCode());
-            sb.append(speciality.getCode());
+            sb.append(trainingDirection.getKnowledgeArea().getCode());
+            sb.append(trainingDirection.getCode());
+            if (speciality != null) {
+                sb.append(speciality.getCode());
+            }
             return sb.toString();
         } catch (NullPointerException e) {
-            try {
-                StringBuilder sb = new StringBuilder();
-                sb.append(educationalQualificationLevel.getCode());
-                sb.append(".");
-                sb.append(trainingDirection.getKnowledgeArea().getCode());
-                sb.append(trainingDirection.getCode());
-                return sb.toString();
-            } catch (NullPointerException e1) {
-                return null;
-            }
+            return null;
         }
     }
 
@@ -167,14 +168,6 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     @ManyToOne
     @JoinColumn(name = "trainingDirection")
     public TrainingDirection getTrainingDirection() {
-        return trainingDirection;
-    }
-
-    @Transient
-    public TrainingDirection getRealTrainingDirection() {
-        if (speciality != null) {
-            return speciality.getTrainingDirection();
-        }
         return trainingDirection;
     }
 
@@ -255,7 +248,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     @Override
     protected boolean entityEquals(LicenseRecord obj) {
-        return aEqualsField(getTrainingDirection(), obj.getTrainingDirection())
+        return aEqualsField(speciality, obj.speciality)
+                && aEqualsField(trainingDirection, obj.trainingDirection)
                 && aEqualsField(educationalQualificationLevel, obj.educationalQualificationLevel);
     }
 

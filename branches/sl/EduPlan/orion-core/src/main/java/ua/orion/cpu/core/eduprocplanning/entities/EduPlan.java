@@ -17,7 +17,7 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirection;
  */
 @Entity
 @Table(schema = "uch", uniqueConstraints =
-@UniqueConstraint(columnNames = {"qualification", 
+@UniqueConstraint(columnNames = {"qualification",
     "licenseRecord", "introducingDate"}))
 public class EduPlan extends AbstractEntity<EduPlan> {
 
@@ -51,7 +51,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * @return запись лиценизии, привязанная к данному учебному плану
      */
     @ManyToOne
-    @JoinColumn(name="licenseRecord", nullable = false)
+    @JoinColumn(name = "licenseRecord", nullable = false)
     public LicenseRecord getLicenseRecord() {
         try {
             return licenseRecord;
@@ -69,7 +69,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * к данному плану (нужен для шапки плана)
      */
     @Transient
-    public String getKATDCode() {
+    public String getKnowledgeAreaCode() {
         try {
             return licenseRecord.getKnowledgeAreaCode();
         } catch (NullPointerException e) {
@@ -83,7 +83,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * (нужен для шапки плана)
      */
     @Transient
-    public String getKnowledgeAreaOrTrainingDirection() {
+    public String getKnowledgeAreaName() {
         try {
             return licenseRecord.getKnowledgeAreaName();
         } catch (NullPointerException e) {
@@ -106,13 +106,26 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название направления подгoтовки/специальности данного учебного плана
+     * @return название направления подгoтовки данного учебного плана
      * (нужен для шапки плана)
      */
     @Transient
-    public TrainingDirection getTrainingDirectionOrSpeciality() {
+    public String getTrainingDirectionName() {
         try {
-            return licenseRecord.getTrainingDirection();
+            return licenseRecord.getTrainingDirection().getName();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return название специальности данного учебного плана
+     * (нужен для шапки плана)
+     */
+    @Transient
+    public String getSpecialityName() {
+        try {
+            return licenseRecord.getSpeciality().getName();
         } catch (NullPointerException e) {
             return null;
         }
@@ -171,7 +184,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="eduPlan")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eduPlan")
     public Set<EduPlanDiscipline> getEduPlanDisciplines() {
         return eduPlanDisciplines;
     }

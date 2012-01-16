@@ -579,11 +579,11 @@ public class LicensingSeedEntity {
 //            //Інформатика
 //            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosIF_B, bach_EQL, stat_EF, 30, corr_EF, 0, lrCal20110701, kafSAVM, btrain_LRG));
 //            //Системний аналіз
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosSA_B, bach_EQL, stat_EF, 30, corr_EF, 30, lrCal20150701, kafSAVM, btrain_LRG));
 //
 //            //Інформатика та обчислювальна техніка
 //            //Програмна інженерія
-//            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, btrain_LRG));
+            es.findUniqueOrPersist(new LicenseRecord(licenseCPU, tdosPI_B, bach_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafPIT, btrain_LRG));
 //
 //            //Електроніка
 //            //Мікро- та наноелектроніка
