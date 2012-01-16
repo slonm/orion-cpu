@@ -11,7 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import test.entities.Student;
+import test.tapestry.entities.Student;
 
 /**
  * Тестируем подключение в базе данных

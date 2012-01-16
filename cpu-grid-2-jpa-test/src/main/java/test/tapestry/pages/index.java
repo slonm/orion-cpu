@@ -8,7 +8,7 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import test.entities.Person;
+import test.tapestry.entities.Person;
 
 /**
  *

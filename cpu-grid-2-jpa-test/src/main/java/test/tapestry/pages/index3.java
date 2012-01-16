@@ -12,7 +12,7 @@ import orion.tapestry.grid.lib.datasource.DataSource;
 import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 import orion.tapestry.grid.services.CpuGridDataSourceFactory;
-import test.entities.Person;
+import test.tapestry.entities.Person;
 
 /**
  *

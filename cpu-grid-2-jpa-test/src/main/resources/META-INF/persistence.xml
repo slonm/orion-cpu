@@ -16,6 +16,6 @@
             <property name="hibernate.current_session_context_class" value="thread"/>
             -->
         </properties>
-        <!-- <class>test.entities.Student</class> -->
+        <!-- <class>test.entities.Person</class> -->
     </persistence-unit>
 </persistence>

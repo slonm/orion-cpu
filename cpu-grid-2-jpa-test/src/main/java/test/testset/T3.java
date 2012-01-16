@@ -3,7 +3,7 @@ package test.testset;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import test.entities.Student;
+import test.tapestry.entities.Student;
 
 /**
  * Тестируем подключение в базе данных
