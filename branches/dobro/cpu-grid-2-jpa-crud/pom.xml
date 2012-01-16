@@ -29,10 +29,12 @@
             <groupId>org.chenillekit</groupId>
             <artifactId>chenillekit-tapestry</artifactId>
         </dependency>
+        <!-- 
         <dependency>
             <groupId>org.tynamo</groupId>
             <artifactId>tapestry-jpa</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-core</artifactId>
