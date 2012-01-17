@@ -1,14 +1,15 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
   http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>orion</groupId>
-  <artifactId>orion-meta</artifactId>
-  <packaging>pom</packaging>
-  <version>0.0.3-SNAPSHOT</version>
-  <name>Метапроект Orion</name>
-  <url>http://code.google.com/p/orion-cpu/</url>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>orion</groupId>
+    <artifactId>orion-meta</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.3-SNAPSHOT</version>
+    <name>Метапроект Orion</name>
+    <url>http://code.google.com/p/orion-cpu/</url>
     <build>
         <plugins>
             <plugin>
@@ -23,13 +24,16 @@
         </plugins>
     </build>
     <modules>
- <module>parent</module>
+        <module>parent</module>
  <!--<module>tapestry-jpa-core-hibernate-entitymanager</module> -->
- <module>tapestry-security-core</module>
- <module>tapestry-security-web</module>
- <module>orion-core</module>
- <module>orion-menu</module>
- <module>orion-web</module>
- <module>cpu</module>
-</modules>
+        <module>tapestry-security-core</module>
+        <module>tapestry-security-web</module>
+        <module>orion-core</module>
+        <module>orion-menu</module>
+        <module>orion-web</module>
+        <module>cpu</module>
+        <module>cpu-grid</module>
+        <module>cpu-grid-2-jpa</module>
+        <module>cpu-grid-2-jpa-crud</module>
+    </modules>
 </project>

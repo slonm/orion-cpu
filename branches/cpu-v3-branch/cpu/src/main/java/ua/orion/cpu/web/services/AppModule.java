@@ -2,8 +2,11 @@ package ua.orion.cpu.web.services;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;
-import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.SubModule;
+import orion.tapestry.grid.services.CpuGridJPA;
+import orion.tapestry.grid.services.CpuGridModule;
 import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule;
 import ua.orion.cpu.core.employees.services.EmployeesIOCModule;
 import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
@@ -18,6 +21,7 @@ import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
 import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
 import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
 import ua.orion.cpu.web.students.services.StudentsWebIOCModule;
+import ua.orion.web.crud.services.CpuGridJPACrudModule;
 import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
@@ -38,7 +42,10 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     OrgUnitsWebIOCModule.class,
     PersonsWebIOCModule.class,
     StudentsWebIOCModule.class,
-    EmployeesWebIOCModule.class
+    EmployeesWebIOCModule.class,
+    CpuGridModule.class,
+    CpuGridJPA.class,
+    CpuGridJPACrudModule.class
 })
 public class AppModule {
 
@@ -48,6 +55,7 @@ public class AppModule {
 
     /**
      * Регистрация и конфигурирование опций.
+     *
      * @param configuration
      */
     public static void contributeApplicationDefaults(
