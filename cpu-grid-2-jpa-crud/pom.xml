@@ -8,7 +8,7 @@
     <parent>
         <groupId>ua.orion</groupId>
         <artifactId>parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <name>cpu-grid-2-jpa-crud</name>
@@ -29,12 +29,6 @@
             <groupId>org.chenillekit</groupId>
             <artifactId>chenillekit-tapestry</artifactId>
         </dependency>
-        <!-- 
-        <dependency>
-            <groupId>org.tynamo</groupId>
-            <artifactId>tapestry-jpa</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-core</artifactId>
@@ -67,7 +61,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
             <scope>provided</scope>
         </dependency>
 
@@ -100,7 +93,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>orion</groupId>
             <artifactId>cpu-grid-jpa</artifactId>
-            <version>2.0-SNAPSHOT</version>
+             <version>2.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>
