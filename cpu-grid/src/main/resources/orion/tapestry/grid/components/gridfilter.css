@@ -1,0 +1,32 @@
+div.filterElementContainer{background-color:#e0e0e0;padding-left:15pt;}
+div.filterElementContainer a{display:none;margin-left:10px;}
+div.filterElementContainer:hover a{display:inline;}
+div.calendar{
+    width:200pt;
+    background-color: #99ccff;
+    padding:3pt;
+}
+div.childrenvariants{
+    background-color: yellowgreen;
+}
+div.filterElementContainer a.childrenvariant{
+    display:block;
+    color:black;
+}
+div.filterElementContainer a.childrenvariant:hover{
+    display:block;
+    background-color:black;
+    color:yellowgreen;
+}
+
+#gridFilterJSON{
+    width:100%;
+    height:1px;
+    border:none;
+    padding:0px;
+    color:#eee;
+}
+
+div.filterElementContainer a.calendar-link{
+    display:inline;
+}

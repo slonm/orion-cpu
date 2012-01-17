@@ -1,0 +1,6 @@
+span.block-saved-properties-container{
+    display: inline-block;
+    white-space: nowrap;
+    float:right;
+    margin-left:10px;
+}
