@@ -20,11 +20,20 @@ public interface EduProcPlanningService {
     
     /*
      * @param educationalQualificationLevel UKey of educationalQualificationLevel
-     * @param trainingDirectionOrSpeciality name of trainingDirectionOrSpeciality
+     * @param trainingDirection name of trainingDirection
      * 
      */
-    LicenseRecord findLicenseRecordByExample(String serial, String number, 
+    LicenseRecord findLicenseRecordByTrainingDirection(String serial, String number, 
     Calendar issue, String educationalQualificationLevel, 
-    String trainingDirectionOrSpeciality, Calendar termination);
+    String trainingDirection, Calendar termination);
+
+    /*
+     * @param educationalQualificationLevel UKey of educationalQualificationLevel
+     * @param speciality name of speciality
+     * 
+     */
+    LicenseRecord findLicenseRecordBySpeciality(String serial, String number, 
+    Calendar issue, String educationalQualificationLevel, 
+    String speciality, Calendar termination);
 
 }

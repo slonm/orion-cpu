@@ -46,24 +46,6 @@ public class PropertyBlocks {
     @Environmental
     @Property(write = false)
     private PropertyEditContext editContext;
-    //Компонент BooleanSelectField, определяющий вывод слов "Направление" или "Специальность"
-    @Component(parameters = {
-        "value=editContext.propertyValue",
-        "label=prop:editContext.label",
-        "model=prop:TrainingDirectionOrSpecialitySelectModel",
-        "clientId=prop:editContext.propertyId",
-        "validate=prop:TrainingDirectionOrSpecialityValidator"
-    })
-    private Select trainingDirectionOrSpeciality;
-    //Компонент BooleanSelectField, определяющий вывод слов "Область знаний" или "Направление"
-    @Component(parameters = {
-        "value=editContext.propertyValue",
-        "label=prop:editContext.label",
-        "model=prop:KnowledgeAreaOrTrainingDirectionSelectModel",
-        "clientId=prop:editContext.propertyId",
-        "validate=prop:KnowledgeAreaOrTrainingDirectionValidator"
-    })
-    private Select knowledgeAreaOrTrainingDirection;
     //Компонент Loop, выводящий в грид все элементы мэпа "форма обучения -
     //лицензированный объем" (ключ - форма обучения)
     //В параметрах компонента указаны: в source - метод getEduFormsD(), возвращающий
@@ -85,22 +67,6 @@ public class PropertyBlocks {
     @Component(parameters = {"source=EduFormsE",
         "value=EduForm"})
     private Loop eduFormLicenseQuantityAfl;
-
-    public FieldValidator<?> getKnowledgeAreaOrTrainingDirectionValidator() {
-        return editContext.getValidator(knowledgeAreaOrTrainingDirection);
-    }
-
-    public FieldValidator<?> getTrainingDirectionOrSpecialityValidator() {
-        return editContext.getValidator(trainingDirectionOrSpeciality);
-    }
-
-    public SelectModel getKnowledgeAreaOrTrainingDirectionSelectModel() {
-        return new BooleanSelectModel(messages.get("KnowledgeAreaOrTrainingDirection-true"), messages.get("KnowledgeAreaOrTrainingDirection-false"));
-    }
-
-    public SelectModel getTrainingDirectionOrSpecialitySelectModel() {
-        return new BooleanSelectModel(messages.get("TrainingDirectionOrSpeciality-true"), messages.get("TrainingDirectionOrSpeciality-false"));
-    }
 
     /**
      * Метод, возвращающий количество лицензий для записи с ключом eduForm
