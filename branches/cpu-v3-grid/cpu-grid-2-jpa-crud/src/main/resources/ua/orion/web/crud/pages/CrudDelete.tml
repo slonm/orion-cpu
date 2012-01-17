@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" 
+      xmlns:p="tapestry:parameter">
+<head>
+<title>${title}</title>
+</head>
+<body>
+<div>${feedbackMessage}</div>
+<t:if test="isEntityClassFound">
+    <t:if test="isEntityObjectFound">
+       <t:beandisplay t:id="display" object="entityObject" model="beanModel"/>
+       <div style="text-align:center;"><t:EventLink t:event="delete" title="message:action.del">${message:action.del}</t:EventLink></div>
+    </t:if>
+</t:if>
+</body>
+</html>
