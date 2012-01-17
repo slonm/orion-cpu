@@ -20,6 +20,8 @@
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-menu</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.chenillekit</groupId>
@@ -32,6 +34,8 @@
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-core</artifactId>
+            <type>jar</type>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.tynamo</groupId>
@@ -89,6 +93,22 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <groupId>org.eclipse.birt</groupId>
             <artifactId>viewservlets</artifactId>
             <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.0.1</version>
         </dependency>
     </dependencies>
     <build>
