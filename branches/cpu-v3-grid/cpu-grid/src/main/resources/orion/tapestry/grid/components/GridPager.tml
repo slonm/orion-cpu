@@ -1,0 +1,17 @@
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+    ${RowsFound} rows found.
+    Pages:
+    <span t:type="Loop" t:source="PageList" t:value="page">
+        <t:if test="CurrentPageIsNull">
+           ...
+        <t:parameter name="else">
+          <t:if test="isCurrentPage">
+            <span class="grid-page-link">${page.PageNumber}</span>
+            <t:parameter name="else">
+              <a href="javascript:void(goToPage('${page.PageNumber}'))" class="grid-page-link">${page.PageNumber}</a>
+            </t:parameter>
+          </t:if>
+        </t:parameter>
+        </t:if>
+    </span>
+</div>
