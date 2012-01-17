@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import java.util.*;
 import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.core.utils.Defense;
@@ -9,12 +10,13 @@ import ua.orion.core.utils.Defense;
  * @author kgp
  */
 @Entity
+@Table
 public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     private static long serialVersionUID = 1L;
     
-    //Поле связи с циклом учебного плана, к которому принадлежит дисциплина
-    private EduPlanDisciplineCycle eduPlanDisciplineCycle;
+    //Поле связи с учебным планом, к которому принадлежит дисциплина
+    private EduPlan eduPlan;
     //является ли дисциплина обязательной или выборочной (она может принадлежать 
     //как к нормативным, так и к выборочным циклас)
     private Boolean isMandatory;
@@ -46,6 +48,9 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     //Количество часов практических занятий, семинаров по дисциплине
     private Integer practicesHours;
 
+    //Теги дисциплины
+    private Set<EduPlanDisciplineTag> eduPlanDisciplineTags = new HashSet();
+    
     //ПОКА НЕ ИСПОЛЬЗУЮ
     //Набор дисциплин данного учебного плана, которые должны предшествовать изучению данной дисциплины
 //    private Set<EduPlanDiscipline> eduPlanDisciplinePrevious = new HashSet<EduPlanDiscipline>();
@@ -53,10 +58,11 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     public EduPlanDiscipline() {
     }
 
-     public EduPlanDiscipline(Boolean isMandatory, 
+     public EduPlanDiscipline(EduPlan eduPlan, Boolean isMandatory, 
              String disciplineNumber, Discipline discipline, Double ectsCreditAmount, String examSemestr, 
              String creditSemester, String courseWorkSemester, String controlWorkSemester, 
              Integer lecturesHours, Integer labsHours, Integer practicesHours) {
+        this.eduPlan = eduPlan;
         this.isMandatory = isMandatory;
         this.disciplineNumber = disciplineNumber;
         this.discipline = discipline;
@@ -70,14 +76,14 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         this.practicesHours = practicesHours;
     }
     
-    //Двунаправленная ассоциация с циклом, к которому принадлежит данная дисциплина
+    //Двунаправленная ассоциация с планом, к которому принадлежит данная дисциплина
     @ManyToOne
-    public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
-        return eduPlanDisciplineCycle;
+    public EduPlan getEduPlan() {
+        return eduPlan;
     }
 
-    public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
+    public void setEduPlan(EduPlan eduPlan) {
+        this.eduPlan = eduPlan;
     }
     
      public Boolean getIsMandatory() {
@@ -195,6 +201,19 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         return this.getTotalHours()-lecturesHours-labsHours-practicesHours;
     }
     
+    //Двунаправленная ассоциация с тегами дисциплин
+    @ManyToMany
+    @JoinTable(joinColumns = {
+        @JoinColumn(name = "EDUPLAN_DISCIPLINE")}, inverseJoinColumns = {
+        @JoinColumn(name = "EDUPLAN_DISCIPLINE_Tag")})
+    public Set<EduPlanDisciplineTag> getEduPlanDisciplineTags() {
+        return eduPlanDisciplineTags;
+    }
+
+    public void setEduPlanDisciplineTags(Set<EduPlanDisciplineTag> eduPlanDisciplineTags) {
+        this.eduPlanDisciplineTags = eduPlanDisciplineTags;
+    }
+    
 //    /**
 //     * @return Набор дисциплин, которые обязательно должны предшествовать изучению данной дисциплины
 //     */
@@ -209,21 +228,21 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     @Override
     public String toString() {
         String name = "<NULL>";
-        String eduPlan = "<NULL>";
+        String ePlan = "<NULL>";
         try {
             name = this.discipline.getName();
         } catch (NullPointerException e) {
         }
         try {
-            eduPlan = eduPlanDisciplineCycle.getEduPlan().toString();
+            ePlan = eduPlan.toString();
         } catch (NullPointerException e) {
         }
-        return name + " " + eduPlan;
+        return name + " " + ePlan;
     }
 
     @Override
     protected boolean entityEquals(EduPlanDiscipline obj) {
-        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlanDisciplineCycle.getEduPlan(), obj.eduPlanDisciplineCycle.getEduPlan());
+        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlan, obj.eduPlan);
     }
 
     @Override

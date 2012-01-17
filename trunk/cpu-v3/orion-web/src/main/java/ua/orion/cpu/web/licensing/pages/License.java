@@ -1,6 +1,7 @@
 package ua.orion.cpu.web.licensing.pages;
 
 import javax.persistence.criteria.*;
+import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.grid.GridDataSource;
@@ -19,6 +20,7 @@ import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 @SuppressWarnings("unused")
 public class License {
     //---Services---
+
     @Inject
     private Request request;
     @Inject
@@ -47,8 +49,9 @@ public class License {
     public GridDataSource getSource() {
         return new JpaGridDataSource<LicenseRecord>(entityService.getEntityManager(), LicenseRecord.class) {
 
-            protected Expression<Boolean> additionalConstraints(CriteriaBuilder cb, Root<LicenseRecord> root) {
-                return cb.equal(root.get("license"), object);
+            @Override
+            protected void applyAdditionalConstraints(CriteriaQuery<?> criteria, Root<LicenseRecord> root, CriteriaBuilder builder) {
+                criteria.where(builder.equal(root.get("license"), object));
             }
         };
     }
@@ -64,6 +67,7 @@ public class License {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";
             }
+            SecurityUtils.getSubject().checkPermission("License:read:" + object.getId());
         }
         return null;
     }
