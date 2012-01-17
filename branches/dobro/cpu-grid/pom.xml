@@ -32,8 +32,7 @@
             <artifactId>tapestry5-annotations</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
-        <!--
--->
+
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
 will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
 of testing facilities designed for use with TestNG (http://testng.org/), so it's recommended. -->
@@ -75,8 +74,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-release-version}</version>
         </dependency>
-        <!--
--->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -94,7 +91,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry-json</artifactId>
-            <version>5.2.5</version>
+            <version>${tapestry-release-version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -140,9 +137,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                     </systemProperties>
                 </configuration>
                 <dependencies>
-                    <!--
--->
-
                     <dependency>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-jdk14</artifactId>
@@ -154,7 +148,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                         <version>${slf4j-release-version}</version>
                     </dependency>
                 </dependencies>
-
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -188,7 +181,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </build>
 
     <reporting>
-
         <!-- Adds a report detailing the components, mixins and base classes defined by this module. -->
         <plugins>
             <plugin>
