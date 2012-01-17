@@ -1,14 +1,11 @@
 package ua.orion.web.components;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.shiro.SecurityUtils;
-import org.apache.tapestry5.Asset;
+import org.apache.tapestry5.*;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.Block;
-import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Request;
@@ -62,8 +59,9 @@ public class Layout {
     @Path("../jquery.cookie.js")
     private Asset jQueryCookieLibrary;
     /**
-     * Используется для генерирования красивых ToolTip-ов
-     * Библиотека загружена лишь с этой функциональностью. Нужно больше - http://flowplayer.org/tools/. Сохранить с тем же именем.
+     * Используется для генерирования красивых ToolTip-ов Библиотека загружена
+     * лишь с этой функциональностью. Нужно больше -
+     * http://flowplayer.org/tools/. Сохранить с тем же именем.
      */
     @Inject
     @Path("../jquery.tools.min.js")
@@ -82,8 +80,12 @@ public class Layout {
     @Property
     private String uiInterface;
     /**
-     * Page navigation menu
+     * Page navigation menu иногда надо, чтобы страница могла влиять на своё
+     * меню
      */
+    @Parameter
+    @Property
+    private Object menupath;
     @Parameter(defaultPrefix = "literal")
     @Property(write = false)
     private Object menudata;
@@ -95,6 +97,17 @@ public class Layout {
     private ThreadRole thRole;
     @Inject
     private ComponentResources cr;
+
+  
+//    public Object getMenudata() {
+//        return menupath == null ? defaultMenudata() : menupath;
+//    }
+//
+//    Object defaultMenudata() {
+//        return request.getParameter("menupath") == null ? "Start"
+//                : request.getParameter("menupath");
+//    }
+
     public String getRole() {
         return thRole.getRole();
     }
