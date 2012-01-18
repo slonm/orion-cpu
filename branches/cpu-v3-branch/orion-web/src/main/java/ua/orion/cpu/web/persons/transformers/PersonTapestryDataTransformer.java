@@ -8,7 +8,6 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
 import ua.orion.web.AbstractTapestryDataTransformer;
 
 /**

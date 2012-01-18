@@ -23,7 +23,8 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
         Set<String> existProps = new HashSet(model.getPropertyNames());
         List<String> requiredProps = Arrays.asList("code",
-                "knowledgeAreaOrTrainingDirection", "trainingDirectionOrSpeciality",
+                "knowledgeAreaName", "trainingDirectionName", "specialityName",
+                "licenseRecordGroupName",
                 "educationalQualificationLevel", "trainingTerm",
                 "qualification", "introducingDate","confirmationDate", "confirmationPerson");
         existProps.removeAll(requiredProps);

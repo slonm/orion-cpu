@@ -7,7 +7,7 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 import ua.orion.web.AbstractTapestryDataTransformer;
 
 /**
@@ -58,33 +58,33 @@ public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTr
     }
     
     private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
-        model.exclude("KnowledgeAreaOrTrainingDirectionCode",
-                "KnowledgeAreaOrTrainingDirectionName",
+        model.exclude("KnowledgeAreaCode",
+                "KnowledgeAreaName",
                 "code");
         return model;
     }
 
-    @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
-        if ("TrainingDirectionOrSpeciality".equalsIgnoreCase(property)) {
-            ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
-            while(it.hasNext()){
-                OptionModel om=it.next();
-                final TrainingDirectionOrSpeciality tdos=(TrainingDirectionOrSpeciality) om.getValue();
-                it.set(new AbstractOptionModel() {
-
-                @Override
-                public String getLabel() {
-                    return es.getStringValue(tdos.getKnowledgeAreaOrTrainingDirection())+" - "+es.getStringValue(tdos);
-                }
-
-                @Override
-                public Object getValue() {
-                    return tdos;
-                }
-            });
-            }
-        }
-        return model;
-    }
+//    @Override
+//    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
+//        if ("TrainingDirection".equalsIgnoreCase(property)) {
+//            ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
+//            while(it.hasNext()){
+//                OptionModel om=it.next();
+//                final TrainingDirection tdos=(TrainingDirection) om.getValue();
+//                it.set(new AbstractOptionModel() {
+//
+//                @Override
+//                public String getLabel() {
+//                    return es.getStringValue(tdos.getKnowledgeArea())+" - "+es.getStringValue(tdos);
+//                }
+//
+//                @Override
+//                public Object getValue() {
+//                    return tdos;
+//                }
+//            });
+//            }
+//        }
+//        return model;
+//    }
 }
