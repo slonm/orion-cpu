@@ -20,22 +20,18 @@
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-menu</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+<!--            <version>0.0.3-SNAPSHOT</version> -->
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.chenillekit</groupId>
             <artifactId>chenillekit-tapestry</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>org.tynamo</groupId>
-            <artifactId>tapestry-jpa</artifactId>
-        </dependency> -->
         <dependency>
             <groupId>ua.orion</groupId>
             <artifactId>orion-core</artifactId>
             <type>jar</type>
-            <version>0.0.3-SNAPSHOT</version>
+<!--            <version>0.0.3-SNAPSHOT</version>  -->
         </dependency>
         <dependency>
             <groupId>org.tynamo</groupId>
