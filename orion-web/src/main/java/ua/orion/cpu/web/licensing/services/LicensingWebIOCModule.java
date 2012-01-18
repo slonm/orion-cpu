@@ -19,12 +19,6 @@ public class LicensingWebIOCModule {
      * @author sl
      */
     public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
-        //Display TDS or KATD
-        configuration.add(new DisplayBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "DisplayTrainingDirectionOrSpeciality"));
-        configuration.add(new DisplayBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "DisplayKnowledgeAreaOrTrainingDirection"));
-        //Edit TDS or KATD
-        configuration.add(new EditBlockContribution("TrainingDirectionOrSpeciality", "licensing/PropertyBlocks", "EditTrainingDirectionOrSpeciality"));
-        configuration.add(new EditBlockContribution("KnowledgeAreaOrTrainingDirection", "licensing/PropertyBlocks", "EditKnowledgeAreaOrTrainingDirection"));
         //Display EduFormLicenseQuantity
         configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "DisplayEduFormLicenseQuantity"));
         //Edit EduFormLicenseQuantity
@@ -43,16 +37,16 @@ public class LicensingWebIOCModule {
         path = "Start>Licensing>License";
         configuration.add(path, mlb.buildCrudPageMenuLink(License.class, path));
 
-//        path = "Start>Licensing>LicenseRecord";
-//        configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecord.class, path));
-
         path = "Start>Licensing>Reference";
 
-        path = "Start>Licensing>Reference>KnowledgeAreaOrTrainingDirection";
-        configuration.add(path, mlb.buildCrudPageMenuLink(KnowledgeAreaOrTrainingDirection.class, path));
+        path = "Start>Licensing>Reference>KnowledgeArea";
+        configuration.add(path, mlb.buildCrudPageMenuLink(KnowledgeArea.class, path));
 
         path = "Start>Licensing>Reference>TrainingDirectionOrSpeciality";
-        configuration.add(path, mlb.buildCrudPageMenuLink(TrainingDirectionOrSpeciality.class, path));
+        configuration.add(path, mlb.buildCrudPageMenuLink(TrainingDirection.class, path));
+
+        path = "Start>Licensing>Reference>Speciality";
+        configuration.add(path, mlb.buildCrudPageMenuLink(Speciality.class, path));
 
         path = "Start>Licensing>Reference>LicenseRecordGroup";
         configuration.add(path, mlb.buildCrudPageMenuLink(LicenseRecordGroup.class, path));

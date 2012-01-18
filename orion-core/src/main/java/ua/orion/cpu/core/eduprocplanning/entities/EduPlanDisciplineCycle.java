@@ -1,16 +1,15 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
-import ua.orion.core.persistence.AbstractEntity;
 
 /**
  * Цикл дисциплин в привязке к конкретному учебному плану
  * @author kgp
  */
 @Entity
-public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycle> {
+@Table(uniqueConstraints =
+@UniqueConstraint(columnNames = {"eduPlan", "EPPCycle"}))
+public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDisciplineCycle> {
 
     private static final long serialVersionUID = 1L;
     private EduPlan eduPlan;
@@ -24,23 +23,25 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     //ТОЛЬКО С ДРОБНОЙ ЧАСТЬЮ .0 ИЛИ .25  ИЛИ .5 ИЛИ .75 
     //Общее количество кредитов на дисциплины цикла
     private Double cycleTotalCredits;
-    //Дисциплины цикла учебного плана
-    private Set<EduPlanDiscipline> eduPlanCycleDisciplines = new HashSet<EduPlanDiscipline>();
+//    //Дисциплины цикла учебного плана
+//    private Set<EduPlanDiscipline> eduPlanCycleDisciplines = new HashSet<EduPlanDiscipline>();
 
     public EduPlanDisciplineCycle() {
     }
 
-    public EduPlanDisciplineCycle(EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
-            Boolean isRegulatory, Double cycleTotalCredits, Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
+    public EduPlanDisciplineCycle(EduPlan eduPlan, EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
+            Boolean isRegulatory, Double cycleTotalCredits) {
+        this.eduPlan = eduPlan;
         this.ePPCycle = ePPCycle;
         this.eduPlanDisciplineCycleNumber = eduPlanDisciplineCycleNumber;
         this.isRegulatory = isRegulatory;
         this.cycleTotalCredits = cycleTotalCredits;
-        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
+//        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
     }
 
-    //Двунаправленная связь с учебным планом
+    //Связь с учебным планом
     @ManyToOne
+    @JoinColumn(name="eduPlan")
     public EduPlan getEduPlan() {
         return eduPlan;
     }
@@ -50,7 +51,7 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
     }
 
     //Однонаправленная ассоциация со справочником циклов освітньо-професійних програм
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name="EPPCycle")
     @ManyToOne
     public EPPCycle getEPPCycle() {
         return ePPCycle;
@@ -93,18 +94,18 @@ public class EduPlanDisciplineCycle extends AbstractEntity<EduPlanDisciplineCycl
         return cycleTotalCredits * NormativeValue.ECTSCREDIT;
     }
 
-    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(joinColumns = {
-        @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "EDUPLANDISCIPLINE_ID")})
-    public Set<EduPlanDiscipline> getEduPlanCycleDisciplines() {
-        return eduPlanCycleDisciplines;
-    }
-
-    public void setEduPlanCycleDisciplines(Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
-        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
-    }
+//    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(schema = "uch", joinColumns = {
+//        @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {
+//        @JoinColumn(name = "EDUPLANDISCIPLINE_ID")})
+//    public Set<EduPlanDiscipline> getEduPlanCycleDisciplines() {
+//        return eduPlanCycleDisciplines;
+//    }
+//
+//    public void setEduPlanCycleDisciplines(Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
+//        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
+//    }
 
     @Override
     public String toString() {

@@ -4,40 +4,28 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
+import ua.orion.cpu.core.licensing.entities.Speciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 
 /**
  * Учебный поток (место поступления).
- *
  * @author sl
  */
 @Entity
+@Table
 public class AcademicStream extends AbstractEntity<AcademicStream> {
 
     private static final long serialVersionUID = 1L;
     @NotNull
     @ManyToOne
-    private TrainingDirectionOrSpeciality trainingDirectionOrSpeciality;
+    private TrainingDirection trainingDirection;
+    @NotNull
+    @ManyToOne
+    private Speciality speciality;
     @NotNull
     @ManyToOne
     private EducationForm educationForm;
     private Integer cource;
-
-    /**
-     * Создание учебного потока
-     *
-     * @param trainingDirectionOrSpeciality - Направление или специальность
-     * @param educationForm - Форма обучения
-     * @param cource - Курс
-     */
-    public AcademicStream(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality, EducationForm educationForm, Integer cource) {
-        this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
-        this.educationForm = educationForm;
-        this.cource = cource;
-    }
-
-    public AcademicStream() {
-    }
 
     public Integer getCource() {
         return cource;
@@ -55,23 +43,37 @@ public class AcademicStream extends AbstractEntity<AcademicStream> {
         this.educationForm = educationForm;
     }
 
-    public TrainingDirectionOrSpeciality getTrainingDirectionOrSpeciality() {
-        return trainingDirectionOrSpeciality;
+    public TrainingDirection getTrainingDirection() {
+        return trainingDirection;
     }
 
-    public void setTrainingDirectionOrSpeciality(TrainingDirectionOrSpeciality trainingDirectionOrSpeciality) {
-        this.trainingDirectionOrSpeciality = trainingDirectionOrSpeciality;
+    public void setTrainingDirection(TrainingDirection trainingDirection) {
+        this.trainingDirection = trainingDirection;
+    }
+
+    public Speciality getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(trainingDirectionOrSpeciality) + " " + String.valueOf(educationForm) + " " + String.valueOf(cource);
+        return "AcademicStream{" + "speciality="
+                + String.valueOf(speciality)
+                + " trainingDirection="
+                + String.valueOf(trainingDirection)
+                + " educationForm=" + String.valueOf(educationForm) + ", cource="
+                + String.valueOf(cource) + '}';
     }
 
     //Недостаточно информации для проверки эквивалентности
     @Override
     protected boolean entityEquals(AcademicStream obj) {
-        return aEqualsField(trainingDirectionOrSpeciality, obj.trainingDirectionOrSpeciality)
+        return aEqualsField(trainingDirection, obj.trainingDirection)
+                && aEqualsField(speciality, obj.speciality)
                 && aEqualsField(educationForm, obj.educationForm)
                 && aEqualsField(cource, obj.cource);
     }

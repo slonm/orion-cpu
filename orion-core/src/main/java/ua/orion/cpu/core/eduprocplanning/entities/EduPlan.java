@@ -9,13 +9,16 @@ import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
-import ua.orion.cpu.core.licensing.entities.TrainingDirectionOrSpeciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 
 /**
  * Сущность-учебный план подготовки по специальности (шапка)
  * @author kgp
  */
 @Entity
+@Table(uniqueConstraints =
+@UniqueConstraint(columnNames = {"qualification",
+    "licenseRecord", "introducingDate"}))
 public class EduPlan extends AbstractEntity<EduPlan> {
 
     private static final long serialVersionUID = 1L;
@@ -23,22 +26,20 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Double trainingTerm;
     private Qualification qualification;
     private Calendar introducingDate;
+    //Дисциплины учебного плана
+    private Set<EduPlanDiscipline> eduPlanDisciplines = new HashSet<EduPlanDiscipline>();
     private Calendar confirmationDate;
     private String confirmationPerson;
-    //Пользовательский тип данных для вывода списка циклов учебного плана в гриде
-    //@DataType("EduPlanDisciplineCycles")
-    @OrderBy("eduPlanDisciplineCycleNumber")
-    private Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles = new HashSet<EduPlanDisciplineCycle>();
 
     public EduPlan() {
     }
 
-    public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification, Calendar introducingDate, Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles, Calendar confirmationDate, String confirmationPerson) {
+    public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
+            Calendar introducingDate, Calendar confirmationDate, String confirmationPerson) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
         this.introducingDate = introducingDate;
-        this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
         this.confirmationDate = confirmationDate;
         this.confirmationPerson = confirmationPerson;
     }
@@ -50,7 +51,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * @return запись лиценизии, привязанная к данному учебному плану
      */
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "licenseRecord", nullable = false)
     public LicenseRecord getLicenseRecord() {
         try {
             return licenseRecord;
@@ -68,9 +69,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * к данному плану (нужен для шапки плана)
      */
     @Transient
-    public String getKATDCode() {
+    public String getKnowledgeAreaCode() {
         try {
-            return licenseRecord.getKnowledgeAreaOrTrainingDirectionCode();
+            return licenseRecord.getKnowledgeAreaCode();
         } catch (NullPointerException e) {
             return null;
         }
@@ -82,9 +83,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * (нужен для шапки плана)
      */
     @Transient
-    public String getKnowledgeAreaOrTrainingDirection() {
+    public String getKnowledgeAreaName() {
         try {
-            return licenseRecord.getKnowledgeAreaOrTrainingDirectionName();
+            return licenseRecord.getKnowledgeAreaName();
         } catch (NullPointerException e) {
             return null;
         }
@@ -105,13 +106,38 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название направления подгoтовки/специальности данного учебного плана
+     * @return название направления подгoтовки данного учебного плана
      * (нужен для шапки плана)
      */
     @Transient
-    public TrainingDirectionOrSpeciality getTrainingDirectionOrSpeciality() {
+    public String getTrainingDirectionName() {
         try {
-            return licenseRecord.getTrainingDirectionOrSpeciality();
+            return licenseRecord.getTrainingDirection().getName();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return название специальности данного учебного плана
+     * (нужен для шапки плана)
+     */
+    @Transient
+    public String getSpecialityName() {
+        try {
+            return licenseRecord.getSpeciality().getName();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return название групп лицензионных записей (подготовка бакалавров, для колледжа и т.д.)
+     */
+    @Transient
+    public String getLicenseRecordGroupName() {
+        try {
+            return licenseRecord.getLicenseRecordGroup().getName();
         } catch (NullPointerException e) {
             return null;
         }
@@ -169,22 +195,14 @@ public class EduPlan extends AbstractEntity<EduPlan> {
         this.introducingDate = introducingDate;
     }
 
-    //TODO Написать компаратор, выводящий циклы в порядке возрастания их номера в учебном плане (eduPlanDisciplineCycleNumber)
-    /**
-     * Двунаправленная ассоциация с EduPlanDisciplineCycle
-     * @return набор циклов дисциплин данного учебного плана
-     */
-//    @Sort(type = SortType.COMPARATOR, comparator=EduPlanDisciplineCycle.EduPlanDisciplineCycleComparator.class)
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(joinColumns = {
-        @JoinColumn(name = "EDUPLAN_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "EDUPLANDISCIPLINECYCLE_ID")})
-    public Set<EduPlanDisciplineCycle> getEduPlanDisciplineCycles() {
-        return eduPlanDisciplineCycles;
+    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eduPlan")
+    public Set<EduPlanDiscipline> getEduPlanDisciplines() {
+        return eduPlanDisciplines;
     }
 
-    public void setEduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
-        this.eduPlanDisciplineCycles = eduPlanDisciplineCycles;
+    public void setEduPlanDisciplines(Set<EduPlanDiscipline> eduPlanDisciplines) {
+        this.eduPlanDisciplines = eduPlanDisciplines;
     }
 
     /**

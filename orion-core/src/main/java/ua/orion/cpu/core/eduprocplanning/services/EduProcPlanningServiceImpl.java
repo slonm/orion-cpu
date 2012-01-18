@@ -34,20 +34,45 @@ public class EduProcPlanningServiceImpl implements EduProcPlanningService {
     }
 
     @Override
-    public LicenseRecord findLicenseRecordByExample(String serial, String number,
+    public LicenseRecord findLicenseRecordByTrainingDirection(String serial, String number,
             Calendar issue, String eql,
-            String tdos, Calendar termination) {
+            String td, Calendar termination) {
         String source = "select lr from LicenseRecord lr"
                 + " join lr.license l join lr.educationalQualificationLevel eql"
-                + " join lr.trainingDirectionOrSpeciality tdos"
+                + " join lr.trainingDirection td"
                 + " where l.serial=:serial and l.number=:number and l.issue=:issue and eql.UKey=:eql"
-                + " and tdos.name=:tdos and lr.termination=:termination";
+                + " and td.name=:td and lr.termination=:termination";
         TypedQuery<LicenseRecord> query = es.getEntityManager().createQuery(source, LicenseRecord.class);
         query.setParameter("serial", serial);
         query.setParameter("number", number);
         query.setParameter("issue", issue);
         query.setParameter("eql", eql);
-        query.setParameter("tdos", tdos);
+        query.setParameter("td", td);
+        query.setParameter("termination", termination);
+        List<LicenseRecord> l = query.setMaxResults(1).getResultList();
+        if (l.isEmpty()) {
+            return null;
+        } else {
+            return l.get(0);
+        }
+    }
+    
+    @Override
+    public LicenseRecord findLicenseRecordBySpeciality(String serial, String number,
+            Calendar issue, String eql,
+            String speciality, Calendar termination) {
+        String source = "select lr from LicenseRecord lr"
+                + " join lr.license l join lr.educationalQualificationLevel eql"
+                + " join lr.trainingDirection td"
+                + " join td.speciality sp"
+                + " where l.serial=:serial and l.number=:number and l.issue=:issue and eql.UKey=:eql"
+                + " and sp.name=:speciality and lr.termination=:termination";
+        TypedQuery<LicenseRecord> query = es.getEntityManager().createQuery(source, LicenseRecord.class);
+        query.setParameter("serial", serial);
+        query.setParameter("number", number);
+        query.setParameter("issue", issue);
+        query.setParameter("eql", eql);
+        query.setParameter("speciality", speciality);
         query.setParameter("termination", termination);
         List<LicenseRecord> l = query.setMaxResults(1).getResultList();
         if (l.isEmpty()) {
