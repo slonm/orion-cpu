@@ -43,9 +43,9 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     PersonsWebIOCModule.class,
     StudentsWebIOCModule.class,
     EmployeesWebIOCModule.class,
-//    CpuGridModule.class,
-//    CpuGridJPA.class,
-//    CpuGridJPACrudModule.class
+    CpuGridModule.class,
+    CpuGridJPA.class,
+    CpuGridJPACrudModule.class
 })
 public class AppModule {
 
