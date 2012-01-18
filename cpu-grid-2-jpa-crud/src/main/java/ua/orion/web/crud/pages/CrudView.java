@@ -152,22 +152,22 @@ public class CrudView {
         return (entityClass != null) ? messages.get("entity." + entityClass.getSimpleName()) : "Unknown entity";
     }
 
-    /**
-     * Сохранение объекта
-     */
-    public Object onSuccessFromEditForm() {
-        feedbackMessage = null;
-        try {
-            // изменяем объект в базе данных
-            SecurityUtils.getSubject().checkPermission(entityClass.getSimpleName() + ":update:" + entityObject.getId());
-            entityService.merge(entityObject);
-            feedbackMessage = messages.get("crud-changes-saved-successfully");
-        } catch (RuntimeException ex) {
-            LOG.error(ex.getClass().getName() + " " + ex.getMessage());
-            feedbackMessage = messages.get("message.update-error");
-        }
-        return null;
-    }
+    //    /**
+    //     * Сохранение объекта
+    //     */
+    //    public Object onSuccessFromEditForm() {
+    //        feedbackMessage = null;
+    //        try {
+    //            // изменяем объект в базе данных
+    //            SecurityUtils.getSubject().checkPermission(entityClass.getSimpleName() + ":update:" + entityObject.getId());
+    //            entityService.merge(entityObject);
+    //            feedbackMessage = messages.get("crud-changes-saved-successfully");
+    //        } catch (RuntimeException ex) {
+    //            LOG.error(ex.getClass().getName() + " " + ex.getMessage());
+    //            feedbackMessage = messages.get("message.update-error");
+    //        }
+    //        return null;
+    //    }
 
     public boolean getIsEntityClassFound() {
         return entityClass != null;
