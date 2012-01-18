@@ -25,9 +25,8 @@ import ua.orion.core.persistence.MetaEntity;
  * @author dobro
  */
 @SuppressWarnings("unused")
-@Import(stylesheet = {"window/css/default.css", "window/css/spread.css","crud.css"},
+@Import(stylesheet = {"window/css/default.css", "window/css/spread.css", "crud.css"},
 library = {"window/js/window.js", "window/js/window_ext.js", "window/js/debug.js", "CrudList.js"})
-
 public class CrudList {
 
     /**
@@ -42,11 +41,6 @@ public class CrudList {
      */
     @Inject
     private Request request;
-    ///**
-    // * Хранит последнюю запрошенную страницу
-    // */
-    //@Inject
-    //private LastPageHolder lastPageHolder;
     /**
      * Логгер
      */
@@ -88,7 +82,6 @@ public class CrudList {
     /**
      * Класс сущности, с которой будем работать
      */
-    @Persist
     private Class<? extends IEntity> objectClass;
     ///**
     // * Сохранённые настройки таблицы
@@ -140,19 +133,22 @@ public class CrudList {
     }
 
     public Object onActivate(EventContext context) {
+        // тип сущности
         Class<? extends IEntity> objClass = null;
+
         // надо проверить, было ли отправлено новое имя класса
         if (context.getCount() >= 1) {
             // имя класса есть, достаем класс
             objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
 
         }
-        // сравниваем с тем, что было раньше
-        // если новое имя отличается от старого, то запомнить 
-        // новые значения
-        if (objClass != null && !objClass.equals(objectClass)) {
-            // если новый класс отличается от старого, запоминаем новый класс
+
+        //if (objClass != null && !objClass.equals(objectClass)) {
+        // извлекаем из контекста активации класс сущности
+        if (objClass != null) {
             objectClass = objClass;
+        }else{
+            return this.startPageName;
         }
 
         // Читаем описание меню
