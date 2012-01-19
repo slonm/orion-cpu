@@ -7,6 +7,7 @@ import ua.orion.core.utils.Defense;
 
 /**
  * Сущность дисциплина учебного плана (может читаться в нескольких семестрах)
+ *
  * @author kgp
  */
 @Entity
@@ -14,16 +15,14 @@ import ua.orion.core.utils.Defense;
 public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     private static long serialVersionUID = 1L;
-    
     //Поле связи с учебным планом, к которому принадлежит дисциплина
     private EduPlan eduPlan;
-    //является ли дисциплина обязательной или выборочной (она может принадлежать 
-    //как к нормативным, так и к выборочным циклас)
-    private Boolean isMandatory;
+    //является дисциплина обязательной, выборочной или факультативной
+    private EduPlanDisciplineVariant disciplineVariant;
     //Номер дисциплины в учебном плане (берётся из ОПП)
     private String disciplineNumber;
     //Название дисциплины (берётся из справочника)
-    private Discipline discipline;
+    private Set<Discipline> disciplines;
     //TODO НА ФОРМЕ ВВОДА КОЛИЧЕСТВА КРЕДИТОВ ОГРАНИЧИТЬ ЗНАЧЕНИЯ 
     //ТОЛЬКО С ДРОБНОЙ ЧАСТЬЮ .0 ИЛИ .25  ИЛИ .5 ИЛИ .75 
     //Количество кредитов ECTS для общего объема часов дисциплины 
@@ -41,40 +40,54 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     //№ семестра, в котором проводится контрольная работа по дисциплине (если в нескольких семестрах,
     //то они перечисляются арабскими цифрами через запятую или тире)
     private String controlWorkSemester;
+    //Кол-во экзаменов
+    private Integer examSemestrQuantity;
+    //Кол-во зачетов
+    private Integer creditSemesterQuantity;
+    //Кол-во курсовых работ
+    private Integer courseWorkSemesterQuantity;
+    //Кол-во контрольных работ
+    private Integer controlWorkSemesterQuantity;
     //Количество часов лекций по дисциплине
     private Integer lecturesHours;
     // Количество часов лабораторных работ по дисциплине
     private Integer labsHours;
     //Количество часов практических занятий, семинаров по дисциплине
     private Integer practicesHours;
-
     //Теги дисциплины
     private Set<EduPlanDisciplineTag> eduPlanDisciplineTags = new HashSet();
-    
+
     //ПОКА НЕ ИСПОЛЬЗУЮ
     //Набор дисциплин данного учебного плана, которые должны предшествовать изучению данной дисциплины
 //    private Set<EduPlanDiscipline> eduPlanDisciplinePrevious = new HashSet<EduPlanDiscipline>();
-    
     public EduPlanDiscipline() {
     }
 
-     public EduPlanDiscipline(EduPlan eduPlan, Boolean isMandatory, 
-             String disciplineNumber, Discipline discipline, Double ectsCreditAmount, String examSemestr, 
-             String creditSemester, String courseWorkSemester, String controlWorkSemester, 
-             Integer lecturesHours, Integer labsHours, Integer practicesHours) {
+    public EduPlanDiscipline(EduPlan eduPlan, EduPlanDisciplineVariant disciplineVariant,
+            String disciplineNumber, Set<Discipline> disciplines, Double ectsCreditAmount, String examSemestr,
+            String creditSemester, String courseWorkSemester, String controlWorkSemester,
+            Integer examSemestrQuantity, Integer creditSemesterQuantity,
+            Integer courseWorkSemesterQuantity, Integer controlWorkSemesterQuantity,
+            Integer lecturesHours, Integer labsHours, Integer practicesHours) {
         this.eduPlan = eduPlan;
-        this.isMandatory = isMandatory;
+        this.disciplineVariant = disciplineVariant;
         this.disciplineNumber = disciplineNumber;
-        this.discipline = discipline;
+        this.disciplines = disciplines;
         this.ectsCreditAmount = ectsCreditAmount;
         this.examSemestr = examSemestr;
         this.creditSemester = creditSemester;
         this.courseWorkSemester = courseWorkSemester;
         this.controlWorkSemester = controlWorkSemester;
+        this.examSemestrQuantity = examSemestrQuantity;
+        this.creditSemesterQuantity = creditSemesterQuantity;
+        this.courseWorkSemesterQuantity = courseWorkSemesterQuantity;
+        this.controlWorkSemesterQuantity = controlWorkSemesterQuantity;
         this.lecturesHours = lecturesHours;
         this.labsHours = labsHours;
         this.practicesHours = practicesHours;
     }
+
+    
     
     //Двунаправленная ассоциация с планом, к которому принадлежит данная дисциплина
     @ManyToOne
@@ -85,13 +98,13 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     public void setEduPlan(EduPlan eduPlan) {
         this.eduPlan = eduPlan;
     }
-    
-     public Boolean getIsMandatory() {
-        return isMandatory;
+
+    public EduPlanDisciplineVariant getDisciplineVariant() {
+        return disciplineVariant;
     }
 
-    public void setIsMandatory(Boolean isMandatory) {
-        this.isMandatory = isMandatory;
+    public void setDisciplineVariant(EduPlanDisciplineVariant disciplineVariant) {
+        this.disciplineVariant = disciplineVariant;
     }
 
     public String getDisciplineNumber() {
@@ -102,30 +115,31 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         this.disciplineNumber = disciplineNumber;
     }
 
-    //Однонаправленная ассоциация со справочником дисциплин (Названий дисциплин)
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    public Discipline getDiscipline() {
-        return discipline;
+    @OneToMany
+ 
+    public Set<Discipline> getDisciplines() {
+        return disciplines;
     }
 
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = Defense.notNull(discipline, "discipline");
+    public void setDisciplines(Set<Discipline> disciplines) {
+        this.disciplines = disciplines;
     }
 
     /**
-     * Геттер для отображения общего количества часов дисциплины в гриде 
-     * (сеттер для вычислимого поля, как и само поле, не нужны)
-     * 
-     * "Натяжка" предметной области: кредиты могут тиеть значение с кратносью 0,25,
-     * а число часов дисциплины должно быть целым
-     * При количестве часов в одном кредите, кратном 4, всё будет ОК
-     * Надеемся на мудрость Министерства образования
-     * @return  целое число часов, соответсвующих общему числу кредитов дисциплины
+     * Геттер для отображения общего количества часов дисциплины в гриде (сеттер
+     * для вычислимого поля, как и само поле, не нужны)
+     *
+     * "Натяжка" предметной области: кредиты могут тиеть значение с кратносью
+     * 0,25, а число часов дисциплины должно быть целым При количестве часов в
+     * одном кредите, кратном 4, всё будет ОК Надеемся на мудрость Министерства
+     * образования
+     *
+     * @return целое число часов, соответсвующих общему числу кредитов
+     * дисциплины
      */
     @Transient
     public Integer getTotalHours() {
-        return (int) (ectsCreditAmount*NormativeValue.ECTSCREDIT);
+        return (int) (ectsCreditAmount * NormativeValue.ECTSCREDIT);
     }
 
     public Double getEctsCreditAmount() {
@@ -191,16 +205,49 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     public void setPracticesHours(Integer practicesHours) {
         this.practicesHours = practicesHours;
     }
-    
+
+    public Integer getControlWorkSemesterQuantity() {
+        return controlWorkSemesterQuantity;
+    }
+
+    public void setControlWorkSemesterQuantity(Integer controlWorkSemesterQuantity) {
+        this.controlWorkSemesterQuantity = controlWorkSemesterQuantity;
+    }
+
+    public Integer getCourseWorkSemesterQuantity() {
+        return courseWorkSemesterQuantity;
+    }
+
+    public void setCourseWorkSemesterQuantity(Integer courseWorkSemesterQuantity) {
+        this.courseWorkSemesterQuantity = courseWorkSemesterQuantity;
+    }
+
+    public Integer getCreditSemesterQuantity() {
+        return creditSemesterQuantity;
+    }
+
+    public void setCreditSemesterQuantity(Integer creditSemesterQuantity) {
+        this.creditSemesterQuantity = creditSemesterQuantity;
+    }
+
+    public Integer getExamSemestrQuantity() {
+        return examSemestrQuantity;
+    }
+
+    public void setExamSemestrQuantity(Integer examSemestrQuantity) {
+        this.examSemestrQuantity = examSemestrQuantity;
+    }
+
     /**
-     * Геттер для отображения часов самостоятельной работы студента по дисциплине в гриде 
-     * (сеттер для вычислимого поля, как и само поле, не нужны)
+     * Геттер для отображения часов самостоятельной работы студента по
+     * дисциплине в гриде (сеттер для вычислимого поля, как и само поле, не
+     * нужны)
      */
     @Transient
     public Integer getStudentIndependWorkHours() {
-        return this.getTotalHours()-lecturesHours-labsHours-practicesHours;
+        return this.getTotalHours() - lecturesHours - labsHours - practicesHours;
     }
-    
+
     //Двунаправленная ассоциация с тегами дисциплин
     @ManyToMany
     @JoinTable(joinColumns = {
@@ -213,7 +260,7 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     public void setEduPlanDisciplineTags(Set<EduPlanDisciplineTag> eduPlanDisciplineTags) {
         this.eduPlanDisciplineTags = eduPlanDisciplineTags;
     }
-    
+
 //    /**
 //     * @return Набор дисциплин, которые обязательно должны предшествовать изучению данной дисциплины
 //     */
@@ -224,13 +271,12 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 //    public void setEduPlanDisciplinePrevious(Set<EduPlanDiscipline> eduPlanDisciplinePrevious) {
 //        this.eduPlanDisciplinePrevious = eduPlanDisciplinePrevious;
 //    }
-
     @Override
     public String toString() {
         String name = "<NULL>";
         String ePlan = "<NULL>";
         try {
-            name = this.discipline.getName();
+            name = this.disciplines.toString();
         } catch (NullPointerException e) {
         }
         try {
@@ -242,7 +288,7 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
 
     @Override
     protected boolean entityEquals(EduPlanDiscipline obj) {
-        return aEqualsField(this.discipline.getName(), obj.discipline.getName()) && aEqualsField(eduPlan, obj.eduPlan);
+        return aEqualsField(this.disciplines.hashCode(), obj.disciplines.hashCode()) && aEqualsField(eduPlan, obj.eduPlan);
     }
 
     @Override

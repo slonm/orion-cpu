@@ -4,10 +4,7 @@ import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.*;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.eduprocplanning.entities.Discipline;
-import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
-import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
-import ua.orion.cpu.core.eduprocplanning.entities.Qualification;
+import ua.orion.cpu.core.eduprocplanning.entities.*;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.services.MenuLinkBuilder;
 
@@ -18,6 +15,7 @@ public class EduProcPlanningWebIOCModule {
 
     /**
      * Регистрация блоков для автоформирования моделей данных
+     *
      * @param configuration
      * @author sl
      */
@@ -32,8 +30,9 @@ public class EduProcPlanningWebIOCModule {
 
     /**
      * Add menu item to configuration
+     *
      * @param configuration
-     * @param pageLinkCreatorFactory 
+     * @param pageLinkCreatorFactory
      */
     public static void contributeOrionMenuService(MappedConfiguration<String, IMenuLink> configuration,
             MenuLinkBuilder mlb) {
@@ -49,6 +48,9 @@ public class EduProcPlanningWebIOCModule {
 
         path = "Start>EduProcPlanning>Reference>Discipline";
         configuration.add(path, mlb.buildCrudPageMenuLink(Discipline.class, path));
+
+        path = "Start>EduProcPlanning>Reference>EduPlanDisciplineVariant";
+        configuration.add(path, mlb.buildCrudPageMenuLink(EduPlanDisciplineVariant.class, path));
 
         path = "Start>EduProcPlanning>Reference>Qualification";
         configuration.add(path, mlb.buildCrudPageMenuLink(Qualification.class, path));
