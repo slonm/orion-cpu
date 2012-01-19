@@ -30,18 +30,20 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Set<EduPlanDiscipline> eduPlanDisciplines = new HashSet<EduPlanDiscipline>();
     private Calendar confirmationDate;
     private String confirmationPerson;
+    private EduPlanState eduPlanState;
 
     public EduPlan() {
     }
 
     public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
-            Calendar introducingDate, Calendar confirmationDate, String confirmationPerson) {
+            Calendar introducingDate, Calendar confirmationDate, String confirmationPerson, EduPlanState eduPlanState) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
         this.introducingDate = introducingDate;
         this.confirmationDate = confirmationDate;
         this.confirmationPerson = confirmationPerson;
+        this.eduPlanState = eduPlanState;
     }
 
     /**
@@ -227,6 +229,15 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     public void setConfirmationPerson(String confirmationPerson) {
         this.confirmationPerson = confirmationPerson;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public EduPlanState getEduPlanState() {
+        return eduPlanState;
+    }
+
+    public void setEduPlanState(EduPlanState eduPlanState) {
+        this.eduPlanState = eduPlanState;
     }
 
     @Override

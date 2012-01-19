@@ -84,7 +84,7 @@ public class EduProcPlanningSeedEntity {
 
             //--Создание экземпляра учебного планв (для бакалавров ПИ 2009г утверждения)
             //привязка к нему набора циклов и сохранение
-            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко"));
+            EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко", EduPlanState.ACTUAL));
 
             //--Создание дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) и их сохранение
             EduPlanDiscipline foreignLangPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
