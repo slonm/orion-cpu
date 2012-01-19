@@ -13,6 +13,7 @@ import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 
 /**
  * Сущность-учебный план подготовки по специальности (шапка)
+ *
  * @author kgp
  */
 @Entity
@@ -30,24 +31,28 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     private Set<EduPlanDiscipline> eduPlanDisciplines = new HashSet<EduPlanDiscipline>();
     private Calendar confirmationDate;
     private String confirmationPerson;
+    private Boolean isValid;
 
     public EduPlan() {
     }
 
     public EduPlan(LicenseRecord licenseRecord, Double trainingTerm, Qualification qualification,
-            Calendar introducingDate, Calendar confirmationDate, String confirmationPerson) {
+            Calendar introducingDate, Calendar confirmationDate, String confirmationPerson, Boolean isValid) {
         this.licenseRecord = licenseRecord;
         this.trainingTerm = trainingTerm;
         this.qualification = qualification;
         this.introducingDate = introducingDate;
         this.confirmationDate = confirmationDate;
         this.confirmationPerson = confirmationPerson;
+        this.isValid = isValid;
     }
 
     /**
      * Однонаправленная ассоциация с лицензионной записью, определяющей:
-     * образовательно-квалификационный уровень, код и название области знаний/направления
-     * подготовки, код и название направления подготовки/специальности
+     * образовательно-квалификационный уровень, код и название области
+     * знаний/направления подготовки, код и название направления
+     * подготовки/специальности
+     *
      * @return запись лиценизии, привязанная к данному учебному плану
      */
     @ManyToOne
@@ -65,7 +70,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     *  @return 4-значный код облаcти знаний/направления подготовки, привязанного
+     * @return 4-значный код облаcти знаний/направления подготовки, привязанного
      * к данному плану (нужен для шапки плана)
      */
     @Transient
@@ -78,9 +83,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название области знаний/направления подготовки, привязанного
-     * к направлению обучения/специальности данного учебного плана
-     * (нужен для шапки плана)
+     * @return название области знаний/направления подготовки, привязанного к
+     * направлению обучения/специальности данного учебного плана (нужен для
+     * шапки плана)
      */
     @Transient
     public String getKnowledgeAreaName() {
@@ -106,8 +111,8 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название направления подгoтовки данного учебного плана
-     * (нужен для шапки плана)
+     * @return название направления подгoтовки данного учебного плана (нужен для
+     * шапки плана)
      */
     @Transient
     public String getTrainingDirectionName() {
@@ -119,8 +124,8 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название специальности данного учебного плана
-     * (нужен для шапки плана)
+     * @return название специальности данного учебного плана (нужен для шапки
+     * плана)
      */
     @Transient
     public String getSpecialityName() {
@@ -132,7 +137,8 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return название групп лицензионных записей (подготовка бакалавров, для колледжа и т.д.)
+     * @return название групп лицензионных записей (подготовка бакалавров, для
+     * колледжа и т.д.)
      */
     @Transient
     public String getLicenseRecordGroupName() {
@@ -144,8 +150,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return образовательно-квалифиувционный уровень направления подготовки/специальности,
-     * привязанному к данному учебному плану (нужен для шапки плана)
+     * @return образовательно-квалифиувционный уровень направления
+     * подготовки/специальности, привязанному к данному учебному плану (нужен
+     * для шапки плана)
      */
     @Transient
     public EducationalQualificationLevel getEducationalQualificationLevel() {
@@ -165,6 +172,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     /**
      * Устанавливает значение свойства плана Срок обучения
+     *
      * @param trainingTerm the trainingTerm to set
      */
     public void setTrainingTerm(Double trainingTerm) {
@@ -173,8 +181,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     /**
      * Однонаправленная ассоциация с квалификацией
-     * @return название квалификации, получаемой в результате обучения
-     * по данному учебному плану
+     *
+     * @return название квалификации, получаемой в результате обучения по
+     * данному учебному плану
      */
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -206,7 +215,7 @@ public class EduPlan extends AbstractEntity<EduPlan> {
     }
 
     /**
-     * @return Дата затвердження 
+     * @return Дата затвердження
      */
     @Temporal(javax.persistence.TemporalType.DATE)
     public Calendar getConfirmationDate() {
@@ -227,6 +236,14 @@ public class EduPlan extends AbstractEntity<EduPlan> {
 
     public void setConfirmationPerson(String confirmationPerson) {
         this.confirmationPerson = confirmationPerson;
+    }
+
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
     }
 
     @Override
