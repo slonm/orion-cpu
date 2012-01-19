@@ -63,6 +63,13 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                                 </select><button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
                             </div>
                             <!-- Диалог с выбором темы (Конец) -->
+                            <!-- Выбор локали (Начало) -->
+                            <div>
+                                <t:loop t:source="supportedLocales" t:value="locale">
+                                    <t:ori.ExternalLink link="Link">${locale}</t:ori.ExternalLink>
+                                </t:loop>
+                            </div>
+                            <!-- Выбор локали (Конец) -->
                             <t:security.Authenticated>
                                 ${message:label.user}: ${user} <t:if test="role">(${role})</t:if><t:ActionLink t:id="logout"><button class="ui-button-quit">${message:action.logout}</button></t:ActionLink>
                             </t:security.Authenticated>
