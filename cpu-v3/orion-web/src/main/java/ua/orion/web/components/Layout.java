@@ -9,8 +9,13 @@ import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventConstants;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.services.ComponentEventLinkEncoder;
+import org.apache.tapestry5.services.LocalizationSetter;
+import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.apache.tapestry5.services.PageRenderRequestParameters;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
@@ -95,6 +100,18 @@ public class Layout {
     private ThreadRole thRole;
     @Inject
     private ComponentResources cr;
+    @Inject
+    private LocalizationSetter localizationSetter;
+    @Inject
+    private ComponentEventLinkEncoder componentEventLinkEncoder;
+    @Inject
+    private PageRenderLinkSource pageRenderLinkSource;
+    @Inject
+    @Symbol("tapestry.supported-locales")
+    private String supported_locales;
+    @Property
+    private String locale;
+
     public String getRole() {
         return thRole.getRole();
     }
@@ -108,8 +125,8 @@ public class Layout {
     @SetupRender
     public void SetupRender() {
         if (!cr.isBound("menudata")) {
-            menudata = request.getParameter("menupath") == null ? "Start" : 
-                    request.getParameter("menupath");
+            menudata = request.getParameter("menupath") == null ? "Start"
+                    : request.getParameter("menupath");
         }
         List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryToolsLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
         for (Asset library : libraries) {
@@ -125,5 +142,54 @@ public class Layout {
         SecurityUtils.getSubject().logout();
         response.sendRedirect(request.getContextPath());
         return false;
+    }
+
+    public String[] getSupportedLocales() {
+        return supported_locales.split(",");
+    }
+
+    public Link getLink() {
+        String requestLocale = getRequestLocale();
+        PageRenderRequestParameters prrp = componentEventLinkEncoder.decodePageRenderRequest(request);
+        Link link;
+        if (prrp != null) {
+            link = componentEventLinkEncoder.createPageRenderLink(prrp);
+            for (String s : request.getParameterNames()) {
+                link.addParameter(s, request.getParameter(s));
+            }
+        }else{
+            link = pageRenderLinkSource.createPageRenderLink("");
+        }
+        if (requestLocale == null) {
+            link = link.copyWithBasePath("/" + locale + link.getBasePath());
+        } else {
+            String base = link.getBasePath();
+            base = base.substring(locale.length() + 1);
+            if (!base.isEmpty() && base.charAt(0) == '/') {
+                base = base.substring(1);
+            }
+            String newBase = "/" + locale;
+            if (!base.isEmpty()) {
+                newBase += "/" + base;
+            }
+            link = link.copyWithBasePath(newBase);
+        }
+        return link;
+    }
+
+    public String getRequestLocale() {
+        String path = request.getPath();
+        String[] split = path.substring(1).split("/");
+        if (split.length == 1 && split[0].equals("")) {
+            return null;
+        }
+        String possibleLocaleName = split[0];
+        // Might be just the page activation context, or it might be locale then page
+        // activation context
+        if (localizationSetter.isSupportedLocaleName(possibleLocaleName)) {
+            return possibleLocaleName;
+        } else {
+            return null;
+        }
     }
 }
