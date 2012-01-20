@@ -63,8 +63,7 @@ public class EduProcPlanningServiceImpl implements EduProcPlanningService {
             String speciality, Calendar termination) {
         String source = "select lr from LicenseRecord lr"
                 + " join lr.license l join lr.educationalQualificationLevel eql"
-                + " join lr.trainingDirection td"
-                + " join td.speciality sp"
+                + " join lr.speciality sp"
                 + " where l.serial=:serial and l.number=:number and l.issue=:issue and eql.UKey=:eql"
                 + " and sp.name=:speciality and lr.termination=:termination";
         TypedQuery<LicenseRecord> query = es.getEntityManager().createQuery(source, LicenseRecord.class);

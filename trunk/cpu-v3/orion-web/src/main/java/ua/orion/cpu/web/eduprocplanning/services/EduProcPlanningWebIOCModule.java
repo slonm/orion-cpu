@@ -28,6 +28,8 @@ public class EduProcPlanningWebIOCModule {
 //        configuration.add(new DisplayBlockContribution("EduPlanDisciplineCycles", "eduprocplanning/PropertyBlocks", "DisplayEduPlanDisciplineCycle"));
         //Edit EduPlanDisciplineCycle
 //        configuration.add(new EditBlockContribution("EduPlanDisciplineCycles", "eduprocplanning/PropertyBlocks", "EditEduPlanDisciplineCycle"));
+        configuration.add(new DisplayBlockContribution("EduPlanTrainingDirectionName", "eduprocplanning/PropertyBlocks", "DisplayEduPlanTrainingDirectionName"));
+        configuration.add(new DisplayBlockContribution("EduPlanSpecialityName",        "eduprocplanning/PropertyBlocks", "DisplayEduPlanSpecialityName"));
     }
 
     /**

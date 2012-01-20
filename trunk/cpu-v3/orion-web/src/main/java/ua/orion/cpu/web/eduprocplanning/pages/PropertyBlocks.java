@@ -1,5 +1,6 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -10,21 +11,19 @@ import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
-import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.AjaxFormLoop;
 import org.apache.tapestry5.corelib.components.Loop;
-import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.internal.SelectModelImpl;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.BeanEditContext;
 import org.apache.tapestry5.services.PropertyEditContext;
 import org.apache.tapestry5.services.PropertyOutputContext;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
+import ua.orion.web.CurrentBeanContext;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -46,14 +45,14 @@ public class PropertyBlocks {
     //Свойство, представляющее контекст, получаемый при выводе грида на экран
     @Environmental
     @Property(write = false)
-    private PropertyOutputContext displayContext;
+    private PropertyOutputContext outputContext;
     //Свойство, представляющее контекст, получаемый при выводе бинэдитора на экран
     @Environmental
     @Property(write = false)
     private PropertyEditContext editContext;
     @Environmental
     @Property(write = false)
-    private BeanEditContext beanEditContext;
+    private CurrentBeanContext currentBeanContext;
     //Компонент Loop, выводящий в грид все элементы SortedSet<EduPlanDisciplineCycle> 
     //eduPlanDisciplineCycles
     //В параметрах компонента указаны: в source - метод EduPlanDisciplineCyclesLoop(), возвращающий
@@ -87,20 +86,20 @@ public class PropertyBlocks {
      * @return Блок, заменющий стандартную ссылку добавления записи компонента ajaxformloop
      */
     public Block getAddRowBlock() {
-	return addRowBlock;
+        return addRowBlock;
     }
 
     public void setAddRowBlock(Block addRowBlock) {
-	this.addRowBlock = addRowBlock;
+        this.addRowBlock = addRowBlock;
     }
-    
+
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
      * @return 
      */
     public Set getEduPlanDisciplineCyclesD() {
-	tmpSet = (Set<EduPlanDisciplineCycle>) displayContext.getPropertyValue();
-	return Collections.unmodifiableSet(tmpSet);
+        tmpSet = (Set<EduPlanDisciplineCycle>) outputContext.getPropertyValue();
+        return Collections.unmodifiableSet(tmpSet);
     }
 
     /**
@@ -190,16 +189,35 @@ public class PropertyBlocks {
     }
 
     public SelectModel getEPPCycleNameSelectModel() {
-	SelectModel selectModel = dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
-	List<OptionModel> models = selectModel.getOptions();
-	Collections.sort(models, new Comparator<OptionModel>() {
+        SelectModel selectModel = dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
+        List<OptionModel> models = selectModel.getOptions();
+        Collections.sort(models, new Comparator<OptionModel>() {
 
-	    @Override
-	    public int compare(OptionModel o1, OptionModel o2) {
-		return o1.getValue().toString().compareTo(o2.getValue().toString());
-	    }
-	});
-	SelectModel a = new SelectModelImpl(selectModel.getOptionGroups(), models);
-	return a;
+            @Override
+            public int compare(OptionModel o1, OptionModel o2) {
+                return o1.getValue().toString().compareTo(o2.getValue().toString());
+            }
+        });
+        SelectModel a = new SelectModelImpl(selectModel.getOptionGroups(), models);
+        return a;
+    }
+    @Property
+    private String specialityKind;
+
+    public String getSpecialityClassify() {
+        EduPlan eduPlan = (EduPlan) currentBeanContext.getCurrentBean();
+        return eduPlan.getLicenseRecord().getSpeciality().getClassify();
+    }
+
+    public List getSpecialityKinds() {
+        EduPlan eduPlan = (EduPlan) currentBeanContext.getCurrentBean();
+        //из eduPlan нужно получить перечень специализаций
+        List<String> list = new ArrayList<>();
+        if (eduPlan.getLicenseRecord().getSpeciality() != null) {
+            list.add("demo1");
+            list.add("demo2");
+            list.add("demo3");
+        }
+        return list;
     }
 }

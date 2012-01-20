@@ -158,7 +158,7 @@ public class LicensingSeedEntity {
             Speciality tdosES_SM = es.findUniqueOrPersist(new Speciality("Економічна статистика", "ЕС", "10", tdosPhysV_B, null, false));
             //Менеджмент
             Speciality tdosMN_B = es.findUniqueOrPersist(new Speciality("Менеджмент", "М", "00", tdosPhysV_B, null, false));
-            Speciality tdosMO_SM = es.findUniqueOrPersist(new Speciality("Менеджмент організації", "МО", "01", tdosPhysV_B, null, false));
+            Speciality tdosMO_SM = es.findUniqueOrPersist(new Speciality("Менеджмент організації", "МО", "01", tdosPhysV_B, "за видами економічної діяльності", false));
             Speciality tdosMZED_SM = es.findUniqueOrPersist(new Speciality("Менеджмент зовнішньо-економічної діяльності", "МЗЕД", "06", tdosPhysV_B, null, false));
             //Туризм
             Speciality tdosTR_B = es.findUniqueOrPersist(new Speciality("Туризм", "Т", "00", tdosPhysV_B, null, false));

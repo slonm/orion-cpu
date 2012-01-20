@@ -1,0 +1,23 @@
+DIV.ori_tabControl {
+}
+
+A.ori_tab {
+    background: url( white-top-bottom.gif ) repeat-x scroll 0 -1px;
+    color: black;
+    border: 1px solid #98c0f4;
+/*    float: left;*/
+    padding-left: 3px;
+    padding-right: 3px;
+/*    padding-top: 2px;
+    padding-bottom: 2px;*/
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    cursor: pointer;
+/*    width: 200px;;*/
+    text-decoration:none;
+}
+
+.active {
+    font-weight: bold;
+}

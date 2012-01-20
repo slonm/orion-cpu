@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<div id="${clientId}" class="ori_tabControl" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <span t:type="Loop" source="panelIds" value="panelId" id="${clientId}_${panelId}">
+        <t:eventLink class="ori_tab" context="${panelId}" 
+                     event="select" zone="${contentZone}">
+            ${panelTitle}
+        </t:eventLink>
+    </span>
+</div>
