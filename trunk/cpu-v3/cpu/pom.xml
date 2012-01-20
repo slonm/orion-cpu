@@ -49,7 +49,7 @@
                 <version>6.1.26</version>
                 <configuration>
                     <contextPath>/</contextPath>
-                    <!--scanIntervalSeconds>5</scanIntervalSeconds-->
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <!-- Log to the console. -->
                     <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
                         <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug
