@@ -27,34 +27,34 @@ public class EduProcPlanningSeedEntity {
             EntityService es, EduProcPlanningService epps) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(EduProcPlanningSymbols.EDUPROC_PLANNING_LIB));
         //---------Заполнение справочников
-        //---------Циклы дисциплин учебных планов----------
-        EPPCycle humsocecon_DC = es.findUniqueOrPersist(new EPPCycle("Цикл гуманітарної та соціально-економічної підготовки", "ЦГСЭП"));
-        EPPCycle mathnatsci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл математичної, природничо-наукової підготовки", "ЦМПНП"));
-        EPPCycle prof_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної та практичної підготовки", "ЦППП"));
-        EPPCycle sochumekonom_DC = es.findUniqueOrPersist(new EPPCycle("Цикл гуманітарних та соціально-економічних дисциплін", "ЦГСЕД"));
-        EPPCycle natursci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл природничо-наукової підготовки", "ЦПНП"));
-        EPPCycle profnd_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної підготовки (нормативні дисципліни)", "ЦППНД"));
-        //---------Квалификации----------
-        Qualification fRTPZ = es.findUniqueOrPersist(new Qualification("фахівець з розробки та тестування програмного забезпечення", ""));
-        Qualification SoftwareEng = es.findUniqueOrPersist(new Qualification("інженер-програміст", ""));
-        Qualification SoftwareMaster = es.findUniqueOrPersist(new Qualification("магістр з програмного забезпечення автоматизованих систем,  інженер-програміст", ""));
-        Qualification tFGPNT = es.findUniqueOrPersist(new Qualification("технічний фахівець в галузі прикладних наук та техніки", ""));
-        Qualification SystemAnalysMaster = es.findUniqueOrPersist(new Qualification("системний аналітик-дослідник", ""));
-        //--Заполнение названий дисциплин ПІ
-        Discipline foreignLang = es.findUniqueOrPersist(new Discipline("Іноземна мова", "Ін.мова"));
-        Discipline pravoznavstvo = es.findUniqueOrPersist(new Discipline("Правознавство", "Правозн."));
-        Discipline mathAnalysis = es.findUniqueOrPersist(new Discipline("Математичний аналіз", "Мат.аналіз"));
-        Discipline physics = es.findUniqueOrPersist(new Discipline("Фізика", "Фізика"));
-        Discipline compDiscrMath = es.findUniqueOrPersist(new Discipline("Комп'ютерна дискретна математика", "КДМ"));
-        Discipline discrStruc = es.findUniqueOrPersist(new Discipline("Дискретні структури", "ДС"));
-        //--Заполнение названий дисциплин CA
-        Discipline ukrainianLang = es.findUniqueOrPersist(new Discipline("Українська мова (за професійним спрямуванням)", "Укр.мова"));
-        Discipline politologiya = es.findUniqueOrPersist(new Discipline("Політологія", "Політолог."));
-        Discipline algGeom = es.findUniqueOrPersist(new Discipline("Алгебра та геометрія", "АГ"));
-        Discipline funcAnalys = es.findUniqueOrPersist(new Discipline("Функціональний аналіз", "Функц.аналіз"));
-        Discipline program = es.findUniqueOrPersist(new Discipline("Програмування", "Прогр."));
-        Discipline model = es.findUniqueOrPersist(new Discipline("Моделювання економічних, екологічних та соціальних процесів", "МЕЕСП"));
         if (testData) {
+            //---------Циклы дисциплин учебных планов----------
+            EPPCycle humsocecon_DC = es.findUniqueOrPersist(new EPPCycle("Цикл гуманітарної та соціально-економічної підготовки", "ЦГСЭП"));
+            EPPCycle mathnatsci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл математичної, природничо-наукової підготовки", "ЦМПНП"));
+            EPPCycle prof_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної та практичної підготовки", "ЦППП"));
+            EPPCycle sochumekonom_DC = es.findUniqueOrPersist(new EPPCycle("Цикл гуманітарних та соціально-економічних дисциплін", "ЦГСЕД"));
+            EPPCycle natursci_DC = es.findUniqueOrPersist(new EPPCycle("Цикл природничо-наукової підготовки", "ЦПНП"));
+            EPPCycle profnd_DC = es.findUniqueOrPersist(new EPPCycle("Цикл професійної підготовки (нормативні дисципліни)", "ЦППНД"));
+            //---------Квалификации----------
+            Qualification fRTPZ = es.findUniqueOrPersist(new Qualification("фахівець з розробки та тестування програмного забезпечення", ""));
+            Qualification SoftwareEng = es.findUniqueOrPersist(new Qualification("інженер-програміст", ""));
+            Qualification SoftwareMaster = es.findUniqueOrPersist(new Qualification("магістр з програмного забезпечення автоматизованих систем,  інженер-програміст", ""));
+            Qualification tFGPNT = es.findUniqueOrPersist(new Qualification("технічний фахівець в галузі прикладних наук та техніки", ""));
+            Qualification SystemAnalysMaster = es.findUniqueOrPersist(new Qualification("системний аналітик-дослідник", ""));
+            //--Заполнение названий дисциплин ПІ
+            Discipline foreignLang = es.findUniqueOrPersist(new Discipline("Іноземна мова", "Ін.мова"));
+            Discipline pravoznavstvo = es.findUniqueOrPersist(new Discipline("Правознавство", "Правозн."));
+            Discipline mathAnalysis = es.findUniqueOrPersist(new Discipline("Математичний аналіз", "Мат.аналіз"));
+            Discipline physics = es.findUniqueOrPersist(new Discipline("Фізика", "Фізика"));
+            Discipline compDiscrMath = es.findUniqueOrPersist(new Discipline("Комп'ютерна дискретна математика", "КДМ"));
+            Discipline discrStruc = es.findUniqueOrPersist(new Discipline("Дискретні структури", "ДС"));
+            //--Заполнение названий дисциплин CA
+            Discipline ukrainianLang = es.findUniqueOrPersist(new Discipline("Українська мова (за професійним спрямуванням)", "Укр.мова"));
+            Discipline politologiya = es.findUniqueOrPersist(new Discipline("Політологія", "Політолог."));
+            Discipline algGeom = es.findUniqueOrPersist(new Discipline("Алгебра та геометрія", "АГ"));
+            Discipline funcAnalys = es.findUniqueOrPersist(new Discipline("Функціональний аналіз", "Функц.аналіз"));
+            Discipline program = es.findUniqueOrPersist(new Discipline("Програмування", "Прогр."));
+            Discipline model = es.findUniqueOrPersist(new Discipline("Моделювання економічних, екологічних та соціальних процесів", "МЕЕСП"));
             //---Списки доступа----------
             //---------Роли----------
             //LicenseReader
@@ -73,6 +73,20 @@ public class EduProcPlanningSeedEntity {
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanSemester:read,insert,update,menu"));
 
             //---------Учебные планы----------
+            //--demo
+            LicenseRecord menSpec = epps.findLicenseRecordBySpeciality("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+                    EducationalQualificationLevel.SPECIALIST_UKEY, "Менеджмент організації",
+                    DateTimeUtils.createCalendar(1, 7, 2015));
+            EduPlan demo = es.findUniqueOrPersist(new EduPlan(menSpec, 4.0, SoftwareMaster, DateTimeUtils.createCalendar(1, 9, 2009), 
+                    DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко", EduPlanState.ACTUAL));
+
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 16, 0, 16));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 32, 0, 32));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "03", physics, 4.0, "1", "", "", "1", 16, 40, 0));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 32, 32, 0));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", discrStruc, 3.5, "3", "", "", "3", 16, 32, 0));
+
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
 
             LicenseRecord pIBach = epps.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
@@ -146,6 +160,7 @@ public class EduProcPlanningSeedEntity {
             es.persist(programSA2009);
             modelSA2009.getEduPlanDisciplineTags().add(pMBach2009ProfND);
             es.persist(modelSA2009);
+
         }
     }
 }

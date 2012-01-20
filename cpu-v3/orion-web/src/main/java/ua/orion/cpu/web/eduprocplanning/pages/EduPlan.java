@@ -37,7 +37,7 @@ public class EduPlan {
     @Property
     @Persist
     private ua.orion.cpu.core.eduprocplanning.entities.EduPlan object;
-
+            
     private boolean isComponentEventRequst() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }

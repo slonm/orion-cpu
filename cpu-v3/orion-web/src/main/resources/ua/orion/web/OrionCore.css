@@ -19,3 +19,10 @@ div.window-content {
     font-size: 15px;
 }
 
+.kinds{
+    display: none;
+}
+
+.kind-status{
+    font-style: italic;
+}

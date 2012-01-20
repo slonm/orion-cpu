@@ -26,7 +26,8 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
                 "knowledgeAreaName", "trainingDirectionName", "specialityName",
                 "licenseRecordGroupName",
                 "educationalQualificationLevel", "trainingTerm",
-                "qualification", "introducingDate","confirmationDate", "confirmationPerson");
+                "qualification", "introducingDate","confirmationDate", "confirmationPerson",
+                "eduPlanState");
         existProps.removeAll(requiredProps);
         model.exclude(existProps.toArray(new String[]{}));
         model.reorder(requiredProps.toArray(new String[]{}));
