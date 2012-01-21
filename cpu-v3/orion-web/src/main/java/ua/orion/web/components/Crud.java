@@ -235,8 +235,4 @@ public class Crud {
     public boolean getIsEdit() {
         return EDIT.equals(mode);
     }
-
-    void onInPlaceUpdate(String zone) {
-        environment.push(CurrentBeanContext.class, currentBeanContext);
-    }
 }
