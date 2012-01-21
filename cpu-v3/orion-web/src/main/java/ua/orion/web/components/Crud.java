@@ -21,7 +21,7 @@ import ua.orion.web.services.TapestryDataSource;
  * Компонент, который предоставляет CRUD для сущностей
  * @author slobodyanuk
  */
-@Import(library = "../WindowUtils.js",stylesheet = "../css/tapestry-crud.css")
+@Import(library = "../WindowUtils.js", stylesheet = "../css/tapestry-crud.css")
 @SuppressWarnings("unused")
 public class Crud {
     //---Components and component's resources---
@@ -90,26 +90,27 @@ public class Crud {
     private static final String DEL = "del";
     @Environmental
     private JavaScriptSupport javascriptSupport;
+    private CurrentBeanContext currentBeanContext = new CurrentBeanContext() {
+
+        @Override
+        public Object getCurrentBean() {
+            return object;
+        }
+
+        @Override
+        public Class<?> getBeanType() {
+            return objectClass;
+        }
+
+        @Override
+        public String getCurrentBeanId() {
+            return getId();
+        }
+    };
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
-        environment.push(CurrentBeanContext.class, new CurrentBeanContext() {
-
-            @Override
-            public Object getCurrentBean() {
-                return object;
-            }
-
-            @Override
-            public Class<?> getBeanType() {
-                return objectClass;
-            }
-
-            @Override
-            public String getCurrentBeanId() {
-                return getId();
-            }
-        });
+        environment.push(CurrentBeanContext.class, currentBeanContext);
     }
 
     final void afterRender() {
@@ -120,6 +121,16 @@ public class Crud {
      * Задано явно для возможности вызова из других классов
      */
     public Object getObject() {
+        //это хак. 
+        //у нас нет возможности удалить контекст после использования
+        //его при обработке события компонента, поэтому не удаляем его вообще,
+        //а просто проверяем тот ли он что и был. Такой подход приведет к ошибкам
+        //при вложенных компонентах, устанавливающих CurrentBeanContext
+        //TODO Продумать и переделать
+        CurrentBeanContext cbc = environment.peek(CurrentBeanContext.class);
+        if (cbc == null || cbc != currentBeanContext) {
+            environment.push(CurrentBeanContext.class, currentBeanContext);
+        }
         return object;
     }
 
@@ -223,5 +234,9 @@ public class Crud {
 
     public boolean getIsEdit() {
         return EDIT.equals(mode);
+    }
+
+    void onInPlaceUpdate(String zone) {
+        environment.push(CurrentBeanContext.class, currentBeanContext);
     }
 }
