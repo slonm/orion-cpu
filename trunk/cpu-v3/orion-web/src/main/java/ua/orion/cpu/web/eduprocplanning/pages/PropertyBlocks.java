@@ -202,18 +202,28 @@ public class PropertyBlocks {
         return a;
     }
     @Property
-    private String specialityKind;
+    private String kind;
 
-    public String getSpecialityClassify() {
-        EduPlan eduPlan = (EduPlan) currentBeanContext.getCurrentBean();
-        return eduPlan.getLicenseRecord().getSpeciality().getClassify();
+    public EduPlan getEduPlan() {
+        return (EduPlan) currentBeanContext.getCurrentBean();
+    }
+
+    public List getTrainingDirectionKinds() {
+        //из getEduPlan() нужно получить перечень специализаций
+        List<String> list = new ArrayList<>();
+        String cl = getEduPlan().getLicenseRecord().getTrainingDirection().getClassify();
+        if (cl != null && !"".equals(cl)) {
+            list.add("demo1");
+            list.add("demo2");
+            list.add("demo3");
+        }
+        return list;
     }
 
     public List getSpecialityKinds() {
-        EduPlan eduPlan = (EduPlan) currentBeanContext.getCurrentBean();
-        //из eduPlan нужно получить перечень специализаций
+        //из getEduPlan() нужно получить перечень специализаций
         List<String> list = new ArrayList<>();
-        if (eduPlan.getLicenseRecord().getSpeciality() != null) {
+        if (getEduPlan().getLicenseRecord().getSpeciality() != null) {
             list.add("demo1");
             list.add("demo2");
             list.add("demo3");

@@ -18,11 +18,3 @@ div.window-content {
     font: 15px Arial, Helvetica, sans-serif;
     font-size: 15px;
 }
-
-.kinds{
-    display: none;
-}
-
-.kind-status{
-    font-style: italic;
-}
