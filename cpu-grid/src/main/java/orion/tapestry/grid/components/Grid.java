@@ -75,7 +75,7 @@ public class Grid implements GridModel {
     /**
      * The model parameter after modification due to the add, include, exclude and reorder parameters.
      */
-    @Persist
+    //@Persist
     private GridBeanModel gridBeanModel;
     /**
      * Сервис для создания модели, описывающей таблицу

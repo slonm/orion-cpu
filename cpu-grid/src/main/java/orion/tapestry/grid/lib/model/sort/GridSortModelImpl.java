@@ -21,11 +21,17 @@ public class GridSortModelImpl implements GridSortModel {
      * список правил сортировки
      */
     List<GridSortConstraint> sortConstraints = new ArrayList<GridSortConstraint>();
+    /**
+     * Модель, которую надо отображать
+     */
+    private GridBeanModel model;
 
-    public GridSortModelImpl(GridBeanModel model) {
+    public GridSortModelImpl(GridBeanModel _model) {
+        // запоминаем модель записи
+        model = _model;
         // сохраняем указатели на правила сортировки, которые хранятся в модели
-        for (Object m : model.getPropertyNames()) {
-            GridSortConstraint modelSortConstraint = ((GridPropertyModelInterface) model.get(m.toString())).getSortConstraint();
+        for (Object m : _model.getPropertyNames()) {
+            GridSortConstraint modelSortConstraint = ((GridPropertyModelInterface) _model.get(m.toString())).getSortConstraint();
             if (modelSortConstraint != null) {
                 sortConstraints.add(modelSortConstraint);
             }
@@ -160,5 +166,9 @@ public class GridSortModelImpl implements GridSortModel {
     @Override
     public String toString() {
         return this.exportJSONString();
+    }
+
+    public GridBeanModel getModel() {
+        return model;
     }
 }

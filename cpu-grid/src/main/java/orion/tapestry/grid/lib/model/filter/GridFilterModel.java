@@ -25,8 +25,13 @@ public class GridFilterModel {
      * список возможных элементов фильтра
      */
     private Map<String, GridFilterAbstract> filterElementList;
+    /**
+     * Модель, которую надо фильтровать
+     */
+    private GridBeanModel model;
 
     public GridFilterModel(GridBeanModel _gridBeanModel) {
+        model = _gridBeanModel;
         this.filterElementList = new HashMap<String, GridFilterAbstract>();
         List<String> propertyNames = _gridBeanModel.getPropertyNames();
         for (String name : propertyNames) {
@@ -143,5 +148,9 @@ public class GridFilterModel {
 
     public String getElementBuildersJSONString() {
         return getElementBuildersJSON().toString();
+    }
+
+    public GridBeanModel getModel() {
+        return model;
     }
 }

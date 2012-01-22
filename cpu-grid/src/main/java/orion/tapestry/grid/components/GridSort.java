@@ -28,8 +28,26 @@ public class GridSort {
      */
     @Persist
     private String gridSortJSON;
+    /**
+     * Сохранённое название типа записи
+     */
+    @Persist
+    private String savedBeanName;
 
     void setupRender() {
+        String currentBeanName=gridSortModel.getModel().getBeanType().getName();
+        // в первый раз просто запоминаем название типа
+        if(savedBeanName==null){
+            savedBeanName=currentBeanName;
+        }else{
+            // проверяем, не изменился ли класс
+            // и если изменился, то очищаем все предыдущие свойства
+            if(!savedBeanName.equals(currentBeanName)){
+                savedBeanName=currentBeanName;
+                gridSortJSON = null;
+            }
+        }
+        // создаем настройки по умолчанию, если настроек ещё нет
         if (gridSortJSON == null) {
             // устанавливаем начальное значение 
             if (gridSortModel == null) {
