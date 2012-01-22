@@ -4,6 +4,7 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
+import ua.orion.web.AdditionalConstraintsApplier;
 
 /**
  * Источник моделей данных и источников данных на основе сущностей JPA для компонентов
@@ -12,6 +13,7 @@ import org.apache.tapestry5.ioc.Messages;
  */
 public interface TapestryDataFactory {
     GridDataSource createGridDataSource(Class<?> entityClass);
+    <E> GridDataSource createGridDataSource(Class<E> entityClass, AdditionalConstraintsApplier<E> applier);
     <T> BeanModel<T> createBeanModelForList(Class<T> entityClass);
     <T> BeanModel<T> createBeanModelForList(Class<T> entityClass, Messages messages);
     <T> BeanModel<T> createBeanModelForAdd(Class<T> entityClass);
