@@ -80,12 +80,14 @@ public class Layout {
     @Property
     private String uiInterface;
     /**
-     * Page navigation menu иногда надо, чтобы страница могла влиять на своё
-     * меню
+     * Page navigation menu 
+     * иногда надо, чтобы страница могла влиять на своё меню.
+     * Этот параметр перекрывает всё остальные источники меню.
      */
     @Parameter
     @Property
     private Object menupath;
+    
     @Parameter(defaultPrefix = "literal")
     @Property(write = false)
     private Object menudata;
@@ -98,7 +100,6 @@ public class Layout {
     @Inject
     private ComponentResources cr;
 
-  
 //    public Object getMenudata() {
 //        return menupath == null ? defaultMenudata() : menupath;
 //    }
@@ -107,7 +108,6 @@ public class Layout {
 //        return request.getParameter("menupath") == null ? "Start"
 //                : request.getParameter("menupath");
 //    }
-
     public String getRole() {
         return thRole.getRole();
     }
@@ -119,10 +119,13 @@ public class Layout {
 
     //Подключение библиотек при старте ренрдеринга 
     @SetupRender
-    public void SetupRender() {
+    public void setupRender() {
         if (!cr.isBound("menudata")) {
-            menudata = request.getParameter("menupath") == null ? "Start" : 
-                    request.getParameter("menupath");
+            menudata = request.getParameter("menupath") == null ? "Start" : request.getParameter("menupath");
+        }
+        // если меню было задано в параметрах, используем его
+        if (menupath != null) {
+            menudata = menupath;
         }
         List<Asset> libraries = Arrays.<Asset>asList(jQueryLibrary, jQueryUILibrary, jQueryUILocalization, jQueryNoConflictLibrary, jQueryCookieLibrary, jQueryToolsLibrary, jQueryUIInterfaceLibrary, jQueryToolTipLibrary, jQueryUISelectMenu, jQueryCPUEffectsLibrary);
         for (Asset library : libraries) {
