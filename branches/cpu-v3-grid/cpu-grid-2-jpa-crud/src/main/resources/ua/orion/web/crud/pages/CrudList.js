@@ -1,9 +1,7 @@
 var crudPopupWindow;
 
 Event.observe(window, 'load',function(){
-    $$('a.crud-page-link-add').each(function(element){
-        Event.observe(element, 'click',crudLinkClicked);
-    });
+
     $$('a.crud-page-link-edit').each(function(element){
         Event.observe(element, 'click',crudLinkClicked);
     });
@@ -29,15 +27,19 @@ Event.observe(window, 'load',function(){
                     duration:1.5
                 }
             })
-
-            //crudPopupWindow.setCloseCallback(function(){
-                // window.location.reload();
-            //});
             crudPopupWindow.show();
             WindowCloseKey.init();
             Event.stop(event);
         });
     });
+    
+    var template=$('menu').childElements().last();
+    var cloned=template.clone();
+    $('menu').insert(cloned);
+    cloned.insert(template.innerHTML);
+    var link=cloned.select('a').first();
+    link.replace($('crud_page_link_add'));
+    Event.observe($('crud_page_link_add'), 'click',crudLinkClicked);
 });
 
 
@@ -65,4 +67,12 @@ function crudLinkClicked(event){
     crudPopupWindow.show();
     WindowCloseKey.init();
     Event.stop(event);
+}
+
+function onEditWindowClosed(msg){
+    // alert(msg);
+    if(crudPopupWindow) {
+        crudPopupWindow.hide();
+    }
+    setTimeout(window.location.reload(),3000);
 }

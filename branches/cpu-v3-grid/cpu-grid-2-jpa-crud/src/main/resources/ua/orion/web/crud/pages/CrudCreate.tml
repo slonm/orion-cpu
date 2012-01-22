@@ -7,7 +7,22 @@
 <body>
 <div>${feedbackMessage}</div>
 <t:if test="isEntityClassFound">
-  <t:beaneditform object="entityObject" model="beanModel"  t:id="editForm" submitlabel="message:crud-save-updates"/>
+    <t:if test="isCloseOnSubmit">
+    <script type="text/javascript">
+      window.top.onEditWindowClosed("${feedbackMessage}");
+    </script>
+    <t:parameter name="else">
+            <t:form t:id="editForm">
+                <t:errors/>
+                <t:beaneditor  object="entityObject" model="beanModel"/>
+                <p align="right">
+                     <t:submit t:id="ok" value="message:crud-ok"/>
+                     <t:submit t:id="apply" value="message:crud-apply"/>
+                     <input type="reset" value="${message:crud-cancel}" onclick="if(window.top.crudPopupWindow) {window.top.crudPopupWindow.hide();}"/>
+                </p>
+            </t:form>
+    </t:parameter>
+    </t:if>
 </t:if>
 </body>
 </html>

@@ -2,14 +2,12 @@ package ua.orion.web.crud.pages;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
@@ -74,6 +72,11 @@ public class CrudCreate {
      */
     @InjectPage
     private CrudEdit editPage;
+    /**
+     * Надо ли закрывать редактор после сохранения
+     */
+    @Persist
+    private boolean closeOnSubmit;
 
     /**
      * Creates a {@link BeanModel} and removes the primary key property from it.
@@ -146,7 +149,7 @@ public class CrudCreate {
      * @return 
      */
     public String getTitle() {
-        return (entityClass!=null)?messages.get("entity." + entityClass.getSimpleName()):"Unknows entity";
+        return (entityClass != null) ? messages.get("entity." + entityClass.getSimpleName()) : "Unknows entity";
     }
 
     /**
@@ -162,7 +165,9 @@ public class CrudCreate {
             editPage.setEntityClass(entityClass);
             editPage.setEntityObject(entityObject);
             editPage.setFeedbackMessage(messages.get("crud-changes-saved-successfully"));
-            return editPage;
+            if (!closeOnSubmit) {
+                return editPage;
+            }
         } catch (RuntimeException ex) {
             LOG.error(ex.getClass().getName() + " " + ex.getMessage());
             feedbackMessage = messages.get("message.update-error");
@@ -171,11 +176,21 @@ public class CrudCreate {
         return null;
     }
 
+    public void onSelectedFromOk() {
+        closeOnSubmit = true;
+    }
+
     public boolean getIsEntityClassFound() {
         return entityClass != null;
     }
-    
-    public void setEntityClass(Class<? extends IEntity> _entityClass){
-        this.entityClass=_entityClass;
+
+    public boolean getIsCloseOnSubmit() {
+        boolean result = closeOnSubmit;
+        closeOnSubmit = false;
+        return result;
+    }
+
+    public void setEntityClass(Class<? extends IEntity> _entityClass) {
+        this.entityClass = _entityClass;
     }
 }
