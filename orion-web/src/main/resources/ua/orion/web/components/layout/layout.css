@@ -139,7 +139,7 @@ a:hover {
 /* Page */
 
 #page {
-    padding: 40px 40px 0 40px;
+    padding: 30px 30px 30px 30px;
 }
 
 /* Content */
@@ -157,7 +157,7 @@ a:hover {
 }
 
 .post .title h2 {
-    padding: 30px 30px 0 0px;
+    padding:10px 30px 10px 30px;
     font-weight: normal;
     font-size: 1.8em;
     text-align: center;
