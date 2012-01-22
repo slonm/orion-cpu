@@ -1,5 +1,6 @@
 package ua.orion.web.services;
 
+import ua.orion.web.AdditionalConstraintsApplier;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
@@ -12,6 +13,7 @@ import org.apache.tapestry5.ioc.Messages;
  */
 public interface TapestryDataSource {
     GridDataSource getGridDataSource(Class<?> entityClass);
+    <E> GridDataSource getGridDataSource(Class<E> entityClass, AdditionalConstraintsApplier<E> applier);
     <T> BeanModel<T> getBeanModelForList(Class<T> entityClass);
     <T> BeanModel<T> getBeanModelForList(Class<T> entityClass, Messages messages);
     <T> BeanModel<T> getBeanModelForAdd(Class<T> entityClass);

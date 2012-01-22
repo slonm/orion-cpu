@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.web.services;
 
 import java.util.List;
@@ -9,6 +5,7 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
+import ua.orion.web.AdditionalConstraintsApplier;
 
 /**
  *
@@ -33,6 +30,11 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
         return ret;
     }
 
+    @Override
+    public <E> GridDataSource getGridDataSource(Class<E> entityClass, AdditionalConstraintsApplier<E> applier) {
+        return factory.createGridDataSource(entityClass, applier);
+    }
+    
     @Override
     public <T> BeanModel<T> getBeanModelForList(Class<T> entityClass) {
         BeanModel<T> ret = factory.createBeanModelForList(entityClass);
@@ -131,4 +133,5 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
         }
         return ret;
     }
+
 }

@@ -10,13 +10,13 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
-import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanState;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
+import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.services.TapestryDataSource;
 /**
  *
  * @author sl
@@ -33,11 +33,11 @@ public class EduPlans {
     private Logger LOG;
     @Inject
     private ComponentEventLinkEncoder componentEventLinkEncoder;
-    @Inject
-    private EntityService entityService;
     @Property
     @Persist
     private EduPlanState eduPlanState;
+    @Inject
+    private TapestryDataSource dataSource;
     //Состояния, соответствующие закладкам
     private static final EduPlanState[] states =
             new EduPlanState[]{EduPlanState.ACTUAL, EduPlanState.PROJECT, EduPlanState.OBSOLETE, null};
@@ -51,16 +51,15 @@ public class EduPlans {
     }
 
     public GridDataSource getSource() {
-        return new JpaGridDataSource<EduPlan>(entityService.getEntityManager(), EduPlan.class) {
+        return dataSource.getGridDataSource(EduPlan.class, new AdditionalConstraintsApplier<EduPlan>(){
 
             @Override
-            protected void applyAdditionalConstraints(CriteriaQuery<?> criteria,
-                    Root<EduPlan> root, CriteriaBuilder builder) {
+            public void applyAdditionalConstraints(CriteriaQuery<EduPlan> criteria, Root<EduPlan> root, CriteriaBuilder builder) {
                 if (eduPlanState != null) {
                     criteria.where(builder.equal(root.get("eduPlanState"), eduPlanState));
                 }
             }
-        };
+        });
     }
 
     public Object onActivate(EventContext context) {

@@ -2,7 +2,9 @@ package ua.orion.web.services;
 
 import java.lang.reflect.Modifier;
 import java.util.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionGroupModel;
 import org.apache.tapestry5.OptionModel;
@@ -18,6 +20,8 @@ import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.util.AbstractSelectModel;
 import ua.orion.core.services.*;
+import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.FetchAllJpaGridDataSource;
 
 /**
  *
@@ -45,7 +49,18 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     @Override
     public GridDataSource createGridDataSource(Class<?> entityClass) {
-        return new JpaGridDataSource(es.getEntityManager(), entityClass);
+        return new FetchAllJpaGridDataSource(es.getEntityManager(), entityClass, propertyAccess);
+    }
+
+    @Override
+    public <E> GridDataSource createGridDataSource(Class<E> entityClass, final AdditionalConstraintsApplier<E> applier) {
+        return new FetchAllJpaGridDataSource(es.getEntityManager(), entityClass, propertyAccess){
+
+            @Override
+            protected void applyAdditionalConstraints(CriteriaQuery criteria, Root root, CriteriaBuilder builder) {
+                applier.applyAdditionalConstraints(criteria, root, builder);
+            }
+        };
     }
 
     @Override
