@@ -10,6 +10,11 @@
     <t:if test="isEntityObjectFound">
        <t:beandisplay t:id="display" object="entityObject" model="beanModel"/>
        <div style="text-align:center;"><t:EventLink t:event="delete" title="message:action.del">${message:action.del}</t:EventLink></div>
+    <t:parameter name="else">
+        <script type="text/javascript">
+            window.top.onEditWindowClosed("${feedbackMessage}");
+        </script>
+    </t:parameter>
     </t:if>
 </t:if>
 </body>

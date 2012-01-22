@@ -18,6 +18,12 @@ import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 import orion.tapestry.grid.services.CpuGridDataSourceFactory;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
+import java.util.List;
+import java.util.PriorityQueue;
+import ua.orion.tapestry.menu.lib.MenuData;
+import ua.orion.tapestry.menu.lib.MenuItem;
+import ua.orion.tapestry.menu.lib.PageMenuLink;
+import ua.orion.tapestry.menu.services.OrionMenuService;
 
 /**
  * Страница, которая предоставляет CRUD для простых сущностей
@@ -83,6 +89,13 @@ public class CrudList {
      * Класс сущности, с которой будем работать
      */
     private Class<? extends IEntity> objectClass;
+    /**
+     * Временная переменная для цикла по строкам
+     * Цикл объявлен в шаблоне компоненты Grid
+     */
+    @SuppressWarnings("unused")
+    @Property
+    private IEntity currentRow;
     ///**
     // * Сохранённые настройки таблицы
     // */
@@ -90,18 +103,16 @@ public class CrudList {
     //@Property
     //private IGridSettingStore settingStore;
     /**
-     * Временная переменная для цикла по строкам
-     * Цикл объявлен в шаблоне компоненты Grid
-     */
-    @SuppressWarnings("unused")
-    @Property                   // <= чтобы не писать примитивные методы get...() и set...()
-    private IEntity currentRow;
-    /**
-     * Константа - путь в дереве меню
+     * Константа - навигационное меню
      */
     @Persist
     @Property
-    private String menupath;
+    private List<MenuData> menuBar;
+    /**
+     * Севис - построитель меню
+     */
+    @Inject
+    private OrionMenuService cpuMenu;
 
     /**
      * Источник данных таблицы
@@ -147,7 +158,7 @@ public class CrudList {
         // извлекаем из контекста активации класс сущности
         if (objClass != null) {
             objectClass = objClass;
-        }else{
+        } else {
             return this.startPageName;
         }
 
@@ -155,10 +166,16 @@ public class CrudList {
         String postedMenuPath = request.getParameter("menupath");
 
         // если было отправлено новое описание меню
-        // и это новое описание не совпадает со старым
         // значит старое забываем, а новое запоминаем
-        if (postedMenuPath != null && !postedMenuPath.equals(menupath)) {
-            menupath = postedMenuPath;
+        if (postedMenuPath != null) {
+            menuBar = cpuMenu.getMenu(postedMenuPath, null, null, null);
+
+            // добавляем кнопку "Создать"
+            //if(SecurityUtils.getSubject().isPermitted(objectClass.getSimpleName() + ":insert")){
+            //    MenuItem mi=new MenuItem(postedMenuPath+">action.add", new PageMenuLink("crud/"+CrudCreate.class.getSimpleName(), this.getCrudRowContext()));
+            //    MenuData addItemMenu=new MenuData(mi, new PriorityQueue<MenuItem>());
+            //    menuBar.add(addItemMenu);
+            //}
             //LOG.info("save menu path "+postedMenuPath);
         }
 

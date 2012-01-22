@@ -80,6 +80,11 @@ public class CrudEdit {
      */
     @InjectPage
     private CrudCreate createPage;
+    /**
+     * Надо ли закрывать редактор после сохранения
+     */
+    @Persist
+    private boolean closeOnSubmit;
 
     /**
      * Creates a {@link BeanModel} and removes the primary key property from it.
@@ -170,6 +175,10 @@ public class CrudEdit {
         return (entityClass != null) ? messages.get("entity." + entityClass.getSimpleName()) : "Unknows entity";
     }
 
+    public void onSelectedFromOk() {
+        closeOnSubmit = true;
+    }
+
     /**
      * Сохранение объекта
      */
@@ -189,6 +198,12 @@ public class CrudEdit {
 
     public boolean getIsEntityClassFound() {
         return entityClass != null;
+    }
+
+    public boolean getIsCloseOnSubmit() {
+        boolean result=closeOnSubmit;
+        closeOnSubmit=false;
+        return result;
     }
 
     public void setEntityClass(Class<? extends IEntity> _entityClass) {

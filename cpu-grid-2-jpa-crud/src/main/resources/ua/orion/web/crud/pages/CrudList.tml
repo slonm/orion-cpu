@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <t:ori.layout title="prop:title"
-              menupath="prop:menupath"
+              menupath="prop:menuBar"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
               xmlns:p="tapestry:parameter"
               xmlns:s="tapestry-library:security">
 
 <s:HasPermission permission="${objectClass.simpleName}:insert">
-  <t:pagelink page="crud/CrudCreate" context="crudRowContext"  title="${message:action.add}" class="crud-page-link-add">${message:action.add}</t:pagelink>
+  <t:pagelink page="crud/CrudCreate" context="crudRowContext"  title="${message:action.add}" id="crud_page_link_add">${message:action.add}</t:pagelink>
 </s:HasPermission>
 
 <t:grid.Grid source="dataSource" row="currentRow" add="menu">
