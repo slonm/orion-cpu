@@ -32,8 +32,28 @@ public class GridView {
     @Persist
     @Property
     private String gridPropertyViewJSON;
+    /**
+     * Сохранённое название типа записи
+     */
+    @Persist
+    private String savedBeanName;
 
     void setupRender() {
+
+        String currentBeanName = gridPropertyViewModel.getModel().getBeanType().getName();
+        // в первый раз просто запоминаем название типа
+        if (savedBeanName == null) {
+            savedBeanName = currentBeanName;
+        } else {
+            // проверяем, не изменился ли класс
+            // и если изменился, то очищаем все предыдущие свойства
+            if (!savedBeanName.equals(currentBeanName)) {
+                savedBeanName = currentBeanName;
+                gridPropertyViewJSON = null;
+            }
+        }
+
+        // создаем настройки по умолчанию, если настроек ещё нет
         if (gridPropertyViewJSON == null) {
             try {
                 if (gridPropertyViewModel == null) {
@@ -46,11 +66,4 @@ public class GridView {
             }
         }
     }
-//
-//    public  void setGridPropertyViewJSON(String newValue){
-//        this.gridPropertyViewJSON=newValue;
-//    }
-//    public String getGridPropertyViewJSON(){
-//        return this.gridPropertyViewJSON;
-//    }
 }

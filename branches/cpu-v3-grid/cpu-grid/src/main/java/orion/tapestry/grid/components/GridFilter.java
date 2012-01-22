@@ -10,12 +10,13 @@ import orion.tapestry.grid.lib.model.filter.GridFilterModel;
  * Редактор условия фильтрации
  * @author dobro
  */
-@Import(library={
+@Import(library = {
     "${tapestry.scriptaculous}/prototype.js",
     "${tapestry.scriptaculous}/dragdrop.js",
-    "gridfilter.js","dateselector.js"},
-    stylesheet={"gridfilter.css"})
+    "gridfilter.js", "dateselector.js"},
+stylesheet = {"gridfilter.css"})
 public class GridFilter {
+
     /**
      * Источник метаданных таблицы
      * Обязательный параметр компоненты,
@@ -24,33 +25,49 @@ public class GridFilter {
     @Parameter(principal = true, required = true)
     @Property
     private GridFilterModel gridFilterModel;
-
     @Persist
     private String gridFilterJSON;
+    /**
+     * Сохранённое название типа записи
+     */
+    @Persist
+    private String savedBeanName;
 
-    public String getElementBuildersJSONString(){
-        if(gridFilterModel==null){
+    public String getElementBuildersJSONString() {
+        if (gridFilterModel == null) {
             return "{}";
-        }else{
+        } else {
             return gridFilterModel.getElementBuildersJSONString();
         }
-        
+
     }
 
     void setupRender() {
-        if(gridFilterJSON==null){
-            gridFilterJSON="{}";
+        String currentBeanName = gridFilterModel.getModel().getBeanType().getName();
+        // в первый раз просто запоминаем название типа
+        if (savedBeanName == null) {
+            savedBeanName = currentBeanName;
+        } else {
+            // проверяем, не изменился ли класс
+            // и если изменился, то очищаем все предыдущие свойства
+            if (!savedBeanName.equals(currentBeanName)) {
+                savedBeanName = currentBeanName;
+                gridFilterJSON = null;
+            }
+        }
+        if (gridFilterJSON == null) {
+            gridFilterJSON = "{}";
         }
     }
 
-
-    public  void setGridFilterJSON(String f){
-        this.gridFilterJSON=f;
+    public void setGridFilterJSON(String f) {
+        this.gridFilterJSON = f;
     }
+
     /**
      * Закодированное в виде JSON условие фильтрации
      */
-    public String getGridFilterJSON(){
+    public String getGridFilterJSON() {
         return this.gridFilterJSON;
     }
 }

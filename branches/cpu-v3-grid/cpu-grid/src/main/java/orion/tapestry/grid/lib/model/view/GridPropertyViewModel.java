@@ -21,9 +21,15 @@ public class GridPropertyViewModel {
      */
     SortedSet<GridPropertyView> viewProperties = new TreeSet<GridPropertyView>(new GridPropertyViewComparator());
 
-    public GridPropertyViewModel(GridBeanModel model) {
-        for (Object m : model.getPropertyNames()) {
-            GridPropertyView vi = ((GridPropertyModelInterface) model.get(m.toString())).getGridPropertyView();
+    /**
+     * Модель, которую надо отображать
+     */
+    private GridBeanModel model;
+    
+    public GridPropertyViewModel(GridBeanModel _model) {
+        model=_model;
+        for (Object m : _model.getPropertyNames()) {
+            GridPropertyView vi = ((GridPropertyModelInterface) _model.get(m.toString())).getGridPropertyView();
             if (vi != null) {
                 viewProperties.add(vi);
             }
@@ -91,5 +97,9 @@ public class GridPropertyViewModel {
             // TODO: add logger here
         }
         return "";
+    }
+    
+    public GridBeanModel getModel(){
+        return model;
     }
 }
