@@ -9,12 +9,12 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
-import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDiscipline;
+import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  *
@@ -31,8 +31,7 @@ public class EduPlan {
     @Inject
     private ComponentEventLinkEncoder componentEventLinkEncoder;
     @Inject
-    @Property(write = false)
-    private EntityService entityService;
+    private TapestryDataSource dataSource;
     //---Locals---
     @Property
     @Persist
@@ -47,13 +46,13 @@ public class EduPlan {
     }
 
     public GridDataSource getSource() {
-        return new JpaGridDataSource<EduPlanDiscipline>(entityService.getEntityManager(), EduPlanDiscipline.class) {
+        return dataSource.getGridDataSource(EduPlanDiscipline.class, new AdditionalConstraintsApplier<EduPlanDiscipline>(){
 
             @Override
-            protected void applyAdditionalConstraints(CriteriaQuery<?> criteria, Root<EduPlanDiscipline> root, CriteriaBuilder builder) {
+            public void applyAdditionalConstraints(CriteriaQuery<EduPlanDiscipline> criteria, Root<EduPlanDiscipline> root, CriteriaBuilder builder) {
                 criteria.where(builder.equal(root.get("eduPlan"), object));
             }
-        };
+        });
     }
 
     public Object onActivate(EventContext context) {
