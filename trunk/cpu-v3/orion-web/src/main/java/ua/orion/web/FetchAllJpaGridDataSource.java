@@ -66,7 +66,10 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
         if (Comparable.class.isAssignableFrom(pa.getDeclaringClass())) {
             Comparable c1 = (Comparable) pa.get(o1);
             Comparable c2 = (Comparable) pa.get(o2);
-            return c1 == null ? 1 : c1.compareTo(c2);
+            if (c1 == null && c2 == null) {
+                return 0;
+            }
+            return c1 == null ? 1 : (c2 == null ? -1 : c1.compareTo(c2));
         }
         return 0;
     }

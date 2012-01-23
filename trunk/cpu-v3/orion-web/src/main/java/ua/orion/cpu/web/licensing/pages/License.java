@@ -6,12 +6,13 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.jpa.JpaGridDataSource;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
+import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  * Страница, которая предоставляет CRUD для простых сущностей
@@ -30,6 +31,8 @@ public class License {
     @Inject
     @Property(write = false)
     private EntityService entityService;
+    @Inject
+    private TapestryDataSource dataSource;
     //---Locals---
     @Property
     @Persist
@@ -47,13 +50,14 @@ public class License {
     }
 
     public GridDataSource getSource() {
-        return new JpaGridDataSource<LicenseRecord>(entityService.getEntityManager(), LicenseRecord.class) {
+        return dataSource.getGridDataSource(LicenseRecord.class, new AdditionalConstraintsApplier<LicenseRecord>(){
 
             @Override
-            protected void applyAdditionalConstraints(CriteriaQuery<?> criteria, Root<LicenseRecord> root, CriteriaBuilder builder) {
+            public void applyAdditionalConstraints(CriteriaQuery<LicenseRecord> criteria, 
+            Root<LicenseRecord> root, CriteriaBuilder builder) {
                 criteria.where(builder.equal(root.get("license"), object));
             }
-        };
+        });
     }
 
     public Object onActivate(EventContext context) {
