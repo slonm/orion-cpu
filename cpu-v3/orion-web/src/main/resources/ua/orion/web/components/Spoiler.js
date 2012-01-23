@@ -1,5 +1,5 @@
-jQuery(document).ready(function(){
-    jQuery(".ori_spoiler-link").click(function(){
+Tapestry.Initializer.initSpoilerLink = function(opt){
+    jQuery("#"+opt).click(function(){
         var spoiler=jQuery(this).parent()
         if (spoiler.hasClass("ori_spoiler-visible")){
             spoiler.removeClass("ori_spoiler-visible").find(".ori_spoiler-body").hide("slow");
@@ -7,4 +7,4 @@ jQuery(document).ready(function(){
             spoiler.addClass("ori_spoiler-visible").find(".ori_spoiler-body").show("slow");
         }
     })    
-})
+}
