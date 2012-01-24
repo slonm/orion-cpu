@@ -56,6 +56,15 @@
                              that prevents the requestLog from being set. -->
                         <append>true</append>
                     </requestLog>                
+                    <scanTargetPatterns>
+                        <scanTargetPattern>
+                            <directory>src</directory>
+                            <excludes>
+                                <exclude>**/*.tml</exclude>
+                                <exclude>**/*.properties</exclude>
+                            </excludes>
+                        </scanTargetPattern>
+                    </scanTargetPatterns>
                 </configuration>
             </plugin>
             <plugin>

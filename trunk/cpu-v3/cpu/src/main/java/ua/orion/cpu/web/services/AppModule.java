@@ -4,46 +4,30 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.SubModule;
-import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule;
-import ua.orion.cpu.core.employees.services.EmployeesIOCModule;
-import ua.orion.cpu.core.licensing.services.LicensingIOCModule;
-import ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule;
-import ua.orion.cpu.core.persons.services.PersonsIOCModule;
-import ua.orion.cpu.core.security.services.OrionSecurityIOCModule;
-import ua.orion.cpu.core.services.OrionCpuIOCModule;
-import ua.orion.cpu.core.students.services.StudentsIOCModule;
-import ua.orion.cpu.web.eduprocplanning.services.EduProcPlanningWebIOCModule;
-import ua.orion.cpu.web.employees.services.EmployeesWebIOCModule;
-import ua.orion.cpu.web.licensing.services.LicensingWebIOCModule;
-import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
-import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
-import ua.orion.cpu.web.students.services.StudentsWebIOCModule;
-import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
  * Модуль конфигурирования IOC
  */
 @SubModule({
-    OrionSecurityIOCModule.class,
-    OrionCpuIOCModule.class,
-    LicensingIOCModule.class,
-    EduProcPlanningIOCModule.class,
-    OrgUnitsIOCModule.class,
-    PersonsIOCModule.class,
-    StudentsIOCModule.class,
-    EmployeesIOCModule.class,
-    OrionSecurityWebIOCModule.class,
-    LicensingWebIOCModule.class,
-    EduProcPlanningWebIOCModule.class,
-    OrgUnitsWebIOCModule.class,
-    PersonsWebIOCModule.class,
-    StudentsWebIOCModule.class,
-    EmployeesWebIOCModule.class
+    ua.orion.cpu.core.security.services.OrionSecurityIOCModule.class,
+    ua.orion.cpu.core.services.OrionCpuIOCModule.class,
+    ua.orion.cpu.core.licensing.services.LicensingIOCModule.class,
+    ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule.class,
+    ua.orion.cpu.core.orgunits.services.OrgUnitsIOCModule.class,
+    ua.orion.cpu.core.persons.services.PersonsIOCModule.class,
+    ua.orion.cpu.core.students.services.StudentsIOCModule.class,
+    ua.orion.cpu.core.employees.services.EmployeesIOCModule.class,
+    ua.orion.web.security.services.OrionSecurityWebIOCModule.class,
+    ua.orion.cpu.web.licensing.services.LicensingWebIOCModule.class,
+    ua.orion.cpu.web.eduprocplanning.services.EduProcPlanningWebIOCModule.class,
+    ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule.class,
+    ua.orion.cpu.web.persons.services.PersonsWebIOCModule.class,
+    ua.orion.cpu.web.students.services.StudentsWebIOCModule.class,
+    ua.orion.cpu.web.employees.services.EmployeesWebIOCModule.class
 })
 public class AppModule {
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(IndexPageRenderLinkTransformer.class);
     }
 
     /**
@@ -59,13 +43,4 @@ public class AppModule {
             configuration.add(key, bundle.getString(key));
         }
     }
-//    public static void contributeComponentEventLinkTransformer(
-//            OrderedConfiguration<ComponentEventLinkTransformer> configuration)
-//    {
-//        configuration.addInstance("App", AppComponentEventLinkTransformer.class);
-//    }
-//    public static void contributeRealmSource(Configuration<Realm> configuration) {
-//        ExtendedPropertiesRealm realm = new ExtendedPropertiesRealm("classpath:shiro-users.properties");
-//        configuration.add(realm);
-//    }
 }
