@@ -17,10 +17,6 @@
             <groupId>ua.orion</groupId>
             <artifactId>orion-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-core</artifactId>
-        </dependency>
         <!-- Provided by the servlet container, but sometimes referenced in the application
        code. -->
         <dependency>
@@ -58,7 +54,7 @@
                     </requestLog>                
                     <scanTargetPatterns>
                         <scanTargetPattern>
-                            <directory>src</directory>
+                            <directory>target</directory>
                             <excludes>
                                 <exclude>**/*.tml</exclude>
                                 <exclude>**/*.properties</exclude>
