@@ -50,9 +50,17 @@ public class EduPlans {
         return EduPlan.class;
     }
 
+    /**
+     * Получение DataSource для Grid
+     * @return GridDataSource
+     */
     public GridDataSource getSource() {
         return dataSource.getGridDataSource(EduPlan.class, new AdditionalConstraintsApplier<EduPlan>(){
 
+            /**
+             * Ограничение получамых записей по полю eduPlanState.
+             * Вкладки - Действующие,  Разрабатываемые,  Упразднённые,  Все.
+             */
             @Override
             public void applyAdditionalConstraints(CriteriaQuery<EduPlan> criteria, Root<EduPlan> root, CriteriaBuilder builder) {
                 if (eduPlanState != null) {
