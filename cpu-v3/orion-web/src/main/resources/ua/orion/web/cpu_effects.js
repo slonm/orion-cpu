@@ -21,7 +21,7 @@ jQuery(document).ready(function(){
         modal:true, //модальность
         autoOpen: false, //автоматическое открытие
         open: function() { 
-            jQuery(".ui-dialog-titlebar-close").hide(); //убирается кнопка закрытия
+//            jQuery(".ui-dialog-titlebar-close").hide(); //убирается кнопка закрытия
         },
         resizable: false //возможность маштабирования отключена
     });
