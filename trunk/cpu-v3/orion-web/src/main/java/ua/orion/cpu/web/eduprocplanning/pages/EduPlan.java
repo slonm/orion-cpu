@@ -62,6 +62,7 @@ public class EduPlan {
                     throw new RuntimeException();
                 }
                 object = context.get(ua.orion.cpu.core.eduprocplanning.entities.EduPlan.class, 0);
+                object.getId(); //throw exception if object is null
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";

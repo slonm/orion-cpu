@@ -67,6 +67,7 @@ public class License {
                     throw new RuntimeException();
                 }
                 object = entityService.find(ua.orion.cpu.core.licensing.entities.License.class, context.get(String.class, 0));
+                object.getId(); //throw exception if object is null
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";
