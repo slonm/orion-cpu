@@ -77,15 +77,15 @@ public class EduProcPlanningSeedEntity {
             LicenseRecord menSpec = epps.findLicenseRecordBySpeciality("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.SPECIALIST_UKEY, "Менеджмент організації",
                     DateTimeUtils.createCalendar(1, 7, 2015));
-            EduPlan demo = es.findUniqueOrPersist(new EduPlan(menSpec, 4.0, SoftwareMaster, DateTimeUtils.createCalendar(1, 9, 2009), 
+            EduPlan demo = es.findUniqueOrPersist(new EduPlan(menSpec, 4.0, SoftwareMaster, DateTimeUtils.createCalendar(1, 9, 2009),
                     DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко", EduPlanState.ACTUAL));
 
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 16, 0, 16));
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 32, 0, 32));
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "03", physics, 4.0, "1", "", "", "1", 16, 40, 0));
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 32, 32, 0));
-            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", discrStruc, 3.5, "3", "", "", "3", 16, 32, 0));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 4, 0, 0, 0, 0, 96));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 0, 1, 0, 0, 16, 0, 16));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 1, 1, 0, 2, 32, 0, 32));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "03", physics, 4.0, "1", "", "", "1", 1, 0, 0, 1, 16, 40, 0));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 1, 4, 0, 1, 32, 32, 0));
+            es.findUniqueOrPersist(new EduPlanDiscipline(demo, true, "02", discrStruc, 3.5, "3", "", "", "3", 1, 4, 0, 1, 16, 32, 0));
 
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
 
@@ -101,19 +101,19 @@ public class EduProcPlanningSeedEntity {
             EduPlan pIBach2009 = es.findUniqueOrPersist(new EduPlan(pIBach, 4.0, fRTPZ, DateTimeUtils.createCalendar(1, 9, 2009), DateTimeUtils.createCalendar(2, 6, 2008), "Проректор з навчальної роботи О.І.Гура, Начальник навчального відділу В.М.Кравченко", EduPlanState.ACTUAL));
 
             //--Создание дисциплин учебных планов (для бакалавров ПИ 2009г утверждения) и их сохранение
-            EduPlanDiscipline foreignLangPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 0, 96));
-            EduPlanDiscipline pravoznavstvoPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 16, 0, 16));
-            EduPlanDiscipline mathAnalysisPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 32, 0, 32));
-            EduPlanDiscipline physicsPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "03", physics, 4.0, "1", "", "", "1", 16, 40, 0));
-            EduPlanDiscipline compDiscrMathPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 32, 32, 0));
-            EduPlanDiscipline discrStrucPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "02", discrStruc, 3.5, "3", "", "", "3", 16, 32, 0));
+            EduPlanDiscipline foreignLangPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", foreignLang, 11.25, "", "1-4", "", "", 0, 4, 0, 0, 0, 0, 96));
+            EduPlanDiscipline pravoznavstvoPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "02", pravoznavstvo, 2.25, "", "7", "", "", 0, 1, 0, 0, 16, 0, 16));
+            EduPlanDiscipline mathAnalysisPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", mathAnalysis, 10.0, "3", "2", "", "2,3", 1, 1, 0, 2, 32, 0, 32));
+            EduPlanDiscipline physicsPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "03", physics, 4.0, "1", "", "", "1", 1, 0, 0, 1, 16, 40, 0));
+            EduPlanDiscipline compDiscrMathPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "01", compDiscrMath, 5.0, "2", "", "", "2", 1, 0, 0, 1, 32, 32, 0));
+            EduPlanDiscipline discrStrucPI2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "02", discrStruc, 3.5, "3", "", "", "3", 1, 4, 0, 1, 16, 32, 0));
             //--Создание дисциплин учебных планов (для бакалавров СА 2009г утверждения)
-            EduPlanDiscipline ukrainianLangSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "1", ukrainianLang, 3.0, "5", "3,4", "", "", 16, 0, 56));
-            EduPlanDiscipline politologiyaSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "4", politologiya, 1.5, "", "3", "", "", 16, 0, 8));
-            EduPlanDiscipline algGeomSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "2", algGeom, 11.0, "1,2", "", "", "", 56, 0, 88));
-            EduPlanDiscipline funcAnalysSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "6", funcAnalys, 3.0, "", "5", "", "", 24, 0, 16));
-            EduPlanDiscipline programSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "3", program, 10.5, "1,2", "", "", "", 32, 96, 16));
-            EduPlanDiscipline modelSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "6", model, 4.0, "8", "", "", "8", 12, 36, 0));
+            EduPlanDiscipline ukrainianLangSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "1", ukrainianLang, 3.0, "5", "3,4", "", "", 1, 2, 0, 0, 16, 0, 56));
+            EduPlanDiscipline politologiyaSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "4", politologiya, 1.5, "", "3", "", "", 0, 1, 0, 0, 16, 0, 8));
+            EduPlanDiscipline algGeomSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "2", algGeom, 11.0, "1,2", "", "", "", 2, 0, 0, 0, 56, 0, 88));
+            EduPlanDiscipline funcAnalysSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "6", funcAnalys, 3.0, "", "5", "", "", 0, 1, 0, 0, 24, 0, 16));
+            EduPlanDiscipline programSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "3", program, 10.5, "1,2", "", "", "", 2, 0, 0, 0, 32, 96, 16));
+            EduPlanDiscipline modelSA2009 = es.findUniqueOrPersist(new EduPlanDiscipline(pIBach2009, true, "6", model, 4.0, "8", "", "", "8", 1, 0, 0, 1, 12, 36, 0));
 
             //--Создание циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения), 
             //привязка к ним наборов дисциплин и сохранение
