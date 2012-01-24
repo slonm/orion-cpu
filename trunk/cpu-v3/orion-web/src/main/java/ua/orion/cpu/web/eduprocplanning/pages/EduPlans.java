@@ -42,7 +42,7 @@ public class EduPlans {
     private static final EduPlanState[] states =
             new EduPlanState[]{EduPlanState.ACTUAL, EduPlanState.PROJECT, EduPlanState.OBSOLETE, null};
 
-    public boolean isComponentEventRequst() {
+    public boolean isComponentEventRequest() {
         return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
     }
 
@@ -71,7 +71,7 @@ public class EduPlans {
     }
 
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+        if (!isComponentEventRequest()) {
             try {
                 if (context.getCount() != 0) {
                     throw new RuntimeException();
