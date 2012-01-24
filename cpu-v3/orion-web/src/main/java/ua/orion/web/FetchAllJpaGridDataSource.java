@@ -76,7 +76,6 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
 
     public void prepare(final int startIndex, final int endIndex,
             final List<SortConstraint> sortConstraints) {
-        prepare();
         final List<Comparator> sortChain = new ArrayList<>();
         for (final SortConstraint constraint : sortConstraints) {
 
@@ -120,7 +119,7 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
         });
 
         preparedResults = new ArrayList<>();
-        for (int i = startIndex; i <= (endIndex - startIndex); i++) {
+        for (int i = startIndex; i <= endIndex; i++) {
             preparedResults.add(allResults.get(i));
         }
         this.startIndex = startIndex;
