@@ -35,4 +35,9 @@ public class GridPropertyModelString extends GridPropertyModelAdapter{
         }
     }
 
+    //    @Override
+    //    public Object fromString(String value) {
+    //        return value;
+    //    }
+
 }

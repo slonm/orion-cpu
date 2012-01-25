@@ -3,6 +3,7 @@ package orion.tapestry.grid.lib.model.property;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.apache.tapestry5.PropertyConduit;
 import org.apache.tapestry5.grid.ColumnSort;
 import org.apache.tapestry5.ioc.Messages;
@@ -76,33 +77,40 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
      */
     protected List<GridFilterAbstract> gridFilterList;
     /**
+     * Источник локализованных сообщений
+     */
+    private Messages messages;
+    /**
      * Можно ли упорядочить по этому полю
      */
-    protected boolean iSortable=true;
+    protected boolean iSortable = true;
+
     /**
      * @param _gridBeanModel модель, которой принадлежит данное свойство
      * @param _propertyName название свойства
      * @param _propertyConduit объект для чтения/записи значений
-     * @param messages источник сообщений на человеческом языке
+     * @param _messages источник сообщений на человеческом языке
      */
     public GridPropertyModelAdapter(
             GridBeanModel _gridBeanModel,
             String _propertyName,
             PropertyConduit _propertyConduit,
-            Messages messages) {
+            Messages _messages) {
         this.gridBeanModel = _gridBeanModel;
         this.propertyName = _propertyName;
         this.propertyConduit = _propertyConduit;
         this.id = this.propertyName.replaceAll("\\W", _propertyName);
 
-        String key = id + "-label";
-        if (messages.contains(key)) {
-            this.label = messages.get(key);
-        } else {
-            this.label = _propertyName;
-        }
+        this.messages = _messages;
+        //String key = id + "-label";
+        //String key = String.format("property.%s.%s", this.gridBeanModel.getBeanType().getSimpleName(), capitalize(propertyName));
+        //if (messages.contains(key)) {
+        //    this.label = messages.get(key);
+        //} else {
+        this.label = propertyName;
+        //}
         this.sortConstraint = new GridSortConstraint(this, ColumnSort.UNSORTED, 0);
-        this.gridPropertyView=new GridPropertyView(this, 0);
+        this.gridPropertyView = new GridPropertyView(this, 0);
         this.gridFilterList = new ArrayList<GridFilterAbstract>();
     }
 
@@ -138,7 +146,7 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
      */
     @Override
     public GridPropertyModelInterface sortable(boolean sortable) {
-        this.iSortable=sortable;
+        this.iSortable = sortable;
         return this;
     }
 
@@ -185,8 +193,19 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
      */
     @Override
     public String getLabel() {
+
         return this.label;
     }
+
+    //    /**
+    //     * Returns a String which capitalizes the first letter of the string.
+    //     */
+    //    public static String capitalize(String name) {
+    //        if (name == null || name.length() == 0) {
+    //            return name;
+    //        }
+    //        return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
+    //    }
 
     /**
      *  изменяет название свойства, которое будет показано пользователю
@@ -258,5 +277,10 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
     @Override
     public void addGridFilter(GridFilterAbstract newGridFilter) {
         this.gridFilterList.add(newGridFilter);
+    }
+
+    @Override
+    public void setMessage(Messages msg) {
+        this.messages = msg;
     }
 }

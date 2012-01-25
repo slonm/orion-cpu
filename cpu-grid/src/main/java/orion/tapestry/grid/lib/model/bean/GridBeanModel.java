@@ -3,6 +3,7 @@ package orion.tapestry.grid.lib.model.bean;
 import org.apache.tapestry5.PropertyConduit;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.beaneditor.RelativePosition;
+import org.apache.tapestry5.ioc.Messages;
 import orion.tapestry.grid.lib.model.filter.GridFilterModel;
 import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
 import orion.tapestry.grid.lib.model.sort.GridSortModelImpl;
@@ -56,7 +57,6 @@ public interface GridBeanModel<T> extends BeanModel<T> {
     @Override
     public GridBeanModel<T> include(String... propertyNames);
 
-
     /**
      * Комбинирует существующие свойства модели
      * в объект GridPropertyViewModel
@@ -77,4 +77,9 @@ public interface GridBeanModel<T> extends BeanModel<T> {
      * для управления фильтрацией.
      */
     public GridFilterModel getGridFilterModel();
+
+    /**
+     * Устанавливает источник сообщений для интерфейса
+     */
+    public void setMessage(Messages msg);
 }
