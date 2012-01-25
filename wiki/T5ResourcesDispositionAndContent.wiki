@@ -19,4 +19,4 @@
 = Частное =
 
 == CSS ==
-T5ComponentLibraryCSS
+[T5ComponentLibraryCSS CSS для библиотек компонентов]
