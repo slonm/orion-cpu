@@ -118,7 +118,9 @@ public class CrudList {
      * Источник данных таблицы
      */
     public DataSource getDataSource() {
-        return cpuGridDataSourceFactory.createDataSource(objectClass);
+        //messages
+        DataSource ds=cpuGridDataSourceFactory.createDataSource(objectClass);
+        return ds;
     }
 
     /**
