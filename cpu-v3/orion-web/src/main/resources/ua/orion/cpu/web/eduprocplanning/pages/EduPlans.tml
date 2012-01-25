@@ -6,6 +6,8 @@
     <t:ori.tabcontrol t:contentZone="crudZone" t:tabcount="4" 
                       t:panelTitles="list:message:action.active,message:action.project,message:action.obsolete,message:action.all"/>
     <t:zone t:id="crudZone">
-        <t:ori.crud t:objectClass="objectClass" t:source="source" t:detailPage="eduprocplanning/eduplan"/>
+        <t:ori.crud t:objectClass="objectClass" t:source="source" 
+                    t:detailPage="eduprocplanning/eduplan"
+                    showViewButton="false"/>
     </t:zone>
 </t:ori.layout>

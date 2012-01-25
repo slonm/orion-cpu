@@ -35,4 +35,11 @@
         </table>
     </t:block>
 
+    <t:block id="DisplayLicenseTrainingDirection">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="TRAINING_DIRECTION" licenseRecord="licenseRecord"/>
+    </t:block>
+
+    <t:block id="DisplayLicenseSpeciality">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="SPECIALITY" licenseRecord="licenseRecord"/>
+    </t:block>
 </div>

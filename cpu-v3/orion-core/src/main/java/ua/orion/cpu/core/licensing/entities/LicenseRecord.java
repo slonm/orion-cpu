@@ -36,6 +36,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     private Calendar termination;
     private OrgUnit orgUnit;
     private LicenseRecordGroup licenseRecordGroup;
+    @DataType("longtext")
+    private String trainingVariants;
 
     public LicenseRecord() {
     }
@@ -167,6 +169,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
      */
     @ManyToOne
     @JoinColumn(name = "trainingDirection")
+    @DataType("LicenseTrainingDirection")
     public TrainingDirection getTrainingDirection() {
         return trainingDirection;
     }
@@ -177,12 +180,21 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     @ManyToOne
     @JoinColumn(name = "speciality")
+    @DataType("LicenseSpeciality")
     public Speciality getSpeciality() {
         return speciality;
     }
 
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
+    }
+
+    public String getTrainingVariants() {
+        return trainingVariants;
+    }
+
+    public void setTrainingVariants(String trainingVariants) {
+        this.trainingVariants = trainingVariants;
     }
 
     /**

@@ -23,6 +23,10 @@ public class LicensingWebIOCModule {
         configuration.add(new DisplayBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "DisplayEduFormLicenseQuantity"));
         //Edit EduFormLicenseQuantity
         configuration.add(new EditBlockContribution("EduFormLicenseQuantity", "licensing/PropertyBlocks", "EditEduFormLicenseQuantity"));
+        configuration.add(new DisplayBlockContribution("LicenseTrainingDirection", "licensing/PropertyBlocks", "DisplayLicenseTrainingDirection"));
+        configuration.add(new EditBlockContribution("LicenseTrainingDirection", "ori/PropertyBlocks", "editEntity"));
+        configuration.add(new DisplayBlockContribution("LicenseSpeciality",        "licensing/PropertyBlocks", "DisplayLicenseSpeciality"));
+        configuration.add(new EditBlockContribution("LicenseSpeciality",        "ori/PropertyBlocks", "editEntity"));
     }
 
     /**

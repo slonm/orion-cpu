@@ -3,13 +3,10 @@ package ua.orion.cpu.web.licensing.pages;
 import java.util.Set;
 import java.util.SortedMap;
 import javax.naming.event.EventContext;
-import org.apache.tapestry5.FieldValidator;
-import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Loop;
-import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PropertyEditContext;
@@ -17,7 +14,8 @@ import org.apache.tapestry5.services.PropertyOutputContext;
 import ua.orion.core.annotations.PersistentSingleton;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.EducationForm;
-import ua.orion.web.BooleanSelectModel;
+import ua.orion.cpu.core.licensing.entities.LicenseRecord;
+import ua.orion.web.CurrentBeanContext;
 
 /**
  * Блоки для beaneditor
@@ -41,7 +39,7 @@ public class PropertyBlocks {
     //Свойство, представляющее контекст, получаемый при выводе грида на экран
     @Environmental
     @Property(write = false)
-    private PropertyOutputContext displayContext;
+    private PropertyOutputContext outputContext;
     //Свойство, представляющее контекст, получаемый при выводе бинэдитора на экран
     @Environmental
     @Property(write = false)
@@ -68,6 +66,12 @@ public class PropertyBlocks {
         "value=EduForm"})
     private Loop eduFormLicenseQuantityAfl;
 
+    @Environmental
+    private CurrentBeanContext currentBeanContext;
+    
+    public LicenseRecord getLicenseRecord(){
+        return (LicenseRecord) currentBeanContext.getCurrentBean();
+    }
     /**
      * Метод, возвращающий количество лицензий для записи с ключом eduForm
      * (используется в компонентах Loop в шаблоне)
@@ -75,7 +79,7 @@ public class PropertyBlocks {
      */
     public Integer getEduFormLicenseQuantities() {
         try {
-            mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+            mp = (SortedMap<EducationForm, Integer>) outputContext.getPropertyValue();
         } catch (Exception ex) {
             System.out.println("EXCEPTION STACK" + ex.getStackTrace());
             mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
@@ -108,7 +112,7 @@ public class PropertyBlocks {
      * @return множество ключей мэпа Map<EducationForm, Integer> licenseQuantityByEducationForm
      */
     public Set getEduFormsD() {
-        mp = (SortedMap<EducationForm, Integer>) displayContext.getPropertyValue();
+        mp = (SortedMap<EducationForm, Integer>) outputContext.getPropertyValue();
         return mp.keySet();
     }
 

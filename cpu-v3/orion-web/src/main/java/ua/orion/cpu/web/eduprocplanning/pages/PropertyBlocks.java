@@ -1,6 +1,5 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -201,33 +200,8 @@ public class PropertyBlocks {
         SelectModel a = new SelectModelImpl(selectModel.getOptionGroups(), models);
         return a;
     }
-    @Property
-    private String kind;
-
+    
     public EduPlan getEduPlan() {
         return (EduPlan) currentBeanContext.getCurrentBean();
-    }
-
-    public List getTrainingDirectionKinds() {
-        //из getEduPlan() нужно получить перечень специализаций
-        List<String> list = new ArrayList<>();
-        String cl = getEduPlan().getLicenseRecord().getTrainingDirection().getClassify();
-        if (cl != null && !"".equals(cl)) {
-            list.add("demo1");
-            list.add("demo2");
-            list.add("demo3");
-        }
-        return list;
-    }
-
-    public List getSpecialityKinds() {
-        //из getEduPlan() нужно получить перечень специализаций
-        List<String> list = new ArrayList<>();
-        if (getEduPlan().getLicenseRecord().getSpeciality() != null) {
-            list.add("demo1");
-            list.add("demo2");
-            list.add("demo3");
-        }
-        return list;
     }
 }

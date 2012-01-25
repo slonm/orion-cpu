@@ -242,7 +242,7 @@ public class OrionWebIOCModule {
             public String identifyDataType(PropertyAdapter adapter) {
                 return entityService.getManagedEntities().contains(adapter.getType()) ? "entity" : null;
             }
-        }, "before:Annotation");
+        }, "after:Annotation");
 
     }
 

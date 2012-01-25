@@ -9,6 +9,8 @@ import org.apache.tapestry5.beaneditor.DataType;
 import ua.orion.core.persistence.AbstractEntity;
 import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
+import ua.orion.cpu.core.licensing.entities.Speciality;
+import ua.orion.cpu.core.licensing.entities.TrainingDirection;
 
 /**
  * Сущность-учебный план подготовки по специальности (шапка)
@@ -110,13 +112,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * (нужен для шапки плана)
      */
     @Transient
-    @DataType("EduPlanTrainingDirectionName")
-    public String getTrainingDirectionName() {
-        try {
-            return licenseRecord.getTrainingDirection().getName();
-        } catch (NullPointerException e) {
-            return null;
-        }
+    @DataType("EduPlanTrainingDirection")
+    public TrainingDirection getTrainingDirection() {
+            return licenseRecord.getTrainingDirection();
     }
 
     /**
@@ -124,13 +122,9 @@ public class EduPlan extends AbstractEntity<EduPlan> {
      * (нужен для шапки плана)
      */
     @Transient
-    @DataType("EduPlanSpecialityName")
-    public String getSpecialityName() {
-        try {
-            return licenseRecord.getSpeciality().getName();
-        } catch (NullPointerException e) {
-            return "-";
-        }
+    @DataType("EduPlanSpeciality")
+    public Speciality getSpeciality() {
+            return licenseRecord.getSpeciality();
     }
 
     /**
