@@ -1,6 +1,6 @@
 package ua.orion.cpu.web.licensing.transformers;
 
-import java.util.ListIterator;
+import java.util.*;
 import org.apache.tapestry5.AbstractOptionModel;
 import org.apache.tapestry5.OptionModel;
 import org.apache.tapestry5.SelectModel;
@@ -53,17 +53,23 @@ public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTr
     }
 
     private <T> BeanModel<T> transformView(BeanModel<T> model) {
-        model.exclude("license","educationalQualificationLevel");
+        Set<String> existProps = new HashSet(model.getPropertyNames());
+        List<String> requiredProps = Arrays.asList("code",
+                "knowledgeAreaName", "trainingDirection", "speciality",
+                "licenseRecordGroup", "licenseQuantityByEducationForm",
+                "termination", "orgUnit");
+        existProps.removeAll(requiredProps);
+        model.exclude(existProps.toArray(new String[]{}));
+        model.reorder(requiredProps.toArray(new String[]{}));
         return model;
     }
-    
+
     private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
         model.exclude("KnowledgeAreaCode",
                 "KnowledgeAreaName",
                 "code");
         return model;
     }
-
 //    @Override
 //    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
 //        if ("TrainingDirection".equalsIgnoreCase(property)) {

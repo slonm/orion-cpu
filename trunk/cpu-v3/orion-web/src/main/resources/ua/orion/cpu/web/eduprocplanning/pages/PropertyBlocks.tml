@@ -55,25 +55,11 @@
         <t:AddRowLink><input type="button" class="bbutton" value="${message:label.add}" id="eduPlanAddCycleLink"></input></t:AddRowLink>
     </t:block>
 
-    <t:block id="DisplayEduPlanTrainingDirectionName">
-        ${outputContext.PropertyValue}
-        <t:if test="trainingDirectionKinds">
-            <t:ori.Spoiler t:link="prop:eduPlan.licenseRecord?.trainingDirection.classify">
-                <p t:type="loop" t:source="trainingDirectionKinds" t:value="Kind">
-                    ${Kind}
-                </p>
-            </t:ori.Spoiler> 
-        </t:if>    
+    <t:block id="DisplayEduPlanTrainingDirection">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="TRAINING_DIRECTION" licenseRecord="eduPlan.licenseRecord"/>
     </t:block>
 
-    <t:block id="DisplayEduPlanSpecialityName">
-        ${outputContext.PropertyValue}
-        <t:if test="specialityKinds">
-            <t:ori.Spoiler t:link="prop:eduPlan.licenseRecord?.speciality.classify">
-                <p t:type="loop" t:source="SpecialityKinds" t:value="Kind">
-                    ${Kind}
-                </p>
-            </t:ori.Spoiler> 
-        </t:if>    
+    <t:block id="DisplayEduPlanSpeciality">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="SPECIALITY" licenseRecord="eduPlan.licenseRecord"/>
     </t:block>
 </div>
