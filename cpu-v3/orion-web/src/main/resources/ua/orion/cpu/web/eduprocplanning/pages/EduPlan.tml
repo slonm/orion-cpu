@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<t:ori.layout title="message:entity.EduPlan"
+<t:ori.layout title="${message:entity.EduPlan} ${tostring:object.licenserecord} ${message:property.EduPlan.IntroducingDate}: ${tostring:object.IntroducingDate}"
               menudata="Start>EduProcPlanning>EduPlan"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <t:ori.crud t:objectClass="DisciplineClass" t:source="source" t:listPage="eduprocplanning/EduPlans"/>
