@@ -10,7 +10,6 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanState;
@@ -31,8 +30,6 @@ public class EduPlans {
     private Request request;
     @Inject
     private Logger LOG;
-    @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
     @Property
     @Persist
     private EduPlanState eduPlanState;
@@ -41,10 +38,6 @@ public class EduPlans {
     //Состояния, соответствующие закладкам
     private static final EduPlanState[] states =
             new EduPlanState[]{EduPlanState.ACTUAL, EduPlanState.PROJECT, EduPlanState.OBSOLETE, null};
-
-    public boolean isComponentEventRequest() {
-        return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
-    }
 
     public Class<?> getObjectClass() {
         return EduPlan.class;
@@ -71,7 +64,7 @@ public class EduPlans {
     }
 
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequest()) {
+        if (!request.isXHR()) {
             try {
                 if (context.getCount() != 0) {
                     throw new RuntimeException();

@@ -11,6 +11,7 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
@@ -27,6 +28,8 @@ import ua.orion.web.services.TapestryDataSource;
  */
 public class EduPlanDisciplineCycleWeb extends Crud {
 
+    @Inject
+    private Request request;
     @Inject
     private ComponentResources resources;
     @Inject
@@ -56,7 +59,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
 
     @Override
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+        if (!request.isXHR()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();

@@ -9,7 +9,6 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDiscipline;
@@ -29,18 +28,12 @@ public class EduPlan {
     @Inject
     private Logger LOG;
     @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
-    @Inject
     private TapestryDataSource dataSource;
     //---Locals---
     @Property
     @Persist
     private ua.orion.cpu.core.eduprocplanning.entities.EduPlan object;
             
-    private boolean isComponentEventRequst() {
-        return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
-    }
-
     public Class<?> getDisciplineClass() {
         return EduPlanDiscipline.class;
     }
@@ -56,7 +49,7 @@ public class EduPlan {
     }
 
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+        if (!request.isXHR()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
