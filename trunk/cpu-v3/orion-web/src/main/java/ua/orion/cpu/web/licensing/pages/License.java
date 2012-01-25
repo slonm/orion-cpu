@@ -6,7 +6,6 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
@@ -27,8 +26,6 @@ public class License {
     @Inject
     private Logger LOG;
     @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
-    @Inject
     @Property(write = false)
     private EntityService entityService;
     @Inject
@@ -37,10 +34,6 @@ public class License {
     @Property
     @Persist
     private ua.orion.cpu.core.licensing.entities.License object;
-
-    private boolean isComponentEventRequst() {
-        return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
-    }
 
     /**
      * Задано явно для возможности вызова из других классов
@@ -61,7 +54,7 @@ public class License {
     }
 
     public Object onActivate(EventContext context) {
-        if (!isComponentEventRequst()) {
+        if (!request.isXHR()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();

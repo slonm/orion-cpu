@@ -5,7 +5,6 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
@@ -31,16 +30,10 @@ public class Crud {
     private LastPageHolder lastPageHolder;
     @Inject
     private Logger LOG;
-    @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
     //---Locals---
     @Persist
     private Class<? extends IEntity> objectClass;
     
-    public boolean isComponentEventRequst() {
-        return componentEventLinkEncoder.decodeComponentEventRequest(request) != null;
-    }
-
     public String getTitle() {
         return messages.get("entity." + objectClass.getSimpleName());
     }
@@ -60,7 +53,7 @@ public class Crud {
     }
 
     public Object onActivate(EventContext context) {
-         if (!isComponentEventRequst()) {
+         if (!request.isXHR()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
