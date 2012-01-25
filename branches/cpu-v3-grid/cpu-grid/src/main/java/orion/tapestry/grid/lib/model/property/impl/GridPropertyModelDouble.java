@@ -12,13 +12,14 @@ import orion.tapestry.grid.lib.model.property.GridPropertyModelAdapter;
  *
  * @author dobro
  */
-public class GridPropertyModelDouble extends GridPropertyModelAdapter{
+public class GridPropertyModelDouble extends GridPropertyModelAdapter {
+
     public GridPropertyModelDouble(
             GridBeanModel _gridBeanModel,
             String _propertyName,
             PropertyConduit _propertyConduit,
-            Messages messages){
-        super(_gridBeanModel, _propertyName, _propertyConduit,messages);
+            Messages messages) {
+        super(_gridBeanModel, _propertyName, _propertyConduit, messages);
         this.gridFilterList.add(new GridFilterGE(this));
         this.gridFilterList.add(new GridFilterGT(this));
         this.gridFilterList.add(new GridFilterLE(this));
@@ -32,4 +33,12 @@ public class GridPropertyModelDouble extends GridPropertyModelAdapter{
         }
     }
 
+    //    @Override
+    //    public Object fromString(String value) {
+    //        try {
+    //            return Double.valueOf(value.replace(',', '.'));
+    //        } catch (NumberFormatException ex) {
+    //            return null;
+    //        }
+    //    }
 }

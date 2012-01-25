@@ -1,7 +1,5 @@
 package orion.tapestry.grid.lib.model.filter.impl;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;

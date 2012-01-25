@@ -360,7 +360,12 @@ public class GridBeanModelImpl<T> implements GridBeanModel<T> {
     public GridPropertyModelInterface addEmpty(String propertyName) {
         return add(propertyName, NULL_PROPERTY_CONDUIT);
     }
-    
-    
-    
+
+    @Override
+    public void setMessage(Messages msg) {
+        this.messages = msg;
+        for(GridPropertyModelInterface gp :this.properties.values()){
+            gp.setMessage(msg);
+        }
+    }
 }

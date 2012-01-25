@@ -2,6 +2,7 @@ package orion.tapestry.grid.lib.model.property;
 
 import java.util.List;
 import org.apache.tapestry5.beaneditor.PropertyModel;
+import org.apache.tapestry5.ioc.Messages;
 import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.model.filter.GridFilterAbstract;
 import orion.tapestry.grid.lib.model.sort.GridSortConstraint;
@@ -95,4 +96,14 @@ public interface GridPropertyModelInterface extends PropertyModel {
      * Добавляет элементарный фильтр
      */
     public void addGridFilter(GridFilterAbstract newGridFilter);
+
+    //    /**
+    //     * Преобразователь из строки в правильный тип данных
+    //     */
+    //    public Object fromString(String value);
+    
+    /**
+     * Устанавливает источник сообщений для интерфейса
+     */
+    public void setMessage(Messages msg);
 }

@@ -32,4 +32,13 @@ public class GridPropertyModelFloat extends GridPropertyModelAdapter{
         }
     }
 
+    //    @Override
+    //    public Object fromString(String value) {
+    //        try{
+    //            return Float.valueOf(value.replace(',','.'));
+    //        } catch (NumberFormatException ex) {
+    //            return null;
+    //        }
+    //    }
+
 }
