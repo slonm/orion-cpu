@@ -10,7 +10,7 @@
   <t:pagelink page="crud/CrudCreate" context="crudRowContext"  title="${message:action.add}" id="crud_page_link_add">${message:action.add}</t:pagelink>
 </s:HasPermission>
 
-<t:grid.Grid source="dataSource" row="currentRow" add="menu">
+<t:grid.Grid source="dataSource" row="currentRow" add="menu" reorder="menu">
         <p:menuCell>
            <s:HasPermission permission="${objectClass.simpleName}:update:${currentRow.id}">
               <t:pagelink page="crud/CrudEdit" context="crudRowContext" class="crud-page-link-edit" title="message:crud-edit"/>
