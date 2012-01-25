@@ -42,6 +42,6 @@ public class StringValueProviderImpl implements StringValueProvider {
             }
             clas = clas.getSuperclass();
         }
-        return String.valueOf(entity);
+        return null;
     }
 }

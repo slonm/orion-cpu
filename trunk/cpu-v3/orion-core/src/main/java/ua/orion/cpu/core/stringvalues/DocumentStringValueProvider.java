@@ -4,8 +4,7 @@
  */
 package ua.orion.cpu.core.stringvalues;
 
-import java.text.DateFormat;
-import org.apache.tapestry5.ioc.services.ThreadLocale;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import ua.orion.core.services.StringValueProvider;
 import ua.orion.cpu.core.entities.Document;
 
@@ -15,19 +14,17 @@ import ua.orion.cpu.core.entities.Document;
  */
 public class DocumentStringValueProvider implements StringValueProvider<Document> {
 
-    private final ThreadLocale thLocale;
-
-    public DocumentStringValueProvider(ThreadLocale thLocale) {
-        this.thLocale = thLocale;
-    }
+    @Inject
+    private StringValueProvider stringValueProvider;
 
     @Override
     public String getStringValue(Document entity) {
         if (entity == null) {
             return null;
         }
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, thLocale.getLocale());
-        String s = entity.getSerial() + entity.getNumber() + " (" + dateFormat.format(entity.getIssue().getTime()) + ")";
-        return s;
+        StringBuilder sb = new StringBuilder();
+        sb.append(entity.getSerial()).append(entity.getNumber());
+        sb.append(" (").append(stringValueProvider.getStringValue(entity.getIssue())).append(")");
+        return sb.toString();
     }
 }

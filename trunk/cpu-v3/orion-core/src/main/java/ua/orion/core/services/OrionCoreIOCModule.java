@@ -1,13 +1,11 @@
 package ua.orion.core.services;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+import java.text.DateFormat;
+import java.util.*;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
-import org.apache.tapestry5.ioc.services.Coercion;
-import org.apache.tapestry5.ioc.services.CoercionTuple;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.jpa.EntityManagerSource;
 import org.apache.tapestry5.jpa.JpaTransactionAdvisor;
 import org.apache.tapestry5.services.UpdateListenerHub;
@@ -34,7 +32,6 @@ public class OrionCoreIOCModule {
     private UpdateListenerHub updateListenerHub;
 
     public static void bind(ServiceBinder binder) {
-        binder.bind(StringValueProvider.class, StringValueProviderImpl.class);
         binder.bind(ModelLibraryService.class, ModelLibraryServiceImpl.class);
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
         binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
@@ -42,6 +39,43 @@ public class OrionCoreIOCModule {
         binder.bind(EntityService.class, EntityServiceImpl.class);
         binder.bind(ModelLabelSource.class, ModelLabelSourceImpl.class);
         binder.bind(EduProcPlanningService.class, EduProcPlanningServiceImpl.class);
+    }
+
+    public static StringValueProvider build(List<StringValueProvider> conf,
+            ChainBuilder builder) {
+        return builder.build(StringValueProvider.class, conf);
+    }
+
+    /**
+     * Добавляет провайдеры для сущностей, java.util.Calendar, java.util.Date
+     * @param conf
+     * @param thLocale 
+     */
+    public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
+            final ThreadLocale thLocale) {
+        conf.addInstance("entity", StringValueProviderImpl.class);
+        conf.add("default", new StringValueProvider() {
+
+            @Override
+            public String getStringValue(Object entity) {
+                return entity == null ? "" : String.valueOf(entity);
+            }
+        }, "after:*");
+        conf.add("date", new StringValueProvider() {
+
+            DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, thLocale.getLocale());
+
+            @Override
+            public String getStringValue(Object entity) {
+                if (Calendar.class.isInstance(entity)) {
+                    return dateFormat.format(((Calendar) entity).getTime());
+                }
+                if (Date.class.isInstance(entity)) {
+                    return dateFormat.format(entity);
+                }
+                return null;
+            }
+        });
     }
 
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
