@@ -45,7 +45,7 @@ public class OrionWebIOCModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(TapestryDataSource.class, TapestryDataSourceImpl.class);
         binder.bind(TapestryDataFactory.class, TapestryDataFactoryImpl.class);
-        binder.bind(LastPageHolder.class, LastPageHolderImpl.class);
+        binder.bind(RequestInfo.class, RequestInfoImpl.class);
         binder.bind(MenuLinkBuilder.class);
     }
 
@@ -182,13 +182,13 @@ public class OrionWebIOCModule {
      * @param filter
      */
     public void contributeRequestHandler(OrderedConfiguration<RequestFilter> configuration,
-            @InjectService("TimingFilter") RequestFilter filter, LastPageHolder holder) {
+            @InjectService("TimingFilter") RequestFilter filter, RequestInfo info) {
         // Each contribution to an ordered configuration has a name, When necessary, you may
         // set constraints to precisely control the invocation order of the contributed filter
         // within the pipeline.
 
         configuration.add("Timing", filter);
-        configuration.add("LastPageHolder", holder);
+        configuration.add("RequestInfo", info);
     }
 
     /**

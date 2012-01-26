@@ -5,11 +5,10 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
-import ua.orion.web.services.LastPageHolder;
+import ua.orion.web.services.RequestInfo;
 
 /**
  * Страница, которая предоставляет CRUD для простых сущностей
@@ -25,9 +24,7 @@ public class Crud {
     private ComponentResources resources;
     //---Services---
     @Inject
-    private Request request;
-    @Inject
-    private LastPageHolder lastPageHolder;
+    private RequestInfo info;
     @Inject
     private Logger LOG;
     //---Locals---
@@ -53,7 +50,7 @@ public class Crud {
     }
 
     public Object onActivate(EventContext context) {
-         if (!request.isXHR()) {
+         if (!info.isComponentEventRequest()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
@@ -64,7 +61,7 @@ public class Crud {
                 //т.к. сброс произойдеи только при следующем запросе страницы
                 if (!objClass.equals(objectClass) && objectClass != null) {
                     resources.discardPersistentFieldChanges();
-                    return lastPageHolder.getLastPage();
+                    return info.getLastPage();
                 }
                 objectClass = objClass;
             } catch (Exception ex) {
