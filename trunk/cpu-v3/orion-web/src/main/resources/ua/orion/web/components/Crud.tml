@@ -2,13 +2,21 @@
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
      xmlns:p="tapestry:parameter"
      xmlns:s="tapestry-library:security">
+    <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%">
+        <s:HasPermission permission="${objectClass.simpleName}:insert">
+            <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add"  id="crud-add-record-button">${message:action.add}</button></t:EventLink>
+        </s:HasPermission>
+        <t:if test="listPage">
+            <t:PageLink class="crud-list" t:page="prop:listPage"><button class="ui-button-tolist">${message:action.list}</button></t:PageLink>
+        </t:if>    
+    </div>
     <t:zone t:id="listZone">
         <t:if test="error">
             <div class="t-error">${error}</div>
         </t:if>
         <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--вызов скрытия окна-->
         <t:grid source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
-                model="dataSource.getBeanModelForList(objectClass,messages)">
+                model="dataSource.getBeanModelForList(objectClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
                 <div class="ui-grid-cell-action-tip" style="display: none">
                     <table class="crud-links">
@@ -48,14 +56,6 @@
             </p:actionCell>
         </t:grid>
     </t:zone>
-    <div id="crud-grid-buttons" class="ui-widget-header ui-corner-all">
-        <s:HasPermission permission="${objectClass.simpleName}:insert">
-            <t:EventLink class="crud-add" t:event="add" zone="popupZone"><button class="ui-button-add"  id="crud-add-record-button">${message:action.add}</button></t:EventLink>
-        </s:HasPermission>
-        <t:if test="listPage">
-            <t:PageLink class="crud-list" t:page="prop:listPage"><button class="ui-button-tolist">${message:action.list}</button></t:PageLink>
-        </t:if>    
-    </div>
     <t:block id="editBlock">
         <t:if test="isedit">
             <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750" height="450"/><!--вызов показа окна-->
