@@ -310,7 +310,7 @@ public class Grid implements GridModel {
 
         // выборка данных
         Page visiblePage = new Page(currentPage, nRowsPerPage);
-        
+
         cachedSource.prepare(visiblePage.getFirstRow(), visiblePage.getLastRow(), GridSortModelImpl.importJSONString(gridBeanModel, this.gridSort.getGridSortJSON()).getSortConstraints(), this.gridFilter.getGridFilterJSON());
 
         int availableRows = cachedSource.getAvailableRows();
@@ -437,5 +437,19 @@ public class Grid implements GridModel {
         public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints, String filterJSON) {
             delegate.prepare(startIndex, endIndex, sortConstraints, filterJSON);
         }
+    }
+
+    /**
+     * Устанавливает модель записи
+     */
+    public void setModel(GridBeanModel _model) {
+        this.model = _model;
+    }
+
+    /**
+     * Возвращает модель записи
+     */
+    public GridBeanModel getModel() {
+        return this.model;
     }
 }
