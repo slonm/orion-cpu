@@ -21,7 +21,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  *
  * 
  */
-@Import(library = {"TabControl.js"}, stylesheet = {"TabControl.css"})
+@Import(library = {"TabControl.js"})
 public class TabControl {
 
     /**
@@ -61,7 +61,7 @@ public class TabControl {
      * @param writer the markup writer
      */
     void afterRender(MarkupWriter writer) {
-        javascriptSupport.addScript("new Ori.TabControl('%s', '%s');", 
+        javascriptSupport.addScript("new TabControl('%s', '%s');", 
                 getClientId(), getClientId() + "_" + activePanelId);
     }
 
