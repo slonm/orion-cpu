@@ -32,12 +32,12 @@
 
 <div t:id="pagerTop"/>
 
-
+<span id="cpu-grid-table-container">
 <table id="gridTable" class="cpuGrid" border="0px" cellspacing="0px">
    <tr t:id="columns"/>
    <tr t:id="rows"/>
 </table>
-
+</span>
 
 
 <div t:id="pagerBottom"/>

@@ -102,13 +102,9 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
         this.id = this.propertyName.replaceAll("\\W", _propertyName);
 
         this.messages = _messages;
-        //String key = id + "-label";
+        this.label = String.format("%s.%s", this.gridBeanModel.getBeanType().getSimpleName(), propertyName);
         //String key = String.format("property.%s.%s", this.gridBeanModel.getBeanType().getSimpleName(), capitalize(propertyName));
-        //if (messages.contains(key)) {
-        //    this.label = messages.get(key);
-        //} else {
-        this.label = propertyName;
-        //}
+
         this.sortConstraint = new GridSortConstraint(this, ColumnSort.UNSORTED, 0);
         this.gridPropertyView = new GridPropertyView(this, 0);
         this.gridFilterList = new ArrayList<GridFilterAbstract>();
@@ -193,19 +189,9 @@ public class GridPropertyModelAdapter implements GridPropertyModelInterface {
      */
     @Override
     public String getLabel() {
-
-        return this.label;
+        return messages.contains(this.label) ? messages.get(this.label) : this.label;
     }
 
-    //    /**
-    //     * Returns a String which capitalizes the first letter of the string.
-    //     */
-    //    public static String capitalize(String name) {
-    //        if (name == null || name.length() == 0) {
-    //            return name;
-    //        }
-    //        return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
-    //    }
 
     /**
      *  изменяет название свойства, которое будет показано пользователю
