@@ -7,22 +7,23 @@ import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.MessageFormatter;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import orion.tapestry.grid.lib.datasource.DataSource;
-import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
+//import orion.tapestry.grid.lib.savedsettings.IGridSettingStore;
 import orion.tapestry.grid.services.CpuGridDataSourceFactory;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.Locale;
+import orion.tapestry.grid.lib.model.bean.GridBeanModel;
+import orion.tapestry.grid.services.GridBeanModelSource;
+import ua.orion.core.services.ModelLabelSource;
 import ua.orion.tapestry.menu.lib.MenuData;
-import ua.orion.tapestry.menu.lib.MenuItem;
-import ua.orion.tapestry.menu.lib.PageMenuLink;
 import ua.orion.tapestry.menu.services.OrionMenuService;
 
 /**
@@ -63,11 +64,11 @@ public class CrudList {
      */
     @Inject
     private ComponentResources resources;
-    /**
-     * ??????
-     */
-    @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
+    //    /**
+    //     * ??????
+    //     */
+    //    @Inject
+    //    private ComponentEventLinkEncoder componentEventLinkEncoder;
     /**
      * Сообщения интерфейса
      */
@@ -113,13 +114,25 @@ public class CrudList {
      */
     @Inject
     private OrionMenuService cpuMenu;
+    /**
+     * Сервис для создания модели, описывающей таблицу
+     */
+    @Inject
+    private GridBeanModelSource gridBeanModelSource;
+    @Inject
+    private ModelLabelSource modelLabels;
+    //    /**
+    //     * Компонента, которая отображает список
+    //     */
+    //    @Component(id="cpuGrid")
+    //    private Grid grid;
 
     /**
      * Источник данных таблицы
      */
     public DataSource getDataSource() {
         //messages
-        DataSource ds=cpuGridDataSourceFactory.createDataSource(objectClass);
+        DataSource ds = cpuGridDataSourceFactory.createDataSource(objectClass);
         return ds;
     }
 
@@ -189,6 +202,17 @@ public class CrudList {
         return this.objectClass.getSimpleName();
     }
 
+    //    @BeginRender
+    //    Object beginRender(){
+    //        GridBeanModel model=grid.getModel();
+    //        model.setMessage(messages);
+    //        return null;
+    //    }
+    public GridBeanModel getModel() {
+        //this.modelLabels.getCellPropertyLabel(objectClass,propertyName, messages);
+        return gridBeanModelSource.createDisplayModel(objectClass, new MsgAdapter());
+    }
+
     public Object[] getCrudRowContext() {
         Object[] context;
         if (this.currentRow == null) {
@@ -201,5 +225,52 @@ public class CrudList {
             //context[2] = this.menupath;
         }
         return context;
+    }
+
+    class MsgAdapter implements Messages {
+
+        @Override
+        public boolean contains(String key) {
+            return true;
+        }
+
+        @Override
+        public String get(String key) {
+
+            String[] propertyName = key.split("\\.");
+            if (propertyName.length >= 2) {
+                try {
+                    return modelLabels.getCellPropertyLabel(objectClass, capitalize(propertyName[1]), messages);
+                } catch (java.lang.NullPointerException ex) {
+                    if (messages.contains(propertyName[1])) {
+                        return messages.get(propertyName[1]);
+                    }
+                }
+            }
+            if (messages.contains(key)) {
+                return messages.get(key);
+            }
+            return key;
+        }
+
+        @Override
+        public MessageFormatter getFormatter(String key) {
+            return messages.getFormatter(key);
+        }
+
+        @Override
+        public String format(String key, Object... args) {
+            return messages.format(key, args);
+        }
+
+        /**
+         * Returns a String which capitalizes the first letter of the string.
+         */
+        public String capitalize(String name) {
+            if (name == null || name.length() == 0) {
+                return name;
+            }
+            return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
+        }
     }
 }
