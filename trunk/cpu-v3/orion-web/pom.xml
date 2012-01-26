@@ -106,22 +106,12 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <version>6.1.26</version>
                 <configuration>
                     <contextPath>/</contextPath>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <!-- Log to the console. -->
                     <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
                         <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug
                              that prevents the requestLog from being set. -->
                         <append>true</append>
                     </requestLog>                
-                    <scanTargetPatterns>
-                        <scanTargetPattern>
-                            <directory>target</directory>
-                            <excludes>
-                                <exclude>**/*.tml</exclude>
-                                <exclude>**/*.properties</exclude>
-                            </excludes>
-                        </scanTargetPattern>
-                    </scanTargetPatterns>
                 </configuration>
             </plugin>
             <plugin>
