@@ -1,43 +1,73 @@
 /**
- * Declare our own name space
+ * @class TabControl - Панель вкладок, которая взаимодействует с Tapestry. 
+ * @author dvelopp (Переписан скрипт CK для jQuery)
  */
-if (window.Ori == undefined) Ori = {};
-Ori.TabControl = Class.create();
-Ori.TabControl.prototype = {
-
-	initialize: function(tabPanelId, activeId)
-	{
-		this.tabPanelId = tabPanelId;
-		this.activeId = activeId;
-		this.panelLinks = $(this.tabPanelId).select('a');
-
-		this.removeActiveStyle();
-
-		this.panelLinks.each(function (e)
-		{
-			Event.observe(e, 'click', this.__clicked.bind(this))
-
-			if (e.up().id == activeId)
-				this.addActiveStyle(e.up());
-
-		}.bind(this));
-	},
-	removeActiveStyle: function()
-	{
-		this.panelLinks.each(function (element)
-		{
-			element.up().removeClassName('active');
-		})
-	},
-	addActiveStyle: function(element)
-	{
-		element.addClassName('active');
-	},
-	__clicked:function(event)
-	{
-		this.removeActiveStyle();
-
-		var clickedLink = Event.element(event)
-		clickedLink.up().addClassName('active');
-	}
-}
+var TabControl = (function(){
+    
+    /**
+     * ID панель вкладок
+     */ 
+    var tabPanelId;
+    /**
+     * ID активного элеметна
+     */
+    var activeId;
+    /**
+     * Вкладки(ссылки)
+     */
+    var panelLinks;
+    
+    /**
+     * Конструктор
+     */
+    var Init = function(tabPanelIdValue, activeIdValue){
+        tabPanelId = tabPanelIdValue;
+        activeId = activeIdValue;
+        panelLinks = jQuery("#"+tabPanelId).find("a");
+        //Удаляется активный стиль со всех вкладок
+        Init.prototype.removeActiveStyle();
+        //Добавляется стиль активной для вкладки, которая в данный активна
+        panelLinks.each(function(){
+            if (jQuery(this).parent().attr("id")==activeId){
+                Init.prototype.addActiveStyle(jQuery(this).parent());
+            }
+        });
+        //Обработчик нажатия на вкладку
+        panelLinks.click(function(){
+            Init.prototype.removeActiveStyle();
+            Init.prototype.addActiveStyle(jQuery(this).parent());
+        })
+        //Обработчик наведения мыши на вкладку
+        panelLinks.parent().mouseenter(function(){
+            Init.prototype.addHoverStyle(jQuery(this));
+        })
+        //Обработчик покидания мышью вкладки
+        panelLinks.parent().mouseleave(function(){
+            Init.prototype.removeHoverStyle();
+        })
+      };
+     
+    //Public-часть
+      Init.prototype = {
+            name: "TabControl Class",
+        removeActiveStyle:function(){
+            panelLinks.each(function ()
+            {
+                jQuery(this).parent().removeClass("ui-state-active");
+            })
+        },
+        removeHoverStyle:function(){
+            panelLinks.each(function ()
+            {
+                jQuery(this).parent().removeClass("ui-state-focus");
+            })
+        },
+        addActiveStyle:function (element){
+            element.addClass("ui-state-active");
+        },
+        addHoverStyle:function (element){
+            element.addClass("ui-state-focus");
+        }
+      };
+      return Init;
+}());
