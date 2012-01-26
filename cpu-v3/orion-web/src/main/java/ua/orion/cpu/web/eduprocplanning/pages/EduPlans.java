@@ -10,11 +10,11 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanState;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
 /**
  *
@@ -27,7 +27,7 @@ public class EduPlans {
     private Zone crudZone;
     //---Services---
     @Inject
-    private Request request;
+    private RequestInfo info;
     @Inject
     private Logger LOG;
     @Property
@@ -64,7 +64,7 @@ public class EduPlans {
     }
 
     public Object onActivate(EventContext context) {
-        if (!request.isXHR()) {
+        if (!info.isComponentEventRequest()) {
             try {
                 if (context.getCount() != 0) {
                     throw new RuntimeException();

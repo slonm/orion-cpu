@@ -1,25 +1,20 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
-import java.lang.Class;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
-import ua.orion.core.persistence.MetaEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
 import ua.orion.web.pages.Crud;
-import ua.orion.web.services.LastPageHolder;
+import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -29,11 +24,9 @@ import ua.orion.web.services.TapestryDataSource;
 public class EduPlanDisciplineCycleWeb extends Crud {
 
     @Inject
-    private Request request;
-    @Inject
     private ComponentResources resources;
     @Inject
-    private LastPageHolder lastPageHolder;
+    private RequestInfo info;
     @Inject
     @Property(write = false)
     private TapestryDataSource dataSource;
@@ -59,7 +52,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
 
     @Override
     public Object onActivate(EventContext context) {
-        if (!request.isXHR()) {
+        if (!info.isComponentEventRequest()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
@@ -76,7 +69,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
                 //т.к. сброс произойдеи только при следующем запросе страницы
                 if (!objClass.equals(getObjectClass()) && getObjectClass() != null) {
                     resources.discardPersistentFieldChanges();
-                    return lastPageHolder.getLastPage();
+                    return info.getLastPage();
                 }
                 setObjectClass(objClass);
 

@@ -2,6 +2,7 @@ package ua.orion.web.services;
 
 import java.io.IOException;
 import org.apache.tapestry5.Link;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.ApplicationStateManager;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.PageRenderLinkSource;
@@ -14,17 +15,16 @@ import org.apache.tapestry5.services.Response;
  *
  * @author slobodyanuk
  */
-public class LastPageHolderImpl implements LastPageHolder {
+public class RequestInfoImpl implements RequestInfo {
 
-    private final ComponentEventLinkEncoder encoder;
-    private final PageRenderLinkSource source;
-    private final ApplicationStateManager manager;
-
-    public LastPageHolderImpl(ComponentEventLinkEncoder encoder, PageRenderLinkSource source, ApplicationStateManager manager) {
-        this.encoder = encoder;
-        this.source = source;
-        this.manager = manager;
-    }
+    @Inject
+    private ComponentEventLinkEncoder encoder;
+    @Inject
+    private PageRenderLinkSource source;
+    @Inject
+    private ApplicationStateManager manager;
+    @Inject
+    private Request request;
 
     @Override
     public Link getLastPage() {
@@ -47,5 +47,10 @@ public class LastPageHolderImpl implements LastPageHolder {
             }
         }
         return handler.service(request, response);
+    }
+
+    @Override
+    public boolean isComponentEventRequest() {
+        return encoder.decodeComponentEventRequest(request) != null;
     }
 }

@@ -6,11 +6,11 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -22,7 +22,7 @@ public class License {
     //---Services---
 
     @Inject
-    private Request request;
+    private RequestInfo info;
     @Inject
     private Logger LOG;
     @Inject
@@ -54,7 +54,7 @@ public class License {
     }
 
     public Object onActivate(EventContext context) {
-        if (!request.isXHR()) {
+        if (!info.isComponentEventRequest()) {
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();

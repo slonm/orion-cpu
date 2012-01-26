@@ -2,8 +2,8 @@ package ua.orion.cpu.web.licensing.pages;
 
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Request;
 import org.slf4j.Logger;
+import ua.orion.web.services.RequestInfo;
 
 /**
  * Страница, которая предоставляет CRUD лицензий
@@ -14,7 +14,7 @@ public class Licenses {
     //---Services---
 
     @Inject
-    private Request request;
+    private RequestInfo info;
     @Inject
     private Logger LOG;
 
@@ -23,7 +23,7 @@ public class Licenses {
     }
 
     public Object onActivate(EventContext context) {
-        if (!request.isXHR()) {
+        if (!info.isComponentEventRequest()) {
             try {
                 if (context.getCount() != 0) {
                     throw new RuntimeException();
