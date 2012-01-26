@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
+import ua.orion.core.OrionSymbols;
 import ua.orion.core.utils.IOCUtils;
 import ua.orion.core.validation.UniqueConstraintValidator;
 import ua.orion.core.persistence.MetaEntity;
@@ -41,6 +42,12 @@ public class OrionCoreIOCModule {
         binder.bind(EduProcPlanningService.class, EduProcPlanningServiceImpl.class);
     }
 
+    public static void contributeFactoryDefaults(
+            MappedConfiguration<String, String> configuration) {
+        //MEDIUM DateFormat
+        configuration.add(OrionSymbols.DATE_FORMAT, "2");
+    }
+
     public static StringValueProvider build(List<StringValueProvider> conf,
             ChainBuilder builder) {
         return builder.build(StringValueProvider.class, conf);
@@ -52,7 +59,7 @@ public class OrionCoreIOCModule {
      * @param thLocale 
      */
     public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
-            final ThreadLocale thLocale) {
+            final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat) {
         conf.addInstance("entity", StringValueProviderImpl.class);
         conf.add("default", new StringValueProvider() {
 
@@ -63,15 +70,15 @@ public class OrionCoreIOCModule {
         }, "after:*");
         conf.add("date", new StringValueProvider() {
 
-            DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, thLocale.getLocale());
-
             @Override
             public String getStringValue(Object entity) {
+                DateFormat _dateFormat = DateFormat.getDateInstance(dateFormat, thLocale.getLocale());
+
                 if (Calendar.class.isInstance(entity)) {
-                    return dateFormat.format(((Calendar) entity).getTime());
+                    return _dateFormat.format(((Calendar) entity).getTime());
                 }
                 if (Date.class.isInstance(entity)) {
-                    return dateFormat.format(entity);
+                    return _dateFormat.format(entity);
                 }
                 return null;
             }
