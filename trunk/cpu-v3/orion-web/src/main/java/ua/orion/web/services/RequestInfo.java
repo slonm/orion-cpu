@@ -19,8 +19,12 @@ public interface RequestInfo extends RequestFilter {
     Link getLastPage();
 
     /**
-     * возвращает true если обрабатывается http request события компонента 
-     * и false, если  обрабатывается http request отрисовки страницы
+     * Возвращает true если обрабатывается http request события компонента 
+     * и false, если  обрабатывается http request отрисовки страницы.
+     * Обычно для такой проверки используется request.isXHR(), но если событие
+     * не вызывает обновление зоны, то request.isXHR() вернет true, поэтому 
+     * в этом методе сделана дополнительная проверка удовлетворяет ли синтаксис
+     * запроса синтаксису запроса события компонента
      */
     boolean isComponentEventRequest();
 }
