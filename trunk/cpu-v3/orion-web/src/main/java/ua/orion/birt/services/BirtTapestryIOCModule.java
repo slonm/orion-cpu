@@ -168,9 +168,9 @@ public class BirtTapestryIOCModule {
             @InjectService("BirtViewServletHttpServletRequestFilter") HttpServletRequestFilter viewServletHttpServletRequestFilter) {
 
         configuration.add("birtEngineServlet",
-                birtEngineServletHttpServletRequestFilter, "after:SecurityRequestFilter");
+                birtEngineServletHttpServletRequestFilter, "after:SecurityRequestFilter", "before:GZIP");
         configuration.add("birtViewServlet",
-                viewServletHttpServletRequestFilter, "after:SecurityRequestFilter");
+                viewServletHttpServletRequestFilter, "after:SecurityRequestFilter", "before:GZIP");
     }
 
     public static void bind(ServiceBinder binder) {
