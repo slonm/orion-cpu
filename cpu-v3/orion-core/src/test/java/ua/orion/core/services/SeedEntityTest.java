@@ -23,14 +23,11 @@ public class SeedEntityTest extends IOCTestCase{
     
     @Test
     public void testLicensingSeedEntity() {
-//    Registry registry=this.buildRegistry(OrionCoreIOCModule.class, LicensingIOCModule.class);
-//    registry.performRegistryStartup();
-//    JPATransactionManager tm=registry.getService(JPATransactionManager.class);
-//    new LicensingSeedEntity(registry.getService(EntityService.class));
-//    tm.commit();
-//    new LicensingSeedEntity(registry.getService(EntityService.class));
-//    tm.commit();
-//    registry.shutdown();
+    Registry registry=this.buildRegistry(OrionCoreIOCModule.class, LicensingIOCModule.class);
+    registry.performRegistryStartup();
+    new LicensingSeedEntity(registry.getService(EntityService.class));
+    new LicensingSeedEntity(registry.getService(EntityService.class));
+    registry.shutdown();
     }
 
 }

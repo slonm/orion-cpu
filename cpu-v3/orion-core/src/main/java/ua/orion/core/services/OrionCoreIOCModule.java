@@ -61,13 +61,6 @@ public class OrionCoreIOCModule {
     public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
             final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat) {
         conf.addInstance("entity", StringValueProviderImpl.class);
-        conf.add("default", new StringValueProvider() {
-
-            @Override
-            public String getStringValue(Object entity) {
-                return entity == null ? "" : String.valueOf(entity);
-            }
-        }, "after:*");
         conf.add("date", new StringValueProvider() {
 
             @Override
@@ -83,6 +76,13 @@ public class OrionCoreIOCModule {
                 return null;
             }
         });
+        conf.add("default", new StringValueProvider() {
+
+            @Override
+            public String getStringValue(Object entity) {
+                return entity == null ? "" : String.valueOf(entity);
+            }
+        }, "after:*");
     }
 
     public static void contributeModelLibraryService(Configuration<ModelLibraryInfo> conf) {
