@@ -44,7 +44,7 @@ public class AclActiveDirectoryRealmTest {
     @BeforeClass
     public void setup() {
         ThreadContext.remove();
-        Configuration cfg = new Configuration().configure("hibernate_file.cfg.xml");
+        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 
         SessionFactory sessionFactory = cfg.buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -72,7 +72,7 @@ public class AclActiveDirectoryRealmTest {
 
         Ejb3Configuration configuration = new Ejb3Configuration();
         configuration.addAnnotatedClass(Acl.class);
-        configuration.configure("hibernate_file.cfg.xml");
+        configuration.configure("hibernate.cfg.xml");
         EntityManagerFactory entityManagerFactory = configuration.buildEntityManagerFactory();
         EntityManager em = entityManagerFactory.createEntityManager();
 
