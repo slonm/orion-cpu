@@ -51,6 +51,6 @@ public class RequestInfoImpl implements RequestInfo {
 
     @Override
     public boolean isComponentEventRequest() {
-        return encoder.decodeComponentEventRequest(request) != null;
+        return request.isXHR() || (encoder.decodeComponentEventRequest(request) != null);
     }
 }

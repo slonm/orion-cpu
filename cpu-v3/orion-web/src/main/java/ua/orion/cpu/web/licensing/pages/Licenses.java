@@ -24,6 +24,7 @@ public class Licenses {
 
     public Object onActivate(EventContext context) {
         if (!info.isComponentEventRequest()) {
+            //Страница не должна получать контекста при запросе страницы
             try {
                 if (context.getCount() != 0) {
                     throw new RuntimeException();

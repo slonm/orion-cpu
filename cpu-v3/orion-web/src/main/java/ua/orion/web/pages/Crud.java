@@ -30,7 +30,7 @@ public class Crud {
     //---Locals---
     @Persist
     private Class<? extends IEntity> objectClass;
-    
+
     public String getTitle() {
         return messages.get("entity." + objectClass.getSimpleName());
     }
@@ -50,7 +50,16 @@ public class Crud {
     }
 
     public Object onActivate(EventContext context) {
-         if (!info.isComponentEventRequest()) {
+        if (info.isComponentEventRequest()) {
+            //Если это событие компонента, то Persistent objectClass
+            //должен быть уже установлен
+            if (objectClass == null) {
+                LOG.debug("Component event on uninitialized page");
+                return "";
+            }
+        } else {
+            //Иначе это запрос страницы. Страница должна обязательно получить класс
+            //сущности
             try {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
@@ -58,7 +67,7 @@ public class Crud {
                 Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
                 //Если страница вызвана для класса сущности, отличного от предыдущего
                 //вызова, то сбросим все Persistent поля и отправим редирект на эту же страницу,
-                //т.к. сброс произойдеи только при следующем запросе страницы
+                //т.к. сброс произойдет только при следующем запросе страницы
                 if (!objClass.equals(objectClass) && objectClass != null) {
                     resources.discardPersistentFieldChanges();
                     return info.getLastPage();
@@ -71,4 +80,4 @@ public class Crud {
         }
         return null;
     }
-    }
+}

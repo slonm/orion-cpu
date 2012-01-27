@@ -18,3 +18,33 @@ div.window-content {
     font: 15px Arial, Helvetica, sans-serif;
     font-size: 15px;
 }
+
+.btntable{
+    border: 1px solid #fff; 
+    text-align: right
+}
+
+.a-button, .a-button:link, .a-button:visited{
+    background-color: #E6E6E6;
+    color: #555555;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid silver;
+    font-size: 13px;
+    font-family: Verdana,Arial,sans-serif;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/*.a-button:before {
+    content: url(images/delete.png);
+}*/
+
+.a-button:hover{
+    background-color: #DADADA;
+    border: 1px solid #999999;
+    color: #212121;
+}
+
