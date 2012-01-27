@@ -1,5 +1,0 @@
-1.1
-* Moved HibernatePrimaryKeyTypeService from Tapestry CRUD-Hibernate to Application Module-Hibernate.
-
-1.0
-* Initial version.
