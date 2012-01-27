@@ -205,7 +205,7 @@ public class SecurityModule {
             @Symbol(SecurityCoreSymbols.ENABLED) boolean enabled) {
         //Handler with name SecurityRequestFilter always exists
         if (enabled) {
-            configuration.add("SecurityRequestFilter", securityRequestFilter, "before:*");
+            configuration.add("SecurityRequestFilter", securityRequestFilter, "after:StoreIntoGlobals");
         } else {
             configuration.add("SecurityRequestFilter", new HttpServletRequestFilter() {
 
@@ -214,7 +214,7 @@ public class SecurityModule {
                     ThreadContext.bind(new DummySubject());
                     return handler.service(request, response);
                 }
-            }, "before:*");
+            }, "after:StoreIntoGlobals");
         }
     }
 }
