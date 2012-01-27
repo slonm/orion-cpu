@@ -3,6 +3,7 @@ package ua.orion.web.components;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.alerts.*;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
@@ -42,7 +43,7 @@ public class Crud {
     private Messages messages;
     //---Services---
     @Inject
-    private EntityService entityService;
+    private EntityService es;
     @Inject
     private ComponentResources resources;
     @Inject
@@ -50,6 +51,8 @@ public class Crud {
     private TapestryDataSource dataSource;
     @Inject
     private Environment environment;
+    @Inject
+    private AlertManager alertManager;
     //---Locals---
     @Parameter(allowNull = false)
     private Class<?> objectClass;
@@ -82,8 +85,6 @@ public class Crud {
     @Persist
     @Property(write = false)
     private String mode;
-    @Property(write = false)
-    private String error;
     private static final String EDIT = "edit";
     private static final String ADD = "add";
     private static final String VIEW = "view";
@@ -135,7 +136,7 @@ public class Crud {
     }
 
     public String getId() {
-        return entityService.getPrimaryKey(object).toString();
+        return es.getPrimaryKey(object).toString();
     }
 
     /**
@@ -170,21 +171,33 @@ public class Crud {
     }
 
     public Object onSuccessFromEditForm() {
-        error = null;
         try {
-            entityService.merge(object);
+            es.merge(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
+                    messages.format("message.success.update.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         } catch (RuntimeException ex) {
-            error = messages.get("message.update-error");
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
+                    messages.format("message.error.update.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         }
         return listZone.getBody();
     }
 
     public Object onSuccessFromAddForm() {
-        error = null;
         try {
-            entityService.persist(object);
+            es.persist(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
+                    messages.format("message.success.insert.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         } catch (RuntimeException ex) {
-            error = messages.get("message.insert-error");
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
+                    messages.format("message.error.insert.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         }
         return listZone.getBody();
     }
@@ -192,42 +205,44 @@ public class Crud {
     public Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
         mode = EDIT;
-        object = entityService.find(objectClass, id);
-        error = null;
+        object = es.find(objectClass, id);
         return editBlock;
     }
 
     public Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         mode = ADD;
-        object = entityService.newInstance(objectClass);
-        error = null;
+        object = es.newInstance(objectClass);
         return editBlock;
     }
 
     public Object onView(Integer id) {
         mode = VIEW;
-        object = entityService.find(objectClass, id);
-        error = null;
+        object = es.find(objectClass, id);
         return viewBlock;
     }
 
     public Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         mode = DEL;
-        object = entityService.find(objectClass, id);
-        error = null;
+        object = es.find(objectClass, id);
         return deleteBlock;
     }
 
     public Object onDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
-        error = null;
         try {
-            object = entityService.find(objectClass, id);
-            entityService.remove(object);
+            object = es.find(objectClass, id);
+            es.remove(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
+                    messages.format("message.success.remove.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         } catch (RuntimeException ex) {
-            error = messages.get("message.delete-error");
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
+                    messages.format("message.error.remove.entity",
+                    messages.get("entity." + objectClass.getSimpleName()),
+                    es.getStringValue(object)));
         }
         return listZone.getBody();
     }

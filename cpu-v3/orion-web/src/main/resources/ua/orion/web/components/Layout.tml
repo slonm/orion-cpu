@@ -34,6 +34,7 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
+                            <t:alerts/>
                             <div class="title ui-widget-content ui-corner-all">
                                 <div class="ui-widget-header ui-corner-tl ui-corner-tr"> <h2>${title}</h2></div>
                                 <div class="entry">
