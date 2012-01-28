@@ -26,7 +26,7 @@ import org.apache.tapestry5.ioc.annotations.SubModule;
     ua.orion.cpu.web.students.services.StudentsWebIOCModule.class,
     ua.orion.cpu.web.employees.services.EmployeesWebIOCModule.class
 })
-public class AppModule {
+public class CpuModule {
 
     public static void bind(ServiceBinder binder) {
     }
