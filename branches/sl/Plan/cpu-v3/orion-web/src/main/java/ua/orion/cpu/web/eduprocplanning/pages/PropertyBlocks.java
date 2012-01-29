@@ -129,11 +129,11 @@ public class PropertyBlocks {
     }
 
     public Double getCycleTotalCredits() {
-        return getEduPlanDisciplineCycle().getePPCycleTotalCredits();
+        return getEduPlanDisciplineCycle().getTotalCredits();
     }
 
     public void setCycleTotalCredits(Double cycleTotalCredits) {
-        this.eduPlanDisciplineCycle.setePPCycleTotalCredits(cycleTotalCredits);
+        this.eduPlanDisciplineCycle.setTotalCredits(cycleTotalCredits);
     }
 
     /**
