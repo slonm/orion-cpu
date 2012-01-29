@@ -1,0 +1,45 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
+    используемый в гриде при отображении списка лицензий-->
+    <t:block id="DisplayEduFormLicenseQuantity">
+        <!--параметры source и value вынесены в аннотацию @Component в класс
+        параметр t:id содержит имя свойства класса-компонента типа Loop-->
+        <table class="nb">
+            <t:loop t:id="eduFormLicenseQuantity">
+                <tr>
+                    <!--для каждого элемента мэпа возвращается имя объекта EduForm eduForm,
+                    являющегося полем класса и указанным в свойстве value компонента,
+                    и соответствующее количество лицензий, определённое методом
+                    Integer getEduFormLicenseQuantities() класса-->
+                    <td>${eduForm.name}</td><td> - </td><td>${EduFormLicenseQuantities}</td>
+                </tr>
+            </t:loop>
+        </table>
+    </t:block>
+    <!--Редактор свойства @DataType("EduFormLicenseQuantity") в сущности LicenseRecord,
+    используемый в бинэдиторе для редактирования списка лицензированного объёма
+    по формам обучения-->
+    <t:block id="EditEduFormLicenseQuantity">
+        <!--Отображать PropertyBlock для объемов необходимо в таблице-->
+        <table class="t-loop">
+            <tr><th class="f-left">
+                    ${message:property.LicenseRecord.LicenseQuantityByEducationForm}<br/>
+                </th></tr>
+            <t:loop t:id="eduFormLicenseQuantityAfl">
+                <tr>
+                    <td class="f-left"><i>${eduForm.name}:</i></td>
+                    <td><t:textfield t:id="txtEduFormLicenseQuantity" value="EduFormLicenseQuantities" class="text"/></td>
+                </tr>
+            </t:loop>
+        </table>
+    </t:block>
+
+    <t:block id="DisplayLicenseTrainingDirection">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="TRAINING_DIRECTION" licenseRecord="licenseRecord"/>
+    </t:block>
+
+    <t:block id="DisplayLicenseSpeciality">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="SPECIALITY" licenseRecord="licenseRecord"/>
+    </t:block>
+</div>

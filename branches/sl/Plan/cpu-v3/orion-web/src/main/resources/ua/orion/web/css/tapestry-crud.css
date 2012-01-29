@@ -1,0 +1,63 @@
+/*TODO add alt text same to http://dimox.name/alt_text_for_images_with_css/*/
+a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud-detail-pic  {
+    border: 1px solid black;
+}
+
+.crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
+    background: no-repeat center transparent;
+    display: block;
+    width: 32px;
+    height: 16px;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid silver;
+    float: left;
+}
+
+TABLE.crud-links TBODY TR TD {
+    border: 0px;
+}
+
+.crud-detail-pic{
+    background-image: url(../images/detail.png);
+}
+
+.crud-view-pic{
+    background-image: url(../images/view.png);
+}
+
+.crud-edit-pic {
+    background-image: url(../images/edit.png);
+}
+
+.crud-del-pic{
+    background-image: url(../images/delete.png);
+}
+
+.crud-edit, .crud-view, .crud-del, .crud-add, .crud-list {
+    display: inline;
+}
+
+:checked {
+    background-color: blue;
+}
+
+table.nb tbody tr td{
+    border: none;
+}
+
+#crud-grid-buttons{
+    display: inline-block;
+    margin-top: 3px;
+    padding-bottom: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+}
+
+#grid-container{
+    width: 100%; overflow-x: scroll; height: 500px; overflow-y: scroll;
+}

@@ -1,0 +1,60 @@
+table.t-data-grid tbody tr td.isObsolete {
+    text-align: center;
+}
+
+table.t-data-grid tbody tr td.rang {
+    text-align: right;
+}
+
+DIV.t-error-popup {
+    z-index: 9999
+}
+
+div.t-beaneditor-row {
+    white-space: nowrap;
+}
+
+div.window-content {
+    font: 15px Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+.btntable{
+    border: 1px solid #fff; 
+    text-align: right
+}
+
+.button-bar a, .button-bar a:link, .button-bar a:visited, 
+.a-button, .a-button:link, .a-button:visited{
+    text-align:center;
+    background-color: #E6E6E6;
+    color: #555555;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid silver;
+    font-size: 13px;
+    font-family: Verdana,Arial,sans-serif;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/*.a-button:before {
+    content: url(images/delete.png);
+}*/
+
+.button-bar a:hover, .a-button:hover{
+    background-color: #DADADA;
+    border: 1px solid #999999;
+    color: #212121;
+}
+
+.button-bar{
+    padding: 5px 10px;
+}
+
+label:after, dt:after {
+    content: ":";
+}
+
