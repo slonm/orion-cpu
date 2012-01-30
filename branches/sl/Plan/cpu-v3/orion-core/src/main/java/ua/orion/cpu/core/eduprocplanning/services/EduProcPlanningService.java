@@ -37,7 +37,7 @@ public interface EduProcPlanningService {
             Calendar issue, String educationalQualificationLevel,
             String speciality, Calendar termination);
 
-    List<EduPlanDisciplineCycle> findEPDCiclesByEduPlan(EduPlan plan);
+    List<EduPlanCycle> findEduPlanCyclesByEduPlan(EduPlan plan);
 
-    List<EduPlanDiscipline> findDisciplinesByEPDCiclesAndEduPlan(EduPlanDisciplineCycle cycle, EduPlan plan);
+    List<EduPlanDiscipline> findDisciplinesByEduPlanCycleAndEduPlan(EduPlanCycle cycle, EduPlan plan);
 }

@@ -104,20 +104,6 @@
                             <td align="center"></td>
                         </tr>
                         <!--Шапка цикла конец-->
-                        <!--Перебор подциклов начало-->
-                        <!--                <t:loop source="subcycles" value="subcycle">-->
-                        <!--Шапка подцикла начало-->
-                        <!--                    <tr style="font-weight: bold">
-                                                <td>
-                                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                                </td>
-                                                <td></td>
-                                                <td colspan="4">${tostring:subcycle.name}</td>
-                                                <td align="center">${subcycle.totalCredits}</td>
-                                                <td align="center">${subcycle.totalHours}</td>
-                                                <td align="center"></td>
-                                            </tr>-->
-                        <!--Шапка подцикла конец-->
                         <!--Перебор дисциплин начало-->
                         <tr t:type="loop" source="disciplines" value="discipline">
                             <td>
@@ -125,7 +111,7 @@
                                 <!--                        <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
                                                         <input type="image" src="delete.png" title="Видалити дисципліну"/>-->
                             </td>
-                            <td align="center">${cycle.number}.${discipline.disciplineNumber}</td>
+                            <td align="center">${cycle.number}.${discipline.number}</td>
                             <td>${discipline.discipline.name}</td>
                             <td align="center">${discipline.examSemestrQuantity}</td>
                             <td align="center">${discipline.creditSemesterQuantity}</td>
@@ -135,8 +121,6 @@
                             <td align="center">кто-то выбрал</td>
                         </tr>
                         <!--Перебор дисциплин конец-->
-                        <!--                </t:loop>-->
-                        <!--Перебор подциклов конец-->
                     </t:loop>
                     <!--Перебор циклов конец-->
                 </tbody>

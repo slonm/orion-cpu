@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import ua.orion.cpu.core.eduprocplanning.NormativeValue;
 import java.util.*;
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(uniqueConstraints =
 @UniqueConstraint(columnNames = {"eduPlan", "EPPCycle"}))
-public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDisciplineCycle> {
+public class EduPlanCycle extends EduPlanDisciplineTag<EduPlanCycle> {
 
     private static final long serialVersionUID = 1L;
     private EduPlan eduPlan;
@@ -24,13 +25,11 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
     //ТОЛЬКО С ДРОБНОЙ ЧАСТЬЮ .0 ИЛИ .25  ИЛИ .5 ИЛИ .75 
     //Общее количество кредитов на дисциплины цикла
     private Double totalCredits;
-    //Части циклов
-    private Set<EduPlanSubCycle> eduPlanSubCycles = new HashSet<>();
 
-    public EduPlanDisciplineCycle() {
+    public EduPlanCycle() {
     }
 
-    public EduPlanDisciplineCycle(EduPlan eduPlan, EPPCycle ePPCycle, String number,
+    public EduPlanCycle(EduPlan eduPlan, EPPCycle ePPCycle, String number,
             Boolean isRegulatory, Double totalCredits) {
         this.eduPlan = eduPlan;
         this.ePPCycle = ePPCycle;
@@ -85,15 +84,6 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
         this.totalCredits = totalCredits;
     }
 
-    @OneToMany(mappedBy="eduPlanCycle")
-    public Set<EduPlanSubCycle> getEduPlanSubCycles() {
-        return eduPlanSubCycles;
-    }
-
-    public void setEduPlanSubCycles(Set<EduPlanSubCycle> eduPlanSubCycles) {
-        this.eduPlanSubCycles = eduPlanSubCycles;
-    }
-    
     /**
      * Геттер для отображения общего количества часов цикла дисциплины в гриде 
      * (сеттер для вычислимого поля, как и само поле, не нужны)
@@ -113,13 +103,13 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
     }
 
     @Override
-    protected boolean entityEquals(EduPlanDisciplineCycle obj) {
+    protected boolean entityEquals(EduPlanCycle obj) {
         return aEqualsField(ePPCycle, obj.ePPCycle);
     }
 
     
     @Override
-    public int compareTo(EduPlanDisciplineCycle o) {
+    public int compareTo(EduPlanCycle o) {
         return number.compareTo(o.number);
     }
 }

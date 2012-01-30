@@ -64,7 +64,7 @@ public class EduProcPlanningSeedEntity {
 
             //LicenseAppender
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseAppender", SubjectType.ROLE, "Qualification:read,insert,update,menu"));
-            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanDisciplineCycle:read,insert,update,menu"));
+            es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlanCycle:read,insert,update,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "ePPCycle:read,insert,update,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "Discipline:read,insert,update,menu"));
             es.findUniqueOrPersist(new Acl("kis/Licensing/LicenseReader", SubjectType.ROLE, "EduPlan:read,insert,update,menu"));
@@ -117,21 +117,21 @@ public class EduProcPlanningSeedEntity {
 
             //--Создание циклов дисциплин учебных планов (для бакалавров ПИ 2009г утверждения), 
             //привязка к ним наборов дисциплин и сохранение
-            EduPlanDisciplineCycle pIBach2009HumSocEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, humsocecon_DC, "1", true, 24.0));
+            EduPlanCycle pIBach2009HumSocEconom = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, humsocecon_DC, "1", true, 24.0));
             //Привязка цикла к дисциплинам 
             foreignLangPI2009.getEduPlanDisciplineTags().add(pIBach2009HumSocEconom);
             es.persist(foreignLangPI2009);
             pravoznavstvoPI2009.getEduPlanDisciplineTags().add(pIBach2009HumSocEconom);
             es.persist(pravoznavstvoPI2009);
 
-            EduPlanDisciplineCycle pIBach2009MathNatSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, mathnatsci_DC, "2", true, 23.5));
+            EduPlanCycle pIBach2009MathNatSci = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, mathnatsci_DC, "2", true, 23.5));
             //Привязка цикла к дисциплинам 
             mathAnalysisPI2009.getEduPlanDisciplineTags().add(pIBach2009MathNatSci);
             es.persist(mathAnalysisPI2009);
             physicsPI2009.getEduPlanDisciplineTags().add(pIBach2009MathNatSci);
             es.persist(physicsPI2009);
 
-            EduPlanDisciplineCycle pIBach2009Prof = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, prof_DC, "3", true, 104.0));
+            EduPlanCycle pIBach2009Prof = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, prof_DC, "3", true, 104.0));
             //Привязка цикла к дисциплинам 
             compDiscrMathPI2009.getEduPlanDisciplineTags().add(pIBach2009Prof);
             es.persist(compDiscrMathPI2009);
@@ -140,21 +140,21 @@ public class EduProcPlanningSeedEntity {
 
             //--Создание циклов дисциплин учебных планов (для бакалавров СА 2009г)
             //привязка к ним наборов дисциплин и сохранение
-            EduPlanDisciplineCycle pMBach2009SocHumEconom = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, sochumekonom_DC, "1", true, 24.0));
+            EduPlanCycle pMBach2009SocHumEconom = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, sochumekonom_DC, "1", true, 24.0));
             //Привязка цикла к дисциплинам 
             ukrainianLangSA2009.getEduPlanDisciplineTags().add(pMBach2009SocHumEconom);
             es.persist(ukrainianLangSA2009);
             politologiyaSA2009.getEduPlanDisciplineTags().add(pMBach2009SocHumEconom);
             es.persist(politologiyaSA2009);
 
-            EduPlanDisciplineCycle pMBach2009NaturSci = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, natursci_DC, "2", true, 60.75));
+            EduPlanCycle pMBach2009NaturSci = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, natursci_DC, "2", true, 60.75));
             //Привязка цикла к дисциплинам 
             algGeomSA2009.getEduPlanDisciplineTags().add(pMBach2009NaturSci);
             es.persist(algGeomSA2009);
             funcAnalysSA2009.getEduPlanDisciplineTags().add(pMBach2009NaturSci);
             es.persist(funcAnalysSA2009);
 
-            EduPlanDisciplineCycle pMBach2009ProfND = es.findUniqueOrPersist(new EduPlanDisciplineCycle(pIBach2009, profnd_DC, "3", true, 57.5));
+            EduPlanCycle pMBach2009ProfND = es.findUniqueOrPersist(new EduPlanCycle(pIBach2009, profnd_DC, "3", true, 57.5));
             //Привязка цикла к дисциплинам 
             programSA2009.getEduPlanDisciplineTags().add(pMBach2009ProfND);
             es.persist(programSA2009);

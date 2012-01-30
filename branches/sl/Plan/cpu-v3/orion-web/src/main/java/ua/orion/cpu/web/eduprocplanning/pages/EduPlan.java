@@ -14,7 +14,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDiscipline;
-import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
+import ua.orion.cpu.core.eduprocplanning.entities.EduPlanCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanState;
 import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningService;
 import ua.orion.web.services.RequestInfo;
@@ -50,14 +50,14 @@ public class EduPlan {
     @Property
     private EduPlanDiscipline discipline;
     @Property
-    private EduPlanDisciplineCycle cycle;
+    private EduPlanCycle cycle;
 
     public List getCycles() {
-        return eduProcPlanningService.findEPDCiclesByEduPlan(object);
+        return eduProcPlanningService.findEduPlanCyclesByEduPlan(object);
     }
     
     public List getDisciplines() {
-        return eduProcPlanningService.findDisciplinesByEPDCiclesAndEduPlan(cycle, object);
+        return eduProcPlanningService.findDisciplinesByEduPlanCycleAndEduPlan(cycle, object);
     }
 
     public Object onActivate(EventContext context) {

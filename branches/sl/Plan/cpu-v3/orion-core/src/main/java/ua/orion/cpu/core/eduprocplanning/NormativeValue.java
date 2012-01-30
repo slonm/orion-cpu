@@ -1,4 +1,4 @@
-package ua.orion.cpu.core.eduprocplanning.entities;
+package ua.orion.cpu.core.eduprocplanning;
 
 /**
  * Значения нормативных переменных, использующиеся в разных пакетах.

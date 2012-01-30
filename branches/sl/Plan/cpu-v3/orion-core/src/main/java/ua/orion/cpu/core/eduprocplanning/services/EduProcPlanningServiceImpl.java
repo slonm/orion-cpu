@@ -83,19 +83,19 @@ public class EduProcPlanningServiceImpl implements EduProcPlanningService {
     }
     
     @Override
-    public List<EduPlanDisciplineCycle> findEPDCiclesByEduPlan(EduPlan plan) {
-        String source = "select c from EduPlanDisciplineCycle c"
-                + " where c.eduPlan=:plan order by c.eduPlanDisciplineCycleNumber";
-        TypedQuery<EduPlanDisciplineCycle> query = es.getEntityManager().createQuery(source, EduPlanDisciplineCycle.class);
+    public List<EduPlanCycle> findEduPlanCyclesByEduPlan(EduPlan plan) {
+        String source = "select c from EduPlanCycle c"
+                + " where c.eduPlan=:plan order by c.number";
+        TypedQuery<EduPlanCycle> query = es.getEntityManager().createQuery(source, EduPlanCycle.class);
         query.setParameter("plan", plan);
         return query.getResultList();
     }
     
     @Override
-    public List<EduPlanDiscipline> findDisciplinesByEPDCiclesAndEduPlan(EduPlanDisciplineCycle cycle, EduPlan plan) {
+    public List<EduPlanDiscipline> findDisciplinesByEduPlanCycleAndEduPlan(EduPlanCycle cycle, EduPlan plan) {
         String source = "select d from EduPlanDiscipline d join d.eduPlan"
                 + " where d.eduPlan=:plan and :cycle MEMBER OF d.eduPlanDisciplineTags"
-                + " order by d.disciplineNumber";
+                + " order by d.number";
         TypedQuery<EduPlanDiscipline> query = es.getEntityManager().createQuery(source, EduPlanDiscipline.class);
         query.setParameter("plan", plan);
         query.setParameter("cycle", cycle);

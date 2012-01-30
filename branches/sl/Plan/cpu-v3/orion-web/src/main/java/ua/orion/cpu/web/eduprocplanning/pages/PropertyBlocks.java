@@ -21,7 +21,7 @@ import org.apache.tapestry5.services.PropertyOutputContext;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EPPCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
-import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
+import ua.orion.cpu.core.eduprocplanning.entities.EduPlanCycle;
 import ua.orion.web.CurrentBeanContext;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -52,32 +52,32 @@ public class PropertyBlocks {
     @Environmental
     @Property(write = false)
     private CurrentBeanContext currentBeanContext;
-    //Компонент Loop, выводящий в грид все элементы SortedSet<EduPlanDisciplineCycle> 
-    //eduPlanDisciplineCycles
-    //В параметрах компонента указаны: в source - метод EduPlanDisciplineCyclesLoop(), возвращающий
+    //Компонент Loop, выводящий в грид все элементы SortedSet<EduPlanCycle> 
+    //eduPlanCycles
+    //В параметрах компонента указаны: в source - метод EduPlanCyclesLoop(), возвращающий
     //набор циклов дисциплины; в value - поле текущего класса,
     //из которого извлекаются значения для отображением в гриде в компоненте Loop
-    @Component(parameters = {"source=EduPlanDisciplineCyclesD", "value=eduPlanDisciplineCycle"})
-    private Loop eduPlanDisciplineCyclesLoop;
+    @Component(parameters = {"source=EduPlanCyclesD", "value=eduPlanCycle"})
+    private Loop eduPlanCyclesLoop;
     //Свойство, необходимое для установления текущего значения при выводе
     //элементов набора в гриде в компоненте Loop
 //    @PageActivationContext
 //    @Property
 //    private EduPlan eduPlan;
 //  @Property
-    private EduPlanDisciplineCycle eduPlanDisciplineCycle;
+    private EduPlanCycle eduPlanCycle;
     //Используемый методами этого класса набор
-    private Set<EduPlanDisciplineCycle> tmpSet = null;
+    private Set<EduPlanCycle> tmpSet = null;
     //На шаблоне создан новый блок, который заменяет стандартную ссылку добавления записи компонента ajaxformloop
     @Inject
     private Block addRowBlock;
-    //Компонент AjaxFormLoop, выводящий в бинэдитор все элементы Set<EduPlanDisciplineCycle> 
-    //eduPlanDisciplineCycles
-    //В параметрах компонента указаны: в source - метод getEduPlanDisciplineCycles(), возвращающий
+    //Компонент AjaxFormLoop, выводящий в бинэдитор все элементы Set<EduPlanCycle> 
+    //eduPlanCycles
+    //В параметрах компонента указаны: в source - метод getEduPlanCycles(), возвращающий
     //набор циклов дисциплины; в value - поле текущего класса,
     //из которого извлекаются значения для отображsением в гриде в компоненте AjaxFormLoop
-    @Component(parameters = {"source=EduPlanDisciplineCyclesE", "value=eduPlanDisciplineCycle", "addRow=prop:addRowBlock"})
-    private AjaxFormLoop eduPlanDisciplineCycles;
+    @Component(parameters = {"source=EduPlanCyclesE", "value=eduPlanCycle", "addRow=prop:addRowBlock"})
+    private AjaxFormLoop eduPlanCycles;
 
     /**
      * Метод получения блока, заменяющего стандартную ссылку добавления записи компонента ajaxformloop
@@ -96,67 +96,67 @@ public class PropertyBlocks {
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в грид
      * @return 
      */
-    public Set getEduPlanDisciplineCyclesD() {
-        tmpSet = (Set<EduPlanDisciplineCycle>) outputContext.getPropertyValue();
+    public Set getEduPlanCyclesD() {
+        tmpSet = (Set<EduPlanCycle>) outputContext.getPropertyValue();
         return Collections.unmodifiableSet(tmpSet);
     }
 
     /**
      * Метод, возвращающий циклы дисциплин учебного плана для вывода в AjaxFormLoop
      */
-    public Set getEduPlanDisciplineCyclesE() {
-        return (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
+    public Set getEduPlanCyclesE() {
+        return (Set<EduPlanCycle>) editContext.getPropertyValue();
     }
 
     /*
      * Добавил сеттер, но почему то в него не заходит
      */
-    public void seteduPlanDisciplineCycles(Set<EduPlanDisciplineCycle> eduPlanDisciplineCycles) {
-        tmpSet = (Set<EduPlanDisciplineCycle>) editContext.getPropertyValue();
-        tmpSet = eduPlanDisciplineCycles;
+    public void seteduPlanCycles(Set<EduPlanCycle> eduPlanCycles) {
+        tmpSet = (Set<EduPlanCycle>) editContext.getPropertyValue();
+        tmpSet = eduPlanCycles;
     }
 
     /**
-     * Геттер поля eduPlanDisciplineCycle данного класса
+     * Геттер поля eduPlanCycle данного класса
      * @return 
      */
-    public EduPlanDisciplineCycle getEduPlanDisciplineCycle() {
-        return eduPlanDisciplineCycle;
+    public EduPlanCycle getEduPlanCycle() {
+        return eduPlanCycle;
     }
 
-    public void setEduPlanDisciplineCycle(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        this.eduPlanDisciplineCycle = eduPlanDisciplineCycle;
+    public void setEduPlanCycle(EduPlanCycle eduPlanCycle) {
+        this.eduPlanCycle = eduPlanCycle;
     }
 
     public Double getCycleTotalCredits() {
-        return getEduPlanDisciplineCycle().getTotalCredits();
+        return getEduPlanCycle().getTotalCredits();
     }
 
     public void setCycleTotalCredits(Double cycleTotalCredits) {
-        this.eduPlanDisciplineCycle.setTotalCredits(cycleTotalCredits);
+        this.eduPlanCycle.setTotalCredits(cycleTotalCredits);
     }
 
     /**
      * Обработчик события добавления строки в AjaxFormLoop
-     * @return объект класса eduPlanDisciplineCycle, добавляемый в AjaxFormLoop
+     * @return объект класса eduPlanCycle, добавляемый в AjaxFormLoop
      */
 //    @CommitAfter
     Object onAddRow() {
-        EduPlanDisciplineCycle ePDCycle = new EduPlanDisciplineCycle();
+        EduPlanCycle ePDCycle = new EduPlanCycle();
 //        EduPlan eduPlan=(EduPlan)beanEditContext.getPropertyValue();
-//        eduPlan.getEduPlanDisciplineCycles().add(ePDCycle);
+//        eduPlan.getEduPlanCycles().add(ePDCycle);
         //т.к. ассоциаиция однонаправленная - нужно раскомментрировать для двунаправленной ассоциации
-//    eduPlanDisciplineCycle.setEduPlan(eduPlan);
+//    eduPlanCycle.setEduPlan(eduPlan);
         return ePDCycle;
     }
 
     /**
      * Обработчик события удаления строки в AjaxFormLoop
-     * @return объект класса eduPlanDisciplineCycle, удаляемый из AjaxFormLoop
+     * @return объект класса eduPlanCycle, удаляемый из AjaxFormLoop
      */
 //    @CommitAfter
-    void onRemoveRow(EduPlanDisciplineCycle eduPlanDisciplineCycle) {
-        es.remove(eduPlanDisciplineCycle);
+    void onRemoveRow(EduPlanCycle eduPlanCycle) {
+        es.remove(eduPlanCycle);
     }
 
     /**
@@ -176,7 +176,7 @@ public class PropertyBlocks {
      * @return Цикл дисциплин, поступающих из освтньо-професійних програм
      */
     public EPPCycle getEPPCycleName() {
-        return eduPlanDisciplineCycle.getEPPCycle();
+        return eduPlanCycle.getEPPCycle();
     }
 
     /**
@@ -184,11 +184,11 @@ public class PropertyBlocks {
      * @param cycle - выбранный цикл.
      */
     public void setEPPCycleName(EPPCycle cycle) {
-        eduPlanDisciplineCycle.setEPPCycle(cycle);
+        eduPlanCycle.setEPPCycle(cycle);
     }
 
     public SelectModel getEPPCycleNameSelectModel() {
-        SelectModel selectModel = dataSource.getSelectModel(EduPlanDisciplineCycle.class, "ePPCycle");
+        SelectModel selectModel = dataSource.getSelectModel(EduPlanCycle.class, "ePPCycle");
         List<OptionModel> models = selectModel.getOptions();
         Collections.sort(models, new Comparator<OptionModel>() {
 

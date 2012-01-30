@@ -1,5 +1,6 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import ua.orion.cpu.core.eduprocplanning.NormativeValue;
 import java.util.*;
 import javax.persistence.*;
 import ua.orion.core.persistence.AbstractEntity;
@@ -21,7 +22,7 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
     //как к нормативным, так и к выборочным циклас)
     private Boolean isMandatory;
     //Номер дисциплины в учебном плане (берётся из ОПП)
-    private String disciplineNumber;
+    private String number;
     //Название дисциплины (берётся из справочника)
     private Discipline discipline;
     //TODO НА ФОРМЕ ВВОДА КОЛИЧЕСТВА КРЕДИТОВ ОГРАНИЧИТЬ ЗНАЧЕНИЯ 
@@ -72,7 +73,7 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
             Integer lecturesHours, Integer labsHours, Integer practicesHours) {
         this.eduPlan = eduPlan;
         this.isMandatory = isMandatory;
-        this.disciplineNumber = disciplineNumber;
+        this.number = disciplineNumber;
         this.discipline = discipline;
         this.ectsCreditAmount = ectsCreditAmount;
         this.examSemestr = examSemestr;
@@ -106,12 +107,12 @@ public class EduPlanDiscipline extends AbstractEntity<EduPlanDiscipline> {
         this.isMandatory = isMandatory;
     }
 
-    public String getDisciplineNumber() {
-        return disciplineNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setDisciplineNumber(String disciplineNumber) {
-        this.disciplineNumber = disciplineNumber;
+    public void setNumber(String disciplineNumber) {
+        this.number = disciplineNumber;
     }
 
     //Однонаправленная ассоциация со справочником дисциплин (Названий дисциплин)

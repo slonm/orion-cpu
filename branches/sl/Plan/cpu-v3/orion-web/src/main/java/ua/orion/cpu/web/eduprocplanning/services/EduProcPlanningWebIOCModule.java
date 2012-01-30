@@ -22,12 +22,12 @@ public class EduProcPlanningWebIOCModule {
      * @author sl
      */
     public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
-        //Display EduPlanDisciplineCycle связывает тип данных EduPlanDisciplineCycle 
+        //Display EduPlanCycle связывает тип данных EduPlanCycle 
         //со страницей eduprocplanning/PropertyBlocks и идентификатором блока н ней,
         //в котором используется этот тип данных
-//        configuration.add(new DisplayBlockContribution("EduPlanDisciplineCycles", "eduprocplanning/PropertyBlocks", "DisplayEduPlanDisciplineCycle"));
-        //Edit EduPlanDisciplineCycle
-//        configuration.add(new EditBlockContribution("EduPlanDisciplineCycles", "eduprocplanning/PropertyBlocks", "EditEduPlanDisciplineCycle"));
+//        configuration.add(new DisplayBlockContribution("EduPlanCycles", "eduprocplanning/PropertyBlocks", "DisplayEduPlanCycle"));
+        //Edit EduPlanCycle
+//        configuration.add(new EditBlockContribution("EduPlanCycles", "eduprocplanning/PropertyBlocks", "EditEduPlanCycle"));
         configuration.add(new DisplayBlockContribution("EduPlanTrainingDirection", "eduprocplanning/PropertyBlocks", "DisplayEduPlanTrainingDirection"));
         configuration.add(new DisplayBlockContribution("EduPlanSpeciality",        "eduprocplanning/PropertyBlocks", "DisplayEduPlanSpeciality"));
     }
