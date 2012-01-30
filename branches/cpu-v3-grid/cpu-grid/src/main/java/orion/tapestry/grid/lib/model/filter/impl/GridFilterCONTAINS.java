@@ -20,6 +20,11 @@ public class GridFilterCONTAINS extends GridFilterText {
         this.setLabel(" contains ");
     }
 
+    public GridFilterCONTAINS(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "CONTAINS");
+        this.setLabel(" contains ");
+    }
     /**
      * Условие "строка содержит подстроку"
      */

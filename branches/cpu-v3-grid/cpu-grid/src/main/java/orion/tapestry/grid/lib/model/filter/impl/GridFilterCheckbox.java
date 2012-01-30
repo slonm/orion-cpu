@@ -14,4 +14,9 @@ public abstract class GridFilterCheckbox extends GridFilterAbstract {
         super(_model);
         this.setGUIType(GridFilterGUIType.CHECKBOX);
     }
+
+    GridFilterCheckbox(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setGUIType(GridFilterGUIType.CHECKBOX);
+    }
 }

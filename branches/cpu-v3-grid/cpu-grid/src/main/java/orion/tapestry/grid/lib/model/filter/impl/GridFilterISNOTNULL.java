@@ -1,6 +1,5 @@
 package orion.tapestry.grid.lib.model.filter.impl;
 
-
 import orion.tapestry.grid.lib.model.filter.GridFilterDataType;
 import orion.tapestry.grid.lib.model.property.GridPropertyModelInterface;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
@@ -14,6 +13,12 @@ public class GridFilterISNOTNULL extends GridFilterCheckbox {
 
     public GridFilterISNOTNULL(GridPropertyModelInterface _model) {
         super(_model);
+        this.setUid(this.fieldName + "ISNOTNULL");
+        this.setLabel(" != null ");
+    }
+
+    public GridFilterISNOTNULL(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
         this.setUid(this.fieldName + "ISNOTNULL");
         this.setLabel(" != null ");
     }
