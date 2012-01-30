@@ -122,15 +122,15 @@ product = productDAO.getById(productId);
 
 Обработчик активации может возвращать значение, которое потоково идентично возвращаемому значению ...
 
-==Шаблоны навигации по страницам==
+==Модели HTTP запросов==
 
-This combination of action links and context and page context can be put together in any number of ways.
+Аctionlink, его контекст и контекст страницы могут сочетаться разными способами.
 
-Let's take a typical master/detail relationship using the concept of a product catalog page. In this example, the ProductListing page is a list of products, and the ProductDetails page must display the details for a specific product.
+Рассмотрим обычную связку master/detail на примере страницы каталога товаров. В этом примере страница ProductListing это список товаров, а  ProductDetails должна показывать детали конкретного товара.
 
-component event requests / Persistent Data
+===Событие компонента / Persistent Data===
 
-In this pattern, the ProductListing page uses action events and a persistent field on the ProductDetails page.
+В этой модели страница ProductListing использует аргументы события и  persistent поля страницы ProductDetails.
 
 ProductListing.html:
 {{{
@@ -179,19 +179,19 @@ product = dao.getById(productId);
 
 }
 }}}
-This is a minimal approach, perhaps good enough for a prototype.
+Этот минимальный пример хорошо подходит в качестве образца.
 
-When the user clicks a link, the component event request URL will initially be something like "http://.../productlisting.select/99" and the final render request URL will be something like "http://.../productdetails". Notice that the product id ("99") does not appear in the render request URL.
+Когда пользователь кликает ссылку, то URL события компонента будет представлять собой что-то вроде "http://.../productlisting.select/99", а the URL запроса страницы что-то вроде "http://.../productdetails". Обратите внимание что идентификатор товара ("99") не передается в URL запроса страницы.
 
-It has some minor flaws:
+Подход имеет некоторые незначительные недостатки:
 
-It requires a session (to store the _productId field between requests).
+ * Требуется сессия для сохранения _productId между запросами.
 
-It may fail if the ProductDetails page is accessed before a valid product id is set.
+ * Если страница ProductDetails будет запрошена до того как верный идентификатор товара был установлен, то произойдет ошибка.
 
-The URL does not indicate the identity of the product; if the user bookmarks the URL and comes back later, they will trigger the previous case (no valid product id).
+ * По URL невозможно идентифицировать товар; если пользователь сохранит в закладке этот URL и откроет его позднее, то это приведет к предыдущей ситуации.
 
-===Component Event Requests / Persistent Data===
+===Component Event Requests / No Persistent Data===
 
 We can improve the previous example without changing the ProductListing page, using a passivation and activation context to avoid the session and make the links more bookmarkable.
 
@@ -269,4 +269,4 @@ As your application's workflow expands, you may find that there is not a reasona
 
 At some point, persistent values make more sense. In the near future, there will be a client-side persistence strategy that will encode persistent data, such as the product id field, into query parameters (and hidden form fields) automatically.
 
-Ссылка на оригинал: http://tapestry.apache.org/tapestry5.1/guide/pagenav.html
+Ссылка на оригинал: http://tapestry.apache.org/page-navigation.html
