@@ -119,6 +119,11 @@ public class CrudList {
      */
     @Inject
     private GridBeanModelSource gridBeanModelSource;
+    
+    /**
+     * Сервис-источник подписей,
+     * который выполняет поиск в нескольких местах.
+     */
     @Inject
     private ModelLabelSource modelLabels;
     //    /**
@@ -158,22 +163,24 @@ public class CrudList {
         this.objectClass = objectClass;
     }
 
+    /**
+     * Выполняется перед каждой загрузкой страницы
+     */
     public Object onActivate(EventContext context) {
         // тип сущности
         Class<? extends IEntity> objClass = null;
 
-        // надо проверить, было ли отправлено новое имя класса
+        // имя класса должно быть обязательно,
+        // извлекаем из контекста активации класс сущности
         if (context.getCount() >= 1) {
-            // имя класса есть, достаем класс
             objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
-
         }
 
-        //if (objClass != null && !objClass.equals(objectClass)) {
-        // извлекаем из контекста активации класс сущности
+        // проверяем, удалось ли найти класс сущности
         if (objClass != null) {
             objectClass = objClass;
         } else {
+            // если класс найти не удалось, переходим на стартовую страницу
             return this.startPageName;
         }
 
@@ -194,25 +201,30 @@ public class CrudList {
             //LOG.info("save menu path "+postedMenuPath);
         }
 
+        // проверяем права доступа
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
         return null;
     }
 
+    /**
+     * Выполняется в процессе формирования URL текущей страницы.
+     */
     public Object onPassivate() {
         return this.objectClass.getSimpleName();
     }
 
-    //    @BeginRender
-    //    Object beginRender(){
-    //        GridBeanModel model=grid.getModel();
-    //        model.setMessage(messages);
-    //        return null;
-    //    }
+    /**
+     * Возвращает модель сущности, которая будет использована для показа списка.
+     * Автоматически сформированная модель не годится,
+     * потому что источник надписей надо заменить.
+     */
     public GridBeanModel getModel() {
-        //this.modelLabels.getCellPropertyLabel(objectClass,propertyName, messages);
         return gridBeanModelSource.createDisplayModel(objectClass, new MsgAdapter());
     }
 
+    /**
+     * Параметры - часть URL страницы
+     */
     public Object[] getCrudRowContext() {
         Object[] context;
         if (this.currentRow == null) {
@@ -227,8 +239,14 @@ public class CrudList {
         return context;
     }
 
+    
+    /**
+     * Адаптер для источника сообщений на нужном языке.
+     * Соединяет интерфейс Messages и сервис ModelLabelSource
+     */
     class MsgAdapter implements Messages {
 
+        
         @Override
         public boolean contains(String key) {
             return true;
