@@ -1,0 +1,272 @@
+=Apache Tapestry 5: Навигация по страницам и события компонентов=
+
+По сути, приложение Tapestry это набор связанных страниц, которые работают вместе. В некотором смысле каждая страница как это приложение в приложении.
+
+Каждый HTTP запрос попадает в единственную страницу. Запрос может быть в одной из двух форм:
+
+ * событие компонента (component event). Запрос предназначается для определенного компонента на определенной странице для вызова события в этом компоненте
+
+ * отрисовка (render). Запрос предназначается для определенной страницы, в ответ клиент получает поток с HTML разметкой страницы.
+
+Разделение между событиями компонентов и отрисовкой появились начиная с Tapestry 5. Подход частично основан на идеях заложенных в спецификации портлетов. Выделение двух типов запросов снимает ряд проблем традиционных веб приложений связанных с фунцией перехода на предыдущую страницу, или обновлении страниц в браузере.
+
+==Запрос события компонента (Component Event Requests)==
+
+Запрос события компонента может иметь форму гиперссылки (ActionLink, EventLink) или отправки формы (Form submission).
+
+В обоих случаях значение возвращаемое обработчиком события управляет ответом, который посылается браузеру.
+
+URL события компонента определяется именем страницы, вложенным идентификатором компонента и именем события, которое вызывается у компонента (событие по умолчанию - "action"). Кроме этого событие компонента может содержать дополнительную контекстную информацию, предоставляемую обработчику события.
+
+Этот URLs частично связан с внутренней структурой приложения. В процессе развития и поддержки приложения идентификатор компонента может изменится. Поэтому такие URL не должны помещаться в закладки. Радует то, что у пользователей редко появляется такая возможность (см. ниже).
+
+===Null ответ===
+
+Если обработчик события не возвращает значения (void) или возвращает null, то текущая страница (содержащая компонент) будет отрисована в ответе.
+
+Ссылка отрисовки страницы (page render link) для текущей страницы создается и посылается клиенту в виде клиетской пересылки. Браузер клиента автоматически посылает новый запрос для генерации страницы.
+
+Пользователь увидит заново сгенерированное содержимое в своем браузере. В дополнение URL в адресной строке браузера отобразит URL отрисовки страницы. URL запроса отрисовки короче и менее привязан к структуре приложения (например он не содержит идентификатора компонента и типа события). URL запроса отрисовки может быть помещен в закладки пользователя. URL запроса события компонента временный, и имеет смысл только в сеансе работы приложения и не предназначены для использования в других сеансах.
+
+===Строковый ответ===
+
+Когда возвращается строка, то ожидается логическое имя страницы (в противоположность полному имени класса страницы). Имя страницы регистронезависимо.
+
+Опять же, URL запроса отрисовки страницы отправляется клиенту как перенаправление.
+
+===Ответ типа Class===
+
+Когда возвращается класс, то ожидается класс страницы. Возвращаемое значение типа Class безопаснее для рефакторинга чем возврат имени страницы.
+
+Как и в других типах ответов будет сконструирован URL отрисовки страницы и отправлен как клиентское перенаправление.
+
+===Ответ в виде страницы===
+
+Так же можно возвращать экземпляр страницы вместо имени или класса страницы.
+
+Страница может быть вставлена с помощью аннотации InjectPage.
+
+Часто нужно настроить состояние страницы перед тем как ее вернуть.
+
+Также можно вернуть компонент страницы, но это приведет к предупреждению времени исполнения.
+
+===Ответ типа Link===
+
+Обработчик события может прямо вернуть экземпляр Link. Link преобразуется в URL и клиенту будет отправлено перенаправление на этот URL.
+
+В объекте ComponentResources, вставленном в класс страницы или компонента, есть методы для создания ссылки запроса события компонента, а в сервисе PageRenderLinkSource есть методы для создания ссылок отрисовки страниц (последнее применительно к версии 5.1 - прим. переводчика).
+
+===Потоковый ответ===
+
+Обработчик события так же может вернуть объект StreamResponse, который инкапсулирует поток, который будет отправлен прямо в браузер клиента. Потоковый ответ используется в таких ситуациях как генерация изображения или PDF и отправки его клиенту.
+
+===Ответ типа URL===
+
+URL обрабатывается как перенаправление клиента на внешний URL.
+
+===Ответ типа Object===
+
+Любые другие типы объектов, возвращенные обработчиком события являются ошибкой.
+
+==Запросы отрисовки страниц==
+
+Запросы отрисовки структурно проще чем запросы событий компонента. В простейшем случае токой URL это просто логическое имя страницы.
+
+У страницы может быть контекст активации. Контекст активации содержит постоянную (persistent) информацию о состоянии страницы. В практическом смысле это обычно идентификатор объекта, который хранится в базе данных.
+
+Когда у страницы есть контекст активации, то значения контекста добавляются к пути URL.
+
+Не у всех страниц есть контекст активации.
+
+Контекст активации может быть явно задан когда создается ссылка (у компонента PageLink есть параметр context как раз для этого). Если нет явно заданного контекста активации, то страница запросит его сама у себя.
+
+Этот запрос выглядит как вызов события с именем "passivate" (ниже будет показано как оно соответствует "activate"). Возвращаемое значение метода-обработчика используется как контекст активации. Например:
+{{{
+public class ProductDetail
+{
+private Product product;
+. . .
+long onPassivate() { return product.getId(); }
+}
+}}}
+Контекст активации может содержать ряд значений, в этом случае возвращаемое значение должно быть массивом или List.
+
+Примечание: если вы используете библиотеку интеграции tapestry-hibernate и в возвращаемом значении обработчика пасивации нужна сущность Hibernate, то можно указывать саму сущность, а не ее идентификатор. Tapestry автоматически извлечет идентификатор сущности в URL, и преобразует ее обратно для обработчика события активации.
+
+===Активация страницы===
+
+Когда приходит запрос отрисовки страница будет активирована до того как будет отрисована.
+
+Активация преследует две цели:
+
+ * Позволяет странице восстановить внутреннее состояние по данным закодированным в URL (контекст активации рассмотрен выше).
+
+ * Она предоставляет возможность для грубой проверки возможности доступа к странице.
+
+Последнее - проверка доступа, как правило, связана с идентификацией пользователя и доступа. Если у вас есть страницы, которые могут быть доступны только определенным пользователям, то вы можете использовать обработчик события активации страницы для проверки прав доступа.
+
+Обработчик события активации страницы зеркально отражает ее обработчик пасивации:
+
+{{{
+. . .
+void onActivate(long productId)
+{
+product = productDAO.getById(productId);
+}
+. . .
+}}}
+
+Еще один важный момент: Когда страница отрисовывается, она может включать много URLов запросов событий компонентов (ссылок и форм). Обработка всех этих событий начнется с активации страницы, а после этого будет вызван сам обработчик. Такая форма обработки позволяет восстанавливать контекстное состояние страницы путем передачи того же самого контекста в ULR.
+
+В некоторых случаях можно получить тот же эффект используя персистентные переменные страницы, но это требует активной сессии, и результат не может быть помещен в закладки.
+
+Обработчик активации может возвращать значение, которое потоково идентично возвращаемому значению ...
+
+==Шаблоны навигации по страницам==
+
+This combination of action links and context and page context can be put together in any number of ways.
+
+Let's take a typical master/detail relationship using the concept of a product catalog page. In this example, the ProductListing page is a list of products, and the ProductDetails page must display the details for a specific product.
+
+component event requests / Persistent Data
+
+In this pattern, the ProductListing page uses action events and a persistent field on the ProductDetails page.
+
+ProductListing.html:
+{{{
+<t:loop source="products" value="product">
+
+<a t:type="actionlink" t:id="select" context="product.id">${product.name}</a>
+
+</t:loop>
+}}}
+
+ProductListing.java:
+{{{
+@InjectPage
+
+private ProductDetails details;
+
+Object onActionFromSelect(long productId)
+
+{
+
+details.setProductId(productId);
+
+return details;
+
+}
+}}}
+ProductDetails.java:
+{{{
+@Inject
+
+private ProductDAO dao;
+
+private Product product;
+
+@Persist
+
+private long productId;
+
+public void setProductId(long productId) { this.productId = productId; }
+
+void onActivate()
+
+{
+
+product = dao.getById(productId);
+
+}
+}}}
+This is a minimal approach, perhaps good enough for a prototype.
+
+When the user clicks a link, the component event request URL will initially be something like "http://.../productlisting.select/99" and the final render request URL will be something like "http://.../productdetails". Notice that the product id ("99") does not appear in the render request URL.
+
+It has some minor flaws:
+
+It requires a session (to store the _productId field between requests).
+
+It may fail if the ProductDetails page is accessed before a valid product id is set.
+
+The URL does not indicate the identity of the product; if the user bookmarks the URL and comes back later, they will trigger the previous case (no valid product id).
+
+===Component Event Requests / Persistent Data===
+
+We can improve the previous example without changing the ProductListing page, using a passivation and activation context to avoid the session and make the links more bookmarkable.
+
+ProductDetails.java:
+{{{
+@Inject
+
+private ProductDAO dao;
+
+private Product product;
+
+private long productId;
+
+public void setProductId(long productId) { productId = productId; }
+
+void onActivate(long productId)
+
+{
+
+this.productId = productId;
+
+product = dao.getById(productId);
+
+}
+
+long onPassivate() { return productId; }
+}}}
+This change ensures that the render request URL will include the product id, i.e., "http://.../productdetails/99".
+
+It has the advantage that the connection from page to page occurs in typesafe Java code, inside the onActionFromSelect method of ProductListing. It has the disadvantage that clicking a link requires two round trips to the server.
+
+===Render Requests Only===
+
+This is the most common version of this master/detail relationship.
+
+ProductListing.html:
+{{{
+<t:loop source="products" value="product">
+
+<a t:type="pagelink" page="productdetails" context="product.id">${product.name}</a>
+
+</t:loop>
+}}}
+ProductListing.java:
+{{{
+No code is needed to support the link.
+}}}
+ProductDetails.java:
+{{{
+@Inject
+
+private ProductDAO dao;
+
+private Product product;
+
+private long productId;
+
+void onActivate(long productId)
+
+{
+
+this.productId = productId;
+
+product = dao.getById(productId);
+
+}
+
+long onPassivate() { return productId; }
+}}}
+The setProductId() method is no longer needed.
+
+==Limitations==
+
+As your application's workflow expands, you may find that there is not a reasonable way to avoid storing some data persistently between requests, outside of the page activation context. For example, if from the ProductDetails page, the user is allowed to navigate to related pages and then back to ProductDetails, it starts to become necessary to keep passing that product id around from page to page to page.
+
+At some point, persistent values make more sense. In the near future, there will be a client-side persistence strategy that will encode persistent data, such as the product id field, into query parameters (and hidden form fields) automatically.
+
+Ссылка на оригинал: http://tapestry.apache.org/tapestry5.1/guide/pagenav.html
