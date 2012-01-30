@@ -12,8 +12,14 @@ public class GridFilterNEQ extends GridFilterText {
 
     public GridFilterNEQ(GridPropertyModelInterface model) {
         super(model);
-        this.setUid(this.fieldName+"NEQ");
+        this.setUid(this.fieldName + "NEQ");
         this.setLabel("!=");
+    }
+
+    public GridFilterNEQ(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "LT");
+        this.setLabel(" < ");
     }
 
     @Override
@@ -39,8 +45,8 @@ public class GridFilterNEQ extends GridFilterText {
             if (checkedValue == null) {
                 return false;
             }
-        }else{
-            checkedValue=value;
+        } else {
+            checkedValue = value;
         }
         restriction.constField(this.fieldName);
         restriction.constValue(checkedValue);

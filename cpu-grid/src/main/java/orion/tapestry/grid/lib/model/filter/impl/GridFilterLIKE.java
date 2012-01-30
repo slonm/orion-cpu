@@ -12,7 +12,13 @@ public class GridFilterLIKE extends GridFilterText {
 
     public GridFilterLIKE(GridPropertyModelInterface model) {
         super(model);
-        this.setUid(this.fieldName+"LIKE");
+        this.setUid(this.fieldName + "LIKE");
+        this.setLabel(" like ");
+    }
+
+    public GridFilterLIKE(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "LIKE");
         this.setLabel(" like ");
     }
 
@@ -39,8 +45,8 @@ public class GridFilterLIKE extends GridFilterText {
             if (checkedValue == null) {
                 return false;
             }
-        }else{
-            checkedValue=value;
+        } else {
+            checkedValue = value;
         }
         restriction.constField(this.fieldName);
         restriction.constValue(checkedValue);

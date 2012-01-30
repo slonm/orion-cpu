@@ -16,6 +16,12 @@ public class GridFilterEQ extends GridFilterText {
         this.setLabel("=");
     }
 
+    public GridFilterEQ(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "EQ");
+        this.setLabel(" = ");
+    }
+
     /**
      * Условие "равно"
      */
@@ -52,5 +58,4 @@ public class GridFilterEQ extends GridFilterText {
         restriction.eq();
         return true;
     }
-
 }

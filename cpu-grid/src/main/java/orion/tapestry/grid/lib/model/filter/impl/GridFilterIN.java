@@ -19,6 +19,12 @@ public class GridFilterIN extends GridFilterText {
         this.setLabel(" in ");
     }
 
+    public GridFilterIN(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "GT");
+        this.setLabel(" > ");
+    }
+
     /**
      * Условие "принадлежит множеству"
      */
@@ -43,16 +49,16 @@ public class GridFilterIN extends GridFilterText {
         Object[] valueList = value.toString().split(",");
         if (this.dataType != null) {
             Object[] checkedValue = new String[valueList.length];
-            for(int i=0;i<valueList.length;i++){
-                Object vl=this.dataType.fromString(valueList[i].toString());
+            for (int i = 0; i < valueList.length; i++) {
+                Object vl = this.dataType.fromString(valueList[i].toString());
                 if (vl == null) {
                     return false;
                 }
-                checkedValue[i]=vl.toString();
+                checkedValue[i] = vl.toString();
             }
             valueList = checkedValue;
         }
-        
+
         restriction.constValueList(valueList);
         restriction.constField(this.fieldName);
         restriction.in();

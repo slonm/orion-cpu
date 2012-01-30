@@ -16,6 +16,12 @@ public class GridFilterGE extends GridFilterText {
         this.setLabel(">=");
     }
 
+    public GridFilterGE(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        super(_model, _uid, _fieldName);
+        this.setUid(this.fieldName + "GE");
+        this.setLabel(" >= ");
+    }
+
     /**
      * Условие "Больше чем или равно"
      */

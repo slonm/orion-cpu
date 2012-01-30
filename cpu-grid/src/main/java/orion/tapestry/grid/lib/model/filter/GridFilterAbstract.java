@@ -44,10 +44,17 @@ public abstract class GridFilterAbstract {
         this.uid = null;
         this.fieldName = null;
     }
+
     public GridFilterAbstract(GridPropertyModelInterface _model) {
         this.model = _model;
         this.uid = this.model.getId();
         this.fieldName = this.model.getPropertyName();
+    }
+
+    public GridFilterAbstract(GridPropertyModelInterface _model, String _uid, String _fieldName) {
+        this.model = _model;
+        this.uid = _uid;
+        this.fieldName = _fieldName;
     }
 
     /**
@@ -158,7 +165,7 @@ public abstract class GridFilterAbstract {
         try {
             // config.typeName
             result.put("typeName", this.getUid());
-            
+
             // config.isactive
             result.put("isactive", "1");
 
