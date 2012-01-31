@@ -163,11 +163,12 @@ products = productDAO.getByPath(path);
 
 Рассмотрим обычную связку master/detail на примере страницы каталога товаров. В этом примере страница ProductListing это список товаров, а  ProductDetails должна показывать детали конкретного товара.
 
-===Событие компонента / Persistent Data===
+===Событие компонента / Хранимые данные===
 
-В этой модели страница ProductListing использует аргументы события и  persistent поля страницы ProductDetails.
+В этой модели страница !ProductListing использует аргументы события и  persistent поля страницы !ProductDetails.
 
-ProductListing.html:
+====!ProductListing.html:====
+
 {{{
 <t:loop source="products" value="product">
 
@@ -176,7 +177,7 @@ ProductListing.html:
 </t:loop>
 }}}
 
-ProductListing.java:
+====!ProductListing.java:====
 {{{
 @InjectPage
 
@@ -192,7 +193,7 @@ return details;
 
 }
 }}}
-ProductDetails.java:
+====!ProductDetails.java:====
 {{{
 @Inject
 
@@ -216,21 +217,21 @@ product = dao.getById(productId);
 }}}
 Этот минимальный пример хорошо подходит в качестве образца.
 
-Когда пользователь кликает ссылку, то URL события компонента будет представлять собой что-то вроде "http://.../productlisting.select/99", а the URL запроса страницы что-то вроде "http://.../productdetails". Обратите внимание что идентификатор товара ("99") не передается в URL запроса страницы.
+Когда пользователь кликает ссылку, то URL события компонента будет представлять собой что-то вроде `"http://.../productlisting.select/99"`, а the URL запроса страницы что-то вроде `"http://.../productdetails"`. Обратите внимание что идентификатор товара ("99") не передается в URL запроса страницы.
 
 Подход имеет некоторые незначительные недостатки:
 
- * Требуется сессия для сохранения _productId между запросами.
+ * Требуется сессия для сохранения `_productId` между запросами.
 
- * Если страница ProductDetails будет запрошена до того как верный идентификатор товара был установлен, то произойдет ошибка.
+ * Если страница !ProductDetails будет запрошена до того как верный идентификатор товара был установлен, то произойдет ошибка.
 
  * По URL невозможно идентифицировать товар; если пользователь сохранит в закладке этот URL и откроет его позднее, то это приведет к предыдущей ситуации.
 
-===Component Event Requests / No Persistent Data===
+===Событие компонента / Без хранимых данных===
 
-We can improve the previous example without changing the ProductListing page, using a passivation and activation context to avoid the session and make the links more bookmarkable.
+Можно улучшить предыдущий пример изменив страницу !ProductListing так, что-бы использовать контексты пасивации и активации, избежать использования сессии и делая ссылки пригодными для сохранения в закладках.
 
-ProductDetails.java:
+====!ProductDetails.java:====
 {{{
 @Inject
 
@@ -254,15 +255,16 @@ product = dao.getById(productId);
 
 long onPassivate() { return productId; }
 }}}
-This change ensures that the render request URL will include the product id, i.e., "http://.../productdetails/99".
 
-It has the advantage that the connection from page to page occurs in typesafe Java code, inside the onActionFromSelect method of ProductListing. It has the disadvantage that clicking a link requires two round trips to the server.
+При таком изменении URL запроса обязательно содержит идентификатор товара. Например: `"http://.../productdetails/99"`.
+
+Преимущество этого варианта в том, что связь между страницами происходит через типизированный Java-кода, внутри onActionFromSelect метода в !ProductListing. Недостаток в том, что для получения страницы требуется  два обращения к серверу
 
 ===Render Requests Only===
 
 This is the most common version of this master/detail relationship.
 
-ProductListing.html:
+====!ProductListing.html:====
 {{{
 <t:loop source="products" value="product">
 
@@ -270,11 +272,11 @@ ProductListing.html:
 
 </t:loop>
 }}}
-ProductListing.java:
+====!ProductListing.java:====
 {{{
 No code is needed to support the link.
 }}}
-ProductDetails.java:
+====!ProductDetails.java:====
 {{{
 @Inject
 
@@ -298,10 +300,10 @@ long onPassivate() { return productId; }
 }}}
 The setProductId() method is no longer needed.
 
-==Limitations==
+==Ограничения==
 
-As your application's workflow expands, you may find that there is not a reasonable way to avoid storing some data persistently between requests, outside of the page activation context. For example, if from the ProductDetails page, the user is allowed to navigate to related pages and then back to ProductDetails, it starts to become necessary to keep passing that product id around from page to page to page.
+При разрастании веб-приложения скорее всего возникнет ситуация, когда не имеет смысла или вообще невозможно сохранение некоторых данных между запросами внутри URL запроса. Например если со страницы !ProductDetails пользователь может перейти на связанные страницы, а потом вернуться на !ProductDetails, то может быть важным работать на всех этих страницах с одним и тем же товаром и хранить его идентификатор в странице !ProductDetails.
 
-At some point, persistent values make more sense. In the near future, there will be a client-side persistence strategy that will encode persistent data, such as the product id field, into query parameters (and hidden form fields) automatically.
+В некоторых случаях хранимые значения более приемлемы. В Tapestry5 реализовано несколько стратегий хранения данных. Есть даже стратегия, которая сохраняет данные в параметры URL [http://tapestry.apache.org/persistent-page-data.html См. Persistent Page Data].
 
-Ссылка на оригинал: http://tapestry.apache.org/page-navigation.html
+Статья написана на базе перевода: `http://tapestry.apache.org/page-navigation.html`
