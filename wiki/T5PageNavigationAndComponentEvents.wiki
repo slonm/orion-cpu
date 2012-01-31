@@ -161,7 +161,7 @@ products = productDAO.getByPath(path);
 
 Аctionlink, его контекст и контекст страницы могут сочетаться разными способами.
 
-Рассмотрим обычную связку master/detail на примере страницы каталога товаров. В этом примере страница ProductListing это список товаров, а  ProductDetails должна показывать детали конкретного товара.
+Рассмотрим обычную связку master/detail на примере страницы каталога товаров. В этом примере страница !ProductListing это список товаров, а  !ProductDetails должна показывать детали конкретного товара.
 
 ===Событие компонента / Хранимые данные===
 
@@ -260,9 +260,9 @@ long onPassivate() { return productId; }
 
 Преимущество этого варианта в том, что связь между страницами происходит через типизированный Java-кода, внутри onActionFromSelect метода в !ProductListing. Недостаток в том, что для получения страницы требуется  два обращения к серверу
 
-===Render Requests Only===
+===Только запрос отрисовки===
 
-This is the most common version of this master/detail relationship.
+Наиболее общая версия связи master/detail.
 
 ====!ProductListing.html:====
 {{{
@@ -298,7 +298,7 @@ product = dao.getById(productId);
 
 long onPassivate() { return productId; }
 }}}
-The setProductId() method is no longer needed.
+Метод setProductId() больше не требуется.
 
 ==Ограничения==
 
