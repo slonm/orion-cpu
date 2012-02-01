@@ -38,5 +38,6 @@
           <p>There are no rows to display;</p>
         </p:empty>
 </t:grid.Grid>
+
 <div style="display:none;" id="edit_dialog_title">${message:crud-edit}</div>
 </t:ori.layout>
