@@ -420,3 +420,8 @@ span.context{
     background-color:#302D26;
 }
 
+span#cpu-grid-table-container{
+    display:block;
+    height:500px;
+    overflow:scroll;
+}
