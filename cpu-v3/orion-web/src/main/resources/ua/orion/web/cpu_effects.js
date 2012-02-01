@@ -63,7 +63,7 @@ function createToolTips(){
  */
 function initializeGridToolTip(){
     //При наведении на строку появляется tooltip
-    jQuery("table.t-data-grid tbody tr td .ui-button-right-list-tfalse").each(function(){
+    jQuery(".ui-button-right-list-tfalse").each(function(){
         jQuery(this).tooltip({
             effect: 'slide', //Тип эффекта
             delay: '150', //Время исчезновения при отведении мыши

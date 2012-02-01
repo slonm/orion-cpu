@@ -225,17 +225,13 @@ div.ajax-state-grid{
 .ui-grid-cell-action-tip {
     display:none;
     font-size:12px;
-    height:30px;
+    width:50px;
     color:#fff;	
     margin-left: 30px;
     margin-top: 10px;
     z-index: 1;
-}
-/* Небольшой фикс стандартного стиля */
-TABLE.crud-links TBODY TR TD{
-    background-color: transparent;
-    background-image: none;
-    background: none;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 /* Окно загрузки Ajax */
 #ui-ajax-loading-window{
