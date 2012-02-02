@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.SubModule;
+//import org.got5.tapestry5.jquery.JQuerySymbolConstants;
 
 /**
  * Модуль конфигурирования IOC
@@ -33,6 +34,7 @@ public class CpuModule {
 
     /**
      * Регистрация и конфигурирование опций.
+     *
      * @param configuration
      */
     public static void contributeApplicationDefaults(
@@ -43,5 +45,7 @@ public class CpuModule {
             String key = e.nextElement();
             configuration.add(key, bundle.getString(key));
         }
+//        configuration.add(JQuerySymbolConstants.SUPPRESS_PROTOTYPE, "false");
+//        configuration.add(JQuerySymbolConstants.JQUERY_ALIAS, "jQuery")
     }
 }

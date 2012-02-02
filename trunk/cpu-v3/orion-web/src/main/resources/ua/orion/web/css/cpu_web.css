@@ -266,7 +266,8 @@ div.ajax-state-grid{
 .ui-widget { font-size: 9pt; }
 .ui-button-icon-only { width: 1.8em; height: 1.8em; }
 button.ui-button-icon-only { width: 1.8em; height: 1.8em; } 
-
+.ui-widget .ui-widget{font-size: 9pt;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-size: 9pt;}
 /* Вкладки от CK */
 .ori-tab {
     min-width: 100px;
@@ -277,4 +278,8 @@ button.ui-button-icon-only { width: 1.8em; height: 1.8em; }
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top: 3px;
+}
+
+div.t-beaneditor-row label{
+/*    width: auto;*/
 }

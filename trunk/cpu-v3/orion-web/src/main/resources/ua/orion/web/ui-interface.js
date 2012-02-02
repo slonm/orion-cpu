@@ -16,12 +16,12 @@ function createIcon(ec, ic){
 }
 //Инициализация кнопок.
 function initializeButtons(){
-    jQuery(".ui-button").button();
+    jQuery(".ui-button[role!=button]").button();
 }
 //Инициализация кнопок для Submit
 function initializeSubmits(){
     //Submit преобразуется в <button type="submit"/>SUBMIT</button>
-    jQuery(".t-beaneditor-row input[type=submit], .ui-submit").each(function(){
+    jQuery(".t-beaneditor-row input[type=submit], .ui-submit[role!=button]").each(function(){
         jQuery(this).replaceWith('<button class="ui-submit" type="' + jQuery(this).attr('type') + '">' + jQuery(this).val() + '</button>');
     });
     jQuery(".ui-submit").button({
