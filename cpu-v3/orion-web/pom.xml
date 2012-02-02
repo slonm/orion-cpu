@@ -21,10 +21,7 @@
             <groupId>ua.orion</groupId>
             <artifactId>orion-menu</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.chenillekit</groupId>
-            <artifactId>chenillekit-tapestry</artifactId>
-        </dependency>
+
         <!--<dependency>
             <groupId>org.tynamo</groupId>
             <artifactId>tapestry-jpa</artifactId>
@@ -93,6 +90,10 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <artifactId>viewservlets</artifactId>
             <version>2.5</version>
         </dependency>
+<!--        <dependency>
+            <groupId>org.got5</groupId>
+            <artifactId>tapestry5-jquery</artifactId>
+        </dependency>-->
     </dependencies>
     <build>
         <finalName>cpu</finalName>
@@ -121,7 +122,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                     <archive>
                         <manifestEntries>
                             <Tapestry-Module-Classes>
-                                        ua.orion.web.services.OrionWebIOCModule
+                                ua.orion.web.services.OrionWebIOCModule
                             </Tapestry-Module-Classes>
                         </manifestEntries>
                     </archive>
