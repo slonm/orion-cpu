@@ -8,7 +8,7 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.3-SNAPSHOT</version>
-    <name> »—  œ” Orion parent</name>
+    <name>–ö–ò–° –ö–ü–£ Orion parent</name>
     <url>http://code.google.com/p/orion-cpu/</url>
     <properties>
         <slf4j-release-version>1.6.1</slf4j-release-version>
