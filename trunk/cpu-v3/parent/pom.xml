@@ -8,19 +8,39 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.3-SNAPSHOT</version>
-    <name>–ö–ò–° –ö–ü–£ Orion parent</name>
+    <name> »—  œ” Orion parent</name>
     <url>http://code.google.com/p/orion-cpu/</url>
     <properties>
         <slf4j-release-version>1.6.1</slf4j-release-version>
         <tapestry-release-version>5.3.1</tapestry-release-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.javaDocEncoding>UTF-8</project.build.javaDocEncoding>
-        <project.build.sourceJavaVersion>1.6</project.build.sourceJavaVersion>
-        <project.build.targetJavaVersion>1.6</project.build.targetJavaVersion>
+        <project.build.sourceJavaVersion>1.7</project.build.sourceJavaVersion>
+        <project.build.targetJavaVersion>1.7</project.build.targetJavaVersion>
         <hibernate-version>3.6.0.Final</hibernate-version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.firebirdsql.jdbc</groupId>
+                <artifactId>jaybird</artifactId>
+                <version>2.1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>1.4</version>
+            </dependency>
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
@@ -102,7 +122,7 @@
             <dependency>
                 <groupId>org.tynamo</groupId>
                 <artifactId>tapestry-security-web</artifactId>
-                <version>0.3.1.sl-SNAPSHOT</version>
+                <version>0.3.1.sl</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.tapestry</groupId>
@@ -153,7 +173,7 @@
             <dependency>
                 <groupId>org.tynamo</groupId>
                 <artifactId>tapestry-security-core</artifactId>
-                <version>0.3.1.sl-SNAPSHOT</version>
+                <version>0.3.1.sl</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -217,7 +237,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <groupId>org.got5</groupId>
                 <artifactId>tapestry5-jquery</artifactId>
                 <version>3.0.0</version>
-                <type>jar</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -249,10 +268,10 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${project.build.sourceJavaVersion}</source>
+                    <target>${project.build.targetJavaVersion}</target>
                     <optimize>true</optimize>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
