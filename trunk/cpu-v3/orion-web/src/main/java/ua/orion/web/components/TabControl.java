@@ -33,16 +33,14 @@ public class TabControl {
     /**
      * list of labels (for each panel).
      */
-    @Parameter(required = true, defaultPrefix = "list")
-    private List<String> panelTitles;
-    @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
-    private int tabcount;
+    @Parameter(required = true, principal = true, autoconnect = true)
+    private Iterable<String> panelTitles;
     /**
      * set the panel with given id as activated.
      */
     @Parameter(value = "0", allowNull = false, required = true)
     private String activePanelId;
-    @Parameter(defaultPrefix = "literal")
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
     @Property(write = false)
     private String contentZone;
     @Property
@@ -50,9 +48,20 @@ public class TabControl {
     @Environmental
     private JavaScriptSupport javascriptSupport;
     private String assignedClientId;
+    private Map<Integer, String> titlesList;
 
-    void setupRender() {
+    boolean setupRender() {
         assignedClientId = javascriptSupport.allocateClientId(clientId);
+        //if panelTitles is empty do not render TabControl
+        if (panelTitles != null && panelTitles.iterator().hasNext()) {
+            titlesList = new HashMap();
+            Integer i = 0;
+            for (String s : panelTitles) {
+                titlesList.put(i++, s);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -61,23 +70,16 @@ public class TabControl {
      * @param writer the markup writer
      */
     void afterRender(MarkupWriter writer) {
-        javascriptSupport.addScript("new TabControl('%s', '%s');", 
+        javascriptSupport.addScript("new TabControl('%s', '%s');",
                 getClientId(), getClientId() + "_" + activePanelId);
     }
 
-    public List<String> getPanelIds() {
-        List<String> list = new ArrayList();
-        for (int i = 0; i < tabcount; i++) {
-            list.add(String.valueOf(i));
-        }
-        return list;
+    public Collection getPanelIds() {
+        return titlesList.keySet();
     }
 
     public String getPanelTitle() {
-        if (panelId < panelTitles.size()) {
-            return panelTitles.get(panelId);
-        }
-        return String.valueOf(panelId);
+        return titlesList.get(panelId);
     }
 
     /**
