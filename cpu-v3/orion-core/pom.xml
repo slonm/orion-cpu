@@ -21,10 +21,6 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
         </dependency>
-<!--        <dependency>
-            <groupId>ua.orion</groupId>
-            <artifactId>tapestry-jpa-hibernate-entitymanager</artifactId>
-        </dependency> -->
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry-jpa</artifactId>
@@ -78,7 +74,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry-test</artifactId>
-            <version>${tapestry-release-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -93,13 +88,10 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
             <artifactId>jaybird</artifactId>
-            <version>2.1.6</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>1.4</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
     <build>
@@ -125,15 +117,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                         <exclude>**/OrionActiveDirectoryRealmTest.java</exclude>
                         <exclude>**/SeedEntityTest.java</exclude><!--Ошибки при создании таблицы в схеме. Переделать-->
                     </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
