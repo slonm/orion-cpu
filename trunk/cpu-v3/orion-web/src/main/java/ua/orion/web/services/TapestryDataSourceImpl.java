@@ -15,10 +15,12 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
 
     private final TapestryDataFactory factory;
     private final List<TapestryDataTransformer> transformers;
+    private final Messages messages;
 
-    public TapestryDataSourceImpl(TapestryDataFactory factory, List<TapestryDataTransformer> transformers) {
+    public TapestryDataSourceImpl(TapestryDataFactory factory, List<TapestryDataTransformer> transformers, Messages messages) {
         this.factory = factory;
         this.transformers = transformers;
+        this.messages = messages;
     }
 
     @Override
@@ -37,11 +39,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
     
     @Override
     public <T> BeanModel<T> getBeanModelForList(Class<T> entityClass) {
-        BeanModel<T> ret = factory.createBeanModelForList(entityClass);
-        for (TapestryDataTransformer trans : transformers) {
-            ret = trans.transformBeanModelForList(ret);
-        }
-        return ret;
+        return getBeanModelForList(entityClass, messages);
     }
 
     @Override
@@ -55,11 +53,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
 
     @Override
     public <T> BeanModel<T> getBeanModelForAdd(Class<T> entityClass) {
-        BeanModel<T> ret = factory.createBeanModelForList(entityClass);
-        for (TapestryDataTransformer trans : transformers) {
-            ret = trans.transformBeanModelForAdd(ret);
-        }
-        return ret;
+        return getBeanModelForAdd(entityClass, messages);
     }
 
     @Override
@@ -73,11 +67,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
 
     @Override
     public <T> BeanModel<T> getBeanModelForView(Class<T> entityClass) {
-        BeanModel<T> ret = factory.createBeanModelForView(entityClass);
-        for (TapestryDataTransformer trans : transformers) {
-            ret = trans.transformBeanModelForView(ret);
-        }
-        return ret;
+        return getBeanModelForView(entityClass, messages);
     }
 
     @Override
@@ -91,11 +81,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
 
     @Override
     public <T> BeanModel<T> getBeanModelForEdit(Class<T> entityClass) {
-        BeanModel<T> ret = factory.createBeanModelForEdit(entityClass);
-        for (TapestryDataTransformer trans : transformers) {
-            ret = trans.transformBeanModelForEdit(ret);
-        }
-        return ret;
+        return getBeanModelForEdit(entityClass, messages);
     }
 
     @Override

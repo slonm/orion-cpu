@@ -24,7 +24,7 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
+    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
         Set<String> existProps = new HashSet(model.getPropertyNames());
         List<String> requiredProps = Arrays.asList("code",
                 "knowledgeAreaName", "trainingDirection", "speciality",
@@ -39,22 +39,7 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return transformBeanModelForList(model);
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model) {
-        return transformEdit(model);
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model, Messages messages) {
-        return transformEdit(model);
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model) {
         return transformEdit(model);
     }
 

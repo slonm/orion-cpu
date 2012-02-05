@@ -20,9 +20,11 @@ public class ModelLabelSourceImpl implements ModelLabelSource {
 
     private static final Logger LOG = LoggerFactory.getLogger(ModelLabelSourceImpl.class);
     private final PropertyAccess propertyAccess;
+    private final Messages messages;
 
-    public ModelLabelSourceImpl(PropertyAccess propertyAccess) {
+    public ModelLabelSourceImpl(PropertyAccess propertyAccess, Messages messages) {
         this.propertyAccess = propertyAccess;
+        this.messages = messages;
     }
 
     @Override
@@ -98,5 +100,20 @@ public class ModelLabelSourceImpl implements ModelLabelSource {
             return messages.get(propertyName);
         }
         return getEntityLabel(propertyAccess.getAdapter(bean).getPropertyAdapter(propertyName).getType(), messages);
+    }
+
+    @Override
+    public String getEntityLabel(Class<?> bean) {
+        return getEntityLabel(bean, messages);
+    }
+
+    @Override
+    public String getPropertyLabel(Class<?> bean, String propertyName) {
+        return getPropertyLabel(bean, propertyName, messages);
+    }
+
+    @Override
+    public String getCellPropertyLabel(Class<?> bean, String propertyName) {
+        return getCellPropertyLabel(bean, propertyName, messages);
     }
 }

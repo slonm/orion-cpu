@@ -29,18 +29,15 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     private final EntityService es;
     private final BeanModelSource beanModelSource;
-    private final ApplicationMessagesSource messagesSource;
     private final ModelLabelSource modelLabelSource;
     private final PropertyAccess propertyAccess;
 
     public TapestryDataFactoryImpl(EntityService entityService,
             BeanModelSource beanModelSource,
-            ApplicationMessagesSource messagesSource,
             ModelLabelSource modelLabelSource,
             PropertyAccess propertyAccess) {
         this.es = entityService;
         this.beanModelSource = beanModelSource;
-        this.messagesSource = messagesSource;
         this.modelLabelSource = modelLabelSource;
         this.propertyAccess = propertyAccess;
     }
@@ -62,22 +59,12 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     }
 
     @Override
-    public <T> BeanModel<T> createBeanModelForList(Class<T> clasz) {
-        return createBeanModelForList(clasz, messagesSource.getMessages());
-    }
-
-    @Override
     public <T> BeanModel<T> createBeanModelForList(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createDisplayModel(clasz, messages);
         removeStaticFields(bm);
         setCellLabels(bm, messages);
         //TODO Hide some user defined fields
         return bm;
-    }
-
-    @Override
-    public <T> BeanModel<T> createBeanModelForView(Class<T> clasz) {
-        return createBeanModelForView(clasz, messagesSource.getMessages());
     }
 
     @Override
@@ -89,21 +76,11 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     }
 
     @Override
-    public <T> BeanModel<T> createBeanModelForEdit(Class<T> clasz) {
-        return createBeanModelForEdit(clasz, messagesSource.getMessages());
-    }
-
-    @Override
     public <T> BeanModel<T> createBeanModelForEdit(Class<T> clasz, Messages messages) {
         BeanModel<T> bm = beanModelSource.createEditModel(clasz, messages);
         removeStaticFields(bm);
         setLabels(bm, messages);
         return bm;
-    }
-
-    @Override
-    public <T> BeanModel<T> createBeanModelForAdd(Class<T> clasz) {
-        return createBeanModelForEdit(clasz, messagesSource.getMessages());
     }
 
     @Override

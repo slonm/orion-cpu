@@ -31,27 +31,12 @@ public class EmployeeTapestryDataTransformer extends AbstractTapestryDataTransfo
 //        return model;
 //    }
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
-        return transformView(model);
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
         return transformView(model);
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model) {
-        return transformEdit(model);
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model, Messages messages) {
-        return transformEdit(model);
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model) {
         return transformEdit(model);
     }
 

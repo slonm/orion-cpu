@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.persistence.ReferenceBook;
-import ua.orion.core.services.ApplicationMessagesSource;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
 import ua.orion.core.utils.IOCUtils;
@@ -122,13 +121,6 @@ public class OrionWebIOCModule {
         configuration.add(new LibraryMapping("ori", "ua.orion.web"));
     }
 
-    public void contributeApplicationMessagesSource(Configuration<String> conf,
-            ComponentClassResolver componentClassResolver) {
-        for (String lib : componentClassResolver.getFolderToPackageMapping().keySet()) {
-            conf.add(lib + "Web");
-        }
-    }
-
     /**
      * This is a service definition, the service will be named "TimingFilter". The interface,
      * RequestFilter, is used within the RequestHandler service pipeline, which is built from the
@@ -213,22 +205,35 @@ public class OrionWebIOCModule {
                 });
     }
 
-    @Match("ComponentMessagesSource")
-    public static void adviseComponentMessagesSourceWithApplicationMessagesSource(MethodAdviceReceiver receiver,
-            final ApplicationMessagesSource messagesSource) {
-
-        receiver.adviseMethod(IOCUtils.getMethod(ComponentMessagesSource.class, "getMessages",
-                ComponentModel.class, ComponentResourceSelector.class), new org.apache.tapestry5.plastic.MethodAdvice() {
-
-            @Override
-            public void advise(MethodInvocation invocation) {
-                invocation.proceed();
-                ComponentResourceSelector crs = (ComponentResourceSelector) invocation.getParameter(1);
-                invocation.setReturnValue(new CompositeMessages(crs.locale,
-                        messagesSource.getMessages(crs.locale),
-                        (Messages) invocation.getReturnValue()));
+    /**
+     * Делает вклад в виде 
+     * 1. каталогов соответствующих библиотекам моделей,
+     * располагающихся по адресу /modelLibName.properties
+     * 2. каталогов соответствующих библиотекам компонентов,
+     * располагающихся по адресу /componentLibNameWeb.properties
+     * @param assetSource
+     * @param modelLibraryService
+     * @param componentClassResolver
+     * @param applicationCatalog
+     * @param configuration 
+     */
+    public static void contributeComponentMessagesSource(AssetSource assetSource,
+            ModelLibraryService modelLibraryService,
+            ComponentClassResolver componentClassResolver,
+            @Symbol(SymbolConstants.APPLICATION_CATALOG) Resource applicationCatalog,
+            OrderedConfiguration<Resource> configuration) {
+        for (ModelLibraryInfo libInfo : modelLibraryService.getModelLibraryInfos()) {
+            Resource r = assetSource.resourceForPath(libInfo.getLibraryName() + ".properties");
+            if (r != null) {
+                configuration.add(libInfo.getLibraryName(), r, "before:AppCatalog");
             }
-        });
+        }
+        for (String lib : componentClassResolver.getFolderToPackageMapping().keySet()) {
+            Resource r = assetSource.resourceForPath(lib + "Web.properties");
+            if (r != null) {
+                configuration.add(lib + "Web", r, "before:AppCatalog");
+            }
+        }
     }
 
     public static void contributeDataTypeAnalyzer(
@@ -328,10 +333,9 @@ public class OrionWebIOCModule {
         configuration.add("JPAAnnotation", new JPAAnnotationsConstraintGenerator());
         configuration.add("JSR303Annotation", new JSR303AnnotationsConstraintGenerator());
     }
-    
+
     public static void contributeBindingSource(
-            MappedConfiguration<String, BindingFactory> configuration)
-    {
+            MappedConfiguration<String, BindingFactory> configuration) {
         configuration.addInstance("tostring", ToStringBindingFactory.class);
     }
 }
