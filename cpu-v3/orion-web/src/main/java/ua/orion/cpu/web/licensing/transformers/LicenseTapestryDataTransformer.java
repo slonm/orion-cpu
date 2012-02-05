@@ -11,14 +11,9 @@ import ua.orion.web.AbstractTapestryDataTransformer;
 public class LicenseTapestryDataTransformer extends AbstractTapestryDataTransformer {
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
+    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
         model.exclude("body");
         return model;
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return transformBeanModelForList(model);
     }
 
     @Override

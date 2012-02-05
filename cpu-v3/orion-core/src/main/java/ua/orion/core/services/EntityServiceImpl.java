@@ -26,7 +26,7 @@ public class EntityServiceImpl implements EntityService {
     private final PropertyAccess propertyAccess;
     private final InheritedAnnotationProviderSource aProviderSource;
     private final StringValueProvider entityStringValueProvider;
-    private final ApplicationMessagesSource applicationMessagesSource;
+    private final ModelLabelSource labelSource;
     private final UniqueConstraintValidator validator;
     private final TypeCoercer typeCoercer;
     private final Map<Class<?>, MetaEntity> metaEntityByEntityClass = new HashMap<Class<?>, MetaEntity>();
@@ -35,11 +35,11 @@ public class EntityServiceImpl implements EntityService {
     public EntityServiceImpl(EntityManager entityManager,
             PropertyAccess propertyAccess,
             TypeCoercer typeCoercer,
-            ApplicationMessagesSource applicationMessagesSource,
+            ModelLabelSource labelSource,
             InheritedAnnotationProviderSource aProviderSource,
             StringValueProvider entityStringValueProvider) {
         this.aProviderSource = aProviderSource;
-        this.applicationMessagesSource = applicationMessagesSource;
+        this.labelSource = labelSource;
         this.propertyAccess = propertyAccess;
         this.em = entityManager;
         this.typeCoercer = typeCoercer;
@@ -333,22 +333,22 @@ public class EntityServiceImpl implements EntityService {
 
         @Override
         public String getLabel(Messages messages) {
-            return messages.get("entity." + type.getSimpleName());
+            return labelSource.getEntityLabel(type, messages);
         }
 
         @Override
-        public String getLabel(Locale locale) {
-            return getLabel(applicationMessagesSource.getMessages(Locale.getDefault()));
+        public String getLabel() {
+            return labelSource.getEntityLabel(type);
         }
 
         @Override
         public String getPropertyLabel(String propertyName, Messages messages) {
-            return messages.get("property." + type.getSimpleName() + "." + propertyName);
+            return labelSource.getPropertyLabel(type, propertyName, messages);
         }
 
         @Override
-        public String getPropertyLabel(String propertyName, Locale locale) {
-            return getPropertyLabel(propertyName, applicationMessagesSource.getMessages(Locale.getDefault()));
+        public String getPropertyLabel(String propertyName) {
+            return labelSource.getPropertyLabel(type, propertyName);
         }
 
         @Override

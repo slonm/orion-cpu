@@ -56,27 +56,9 @@ public class EntityTapestryDataTransformer implements TapestryDataTransformer {
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
-        if (map.containsKey(model.getBeanType())) {
-            return map.get(model.getBeanType()).transformBeanModelForList(model);
-        } else {
-            return model;
-        }
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
         if (map.containsKey(model.getBeanType())) {
             return map.get(model.getBeanType()).transformBeanModelForList(model, messages);
-        } else {
-            return model;
-        }
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model) {
-        if (map.containsKey(model.getBeanType())) {
-            return map.get(model.getBeanType()).transformBeanModelForAdd(model);
         } else {
             return model;
         }
@@ -92,27 +74,9 @@ public class EntityTapestryDataTransformer implements TapestryDataTransformer {
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForView(BeanModel<T> model) {
-        if (map.containsKey(model.getBeanType())) {
-            return map.get(model.getBeanType()).transformBeanModelForView(model);
-        } else {
-            return model;
-        }
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForView(BeanModel<T> model, Messages messages) {
         if (map.containsKey(model.getBeanType())) {
             return map.get(model.getBeanType()).transformBeanModelForView(model, messages);
-        } else {
-            return model;
-        }
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model) {
-        if (map.containsKey(model.getBeanType())) {
-            return map.get(model.getBeanType()).transformBeanModelForEdit(model);
         } else {
             return model;
         }

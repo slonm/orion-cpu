@@ -33,7 +33,6 @@ public class OrionCoreIOCModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(ModelLibraryService.class, ModelLibraryServiceImpl.class);
         binder.bind(PersistentSingletonSource.class, PersistentSingletonSourceImpl.class);
-        binder.bind(ApplicationMessagesSource.class, ApplicationMessagesSourceImpl.class);
         binder.bind(InheritedAnnotationProviderSource.class, InheritedAnnotationProviderSourceImpl.class);
         binder.bind(EntityService.class, EntityServiceImpl.class);
         binder.bind(ModelLabelSource.class, ModelLabelSourceImpl.class);
@@ -58,7 +57,7 @@ public class OrionCoreIOCModule {
      */
     public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
             final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat,
-            final ApplicationMessagesSource messagesSource) {
+            final Messages mes) {
         conf.addInstance("entity", StringValueProviderImpl.class);
 
         conf.add("enum", new StringValueProvider() {
@@ -68,7 +67,6 @@ public class OrionCoreIOCModule {
                 if (o == null || (!(o instanceof Enum))) {
                     return null;
                 }
-                Messages mes = messagesSource.getMessages();
                 StringBuilder sb = new StringBuilder();
                 sb.append(mes.get(o.getClass().getSimpleName() + "." + o.toString()));
                 return sb.toString();
@@ -111,14 +109,6 @@ public class OrionCoreIOCModule {
             String libName = libInfo.getLibraryPackage() + ".entities";
             conf.add(libName);
             LOG.debug("Added entity library " + libName);
-        }
-    }
-
-    //TODO Test if Bundle not found
-    public void contributeApplicationMessagesSource(Configuration<String> conf,
-            ModelLibraryService modelLibraryService) {
-        for (ModelLibraryInfo libInfo : modelLibraryService.getModelLibraryInfos()) {
-            conf.add(libInfo.getLibraryName());
         }
     }
 

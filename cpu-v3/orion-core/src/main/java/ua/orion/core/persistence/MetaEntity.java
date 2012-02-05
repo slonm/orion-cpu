@@ -4,7 +4,7 @@ import java.util.Locale;
 import org.apache.tapestry5.ioc.Messages;
 
 /**
- * Описатель сущности. Доплнение к JPA Metamodel
+ * Описатель сущности. Дополнение к JPA Metamodel
  * @author sl
  */
 public interface MetaEntity {
@@ -41,10 +41,9 @@ public interface MetaEntity {
 
     /**
      * Возвращает ключ в формате "entity." + type.getSimpleName()
-     * из ApplicationMessagesSource
      * @return label
      */
-    String getLabel(Locale locale);
+    String getLabel();
 
     /**
      * Возвращает ключ в формате "property." + type.getSimpleName() + "." + propertyName
@@ -54,8 +53,7 @@ public interface MetaEntity {
 
     /**
      * Возвращает ключ в формате "property." + type.getSimpleName() + "." + propertyName
-     * из ApplicationMessagesSource
      * @return label
      */
-    String getPropertyLabel(String propertyName, Locale locale);
+    String getPropertyLabel(String propertyName);
 }

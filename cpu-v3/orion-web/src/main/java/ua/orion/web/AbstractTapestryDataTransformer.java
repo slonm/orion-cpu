@@ -22,17 +22,7 @@ public abstract class AbstractTapestryDataTransformer implements TapestryDataTra
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model) {
-        return model;
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return model;
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForAdd(BeanModel<T> model) {
         return model;
     }
 
@@ -42,17 +32,7 @@ public abstract class AbstractTapestryDataTransformer implements TapestryDataTra
     }
 
     @Override
-    public <T> BeanModel<T> transformBeanModelForView(BeanModel<T> model) {
-        return model;
-    }
-
-    @Override
     public <T> BeanModel<T> transformBeanModelForView(BeanModel<T> model, Messages messages) {
-        return model;
-    }
-
-    @Override
-    public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model) {
         return model;
     }
 

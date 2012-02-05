@@ -16,6 +16,7 @@ public interface ModelLabelSource {
      * 3. запись с именем в формате EntityName
      */
     String getEntityLabel(Class<?> bean, Messages messages);
+    String getEntityLabel(Class<?> bean);
 
     /**
      * Подписи свойств
@@ -26,6 +27,7 @@ public interface ModelLabelSource {
      * 4. запись для типа данных свойства
      */
     String getPropertyLabel(Class<?> bean, String propertyName, Messages messages);
+    String getPropertyLabel(Class<?> bean, String propertyName);
 
     /**
      * Подписи свойств в каталоге сообщений в заголовке столбцов
@@ -39,4 +41,5 @@ public interface ModelLabelSource {
      * 7. запись для типа данных свойства
      */
     String getCellPropertyLabel(Class<?> bean, String propertyName, Messages messages);
+    String getCellPropertyLabel(Class<?> bean, String propertyName);
 }
