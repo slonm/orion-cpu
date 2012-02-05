@@ -10,8 +10,6 @@ import org.apache.tapestry5.jpa.EntityManagerSource;
 import org.apache.tapestry5.jpa.JpaTransactionAdvisor;
 import org.apache.tapestry5.services.UpdateListenerHub;
 import org.slf4j.Logger;
-//import org.tynamo.jpa.JPAEntityManagerSource;
-//import org.tynamo.jpa.JPATransactionAdvisor;
 import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
@@ -54,24 +52,42 @@ public class OrionCoreIOCModule {
     }
 
     /**
-     * Добавляет провайдеры для сущностей, java.util.Calendar, java.util.Date
+     * Добавляет провайдеры для сущностей, enum, java.util.Calendar, java.util.Date
      * @param conf
      * @param thLocale 
      */
     public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
-            final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat) {
+            final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat,
+            final ApplicationMessagesSource messagesSource) {
         conf.addInstance("entity", StringValueProviderImpl.class);
+
+        conf.add("enum", new StringValueProvider() {
+
+            @Override
+            public String getStringValue(Object o) {
+                if (o == null || (!(o instanceof Enum))) {
+                    return null;
+                }
+                Messages mes = messagesSource.getMessages();
+                StringBuilder sb = new StringBuilder();
+                sb.append(mes.get(o.getClass().getSimpleName() + "." + o.toString()));
+                return sb.toString();
+            }
+        });
         conf.add("date", new StringValueProvider() {
 
             @Override
-            public String getStringValue(Object entity) {
+            public String getStringValue(Object date) {
+                if (date == null) {
+                    return null;
+                }
                 DateFormat _dateFormat = DateFormat.getDateInstance(dateFormat, thLocale.getLocale());
 
-                if (Calendar.class.isInstance(entity)) {
-                    return _dateFormat.format(((Calendar) entity).getTime());
+                if (Calendar.class.isInstance(date)) {
+                    return _dateFormat.format(((Calendar) date).getTime());
                 }
-                if (Date.class.isInstance(entity)) {
-                    return _dateFormat.format(entity);
+                if (Date.class.isInstance(date)) {
+                    return _dateFormat.format(date);
                 }
                 return null;
             }
@@ -79,8 +95,8 @@ public class OrionCoreIOCModule {
         conf.add("default", new StringValueProvider() {
 
             @Override
-            public String getStringValue(Object entity) {
-                return entity == null ? "" : String.valueOf(entity);
+            public String getStringValue(Object o) {
+                return o == null ? "" : String.valueOf(o);
             }
         }, "after:*");
     }

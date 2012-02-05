@@ -1,19 +1,22 @@
 package ua.orion.cpu.web.eduprocplanning.pages;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
+import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.grid.GridDataSource;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDiscipline;
+import ua.orion.cpu.core.eduprocplanning.entities.EduPlanCycle;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlanState;
-import ua.orion.web.AdditionalConstraintsApplier;
+import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningService;
 import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -33,29 +36,30 @@ public class EduPlan {
     private TapestryDataSource dataSource;
     @Inject
     private EntityService es;
+    @Inject
+    private AlertManager alertManager;
+    @Inject
+    private EduProcPlanningService eduProcPlanningService;
     //---Locals---
+    @Component
+    private Zone headerZone;
     @Property
     @Persist
     private ua.orion.cpu.core.eduprocplanning.entities.EduPlan object;
+    
+    @Property
+    private EduPlanDiscipline discipline;
+    @Property
+    private EduPlanCycle cycle;
 
-    public Class<?> getDisciplineClass() {
-        return EduPlanDiscipline.class;
-    }
-
-    public GridDataSource getSource() {
-        return dataSource.getGridDataSource(EduPlanDiscipline.class, new AdditionalConstraintsApplier<EduPlanDiscipline>() {
-
-            @Override
-            public void applyAdditionalConstraints(CriteriaQuery<EduPlanDiscipline> criteria, Root<EduPlanDiscipline> root, CriteriaBuilder builder) {
-                criteria.where(builder.equal(root.get("eduPlan"), object));
-            }
-        });
-    }
-
-    public Object onPassivate() {
-        return object;
+    public List getCycles() {
+        return eduProcPlanningService.findEduPlanCyclesByEduPlan(object);
     }
     
+    public List getDisciplines() {
+        return eduProcPlanningService.findDisciplinesByEduPlanCycleAndEduPlan(cycle, object);
+    }
+
     public Object onActivate(EventContext context) {
         if (info.isComponentEventRequest()) {
             //Если это событие компонента, то Persistent object
@@ -82,22 +86,42 @@ public class EduPlan {
         return null;
     }
 
-    public void onSuccessFromApprove() {
-        object.setEduPlanState(EduPlanState.ACTUAL);
-        es.getEntityManager().merge(object);
+    public Object onSuccessFromApprove() {
+        if (EduPlanState.ACTUAL != object.getEduPlanState()) {
+            SecurityUtils.getSubject().checkPermission("EduPlan:update:" + object.getId());
+            object.setEduPlanState(EduPlanState.ACTUAL);
+            object = es.merge(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO, "Учебный план " + es.getStringValue(object) + " утвержден");
+            return headerZone.getBody();
+        }
+        return true;
     }
 
-    public void onDisable() {
-        object.setEduPlanState(EduPlanState.OBSOLETE);
-        es.getEntityManager().merge(object);
+    public Object onDisable() {
+        if (EduPlanState.OBSOLETE != object.getEduPlanState()) {
+            SecurityUtils.getSubject().checkPermission("EduPlan:update:" + object.getId());
+            object.setEduPlanState(EduPlanState.OBSOLETE);
+            object = es.merge(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO, "Учебный план " + es.getStringValue(object) + " упразднен");
+            return headerZone.getBody();
+        }
+        return true;
     }
 
-    public void onProject() {
-        object.setEduPlanState(EduPlanState.PROJECT);
-        es.getEntityManager().merge(object);
+    public Object onProject() {
+        if (EduPlanState.PROJECT != object.getEduPlanState()) {
+            object.setEduPlanState(EduPlanState.PROJECT);
+            object = es.merge(object);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO, "Учебный план " + es.getStringValue(object) + " сделан проектом");
+            return headerZone.getBody();
+        }
+        return true;
     }
 
     public boolean getIsProject() {
         return object.getEduPlanState() == EduPlanState.PROJECT;
+    }
+    public boolean getIsActual() {
+        return object.getEduPlanState() == EduPlanState.ACTUAL;
     }
 }

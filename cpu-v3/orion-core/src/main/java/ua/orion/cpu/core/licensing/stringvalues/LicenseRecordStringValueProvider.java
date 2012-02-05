@@ -21,8 +21,8 @@ public class LicenseRecordStringValueProvider implements StringValueProvider<Lic
         StringBuilder sb = new StringBuilder();
         sb.append(e.getCode()).append(" - ");
         sb.append(e.getSpeciality() == null ? e.getTrainingDirection().getName() : e.getSpeciality().getName()).append(" (");
-        sb.append(e.getLicenseRecordGroup().getName()).append(") ");
-//        sb.append(stringValueProvider.getStringValue(e.getTermination()));
+        sb.append(e.getLicenseRecordGroup().getName()).append(")");
+//        sb.append(" ").append(stringValueProvider.getStringValue(e.getTermination()));
         return sb.toString();
     }
 }

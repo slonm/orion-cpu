@@ -23,8 +23,6 @@ import ua.orion.web.services.TapestryDataSource;
 @SuppressWarnings("unused")
 public class EduPlans {
 
-    @Property
-    private String val;
     @Component
     private Zone crudZone;
     //---Services---

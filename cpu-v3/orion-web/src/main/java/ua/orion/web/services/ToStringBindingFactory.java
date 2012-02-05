@@ -47,7 +47,7 @@ public class ToStringBindingFactory implements BindingFactory {
 
             @Override
             public boolean isInvariant() {
-                return true;
+                return false;
             }
 
             @Override
@@ -57,7 +57,7 @@ public class ToStringBindingFactory implements BindingFactory {
 
             @Override
             public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
-                return null;
+                return delegate.getAnnotation(annotationClass);
             }
         };
     }

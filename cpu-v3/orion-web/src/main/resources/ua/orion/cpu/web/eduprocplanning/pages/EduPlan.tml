@@ -1,72 +1,131 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<t:ori.layout title="${message:entity.EduPlan} ${tostring:object.licenserecord}. ${message:property.EduPlan.IntroducingDate}: ${tostring:object.IntroducingDate}"
+<t:ori.layout title="${message:entity.EduPlan} ${tostring:object}"
               menudata="Start>EduProcPlanning>EduPlan"
-              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <t:form t:id="approve">
-        <table class="btntable"> 
-            <tr>
-                <td>
-                    <t:if test="isProject">
-                        <input t:type="submit" value="Затвердити план" class="ui-button" title="Змінює статус плану на діючий"/>
-                    </t:if>
-                </td>
-                <td>
-                    <t:if test="isProject">
-                        <label>Дата затвердження</label>
-                    </t:if>
-                </td>
-                <td>
-                    <t:if test="isProject">
-                        <input t:type="datefield" value="object.confirmationDate" title="Оберіть дату затвердження навчального плану"/>
-                    </t:if>
-                </td>
-                <td>
-                    <t:if test="isProject">
-                        <label>Хто затвердив</label>
-                    </t:if>
-                </td>
-                <td>
-                    <t:if test="isProject">
-                        <input t:type="textarea" value="object.confirmationPerson" title="Введіть осіб, які затвердили навчальний план"/>
-                    </t:if>
-                </td>
-                <td>
-                    <t:eventlink event="project">Proj</t:eventlink>
-                    <t:eventlink class="a-button" event="disable" title="Змінює статус плану на виведений з дії">
-                        Вивести план з дії
-                    </t:eventlink>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <t:PageLink t:page="eduprocplanning/EduPlans" class="a-button" title="Перейти до навчальних планів">z
-                        До навчальних планів
-                    </t:PageLink>
-                </td>
-                <td>
-                    <t:PageLink t:page="eduprocplanning/EduPlans" class="a-button" title="Заповнити дані дисципліни для денної форми навчання">
-                        Денна форма
-                    </t:PageLink>
-                    <t:PageLink t:page="eduprocplanning/EduPlans" class="a-button" title="Заповнити дані дисципліни для заочної форми навчання">
-                        Заочна форма
-                    </t:PageLink>
-                    <t:PageLink t:page="eduprocplanning/EduPlans" class="a-button" title="Заповнити дані дисципліни для дистанційної форми навчання">
-                        Дистанційна форма
-                    </t:PageLink>
-                </td>
-                <td>
-                    <t:PageLink t:page="eduprocplanning/EduPlans" class="a-button" title="Перейти до банку навчальних дисциплін">
-                        До банку навчальних дисциплін
-                    </t:PageLink>
-                </td>
-                <td colspan="5">
-                    <t:eventlink event="addcycle" class="a-button" title="Додати цикл дисциплін">
-                        Додати цикл
-                    </t:eventlink>
-                </td>
-            </tr>
-        </table>
-    </t:form>
-    <t:ori.crud t:objectClass="DisciplineClass" t:source="source" t:listPage="eduprocplanning/EduPlans"/>
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <t:zone t:id="headerZone">
+        <span style="background-color: red;">${tostring:object.EduPlanState}</span><br/>
+        <t:form t:id="approve" zone="headerZone">
+            <table class="btntable"> 
+                <tr>
+                    <td>
+                        <t:if test="isProject">
+                            <input t:type="submit" value="Затвердити план" class="" title="Змінює статус плану на діючий"/>
+                        </t:if>
+                    </td>
+                    <td>
+                        <dt>Дата затвердження</dt>
+                    </td>
+                    <td>
+                        <t:if test="isProject">
+                            <input t:type="datefield" value="object.confirmationDate" title="Оберіть дату затвердження навчального плану"/>
+                            <p:else>
+                                <dd>${tostring:object.confirmationDate}</dd>
+                            </p:else>
+                        </t:if>
+                    </td>
+                    <td>
+                        <dt>Хто затвердив</dt>
+                    </td>
+                    <td>
+                        <t:if test="isProject">
+                            <input t:type="textarea" value="object.confirmationPerson" title="Введіть осіб, які затвердили навчальний план"/>
+                            <p:else>
+                                <dd>${object.confirmationPerson}</dd>
+                            </p:else>
+                        </t:if>
+                    </td>
+                    <td>
+                        <t:if test="isActual">
+                            <t:eventlink class="a-button" event="disable" zone="headerZone" title="Змінює статус плану на виведений з дії">
+                                Вивести план з дії
+                            </t:eventlink>
+                        </t:if>
+                    </td>
+                </tr>
+            </table>
+        </t:form>
+        <div class="button-bar">
+            <t:PageLink t:page="eduprocplanning/EduPlans" title="Перейти до навчальних планів">
+                До навчальних планів
+            </t:PageLink>
+            <t:PageLink t:page="eduprocplanning/EduPlans" title="Заповнити дані дисципліни для денної форми навчання">
+                Денна форма
+            </t:PageLink>
+            <t:PageLink t:page="eduprocplanning/EduPlans" title="Заповнити дані дисципліни для заочної форми навчання">
+                Заочна форма
+            </t:PageLink>
+            <t:PageLink t:page="eduprocplanning/EduPlans" title="Заповнити дані дисципліни для дистанційної форми навчання">
+                Дистанційна форма
+            </t:PageLink>
+            <t:PageLink t:page="eduprocplanning/EduPlans" title="Перейти до банку навчальних дисциплін">
+                До банку навчальних дисциплін
+            </t:PageLink>
+            <t:eventlink event="project" zone="headerZone" style="display:none;">Do Project</t:eventlink>
+            <t:eventlink event="addcycle" title="Додати цикл дисциплін">Додати цикл</t:eventlink>
+        </div>
+    </t:zone>
+    <t:zone t:id="data">
+        <t:if test="cycles">
+            <table class="${symbol:tapestry.components.grid_table_css_class}">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="t-first"/>
+                        <th rowspan="2">№ з/п</th>
+                        <th rowspan="2">Назва дисципліни</th>
+                        <th colspan="3">Кількість підсумкових контрольних заходів</th>
+                        <th rowspan="2">Кредитів ECTS</th>
+                        <th rowspan="2">Загал. обсяг годин</th>
+                        <th rowspan="2">Дисципліна введена до плану</th>
+                    </tr>
+                    <tr>
+                        <th>Іспитів</th>
+                        <th>Заліків</th>
+                        <th>Курс. робіт</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Перебор циклов начало-->
+                    <t:loop source="cycles" value="cycle">
+                        <!--Шапка цикла конец-->
+                        <tr style="font-weight: bold">
+                            <td>
+                                <button class="ui-button-right-list-tfalse"></button>
+                                <div style="display:none; white-space: nowrap">
+                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
+                                    <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td colspan="4">${cycle.Number}.${cycle.ePPCycle.name}</td>
+                            <td align="center">${cycle.totalCredits}</td>
+                            <td align="center">${cycle.totalHours}</td>
+                            <td align="center"></td>
+                        </tr>
+                        <!--Шапка цикла конец-->
+                        <!--Перебор дисциплин начало-->
+                        <tr t:type="loop" source="disciplines" value="discipline">
+                            <td>
+                                <button class="ui-button-right-list-tfalse"></button>
+                                <!--                        <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
+                                                        <input type="image" src="delete.png" title="Видалити дисципліну"/>-->
+                            </td>
+                            <td align="center">${cycle.number}.${discipline.number}</td>
+                            <td>${discipline.discipline.name}</td>
+                            <td align="center">${discipline.examSemestrQuantity}</td>
+                            <td align="center">${discipline.creditSemesterQuantity}</td>
+                            <td align="center">${discipline.courseWorkSemesterQuantity}</td>
+                            <td align="center">${discipline.ectsCreditAmount}</td>
+                            <td align="center">${discipline.totalHours}</td>
+                            <td align="center">кто-то выбрал</td>
+                        </tr>
+                        <!--Перебор дисциплин конец-->
+                    </t:loop>
+                    <!--Перебор циклов конец-->
+                </tbody>
+            </table>
+            <p:else>${message:no-grid-data-to-display}</p:else>
+        </t:if>
+    </t:zone>
 </t:ori.layout>
