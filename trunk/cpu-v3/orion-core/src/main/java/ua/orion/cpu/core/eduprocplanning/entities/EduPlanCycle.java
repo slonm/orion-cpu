@@ -1,5 +1,7 @@
 package ua.orion.cpu.core.eduprocplanning.entities;
 
+import ua.orion.cpu.core.eduprocplanning.NormativeValue;
+import java.util.*;
 import javax.persistence.*;
 
 /**
@@ -9,34 +11,31 @@ import javax.persistence.*;
 @Entity
 @Table(uniqueConstraints =
 @UniqueConstraint(columnNames = {"eduPlan", "EPPCycle"}))
-public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDisciplineCycle> {
+public class EduPlanCycle extends EduPlanDisciplineTag<EduPlanCycle> {
 
     private static final long serialVersionUID = 1L;
     private EduPlan eduPlan;
     //Название цикла дисциплин (берётся из справочника)
     private EPPCycle ePPCycle;
     //Порядковый номер цикла дисциплин (берется из ОПП)
-    private String eduPlanDisciplineCycleNumber;
+    private String number;
     //Явлется ли цикл дисциплин учебного плана нормативным
     private Boolean isRegulatory;
     //TODO НА ФОРМЕ ВВОДА КОЛИЧЕСТВА КРЕДИТОВ ОГРАНИЧИТЬ ЗНАЧЕНИЯ 
     //ТОЛЬКО С ДРОБНОЙ ЧАСТЬЮ .0 ИЛИ .25  ИЛИ .5 ИЛИ .75 
     //Общее количество кредитов на дисциплины цикла
-    private Double cycleTotalCredits;
-//    //Дисциплины цикла учебного плана
-//    private Set<EduPlanDiscipline> eduPlanCycleDisciplines = new HashSet<EduPlanDiscipline>();
+    private Double totalCredits;
 
-    public EduPlanDisciplineCycle() {
+    public EduPlanCycle() {
     }
 
-    public EduPlanDisciplineCycle(EduPlan eduPlan, EPPCycle ePPCycle, String eduPlanDisciplineCycleNumber,
-            Boolean isRegulatory, Double cycleTotalCredits) {
+    public EduPlanCycle(EduPlan eduPlan, EPPCycle ePPCycle, String number,
+            Boolean isRegulatory, Double totalCredits) {
         this.eduPlan = eduPlan;
         this.ePPCycle = ePPCycle;
-        this.eduPlanDisciplineCycleNumber = eduPlanDisciplineCycleNumber;
+        this.number = number;
         this.isRegulatory = isRegulatory;
-        this.cycleTotalCredits = cycleTotalCredits;
-//        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
+        this.totalCredits = totalCredits;
     }
 
     //Связь с учебным планом
@@ -61,12 +60,12 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
         this.ePPCycle = ePPCycle;
     }
 
-    public String getEduPlanDisciplineCycleNumber() {
-        return eduPlanDisciplineCycleNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setEduPlanDisciplineCycleNumber(String eduPlanDisciplineCycleNumber) {
-        this.eduPlanDisciplineCycleNumber = eduPlanDisciplineCycleNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public Boolean getIsRegulatory() {
@@ -77,12 +76,12 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
         this.isRegulatory = isRegulatory;
     }
 
-    public Double getePPCycleTotalCredits() {
-        return cycleTotalCredits;
+    public Double getTotalCredits() {
+        return totalCredits;
     }
 
-    public void setePPCycleTotalCredits(Double ePPCycleTotalCredits) {
-        this.cycleTotalCredits = ePPCycleTotalCredits;
+    public void setTotalCredits(Double totalCredits) {
+        this.totalCredits = totalCredits;
     }
 
     /**
@@ -90,22 +89,9 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
      * (сеттер для вычислимого поля, как и само поле, не нужны)
      */
     @Transient
-    public Double getCycleTotalHours() {
-        return cycleTotalCredits * NormativeValue.ECTSCREDIT;
+    public Double getTotalHours() {
+        return totalCredits * NormativeValue.ECTSCREDIT;
     }
-
-//    //Двунаправленная ассоциация с дисциплинами учебного плана, входящими в данный цикл
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(schema = "uch", joinColumns = {
-//        @JoinColumn(name = "EDUPLANCYCLE_ID")}, inverseJoinColumns = {
-//        @JoinColumn(name = "EDUPLANDISCIPLINE_ID")})
-//    public Set<EduPlanDiscipline> getEduPlanCycleDisciplines() {
-//        return eduPlanCycleDisciplines;
-//    }
-//
-//    public void setEduPlanCycleDisciplines(Set<EduPlanDiscipline> eduPlanCycleDisciplines) {
-//        this.eduPlanCycleDisciplines = eduPlanCycleDisciplines;
-//    }
 
     @Override
     public String toString() {
@@ -117,13 +103,13 @@ public class EduPlanDisciplineCycle extends EduPlanDisciplineTag<EduPlanDiscipli
     }
 
     @Override
-    protected boolean entityEquals(EduPlanDisciplineCycle obj) {
+    protected boolean entityEquals(EduPlanCycle obj) {
         return aEqualsField(ePPCycle, obj.ePPCycle);
     }
 
     
     @Override
-    public int compareTo(EduPlanDisciplineCycle o) {
-        return o.eduPlanDisciplineCycleNumber.compareTo(o.eduPlanDisciplineCycleNumber);
+    public int compareTo(EduPlanCycle o) {
+        return number.compareTo(o.number);
     }
 }

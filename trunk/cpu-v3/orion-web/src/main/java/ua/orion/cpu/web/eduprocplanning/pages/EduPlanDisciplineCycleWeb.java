@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import ua.orion.core.persistence.IEntity;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.eduprocplanning.entities.EduPlan;
-import ua.orion.cpu.core.eduprocplanning.entities.EduPlanDisciplineCycle;
+import ua.orion.cpu.core.eduprocplanning.entities.EduPlanCycle;
 import ua.orion.web.pages.Crud;
 import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
@@ -47,7 +47,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
     @Property(write = false)
     private String error;
     @Property
-    private EduPlanDisciplineCycle eduPlanDisciplineCycle;
+    private EduPlanCycle eduPlanDisciplineCycle;
     private EduPlan eduPlan;
 
     @Override
@@ -61,7 +61,7 @@ public class EduPlanDisciplineCycleWeb extends Crud {
                 //            Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
                 
                 String id = context.get(String.class, 0);
-                eduPlanDisciplineCycle=entityService.find(EduPlanDisciplineCycle.class, id);
+                eduPlanDisciplineCycle=entityService.find(EduPlanCycle.class, id);
 
                 Class<? extends IEntity> objClass = eduPlanDisciplineCycle.getClass();
                 //Если страница вызвана для класса сущности, отличного от предыдущего
