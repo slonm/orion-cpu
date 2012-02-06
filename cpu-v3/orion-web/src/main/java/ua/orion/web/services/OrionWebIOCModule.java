@@ -82,6 +82,7 @@ public class OrionWebIOCModule {
 
     /**
      * Скрещиваем меню с системой безопасности
+     *
      * @param receiver приемник событий CpuMenu
      */
 //    @Match("OrionMenuService")
@@ -90,6 +91,7 @@ public class OrionWebIOCModule {
 //    }
     /**
      * Add menu item to configuration
+     *
      * @param configuration
      * @param pageLinkCreatorFactory
      */
@@ -114,25 +116,26 @@ public class OrionWebIOCModule {
 
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
         configuration.add(new LibraryMapping("ori", "ua.orion.web"));
+        configuration.add(new LibraryMapping("eicons", "ua.orion"));
     }
 
     /**
-     * This is a service definition, the service will be named "TimingFilter". The interface,
-     * RequestFilter, is used within the RequestHandler service pipeline, which is built from the
-     * RequestHandler service configuration. Tapestry IoC is responsible for passing in an
-     * appropriate Logger instance. Requests for static resources are handled at a higher level, so
+     * This is a service definition, the service will be named "TimingFilter".
+     * The interface, RequestFilter, is used within the RequestHandler service
+     * pipeline, which is built from the RequestHandler service configuration.
+     * Tapestry IoC is responsible for passing in an appropriate Logger
+     * instance. Requests for static resources are handled at a higher level, so
      * this filter will only be invoked for Tapestry related requests.
      *
-     * <p>
-     * Service builder methods are useful when the implementation is inline as an inner class
-     * (as here) or require some other kind of special initialization. In most cases,
-     * use the static bind() method instead.
+     * <p> Service builder methods are useful when the implementation is inline
+     * as an inner class (as here) or require some other kind of special
+     * initialization. In most cases, use the static bind() method instead.
      *
-     * <p>
-     * If this method was named "build", then the service id would be taken from the
-     * service interface and would be "RequestFilter".  Since Tapestry already defines
-     * a service named "RequestFilter" we use an explicit service id that we can reference
-     * inside the contribution method.
+     * <p> If this method was named "build", then the service id would be taken
+     * from the service interface and would be "RequestFilter". Since Tapestry
+     * already defines a service named "RequestFilter" we use an explicit
+     * service id that we can reference inside the contribution method.
+     *
      * @param log
      * @return
      */
@@ -160,11 +163,13 @@ public class OrionWebIOCModule {
     }
 
     /**
-     * This is a contribution to the RequestHandler service configuration. This is how we extend
-     * Tapestry using the timing filter. A common use for this kind of filter is transaction
-     * management or security. The @Local annotation selects the desired service by type, but only
-     * from the same module.  Without @Local, there would be an error due to the other service(s)
-     * that implement RequestFilter (defined in other modules).
+     * This is a contribution to the RequestHandler service configuration. This
+     * is how we extend Tapestry using the timing filter. A common use for this
+     * kind of filter is transaction management or security. The @Local
+     * annotation selects the desired service by type, but only from the same
+     * module. Without @Local, there would be an error due to the other
+     * service(s) that implement RequestFilter (defined in other modules).
+     *
      * @param configuration
      * @param filter
      */
@@ -179,8 +184,7 @@ public class OrionWebIOCModule {
     }
 
     /**
-     * from EventContext to Object[]
-     * from IMenuLink to Class
+     * from EventContext to Object[] from IMenuLink to Class
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
             @InjectService("MetaLinkCoercion") Coercion coercion) {
@@ -201,16 +205,16 @@ public class OrionWebIOCModule {
     }
 
     /**
-     * Делает вклад в виде 
-     * 1. каталогов соответствующих библиотекам моделей,
-     * располагающихся по адресу /modelLibName.properties
-     * 2. каталогов соответствующих библиотекам компонентов,
-     * располагающихся по адресу /componentLibNameWeb.properties
+     * Делает вклад в виде 1. каталогов соответствующих библиотекам моделей,
+     * располагающихся по адресу /modelLibName.properties 2. каталогов
+     * соответствующих библиотекам компонентов, располагающихся по адресу
+     * /componentLibNameWeb.properties
+     *
      * @param assetSource
      * @param modelLibraryService
      * @param componentClassResolver
      * @param applicationCatalog
-     * @param configuration 
+     * @param configuration
      */
     public static void contributeComponentMessagesSource(AssetSource assetSource,
             ModelLibraryService modelLibraryService,
@@ -259,7 +263,8 @@ public class OrionWebIOCModule {
     }
 
     /*
-     * Позволяет BeanEditor создавать новый бин, если он не существовал, стандартными средствами
+     * Позволяет BeanEditor создавать новый бин, если он не существовал,
+     * стандартными средствами
      */
     @Match("BeanModelSource")
     public static void adviseBeanModelSourceWithBeanModelWrapper(MethodAdviceReceiver receiver) {
@@ -321,6 +326,7 @@ public class OrionWebIOCModule {
 
     /**
      * Регистация обработчика аннотаций JPA для валидации в Beaneditor
+     *
      * @param configuration
      */
     public static void contributeValidationConstraintGenerator(

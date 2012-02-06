@@ -283,3 +283,11 @@ button.ui-button-icon-only { width: 1.8em; height: 1.8em; }
 div.t-beaneditor-row label{
 /*    width: auto;*/
 }
+
+.e-icon-16x16{
+    height: 16px;
+    width: 16px;
+    max-height: 16px;
+    max-width: 16px;
+    display: inline-block;
+}
