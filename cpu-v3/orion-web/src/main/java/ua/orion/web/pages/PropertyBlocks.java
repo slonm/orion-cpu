@@ -12,7 +12,6 @@ import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.*;
-import ua.orion.web.BooleanSelectModel;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -46,7 +45,8 @@ public class PropertyBlocks {
     @Component(parameters = {
         "value=editContext.propertyValue",
         "label=prop:editContext.label",
-        "model=prop:booleanSelectModel",
+//        "model={true:${message:true}, false:${message:false}}",
+        "model={'true':trueLabel, 'false':falseLabel}",
         "clientId=prop:editContext.propertyId",
         "validate=prop:booleanSelectValidator"
     })
@@ -100,7 +100,11 @@ public class PropertyBlocks {
         return editContext.getValidator(entitySelect);
     }
 
-    public SelectModel getBooleanSelectModel() {
-        return new BooleanSelectModel(messages.get("true"), messages.get("false"));
+    public String getTrueLabel(){
+        return messages.get("true");
+    }
+
+    public String getFalseLabel(){
+        return messages.get("false");
     }
 }
