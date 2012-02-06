@@ -1,5 +1,5 @@
+#summary Entities icons
 #labels eicons,menu
-#Entities icons
 
 = Entities icons =
 
