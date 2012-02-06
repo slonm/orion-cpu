@@ -71,4 +71,23 @@ public class MenuNavigator {
     String onPassivate() {
         return path;
     }
+    
+        /**
+     * Получение иконки
+     * @return css-свойство устанавливающее иконку как background-image
+     */
+    public String getUidIcon() {
+        String iconURL = messages.get(_Item.getUid() + "-icon");
+        if (iconURL.indexOf("missing key") < 1) {
+            return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
+        } else {
+            String[] menuParts = _Item.getUid().split(">");
+            String lastMenuPart = menuParts[menuParts.length - 1];
+            iconURL = messages.get(lastMenuPart + "-icon");
+            if (iconURL.indexOf("missing key") < 1) {
+                return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
+            }
+        }
+        return "background-image: url('/webcontent/e-icons/folder.png')";
+    }
 }

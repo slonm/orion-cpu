@@ -5,7 +5,7 @@
           xmlns:p="tapestry:parameter">
 
 <div t:type="loop" t:source="items" t:value="Item" class="ui-state-default">
-    <t:menu.menulink t:menuLink="Item.itemLink" class="ui-menunavigator-link">${localize(Item.Uid)}</t:menu.menulink>
+    <t:menu.menulink t:menuLink="Item.itemLink" class="ui-menunavigator-link"><div class="e-icon-16x16" style="${UidIcon}"></div><div class="menu-item-link">${localize(Item.Uid)}</div></t:menu.menulink>
 </div>
 
 </t:ori.layout>
