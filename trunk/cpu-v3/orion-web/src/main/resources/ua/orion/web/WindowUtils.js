@@ -4,7 +4,7 @@ Tapestry.Initializer.showCkWindow = function(opt){
     win.dialog({
         modal: true,
         height: 
-            opt.height==undefined?win.css("height").substring(0,win.css("height").indexOf("px")):opt.height,
+            opt.height==undefined?parseInt(win.css("height").substring(0,win.css("height").indexOf("px")))+50:opt.height,
         width: opt.width==undefined?750:opt.width,
         title: opt.title,
         show: "fold",
