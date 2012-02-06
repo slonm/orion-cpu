@@ -5,30 +5,29 @@
 Для настройки среды программирования на языке Java необходимо:
 
 == Установить Java Development Kit ==
- * Скачать и установить [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java Development Kit]
-
- * Установить переменную JAVA_HOME. Например `C:\Program Files\Java\jdk1.6.0_26` для Windows.
-
- * Установить переменную JRE_HOME. Например `C:\Program Files\Java\jdk1.6.0_26\jre` для Windows. 
- * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\Program Files\Java\jdk1.6.0_26\bin\` для Windows
+ * Скачать и установить [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java Development Kit 1.7]
+ * Установить переменную JAVA_HOME. Например `C:\Program Files\Java\jdk1.7.0_2` для Windows.
+ * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\Program Files\Java\jdk1.7.0_2\bin\` для Windows
 
 == Установить Maven ==
 
- * Скачать и распаковать [http://maven.apache.org/download.html Maven] в C:\apache-maven.
+ * Скачать и распаковать [http://maven.apache.org/download.html Maven 3] в `C:\maven`.
+ * Установить переменную M2_HOME. Например `C:\maven` для Windows.
+ * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\maven\bin\` для Windows
 
  * Создать каталог C:\maven-repo.
- * В файле C:\apache-maven\conf\settings.xml в теге settings добавить тег `<localRepository>C:\maven-repo</localRepository>`
+ * В файле C:\maven\conf\settings.xml в теге settings добавить тег `<localRepository>C:\maven-repo</localRepository>`
 
 == Установить `NetBeans` ==
  * Скачать и установить [http://www.netbeans.org/downloads/index.html NetBeans] из дистрибутива с конфигурацией, включающей JavaEE (Java или Все). 
 
- * В файле конфигурации `NetBeans` `C:\Program Files\NetBeans 7.0\etc\netbeans.conf` (В Linux `/usr/local/netbeans-x.x/etc/netbeans.conf`) к netbeans_default_options добавить `-J-Dfile.encoding=UTF-8` и `--fontsize 16`
+ * В файле конфигурации `NetBeans` `C:\Program Files\NetBeans 7.0\etc\netbeans.conf` (В Linux `/usr/local/netbeans-x.x/etc/netbeans.conf`) к netbeans_default_options добавить `-J-Dfile.encoding=UTF-8 --fontsize 16 --locale en:US`
 
  * Выбрать Tools > Plugins > Installed > Downloaded. Нажать Add Plugin и установить плагины: 
 org-netbeans-modules-tapestry.nbm 
 org-netbeans-modules-tapestry-codetemplates.nbm 
 org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://orion-cpu.googlecode.com/files/nbtapestrysupport.zip тут])
-(версии файлов актуальны на 18.09.2009, в версии Netbeans 7.0 эти плагины могут не устанавливаться - новые версии смотреть на  [nbtapestrysupport.dev.java.net nbtapestrysupport.dev.java.net]). 
+(версии файлов актуальны на 18.09.2009, в версиях Netbeans > 7.0 эти плагины могут не устанавливаться - новые версии смотреть на  [nbtapestrysupport.dev.java.net nbtapestrysupport.dev.java.net]). 
 Перезапустить `NetBeans`. Установленные модули будут перечислены в
  Tools > Plugins > Installed > User Installed Plugins
 
@@ -38,9 +37,9 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
  * Выбрать Tools > Options > Miscellaneous > Maven. В поле External Maven Home указать местонахождение Maven (C:\apache-maven).
 В поле Local Repository указать путь к локальному репозиторию Maven C:\maven-repo.
 
-Выполнить настройку клиента Subversion в NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию: https://orion-cpu.googlecode.com/svn/trunk/, При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
+Выполнить настройку клиента Subversion в !NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию: https://orion-cpu.googlecode.com/svn/trunk/, При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
 После нажатия Next можно выбрать ту часть репозитория с которой необходимо работать.
-Реализованная стратегия использования svn ресурсов основана на первом варианте из [http://www.gnuman.ru/stuff/svn_strateg/ http://www.gnuman.ru/stuff/svn_strateg/] 
+Реализованная стратегия использования svn ресурсов основана на первом варианте из [http://www.gnuman.ru/stuff/svn_strateg/] 
 Структура ресурса следующая:
 {{{
 / 
@@ -52,6 +51,8 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
             /user3 
 }}}
 Стратегия использования различается от описанной только в ветке branches. Пользователи создают совместно разрабатываемые бранчи в каталоге branches, а индивидуально разрабатываемые в каталогах, которые соответствуют их имени (user1, user2). 
+
+Плагин !NetBeans для работы с SVN плохо ведет себя при манипуляции с ветками (слияние, создание), поэтому рекомендуется использовать его только для элементарных операций (checkout, commit, update). Для работы с ветками рекомендуется использовать [http://tortoisesvn.net/ TortoiseSVN] для Windows или [http://www.rabbitvcs.org/ RabbitVCS] для Linux. Так же в для удобства работы в них рекомендуется установить diff утилиту [http://kdiff3.sourceforge.net/ KDiff3], которая позволяет сравнивать как файлы, так и каталоги.
 
 === Проверка русской орфографии ===
 Запускаем !NetBeans, открываем вкладку Tools -> Options -> Miscellaneous ->Spellchecker.
