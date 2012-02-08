@@ -10,7 +10,7 @@
  * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\Program Files\Java\jdk1.7.0_2\bin\` для Windows
 
 == Установить Maven ==
-
+_*Maven устанавливать не обязательно. !NetBeans содержит встроенный maven.*_
  * Скачать и распаковать [http://maven.apache.org/download.html Maven 3] в `C:\maven`.
  * Установить переменную M2_HOME. Например `C:\maven` для Windows.
  * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\maven\bin\` для Windows
@@ -27,7 +27,7 @@
 org-netbeans-modules-tapestry.nbm 
 org-netbeans-modules-tapestry-codetemplates.nbm 
 org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://orion-cpu.googlecode.com/files/nbtapestrysupport.zip тут])
-(версии файлов актуальны на 18.09.2009, в версиях Netbeans > 7.0 эти плагины могут не устанавливаться - новые версии смотреть на  [nbtapestrysupport.dev.java.net nbtapestrysupport.dev.java.net]). 
+(версии файлов актуальны на 18.09.2009, в версиях Netbeans > 7.1 эти плагины могут не устанавливаться. Новые версии плагина смотреть на  [nbtapestrysupport.dev.java.net nbtapestrysupport.dev.java.net]). 
 Перезапустить `NetBeans`. Установленные модули будут перечислены в
  Tools > Plugins > Installed > User Installed Plugins
 
@@ -53,6 +53,10 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
 Стратегия использования различается от описанной только в ветке branches. Пользователи создают совместно разрабатываемые бранчи в каталоге branches, а индивидуально разрабатываемые в каталогах, которые соответствуют их имени (user1, user2). 
 
 Плагин !NetBeans для работы с SVN плохо ведет себя при манипуляции с ветками (слияние, создание), поэтому рекомендуется использовать его только для элементарных операций (checkout, commit, update). Для работы с ветками рекомендуется использовать [http://tortoisesvn.net/ TortoiseSVN] для Windows или [http://www.rabbitvcs.org/ RabbitVCS] для Linux. Так же в для удобства работы в них рекомендуется установить diff утилиту [http://kdiff3.sourceforge.net/ KDiff3], которая позволяет сравнивать как файлы, так и каталоги.
+
+==Live class reloading==
+
+Tapestry5 поддерживает "горячую" подмену классов и ресурсов ( см. [http://tapestry.apache.org/class-reloading.html Live Class and Template Reloading]). Но для ее работы в настройках проекта нужны соответствующие настройки проекта и IDE . Проект уже содержит нужные настройки, а в !NetBeans из нужно выполнить в соответствии с [http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html RAD w/ Tapestry 5, NetBeans 6.7, Maven, and Jetty : Really !!!].
 
 === Проверка русской орфографии ===
 Запускаем !NetBeans, открываем вкладку Tools -> Options -> Miscellaneous ->Spellchecker.
