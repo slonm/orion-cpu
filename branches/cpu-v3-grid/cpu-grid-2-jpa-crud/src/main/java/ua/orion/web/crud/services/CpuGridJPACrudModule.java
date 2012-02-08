@@ -23,7 +23,5 @@ public class CpuGridJPACrudModule {
      */
     public static void contributeGridPropertyModelSource(MappedConfiguration<String, Class> configuration) {
         configuration.add(OrgUnit.class.getName(), GridPropertyModelOrgUnit.class);
-        //configuration.add("byte", GridPropertyModelByte.class);
-        //configuration.add("java.lang.Byte", GridPropertyModelByte.class);
     }
 }
