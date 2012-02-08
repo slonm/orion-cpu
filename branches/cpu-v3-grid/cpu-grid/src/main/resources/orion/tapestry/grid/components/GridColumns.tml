@@ -1,4 +1,5 @@
-    <tr xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd" xml:space="default">
+<thead class="fixedHeader" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd" xml:space="default">    
+<tr>
         <th t:type="Loop" source="columnList" id="${columnModel.id}ColumnHeader" value="columnModel" formstate="none" index="index" valign="top">
             <t:delegate to="blockForColumn"/>
             <t:block id="standardHeader">
@@ -6,3 +7,4 @@
             </t:block>
         </th>
     </tr>
+</thead>

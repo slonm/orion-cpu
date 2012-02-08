@@ -213,7 +213,10 @@ function gridTable(gridId){
         cell.insert('&nbsp;');
         row.insert(cell);
     });
-    this.table.insert({'top':row});
+    
+    // 
+    this.table.select('thead').first().insert({'top':row});
+    // this.table.insert({'top':row});
     // ------------------- перетаскиватели колонок - конец ---------------------
 
 
