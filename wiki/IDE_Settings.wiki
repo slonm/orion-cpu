@@ -9,7 +9,7 @@
  * Установить переменную JAVA_HOME. Например `C:\Program Files\Java\jdk1.7.0_2` для Windows.
  * В переменную среды PATH добавить путь к исполняемым файлам. Например  `C:\Program Files\Java\jdk1.7.0_2\bin\` для Windows
 
-== Установить Maven ==
+== Установить Apache Maven ==
 _*Maven устанавливать не обязательно. !NetBeans содержит встроенный maven.*_
  * Скачать и распаковать [http://maven.apache.org/download.html Maven 3] в `C:\maven`.
  * Установить переменную M2_HOME. Например `C:\maven` для Windows.
@@ -34,10 +34,17 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
  * Выбрать ''Tools > Plugins''. Вкладка Installed.
 Выбрать ''Maven Project Support'' модуль и нажать кнопку активировать. Перезапустить `NetBeans`.
 
- * Выбрать Tools > Options > Miscellaneous > Maven. В поле External Maven Home указать местонахождение Maven (C:\apache-maven).
+ * Выбрать Tools > Options > Miscellaneous > Maven. В поле External Maven Home указать местонахождение Maven (C:\maven).
 В поле Local Repository указать путь к локальному репозиторию Maven C:\maven-repo.
+Нажать кнопку "Edit Global Custom Goal Definitions..." и создать цели для запуска проекта в Jetty: 
 
-Выполнить настройку клиента Subversion в !NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию: https://orion-cpu.googlecode.com/svn/trunk/, При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
+[http://orion-cpu.googlecode.com/svn/wiki/jetty_run_Goal.PNG] 
+
+и для запуска так же в Jetty, но в отладочном режиме: 
+
+[http://orion-cpu.googlecode.com/svn/wiki/Debug_jetty_run_Goal.PNG]
+
+ * Выполнить настройку клиента Subversion в !NetBeans: Team-Subversion-Checkout. Указать путь к репозиторию: https://orion-cpu.googlecode.com/svn/trunk/, При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
 После нажатия Next можно выбрать ту часть репозитория с которой необходимо работать.
 Реализованная стратегия использования svn ресурсов основана на первом варианте из [http://www.gnuman.ru/stuff/svn_strateg/] 
 Структура ресурса следующая:
@@ -54,9 +61,15 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
 
 Плагин !NetBeans для работы с SVN плохо ведет себя при манипуляции с ветками (слияние, создание), поэтому рекомендуется использовать его только для элементарных операций (checkout, commit, update). Для работы с ветками рекомендуется использовать [http://tortoisesvn.net/ TortoiseSVN] для Windows или [http://www.rabbitvcs.org/ RabbitVCS] для Linux. Так же в для удобства работы в них рекомендуется установить diff утилиту [http://kdiff3.sourceforge.net/ KDiff3], которая позволяет сравнивать как файлы, так и каталоги.
 
-==Live class reloading==
+==Запуск, отладка и Live class reloading==
 
-Tapestry5 поддерживает "горячую" подмену классов и ресурсов ( см. [http://tapestry.apache.org/class-reloading.html Live Class and Template Reloading]). Но для ее работы в настройках проекта нужны соответствующие настройки проекта и IDE . Проект уже содержит нужные настройки, а в !NetBeans из нужно выполнить в соответствии с [http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html RAD w/ Tapestry 5, NetBeans 6.7, Maven, and Jetty : Really !!!].
+Для запуска проекта модно использовать стандартные средства deploy !NetBeans (нажатием кнопки Run). В этом случае происходит deploy war архива проекта на указанный при запуске сервер приложений.
+Tapestry5 поддерживает "горячую" подмену классов и ресурсов (см. [http://tapestry.apache.org/class-reloading.html Live Class and Template Reloading]). Но для ее работы нужно, что-бы сервер приложений работал не с war архивом, а с каталогами classpath, в которых лежат классы и ресурсы. Тогда Tapestry5 при обнаружении изменений в файлах классов будет автоматически делать их горячую замену. Запуск сервера приложений из каталога поддерживает Jetty. Цели для запуска Jetty сконфигурированы выше, а сам проект уже содержит нужные настройки как для целей maven, так и опций проекта для !NetBeans.
+Для запуска проекта в Jetty нужно выбрать нужную цель maven в меню:
+
+[http://orion-cpu.googlecode.com/svn/wiki/menu_maven_goal.png]
+
+(настройка сделана по статье [http://www.troymaxventures.com/2009/05/rad-w-tapestry-5-netbeans-67-maven-and.html RAD w/ Tapestry 5, NetBeans 6.7, Maven, and Jetty : Really !!!]).
 
 === Проверка русской орфографии ===
 Запускаем !NetBeans, открываем вкладку Tools -> Options -> Miscellaneous ->Spellchecker.
