@@ -18,6 +18,11 @@
   * [http://code.google.com/p/gsoc2011-csrf-protection/ GSoC2011 Cross-site script request forgery protection for Apache Tapestry 5]
   * [https://github.com/argoyle/tapestry-breadcrumbs BreadCrumb]
 
-==Проекты на базе Tapestry==]
+==Проекты на базе Tapestry==
 
   * [http://www.linpki.org/projects/linshare LinShare]
+
+==Обзоры==
+
+  * [http://www.techinfo.net.ru/docs/web/javawebdev.html Технологии Java
+для разработки веб-приложений]
