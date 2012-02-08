@@ -54,8 +54,8 @@ public interface orion.tapestry.grid.lib.datasource.DataSource extends org.apach
 == Настройка компоненты ==
 
 Ниже в шаблоне используются:
-* Пространство имен t - это элементы шаблона tapestry (в заголовке шаблона добавлено xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd")
-* Пространство имен p - это параметры шаблона tapestry (в заголовке шаблона добавлено xmlns:p="tapestry:parameter")
+  * Пространство имен t - это элементы шаблона tapestry (в заголовке шаблона добавлено xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd")
+  * Пространство имен p - это параметры шаблона tapestry (в заголовке шаблона добавлено xmlns:p="tapestry:parameter")
 
 Добавление дополнительной колонки в таблицу выполняется с помощью параметра *add* в шаблоне. *add* - перечисленные через запятую названия колонок, которые следует добавить к модели таблицы. Ячейки в добавленных колонках будут пустыми, если не задать шаблон из содержимого. Поэтому следует определить внутри элемента <t:grid.Grid> шаблон содержимого ячейки. Например, чтобы добавить колонку с названием *yourColumn*, надо написать в шаблоне страницы:
 {{{
@@ -155,3 +155,6 @@ orion.tapestry.grid.lib.datasource.impl.ListDataSource
 и добавить в параметры аннотации @SubModule
 классы CpuGridModule.class, CpuGridJPA.class, CpuGridJPACrudModule.class
 
+== Отображение нестандартных типов данных ==
+
+== Созранение настроек ==
