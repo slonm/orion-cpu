@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+    height: 100%;
+}
+a {
+    color: blue;
+    outline: none;
+    text-decoration: underline;
+}
+a:hover {
+    text-decoration: none;
+}
+p {
+    margin: 0 0 18px
+}
+img {
+    border: none;
+}
+input {
+    vertical-align: middle;
+}
+
+h2.title {
+    font: 26px/32px Arial, Tahoma, Verdana, sans-serif;
+    text-align: center;
+    padding-top: 10px;
+}
+
+h2.subtitle {
+    font: 20px/26px Arial, Tahoma, Verdana, sans-serif;
+    text-align: center;
+    padding-top: 30px;
+}
+
+#wrapper {
+    min-width: 1000px;
+    max-width: 1920px;
+    margin: 0 auto;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+    height: 30px;
+    font-size: medium;
+    border:  1px solid black; 
+    padding: 5px;
+    word-spacing: 10px;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#content {
+    padding: 0 0 100px;
+}
+
+
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+    margin: -40px auto 0;
+    min-width: 1000px;
+    max-width: 1920px;
+    height: 100px;
+    position: relative;
+    font: 20px/26px Arial, Tahoma, Verdana, sans-serif;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#grid-buttons {
+    display: inline-block;
+    margin-top: 3px;
+    padding: 1px 4px;
+}
+
+table, th, td { 
+    border: 1px solid black; 
+    border-collapse:collapse; 
+    padding:10px;
+    /*    text-align: center;*/
+}
+
+td.lbl {
+    text-align: right
+}
+
+td.btnrow { 
+    border: 1px solid #fff; text-align: right
+}
+
+#master-table{
+    text-align: center;
+    font-size: medium;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+#tblcenter {
+    width: 300px; /* Ширина таблицы */
+    border: 1px solid black; /* Рамка вокруг таблицы */
+    margin: 0 auto; /* Выравниваем таблицу по центру окна  */
+}
+
+p.figure{
+    text-align: center;
+    padding-top: 10px;
+} 
+
