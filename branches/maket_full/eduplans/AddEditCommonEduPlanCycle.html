@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>    
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Додавання/редагування циклу навчальних дисциплін</title>
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h2>Додавання/редагування циклу навчальних дисциплін</h2>
+        <form action="addEditEduPlanCycle" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="lbl"><label>Навчальний план:</label></td>
+                        <td><label>6.050103-Підготовка бакалаврів - 01.09.2009</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>№ циклу дисциплін:</label></td>
+                        <td>
+                            <input type="text"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Назва циклу дисциплін:</label></td>
+                        <td>
+                            <select>
+                                <option value="HumSocEconPrep">Цикл гуманітарної та соціально-економічної підготовки</option>
+                                <option value="HumSocEconDisc">Цикл гуманітарних та соціально-економічних дисциплін</option>
+                                <option value="MathNatSci">Цикл математичної, природничо-наукової підготовки</option>
+                                <option value="ProfPract">Цикл професійної та практичної підготовки</option>
+                                <option value="ProfPract">Цикл позакредитних дисциплін</option>
+                            </select>
+                            <p><a href="">Перейти до довідника назв циклів</a></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Загальна кількість ECTS-кредитів циклу:</label></td>
+                        <td>
+                            <input type="text"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="btnrow" colspan="2">
+                            <a href="CommonEduPlan.html"><input type="button" value="Відмінити"/></a>
+                            <a href="CommonEduPlan.html"><input type="button" value="Додати/Змінити"/></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
+

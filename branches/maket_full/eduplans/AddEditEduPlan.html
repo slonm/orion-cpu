@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>    
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Додавання/редагування навчального плану</title>
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h2>Додавання/редагування навчального плану</h2>
+        <form action="addEditEduPlan" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="lbl"><label>Ліцензійний запис:</label></td>
+                        <td>
+                            <select>
+                                <option value="PI">6.050103-Програмна інженерія-01.09.2009-Підготовка бакалаврів</option>
+                                <option value="SA">6.040303-Системний аналіз-01.09.2009-Підготовка бакалаврів</option>
+                                <option value="MOA">7.03060101-Менеджмент організацій і адміністрування (за видами економічної діяльності)-01.09.2009-Підготовка спеціалістів, магістрів</option>
+                                <option value="RZG">6.030302-Реклама і зв'язки з громадкістю (за видами діяльності)-01.09.2009-Підготовка бакалаврів</option>
+                            </select>
+                            <p><a href="">Перейти до переліку ліцензійних записів</a></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Перелік варіантів підготовки:</label><br/>
+                            <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label>
+                        </td>
+                        <td>
+                            <input type="text" size="55"></input>
+                            <a href="">Видалити варіант підготовки</a>
+                            <p><a href="">Додати варіант підготовки</a></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Термін навчання(років):</label></td>
+                        <td>
+                            <input type="text"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Кваліфікація:</label></td>
+                        <td>
+                            <select>
+                                <option value="FRTPZ">фахівець з розробки та тестування програмного забезпечення</option>
+                                <option value="TFGPNT">технічний фахівець в галузі прикладних наук та техніки</option>
+                                <option value="M">спеціаліст з менеджменту організацій і адміністрування</option>
+                                <option value="M">фахівець зі зв’язків з громадськістю</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Дата введення в дію:</label></td>
+                        <td>
+                            <input type="text"></input>
+                            <img src="datefield.gif" title="Оберіть дату введення навчального плау" alt="Calrndar"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="btnrow" colspan="2">
+                            <a href="EduPlans.html"><input type="button" value="Відмінити"/></a>
+                            <a href="EduPlans.html"><input type="button" value="Додати/Змінити"/></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>

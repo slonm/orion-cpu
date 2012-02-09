@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>    
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Додавання/редагування обов'язкової/вибіркової частини циклу навчальних дисциплін</title>
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h2>Додавання/редагування обов'язкової/вибіркової частини циклу навчальних дисциплін</h2>
+        <form action="addEditEduPlanCycle" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="lbl"><label>Навчальний план:</label></td>
+                        <td><label>6.050103-Підготовка бакалаврів - 01.09.2009</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Цикл навчального плану:</label></td>
+                        <td><label>1. Цикл гуманітарної та соціально-економічної підготовки</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Чи є частина циклу дисциплін обов'язковою:</label></td>
+                        <td><input type="checkbox"></input></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Загальна кількість ECTS-кредитів обов'язкової/вибіркової частини циклу:</label></td>
+                        <td>
+                            <input type="text"></input><label style="color: #f0f">Загальна кількість ECTS-кредитів циклу: 16 кредитів з 240 кредитів плану</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Чи є варіанти підготовки в вибірковій частині циклу:</label></td>
+                        <td>
+                            <input type="checkbox"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="btnrow" colspan="2">
+                            <a href="CommonEduPlan.html"><input type="button" value="Відмінити"/></a>
+                            <a href="CommonEduPlan.html"><input type="button" value="Додати/Змінити"/></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title></title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="style.css" type="text/css" media="screen, projection" />
+				<link rel="stylesheet" href="css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+        <!--[if lte IE 6]><link rel="stylesheet" href="style_ie.css" type="text/css" media="screen, projection" /><![endif]-->
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="index.html">Головна ▼</a>     <a href="license.html">Ліцензування ▼</a>     <a href="license.html">Ліцензії ▼</a>     <a href="licenserecord.html">Ліцензійні записи ▼</a><a href="eduplans/EduPlans.html">Навчальні плани ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Ліцензія АГ 582006 (14.09.2011)</H2> 
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="license-record-add-button" >Добавить</button><a href="license.html" ><button type="submit" >До списку ліцензій</button></a>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Код</th>
+                                <th>Галузь знань</th>
+                                <th>Напрям підготовки</th>
+                                <th>Спеціальність</th>
+                                <th>Область дії ліцензії</th>
+                                <th>Ліцензійний обсяг</th>
+                                <th>Термін дії ліцензії</th>
+                                <th>Кафедра</th>
+                            </tr>
+                            <tr>
+                                <td><input class="license-record-edit" type="image" src="img/edit.png" title="Редагувати ліцензійний запис"/></td>
+                                <td class="lk">5.05010301</td>
+                                <td class="lgz">Інформатика та обчислювальна техніка</td>
+                                <td class="lnp">Програмна інженерія</td>
+                                <td class="ls">Розробка програмного забезпечення</td>
+                                <td class="lodl">Підготовка молодших спеціалістів</td>
+                                <td class="llo">Денна - 30<br/>Заочна - 20</td>
+                                <th class="ltdl">01.07.2015</th>
+                                <th class="lkf">Кафедра програмування та інформаційних технологій</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Классический приватный университет</strong>
+        </div><!-- #footer -->
+		<div id="add-license-dialog" style="display: none">
+			<div class="ui-state-highlight" id="license-help"></div>
+		<table>
+			<tr id="l-sd">
+			<td>Кваліфікаційний рівень:</td><td>
+			<select id="ku">
+			<option value="1">Молодший спеціаліст</option>
+			<option value="2">Бакалавр</option>
+			<option value="3">Спеціаліст</option>
+			<option value="4">Мігістр</option>
+			</select>
+			</td>
+			</tr>
+			<tr id="tnp">
+			<td>Напрям підготовки:</td><td><input type="text" id="l-np"></td>
+			</tr>
+			<tr id="tsp">
+			<td>Спеціальність:</td><td><input type="text" id="l-s" ></td>
+			</tr>
+			<tr>
+			 <td class="lbl"><label>Перелік варіантів підготовки:</label><br/>
+                            <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label>
+                        </td>
+                        <td>
+                            <input type="text" ></input>
+                            <a href="">Видалити варіант підготовки</a>
+                            <p><a href="">Додати варіант підготовки</a></p>
+                        </td>
+			</tr>
+			<tr>
+			<td>Область дії ліцензії:</td><td><input type="text" id="l-odl"></td>
+			</tr>
+			<tr>
+			<td>Ліцензійний обсяг:</td><td><br>Денна:<input type="text" id="l-lo"><br>Заочна:<input type="text" id="l-lo"></td>
+			</tr>
+			<tr>
+			<td>Термін дії ліцензії:</td><td><input type="text" id="l-tdl"><img src="img/datefield.gif"></img></td>
+			</tr>
+			<tr>
+			<td>Кафедра:</td><td><input type="text" id="l-kf"></img></td>
+			</tr>
+			<tr>
+			<td></td><td><input type="submit" value="Сохранить" id="license-save"/></td>
+			</tr>
+		</table>
+		</div>
+				<script type="text/javascript">
+				function selectNapSpec(){
+				if (jQuery("#ku :selected").val()==2) {
+				jQuery("#tnp").css({'display':'table-row'});
+				jQuery("#tsp").css({'display':'none'});
+			} else {
+			jQuery("#tnp").css({'display':'none'});
+				jQuery("#tsp").css({'display':'table-row'});
+			}
+				}
+		jQuery(document).ready(function(){
+		selectNapSpec();
+		jQuery(".license-record-edit").click(function(){
+		jQuery("#add-license-dialog").attr("title", "Редактирование лицензионной записи");
+		jQuery("#l-np").val(jQuery(this).parent().parent().find('.lnp').html());
+		jQuery("#l-odl").val(jQuery(this).parent().parent().find('.lodl').html());
+		jQuery("#l-tdl").val(jQuery(this).parent().parent().find('.ltdl').html());
+		jQuery("#l-kf").val(jQuery(this).parent().parent().find('.lkf').html());
+		jQuery("#add-license-dialog").dialog({width: 500, show: "blind", hide:"blind"});
+		})		
+		jQuery("#license-save").click(function(){jQuery("#add-license-dialog").dialog("close")})
+					jQuery("#ku").change(function(){
+	selectNapSpec();
+			
+			})
+					jQuery("#license-record-add-button").click(function(){
+			jQuery("#add-license-dialog").attr("title", "Добавление лицензионной записи");
+		jQuery("#l-np").val("");
+		jQuery("#l-odl").val("");
+		jQuery("#l-lo").val("");
+		jQuery("#l-tdl").val("");
+		jQuery("#l-kf").val("");
+			jQuery("#add-license-dialog").dialog({width: 500, show: "blind", hide:"blind"});
+			})
+			})
+	
+
+		</script>
+    </body>
+</html>
