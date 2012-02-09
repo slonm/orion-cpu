@@ -20,11 +20,14 @@ div.filterElementContainer a.childrenvariant:hover{
 }
 
 #gridFilterJSON{
-    width:100%;
+    width:1px;
     height:1px;
     border:none;
     padding:0px;
     color:#eee;
+    display:block;
+    float:right;
+    opacity:0;
 }
 
 div.filterElementContainer a.calendar-link{

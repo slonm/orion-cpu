@@ -17,12 +17,12 @@
         <span class="grid-form-block filter"><b>Filter:</b><br/><t:grid.GridFilter t:id="gridfilter" gridFilterModel="filterModel"/></span>
         <span class="grid-form-block view"><b>View:</b><br/><t:grid.GridView t:id="gridview" gridPropertyViewModel="viewModel"/></span>
         <span class="grid-form-block sort"><b>Sort:</b><br/><t:grid.GridSort t:id="gridsort" gridSortModel="sortModel"/></span>
-        <br/>
-
-        Rows per page <input type="text" t:type="TextField" t:id="nRowsPerPage" style="width:40pt;"/>
-        Page number <input type="text" t:type="TextField" t:id="currentPage" style="width:40pt;"/>
-        <br/><br/>
-        <input type="submit" value="${message:grid-save-settings}"/>
+        <div class="filter">
+          Rows per page <input type="text" t:type="TextField" t:id="nRowsPerPage" style="width:40pt;"/>
+          Page number <input type="text" t:type="TextField" t:id="currentPage" style="width:40pt;"/>
+          <br/><br/>
+          <input type="submit" value="${message:grid-save-settings}"/>
+        </div>
     </span>
     ${humanReadableFilterInfo}
 </form>

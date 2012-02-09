@@ -12,17 +12,20 @@ input.viewElementWidth{
     width:40pt;
     margin-right:5pt;
 }
-.grid-width-slider{
+div.grid-width-slider{
     border-left-color: transparent;
     border-left-style: solid;
     border-left-width: 16px;
-    border-top-color: blue;
+    border-top-color: #e0e0e0;
     border-top-style: solid;
     border-top-width: 16px;
     cursor: e-resize;
     float: right;
     height: 0px;
     width: 0px;
+}
+div.grid-width-slider:hover{
+    border-top-color:blue;
 }
 div.grid-context-menu{
     background-color: silver;
@@ -42,4 +45,7 @@ div.grid-context-menu a:hover{
     border:none;
     padding:0px;
     color:#eee;
+    display:block;
+    float:right;
+    opacity:0;
 }

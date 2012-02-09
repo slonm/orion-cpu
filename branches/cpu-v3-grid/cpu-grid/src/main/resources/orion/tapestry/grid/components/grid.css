@@ -25,9 +25,9 @@ span.grid-form-block{
     display:inline-block;
     vertical-align:top;
 }
-.filter{width:50%;}
-.sort{width:24%;}
-.view{width:24%;}
+.filter{ padding: 1%; width: 48%;}
+.sort{padding: 1%; width:22%;}
+.view{padding: 1%; width:22%;}
 
 table#gridTable td{
     overflow:hidden;
@@ -76,7 +76,7 @@ form.grid_properties_form{
 span.gridproperties{
     display:inline-block;
     width:100%;
-    padding:3px;
+    padding:0px;
     background-color:#c0c0c0;
     font-size:11px;
 }
@@ -86,6 +86,7 @@ table.cpuGrid th{
     padding:0px;
     overflow: hidden;
     border:1px solid gray;
+    border-top:none;
 }
 
 table.cpuGrid td{
@@ -96,3 +97,15 @@ a.sortColumnHeaderLink{
     overflow: hidden;
 }
 
+
+
+
+thead.fixedHeader{
+    position:absolute;
+    margin-top:-65px;
+    background-color:#e8e8e8;
+}
+
+#cpu-grid-table-container{
+    margin-top:65px;
+}

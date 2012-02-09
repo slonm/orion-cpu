@@ -1,7 +1,7 @@
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 
 
-<input type="text" t:type="TextField" t:id="gridFilterJSON" style="width:100%;"/>
+<input type="text" t:type="TextField" t:id="gridFilterJSON"/>
 
 <script type="text/javascript">
 var filterElementBuilderConfig=${ElementBuildersJSONString};
