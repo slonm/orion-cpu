@@ -38,6 +38,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     private LicenseRecordGroup licenseRecordGroup;
     @DataType("longtext")
     private String trainingVariants;
+    //Подпись классификации в именительном падеже, единственном числе
+    private String classify;
 
     public LicenseRecord() {
     }
@@ -187,6 +189,14 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
+    }
+
+    public String getClassify() {
+        return classify;
+    }
+
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 
     public String getTrainingVariants() {

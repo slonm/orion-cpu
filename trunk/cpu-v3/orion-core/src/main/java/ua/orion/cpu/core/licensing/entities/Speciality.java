@@ -18,8 +18,6 @@ public class Speciality extends AbstractReferenceEntity<Speciality> {
     private static final long serialVersionUID = 1L;
     private String code;
     private TrainingDirection trainingDirection;
-    //Подпись классификации в именительном падеже, единственном числе
-    private String classify;
 
     public Speciality() {
     }
@@ -27,13 +25,11 @@ public class Speciality extends AbstractReferenceEntity<Speciality> {
     public Speciality(String name,
             String shortName,
             String code,
-            TrainingDirection trainingDirection, String classify,
-            Boolean isObsolete) {
+            TrainingDirection trainingDirection) {
                 setName(name);
                 this.code=code;
                 this.trainingDirection=trainingDirection;
-                setIsObsolete(isObsolete);
-                this.classify=classify;
+                setIsObsolete(false);
     }
 
     @Pattern(regexp="([0-9]{2})")
@@ -59,14 +55,6 @@ public class Speciality extends AbstractReferenceEntity<Speciality> {
 
     public void setTrainingDirection(TrainingDirection trainingDirection) {
         this.trainingDirection = trainingDirection;
-    }
-
-    public String getClassify() {
-        return classify;
-    }
-
-    public void setClassify(String classify) {
-        this.classify = classify;
     }
 
     @Override

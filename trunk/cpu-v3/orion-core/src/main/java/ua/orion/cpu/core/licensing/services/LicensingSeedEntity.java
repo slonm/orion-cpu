@@ -72,44 +72,44 @@ public class LicensingSeedEntity {
 
             //Подготовка бакалавров (Перелік 2006р - напрями навчання)
             //Фізичне виховання, спорт і здоров'я людини
-            TrainingDirection tdosPhysV_B = es.findUniqueOrPersist(new TrainingDirection("Фізичне виховання", "ФВ", "01", kaotdPhysTrainSport, null, false));
-            TrainingDirection tdosZL_B = es.findUniqueOrPersist(new TrainingDirection("Здоров'я людини", "ЗЛ", "03", kaotdPhysTrainSport, null, false));
+            TrainingDirection tdosPhysV_B = es.findUniqueOrPersist(new TrainingDirection("Фізичне виховання", "ФВ", "01", kaotdPhysTrainSport));
+            TrainingDirection tdosZL_B = es.findUniqueOrPersist(new TrainingDirection("Здоров'я людини", "ЗЛ", "03", kaotdPhysTrainSport));
             //Культура
-            TrainingDirection tdosT_B = es.findUniqueOrPersist(new TrainingDirection("Туризм", "Т", "07", kaotdPhysTrainSport, null, false));
+            TrainingDirection tdosT_B = es.findUniqueOrPersist(new TrainingDirection("Туризм", "Т", "07", kaotdPhysTrainSport));
             //Гуманітарні науки
-            TrainingDirection tdosPhilol_B = es.findUniqueOrPersist(new TrainingDirection("Філологія", "ФЛ", "03", kaotdPhilol, null, false));
+            TrainingDirection tdosPhilol_B = es.findUniqueOrPersist(new TrainingDirection("Філологія", "ФЛ", "03", kaotdPhilol));
             //Соціально-політичні науки
-            TrainingDirection tdosS_B = es.findUniqueOrPersist(new TrainingDirection("Соціологія", "С", "01", kaotdSocial, null, false));
-            TrainingDirection tdosPSH_B = es.findUniqueOrPersist(new TrainingDirection("Психологія", "П", "02", kaotdPs, null, false));
+            TrainingDirection tdosS_B = es.findUniqueOrPersist(new TrainingDirection("Соціологія", "С", "01", kaotdSocial));
+            TrainingDirection tdosPSH_B = es.findUniqueOrPersist(new TrainingDirection("Психологія", "П", "02", kaotdPs));
             //Журналістика та інформація
-            TrainingDirection tdosZhu_B = es.findUniqueOrPersist(new TrainingDirection("Журналістика", "Ж", "01", kaotdZhurn, null, false));
-            TrainingDirection tdosRZG_B = es.findUniqueOrPersist(new TrainingDirection("Реклама і зв'язки з громадкістю (за видами)", "РЗГ", "02", kaotdManeg, "вид", false));
-            TrainingDirection tdosVSR_B = es.findUniqueOrPersist(new TrainingDirection("Видавнича справа та редагування", "ВСР", "03", kaotdZhurn, null, false));
+            TrainingDirection tdosZhu_B = es.findUniqueOrPersist(new TrainingDirection("Журналістика", "Ж", "01", kaotdZhurn));
+            TrainingDirection tdosRZG_B = es.findUniqueOrPersist(new TrainingDirection("Реклама і зв'язки з громадкістю (за видами)", "РЗГ", "02", kaotdManeg));
+            TrainingDirection tdosVSR_B = es.findUniqueOrPersist(new TrainingDirection("Видавнича справа та редагування", "ВСР", "03", kaotdZhurn));
             //Право
-            TrainingDirection tdosP_B = es.findUniqueOrPersist(new TrainingDirection("Право", "П", "01", kaotdRight, null, false));
+            TrainingDirection tdosP_B = es.findUniqueOrPersist(new TrainingDirection("Право", "П", "01", kaotdRight));
             //Економіка і підприємництво
-            TrainingDirection tdosEKib_B = es.findUniqueOrPersist(new TrainingDirection("Економічна кібернетика", "ЕК", "02", kaotdEkonBus, null, false));
-            TrainingDirection tdosME_B = es.findUniqueOrPersist(new TrainingDirection("Міжнародна економіка", "МЕ", "03", kaotdEkonBus, null, false));
-            TrainingDirection tdosEP_B = es.findUniqueOrPersist(new TrainingDirection("Економіка підприємства", "ЕП", "04", kaotdEkonBus, null, false));
-            TrainingDirection tdosPRS_B = es.findUniqueOrPersist(new TrainingDirection("Прикладна статистика", "ПС", "06", kaotdEkonBus, null, false));
-            TrainingDirection tdosM_B = es.findUniqueOrPersist(new TrainingDirection("Маркетинг", "М", "07", kaotdEkonBus, null, false));
-            TrainingDirection tdosFK_B = es.findUniqueOrPersist(new TrainingDirection("Фінанси і кредит", "ФК", "08", kaotdEkonBus, null, false));
-            TrainingDirection tdosOA_B = es.findUniqueOrPersist(new TrainingDirection("Облік і аудит", "ОА", "09", kaotdEkonBus, null, false));
+            TrainingDirection tdosEKib_B = es.findUniqueOrPersist(new TrainingDirection("Економічна кібернетика", "ЕК", "02", kaotdEkonBus));
+            TrainingDirection tdosME_B = es.findUniqueOrPersist(new TrainingDirection("Міжнародна економіка", "МЕ", "03", kaotdEkonBus));
+            TrainingDirection tdosEP_B = es.findUniqueOrPersist(new TrainingDirection("Економіка підприємства", "ЕП", "04", kaotdEkonBus));
+            TrainingDirection tdosPRS_B = es.findUniqueOrPersist(new TrainingDirection("Прикладна статистика", "ПС", "06", kaotdEkonBus));
+            TrainingDirection tdosM_B = es.findUniqueOrPersist(new TrainingDirection("Маркетинг", "М", "07", kaotdEkonBus));
+            TrainingDirection tdosFK_B = es.findUniqueOrPersist(new TrainingDirection("Фінанси і кредит", "ФК", "08", kaotdEkonBus));
+            TrainingDirection tdosOA_B = es.findUniqueOrPersist(new TrainingDirection("Облік і аудит", "ОА", "09", kaotdEkonBus));
             //Менеджмент та адміністрування
-            TrainingDirection tdosMG_B = es.findUniqueOrPersist(new TrainingDirection("Менеджмент", "МА", "01", kaotdEkonBus, "за видами економічної діяльності", false));
+            TrainingDirection tdosMG_B = es.findUniqueOrPersist(new TrainingDirection("Менеджмент", "МА", "01", kaotdEkonBus));
             //Системні науки та кібернетика
-            TrainingDirection tdosIF_B = es.findUniqueOrPersist(new TrainingDirection("Інформатика", "І", "02", kaotdEkonBus, null, false));
-            TrainingDirection tdosSA_B = es.findUniqueOrPersist(new TrainingDirection("Системний аналіз", "СА", "03", kaotdEkonBus, null, false));
+            TrainingDirection tdosIF_B = es.findUniqueOrPersist(new TrainingDirection("Інформатика", "І", "02", kaotdEkonBus));
+            TrainingDirection tdosSA_B = es.findUniqueOrPersist(new TrainingDirection("Системний аналіз", "СА", "03", kaotdEkonBus));
             //Інформатика та обчислювальна техника
-            TrainingDirection tdosPI_B = es.findUniqueOrPersist(new TrainingDirection("Програмна інженерія", "ПІ", "03", kaotdEkonBus, null, false));
+            TrainingDirection tdosPI_B = es.findUniqueOrPersist(new TrainingDirection("Програмна інженерія", "ПІ", "03", kaotdEkonBus));
             //Електроніка
-            TrainingDirection tdosMNE_B = es.findUniqueOrPersist(new TrainingDirection("Мікро- та наноелектроніка", "МНЕ", "01", kaotdEkonBus, null, false));
+            TrainingDirection tdosMNE_B = es.findUniqueOrPersist(new TrainingDirection("Мікро- та наноелектроніка", "МНЕ", "01", kaotdEkonBus));
             //Геодезія та землеустрій
-            TrainingDirection tdosGKZ_B = es.findUniqueOrPersist(new TrainingDirection("Геодезія, картографія та землеустрій", "ГКЗ", "01", kaotdEkonBus, null, false));
+            TrainingDirection tdosGKZ_B = es.findUniqueOrPersist(new TrainingDirection("Геодезія, картографія та землеустрій", "ГКЗ", "01", kaotdEkonBus));
             //Мистецтво (NEW)
-            TrainingDirection tdosDZ_B = es.findUniqueOrPersist(new TrainingDirection("Дизайн", "ДЗ", "07", kaotdEkonBus, null, false));
+            TrainingDirection tdosDZ_B = es.findUniqueOrPersist(new TrainingDirection("Дизайн", "ДЗ", "07", kaotdEkonBus));
             //Сфера обслуговування (NEW)
-            TrainingDirection tdosGRS_B = es.findUniqueOrPersist(new TrainingDirection("Готельно ресторанна справа", "ГРС", "01", kaotdEkonBus, null, false));
+            TrainingDirection tdosGRS_B = es.findUniqueOrPersist(new TrainingDirection("Готельно ресторанна справа", "ГРС", "01", kaotdEkonBus));
 
             //---Направления подготовки или специальности суффиксы _JS, _B, _S, _M обозначают квалификационные уровни
             //младшего специалиста, бакалавра, специалиста/магистра, соответственно
@@ -119,82 +119,82 @@ public class LicensingSeedEntity {
 
             //Підготовка бакалаврів, спеціалістів, магістрів (Перелік 1997р - спеціальності)
             //Специфічні категорії
-            Speciality tdosPVSH_M = es.findUniqueOrPersist(new Speciality("Педагогіка вищої школи", "ПВШ", "05", tdosPhysV_B, null, false));
-            Speciality tdosAM_M = es.findUniqueOrPersist(new Speciality("Адміністративний менеджмент", "АМ", "07", tdosPhysV_B, null, false));
-            Speciality tdosUNZ_M = es.findUniqueOrPersist(new Speciality("Управління навчальним закладом", "УНЗ", "09", tdosPhysV_B, null, false));
-            Speciality tdosPE_M = es.findUniqueOrPersist(new Speciality("Прикладна економіка", "ПЕ", "11", tdosPhysV_B, null, false));
-            Speciality tdosBA_M = es.findUniqueOrPersist(new Speciality("Бізнес-адміністрування", "БА", "13", tdosPhysV_B, null, false));
+            Speciality tdosPVSH_M = es.findUniqueOrPersist(new Speciality("Педагогіка вищої школи", "ПВШ", "05", tdosPhysV_B));
+            Speciality tdosAM_M = es.findUniqueOrPersist(new Speciality("Адміністративний менеджмент", "АМ", "07", tdosPhysV_B));
+            Speciality tdosUNZ_M = es.findUniqueOrPersist(new Speciality("Управління навчальним закладом", "УНЗ", "09", tdosPhysV_B));
+            Speciality tdosPE_M = es.findUniqueOrPersist(new Speciality("Прикладна економіка", "ПЕ", "11", tdosPhysV_B));
+            Speciality tdosBA_M = es.findUniqueOrPersist(new Speciality("Бізнес-адміністрування", "БА", "13", tdosPhysV_B));
             //Фізичне виховання і спорт
-            Speciality tdosPVS_B = es.findUniqueOrPersist(new Speciality("Фізичне виховання і спорт", "ФВС", "00", tdosPhysV_B, null, false));
-            Speciality tdosPhysV_SM = es.findUniqueOrPersist(new Speciality("Фізичне виховання", "ФВ", "01", tdosPhysV_B, null, false));
-            Speciality tdosPhysR_SM = es.findUniqueOrPersist(new Speciality("Фізична реабілітація", "ФР", "02", tdosPhysV_B, null, false));
+            Speciality tdosPVS_B = es.findUniqueOrPersist(new Speciality("Фізичне виховання і спорт", "ФВС", "00", tdosPhysV_B));
+            Speciality tdosPhysV_SM = es.findUniqueOrPersist(new Speciality("Фізичне виховання", "ФВ", "01", tdosPhysV_B));
+            Speciality tdosPhysR_SM = es.findUniqueOrPersist(new Speciality("Фізична реабілітація", "ФР", "02", tdosPhysV_B));
             //Журналістика
-            Speciality tdosZhurn_B = es.findUniqueOrPersist(new Speciality("Журналістика", "Ж", "00", tdosPhysV_B, null, false));
-            Speciality tdosZhurn_SM = es.findUniqueOrPersist(new Speciality("Журналістика", "Ж", "01", tdosPhysV_B, null, false));
-            Speciality tdosVSR_S = es.findUniqueOrPersist(new Speciality("Видавнича справа та редагування", "ВСР", "03", tdosPhysV_B, null, false));
+            Speciality tdosZhurn_B = es.findUniqueOrPersist(new Speciality("Журналістика", "Ж", "00", tdosPhysV_B));
+            Speciality tdosZhurn_SM = es.findUniqueOrPersist(new Speciality("Журналістика", "Ж", "01", tdosPhysV_B));
+            Speciality tdosVSR_S = es.findUniqueOrPersist(new Speciality("Видавнича справа та редагування", "ВСР", "03", tdosPhysV_B));
             //Міжнародні відносини
-            Speciality tdosMP_B = es.findUniqueOrPersist(new Speciality("Міжнародні відносини", "МВ", "00", tdosPhysV_B, null, false));
-            Speciality tdosMP_S = es.findUniqueOrPersist(new Speciality("Міжнародне право", "МП", "02", tdosPhysV_B, null, false));
+            Speciality tdosMP_B = es.findUniqueOrPersist(new Speciality("Міжнародні відносини", "МВ", "00", tdosPhysV_B));
+            Speciality tdosMP_S = es.findUniqueOrPersist(new Speciality("Міжнародне право", "МП", "02", tdosPhysV_B));
             //Філологія
-            Speciality tdosPhyl_B = es.findUniqueOrPersist(new Speciality("Філологія", "Ф", "00", tdosPhysV_B, null, false));
-            Speciality tdosLangLit_SM = es.findUniqueOrPersist(new Speciality("Мова та література (англійська)", "МЛ", "02", tdosPhysV_B, null, false));
-            Speciality tdosTransl_SM = es.findUniqueOrPersist(new Speciality("Переклад", "ПР", "07", tdosPhysV_B, null, false));
-            Speciality tdosLT_B = es.findUniqueOrPersist(new Speciality("Літературна творчість", "ЛТ", "00", tdosPhysV_B, null, false));
+            Speciality tdosPhyl_B = es.findUniqueOrPersist(new Speciality("Філологія", "Ф", "00", tdosPhysV_B));
+            Speciality tdosLangLit_SM = es.findUniqueOrPersist(new Speciality("Мова та література (англійська)", "МЛ", "02", tdosPhysV_B));
+            Speciality tdosTransl_SM = es.findUniqueOrPersist(new Speciality("Переклад", "ПР", "07", tdosPhysV_B));
+            Speciality tdosLT_B = es.findUniqueOrPersist(new Speciality("Літературна творчість", "ЛТ", "00", tdosPhysV_B));
             //Психологія
-            Speciality tdosPS_B = es.findUniqueOrPersist(new Speciality("Психологія", "ПС", "00", tdosPhysV_B, null, false));
-            Speciality tdosPS_SM = es.findUniqueOrPersist(new Speciality("Психологія", "ПС", "01", tdosPhysV_B, null, false));
+            Speciality tdosPS_B = es.findUniqueOrPersist(new Speciality("Психологія", "ПС", "00", tdosPhysV_B));
+            Speciality tdosPS_SM = es.findUniqueOrPersist(new Speciality("Психологія", "ПС", "01", tdosPhysV_B));
             //Соціологія
-            Speciality tdosSR_B = es.findUniqueOrPersist(new Speciality("Соціологія", "СР", "00", tdosPhysV_B, null, false));
-            Speciality tdosSR_SM = es.findUniqueOrPersist(new Speciality("Соціальна робота", "СР", "02", tdosPhysV_B, null, false));
+            Speciality tdosSR_B = es.findUniqueOrPersist(new Speciality("Соціологія", "СР", "00", tdosPhysV_B));
+            Speciality tdosSR_SM = es.findUniqueOrPersist(new Speciality("Соціальна робота", "СР", "02", tdosPhysV_B));
             //Економіка і підприємництво
-            Speciality tdosEIP_B = es.findUniqueOrPersist(new Speciality("Економіка і підприємництво", "ЕІП", "00", tdosPhysV_B, null, false));
-            Speciality tdosEKib_SM = es.findUniqueOrPersist(new Speciality("Економічна кібернетика", "ЕК", "02", tdosPhysV_B, null, false));
-            Speciality tdosME_SM = es.findUniqueOrPersist(new Speciality("Міжнародна економіка", "МЕ", "03", tdosPhysV_B, null, false));
-            Speciality tdosF_SM = es.findUniqueOrPersist(new Speciality("Фінанси", "Ф", "04", tdosPhysV_B, null, false));
-            Speciality tdosOA_SM = es.findUniqueOrPersist(new Speciality("Облік і аудит", "ОА", "06", tdosPhysV_B, null, false));
-            Speciality tdosBS_SM = es.findUniqueOrPersist(new Speciality("Банківська справа", "БС", "05", tdosPhysV_B, null, false));
-            Speciality tdosEP_SM = es.findUniqueOrPersist(new Speciality("Економіка підприємства", "ЕП", "07", tdosPhysV_B, null, false));
-            Speciality tdosM_SM = es.findUniqueOrPersist(new Speciality("Маркетинг", "М", "08", tdosPhysV_B, null, false));
-            Speciality tdosES_SM = es.findUniqueOrPersist(new Speciality("Економічна статистика", "ЕС", "10", tdosPhysV_B, null, false));
+            Speciality tdosEIP_B = es.findUniqueOrPersist(new Speciality("Економіка і підприємництво", "ЕІП", "00", tdosPhysV_B));
+            Speciality tdosEKib_SM = es.findUniqueOrPersist(new Speciality("Економічна кібернетика", "ЕК", "02", tdosPhysV_B));
+            Speciality tdosME_SM = es.findUniqueOrPersist(new Speciality("Міжнародна економіка", "МЕ", "03", tdosPhysV_B));
+            Speciality tdosF_SM = es.findUniqueOrPersist(new Speciality("Фінанси", "Ф", "04", tdosPhysV_B));
+            Speciality tdosOA_SM = es.findUniqueOrPersist(new Speciality("Облік і аудит", "ОА", "06", tdosPhysV_B));
+            Speciality tdosBS_SM = es.findUniqueOrPersist(new Speciality("Банківська справа", "БС", "05", tdosPhysV_B));
+            Speciality tdosEP_SM = es.findUniqueOrPersist(new Speciality("Економіка підприємства", "ЕП", "07", tdosPhysV_B));
+            Speciality tdosM_SM = es.findUniqueOrPersist(new Speciality("Маркетинг", "М", "08", tdosPhysV_B));
+            Speciality tdosES_SM = es.findUniqueOrPersist(new Speciality("Економічна статистика", "ЕС", "10", tdosPhysV_B));
             //Менеджмент
-            TrainingDirection tdosMN_B = es.findUniqueOrPersist(new TrainingDirection("Менеджмент", "М", "00", kaotdEkonBus, "за видами економічної діяльності", false));
-            Speciality tdosMO_SM = es.findUniqueOrPersist(new Speciality("Менеджмент організації", "МО", "01", tdosMN_B, "за видами економічної діяльності", false));
-            Speciality tdosMZED_SM = es.findUniqueOrPersist(new Speciality("Менеджмент зовнішньо-економічної діяльності", "МЗЕД", "06", tdosPhysV_B, null, false));
+            TrainingDirection tdosMN_B = es.findUniqueOrPersist(new TrainingDirection("Менеджмент", "М", "00", kaotdEkonBus));
+            Speciality tdosMO_SM = es.findUniqueOrPersist(new Speciality("Менеджмент організації", "МО", "01", tdosMN_B));
+            Speciality tdosMZED_SM = es.findUniqueOrPersist(new Speciality("Менеджмент зовнішньо-економічної діяльності", "МЗЕД", "06", tdosPhysV_B));
             //Туризм
-            Speciality tdosTR_B = es.findUniqueOrPersist(new Speciality("Туризм", "Т", "00", tdosPhysV_B, null, false));
-            Speciality tdosTR_SM = es.findUniqueOrPersist(new Speciality("Туризм", "Т", "01", tdosPhysV_B, null, false));
-            Speciality tdosGGos_SM = es.findUniqueOrPersist(new Speciality("Готельне господарство", "ГГ", "02", tdosPhysV_B, null, false));
+            Speciality tdosTR_B = es.findUniqueOrPersist(new Speciality("Туризм", "Т", "00", tdosPhysV_B));
+            Speciality tdosTR_SM = es.findUniqueOrPersist(new Speciality("Туризм", "Т", "01", tdosPhysV_B));
+            Speciality tdosGGos_SM = es.findUniqueOrPersist(new Speciality("Готельне господарство", "ГГ", "02", tdosPhysV_B));
             //Право
-            Speciality tdosPZ_B = es.findUniqueOrPersist(new Speciality("Право", "П", "00", tdosPhysV_B, null, false));
-            Speciality tdosPZ_SM = es.findUniqueOrPersist(new Speciality("Правознавство", "П", "01", tdosPhysV_B, null, false));
+            Speciality tdosPZ_B = es.findUniqueOrPersist(new Speciality("Право", "П", "00", tdosPhysV_B));
+            Speciality tdosPZ_SM = es.findUniqueOrPersist(new Speciality("Правознавство", "П", "01", tdosPhysV_B));
             //Геодезія, картографія та землевпорядкування
-            Speciality tdosZK_B = es.findUniqueOrPersist(new Speciality("Землевпорядаткування та кадастр", "ЗК", "00", tdosPhysV_B, null, false));
+            Speciality tdosZK_B = es.findUniqueOrPersist(new Speciality("Землевпорядаткування та кадастр", "ЗК", "00", tdosPhysV_B));
             //Прикладна математика
-            Speciality tdosPM_B = es.findUniqueOrPersist(new Speciality("Прикладна математика", "ПМ", "00", tdosPhysV_B, null, false));
-            Speciality tdosSAU_SM = es.findUniqueOrPersist(new Speciality("Системний аналіз і управління", "САУ", "03", tdosPhysV_B, null, false));
-            Speciality tdosI_B = es.findUniqueOrPersist(new Speciality("Інформатика", "Інф", "00", tdosPhysV_B, null, false));
+            Speciality tdosPM_B = es.findUniqueOrPersist(new Speciality("Прикладна математика", "ПМ", "00", tdosPhysV_B));
+            Speciality tdosSAU_SM = es.findUniqueOrPersist(new Speciality("Системний аналіз і управління", "САУ", "03", tdosPhysV_B));
+            Speciality tdosI_B = es.findUniqueOrPersist(new Speciality("Інформатика", "Інф", "00", tdosPhysV_B));
             //Комп'ютерні науки
-            TrainingDirection tdosPZAS_B = es.findUniqueOrPersist(new TrainingDirection("Програмне забезпечення автоматизованих систем", "ПЗАС", "00", kaotdEkonBus, null, false));
-            Speciality tdosPZAS_SM = es.findUniqueOrPersist(new Speciality("Програмне забезпечення автоматизованих систем", "ПЗАС", "03", tdosPZAS_B, null, false));
+            TrainingDirection tdosPZAS_B = es.findUniqueOrPersist(new TrainingDirection("Програмне забезпечення автоматизованих систем", "ПЗАС", "00", kaotdEkonBus));
+            Speciality tdosPZAS_SM = es.findUniqueOrPersist(new Speciality("Програмне забезпечення автоматизованих систем", "ПЗАС", "03", tdosPZAS_B));
             //Електроніка
-            Speciality tdosFBE_B = es.findUniqueOrPersist(new Speciality("Фізична та біомедична електроніка", "ФБЕ", "00", tdosPhysV_B, null, false));
-            Speciality tdosFBE_SM = es.findUniqueOrPersist(new Speciality("Фізична та біомедична електроніка", "ФБЕ", "04", tdosPhysV_B, null, false));
+            Speciality tdosFBE_B = es.findUniqueOrPersist(new Speciality("Фізична та біомедична електроніка", "ФБЕ", "00", tdosPhysV_B));
+            Speciality tdosFBE_SM = es.findUniqueOrPersist(new Speciality("Фізична та біомедична електроніка", "ФБЕ", "04", tdosPhysV_B));
             //Державне управління
-            Speciality tdosDS_M = es.findUniqueOrPersist(new Speciality("Державна служба", "ДС", "01", tdosPhysV_B, null, false));
+            Speciality tdosDS_M = es.findUniqueOrPersist(new Speciality("Державна служба", "ДС", "01", tdosPhysV_B));
 
             //Перепідготовка спеціалістів (Перелік 1997р - спеціальності) - додаткових до основних спеціальностей немає
 
             //Для коледжу КПУ (Перелік 1997р - спеціальності) - додаткові до основних спеціальності
             //Менеджмент
-            Speciality tdosOON_JS = es.findUniqueOrPersist(new Speciality("Організація обслуговування населення", "ООН", "03", tdosPhysV_B, null, false));
+            Speciality tdosOON_JS = es.findUniqueOrPersist(new Speciality("Організація обслуговування населення", "ООН", "03", tdosPhysV_B));
             //Торгівля
-            Speciality tdosTKD_JS = es.findUniqueOrPersist(new Speciality("Товарознавство та комерційна діяльність", "ТКД", "01", tdosPhysV_B, null, false));
+            Speciality tdosTKD_JS = es.findUniqueOrPersist(new Speciality("Товарознавство та комерційна діяльність", "ТКД", "01", tdosPhysV_B));
             //Туризм
-            Speciality tdosOOGTK_JS = es.findUniqueOrPersist(new Speciality("Організація обслуговування в готелях та туристичних комплексах", "ООГТК", "03", tdosPhysV_B, null, false));
+            Speciality tdosOOGTK_JS = es.findUniqueOrPersist(new Speciality("Організація обслуговування в готелях та туристичних комплексах", "ООГТК", "03", tdosPhysV_B));
             //Прикладна математика
-            Speciality tdosPM_JS = es.findUniqueOrPersist(new Speciality("Прикладна математика", "ПМ", "02", tdosPhysV_B, null, false));
+            Speciality tdosPM_JS = es.findUniqueOrPersist(new Speciality("Прикладна математика", "ПМ", "02", tdosPhysV_B));
             //Комп'ютерні науки
-            Speciality tdosPECTAS_JS = es.findUniqueOrPersist(new Speciality("Програмування для електронно-обчислювальної техніки і автоматизованих систем", "ПЗАС", "05", tdosIF_B, null, false));
+            Speciality tdosPECTAS_JS = es.findUniqueOrPersist(new Speciality("Програмування для електронно-обчислювальної техніки і автоматизованих систем", "ПЗАС", "05", tdosIF_B));
 
 
             //---Серия, номер и дата выдачи лицензии----------
@@ -301,13 +301,16 @@ public class LicensingSeedEntity {
             //Менеджмент
             //Менеджмент - бакалаври
             lr = new LicenseRecord(licenseCPU, tdosMN_B, bach_EQL, stat_EF, 140, corr_EF, 250, lrCal20150701, kafMO, bsmtrain_LRG);
+            lr.setClassify("за видами економічної діяльності");
             lr.setTrainingVariants("Аграрний менеджмент\nМенеджмент організації інвестиційної діяльності\nМенеджмент на ринку товарів та послуг");
             es.findUniqueOrPersist(lr);
             //Менеджмент організацій - спеціалісти, магістри
             lr = new LicenseRecord(licenseCPU, tdosMO_SM, spec_EQL, stat_EF, 90, corr_EF, 150, lrCal20150701, kafMO, bsmtrain_LRG);
+            lr.setClassify("за видами економічної діяльності");
             lr.setTrainingVariants("Менеджмент організації інвестиційної діяльності\nМенеджмент на ринку товарів та послуг");
             es.findUniqueOrPersist(lr);
             lr = new LicenseRecord(licenseCPU, tdosMO_SM, master_EQL, stat_EF, 60, corr_EF, 60, lrCal20150701, kafMO, bsmtrain_LRG);
+            lr.setClassify("за видами економічної діяльності");
             lr.setTrainingVariants("Аграрний менеджмент\nМенеджмент організації інвестиційної діяльності\nМенеджмент на ринку товарів та послуг");
             es.findUniqueOrPersist(lr);
 
