@@ -204,17 +204,15 @@ public class SecurityModule {
             @InjectService("SecurityRequestFilter") HttpServletRequestFilter securityRequestFilter,
             @Symbol(SecurityCoreSymbols.ENABLED) boolean enabled) {
         //Handler with name SecurityRequestFilter always exists
-        if (enabled) {
-            configuration.add("SecurityRequestFilter", securityRequestFilter, "after:StoreIntoGlobals");
-        } else {
-            configuration.add("SecurityRequestFilter", new HttpServletRequestFilter() {
+        configuration.add("SecurityRequestFilter", enabled ? securityRequestFilter : new HttpServletRequestFilter() {
 
-                @Override
-                public boolean service(HttpServletRequest request, HttpServletResponse response, HttpServletRequestHandler handler) throws IOException {
-                    ThreadContext.bind(new DummySubject());
-                    return handler.service(request, response);
-                }
-            }, "after:StoreIntoGlobals");
-        }
+            @Override
+            public boolean service(HttpServletRequest request,
+                    HttpServletResponse response, 
+                    HttpServletRequestHandler handler) throws IOException {
+                ThreadContext.bind(new DummySubject());
+                return handler.service(request, response);
+            }
+        }, "after:StoreIntoGlobals");
     }
 }
