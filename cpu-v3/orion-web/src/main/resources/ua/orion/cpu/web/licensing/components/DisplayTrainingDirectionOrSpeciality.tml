@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <div xml:space="default" 
      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-    xmlns:p="tapestry:parameter">
+     xmlns:p="tapestry:parameter">
     <t:if test="IsTrainingDirection">
         ${licenseRecord.TrainingDirection.name}
         <p:else>
@@ -14,24 +14,11 @@
             </t:if>
         </p:else>
     </t:if>
-    <t:if test="licenseRecord.trainingVariants">
-        <t:if test="IsTrainingDirection">
-            <t:if test="!licenseRecord.speciality">
-                <t:ori.Spoiler t:link="prop:licenseRecord.trainingDirection.classify">
-                    <p t:type="loop" t:source="trainingVariants" t:value="trainingVariant">
-                        ${trainingVariant}
-                    </p>
-                </t:ori.Spoiler> 
-            </t:if>    
-            <p:else>
-                <t:if test="licenseRecord.speciality">
-                    <t:ori.Spoiler t:link="prop:licenseRecord.speciality.classify">
-                        <p t:type="loop" t:source="trainingVariants" t:value="trainingVariant">
-                            ${trainingVariant}
-                        </p>
-                    </t:ori.Spoiler> 
-                </t:if>    
-            </p:else>
-        </t:if>    
+    <t:if test="showVariants">
+        <t:ori.Spoiler t:link="prop:licenseRecord.classify">
+            <p t:type="loop" t:source="trainingVariants" t:value="trainingVariant">
+                ${trainingVariant}
+            </p>
+        </t:ori.Spoiler> 
     </t:if>    
 </div>
