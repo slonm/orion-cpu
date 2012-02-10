@@ -1,0 +1,11 @@
+<t:ori.layout t:title="prop:Title"
+          t:menudata="prop:CpuMenu"
+          mode="activationContext"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+          xmlns:p="tapestry:parameter">
+
+<div t:type="loop" t:source="items" t:value="Item" class="ui-state-default">
+    <t:menu.menulink t:menuLink="Item.itemLink" class="ui-menunavigator-link"><div class="e-icon-16x16" style="${UidIcon}"></div><div class="menu-item-link">${localize(Item.Uid)}</div></t:menu.menulink>
+</div>
+
+</t:ori.layout>
