@@ -9,13 +9,13 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Environment;
-import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
+import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.CurrentBeanContext;
-import ua.orion.web.OrionWebSymbols;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -34,6 +34,8 @@ public class Crud {
     private Block buttons;
     @Inject
     private Block editBlock;
+    @Inject
+    private Block addBlock;
     @Inject
     private Block viewBlock;
     @Inject
@@ -73,24 +75,10 @@ public class Crud {
     @Parameter(defaultPrefix = "literal")
     @Property
     private String listPage;
-    /*
-     * Свойство, отвечающее за отображение всплывающих подсказок
-     */
-    @Inject
-    @Symbol(OrionWebSymbols.SHOW_HINTS)
-    @Property
-    private String showHints;
     @Persist
     private Object object;
-    @Persist
-    @Property(write = false)
-    private String mode;
-    private static final String EDIT = "edit";
-    private static final String ADD = "add";
-    private static final String VIEW = "view";
-    private static final String DEL = "del";
-    @Environmental
-    private JavaScriptSupport javascriptSupport;
+    @Inject
+    private AjaxResponseRenderer ajaxResponseRenderer;
     private CurrentBeanContext currentBeanContext = new CurrentBeanContext() {
 
         @Override
@@ -161,8 +149,6 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
-        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS. 
-        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "updateGrid", "");
         if (resources.isBound("source")) {
             return source;
         } else {
@@ -183,7 +169,7 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
-        return listZone.getBody();
+        return closeWindowAndGetListZone();
     }
 
     public Object onSuccessFromAddForm() {
@@ -199,33 +185,69 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
-        return listZone.getBody();
+        return closeWindowAndGetListZone();
     }
 
     public Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
-        mode = EDIT;
         object = es.find(objectClass, id);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", "popupWindow",
+                        "title", messages.get("label.mode.edit")));
+            }
+        });
         return editBlock;
     }
 
     public Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
-        mode = ADD;
         object = es.newInstance(objectClass);
-        return editBlock;
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", "popupWindow",
+                        "title", messages.get("label.mode.add")));
+            }
+        });
+        return addBlock;
     }
 
     public Object onView(Integer id) {
-        mode = VIEW;
         object = es.find(objectClass, id);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", "popupWindow",
+                        "title", messages.get("label.mode.view")));
+            }
+        });
         return viewBlock;
     }
 
     public Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
-        mode = DEL;
         object = es.find(objectClass, id);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", "popupWindow",
+                        "title", messages.get("label.mode.del")));
+            }
+        });
         return deleteBlock;
     }
 
@@ -244,10 +266,19 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
-        return listZone.getBody();
+        return closeWindowAndGetListZone();
     }
 
-    public boolean getIsEdit() {
-        return EDIT.equals(mode);
+    private Object closeWindowAndGetListZone() {
+        //Close window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("closeCkWindow",
+                        new JSONObject("window", "popupWindow"));
+            }
+        });
+        return listZone.getBody();
     }
 }

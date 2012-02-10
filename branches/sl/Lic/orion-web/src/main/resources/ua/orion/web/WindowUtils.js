@@ -22,6 +22,9 @@ Tapestry.Initializer.showCkWindow = function(opt){
     //        Tapestry.Initializer.showGridAjaxSave();
     //    })
     //Создание подсказок
+    //TODO Сейчас этот параметр не передается. Его нужно поместить в глобальное 
+    //пространство имен и инициализировать значением символа 
+    //OrionWebSymbols.SHOW_HINTS = "orion.cpu.web.show-hints"
     if (opt.showhints=="true"){
         createToolTips();
     }
@@ -39,7 +42,7 @@ Tapestry.Initializer.closeCkWindow = function(opt){
     updateCSS();
 }
 
-Tapestry.Initializer.updateGrid = function(opt){
+Tapestry.Initializer.updateGrid = function(){
     jQuery(".crud-links a, #crud-add-record-button").click(function(){
         Tapestry.Initializer.showGridAjax();
     })

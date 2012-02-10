@@ -19,6 +19,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  * Initialization occurs at {@link InitializationPriority#NORMAL} priority.
  * All informal parameters has been added as JSON parametrs.
  * @author sl
+ * @deprecated use AjaxResponseRenderer instead
  */
 @SupportsInformalParameters
 public class InitCall {

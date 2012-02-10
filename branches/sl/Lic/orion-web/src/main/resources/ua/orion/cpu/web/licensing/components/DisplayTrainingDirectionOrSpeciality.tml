@@ -15,10 +15,12 @@
         </p:else>
     </t:if>
     <t:if test="showVariants">
-        <t:ori.Spoiler t:link="prop:licenseRecord.classify">
-            <p t:type="loop" t:source="trainingVariants" t:value="trainingVariant">
-                ${trainingVariant}
-            </p>
+        <t:ori.Spoiler t:link="${licenseRecord.classify}:">
+            <ul>
+                <li t:type="loop" t:source="trainingVariants" t:value="trainingVariant">
+                    ${trainingVariant};
+                </li>
+            </ul>    
         </t:ori.Spoiler> 
     </t:if>    
 </div>

@@ -17,7 +17,7 @@
         </t:if>    
     </div>
     <t:zone t:id="listZone">
-        <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--вызов скрытия окна-->
+        <!--t:ori.InitCall function="closeCkWindow" window="popupWindow"/--><!--вызов скрытия окна-->
         <t:grid source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(objectClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
@@ -58,37 +58,35 @@
         </t:grid>
     </t:zone>
     <t:block id="editBlock">
-        <t:if test="isedit">
-            <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/><!--вызов показа окна-->
-            <t:ori.beaneditformext t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
-                                   zone="listZone" context="object" submitLabel="message:action.edit" buttons="buttons"/>
-            <p:else>
-                <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" /><!--вызов показа окна-->
-                <t:ori.beaneditformext t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
-                                       zone="listZone" submitLabel="message:action.add" buttons="buttons"/>
-            </p:else>    
-        </t:if>
+        <!--t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.edit" html="false" showhints="${showHints}" width="750"/--><!--вызов показа окна-->
+        <t:ori.beaneditformext t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
+                               zone="listZone" context="object" submitLabel="message:action.edit" buttons="buttons"/>
+    </t:block>
+    <t:block id="addBlock">
+        <!--t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.add" html="false" showhints="${showHints}" width="750" /--><!--вызов показа окна-->
+        <t:ori.beaneditformext t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
+                               zone="listZone" submitLabel="message:action.add" buttons="buttons"/>
     </t:block>
     <t:block id="buttons">
-                <a href="#" onclick="jQuery('#popupWindow').dialog('close');">
-                    <button class="ui-button-close" style="margin-top: 5px">${message:action.cancel}</button>
-                </a>        
+        <a href="#" onclick="jQuery('#popupWindow').dialog('close');">
+            <button class="ui-button-close" style="margin-top: 5px">${message:action.cancel}</button>
+        </a>        
     </t:block>
     <t:block id="viewBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" width="750"/><!--вызов показа окна-->
+        <!--t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.view" html="false" width="750"/--><!--вызов показа окна-->
         <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
         <t:delegate to="buttons"/>
     </t:block>
     <t:block id="deleteBlock">
-        <t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" height="85" width="235"/><!--вызов показа окна-->
+        <!--t:ori.InitCall function="showCkWindow" window="popupWindow" title="message:label.mode.del" html="false" height="85" width="235"/--><!--вызов показа окна-->
         <table>
             <tr>
                 <td>
                     <t:EventLink t:event="delete" context="object" zone="listZone"><button class="ui-button-del">${message:action.del}</button></t:EventLink>
                 </td>
-                                <td>
-                                    <a href="#" onclick="jQuery('#popupWindow').dialog('close');"><button class="ui-button-cancel">${message:action.cancel}</button></a>
-                                </td>
+                <td>
+                    <a href="#" onclick="jQuery('#popupWindow').dialog('close');"><button class="ui-button-cancel">${message:action.cancel}</button></a>
+                </td>
             </tr>
         </table>
     </t:block>
