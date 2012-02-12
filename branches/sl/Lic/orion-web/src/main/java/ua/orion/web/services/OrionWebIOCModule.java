@@ -13,6 +13,7 @@ import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.*;
 import org.apache.tapestry5.services.*;
+import org.apache.tapestry5.services.javascript.JavaScriptStack;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
 import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
@@ -54,6 +55,8 @@ public class OrionWebIOCModule {
         configuration.override(SymbolConstants.START_PAGE_NAME, "ori/index");
         //Это страница может и не понадобится, если шаблоны tml будут браться их базы
         configuration.add(OrionWebSymbols.MENU_NAVIGATOR, "ori/MenuNavigator");
+        configuration.add(OrionWebSymbols.SHOW_HINTS, "true");
+        configuration.add(OrionWebSymbols.UI_INTERFACE, "true");
     }
 
     public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration,
@@ -302,6 +305,7 @@ public class OrionWebIOCModule {
 
     /**
      * Добавляет CSS соответствующие библиотекам сущностей
+     * TODO Перенести в OrionCoreJavaScriptStack
      */
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
             final AssetSource assetSource, final Environment environment,
@@ -339,4 +343,10 @@ public class OrionWebIOCModule {
             MappedConfiguration<String, BindingFactory> configuration) {
         configuration.addInstance("tostring", ToStringBindingFactory.class);
     }
+    
+    public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration)
+    {
+        configuration.addInstance("Orion", OrionCoreJavaScriptStack.class);
+    }
+
 }

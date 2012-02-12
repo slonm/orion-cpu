@@ -77,8 +77,13 @@ public class Crud {
     private String listPage;
     @Persist
     private Object object;
+    @Persist
+    @Property(write = false)
+    private String popupWindowId;
     @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
+    @Inject
+    private JavaScriptSupport javascriptSupport;
     private CurrentBeanContext currentBeanContext = new CurrentBeanContext() {
 
         @Override
@@ -100,6 +105,7 @@ public class Crud {
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
         environment.push(CurrentBeanContext.class, currentBeanContext);
+        popupWindowId = javascriptSupport.allocateClientId("popupWindow");
     }
 
     final void afterRender() {
@@ -149,6 +155,10 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
+        //Это хак.
+        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS.
+        //TODO Продумать как привязаться к обновлению внутренней зоны Grid
+        javascriptSupport.addInitializerCall("updateGrid", "");
         if (resources.isBound("source")) {
             return source;
         } else {
@@ -197,7 +207,7 @@ public class Crud {
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", "popupWindow",
+                        new JSONObject("window", popupWindowId,
                         "title", messages.get("label.mode.edit")));
             }
         });
@@ -213,7 +223,7 @@ public class Crud {
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", "popupWindow",
+                        new JSONObject("window", popupWindowId,
                         "title", messages.get("label.mode.add")));
             }
         });
@@ -228,7 +238,7 @@ public class Crud {
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", "popupWindow",
+                        new JSONObject("window", popupWindowId,
                         "title", messages.get("label.mode.view")));
             }
         });
@@ -244,8 +254,10 @@ public class Crud {
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", "popupWindow",
-                        "title", messages.get("label.mode.del")));
+                        new JSONObject("window", popupWindowId,
+                        "title", messages.get("label.mode.del"),
+                        //TODO Размер окна должен вычислятся автоматически
+                        "width", "235"));
             }
         });
         return deleteBlock;
@@ -276,7 +288,7 @@ public class Crud {
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("closeCkWindow",
-                        new JSONObject("window", "popupWindow"));
+                        new JSONObject("window", popupWindowId));
             }
         });
         return listZone.getBody();
