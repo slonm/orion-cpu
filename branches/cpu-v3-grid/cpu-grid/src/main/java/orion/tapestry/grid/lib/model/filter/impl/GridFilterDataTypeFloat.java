@@ -3,7 +3,8 @@ package orion.tapestry.grid.lib.model.filter.impl;
 import orion.tapestry.grid.lib.model.filter.GridFilterDataType;
 
 /**
- *
+ * Проверка и/или преобразование строки к нужному типу данных.
+ * Строка вводится пользователем в форме фильтрации.
  * @author Gennadiy Dobrovolsky
  */
 public class GridFilterDataTypeFloat implements GridFilterDataType<Float> {

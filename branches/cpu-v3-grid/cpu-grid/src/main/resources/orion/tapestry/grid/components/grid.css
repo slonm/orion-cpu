@@ -102,10 +102,10 @@ a.sortColumnHeaderLink{
 
 thead.fixedHeader{
     position:absolute;
-    margin-top:-65px;
+    margin-top:-80px;
     background-color:#e8e8e8;
 }
 
 #cpu-grid-table-container{
-    margin-top:65px;
+    margin-top:80px;
 }

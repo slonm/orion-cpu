@@ -5,7 +5,8 @@ import orion.tapestry.grid.lib.model.filter.GridFilterDataType;
 
 
 /**
- *
+ * Проверка и/или преобразование строки к нужному типу данных.
+ * Строка вводится пользователем в форме фильтрации.
  * @author Gennadiy Dobrovolsky
  */
 public class GridFilterDataTypeBoolean implements GridFilterDataType<Boolean> {
