@@ -1,7 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<t:ori.layout title="${message:entity.License} ${tostring:object}"
+<t:ori.layout title="${message:entity.License} ${tostring:license}"
               menudata="Start>Licensing>License"
-              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <t:ori.crud t:objectClass="LicenseRecordClass" t:source="source" t:listPage="licensing/licenses"/>
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <t:ori.crud t:id="crud" t:objectClass="LicenseRecordClass" t:source="source" t:listPage="licensing/licenses">
+        <p:editBlock>
+            <t:ori.beaneditformext t:id="editForm" object="crud.object" model="beanModel"
+                                   zone="${crud.listZoneId}" submitLabel="message:action.edit" 
+                                   buttons="crud.hideWindowButtonBlock">
+                <p:license>
+                    <label>${message:property.LicenseRecord.license}</label><span>${tostring:license}</span>
+                </p:license>
+
+                <p:educationalQualificationLevel>
+                    <t:propertyEditor property="'educationalQualificationLevel'" object="crud.object" model="beanModel"/>
+                </p:educationalQualificationLevel>
+            </t:ori.beaneditformext>
+        </p:editBlock>
+    </t:ori.crud>
 </t:ori.layout>
