@@ -415,12 +415,12 @@ function gridTable(gridId){
             col=$(currentTable.column[columnid][i]);
             if(col){
                 col.setStyle({'width':newwidth+'px'});
+                col.select('div.ColumnHeaderText').each(function(element){
+                    $(element).setStyle({width:newwidth+'px'});
+                    console.log($(element));
+                });
             }
         }
-        // currentTable.columnWidth[columnid]=newwidth;
-        // for(var i=0;i<currentTable.onWidthAdjusted.length;i++){
-        //     currentTable.onWidthAdjusted[i]();
-        // }
     }
     var observeColumnWith=function(){
         for(var i in gridViewProperties){

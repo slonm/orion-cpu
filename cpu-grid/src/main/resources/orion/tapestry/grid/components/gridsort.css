@@ -26,6 +26,7 @@ span.lblLet{
 div.ColumnHeaderText{
     white-space: nowrap;
     height: 30px;
+    overflow:hidden;
 }
 a.sortColumnHeaderLink{
     display:block;
