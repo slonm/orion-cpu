@@ -19,7 +19,7 @@ public class LabelBindingFactory implements BindingFactory {
     private ModelLabelSource mls;
     @Inject
     private EntityService entityService;
-    
+
     private String incorrectLabelKey(String key) {
         return String.format("[[missing key: %s]]", key);
     }
@@ -32,11 +32,13 @@ public class LabelBindingFactory implements BindingFactory {
         //Нужно хотя бы две части
         if (parts.length < 2) {
             value = incorrectLabelKey(expression);
-        } else  
-            
-            if ("entity".equalsIgnoreCase(parts[0])) {
+        } else if ("entity".equalsIgnoreCase(parts[0])) {
             value = mls.getEntityLabel(entityService.getMetaEntity(parts[1]).getClass(), component.getMessages());
-        }
+        } else if ("property".equalsIgnoreCase(parts[0])) {
+            value = mls.getPropertyLabel(entityService.getMetaEntity(parts[1]).getClass(), parts[2], component.getMessages());
+        } else if ("property-cell".equalsIgnoreCase(parts[0])) {
+            value = mls.getCellPropertyLabel(entityService.getMetaEntity(parts[1]).getClass(), parts[2], component.getMessages());
+        } else value = incorrectLabelKey(expression);
 
 //
         return new Binding() {
