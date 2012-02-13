@@ -20,32 +20,34 @@ public class LabelBindingFactory implements BindingFactory {
     @Inject
     private EntityService entityService;
 
-    private String incorrectLabelKey(String key) {
-        return String.format("[[missing key: %s]]", key);
-    }
-
     public Binding newBinding(final String description, final ComponentResources container,
             final ComponentResources component,
             final String expression, final Location location) {
-        final String value;
-        String[] parts = expression.split(".");
-        //Нужно хотя бы две части
-        if (parts.length < 2) {
-            value = incorrectLabelKey(expression);
-        } else if ("entity".equalsIgnoreCase(parts[0])) {
-            value = mls.getEntityLabel(entityService.getMetaEntity(parts[1]).getClass(), component.getMessages());
-        } else if ("property".equalsIgnoreCase(parts[0])) {
-            value = mls.getPropertyLabel(entityService.getMetaEntity(parts[1]).getClass(), parts[2], component.getMessages());
-        } else if ("property-cell".equalsIgnoreCase(parts[0])) {
-            value = mls.getCellPropertyLabel(entityService.getMetaEntity(parts[1]).getClass(), parts[2], component.getMessages());
-        } else value = incorrectLabelKey(expression);
+        String value;
+        try {
+            String[] parts = expression.split("\\.");
+            //Нужно хотя бы две части
+            if (parts.length < 2) {
+                throw new RuntimeException();
+            } else if ("entity".equalsIgnoreCase(parts[0])) {
+                value = mls.getEntityLabel(entityService.getMetaEntity(parts[1]).getEntityClass(), component.getMessages());
+            } else if ("property".equalsIgnoreCase(parts[0])) {
+                value = mls.getPropertyLabel(entityService.getMetaEntity(parts[1]).getEntityClass(), parts[2], component.getMessages());
+            } else if ("property-cell".equalsIgnoreCase(parts[0])) {
+                value = mls.getCellPropertyLabel(entityService.getMetaEntity(parts[1]).getEntityClass(), parts[2], component.getMessages());
+            } else {
+                throw new RuntimeException();
+            }
+        } catch (RuntimeException e) {
+            value = String.format("[[missing label: %s]]", expression);;
+        }
+        final String finalValue = value;
 
-//
         return new Binding() {
 
             @Override
             public Object get() {
-                return value;
+                return finalValue;
             }
 
             @Override

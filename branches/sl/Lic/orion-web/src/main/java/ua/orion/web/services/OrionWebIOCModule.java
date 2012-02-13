@@ -342,6 +342,7 @@ public class OrionWebIOCModule {
     public static void contributeBindingSource(
             MappedConfiguration<String, BindingFactory> configuration) {
         configuration.addInstance("tostring", ToStringBindingFactory.class);
+        configuration.addInstance("label", LabelBindingFactory.class);
     }
     
     public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration)

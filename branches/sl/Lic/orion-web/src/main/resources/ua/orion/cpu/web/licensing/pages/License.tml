@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<t:ori.layout title="${message:entity.License} ${tostring:license}"
+<t:ori.layout title="${label:entity.License} ${tostring:license}"
               menudata="Start>Licensing>License"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
               xmlns:p="tapestry:parameter">
@@ -10,12 +10,47 @@
                                    zone="${crud.listZoneId}" submitLabel="message:action.edit" 
                                    buttons="crud.hideWindowButtonBlock">
                 <p:license>
-                    <label>${message:property.LicenseRecord.license}</label><span>${tostring:license}</span>
+                    <label>${label:property.LicenseRecord.license}</label>
+                    <span>${tostring:license}</span>
                 </p:license>
-
                 <p:educationalQualificationLevel>
-                    <t:propertyEditor property="'educationalQualificationLevel'" object="crud.object" model="beanModel"/>
-                </p:educationalQualificationLevel>
+                    <t:label for="levelSelect"/>
+                    <t:select t:id="levelSelect" 
+                              label="${label:property.LicenseRecord.educationalQualificationLevel}"
+                              value="LicenseRecord.educationalQualificationLevel"
+                              model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'educationalQualificationLevel')" 
+                              clientId="'educationalQualificationLevel'"
+                              encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('EducationalQualificationLevel').entityClass)" 
+                              zone="specialityZone"/>
+                </p:educationalQualificationLevel>validate="prop:editContext.getValidator(levelSelect)"
+
+                <p:trainingDirection>
+                    <t:zone t:id="trainingDirectionZone" id="trainingDirectionZone">
+                        <t:label for="trainingDirectionSelect"/>
+                        <t:select t:id="trainingDirectionSelect" 
+                                  label="${label:property.LicenseRecord.trainingDirection}"
+                                  value="LicenseRecord.trainingDirection"
+                                  model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'trainingDirection')" 
+                                  clientId="'trainingDirection'"
+                                  encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('trainingDirection').entityClass)" 
+                                  disabled="isShowSpeciality"
+                                  zone="specialityZone"/>
+                    </t:zone>
+                </p:trainingDirection>validate="prop:editContext.getValidator(specialitySelect)"
+
+                <p:speciality>
+                    <t:zone t:id="specialityZone" id="specialityZone">
+                        <t:label for="specialitySelect"/>
+                        <t:select t:id="specialitySelect" 
+                                  label="${label:property.LicenseRecord.speciality}"
+                                  value="LicenseRecord.speciality"
+                                  model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'speciality')" 
+                                  clientId="'speciality'"
+                                  encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('Speciality').entityClass)" 
+                                  disabled="!isShowSpeciality"
+                                  zone="trainingDirectionZone"/>
+                    </t:zone>
+                </p:speciality>validate="prop:editContext.getValidator(specialitySelect)"
             </t:ori.beaneditformext>
         </p:editBlock>
     </t:ori.crud>
