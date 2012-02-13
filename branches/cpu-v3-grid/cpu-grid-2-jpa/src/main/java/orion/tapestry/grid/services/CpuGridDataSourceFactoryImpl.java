@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package orion.tapestry.grid.services;
 
 import javax.persistence.EntityManager;
@@ -12,7 +8,7 @@ import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorJPACriteria;
 
 /**
- *
+ * Сервис-создатель моделей для CpuGrid
  * @author dobro
  */
 public class CpuGridDataSourceFactoryImpl implements CpuGridDataSourceFactory {
