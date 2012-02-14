@@ -170,7 +170,7 @@ public class MenuJUnitTest {
     @Test
     public void testCpuMenuImpl_1() {
 
-        OrionMenuServiceImpl menu = new OrionMenuServiceImpl(this.config, null);
+        OrionMenuServiceImpl menu = new OrionMenuServiceImpl(this.config, null, null);
 
         //SortedMap<MenuItemPosition, MenuItemSource> fullMenu;
         // test if items exists
@@ -181,7 +181,7 @@ public class MenuJUnitTest {
 
     @Test
     public void testCpuMenuImpl_2() {
-        OrionMenuServiceImpl mnu = new OrionMenuServiceImpl(this.config, null);
+        OrionMenuServiceImpl mnu = new OrionMenuServiceImpl(this.config, null, null);
         MenuData md;
         Object[] items;
         ArrayList<MenuData> m1;
@@ -247,7 +247,7 @@ public class MenuJUnitTest {
 
     @Test
     public void testCpuMenuImpl_3() {
-        OrionMenuServiceImpl mnu = new OrionMenuServiceImpl(this.config, null);
+        OrionMenuServiceImpl mnu = new OrionMenuServiceImpl(this.config, null, null);
         MenuData md;
         Object[] items;
         ArrayList<MenuData> m1;

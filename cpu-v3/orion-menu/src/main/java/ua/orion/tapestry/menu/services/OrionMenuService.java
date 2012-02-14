@@ -36,4 +36,6 @@ public interface OrionMenuService {
      */
     public MenuData getOneMenu(String path, Object[] context,Map<String,String>parameters,String anchor);
     public String localizeItem(String msg, IMenuLink lnk, Messages messages);
+    public String createSmallIcon(String msg,IMenuLink lnk, Messages messages);
+    public String createBigIcon(String msg,IMenuLink lnk, Messages messages);
 }

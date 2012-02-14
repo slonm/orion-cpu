@@ -6,13 +6,14 @@ package ua.orion.web.pages;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
 import ua.orion.tapestry.menu.lib.MenuItem;
 import ua.orion.tapestry.menu.services.OrionMenuService;
-
 
 /**
  *
@@ -27,7 +28,6 @@ public class MenuNavigator {
     private OrionMenuService cpuMenu;
     @Property
     private MenuItem _Item;
-
     /**
      * Localized messages
      */
@@ -35,7 +35,7 @@ public class MenuNavigator {
     private Messages messages;
 
     public String getTitle() {
-        return messages.get("menu>"+lastMenu.getTitle());
+        return messages.get("menu>" + lastMenu.getTitle());
     }
 
     public PriorityQueue<MenuItem> getItems() {
@@ -54,6 +54,20 @@ public class MenuNavigator {
         return cpuMenu.localizeItem(msg, _Item.getItemLink(), messages);
     }
 
+    /**
+     * Получение большой иконки в качестве background
+     */
+    public String prepareBigIconInStyleAttribute(String msg) {
+        return "background: url('" + getBigIcon(msg) + "')";
+    }
+
+    /**
+     * Получение большой иконки
+     */
+    public String getBigIcon(String msg) {
+        return cpuMenu.createBigIcon(msg, _Item.getItemLink(), messages);
+    }
+
     void onActivate(String position) {
         this.path = position;
         //Logger logger = LoggerFactory.getLogger(MenuNavigator.class);
@@ -67,27 +81,7 @@ public class MenuNavigator {
 //    void onActivate() {
 //        onActivate("Start");
 //    }
-
     String onPassivate() {
         return path;
-    }
-    
-        /**
-     * Получение иконки
-     * @return css-свойство устанавливающее иконку как background-image
-     */
-    public String getUidIcon() {
-        String iconURL = messages.get(_Item.getUid() + "-icon");
-        if (iconURL.indexOf("missing key") < 1) {
-            return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
-        } else {
-            String[] menuParts = _Item.getUid().split(">");
-            String lastMenuPart = menuParts[menuParts.length - 1];
-            iconURL = messages.get(lastMenuPart + "-icon");
-            if (iconURL.indexOf("missing key") < 1) {
-                return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
-            }
-        }
-        return "background-image: url('/webcontent/e-icons/folder.png')";
     }
 }
