@@ -2,17 +2,14 @@
 #sidebar Content
 
   * [Overview	Обзор и структура проекта]
-
   * [OrionFramework Каркас для организации бизнес-логики]
     * [T5ResourcesDispositionAndContent	Подход к размещению ресурсов]
     * [ApplicationDefaultsInProperties	Конфигурационные символы в файле .propetries]
     * [PersistentSingleton	Хранимые в одном экземпляре объекты]
-
   * [OrionCpuSubsystems Модель данных и бизнес-логика]
     * [ProjectSubsystemsFunctions	Подсистема лицензирования]
     * [SubsystemSecurity	Архитектура подсистемы безопасности]
     * [1C_Data	Формат данных для импорта из 1С]
-
   * [OrionWeb Веб-интерфейс]
     * [cpuGrid	Как использовать компоненту Grid]
     * [Entities_icons	Entities icons]
@@ -21,8 +18,6 @@
     * [T5ComponentLibraryCSS	Добавление стилей библиотек]
     * [TapestryDataSource	Источник моделей и данных для компонентов]
     * [T5ComponentWindow	Применение компонента Window библиотеки ChenilleKit]
-
   * [WorkEnvironment Организация рабочего места]
     * [IDE_Settings Настройка среды разработки]
-
   * [TapestryResources	Ссылки на ресурсы по Apache Tapestry 5]
