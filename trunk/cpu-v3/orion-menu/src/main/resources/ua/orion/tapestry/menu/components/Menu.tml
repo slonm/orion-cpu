@@ -8,7 +8,12 @@
 
     <span class="menuitems">
         <div t:type="loop" t:source="items" t:value="Item" class="menuitem ui-state-default">
-            <t:menu.menulink t:menuLink="Item.itemLink" style="font-size: 8pt"><div class="e-icon-16x16" style="${UidIcon}"></div><div class="menu-item-link">${Localize(Item.Uid, Item.ItemLink)}</div></t:menu.menulink>
+            <t:menu.menulink t:menuLink="Item.itemLink" style="font-size: 8pt">
+                <div 
+                    class="e-icon-16x16"
+                    style="${PrepareSmallIconInStyleAttribute(Item.Uid, Item.ItemLink)}">
+                </div>
+                <div class="menu-item-link">${Localize(Item.Uid, Item.ItemLink)}</div></t:menu.menulink>
         </div>
     </span>
 </span>

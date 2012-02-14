@@ -9,10 +9,16 @@ jQuery(document).ready(function(){
     if (jQuery("ui#interface").text()=="true"){
         initializeUIComponents();   
     }
+    //Обработка menunavigator-а
     jQuery(".ui-menunavigator-link").hover(function(){
-        jQuery(this).parent().attr("class","ui-state-focus");
+        jQuery(this).parent().removeClass("ui-state-default").addClass("ui-state-focus");
+        jQuery("#ui-menu-navigator-detail").html(jQuery(this).find(".ui-menunavigator-link-text").text());
     },function(){
-        jQuery(this).parent().attr("class","ui-state-default");
+        jQuery(this).parent().removeClass("ui-state-focus");
+    });
+    jQuery(".menu-navigator-item-block").click(function(){
+        jQuery(".ui-menunavigator-link").parent().removeClass("ui-state-active");
+        jQuery(this).find(".ui-menunavigator-link").removeClass("ui-state-focus").addClass("ui-state-active");
     })
     //Инициализация подсказок
     initializeGridToolTip();
@@ -21,7 +27,7 @@ jQuery(document).ready(function(){
         modal:true, //модальность
         autoOpen: false, //автоматическое открытие
         open: function() { 
-//            jQuery(".ui-dialog-titlebar-close").hide(); //убирается кнопка закрытия
+        //            jQuery(".ui-dialog-titlebar-close").hide(); //убирается кнопка закрытия
         },
         resizable: false //возможность маштабирования отключена
     });

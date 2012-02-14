@@ -12,10 +12,10 @@ import java.util.SortedMap;
 
 import java.util.TreeMap;
 import java.util.TreeSet;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.services.AssetSource;
 import ua.orion.tapestry.menu.lib.DefaultMenuLink;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
@@ -25,6 +25,7 @@ import ua.orion.tapestry.menu.lib.MenuItemSource;
 
 /**
  * Класс представляет структуру данных для отображения навигационного меню
+ *
  * @author Gennadiy Dobrovolsky
  */
 public class OrionMenuServiceImpl implements OrionMenuService {
@@ -32,8 +33,11 @@ public class OrionMenuServiceImpl implements OrionMenuService {
     //private Logger logger;
     public SortedMap<MenuItemPosition, MenuItemSource> fullMenu;
     private final TypeCoercer coercer;
-    public OrionMenuServiceImpl(Map<String, IMenuLink> config, TypeCoercer coercer) {
-        this.coercer=coercer;
+    private final AssetSource as;
+
+    public OrionMenuServiceImpl(Map<String, IMenuLink> config, TypeCoercer coercer, AssetSource as) {
+        this.coercer = coercer;
+        this.as = as;
         //logger=LoggerFactory.getLogger(CpuMenuModule.class);
 
         ArrayList<MenuItemSource> tmp = new ArrayList<MenuItemSource>();
@@ -133,10 +137,11 @@ public class OrionMenuServiceImpl implements OrionMenuService {
 
     /**
      * Create one menu (i.e. orion.tapestry.menu.lib.MenuData object )
+     *
      * @param path position ot the menu
      * @param context additional paremeters
      * @param parameters
-     * @param anchor 
+     * @param anchor
      * @return one menu
      * @see orion.tapestry.menu.lib.MenuData
      */
@@ -170,7 +175,9 @@ public class OrionMenuServiceImpl implements OrionMenuService {
 
     /**
      * Get menu bar for current position
-     * @param path position ot the last menu item ( orion.tapestry.menu.lib.MenuItemPosition )
+     *
+     * @param path position ot the last menu item (
+     * orion.tapestry.menu.lib.MenuItemPosition )
      * @param context additional link parameters
      * @return collection of the menus
      * @see orion.tapestry.menu.lib.MenuItemPosition
@@ -200,8 +207,51 @@ public class OrionMenuServiceImpl implements OrionMenuService {
         return getMenu(new MenuItemPosition(path), context, parameters, anchor);
     }
 
+    /**
+     * Создание иконок для сущностей
+     *
+     * @param msg
+     * @param lnk
+     * @param messages
+     * @param size - размер иконки (big или small)
+     * @return URL иконки
+     */
+    public String createIcon(String msg, IMenuLink lnk, Messages messages, String size) {
+        String[] menuParts = msg.split(">");
+        String appVersion = "0.0.3-SNAPSHOT";
+        String clazzName = menuParts[menuParts.length - 1];
+        try {
+            as.getClasspathAsset("ua/orion/web/images/icons/" + size + "/" + clazzName + ".png");
+        } catch (Exception e) {
+            return "/assets/" + appVersion + "/ori/images/icons/" + size + "/Folder.png";
+        }
+        return "/assets/" + appVersion + "/ori/images/icons/" + size + "/" + clazzName + ".png";
+    }
+
+    /**
+     * Создание маленькой иконки
+     * @param msg
+     * @param lnk
+     * @param messages
+     * @return 
+     */
+    public String createSmallIcon(String msg, IMenuLink lnk, Messages messages) {
+        return createIcon(msg, lnk, messages, "small");
+    }
+
+    /**
+     * Создание большой иконки
+     * @param msg
+     * @param lnk
+     * @param messages
+     * @return 
+     */
+    public String createBigIcon(String msg, IMenuLink lnk, Messages messages) {
+        return createIcon(msg, lnk, messages, "big");
+    }
+
     public String localizeItem(String msg, IMenuLink lnk, Messages messages) {
-        
+
         //Пример: menu>Start где Start - подпись пункта
         String key = "menu>" + msg;
         if (messages.contains(key)) {

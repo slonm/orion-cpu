@@ -4,7 +4,9 @@
  */
 package ua.orion.tapestry.menu.components;
 
+import java.io.File;
 import java.util.PriorityQueue;
+import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.Import;
 
 import org.apache.tapestry5.annotations.Parameter;
@@ -12,6 +14,8 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.tapestry.menu.lib.MenuData;
 import ua.orion.tapestry.menu.lib.MenuItem;
@@ -54,6 +58,20 @@ public class Menu {
     }
 
     /**
+     * Получение маленькой иконки в качестве background
+     */
+    public String prepareSmallIconInStyleAttribute(String msg, IMenuLink lnk) {
+        return "background: url('" + getSmallIcon(msg, lnk) + "')";
+    }
+
+    /**
+     * Получение маленькой иконки в качестве background
+     */
+    public String getSmallIcon(String msg, IMenuLink lnk) {
+        return menuService.createSmallIcon(msg, lnk, messages);
+    }
+
+    /**
      * @return Menu items
      */
     public PriorityQueue<MenuItem> getItems() {
@@ -84,24 +102,9 @@ public class Menu {
     public boolean getSubitems() {
         return (menudata.getItems().size() > 0);
     }
-
     /**
      * Получение иконки
      *
      * @return css-свойство устанавливающее иконку как background-image
      */
-    public String getUidIcon() {
-        String iconURL = messages.get(_Item.getUid() + "-icon");
-        if (iconURL.indexOf("missing key") < 1) {
-            return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
-        } else {
-            String[] menuParts = _Item.getUid().split(">");
-            String lastMenuPart = menuParts[menuParts.length - 1];
-            iconURL = messages.get(lastMenuPart + "-icon");
-            if (iconURL.indexOf("missing key") < 1) {
-                return "background-image: url('/webcontent/e-icons/" + iconURL + "')";
-            }
-        }
-        return "background-image: url('/webcontent/e-icons/folder.png')";
-    }
 }
