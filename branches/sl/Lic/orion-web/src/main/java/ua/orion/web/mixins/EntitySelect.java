@@ -11,42 +11,91 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package ua.orion.web.mixins;
 
+import java.lang.annotation.Annotation;
 import javax.inject.Inject;
+import org.apache.tapestry5.Binding;
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.Field;
-import org.apache.tapestry5.annotations.Environmental;
-import org.apache.tapestry5.annotations.HeartbeatDeferred;
-import org.apache.tapestry5.annotations.Import;
+import org.apache.tapestry5.FieldValidator;
+import org.apache.tapestry5.SelectModel;
+import org.apache.tapestry5.ValueEncoder;
+import org.apache.tapestry5.annotations.BindParameter;
 import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.components.Select;
-import org.apache.tapestry5.json.JSONObject;
-import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.ioc.services.PropertyAdapter;
+import org.apache.tapestry5.plastic.FieldConduit;
+import org.apache.tapestry5.plastic.InstanceContext;
+import org.apache.tapestry5.services.FieldValidatorDefaultSource;
+import org.apache.tapestry5.services.ValueEncoderSource;
+import ua.orion.core.services.ModelLabelSource;
+import ua.orion.web.services.TapestryDataSource;
 
 /**
  * Подмешиватель применяется к компоненту {@link org.apache.tapestry5.corelib.components.Select}
  * для привязки его к конкретному свойству сущности
  */
-public class EntitySelect
-{
-    @InjectContainer
-    private Select container;
+public class EntitySelect {
+    //---Parameters---
 
     @Parameter(required = true, allowNull = false)
     private Object entity;
-    
     @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL, allowNull = false)
     private String property;
-
+    //---Container Resources---
+    @BindParameter
+    private SelectModel model;
+    @BindParameter
+    private FieldValidator<Object> validate;
+    @BindParameter
+    private Object value;
+    @BindParameter
+    private String label;
+    @BindParameter
+    private String clientId;
+    @BindParameter
+    private ValueEncoder encoder;
+    @InjectContainer
+    private Select container;
+    //---Services---
     @Inject
     private ComponentResources resources;
-    
-    void setupRender()
-    {
+    @Inject
+    private TapestryDataSource dataSource;
+    @Inject
+    private ValueEncoderSource valueEncoderSource;
+    @Inject
+    private ModelLabelSource labelSource;
+    @Inject
+    private PropertyAccess propertyAccess;
+    @Inject
+    private FieldValidatorDefaultSource fieldValidatorDefaultSource;
+
+    void beginRender() {
+        ComponentResources cntRes = resources.getContainerResources();
+        if (!cntRes.isBound("label")) {
+            label = labelSource.getPropertyLabel(entity.getClass(), property, cntRes.getMessages());
+        }
+        ClassPropertyAdapter cpa = propertyAccess.getAdapter(entity);
+        final PropertyAdapter pa = cpa.getPropertyAdapter(property);
+        //????value = pa.get(entity);
+        if (!cntRes.isBound("model")) {
+            model = dataSource.getSelectModel(entity, property);
+        }
+        if (!cntRes.isBound("clientId")) {
+            clientId = property;
+        }
+        if (!cntRes.isBound("encoder")) {
+            encoder = valueEncoderSource.getValueEncoder(pa.getType());
+        }
+        if (!cntRes.isBound("validate")) {
+            validate = fieldValidatorDefaultSource.createDefaultValidator(container,
+                    property, cntRes.getMessages(), cntRes.getLocale(),
+                    pa.getType(), pa);
+        }
     }
 }
