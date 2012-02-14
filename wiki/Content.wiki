@@ -1,4 +1,6 @@
-#summary Содержание.
+#summary Содержание
+#sidebar SideBar
+
  * [Overview	Обзор и структура проекта]
 
  * [OrionFramework Каркас для организации бизнес-логики]
