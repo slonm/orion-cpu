@@ -1,28 +1,28 @@
 #summary Содержание
 #sidebar Content
 
- * [Overview	Обзор и структура проекта]
+  * [Overview	Обзор и структура проекта]
 
- * [OrionFramework Каркас для организации бизнес-логики]
-   * [T5ResourcesDispositionAndContent	Подход к размещению ресурсов]
-   * [ApplicationDefaultsInProperties	Конфигурационные символы в файле .propetries]
-   * [PersistentSingleton	Хранимые в одном экземпляре объекты]
+  * [OrionFramework Каркас для организации бизнес-логики]
+    * [T5ResourcesDispositionAndContent	Подход к размещению ресурсов]
+    * [ApplicationDefaultsInProperties	Конфигурационные символы в файле .propetries]
+    * [PersistentSingleton	Хранимые в одном экземпляре объекты]
 
- * [OrionCpuSubsystems Модель данных и бизнес-логика]
-   * [ProjectSubsystemsFunctions	Подсистема лицензирования]
-   * [SubsystemSecurity	Архитектура подсистемы безопасности]
-   * [1C_Data	Формат данных для импорта из 1С]
+  * [OrionCpuSubsystems Модель данных и бизнес-логика]
+    * [ProjectSubsystemsFunctions	Подсистема лицензирования]
+    * [SubsystemSecurity	Архитектура подсистемы безопасности]
+    * [1C_Data	Формат данных для импорта из 1С]
 
- * [OrionWeb Веб-интерфейс]
-   * [cpuGrid	Как использовать компоненту Grid]
-   * [Entities_icons	Entities icons]
-   * [T5PageNavigationAndComponentEvents	Apache Tapestry 5: Навигация по страницам и события компонентов]
-   * [ChenilleKit_OnEvent_mixin	Описание использования миксина ChenilleKit OnEvent]
-   * [T5ComponentLibraryCSS	Добавление стилей библиотек]
-   * [TapestryDataSource	Источник моделей и данных для компонентов]
-   * [T5ComponentWindow	Применение компонента Window библиотеки ChenilleKit]
+  * [OrionWeb Веб-интерфейс]
+    * [cpuGrid	Как использовать компоненту Grid]
+    * [Entities_icons	Entities icons]
+    * [T5PageNavigationAndComponentEvents	Apache Tapestry 5: Навигация по страницам и события компонентов]
+    * [ChenilleKit_OnEvent_mixin	Описание использования миксина ChenilleKit OnEvent]
+    * [T5ComponentLibraryCSS	Добавление стилей библиотек]
+    * [TapestryDataSource	Источник моделей и данных для компонентов]
+    * [T5ComponentWindow	Применение компонента Window библиотеки ChenilleKit]
 
- * [WorkEnvironment Организация рабочего места]
-   * [IDE_Settings Настройка среды разработки]
+  * [WorkEnvironment Организация рабочего места]
+    * [IDE_Settings Настройка среды разработки]
 
- * [TapestryResources	Ссылки на ресурсы по Apache Tapestry 5]
+  * [TapestryResources	Ссылки на ресурсы по Apache Tapestry 5]
