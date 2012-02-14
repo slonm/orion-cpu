@@ -25,7 +25,19 @@
  * Каскадные стили библиотек компонентов подключаются автоматически [T5ComponentLibraryCSS CSS для библиотек компонентов]
 
 == Properties ==
- * [ApplicationMessages Соглашение именования параметров]
- * [ApplicationMessages Ресурсы библиотек]
+===Ресурсы библиотек модели===
+Для библиотек модели ресурсы ищутся в корне classpath с именем совпадающим с именем библиотеки с _учетом регистра_(имя библиотеки задается в классе <имя-подсистемы>WebIOCModule.java в методе contributeComponentClassResolver). Для библиотек компонентов имя ресурса складывается из имени библиотеки и префикса "Web", т.е. <имя-подсистемы>Web.properties. Ресурсы ищутся также в корне classpath. <имя-подсистемы> должно совпадать  В ресурс библиотеки компонентов выносятся, например, подписи пунктов главного меню. 
+
+===Соглашение на именование ключей ресурсов===
+  * *entity.EntityName* - подпись сущности с именем EntityName
+  * *property.EntityName.PropertyName* - подпись свойства PropertyName сущности EntityName
+  * *property-cell.EntityName.PropertyName* - подпись свойства PropertyName сущности EntityName в заголовке таблицы
+  * *Menu>Start>Admin* - подпись пункта меню Start>Admin
+  * *label.text* - подпись на странице с именем text
+  * *message.text* - длинный самостоятельный текст на странице с именем text
+  * *action.actionname* - подпись для действия с именем actionname. Т.е. подписи для Submit, ActionLink и EventLink - другими словами для Component Event Request
+  * *link.name.foo* - переход на страницу. name - имя страницы, foo префикс, конкретику, т.к. страница может иметь параметры, контекст или предварительно установленные переменные. В общем подпись для контекстного PageLink
+  * *page.name* - титул страницы с именем name
+
 == Templates ==
 == !JavaScript ==
