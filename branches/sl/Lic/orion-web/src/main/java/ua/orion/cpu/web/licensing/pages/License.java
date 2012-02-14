@@ -1,5 +1,7 @@
 package ua.orion.cpu.web.licensing.pages;
 
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.criteria.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.EventContext;
@@ -8,6 +10,7 @@ import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.beaneditor.BeanModel;
+import org.apache.tapestry5.beaneditor.RelativePosition;
 import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
@@ -18,6 +21,7 @@ import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
+import ua.orion.cpu.core.licensing.entities.KnowledgeArea;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 import ua.orion.cpu.core.licensing.entities.Speciality;
 import ua.orion.cpu.core.licensing.entities.TrainingDirection;
@@ -97,6 +101,11 @@ public class License {
                 return "";
             }
             SecurityUtils.getSubject().checkPermission("License:read:" + license.getId());
+        } else {
+            try {
+                knowledgeArea = getLicenseRecord().getTrainingDirection().getKnowledgeArea();
+            } catch (NullPointerException ex) {
+            }
         }
         return null;
     }
@@ -106,11 +115,21 @@ public class License {
     }
 
     public BeanModel getBeanModel() {
-        return dataSource.getBeanModelForEdit(LicenseRecord.class);
+        BeanModel bm = dataSource.getBeanModelForEdit(LicenseRecord.class);
+        String ka = "knowledgeArea";
+        bm.addEmpty(ka);
+        List<String> props = new LinkedList<>(bm.getPropertyNames());
+        props.remove(ka);
+        props.add(2, ka);
+        bm.reorder(props.toArray(new String[0]));
+        return bm;
     }
     @Component
     @Property(write = false)
     private Select levelSelect;
+    @Component
+    @Property(write = false)
+    private Select knowledgeAreaSelect;
     @Component
     @Property(write = false)
     private Select specialitySelect;
@@ -121,6 +140,8 @@ public class License {
     private Zone specialityZone;
     @Component
     private Zone trainingDirectionZone;
+    @Property(read = false)
+    private KnowledgeArea knowledgeArea;
 
     public void onValueChangedFromLevelSelect(EducationalQualificationLevel level) {
         getLicenseRecord().setEducationalQualificationLevel(level);
@@ -141,11 +162,33 @@ public class License {
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
     }
 
-    public boolean getIsShowSpeciality() {
-        return !EducationalQualificationLevel.BACHELOR_UKEY.equals(getLicenseRecord().getEducationalQualificationLevel().getUKey());
+    public void onValueChangedKnowledgeAreaSelect(KnowledgeArea ka) {
+        this.knowledgeArea = ka;
+        ajaxResponseRenderer.addRender("specialityZone", specialityZone);
+        ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
+    }
+
+    public boolean getIsEditSpeciality() {
+        return knowledgeArea != null
+                && !EducationalQualificationLevel.BACHELOR_UKEY.equals(
+                getLicenseRecord().getEducationalQualificationLevel().getUKey());
+    }
+
+    public boolean getIsEditTrainingDirection() {
+        return knowledgeArea != null
+                && EducationalQualificationLevel.BACHELOR_UKEY.equals(
+                getLicenseRecord().getEducationalQualificationLevel().getUKey());
     }
 
     public ValueEncoder getLevelEncoder() {
         return valueEncoderSource.getValueEncoder(entityService.getMetaEntity("EducationalQualificationLevel").getEntityClass());
+    }
+
+    public KnowledgeArea getKnowledgeArea() {
+        return getLicenseRecord().getTrainingDirection().getKnowledgeArea();
+    }
+
+    public SelectModel getKnowledgeAreas() {
+        return tapestryComponentDataSource.getSelectModel(TrainingDirection.class, "knowledgeArea");
     }
 }
