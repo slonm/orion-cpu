@@ -1,5 +1,5 @@
 #summary Содержание
-#sidebar SideBar
+#sidebar Content
 
  * [Overview	Обзор и структура проекта]
 
