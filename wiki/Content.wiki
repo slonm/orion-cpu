@@ -1,0 +1,25 @@
+#summary Содержание.
+ * [Overview	Обзор и структура проекта]
+
+ * Модель данных и бизнес-логика
+   * [ProjectSubsystemsFunctions	Описание подсистем проекта]
+   * [SubsystemSecurity	Архитектура подсистемы безопасности]
+   * [1C_Data	Формат данных для импорта из 1С]
+
+ * Ядро организации бизнес-логики
+   * [T5ResourcesDispositionAndContent	Подход к размещению ресурсов]
+   * [PersistentSingleton	Хранимые в одном экземпляре объекты]
+
+ * Веб-интерфейс
+   * [cpuGrid	Как использовать компоненту Grid]
+   * [Entities_icons	Entities icons]
+   * [T5PageNavigationAndComponentEvents	Apache Tapestry 5: Навигация по страницам и события компонентов]
+   * [ChenilleKit_OnEvent_mixin	Описание использования миксина ChenilleKit OnEvent]
+   * [T5ComponentLibraryCSS	Добавление стилей библиотек]
+   * [TapestryDataSource	Источник моделей и данных для компонентов]
+   * [ApplicationDefaultsInProperties	Конфигурационные символы в файле .propetries]
+   * [T5ComponentWindow	Применение компонента Window библиотеки ChenilleKit]
+
+ * Дополнительная информация
+   * [IDE_Settings Настройка среды разработки]
+   * [TapestryResources	Ссылки на ресурсы по Apache Tapestry 5]
