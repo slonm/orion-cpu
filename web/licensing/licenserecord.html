@@ -150,7 +150,8 @@
             <div class="ui-state-highlight" id="license-help"></div>
             <table>
                 <tr id="l-sd">
-                    <td>Кваліфікаційний рівень:</td><td>
+                    <td>Кваліфікаційний рівень:</td>
+                    <td>
                         <select id="ku">
                             <option value="1">Молодший спеціаліст</option>
                             <option value="2">Бакалавр</option>
@@ -177,7 +178,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Область дії ліцензії:</td><td><input type="text" id="l-odl" size="30"/></td>
+                    <td>Область дії ліцензії:</td>
+                    <td>
+                        <select id="l-odl">
+                            <option value="11">Підготовка молодших спеціалістів</option>
+                            <option value="12">Підготовка бакалаврів</option>
+                            <option value="13">Підготовка спеціалістів, магістрів</option>
+                            <option value="14">Перепідготовка спеціалістів</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Ліцензійний обсяг:</td><td><br/>Денна:<input type="text" id="l-lo"/><br/>Заочна:<input type="text" id="l-lo"/></td>
@@ -186,7 +195,14 @@
                     <td>Термін дії ліцензії:</td><td><input type="text" id="l-tdl"/><img src="../img/datefield.gif"/></td>
                 </tr>
                 <tr>
-                    <td>Кафедра:</td><td><input type="text" id="l-kf" size="42"/></td>
+                    <td>Кафедра:</td>
+                    <td>
+                        <select id="l-kf">
+                            <option value="111">Кафедра програмування та інформаційних технологій</option>
+                            <option value="112">Кафедра реклами і зв’язків з громадськістю</option>
+                            <option value="113">Кафедра менеджменту організацій</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td></td><td><input type="submit" value="Відмінити" id="license-cancel"/> <input type="submit" value="Зберегти" id="license-save"/></td>
