@@ -18,7 +18,7 @@ _*Maven устанавливать не обязательно. !NetBeans сод
  * Создать каталог C:\maven-repo.
  * В файле C:\maven\conf\settings.xml в теге settings добавить тег `<localRepository>C:\maven-repo</localRepository>`
 
-===Дополнительная информация===
+====Дополнительная информация====
  * [http://m.habrahabr.ru/post/77382/ Apache Maven — основы]
 
 
@@ -65,15 +65,17 @@ org-netbeans-modules-web-tapestry-templates.nbm (можно взять [http://o
 }}}
 Стратегия использования различается от описанной только в ветке branches. Пользователи создают совместно разрабатываемые бранчи в каталоге branches, а индивидуально разрабатываемые в каталогах, которые соответствуют их имени (user1, user2). 
 
-Плагин !NetBeans для работы с SVN плохо ведет себя при манипуляции с ветками (слияние, создание), поэтому рекомендуется использовать его только для элементарных операций (checkout, commit, update). Кроме этого внутренний клиент не поддерживает формат рабочей копии 1.7. Для работы с ветками рекомендуется использовать [http://tortoisesvn.net/ TortoiseSVN] для Windows или [http://www.rabbitvcs.org/ RabbitVCS] для Linux. Так же в для удобства работы в них рекомендуется установить diff утилиту [http://kdiff3.sourceforge.net/ KDiff3], которая позволяет сравнивать как файлы, так и каталоги.
+Плагин !NetBeans для работы с SVN плохо ведет себя при манипуляции с ветками (слияние, создание). Кроме этого внутренний клиент не поддерживает формат рабочей копии 1.7. Его лучше использовать только для элементарных операций (checkout, commit, update). Для работы с ветками рекомендуется использовать [http://tortoisesvn.net/ TortoiseSVN] для Windows или [http://www.rabbitvcs.org/ RabbitVCS] для Linux. Так же в для удобства работы в них рекомендуется установить diff утилиту [http://kdiff3.sourceforge.net/ KDiff3], которая позволяет сравнивать как файлы, так и каталоги.
 
-Нужно выполнить настройку клиента Subversion в !NetBeans: Tools > Options > Versioning > Subversion. В поле "Path to the SVN executable File:" Указать "C:\Program Files\TortoiseSVN\bin"
+Плагин !NetBeans для работы с SVN настраивается в этом случае следующим образом:
+ * Указываем путь к внешнему клиенту Subversion: Tools > Options > Versioning > Subversion. В поле "Path to the SVN executable File:" Указать "C:\Program Files\TortoiseSVN\bin"
+ * В параметрах запуска добавляем опцию для использования команд командной строки при работе с SVN: "-J-DsvnClientAdapterFactory=commandline"
 
 Теперь можно получить рабочую копию проекта: Team > Subversion > Checkout. Указать путь к репозиторию: https://orion-cpu.googlecode.com/svn/trunk/, При первом подключении будет выведено окно с предложением добавить в Вашу систему высылаемый сервером сертификат безопасности. Необходимо его принять (кнопка Accept Permanently).
 После нажатия Next можно выбрать ту часть репозитория с которой необходимо работать.
 
 
-===Дополнительная информация===
+====Дополнительная информация====
  * [http://habrahabr.ru/blogs/development_tools/45203/ Работа с ветками SVN]
 
 ==Запуск, отладка и Live class reloading==
