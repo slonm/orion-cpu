@@ -15,63 +15,45 @@
                 </p:license>
                 <p:educationalQualificationLevel>
                     <t:label for="levelSelect"/>
-                    <t:ori.entityselect t:id="levelSelect"
-                              entity="LicenseRecord"
-                              property="educationalQualificationLevel"
-                              qlabel="${label:property.LicenseRecord.educationalQualificationLevel}"
-                              qvalue="LicenseRecord.educationalQualificationLevel"
-                              qmodel="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'educationalQualificationLevel')" 
-                              qclientId="'educationalQualificationLevel'"
-                              qencoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('EducationalQualificationLevel').entityClass)" 
-                              zone="specialityZone"/>
-                </p:educationalQualificationLevel>validate="prop:editContext.getValidator(levelSelect)"
+                    <t:ori.entityselect t:id="levelSelect" entity="LicenseRecord"
+                                        property="educationalQualificationLevel"
+                                        zone="specialityZone"/>
+                </p:educationalQualificationLevel>
 
                 <p:knowledgeArea>
                     <t:label for="knowledgeAreaSelect"/>
-                    <t:select t:id="knowledgeAreaSelect" 
-                              label="${label:entity.KnowledgeArea}"
-                              value="knowledgeArea"
-                              model="prop:knowledgeAreas" 
-                              clientId="'knowledgeArea'"
-                              encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('KnowledgeArea').entityClass)" 
-                              zone="specialityZone"/>
-                </p:knowledgeArea>validate="prop:editContext.getValidator(knowledgeAreaSelect)"
+                    <t:ori.entityselect t:id="knowledgeAreaSelect" entity="knowledgeAreaContainer"
+                                        property="knowledgeArea" blankoption="ALWAYS"
+                                        zone="specialityZone"/>
+                </p:knowledgeArea>
 
                 <p:trainingDirection>
                     <t:label for="trainingDirectionSelect"/>
                     <t:zone t:id="trainingDirectionZone" id="trainingDirectionZone">
                         <t:if test="isEditTrainingDirection">
-                            <t:select t:id="trainingDirectionSelect" 
-                                      label="${label:property.LicenseRecord.trainingDirection}"
-                                      value="LicenseRecord.trainingDirection"
-                                      model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'trainingDirection')" 
-                                      clientId="'trainingDirection'"
-                                      encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('trainingDirection').entityClass)" 
-                                      zone="specialityZone"/>
+                            <t:ori.entityselect t:id="trainingDirectionSelect" entity="LicenseRecord"
+                                                property="trainingDirection"
+                                                zone="specialityZone"/>
                             <p:else>
                                 <input type="text" disabled="true" value="${tostring:licenseRecord.trainingDirection}"/>
                             </p:else>
                         </t:if>
                     </t:zone>
-                </p:trainingDirection>validate="prop:editContext.getValidator(specialitySelect)"
+                </p:trainingDirection>
 
                 <p:speciality>
                     <t:zone t:id="specialityZone" id="specialityZone">
                         <t:label for="specialitySelect"/>
                         <t:if test="isEditSpeciality">
-                            <t:select t:id="specialitySelect" 
-                                      label="${label:property.LicenseRecord.speciality}"
-                                      value="LicenseRecord.speciality"
-                                      model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'speciality')" 
-                                      clientId="'speciality'"
-                                      encoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('Speciality').entityClass)" 
-                                      zone="trainingDirectionZone"/>
+                            <t:ori.entityselect t:id="specialitySelect" entity="LicenseRecord"
+                                                property="speciality"
+                                                zone="trainingDirectionZone"/>
                             <p:else>
                                 <input type="text" disabled="true" value="-"/>
                             </p:else>
                         </t:if>
                     </t:zone>
-                </p:speciality>validate="prop:editContext.getValidator(specialitySelect)"
+                </p:speciality>
             </t:ori.beaneditformext>
         </p:editBlock>
     </t:ori.crud>

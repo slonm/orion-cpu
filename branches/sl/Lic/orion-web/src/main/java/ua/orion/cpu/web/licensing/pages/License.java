@@ -65,6 +65,12 @@ public class License {
     @Property
     @Persist
     private ua.orion.cpu.core.licensing.entities.License license;
+    @Component
+    private Zone specialityZone;
+    @Component
+    private Zone trainingDirectionZone;
+    @Property(write = false)
+    private TrainingDirection knowledgeAreaContainer;
 
     /**
      * Задано явно для возможности вызова из других классов
@@ -101,11 +107,12 @@ public class License {
                 return "";
             }
             SecurityUtils.getSubject().checkPermission("License:read:" + license.getId());
-        } else {
-            try {
-                knowledgeArea = getLicenseRecord().getTrainingDirection().getKnowledgeArea();
-            } catch (NullPointerException ex) {
-            }
+        }
+        knowledgeAreaContainer = new TrainingDirection();
+        try {
+            knowledgeAreaContainer.setKnowledgeArea(
+                    getLicenseRecord().getTrainingDirection().getKnowledgeArea());
+        } catch (NullPointerException ex) {
         }
         return null;
     }
@@ -124,24 +131,6 @@ public class License {
         bm.reorder(props.toArray(new String[0]));
         return bm;
     }
-    @Component
-    @Property(write = false)
-    private Select levelSelect;
-    @Component
-    @Property(write = false)
-    private Select knowledgeAreaSelect;
-    @Component
-    @Property(write = false)
-    private Select specialitySelect;
-    @Component
-    @Property(write = false)
-    private Select trainingDirectionSelect;
-    @Component
-    private Zone specialityZone;
-    @Component
-    private Zone trainingDirectionZone;
-    @Property(read = false)
-    private KnowledgeArea knowledgeArea;
 
     public void onValueChangedFromLevelSelect(EducationalQualificationLevel level) {
         getLicenseRecord().setEducationalQualificationLevel(level);
@@ -163,32 +152,20 @@ public class License {
     }
 
     public void onValueChangedKnowledgeAreaSelect(KnowledgeArea ka) {
-        this.knowledgeArea = ka;
+        knowledgeAreaContainer.setKnowledgeArea(ka);
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
     }
 
     public boolean getIsEditSpeciality() {
-        return knowledgeArea != null
+        return knowledgeAreaContainer.getKnowledgeArea() != null
                 && !EducationalQualificationLevel.BACHELOR_UKEY.equals(
                 getLicenseRecord().getEducationalQualificationLevel().getUKey());
     }
 
     public boolean getIsEditTrainingDirection() {
-        return knowledgeArea != null
+        return knowledgeAreaContainer.getKnowledgeArea() != null
                 && EducationalQualificationLevel.BACHELOR_UKEY.equals(
                 getLicenseRecord().getEducationalQualificationLevel().getUKey());
-    }
-
-    public ValueEncoder getLevelEncoder() {
-        return valueEncoderSource.getValueEncoder(entityService.getMetaEntity("EducationalQualificationLevel").getEntityClass());
-    }
-
-    public KnowledgeArea getKnowledgeArea() {
-        return getLicenseRecord().getTrainingDirection().getKnowledgeArea();
-    }
-
-    public SelectModel getKnowledgeAreas() {
-        return tapestryComponentDataSource.getSelectModel(TrainingDirection.class, "knowledgeArea");
     }
 }
