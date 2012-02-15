@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>    
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Додавання/редагування навчальної дисципліни</title>
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h2>Додавання/редагування навчальної дисципліни</h2>
+        <form action="addEditEduPlanCycle" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="lbl"><label>Навчальний план:</label></td>
+                        <td colspan="2"><label>6.050103-Підготовка бакалаврів - 01.09.2009</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Цикл навчального плану:</label></td>
+                        <td colspan="2"><label>1. Цикл гуманітарної та соціально-економічної підготовки</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Частина циклу навчального плану:</label></td>
+                        <td colspan="2"><label>Вибіркові дисципліни</label></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>№ дисципліни за планом:</label></td>
+                        <td  colspan="2">
+                            <input type="text" value="1.01в"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Назва дисципліни відповідно до навчального плану:</label></td>
+                        <td  colspan="2">
+                            <input type="text" size="50" value="Вибіркова дисципліна-1"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Загальна кількість ECTS-кредитів дисципліни:</label><br/>
+                            <label style="color: #f0f">(використовується для фільтрації дисциплін з банку навчальних дисциплін)</label></td>
+                        <td colspan="2">
+                            <input type="text"></input><br/>
+                            <label style="color: #f00">Загальна кількість ECTS-кредитів циклу: 16 кредитів з 240 кредитів плану</label><br/>
+                            <label style="color: #cd0a0a">Загальна кількість ECTS-кредитів частини циклу: 6 кредитів з 16 кредитів циклу</label><br/>
+                            <label style="color: #f0f">Загальна кількість ECTS-кредитів варіанту підготовки: 0 кредитів з 8 кредитів частини циклу</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Кількість екзаменів з дисципліни за планом:</label><br/>
+                            <label style="color: #f0f">(використовується для фільтрації дисциплін з банку навчальних дисциплін)</label></td>
+                        <td colspan="2">
+                            <select>
+                                <option value="noexam">немає</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Кількість заліків з дисципліни за планом:</label><br/>
+                            <label style="color: #f0f">(використовується для фільтрації дисциплін з банку навчальних дисциплін)</label></td>
+                        <td colspan="2">
+                            <select>
+                                <option value="nocredit">немає</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Кількість курсових робіт з дисципліни за планом:</label><br/>
+                            <label style="color: #f0f">(використовується для фільтрації дисциплін з банку навчальних дисциплін)</label></td>
+                        <td colspan="2">
+                            <select>
+                                <option value="nocredit">немає</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl" rowspan="3"><label>Оберіть дисципліну(дисципліни) з банку навчальних дисциплін</label><br/>
+                            <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label></td>
+                        <td>
+                            <select>
+                                <option>Оберіть дисципліну...</option>
+                                <option selected>Соціологія</option>
+                                <option>Психологія</option>
+                                <option>Етика і естетика</option>
+                                <option>Релігієзнавство</option>
+                            </select>
+                        </td>
+                        <td>
+                            <a href="">Видалити дисципліну з набору вибору</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select>
+                                <option>Оберіть дисципліну...</option>
+                                <option>Психологія</option>
+                                <option>Етика і естетика</option>
+                                <option>Релігієзнавство</option>
+                            </select>
+                        </td>
+                        <td>
+                            <a href="">Видалити дисципліну з набору вибору</a>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td><a href="">Додати дисципліну до набору вибору</a></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Чи вивчається студентами відповідних форм навчання:</label></td>
+                        <td>Денна:<br/>Заочна<br/>Дистанційна</td>
+                        <td><input type="checkbox" checked=""></input><br/>
+                            <input type="checkbox" checked=""></input><br/>
+                            <input type="checkbox" checked=""></input><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl"><label>Дисципліна введена до навчального плану</label></td>
+                        <td  colspan="2">
+                            <select>
+                                <option value="OPP">за стандартом (ОПП)</option>
+                                <option value="IU(Econ)(Pkt)">за наказом МОН</option>
+                                <option value="IU(Krv)">за вибором ВНЗ</option>
+                                <option value="IU(Krv)">за вибором студента</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="btnrow" colspan="3">
+                            <a href="CommonEduPlan.html"><input type="button" value="Відмінити"/></a>
+                            <a href="CommonEduPlan.html"><input type="button" value="Додати/Змінити"/></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
+
