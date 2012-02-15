@@ -15,13 +15,12 @@
                 </p:license>
                 <p:educationalQualificationLevel>
                     <t:label for="levelSelect"/>
-                    <t:select t:id="levelSelect"
-                              t:mixins="ori/entityselect"
+                    <t:ori.entityselect t:id="levelSelect"
                               entity="LicenseRecord"
                               property="educationalQualificationLevel"
                               qlabel="${label:property.LicenseRecord.educationalQualificationLevel}"
                               qvalue="LicenseRecord.educationalQualificationLevel"
-                              model="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'educationalQualificationLevel')" 
+                              qmodel="prop:tapestryComponentDataSource.getSelectModel(LicenseRecord, 'educationalQualificationLevel')" 
                               qclientId="'educationalQualificationLevel'"
                               qencoder="prop:valueEncoderSource.getValueEncoder(entityService.getMetaEntity('EducationalQualificationLevel').entityClass)" 
                               zone="specialityZone"/>
