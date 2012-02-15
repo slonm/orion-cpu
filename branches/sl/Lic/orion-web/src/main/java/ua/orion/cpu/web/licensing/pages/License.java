@@ -145,13 +145,13 @@ public class License {
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
     }
 
-    public void onValueChangedTrainingDirectionSelect(TrainingDirection td) {
+    public void onValueChangedFromTrainingDirectionSelect(TrainingDirection td) {
         getLicenseRecord().setTrainingDirection(td);
         getLicenseRecord().preSave();
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
     }
 
-    public void onValueChangedKnowledgeAreaSelect(KnowledgeArea ka) {
+    public void onValueChangedFromKnowledgeAreaSelect(KnowledgeArea ka) {
         knowledgeAreaContainer.setKnowledgeArea(ka);
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
