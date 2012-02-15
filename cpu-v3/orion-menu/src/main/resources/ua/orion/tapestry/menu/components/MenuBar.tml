@@ -1,4 +1,0 @@
-<span xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd"
-      t:type="loop" t:source="MenuList" t:value="Menu">
-        <t:menu.menu menudata="Menu"/>
-</span>
