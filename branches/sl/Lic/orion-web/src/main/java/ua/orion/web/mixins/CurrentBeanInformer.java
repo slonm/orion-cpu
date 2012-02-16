@@ -45,9 +45,9 @@ public class CurrentBeanInformer {
     }
 
     private void pushCurrentBeanContext() {
-        LOG.info("pushCurrentBeanContext");
+        LOG.debug("pushCurrentBeanContext");
         if (!resources.isBound("containerProperty")) {
-            LOG.info("containerProperty isEmpty");
+            LOG.debug("containerProperty isEmpty");
             containerProperty = guessPropertyName();
         }
 
