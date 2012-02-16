@@ -81,7 +81,7 @@ public class CurrentBeanInformer {
             return "object";
         }
         throw new RuntimeException(
-                "The container's object property couldn't be guessed, please provide one. eg: avisor.containerProperty=\"bean\"");
+                "The container's object property couldn't be guessed, please provide one. eg: ori/CurrentBeanInformer.containerProperty=\"bean\"");
     }
 
     @Log
