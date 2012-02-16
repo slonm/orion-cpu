@@ -8,53 +8,73 @@
         <p:editBlock>
             <t:ori.beaneditformext t:id="editForm" object="crud.object" model="beanModel"
                                    zone="${crud.listZoneId}" submitLabel="message:action.edit" 
-                                   buttons="crud.hideWindowButtonBlock">
-                <p:license>
-                    <label>${label:property.LicenseRecord.license}</label>
-                    <span>${tostring:licenseRecord.license}</span>
-                </p:license>
-                <p:educationalQualificationLevel>
-                    <t:label for="levelSelect"/>
-                    <t:ori.entityselect t:id="levelSelect" entity="LicenseRecord"
-                                        property="educationalQualificationLevel"
-                                        zone="specialityZone"/>
-                </p:educationalQualificationLevel>
-
-                <p:knowledgeArea>
-                    <t:label for="knowledgeAreaSelect"/>
-                    <t:ori.entityselect t:id="knowledgeAreaSelect" entity="knowledgeAreaContainer"
-                                        property="knowledgeArea" blankoption="ALWAYS"
-                                        zone="specialityZone"/>
-                </p:knowledgeArea>
-
-                <p:trainingDirection>
-                    <t:label for="trainingDirectionSelect"/>
-                    <t:zone t:id="trainingDirectionZone" id="trainingDirectionZone">
-                        <t:if test="isEditTrainingDirection">
-                            <t:ori.entityselect t:id="trainingDirectionSelect" entity="LicenseRecord"
-                                                property="trainingDirection"
-                                                zone="specialityZone"/>
-                            <p:else>
-                                <input type="text" disabled="true" value="${tostring:licenseRecord.trainingDirection}"/>
-                            </p:else>
-                        </t:if>
-                    </t:zone>
-                </p:trainingDirection>
-
-                <p:speciality>
-                    <t:zone t:id="specialityZone" id="specialityZone">
-                        <t:label for="specialitySelect"/>
-                        <t:if test="isEditSpeciality">
-                            <t:ori.entityselect t:id="specialitySelect" entity="LicenseRecord"
-                                                property="speciality"
-                                                zone="trainingDirectionZone"/>
-                            <p:else>
-                                <input type="text" disabled="true" value="-"/>
-                            </p:else>
-                        </t:if>
-                    </t:zone>
-                </p:speciality>
+                                   buttons="crud.hideWindowButtonBlock"
+                                   license="block:licenseBlock"
+                                   educationalQualificationLevel="block:educationalQualificationLevelBlock"
+                                   knowledgeArea="block:knowledgeAreaBlock"
+                                   trainingDirection="block:trainingDirectionBlock"
+                                   speciality="block:specialityBlock">
             </t:ori.beaneditformext>
         </p:editBlock>
+        <!--p:addBlock>
+            <t:ori.beaneditformext t:id="addForm" object="crud.object" model="beanModel"
+                                   zone="${crud.listZoneId}" submitLabel="message:action.add" 
+                                   buttons="crud.hideWindowButtonBlock"
+                                   license="block:licenseBlock"
+                                   educationalQualificationLevel="block:educationalQualificationLevelBlock"
+                                   knowledgeArea="block:knowledgeAreaBlock"
+                                   trainingDirection="block:trainingDirectionBlock"
+                                   speciality="block:specialityBlock">
+            </t:ori.beaneditformext>
+        </p:addBlock-->
     </t:ori.crud>
+    <t:block id="licenseBlock">
+        <label>${label:property.LicenseRecord.license}</label>
+        <span>${tostring:licenseRecord.license}</span>
+    </t:block>
+    <t:block id="educationalQualificationLevelBlock">
+        <t:label for="levelSelect"/>
+        <t:ori.entityselect t:id="levelSelect" entity="LicenseRecord"
+                            property="educationalQualificationLevel"
+                            zone="specialityZone"/>
+    </t:block>
+    <t:block id="knowledgeAreaBlock">
+        <t:label for="knowledgeAreaSelect"/>
+        <t:ori.entityselect t:id="knowledgeAreaSelect" entity="knowledgeAreaContainer"
+                            property="knowledgeArea" blankoption="ALWAYS"
+                            zone="specialityZone"/>
+    </t:block>
+    <t:block id="trainingDirectionBlock">
+        <t:label for="trainingDirectionSelect"/>
+        <t:zone t:id="trainingDirectionZone" id="trainingDirectionZone" t:update="show">
+            <t:if test="isEditTrainingDirection">
+                <t:ori.entityselect t:id="trainingDirectionSelect" entity="LicenseRecord"
+                                    property="trainingDirection"
+                                    model="trainingDirectionModel" blankoption="NEVER"
+                                    zone="specialityZone"/>
+                <p:else>
+                    <t:if test="licenseRecord.trainingDirection">
+                        ${tostring:licenseRecord.trainingDirection}
+                        <p:else>
+                            -
+                        </p:else>
+                    </t:if>
+                </p:else>
+            </t:if>
+        </t:zone>
+    </t:block>
+    <t:block id="specialityBlock">
+        <t:zone t:id="specialityZone" id="specialityZone" t:update="show">
+            <t:label for="specialitySelect"/>
+            <t:if test="isEditSpeciality">
+                <t:ori.entityselect t:id="specialitySelect" entity="LicenseRecord"
+                                    property="speciality"
+                                    model="specialityModel" blankoption="NEVER"
+                                    zone="trainingDirectionZone"/>
+                <p:else>
+                    -
+                </p:else>
+            </t:if>
+        </t:zone>
+    </t:block>
 </t:ori.layout>

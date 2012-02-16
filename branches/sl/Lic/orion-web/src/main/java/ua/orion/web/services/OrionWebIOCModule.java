@@ -3,29 +3,34 @@ package ua.orion.web.services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.tapestry5.Asset;
-import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.SymbolConstants;
+import java.util.List;
+import org.apache.tapestry5.*;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.internal.services.DocumentLinker;
 import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.*;
-import org.apache.tapestry5.ioc.services.*;
+import org.apache.tapestry5.ioc.annotations.InjectService;
+import org.apache.tapestry5.ioc.annotations.Match;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.ChainBuilder;
+import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.CoercionTuple;
+import org.apache.tapestry5.ioc.services.PropertyAdapter;
+import org.apache.tapestry5.plastic.MethodAdvice;
+import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.*;
 import org.apache.tapestry5.services.javascript.JavaScriptStack;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
 import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
-import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.persistence.ReferenceBook;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.services.ModelLibraryService;
 import ua.orion.core.utils.IOCUtils;
+import static ua.orion.core.utils.IOCUtils.getMethod;
 import ua.orion.cpu.core.security.entities.Acl;
+import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.BeanModelWrapper;
-import static ua.orion.core.utils.IOCUtils.*;
 import ua.orion.web.JPAAnnotationsConstraintGenerator;
 import ua.orion.web.JSR303AnnotationsConstraintGenerator;
 import ua.orion.web.OrionWebSymbols;
@@ -42,6 +47,7 @@ public class OrionWebIOCModule {
         binder.bind(TapestryDataFactory.class, TapestryDataFactoryImpl.class);
         binder.bind(RequestInfo.class, RequestInfoImpl.class);
         binder.bind(MenuLinkBuilder.class);
+        binder.bind(Coercion.class, ListToSelectModelCoercion.class).withId("ListToSelectModelCoercion");
     }
 
     public static void contributeTapestryDataSource(
@@ -190,12 +196,20 @@ public class OrionWebIOCModule {
      * from EventContext to Object[] from IMenuLink to Class
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
-            @InjectService("MetaLinkCoercion") Coercion coercion) {
+            @InjectService("MetaLinkCoercion") Coercion metaLink,
+            @InjectService("ListToSelectModelCoercion") Coercion list2Model) {
         configuration.add(CoercionTuple.create(String.class, FieldSetMode.class, StringToEnumCoercion.create(FieldSetMode.class)));
-        addTuple(configuration, IMenuLink.class, Class.class, coercion);
-        addTuple(configuration, EventContext.class, Object[].class,
+        //Нельзя наверняка сказать что будет использован list2Model Coercion, а не 
+        //указанный в TapestryModule. Поэтому следующая строка не имеет смысла.
+        //см. https://issues.apache.org/jira/browse/TAP5-1624
+        //TODO Сделать что-бы наверняка работало
+        configuration.add(CoercionTuple.create(List.class, SelectModel.class, list2Model));
+
+        configuration.add(CoercionTuple.create(IMenuLink.class, Class.class, metaLink));
+        configuration.add(CoercionTuple.create(EventContext.class, Object[].class,
                 new Coercion<EventContext, Object[]>() {
 
+                    @Override
                     public Object[] coerce(EventContext context) {
                         int count = context.getCount();
                         Object[] result = new Object[count];
@@ -204,7 +218,7 @@ public class OrionWebIOCModule {
                         }
                         return result;
                     }
-                });
+                }));
     }
 
     /**
@@ -275,9 +289,9 @@ public class OrionWebIOCModule {
         MethodAdvice advice = new MethodAdvice() {
 
             @Override
-            public void advise(Invocation invocation) {
+            public void advise(MethodInvocation invocation) {
                 invocation.proceed();
-                invocation.overrideResult(new BeanModelWrapper((BeanModel) invocation.getResult()));
+                invocation.setReturnValue(new BeanModelWrapper((BeanModel) invocation.getReturnValue()));
             }
         };
         receiver.adviseMethod(getMethod(BeanModelSource.class, "createEditModel", Class.class, Messages.class), advice);
@@ -292,10 +306,10 @@ public class OrionWebIOCModule {
         MethodAdvice advice = new MethodAdvice() {
 
             @Override
-            public void advise(Invocation invocation) {
+            public void advise(MethodInvocation invocation) {
                 String page = invocation.getParameter(0).toString();
                 if ("".equals(page) || "index".equalsIgnoreCase(page)) {
-                    invocation.override(0, "ori/index");
+                    invocation.setParameter(0, "ori/index");
                 }
                 invocation.proceed();
             }
@@ -304,8 +318,8 @@ public class OrionWebIOCModule {
     }
 
     /**
-     * Добавляет CSS соответствующие библиотекам сущностей
-     * TODO Перенести в OrionCoreJavaScriptStack
+     * Добавляет CSS соответствующие библиотекам сущностей TODO Перенести в
+     * OrionCoreJavaScriptStack
      */
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
             final AssetSource assetSource, final Environment environment,
@@ -344,9 +358,8 @@ public class OrionWebIOCModule {
         configuration.addInstance("tostring", ToStringBindingFactory.class);
         configuration.addInstance("label", LabelBindingFactory.class);
     }
-    
-    public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration)
-    {
+
+    public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration) {
         configuration.addInstance("Orion", OrionCoreJavaScriptStack.class);
     }
 

@@ -1,12 +1,10 @@
 package ua.orion.web.components;
 
 import javax.inject.Inject;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.Field;
-import org.apache.tapestry5.FieldValidator;
-import org.apache.tapestry5.ValueEncoder;
-import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.*;
+import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.ioc.services.PropertyAdapter;
@@ -20,13 +18,15 @@ import ua.orion.web.services.TapestryDataSource;
  * для привязки его к конкретному свойству сущности
  */
 @SupportsInformalParameters
-public class EntitySelect implements Field{
+public class EntitySelect implements Field {
 
     //---Parameters---
     @Parameter(required = true, principal = true)
     private Object entity;
     @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL, allowNull = false, principal = true)
     private String property;
+    @Parameter
+    private SelectModel model;
     @Component(parameters = {
         "value=prop:value",
         "label=prop:label",
@@ -63,14 +63,16 @@ public class EntitySelect implements Field{
         getPropertyAdapter().set(entity, o);
     }
 
+    @Override
     public String getLabel() {
         return labelSource.getPropertyLabel(entity.getClass(), property, resources.getMessages());
     }
 
     public Object getModel() {
-        return dataSource.getSelectModel(entity, property);
+        return resources.isBound("model") ? model : dataSource.getSelectModel(entity, property);
     }
 
+    @Override
     public String getClientId() {
         return property;
     }
@@ -103,5 +105,4 @@ public class EntitySelect implements Field{
     public boolean isRequired() {
         return select.isRequired();
     }
-    
 }

@@ -2,36 +2,34 @@ package ua.orion.cpu.web.licensing.pages;
 
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.criteria.*;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.FieldValidator;
-import org.apache.tapestry5.SelectModel;
-import org.apache.tapestry5.ValueEncoder;
-import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
-import org.apache.tapestry5.beaneditor.RelativePosition;
-import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PropertyEditContext;
-import org.apache.tapestry5.services.ValueEncoderSource;
+import org.apache.tapestry5.ioc.annotations.InjectService;
+import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.EducationalQualificationLevel;
-import ua.orion.cpu.core.licensing.entities.KnowledgeArea;
-import ua.orion.cpu.core.licensing.entities.LicenseRecord;
-import ua.orion.cpu.core.licensing.entities.Speciality;
-import ua.orion.cpu.core.licensing.entities.TrainingDirection;
+import ua.orion.cpu.core.licensing.entities.*;
 import ua.orion.web.AdditionalConstraintsApplier;
 import ua.orion.web.components.Crud;
 import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
- * Страница, которая предоставляет CRUD для простых сущностей
+ * Страница, которая предоставляет CRUD для
+ * ua.orion.cpu.core.licensing.entities.License
+ *
  * @author slobodyanuk
  */
 @SuppressWarnings("unused")
@@ -44,20 +42,13 @@ public class License {
     private Logger LOG;
     @Inject
     @Property(write = false)
-    private EntityService entityService;
+    private EntityService es;
     @Inject
     private TapestryDataSource dataSource;
     @Inject
-    @Property(write = false)
-    private TapestryDataSource tapestryComponentDataSource;
-    @Environmental
-    @Property(write = false)
-    private PropertyEditContext editContext;
-    @Inject
-    @Property(write = false)
-    private ValueEncoderSource valueEncoderSource;
-    @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
+    @InjectService("ListToSelectModelCoercion")
+    private Coercion list2Model;
     //---Locals---
     @Component
     @Property(write = false)
@@ -100,7 +91,7 @@ public class License {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
                 }
-                license = entityService.find(ua.orion.cpu.core.licensing.entities.License.class, context.get(String.class, 0));
+                license = es.find(ua.orion.cpu.core.licensing.entities.License.class, context.get(String.class, 0));
                 license.getId(); //throw exception if object is null
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
@@ -112,7 +103,9 @@ public class License {
         try {
             knowledgeAreaContainer.setKnowledgeArea(
                     getLicenseRecord().getTrainingDirection().getKnowledgeArea());
+            LOG.debug("KnowledgeArea is set to {}", knowledgeAreaContainer.getKnowledgeArea());
         } catch (NullPointerException ex) {
+            LOG.debug("KnowledgeArea is not set");
         }
         return null;
     }
@@ -134,24 +127,27 @@ public class License {
 
     public void onValueChangedFromLevelSelect(EducationalQualificationLevel level) {
         getLicenseRecord().setEducationalQualificationLevel(level);
-        //getLicenseRecord().preSave();
+        getLicenseRecord().preSave();
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
     }
 
     public void onValueChangedFromSpecialitySelect(Speciality spec) {
+        LOG.debug("Speciality {} is selected", spec);
         getLicenseRecord().setSpeciality(spec);
         getLicenseRecord().preSave();
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
     }
 
     public void onValueChangedFromTrainingDirectionSelect(TrainingDirection td) {
+        LOG.debug("TrainingDirection {} is selected", td);
         getLicenseRecord().setTrainingDirection(td);
         getLicenseRecord().preSave();
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
     }
 
     public void onValueChangedFromKnowledgeAreaSelect(KnowledgeArea ka) {
+        LOG.debug("KnowledgeArea {} is selected", ka);
         knowledgeAreaContainer.setKnowledgeArea(ka);
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
@@ -167,5 +163,22 @@ public class License {
         return knowledgeAreaContainer.getKnowledgeArea() != null
                 && EducationalQualificationLevel.BACHELOR_UKEY.equals(
                 getLicenseRecord().getEducationalQualificationLevel().getUKey());
+    }
+
+    public Object getTrainingDirectionModel() {
+        CriteriaBuilder cb = es.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<TrainingDirection> query = cb.createQuery(TrainingDirection.class);
+        Root<?> root = query.from(TrainingDirection.class);
+        query.where(cb.equal(root.get("knowledgeArea"), knowledgeAreaContainer.getKnowledgeArea()));
+        return list2Model.coerce(es.getEntityManager().createQuery(query).getResultList());
+    }
+
+    public Object getSpecialityModel() {
+        String source = "select sp from Speciality sp"
+                + " join sp.trainingDirection td"
+                + " where td.knowledgeArea=:knowledgeArea";
+        TypedQuery<Speciality> query = es.getEntityManager().createQuery(source, Speciality.class);
+        query.setParameter("knowledgeArea", knowledgeAreaContainer.getKnowledgeArea());
+        return list2Model.coerce(query.getResultList());
     }
 }

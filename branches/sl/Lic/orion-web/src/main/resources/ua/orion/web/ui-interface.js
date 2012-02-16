@@ -59,7 +59,7 @@ function addUIClassesToBeanEditView(){
 //Инициализация компонентов
 function initializeUIComponents(){
     addUIClassesToBeanEditView();
-    putCookieThemeToSelect();
+//    putCookieThemeToSelect();
     initializeTextFields();
     initializeCalendar();
     initializeButtons();

@@ -51,9 +51,11 @@ public class OrionCoreIOCModule {
     }
 
     /**
-     * Добавляет провайдеры для сущностей, enum, java.util.Calendar, java.util.Date
+     * Добавляет провайдеры для сущностей, enum, java.util.Calendar,
+     * java.util.Date
+     *
      * @param conf
-     * @param thLocale 
+     * @param thLocale
      */
     public static void contributeStringValueProvider(OrderedConfiguration<StringValueProvider> conf,
             final ThreadLocale thLocale, @Symbol(OrionSymbols.DATE_FORMAT) final int dateFormat,
@@ -143,12 +145,11 @@ public class OrionCoreIOCModule {
     }
 
     /**
-     * from String to Class
-     * from String to MetaEntity
+     * from String to Class from String to MetaEntity
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
             @Local final EntityService entityService) {
-        IOCUtils.addTuple(configuration, String.class, Class.class,
+        configuration.add(CoercionTuple.create(String.class, Class.class,
                 new Coercion<String, Class>() {
 
                     @Override
@@ -159,21 +160,22 @@ public class OrionCoreIOCModule {
                             return null;
                         }
                     }
-                });
-        IOCUtils.addTuple(configuration, String.class, MetaEntity.class,
+                }));
+        configuration.add(CoercionTuple.create(String.class, MetaEntity.class,
                 new Coercion<String, MetaEntity>() {
 
+                    @Override
                     public MetaEntity coerce(String className) {
                         return entityService.getMetaEntity(className);
                     }
-                });
-        IOCUtils.addTuple(configuration, Calendar.class, Date.class,
+                }));
+        configuration.add(CoercionTuple.create(Calendar.class, Date.class,
                 new Coercion<Calendar, Date>() {
 
                     @Override
                     public Date coerce(Calendar cal) {
                         return cal.getTime();
                     }
-                });
+                }));
     }
 }
