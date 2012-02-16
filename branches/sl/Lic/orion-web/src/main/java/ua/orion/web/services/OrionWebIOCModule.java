@@ -15,6 +15,7 @@ import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.ioc.services.PropertyAdapter;
+import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.plastic.MethodAdvice;
 import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.*;
@@ -193,17 +194,40 @@ public class OrionWebIOCModule {
     }
 
     /**
-     * from EventContext to Object[] from IMenuLink to Class
+     * В TypeCoercer уже есть вклад типа List --> SelectModel.
+     * Для его переопределения нет прямого пути
+     * (см. https://issues.apache.org/jira/browse/TAP5-1624_
+     * Поэтому переопределяем вызов метода coerce для параметров такого типа с 
+     * попощью советника
+     */
+    @Match("TypeCoercer")
+    public static void adviseTypeCoercerWithListToSelectModelCoercion(MethodAdviceReceiver receiver,
+            @InjectService("ListToSelectModelCoercion") final Coercion list2Model) {
+
+        MethodAdvice advice = new MethodAdvice() {
+
+            @Override
+            public void advise(MethodInvocation invocation) {
+                if (invocation.getParameter(0) != null
+                        && List.class.isInstance(invocation.getParameter(0))
+                        && SelectModel.class == invocation.getParameter(1)) {
+                    invocation.setReturnValue(list2Model.coerce(invocation.getParameter(0)));
+                } else {
+                    invocation.proceed();
+                }
+            }
+        };
+        receiver.adviseMethod(getMethod(TypeCoercer.class, "coerce", Object.class, Class.class), advice);
+    }
+
+    /**
+     * EventContext --> Object[] 
+     * IMenuLink --> Class
+     * String --> FieldSetMode
      */
     public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration,
-            @InjectService("MetaLinkCoercion") Coercion metaLink,
-            @InjectService("ListToSelectModelCoercion") Coercion list2Model) {
+            @InjectService("MetaLinkCoercion") Coercion metaLink) {
         configuration.add(CoercionTuple.create(String.class, FieldSetMode.class, StringToEnumCoercion.create(FieldSetMode.class)));
-        //Нельзя наверняка сказать что будет использован list2Model Coercion, а не 
-        //указанный в TapestryModule. Поэтому следующая строка не имеет смысла.
-        //см. https://issues.apache.org/jira/browse/TAP5-1624
-        //TODO Сделать что-бы наверняка работало
-        configuration.add(CoercionTuple.create(List.class, SelectModel.class, list2Model));
 
         configuration.add(CoercionTuple.create(IMenuLink.class, Class.class, metaLink));
         configuration.add(CoercionTuple.create(EventContext.class, Object[].class,
@@ -362,5 +386,4 @@ public class OrionWebIOCModule {
     public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration) {
         configuration.addInstance("Orion", OrionCoreJavaScriptStack.class);
     }
-
 }

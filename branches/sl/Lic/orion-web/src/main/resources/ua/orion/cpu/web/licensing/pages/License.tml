@@ -6,7 +6,7 @@
               xmlns:p="tapestry:parameter">
     <t:ori.crud t:id="crud" t:objectClass="LicenseRecordClass" t:source="source" t:listPage="licensing/licenses">
         <p:editBlock>
-            <t:ori.beaneditformext t:id="editForm" object="crud.object" model="beanModel"
+            <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="editForm" object="crud.object" model="beanModel"
                                    zone="${crud.listZoneId}" submitLabel="message:action.edit" 
                                    buttons="crud.hideWindowButtonBlock"
                                    license="block:licenseBlock"
@@ -16,8 +16,8 @@
                                    speciality="block:specialityBlock">
             </t:ori.beaneditformext>
         </p:editBlock>
-        <!--p:addBlock>
-            <t:ori.beaneditformext t:id="addForm" object="crud.object" model="beanModel"
+        <p:addBlock>
+            <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="addForm" object="crud.object" model="beanModel"
                                    zone="${crud.listZoneId}" submitLabel="message:action.add" 
                                    buttons="crud.hideWindowButtonBlock"
                                    license="block:licenseBlock"
@@ -26,7 +26,7 @@
                                    trainingDirection="block:trainingDirectionBlock"
                                    speciality="block:specialityBlock">
             </t:ori.beaneditformext>
-        </p:addBlock-->
+        </p:addBlock>
     </t:ori.crud>
     <t:block id="licenseBlock">
         <label>${label:property.LicenseRecord.license}</label>
@@ -36,7 +36,7 @@
         <t:label for="levelSelect"/>
         <t:ori.entityselect t:id="levelSelect" entity="LicenseRecord"
                             property="educationalQualificationLevel"
-                            zone="specialityZone"/>
+                            zone="specialityZone" blankoption="ALWAYS"/>
     </t:block>
     <t:block id="knowledgeAreaBlock">
         <t:label for="knowledgeAreaSelect"/>
@@ -50,10 +50,10 @@
             <t:if test="isEditTrainingDirection">
                 <t:ori.entityselect t:id="trainingDirectionSelect" entity="LicenseRecord"
                                     property="trainingDirection"
-                                    model="trainingDirectionModel" blankoption="NEVER"
+                                    model="trainingDirectionModel" blankoption="ALWAYS"
                                     zone="specialityZone"/>
                 <p:else>
-                    <t:if test="licenseRecord.trainingDirection">
+                    <t:if test="licenseRecord?.trainingDirection">
                         ${tostring:licenseRecord.trainingDirection}
                         <p:else>
                             -

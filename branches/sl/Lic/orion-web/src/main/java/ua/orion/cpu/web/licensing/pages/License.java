@@ -15,8 +15,6 @@ import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.InjectService;
-import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
@@ -47,8 +45,6 @@ public class License {
     private TapestryDataSource dataSource;
     @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
-    @InjectService("ListToSelectModelCoercion")
-    private Coercion list2Model;
     //---Locals---
     @Component
     @Property(write = false)
@@ -114,6 +110,15 @@ public class License {
         return crud.onSuccessFromEditForm();
     }
 
+    Object onSuccessFromAddForm() {
+        return crud.onSuccessFromEditForm();
+    }
+
+    void onBeforeAddPopupFromCrud(LicenseRecord lr) {
+        lr.setLicense(license);
+        knowledgeAreaContainer.setKnowledgeArea(null);
+    }
+
     public BeanModel getBeanModel() {
         BeanModel bm = dataSource.getBeanModelForEdit(LicenseRecord.class);
         String ka = "knowledgeArea";
@@ -154,15 +159,23 @@ public class License {
     }
 
     public boolean getIsEditSpeciality() {
-        return knowledgeAreaContainer.getKnowledgeArea() != null
-                && !EducationalQualificationLevel.BACHELOR_UKEY.equals(
-                getLicenseRecord().getEducationalQualificationLevel().getUKey());
+        try {
+            return knowledgeAreaContainer.getKnowledgeArea() != null
+                    && !EducationalQualificationLevel.BACHELOR_UKEY.equals(
+                    getLicenseRecord().getEducationalQualificationLevel().getUKey());
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     public boolean getIsEditTrainingDirection() {
-        return knowledgeAreaContainer.getKnowledgeArea() != null
-                && EducationalQualificationLevel.BACHELOR_UKEY.equals(
-                getLicenseRecord().getEducationalQualificationLevel().getUKey());
+        try {
+            return knowledgeAreaContainer.getKnowledgeArea() != null
+                    && EducationalQualificationLevel.BACHELOR_UKEY.equals(
+                    getLicenseRecord().getEducationalQualificationLevel().getUKey());
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     public Object getTrainingDirectionModel() {
@@ -170,7 +183,7 @@ public class License {
         CriteriaQuery<TrainingDirection> query = cb.createQuery(TrainingDirection.class);
         Root<?> root = query.from(TrainingDirection.class);
         query.where(cb.equal(root.get("knowledgeArea"), knowledgeAreaContainer.getKnowledgeArea()));
-        return list2Model.coerce(es.getEntityManager().createQuery(query).getResultList());
+        return es.getEntityManager().createQuery(query).getResultList();
     }
 
     public Object getSpecialityModel() {
@@ -179,6 +192,6 @@ public class License {
                 + " where td.knowledgeArea=:knowledgeArea";
         TypedQuery<Speciality> query = es.getEntityManager().createQuery(source, Speciality.class);
         query.setParameter("knowledgeArea", knowledgeAreaContainer.getKnowledgeArea());
-        return list2Model.coerce(query.getResultList());
+        return query.getResultList();
     }
 }

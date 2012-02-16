@@ -17,7 +17,7 @@
         </t:if>    
     </div>
     <t:zone t:id="listZone" id="${listZoneId}">
-        <t:grid source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
+        <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(objectClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
                 <div class="ui-grid-cell-action-tip" style="display: none">
@@ -57,11 +57,11 @@
         </t:grid>
     </t:zone>
     <t:block id="defaultEditBlock">
-        <t:ori.beaneditformext t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
+        <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(objectClass,messages)"
                                zone="prop:listZoneId" submitLabel="message:action.edit" buttons="hideWindowButtonBlock"/>
     </t:block>
     <t:block id="defaultAddBlock">
-        <t:ori.beaneditformext t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
+        <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(objectClass,messages)"
                                zone="prop:listZoneId" submitLabel="message:action.add" buttons="hideWindowButtonBlock"/>
     </t:block>
     <t:block id="hideWindowButtonBlock">
@@ -70,7 +70,7 @@
         </a>        
     </t:block>
     <t:block id="defaultViewBlock">
-        <t:beandisplay t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
+        <t:beandisplay t:mixins="ori/CurrentBeanInformer" t:id="display" object="object" model="dataSource.getBeanModelForView(objectClass,messages)"/>
         <t:delegate to="hideWindowButtonBlock"/>
     </t:block>
     <t:block id="deleteBlock">

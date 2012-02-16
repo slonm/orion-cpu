@@ -15,7 +15,6 @@ import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import ua.orion.core.services.EntityService;
-import ua.orion.web.CurrentBeanContext;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -129,49 +128,17 @@ public class Crud {
     private String popupWindowId;
     @Persist
     private String listZoneId;
-    private CurrentBeanContext currentBeanContext = new CurrentBeanContext() {
-
-        @Override
-        public Object getCurrentBean() {
-            return object;
-        }
-
-        @Override
-        public Class<?> getBeanType() {
-            return objectClass;
-        }
-
-        @Override
-        public String getCurrentBeanId() {
-            return getId();
-        }
-    };
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
-        environment.push(CurrentBeanContext.class, currentBeanContext);
         popupWindowId = javascriptSupport.allocateClientId("popupWindow");
         listZoneId = javascriptSupport.allocateClientId("listZone");
-    }
-
-    final void afterRender() {
-        environment.pop(CurrentBeanContext.class);
     }
 
     /**
      * Задано явно для возможности вызова из других классов
      */
     public Object getObject() {
-        //это хак. 
-        //у нас нет возможности удалить контекст после использования
-        //его при обработке события компонента, поэтому не удаляем его вообще,
-        //а просто проверяем тот ли он что и был. Такой подход приведет к ошибкам
-        //при вложенных компонентах, устанавливающих CurrentBeanContext
-        //TODO Продумать и переделать
-        CurrentBeanContext cbc = environment.peek(CurrentBeanContext.class);
-        if (cbc == null || cbc != currentBeanContext) {
-            environment.push(CurrentBeanContext.class, currentBeanContext);
-        }
         return object;
     }
 
@@ -276,6 +243,7 @@ public class Crud {
     Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeEditPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
@@ -292,6 +260,7 @@ public class Crud {
     Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         object = es.newInstance(objectClass);
+        resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
@@ -307,6 +276,7 @@ public class Crud {
 
     Object onView(Integer id) {
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeViewPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
@@ -323,6 +293,7 @@ public class Crud {
     Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeTryDeletePopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 

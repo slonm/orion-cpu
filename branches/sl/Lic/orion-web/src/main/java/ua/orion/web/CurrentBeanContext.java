@@ -7,5 +7,4 @@ package ua.orion.web;
 public interface CurrentBeanContext {
     Object getCurrentBean();
     Class<?> getBeanType();
-    String getCurrentBeanId();
 }
