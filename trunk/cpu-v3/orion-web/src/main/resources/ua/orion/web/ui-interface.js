@@ -66,7 +66,7 @@ function initializeUIComponents(){
     initializeSubmits();
     initializeIcons();
     //Создание выпадающего списка из select
-    jQuery("select").selectmenu();
+    ///jQuery("select").selectmenu();
     initializeCheckboxes();
     jQuery("button").parent('a').css({
         'text-decoration':'none'

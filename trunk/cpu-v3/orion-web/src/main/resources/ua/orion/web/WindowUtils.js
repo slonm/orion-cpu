@@ -22,7 +22,7 @@ Tapestry.Initializer.showCkWindow = function(opt){
     //        Tapestry.Initializer.showGridAjaxSave();
     //    })
     //Создание подсказок
-    if (opt.showhints=="true"){
+    if (Ori.SHOW_HINTS){
         createToolTips();
     }
 }
@@ -36,16 +36,16 @@ Tapestry.Initializer.closeCkWindow = function(opt){
     jQuery("#"+opt.window).find('#window-content').css({
         'display':'none'
     });
-    updateCSS();
 }
 
-Tapestry.Initializer.updateGrid = function(opt){
-    jQuery(".crud-links a, #crud-add-record-button").click(function(){
+Tapestry.Initializer.updateGrid = function(){
+    jQuery(".crud-links a").click(function(){
         Tapestry.Initializer.showGridAjax();
     })
     Tapestry.Initializer.hideGridAjax();
     initializeGridToolTip();
     jQuery("table.t-data-grid").wrapAll("<div id=\"grid-container\"></div>");
+    updateCSS();
 }
 
 /**

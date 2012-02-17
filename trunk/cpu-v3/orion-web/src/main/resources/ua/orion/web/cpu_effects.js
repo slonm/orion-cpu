@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
         },
         resizable: false //возможность маштабирования отключена
     });
-    jQuery("#crud-add-record-button").click(function(){
+    jQuery(".crud-add-record-button").click(function(){
         Tapestry.Initializer.showGridAjax(); //При добавлении записи появляется окно загрузки
     })
     jQuery(".menuarrow, .menutitle").hover(function(){

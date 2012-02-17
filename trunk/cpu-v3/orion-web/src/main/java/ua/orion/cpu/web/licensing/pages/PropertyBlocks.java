@@ -81,7 +81,6 @@ public class PropertyBlocks {
         try {
             mp = (SortedMap<EducationForm, Integer>) outputContext.getPropertyValue();
         } catch (Exception ex) {
-            System.out.println("EXCEPTION STACK" + ex.getStackTrace());
             mp = (SortedMap<EducationForm, Integer>) editContext.getPropertyValue();
         }
         return mp.get(eduForm);
