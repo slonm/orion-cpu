@@ -10,16 +10,17 @@ import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 import ua.orion.core.persistence.AbstractEntity;
 
 /**
- * Сущность записи в лицензии (даёт право на обучение студентов в соответствии 
- * с указанными в записи атрибутами)
+ * Сущность записи в лицензии (даёт право на обучение студентов в соответствии с
+ * указанными в записи атрибутами)
+ *
  * @author kgp
  */
 //  Невозможно создать ограничение, что-бы trainingDirection не повторялось при speciality=null
 //  Но в таком случае записи бакалавров будут дублироваться
 @Entity
 @Table(uniqueConstraints = {
-//    @UniqueConstraint(columnNames = {"educationalQualificationLevel",
-//        "trainingDirection", "termination", "license"}),
+    //    @UniqueConstraint(columnNames = {"educationalQualificationLevel",
+    //        "trainingDirection", "termination", "license"}),
     @UniqueConstraint(columnNames = {"educationalQualificationLevel",
         "speciality", "termination", "license"})
 })
@@ -90,7 +91,7 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
 
     /**
      * Применение ограничений на взаимно-зависимые поля
-     * 
+     *
      */
     @PrePersist
     @PreUpdate
@@ -98,13 +99,17 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
         if (EducationalQualificationLevel.BACHELOR_UKEY.equals(educationalQualificationLevel.getUKey())) {
             speciality = null;
         } else {
-            trainingDirection = speciality.getTrainingDirection();
+            if (speciality != null) {
+                trainingDirection = speciality.getTrainingDirection();
+            } else {
+                trainingDirection = null;
+            }
         }
     }
 
     /**
-     * @return Серия, номер и дата выдачи лицензии, к которой принадлежит данная запись
-     * (не отображается в гриде)
+     * @return Серия, номер и дата выдачи лицензии, к которой принадлежит данная
+     * запись (не отображается в гриде)
      */
     @ManyToOne
     @NotNull
@@ -135,8 +140,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     /**
-     * @return образовательно-квалификайционный уровень
-     * (не отображается в гриде)
+     * @return образовательно-квалификайционный уровень (не отображается в
+     * гриде)
      */
     @ManyToOne
     @NotNull
@@ -236,7 +241,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     /**
-     * @return название групп лицензионных записей (подготовка бакалавров, для колледжа и т.д.)
+     * @return название групп лицензионных записей (подготовка бакалавров, для
+     * колледжа и т.д.)
      */
     @ManyToOne
     @NotNull
@@ -249,7 +255,8 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     }
 
     /**
-     * @return Организационная единица, подготавливающая студентов в рамках данной лицензионной записи
+     * @return Организационная единица, подготавливающая студентов в рамках
+     * данной лицензионной записи
      */
     @ManyToOne
     @NotNull

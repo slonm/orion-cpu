@@ -19,7 +19,7 @@
                     <t:if test="error">
                         <div class="t-error">${error}</div>
                     </t:if>
-                    <t:ori.InitCall function="closeCkWindow" window="popupWindow"/><!--для вызова метода скрытия окна-->
+                    <!--t:ori.InitCall function="closeCkWindow" window="popupWindow"/><для вызова метода скрытия окна-->
                     <t:grid source="objects" row="object" inplace="true" add="action"
                             model="dataSource.getBeanModelForList(objectClass,messages)">
                         <p:actionCell>

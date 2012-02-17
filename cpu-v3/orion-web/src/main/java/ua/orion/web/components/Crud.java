@@ -9,13 +9,12 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Environment;
-import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
+import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import ua.orion.core.services.EntityService;
-import ua.orion.web.CurrentBeanContext;
-import ua.orion.web.OrionWebSymbols;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -25,17 +24,81 @@ import ua.orion.web.services.TapestryDataSource;
 @Import(library = "../WindowUtils.js", stylesheet = "../css/tapestry-crud.css")
 @SuppressWarnings("unused")
 public class Crud {
-    //---Components and component's resources---
 
+    //---Parameters---
+    /**
+     * Класс сущности
+     */
+    @Parameter(allowNull = false)
+    private Class<?> objectClass;
+    /**
+     * Источник данных для Grid
+     */
+    @Parameter(allowNull = false)
+    private GridDataSource source;
+    /**
+     * Показывать ли кнопку редактирования
+     */
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showEditButton;
+    /**
+     * Показывать ли кнопку просмотра
+     */
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showViewButton;
+    /**
+     * Показывать ли кнопку удаления
+     */
+    @Parameter(value = "true", autoconnect = true)
+    @Property
+    private boolean showDelButton;
+    /**
+     * Адрес detail страницы.
+     * Если страница задана, то в наборе кнопок CRUD строки появится 
+     * кнопка перехода на эту страницу
+     */
+    @Parameter(defaultPrefix = "literal")
+    @Property
+    private String detailPage;
+    /**
+     * Адрес master страницы.
+     * Если страница задана, то появится 
+     * кнопка перехода на эту страницу
+     */
+    @Parameter(defaultPrefix = "literal")
+    @Property
+    private String listPage;
+    /**
+     * Блок переопределяющий форму редактирования сущности,
+     * предоставляемый по умолчанию
+     */
+    @Parameter(value = "block:defaultEditBlock")
+    private Block editBlock;
+    /**
+     * Блок переопределяющий форму добавления сущности,
+     * предоставляемый по умолчанию
+     */
+    @Parameter(value = "block:defaultAddBlock")
+    private Block addBlock;
+    /**
+     * Блок переопределяющий разметку представления сущности,
+     * предоставляемый по умолчанию
+     */
+    @Parameter(value = "block:defaultViewBlock")
+    private Block viewBlock;
+    //---Components and component's resources---
     @Component
     private Zone listZone;
     @Inject
-    @Property(write = false)
-    private Block buttons;
+    private Block hideWindowButtonBlock;
     @Inject
-    private Block editBlock;
+    private Block defaultEditBlock;
     @Inject
-    private Block viewBlock;
+    private Block defaultAddBlock;
+    @Inject
+    private Block defaultViewBlock;
     @Inject
     private Block deleteBlock;
     @Inject
@@ -53,88 +116,35 @@ public class Crud {
     private Environment environment;
     @Inject
     private AlertManager alertManager;
-    //---Locals---
-    @Parameter(allowNull = false)
-    private Class<?> objectClass;
-    @Parameter(allowNull = false)
-    private GridDataSource source;
-    @Parameter(value = "true", autoconnect = true)
-    @Property
-    private boolean showEditButton;
-    @Parameter(value = "true", autoconnect = true)
-    @Property
-    private boolean showViewButton;
-    @Parameter(value = "true", autoconnect = true)
-    @Property
-    private boolean showDelButton;
-    @Parameter(defaultPrefix = "literal")
-    @Property
-    private String detailPage;
-    @Parameter(defaultPrefix = "literal")
-    @Property
-    private String listPage;
-    /*
-     * Свойство, отвечающее за отображение всплывающих подсказок
-     */
     @Inject
-    @Symbol(OrionWebSymbols.SHOW_HINTS)
-    @Property
-    private String showHints;
+    private AjaxResponseRenderer ajaxResponseRenderer;
+    @Inject
+    private JavaScriptSupport javascriptSupport;
+    //---Locals---
     @Persist
     private Object object;
     @Persist
     @Property(write = false)
-    private String mode;
-    private static final String EDIT = "edit";
-    private static final String ADD = "add";
-    private static final String VIEW = "view";
-    private static final String DEL = "del";
-    @Environmental
-    private JavaScriptSupport javascriptSupport;
-    private CurrentBeanContext currentBeanContext = new CurrentBeanContext() {
-
-        @Override
-        public Object getCurrentBean() {
-            return object;
-        }
-
-        @Override
-        public Class<?> getBeanType() {
-            return objectClass;
-        }
-
-        @Override
-        public String getCurrentBeanId() {
-            return getId();
-        }
-    };
+    private String popupWindowId;
+    @Persist
+    private String listZoneId;
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
-        environment.push(CurrentBeanContext.class, currentBeanContext);
-    }
-
-    final void afterRender() {
-        environment.pop(CurrentBeanContext.class);
+        popupWindowId = javascriptSupport.allocateClientId("popupWindow");
+        listZoneId = javascriptSupport.allocateClientId("listZone");
     }
 
     /**
      * Задано явно для возможности вызова из других классов
      */
     public Object getObject() {
-        //это хак. 
-        //у нас нет возможности удалить контекст после использования
-        //его при обработке события компонента, поэтому не удаляем его вообще,
-        //а просто проверяем тот ли он что и был. Такой подход приведет к ошибкам
-        //при вложенных компонентах, устанавливающих CurrentBeanContext
-        //TODO Продумать и переделать
-        CurrentBeanContext cbc = environment.peek(CurrentBeanContext.class);
-        if (cbc == null || cbc != currentBeanContext) {
-            environment.push(CurrentBeanContext.class, currentBeanContext);
-        }
         return object;
     }
 
+    /**
+     * Идентификатор текущего объекта
+     */
     public String getId() {
         return es.getPrimaryKey(object).toString();
     }
@@ -154,6 +164,22 @@ public class Crud {
     }
 
     /**
+     * Используется для обновления зоны списка из переопределенных 
+     * редакторов editForm и addForm
+     */
+    public String getListZoneId() {
+        return listZoneId;
+    }
+
+    /**
+     * Используется для добавления кнопки закрытия окна из переопределенных 
+     * блоков, располагающихся во всплывающем окне
+     */
+    public Block getHideWindowButtonBlock() {
+        return hideWindowButtonBlock;
+    }
+
+    /**
      * Задано явно для возможности вызова из других классов
      */
     public void setObjectClass(Class<?> objectClass) {
@@ -161,8 +187,10 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
-        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS. 
-        javascriptSupport.addInitializerCall(InitializationPriority.valueOf("NORMAL"), "updateGrid", "");
+        //Это хак.
+        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS.
+        //TODO Продумать как привязаться к обновлению внутренней зоны Grid
+        javascriptSupport.addInitializerCall("updateGrid", "");
         if (resources.isBound("source")) {
             return source;
         } else {
@@ -170,6 +198,11 @@ public class Crud {
         }
     }
 
+    /**
+     * Обработчик сохранения после редактирования.
+     * Может использоваться переопределенной формой редактирования, если 
+     * она редактировала свойство Object компонента Crud 
+     */
     public Object onSuccessFromEditForm() {
         try {
             es.merge(object);
@@ -183,9 +216,14 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
-        return listZone.getBody();
+        return closeWindowAndGetListZone();
     }
 
+    /**
+     * Обработчик сохранения после создания нового объекта.
+     * Может использоваться переопределенной формой редактирования, если 
+     * она редактировала свойство Object компонента Crud 
+     */
     public Object onSuccessFromAddForm() {
         try {
             es.persist(object);
@@ -199,37 +237,79 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
-        return listZone.getBody();
+        return closeWindowAndGetListZone();
     }
 
-    public Object onEdit(Integer id) {
+    Object onEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
-        mode = EDIT;
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeEditPopup", new Object[]{object}, null);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", popupWindowId,
+                        "title", messages.get("label.mode.edit")));
+            }
+        });
         return editBlock;
     }
 
-    public Object onAdd() {
+    Object onAdd() {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
-        mode = ADD;
         object = es.newInstance(objectClass);
-        return editBlock;
+        resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", popupWindowId,
+                        "title", messages.get("label.mode.add")));
+            }
+        });
+        return addBlock;
     }
 
-    public Object onView(Integer id) {
-        mode = VIEW;
+    Object onView(Integer id) {
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeViewPopup", new Object[]{object}, null);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", popupWindowId,
+                        "title", messages.get("label.mode.view")));
+            }
+        });
         return viewBlock;
     }
 
-    public Object onTryDelete(Integer id) {
+    Object onTryDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
-        mode = DEL;
         object = es.find(objectClass, id);
+        resources.triggerEvent("beforeTryDeletePopup", new Object[]{object}, null);
+        //Show window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("showCkWindow",
+                        new JSONObject("window", popupWindowId,
+                        "title", messages.get("label.mode.del"),
+                        //TODO Размер окна должен вычислятся автоматически
+                        "width", "235"));
+            }
+        });
         return deleteBlock;
     }
 
-    public Object onDelete(Integer id) {
+    Object onDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
         try {
             object = es.find(objectClass, id);
@@ -244,10 +324,30 @@ public class Crud {
                     messages.get("entity." + objectClass.getSimpleName()),
                     es.getStringValue(object)));
         }
+        return closeWindowAndGetListZone();
+    }
+
+    private Object closeWindowAndGetListZone() {
+        //Close window
+        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+
+            public void run(JavaScriptSupport javascriptSupport) {
+
+                javascriptSupport.addInitializerCall("closeCkWindow",
+                        new JSONObject("window", popupWindowId));
+            }
+        });
         return listZone.getBody();
     }
 
-    public boolean getIsEdit() {
-        return EDIT.equals(mode);
-    }
+//    void onInplaceUpdateFromGrid(String zone) {
+//        javascriptSupport.addScript("Tapestry.Initializer.updateGrid()");
+//        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
+//
+//            public void run(JavaScriptSupport javascriptSupport) {
+//
+//                javascriptSupport.addInitializerCall("updateGrid", "");
+//            }
+//        });
+//    }
 }

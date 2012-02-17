@@ -24,7 +24,28 @@ public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTr
 
     @Override
     public <T> BeanModel<T> transformBeanModelForList(BeanModel<T> model, Messages messages) {
-        return transformView(model);
+        Set<String> existProps = new HashSet(model.getPropertyNames());
+        List<String> requiredProps = Arrays.asList("code",
+                "knowledgeAreaName", "trainingDirection", "speciality",
+                "licenseRecordGroup", "licenseQuantityByEducationForm",
+                "termination", "orgUnit");
+        existProps.removeAll(requiredProps);
+        model.exclude(existProps.toArray(new String[]{}));
+        model.reorder(requiredProps.toArray(new String[]{}));
+        return model;
+    }
+
+    @Override
+    public <T> BeanModel<T> transformBeanModelForView(BeanModel<T> model, Messages messages) {
+        Set<String> existProps = new HashSet(model.getPropertyNames());
+        List<String> requiredProps = Arrays.asList("license", "code", "educationalQualificationLevel",
+                "knowledgeAreaName", "trainingDirection", "speciality",
+                "licenseRecordGroup", "licenseQuantityByEducationForm",
+                "termination", "orgUnit");
+        existProps.removeAll(requiredProps);
+        model.exclude(existProps.toArray(new String[]{}));
+        model.reorder(requiredProps.toArray(new String[]{}));
+        return model;
     }
 
     @Override
@@ -35,18 +56,6 @@ public class LicenseRecordTapestryDataTransformer extends AbstractTapestryDataTr
     @Override
     public <T> BeanModel<T> transformBeanModelForEdit(BeanModel<T> model, Messages messages) {
         return transformEdit(model);
-    }
-
-    private <T> BeanModel<T> transformView(BeanModel<T> model) {
-        Set<String> existProps = new HashSet(model.getPropertyNames());
-        List<String> requiredProps = Arrays.asList("code",
-                "knowledgeAreaName", "trainingDirection", "speciality",
-                "licenseRecordGroup", "licenseQuantityByEducationForm",
-                "termination", "orgUnit");
-        existProps.removeAll(requiredProps);
-        model.exclude(existProps.toArray(new String[]{}));
-        model.reorder(requiredProps.toArray(new String[]{}));
-        return model;
     }
 
     private <T> BeanModel<T> transformEdit(BeanModel<T> model) {
