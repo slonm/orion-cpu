@@ -1,4 +1,6 @@
 /*TODO add alt text same to http://dimox.name/alt_text_for_images_with_css/*/
+/*
+//Подсвечивающийся при наведении бордюр
 a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud-detail-pic  {
     border: 1px solid black;
 }
@@ -6,8 +8,8 @@ a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud
 .crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
     background: no-repeat center transparent;
     display: block;
-    width: 32px;
-    height: 16px;
+    width: 100px;
+    height: 32px;
     position: relative;
     text-decoration: none;
     cursor: pointer;
@@ -15,26 +17,40 @@ a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud
     margin-right: 5px;
     border: 1px solid silver;
     float: left;
+}*/
+.crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
+    display: block;
 }
 
 TABLE.crud-links TBODY TR TD {
     border: 0px;
 }
 
-.crud-detail-pic{
-    background-image: url(../images/detail.png);
+.ui-grid-cell-action-tip {
+    display:none;
+    font-size:12px;
+    color:#fff;	
+    margin-left: 30px;
+    margin-top: 10px;
+    z-index: 1;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
-.crud-view-pic{
-    background-image: url(../images/view.png);
+.crud-detail-pic:before{
+    content: url(../images/detail.png);
 }
 
-.crud-edit-pic {
-    background-image: url(../images/edit.png);
+.crud-view-pic:before{
+    content: url(../images/view.png);
 }
 
-.crud-del-pic{
-    background-image: url(../images/delete.png);
+.crud-edit-pic:before{
+    content: url(../images/edit.png);
+}
+
+.crud-del-pic:before{
+    content: url(../images/delete.png);
 }
 
 .crud-edit, .crud-view, .crud-del, .crud-add, .crud-list {
@@ -60,4 +76,20 @@ table.nb tbody tr td{
 
 #grid-container{
     width: 100%; overflow-x: scroll; height: 500px; overflow-y: scroll;
+}
+
+.ori-icon-detail{
+    background-image: url(../images/detail.png);
+}
+
+.ori-icon-view{
+    background-image: url(../images/view.png);
+}
+
+.ori-icon-edit+.ui-icon{
+    background-image: url(../images/edit.png);
+}
+
+.ori-icon-del{
+    background-image: url(../images/delete.png);
 }
