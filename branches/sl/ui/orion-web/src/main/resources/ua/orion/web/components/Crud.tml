@@ -20,39 +20,37 @@
         <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(objectClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
-                <div class="ui-grid-cell-action-tip">
-                    <table class="crud-links">
-                        <t:if test="detailPage">
-                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                                <tr><td>
-                                        <t:PageLink class="crud-detail-pic ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
-                                    </td></tr>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showEditButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
-                                <tr><td>
-                                        <t:EventLink class="ui-button ui-widget ui-state-default ui-corner-all ui-button-edit"
-                                                     t:event="edit" context="object" zone="popupZone">${message:action.edit}</t:EventLink>
-                                    </td></tr>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showViewButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
-                                <tr><td>
-                                        <t:EventLink class="crud-view-pic ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" t:event="view" context="object" zone="popupZone">${message:action.view}</t:EventLink>
-                                    </td></tr>
-                            </s:HasPermission>
-                        </t:if>    
-                        <t:if test="showDelButton">
-                            <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
-                                <tr><td>
-                                        <t:EventLink class="crud-del-pic ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" t:event="trydelete" context="object" zone="popupZone">${message:action.del}</t:EventLink>
-                                    </td></tr>
-                            </s:HasPermission>
-                        </t:if>    
-                    </table>
-                </div>
+                <table class="ui-grid-cell-action-tip ui-widget-header">
+                    <t:if test="detailPage">
+                        <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                            <tr><td>
+                                    <t:PageLink class="ui-button-detail" style="display: block;" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
+                                </td></tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showEditButton">
+                        <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
+                            <tr><td>
+                                    <t:EventLink class="ui-button-edit" style="display: block;"
+                                                 t:event="edit" context="object" zone="popupZone">${message:action.edit}</t:EventLink>
+                                </td></tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showViewButton">
+                        <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
+                            <tr><td>
+                                    <t:EventLink class="ui-button-view" style="display: block;" t:event="view" context="object" zone="popupZone">${message:action.view}</t:EventLink>
+                                </td></tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showDelButton">
+                        <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
+                            <tr><td>
+                                    <t:EventLink class="ui-button-del" style="display: block;" t:event="trydelete" context="object" zone="popupZone">${message:action.del}</t:EventLink>
+                                </td></tr>
+                        </s:HasPermission>
+                    </t:if>    
+                </table>
                 <button class="ui-button-right-list-tfalse"/>
             </p:actionCell>
         </t:grid>

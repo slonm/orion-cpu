@@ -3,11 +3,13 @@
 //var elements={"ui-button-close":"ui-icon-close",
 //              "ui-button-add":"ui-icon-circle-plus"}
 //tfalse в конце используется для того, чтобы сделать кнопку без текста. 
+//var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse");
 var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse",
-"ui-button-detail", "ui-button-edit");
+"ui-button-detail", "ui-button-edit","ui-button-view","ui-button-del");
 //Инициализация классов иконок, для кнопок в массиве elements
-var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ori-icon-del", "ui-icon-cancel", "ori-icon-edit","ori-icon-view","ori-icon-del","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e", 
-"ori-icon-detail", "ui-icon-edit");
+//var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e");
+var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e", 
+"ui-icon-zoomin", "ui-icon-pencil", "ui-icon-search", "ui-icon-circle-minus");
     
 //Инициализация иконок на кнопках
 //ec - класс элемента HTML, ic - класс иконик (из jquery-ui)
@@ -174,7 +176,7 @@ function applyCookieTheme(){
  * Добавление UI-классов к элементам интерфейса
  */
 function updateCSS(){
-    jQuery("table.t-data-grid tbody tr td[class!='action']").addClass("ui-widget-content");
+    //jQuery("table.t-data-grid tbody tr td[class!='action']").addClass("ui-widget-content");
     jQuery("table.t-data-grid thead tr th[class!='action t-last']").addClass("ui-state-default");
     jQuery("div.t-data-grid-pager a").addClass("ui-corner-all ui-state-default");
     jQuery("div.t-data-grid-pager span.current").addClass("ui-corner-all ui-state-active");

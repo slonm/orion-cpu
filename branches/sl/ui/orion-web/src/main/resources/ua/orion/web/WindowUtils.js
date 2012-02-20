@@ -39,7 +39,7 @@ Tapestry.Initializer.closeCkWindow = function(opt){
 }
 
 Tapestry.Initializer.updateGrid = function(){
-    jQuery(".crud-links a").click(function(){
+    jQuery(".ui-grid-cell-action-tip a").click(function(){
         Tapestry.Initializer.showGridAjax();
     })
     Tapestry.Initializer.hideGridAjax();

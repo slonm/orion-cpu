@@ -1,14 +1,18 @@
 package ua.orion.web.components;
 
+import java.util.Locale;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.ThreadLocale;
 import org.apache.tapestry5.services.ComponentEventLinkEncoder;
 import org.apache.tapestry5.services.LocalizationSetter;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.PageRenderRequestParameters;
 import org.apache.tapestry5.services.Request;
+import org.slf4j.Logger;
 
 /**
  *
@@ -24,11 +28,17 @@ public class LocaleSwitcher {
     private PageRenderLinkSource pageRenderLinkSource;
     @Inject
     private Request request;
-    @Property
-    private String locale;
+    @Inject
+    private Messages messages;
+    @Inject
+    private Logger LOG;
+    @Inject
+    private ThreadLocale thLocale;
     @Inject
     @Symbol("tapestry.supported-locales")
     private String supportedLocales;
+    @Property
+    private String locale;
 
     public Link getLink() {
         String requestLocale = getRequestLocale();
@@ -76,11 +86,20 @@ public class LocaleSwitcher {
     }
 
     public boolean getIsCurrentLocale() {
-        return locale.equals(getRequestLocale());
+        return locale.equals(thLocale.getLocale().toString());
     }
-    
+
     public String[] getSupportedLocales() {
         return supportedLocales.split(",");
     }
 
+    public String getLanguage() {
+        LOG.debug("Locale: {}", locale);
+        String key = "lang." + locale;
+        if (messages.contains(key)) {
+            return messages.get(key);
+        } else {
+            return localizationSetter.toLocale(locale).getDisplayLanguage();
+        }
+    }
 }
