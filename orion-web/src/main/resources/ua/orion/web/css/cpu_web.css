@@ -104,12 +104,12 @@ span.menutitle{
 /* ЧАСТЬ 6 Работа со слоями */
 /* ЧАСТЬ 6.1 Установка слоев */
 /* Кнопки в Grid */
-.crud-links{
+/*.crud-links{
     z-index: 1;
     background-color: transparent;
     margin-left: auto;
     margin-right: auto;
-}
+}*/
 /* Элементы меню */
 .menuitems{
     z-index: 3;
@@ -209,7 +209,7 @@ textarea{
 }
 
 .ui-button{
-    display: inline;
+    display: inline-block;
 }
 
 /* Индикатор загрузки всплывающего окна */
@@ -221,18 +221,6 @@ div.ajax-state-grid{
     background-image: url(../images/ajax-state-80x12-windows.gif);
 }
 
-/* Стиль всплывающих кнопок в grid */
-.ui-grid-cell-action-tip {
-    display:none;
-    font-size:12px;
-    width:50px;
-    color:#fff;	
-    margin-left: 30px;
-    margin-top: 10px;
-    z-index: 1;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
 /* Окно загрузки Ajax */
 #ui-ajax-loading-window{
     display: none;

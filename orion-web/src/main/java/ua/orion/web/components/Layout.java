@@ -25,7 +25,7 @@ import ua.orion.web.OrionWebSymbols;
 /**
  * Layout component for pages.
  */
-@Import(stack={"orion"}, stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
+@Import(stack = {"orion"}, stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
 @SuppressWarnings("unused")
 public class Layout {
 
@@ -100,17 +100,6 @@ public class Layout {
     private ThreadRole thRole;
     @Inject
     private ComponentResources cr;
-    @Inject
-    private LocalizationSetter localizationSetter;
-    @Inject
-    private ComponentEventLinkEncoder componentEventLinkEncoder;
-    @Inject
-    private PageRenderLinkSource pageRenderLinkSource;
-    @Inject
-    @Symbol("tapestry.supported-locales")
-    private String supported_locales;
-    @Property
-    private String locale;
 
     public String getRole() {
         return thRole.getRole();
@@ -144,52 +133,4 @@ public class Layout {
         return false;
     }
 
-    public String[] getSupportedLocales() {
-        return supported_locales.split(",");
-    }
-
-    public Link getLink() {
-        String requestLocale = getRequestLocale();
-        PageRenderRequestParameters prrp = componentEventLinkEncoder.decodePageRenderRequest(request);
-        Link link;
-        if (prrp != null) {
-            link = componentEventLinkEncoder.createPageRenderLink(prrp);
-            for (String s : request.getParameterNames()) {
-                link.addParameter(s, request.getParameter(s));
-            }
-        }else{
-            link = pageRenderLinkSource.createPageRenderLink("");
-        }
-        if (requestLocale == null) {
-            link = link.copyWithBasePath("/" + locale + link.getBasePath());
-        } else {
-            String base = link.getBasePath();
-            base = base.substring(locale.length() + 1);
-            if (!base.isEmpty() && base.charAt(0) == '/') {
-                base = base.substring(1);
-            }
-            String newBase = "/" + locale;
-            if (!base.isEmpty()) {
-                newBase += "/" + base;
-            }
-            link = link.copyWithBasePath(newBase);
-        }
-        return link;
-    }
-
-    public String getRequestLocale() {
-        String path = request.getPath();
-        String[] split = path.substring(1).split("/");
-        if (split.length == 1 && split[0].equals("")) {
-            return null;
-        }
-        String possibleLocaleName = split[0];
-        // Might be just the page activation context, or it might be locale then page
-        // activation context
-        if (localizationSetter.isSupportedLocaleName(possibleLocaleName)) {
-            return possibleLocaleName;
-        } else {
-            return null;
-        }
-    }
 }
