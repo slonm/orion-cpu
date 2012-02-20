@@ -417,7 +417,7 @@ function gridTable(gridId){
                 col.setStyle({'width':newwidth+'px'});
                 col.select('div.ColumnHeaderText').each(function(element){
                     $(element).setStyle({width:newwidth+'px'});
-                    console.log($(element));
+                    //console.log($(element));
                 });
             }
         }
@@ -544,7 +544,17 @@ function gridTable(gridId){
         var currentRow=this.row[this.rowNames[irow]];
         for(icol=0;icol<headerRow.length;icol++){
             var colName=headerRow[icol].replace(/ColumnHeader$/,'')
-            this.addMenuItem('menu_'+currentRow[icol],new this.MenuItem('javascript:void(menuItemFilterByValue(\''+colName+'\',\''+currentRow[icol]+'\'))','Filter by value',''));
+            // add item only if column values can be filtered
+            var column_values_can_be_filtered=false;
+            for(var elname in filterElementBuilderConfig){
+                if(elname.toString().indexOf(colName)>=0){
+                    column_values_can_be_filtered=true;
+                    break;
+                }
+            }
+            if(column_values_can_be_filtered){
+               this.addMenuItem('menu_'+currentRow[icol],new this.MenuItem('javascript:void(menuItemFilterByValue(\''+colName+'\',\''+currentRow[icol]+'\'))','Filter by value',''));
+            }
         }
     }
 
