@@ -2,14 +2,12 @@ var crudPopupWindow;
 
 Event.observe(window, 'load',function(){
 
-    $$('a.crud-page-link-edit').each(function(element){
+    $$('a.crud-popup-edit').each(function(element){
+        //element.writeAttribute({href:'javascript:void(0)'});
         Event.observe(element, 'click',crudLinkClicked);
     });
-    $$('a.crud-page-link-delete').each(function(element){
-        Event.observe(element, 'click',crudLinkClicked);
-    });
-    $$('a.crud-page-link-view').each(function(element){
-        
+    $$('a.crud-popup-view').each(function(element){
+        //element.writeAttribute({href:'javascript:void(0)'});
         Event.observe(element, 'click',function (event){
             var title=$(this).readAttribute('title');
             var url=$(this).readAttribute('href')
@@ -29,6 +27,12 @@ Event.observe(window, 'load',function(){
             })
             crudPopupWindow.show();
             WindowCloseKey.init();
+            
+            // скрываются меню.
+            firstClick=false;
+            $$("span.menuitems").each(Element.hide);
+            menuIsOpen=false; 
+
             Event.stop(event);
         });
     });
@@ -66,6 +70,12 @@ function crudLinkClicked(event){
     });
     crudPopupWindow.show();
     WindowCloseKey.init();
+    
+    // скрываются меню.
+    firstClick=false;
+    $$("span.menuitems").each(Element.hide);
+    menuIsOpen=false; 
+    
     Event.stop(event);
 }
 
