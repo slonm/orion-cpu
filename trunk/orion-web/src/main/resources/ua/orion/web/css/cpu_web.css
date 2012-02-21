@@ -244,12 +244,6 @@ div.ajax-state-grid{
     height: 10px;
 }
 
-.user-role-panel{
-    padding: 5px 5px 5px 5px;
-    text-align: center;
-    margin-top: 5px;
-}
-
 /* Переопределение стилей UI для универсальности тем */
 .ui-widget { font-size: 9pt; }
 .ui-button-icon-only { width: 1.8em; height: 1.8em; }

@@ -1,10 +1,11 @@
 package ua.orion.web;
 
 import java.util.*;
-
-import javax.persistence.*;
-import javax.persistence.criteria.*;
-
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.apache.tapestry5.ioc.services.ClassPropertyAdapter;
@@ -47,6 +48,7 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getAvailableRows() {
         prepare();
         return allResults.size();
@@ -74,6 +76,7 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
         return 0;
     }
 
+    @Override
     public void prepare(final int startIndex, final int endIndex,
             final List<SortConstraint> sortConstraints) {
         final List<Comparator> sortChain = new ArrayList<>();
@@ -132,6 +135,7 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Object getRowValue(final int index) {
         return preparedResults.get(index - startIndex);
     }
@@ -139,6 +143,7 @@ public class FetchAllJpaGridDataSource<E> implements GridDataSource {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<E> getRowType() {
         return entityType;
     }

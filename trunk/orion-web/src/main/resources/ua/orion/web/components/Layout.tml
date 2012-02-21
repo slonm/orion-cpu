@@ -43,9 +43,9 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
 
                             </div>
                         </div>
-                        <div class="ui-state-highlight user-role-panel">
-                            <!-- Диалог с выбором темы (Начало) -->
-                            <button id="ui-show-select-theme-dialog-button" class="ui-button" style="float: left;">UI Theme</button>
+                        <div class="ui-state-highlight controls-bar">
+                            <!--Диалог с выбором темы (Начало) -->
+                            <button id="ui-show-select-theme-dialog-button" class="ui-button" >UI Theme</button>
                             <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
                                     <option>black-tie</option>
                                     <option>cupertino</option>
@@ -67,16 +67,19 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                             <!-- Выбор локали (Начало) -->
                             <t:ori.LocaleSwitcher/>
                             <!-- Выбор локали (Конец) -->
-                            <t:security.Authenticated>
-                                ${user} <t:if test="role">(${role})</t:if>
-                                <t:pagelink page="ori/selectRole" class="ui-button-refresh">${message:action.selectRolePage}</t:pagelink>
-                            </t:security.Authenticated>
-                            <t:security.NotAuthenticated>
-                                <t:pagelink page="security/login" class="ui-button-login">${message:action.login}</t:pagelink>
-                            </t:security.NotAuthenticated>&nbsp;
-                            <t:security.Authenticated>
-                                <t:ActionLink t:id="logout" class="ui-button-quit">${message:action.logout}</t:ActionLink>
-                            </t:security.Authenticated>
+                            <span style="display: inline-block;" >
+                                <t:security.Authenticated>
+                                    ${user}<t:if test="role">&nbsp;(${role})</t:if>
+                                    <t:pagelink page="ori/selectRole" class="ui-button-refresh">${message:action.selectRolePage}</t:pagelink>
+                                </t:security.Authenticated>
+                                <t:security.NotAuthenticated>
+                                    <t:pagelink page="security/login" class="ui-button-login">${message:action.login}</t:pagelink>
+                                </t:security.NotAuthenticated>&nbsp;
+                                <t:security.Authenticated>
+                                    <t:ActionLink t:id="logout" class="ui-button-quit">${message:action.logout}</t:ActionLink>
+                                </t:security.Authenticated>
+                            </span>
+                            <span class="controls-bar-after"/>
                         </div>
                         <!-- end content -->
                         <br style="clear: both;"/>

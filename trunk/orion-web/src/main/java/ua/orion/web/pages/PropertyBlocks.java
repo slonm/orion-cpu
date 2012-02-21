@@ -4,15 +4,20 @@ import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.FieldValidator;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
-import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Environmental;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.corelib.components.BeanEditor;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.corelib.components.Select;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.*;
-import ua.orion.core.services.EntityService;
+import org.apache.tapestry5.services.BeanEditContext;
+import org.apache.tapestry5.services.PropertyEditContext;
+import org.apache.tapestry5.services.PropertyOutputContext;
+import org.apache.tapestry5.services.ValueEncoderSource;
+import ua.orion.core.services.StringValueProvider;
 import ua.orion.web.services.TapestryDataSource;
 
 /**
@@ -28,7 +33,7 @@ public class PropertyBlocks {
     @Inject
     private Messages messages;
     @Inject
-    private EntityService es;
+    private StringValueProvider svp;
     @Inject
     private ValueEncoderSource valueEncoderSource;
     @Inject
@@ -45,8 +50,7 @@ public class PropertyBlocks {
     @Component(parameters = {
         "value=editContext.propertyValue",
         "label=prop:editContext.label",
-//        "model={true:${message:true}, false:${message:false}}",
-        "model={'true':trueLabel, 'false':falseLabel}",
+        "model={'true':label('true'), 'false':label('false')}",
         "clientId=prop:editContext.propertyId",
         "validate=prop:booleanSelectValidator"
     })
@@ -81,11 +85,7 @@ public class PropertyBlocks {
      * @return a {@link String}.
      */
     public String getEntity() {
-        Object propertyValue = outputContext.getPropertyValue();
-        if (propertyValue == null) {
-            return "";
-        }
-        return es.getStringValue(propertyValue);
+        return svp.getStringValue(outputContext.getPropertyValue());
     }
 
     public SelectModel getEntitySelectModel() {
@@ -100,11 +100,7 @@ public class PropertyBlocks {
         return editContext.getValidator(entitySelect);
     }
 
-    public String getTrueLabel(){
-        return messages.get("true");
-    }
-
-    public String getFalseLabel(){
-        return messages.get("false");
+    public String label(String key){
+        return messages.get(key);
     }
 }
