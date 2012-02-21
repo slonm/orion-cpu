@@ -26,6 +26,10 @@ TABLE.ui-grid-cell-action-tip TBODY TR TD {
     border: 0px;
 }
 
+.ui-grid-cell-action-tip a {
+    display: block;
+}
+
 .ui-grid-cell-action-tip {
     display:none;
     font-size:12px;

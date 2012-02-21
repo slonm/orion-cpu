@@ -10,10 +10,10 @@
     </div>
     <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
         <s:HasPermission permission="${objectClass.simpleName}:insert">
-            <t:EventLink class="crud-add ui-button-add crud-add-record-button" t:event="add" zone="popupZone" style="display:inline-block">${message:action.add}</t:EventLink>
+            <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
         </s:HasPermission>
         <t:if test="listPage">
-            <t:PageLink class="crud-list ui-button-tolist" t:page="prop:listPage" style="display:inline-block">${message:action.list}</t:PageLink>
+            <t:PageLink class="ui-button-tolist" t:page="prop:listPage">${message:action.list}</t:PageLink>
         </t:if>    
     </div>
     <t:zone t:id="listZone" id="${listZoneId}">
@@ -24,14 +24,14 @@
                     <t:if test="detailPage">
                         <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
                             <tr><td>
-                                    <t:PageLink class="ui-button-detail" style="display: block;" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
+                                    <t:PageLink class="ui-button-detail" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showEditButton">
                         <s:HasPermission permission="${objectClass.simpleName}:update:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-edit" style="display: block;"
+                                    <t:EventLink class="ui-button-edit"
                                                  t:event="edit" context="object" zone="popupZone">${message:action.edit}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
@@ -39,14 +39,14 @@
                     <t:if test="showViewButton">
                         <s:HasPermission permission="${objectClass.simpleName}:read:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-view" style="display: block;" t:event="view" context="object" zone="popupZone">${message:action.view}</t:EventLink>
+                                    <t:EventLink class="ui-button-view" t:event="view" context="object" zone="popupZone">${message:action.view}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showDelButton">
                         <s:HasPermission permission="${objectClass.simpleName}:delete:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-del" style="display: block;" t:event="trydelete" context="object" zone="popupZone">${message:action.del}</t:EventLink>
+                                    <t:EventLink class="ui-button-del" t:event="trydelete" context="object" zone="popupZone">${message:action.del}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
@@ -76,10 +76,10 @@
         <table>
             <tr>
                 <td>
-                    <t:EventLink t:event="delete" context="object" zone="prop:listZoneId" class="ui-button-del" style="display:inline-block">${message:action.del}</t:EventLink>
+                    <t:EventLink t:event="delete" context="object" zone="prop:listZoneId" class="ui-button-del">${message:action.del}</t:EventLink>
                 </td>
                 <td>
-                    <a href="cancel" onclick="javascript: jQuery('#${popupWindowId}').dialog('close'); return false;" class="ui-button-cancel" style="display:inline-block">${message:action.cancel}</a>
+                    <a href="cancel" onclick="javascript: jQuery('#${popupWindowId}').dialog('close'); return false;" class="ui-button-cancel">${message:action.cancel}</a>
                 </td>
             </tr>
         </table>
