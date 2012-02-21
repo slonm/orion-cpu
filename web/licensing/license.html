@@ -24,7 +24,10 @@
                 <H2 class="title">Ліцензії</H2> 
                 <div id="grid-buttons" style="width: 99%">
                     <button type="submit" id="license-add-button" title="Після додавання нової ліцензії попередні автоматично маркуються як застарілі">Додати</button>
-                    Після додавання нової ліцензії попередні автоматично маркуються як застарілі
+                    <ul>
+                        <li>Після додавання нової ліцензії попередні автоматично маркуються як застарілі</li>
+                        <li>Після редагування/видалення/додавання записів для нової ліцензії її потрібно активувати (вона стане діючою)</li>
+                    </ul>
                 </div>
                 <div id="master-table">
                     <table>
@@ -37,14 +40,21 @@
                                 <th>Чи є діючою</th>
                             </tr>
                             <tr>
-                                <td><a href="licenserecord.html"><input type="image" src="../img/detail.png" title="Перейти до ліцензійних записів"/></a>  <input class="license-edit" type="image" src="../img/edit.png" title="Редагувати"/></td>
+                                <td ><a href="licenserecord.html"><input type="image" src="../img/detail.png" title="Перейти до ліцензійних записів"/></a>  <input class="license-edit" type="image" src="../img/edit.png" title="Редагувати"/>   <input class="license-activate" type="image" src="../img/activate.png" title="Активувати ліцензію"/></td>
+                                <td class="t-s">АГ</td>
+                                <td class="t-n">582006</td>
+                                <td class="t-d">11.02.2012</td>
+                                <td class="t-sd">Ні</td>
+                            </tr>
+                            <tr>
+                                <td align="left"><a href="licenserecord.html"><input type="image" src="../img/detail.png" title="Перейти до ліцензійних записів"/></a></td>
                                 <td class="t-s">АГ</td>
                                 <td class="t-n">582006</td>
                                 <td class="t-d">14.09.2011</td>
                                 <td class="t-sd">Так</td>
                             </tr>
                             <tr>
-                                <td><a href="licenserecord.html"><input type="image" src="../img/detail.png" title="Перейти до ліцензійних записів"/></a>  <input class="license-edit" type="image" src="../img/edit.png" title="Редагувати"/></td>
+                                <td align="left"><a href="licenserecord.html"><input type="image" src="../img/detail.png" title="Перейти до ліцензійних записів"/></a></td>
                                 <td class="t-s">АВ</td>
                                 <td class="t-n">529699</td>
                                 <td class="t-d">05.11.2010</td>
@@ -60,24 +70,40 @@
         <div id="footer">
             <strong>© 2009-2012 Класичний приватний університет</strong>
         </div><!-- #footer -->
+        <!--Диалоговое окно редактирования -->
         <div id="add-license-dialog" style="display: none">
             <div class="ui-state-highlight" id="license-help"></div>
             <table>
                 <tr>
-                    <td>Серія</td><td><input type="text" id="l-s"></td>
+                    <td>Серія</td><td><input type="text" id="l-s"/></td>
                 </tr>
                 <tr>
-                    <td>Номер</td><td><input type="text" id="l-n"></td>
+                    <td>Номер</td><td><input type="text" id="l-n"/></td>
                 </tr>
                 <tr>
-                    <td>Дата видачі</td><td><input type="text" id="l-d"><img src="../img/datefield.gif"></img></td>
+                    <td>Дата видачі</td><td><input type="text" id="l-d"/><img src="../img/datefield.gif"></img></td>
                 </tr>
                 <tr id="l-sd">
-                    <td>Новий термін дії ліцезійних записів</td><td><input type="text" ><img src="../img/datefield.gif"></img></td>
+                    <td>Новий термін дії ліцезійних записів</td><td><input type="text" /><img src="../img/datefield.gif"></img></td>
                 </tr>
                 <tr>
                     <td></td><td><input type="submit" value="Відмінити" id="license-cancel"/> <input type="submit" value="Зберегти" id="license-save"/></td>
                 </tr>
+            </table>
+        </div>
+        <!--Диалоговое окно активации -->
+        <div id="activate-license-dialog" style="display: none">
+            <div class="ui-state-highlight" id="license-help-activate"></div>
+            <table>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>Перед активацією ліцензії потрібно відредагувати/додати/видалити її ліцензійні записи, оскільки після активації змінити описові дані ліцензії та її ліцензійних записів буде неможливо</li>
+                            <li>Ви дійсно бажаєти активувати ліцензію?</li>
+                        </ul>
+                        <input type="submit" value="Ні" style="width: 50px" id="activate-cancel"/>   <input type="submit" value="Так" style="width: 50px" id="activate-save"/>
+                    </td>
+                </tr> 
             </table>
         </div>
         <script type="text/javascript">
@@ -90,19 +116,24 @@
                     jQuery("#license-help").css({'display':'none'});
                     jQuery("#add-license-dialog").dialog({show: "blind", hide:"blind",  title: "Редагувння ліцензії"});
                 })		
-                jQuery("#license-save").click(function(){jQuery("#add-license-dialog").dialog("close")})
-                jQuery("#license-cancel").click(function(){jQuery("#add-license-dialog").dialog("close")})
+                jQuery("#license-save").click(function(){jQuery("#add-license-dialog").dialog("close")});
+                jQuery("#license-cancel").click(function(){jQuery("#add-license-dialog").dialog("close")});
             })
             jQuery("#license-add-button").click(function(){
                 jQuery("#license-help").html("<ul><li>Всі попередні ліцензії автоматично стануть недіючими<li>\n\
         Всі ліцензійні записи, пов\'язані із попереднью ліцензією, будуть скопійовані до нової ліцензії із терміном\n\
 завершення їх дії, вказаним в полі \"Новий термін дії ліцензійних записів\"<li>Після додавання нової ліцензії потрібно\n\
-відредагувати/додати/видалити її ліцензійні записи</ul>'");
+відредагувати/додати/видалити її ліцензійні записи та активувати ліцензію</ul>");
                 jQuery("#license-help").css({'display':'block'});
                 jQuery("#l-sd").css({'display':'table-row'});
                 jQuery("#add-license-dialog").dialog({width:500, show: "blind", hide:"blind", title: "Додавання ліцензії"});
 
             })
+            jQuery(".license-activate").click(function(){
+                jQuery("#activate-license-dialog").dialog({width:500, show: "blind", hide:"blind", title: "Активування ліцекезії"});
+            })
+            jQuery("#activate-save").click(function(){jQuery("#activate-license-dialog").dialog("close")});
+            jQuery("#activate-cancel").click(function(){jQuery("#activate-license-dialog").dialog("close")});
         </script>
     </body>
 </html>
