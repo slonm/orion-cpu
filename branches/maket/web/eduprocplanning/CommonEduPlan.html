@@ -31,51 +31,37 @@
             <div id="content">
                 <H2 class="title">Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009</H2> 
                 <div id="approve-buttons" style="width: 99%">
-                    <button type="submit" id="eduplan-approve-button" >Затвердити план</button>   Дата затвердження: <input type="text"/><img src="../img/datefield.gif"/>  Кто затвердив: <select>
+                    <button type="submit" id="eduplan-approve-button" style="padding-bottom: 3px">Затвердити план</button>   Дата затвердження: <input type="text"/><img src="../img/datefield.gif"/>  Кто затвердив: <select>
                         <option value="CPU">Керівництво КПУ</option>
                         <option value="MONcomis">Комісія МОН</option>
                         <option value="MON">МОН</option>
                     </select>
                     Змінює статус сплану на діючий
                 </div>
-                <div id="inactive-buttons" style="width: 99%">
-                    <button type="submit" id="eduplan-inactive-button" >Вивести план з діїн</button>   Дата виведення з дії: <input type="text"/><img src="../img/datefield.gif"/>  Кто виві із дфї: <select>
+                <div id="inactive-buttons" style="width: 99%;padding-bottom: 5px">
+                    <button type="submit" id="eduplan-inactive-button" >Вивести план з дії</button>   Дата виведення з дії: <input type="text"/><img src="../img/datefield.gif"/>  Кто вивів із дії: <select>
                         <option value="CPU">Керівництво КПУ</option>
                         <option value="MONcomis">Комісія МОН</option>
                         <option value="MON">МОН</option>
                     </select>
                     Змінює статус сплану на виведений з діх
                 </div>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addcycle-button">Додати цикл</button>   <a href="EduPlans.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>   <a href="Disciplines.html"><button type="submit" id="to-discipline-list" >До банку дисциплін</button></a>
+                    <a href="EPDisciplinesWeb.html"  style="padding-left: 35%"><button type="submit" id="to-stationary-eduplan-button">Денна форма</button></a>   <a href="EPDisciplinesWebCorresp.html"><button type="submit" id="to-correspondence-eduplan-button" >Заочна форма</button></a>   <a href="EPDisciplinesWeb.html"><button type="submit" id="to-distance-eduplan-button" >Дистанційна форма</button></a>
+                </div>
                 <div id="grid">
-                    <table width="100%"> 
-                        <tr>
-                            <td class="btnrow"><a href="EduPlans.html">
-                                    <input type="button"  value="До навчальних планів" title="Перейти до навчальних планів"/></a>
-                            </td>
-                            <td class="btnrow">
-                                <a href="EPDisciplinesWeb.html"><input type="button" value="Денна форма" title="Заповнити дані дисципліни для денної форми навчання"/></a>
-                                <a href="EPDisciplinesWebCorresp.html"><input type="button" value="Заочна форма"  title="Заповнити дані дисципліни для заочної форми навчання"/></a>
-                                <a href="EPDisciplinesWeb.html"><input type="button" value="Дистанційна форма"  title="Заповнити дані дисципліни для дистанційної форми навчання"/></a>
-                            </td>
-                            <td class="btnrow"><a href="Disciplines.html">
-                                    <input type="button"  value="До банку навчальних дисциплін" title="Перейти до банку навчальних дисциплін"/></a>
-                            </td>
-                            <td class="btnrow" colspan="5">
-                                <a href="AddEditCommonEduPlanCycle.html"><input type="button"  value="Додати цикл" title="Додати цикл дисциплін"/></a>
-                            </td>
-                        </tr>
-                    </table>
                     <table>
                         <tbody>
                             <tr>
+                                <th rowspan="2"></th>
                                 <th rowspan="2">№ з/п</th>
                                 <th rowspan="2">Назва дисципліни</th>
                                 <th colspan="3">Кількість підсумкових контрольних заходів</th>
                                 <th rowspan="2">Кредитів ECTS</th>
                                 <th rowspan="2">Загал. обсяг годин</th>
+                                <th rowspan="2">Тип дисципліни</th>
                                 <th rowspan="2">Дисципліна введена до плану</th>
-                                <th rowspan="2">
-                                </th>
                             </tr>
                             <tr>
                                 <th>Іспитів</th>
@@ -83,32 +69,16 @@
                                 <th>Курс. робіт</th>
                             </tr>
                             <tr style="font-weight: bold">
+                                <td><input class="eduplancycle-edit" type="image" src="../img/edit.png" title="Редагувати цикл навчального плану"/>   <input class="eduplancycle-delete" type="image" src="../img/delete.png" title="Видалити цикл навчального плану"/>   <input class="eduplandiscipline-add" type="image" src="../img/add.png" title="Додати дисципліну циклу навчального плану"/></td>
                                 <td></td>
                                 <td colspan="4">1. Цикл гуманітарної та соціально-економічної підготовки</td>
                                 <td align="center">24.0</td>
                                 <td align="center">864</td>
                                 <td align="center"></td>
-                                <td>
-                                    <div style="display:inline; white-space: nowrap">
-                                        <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
-                                        <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
-                                        <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="addcyclepart.png" title="Додати обов'язкову/вибіркову частину циклу дисциплін"/></a><br/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Обов'язкові дисципліни</td>
-                                <td align="center">16.0</td>
-                                <td align="center">576</td>
                                 <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">1.01</td>
                                 <td>Українська мова (за професійним спрямуванням)</td>
                                 <td align="center">1</td>
@@ -116,13 +86,11 @@
                                 <td align="center"></td>
                                 <td align="center">3,0</td>
                                 <td align="center">108</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за стандартом (ОПП)</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">1.02</td>
                                 <td>Історія України</td>
                                 <td align="center">1</td>
@@ -130,105 +98,67 @@
                                 <td align="center"></td>
                                 <td align="center">3,0</td>
                                 <td align="center">108</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за стандартом (ОПП)</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">1.01в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-1</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">Вибіркова</td>
+                                <td align="center">за вибором студента</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">1.02в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-2</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">Вибіркова</td>
+                                <td align="center">за вибором студента</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">1.03в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-3</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">Вибіркова</td>
+                                <td align="center">за вибором студента</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">1.04в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-4</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">Вибіркова</td>
+                                <td align="center">за вибором студента</td>
                             </tr>
                             <tr style="font-weight: bold">
                                 <td></td>
-                                <td colspan="4">Вибіркові дисципліни</td>
-                                <td align="center">8.0</td>
-                                <td align="center">288</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDisciplineChoice.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">1.01в</td>
-                                <td><select class="choosen-discipline-list"></select></td>
-                                <td align="center"></td>
-                                <td align="center">1</td>
-                                <td align="center"></td>
-                                <td align="center">2,0</td>
-                                <td align="center">72</td>
-                                <td align="center">за вибором студента</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDisciplineChoice.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">1.02в</td>
-                                <td><select class="choosen-discipline-list"></select></td>
-                                <td align="center"></td>
-                                <td align="center">1</td>
-                                <td align="center"></td>
-                                <td align="center">2,0</td>
-                                <td align="center">72</td>
-                                <td align="center">за вибором студента</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDisciplineChoice.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">1.03в</td>
-                                <td><select class="choosen-discipline-list"></select></td>
-                                <td align="center"></td>
-                                <td align="center">1</td>
-                                <td align="center"></td>
-                                <td align="center">2,0</td>
-                                <td align="center">72</td>
-                                <td align="center">за вибором студента</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDisciplineChoice.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">1.04в</td>
-                                <td><select class="choosen-discipline-list"></select></td>
-                                <td align="center"></td>
-                                <td align="center">1</td>
-                                <td align="center"></td>
-                                <td align="center">2,0</td>
-                                <td align="center">72</td>
-                                <td align="center">за вибором студента</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDisciplineChoice.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
                                 <td></td>
                                 <td colspan="4">2. Цикл математичної, природничо-наукової підготовки</td>
                                 <td align="center">38.0</td>
                                 <td align="center">1368</td>
                                 <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
-                                    <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="addcyclepart.png" title="Додати обов'язкову/вибіркову частину циклу дисциплін"/></a><br/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Обов'язкові дисципліни</td>
-                                <td align="center">24.5</td>
-                                <td align="center">882</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">2.01</td>
                                 <td>Математичний аналіз</td>
                                 <td align="center">1</td>
@@ -236,63 +166,43 @@
                                 <td align="center"></td>
                                 <td align="center">10,0</td>
                                 <td align="center">360</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за стандартом (ОПП)</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Вибіркові дисципліни</td>
-                                <td align="center">13.5</td>
-                                <td align="center">486</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">2.01в</td>
-                                <td><select class="choosen-discipline"><option>Чисельні методи в інформатиці</option></select></td>
+                                <td>Чисельні методи в інформатиці</td>
                                 <td align="center"></td>
                                 <td align="center">1</td>
                                 <td align="center"></td>
                                 <td align="center">4,5</td>
                                 <td align="center">162</td>
+                                <td align="center">Вибіркова</td>
                                 <td align="center">за вибором ВНЗ</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">2.01в</td>
+                                <td>Вибіркова дисципліна ЦМПНП-1</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">4,0</td>
+                                <td align="center">144</td>
+                                <td align="center">Вибіркова</td>
+                                <td align="center">за вибором студента</td>
                             </tr>
                             <tr style="font-weight: bold">
+                                <td></td>
                                 <td></td>
                                 <td colspan="4">3. Цикл професійної та практичної підготовки</td>
                                 <td align="center">161.5</td>
                                 <td align="center">5814</td>
                                 <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
-                                    <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="addcyclepart.png" title="Додати обов'язкову/вибіркову частину циклу дисциплін"/></a><br/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Обов'язкові дисципліни</td>
-                                <td align="center">104.0</td>
-                                <td align="center">3744</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">3.01</td>
                                 <td>Комп’ютерна дискретна математика</td>
                                 <td align="center">1</td>
@@ -300,63 +210,31 @@
                                 <td align="center"></td>
                                 <td align="center">5,0</td>
                                 <td align="center">180</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за стандартом (ОПП)</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Вибіркові дисципліни</td>
-                                <td align="center">57.5</td>
-                                <td align="center">2070</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">3.01в</td>
-                                <td><select class="choosen-discipline"><option>Мова програмування Java</option></select></td>
+                                <td>Мова програмування Java</td>
                                 <td align="center">1</td>
                                 <td align="center"></td>
                                 <td align="center"></td>
                                 <td align="center">4,5</td>
                                 <td align="center">162</td>
+                                <td align="center">Вибіркова</td>
                                 <td align="center">за вибором ВНЗ</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
                             </tr>
                             <tr style="font-weight: bold">
+                                <td></td>
                                 <td></td>
                                 <td colspan="4">Цикл позакредитних дисциплін</td>
                                 <td align="center">20.5</td>
                                 <td align="center">738</td>
                                 <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
-                                    <a href="AddEditCommonEduPlanCyclePart.html"><input type="image" src="addcyclepart.png" title="Додати обов'язкову/вибіркову частину циклу дисциплін"/></a><br/>
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td></td>
-                                <td colspan="4">Обов'язкові дисципліни</td>
-                                <td align="center">20.5</td>
-                                <td align="center">738</td>
-                                <td align="center"></td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати нормативну/вибіркову частину циклу дисциплін"/></a>
-                                    <input type="image" src="delete.png" title="Видалити нормативну/вибіркову частину циклу дисциплін"/>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="adddisc.png" title="Додати дисципліну"/></a>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">пк.01</td>
                                 <td>Фізичне виховання</td>
                                 <td align="center"></td>
@@ -364,13 +242,11 @@
                                 <td align="center"></td>
                                 <td align="center">8,0</td>
                                 <td align="center">288</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за наказом МОН</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
                             </tr>
                             <tr>
+                                <td></td>
                                 <td align="center">пк.02</td>
                                 <td>Основи християнської традиції</td>
                                 <td align="center"></td>
@@ -378,26 +254,15 @@
                                 <td align="center"></td>
                                 <td align="center">0,75</td>
                                 <td align="center">72</td>
+                                <td align="center">Обов'язкова</td>
                                 <td align="center">за вибором ВНЗ</td>
-                                <td>
-                                    <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                                    <input type="image" src="delete.png" title="Видалити дисципліну"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="btnrow">
-                                    <a href="EduPlans.html"><input type="button"  value="До навчальних планів" title="Перейти до навчальних планів"/></a>
-                                </td>
-                                <td class="btnrow"colspan="7"><a href="EPDisciplinesWeb.html"><input type="button" value="Денна форма" title="Заповнити дані дисципліни для денної форми навчання"/></a>
-                                    <a href="EPDisciplinesWebCorresp.html"><input type="button" value="Заочна форма"  title="Заповнити дані дисципліни для заочної форми навчання"/></a>
-                                    <a href="EPDisciplinesWeb.html"><input type="button" value="Дистанційна форма"  title="Заповнити дані дисципліни для дистанційної форми навчання"/></a>
-                                </td>
-                                <td class="btnrow">
-                                    <a href="AddEditCommonEduPlanCycle.html"><input type="button"  value="Додати цикл" title="Додати цикл дисциплін"/></a>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div id="grid-buttons" style="width: 99%">
+                        <button type="submit" id="addcycle-button">Додати цикл</button>   <a href="EduPlans.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>   <a href="Disciplines.html"><button type="submit" id="to-discipline-list" >До банку дисциплін</button></a>
+                        <a href="EPDisciplinesWeb.html"  style="padding-left: 35%"><button type="submit" id="to-stationary-eduplan-button">Денна форма</button></a>   <a href="EPDisciplinesWebCorresp.html"><button type="submit" id="to-correspondence-eduplan-button" >Заочна форма</button></a>   <a href="EPDisciplinesWeb.html"><button type="submit" id="to-distance-eduplan-button" >Дистанційна форма</button></a>
+                    </div>
                 </div><!---#grid -->
             </div><!-- #content-->
 
@@ -406,5 +271,45 @@
         <div id="footer">
             <strong>© 2009-2012 Классический приватный университет</strong>
         </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование цикла) -->
+        <div id="add-eduplancycle-dialog" style="display: none">
+            <div class="ui-state-highlight" id="eduplancycle-help"></div>
+            <table>
+                <tr>
+                    <td>№ циклу дисциплін:</td><td><input type="text"></input></td>
+                </tr>
+                <tr>
+                    <td>Назва циклу дисциплін:</td>
+                    <td>
+                        <select>
+                            <option value="HumSocEconPrep">Цикл гуманітарної та соціально-економічної підготовки</option>
+                            <option value="HumSocEconDisc">Цикл гуманітарних та соціально-економічних дисциплін</option>
+                            <option value="MathNatSci">Цикл математичної, природничо-наукової підготовки</option>
+                            <option value="ProfPract">Цикл професійної та практичної підготовки</option>
+                            <option value="ProfPract">Цикл позакредитних дисциплін</option>
+                        </select>
+                        <p><a href="">Перейти до довідника назв циклів</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Загальна кількість ECTS-кредитів циклу:</td><td><input type="text"></input></td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="eduplancycle-cancel"/> <input type="submit" value="Зберегти" id="eduplancycle-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addcycle-button").click(function(){
+                    jQuery("#eduplancycle-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009");
+                    jQuery("#eduplancycle-help").css({'display':'block'});
+                    jQuery("#add-eduplancycle-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Додавання циклу навчального плану"});
+                })
+                jQuery("#eduplancycle-save").click(function(){jQuery("#add-eduplancycle-dialog").dialog("close")});
+                jQuery("#eduplancycle-cancel").click(function(){jQuery("#add-eduplancycle-dialog").dialog("close")});
+            })
+        
+        </script>
     </body>
 </html>
