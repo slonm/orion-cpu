@@ -1,0 +1,19 @@
+.ori_spoiler-link .ori_spoiler-toggle  {
+    display: Inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.ori_spoiler .ori_spoiler-link .ori_spoiler-toggle{
+    background-image: url(../images/expand.png);
+}
+
+.ori_spoiler-visible .ori_spoiler-link .ori_spoiler-toggle{
+    background-image: url(../images/collapse.png);
+}
+
+.ori_spoiler-body{
+    font-style: italic;
+    color: DarkGray;
+    display: none;
+}

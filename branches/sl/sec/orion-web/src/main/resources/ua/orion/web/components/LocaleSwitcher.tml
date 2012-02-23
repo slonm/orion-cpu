@@ -1,0 +1,12 @@
+<div class="ui-buttonset" style="display: inline-block" xml:space="default" 
+     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+     xmlns:p="tapestry:parameter">
+    <t:loop t:source="supportedLocales" t:value="locale">
+        <t:if test="!isCurrentLocale">
+            <t:ori.ExternalLink link="Link">${language}</t:ori.ExternalLink>
+            <p:else>
+                <a href="#" onclick="javascript:return false;"><b>${language}</b></a>
+            </p:else>
+        </t:if>
+    </t:loop>
+</div>    

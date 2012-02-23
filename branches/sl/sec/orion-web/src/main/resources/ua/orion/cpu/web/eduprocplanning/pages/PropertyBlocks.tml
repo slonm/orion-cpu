@@ -1,0 +1,65 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <!--Редактор свойства @DataType("EduPlanCycle") в сущности EduPlan,
+    используемый в гриде при отображении списка учебных планов-->
+    <t:block id="DisplayEduPlanCycle">
+        <!--параметры source и value вынесены в аннотацию @Component в класс
+        параметр t:id содержит имя свойства класса-компонента типа Loop-->
+        <ol>
+            <t:loop t:id="eduPlanCyclesLoop">
+
+                <!--для каждого элемента набора EduPlanCycles возвращается 
+                имя объекта eduPlanCycle.ePPCycle,
+                являющегося полем класса и указанным в свойстве value компонента, -->
+                <li><t:pagelink page="eduprocplanning/EduPlanCycleWeb" context="eduPlanCycle.id">${eduPlanCycle}</t:pagelink></li>
+                <!--                   <td>${eduPlanCycle.ePPCycle}</td> -->
+
+            </t:loop>
+        </ol>
+    </t:block>
+    <!--Редактор свойства @DataType("EduPlanCycle") в сущности EduPlan,
+    используемый в бинэдиторе для редактирования списка циклов дисциплин для 
+    учебного плана -->
+    <t:block id="EditEduPlanCycle">
+        <!--Отображать PropertyBlock для объемов необходимо в таблице-->
+        <div id="eduPlanPBContainer">
+            <table>
+                <tr><td id="headerfortableinpb">${message:property.EduPlan.EduPlanCycles}</td></tr>
+                <tr><td><table class="t-loop t-data-grid" id="eduPlanPBContainerTable" style="text-align: center">
+                            <thead>
+                                <tr>
+                                    <!--      <td>${message:entity.EPPCycle}</td> -->
+                                    <th>${message:property.EduPlanCycle.Number}</th>
+                                    <th>${message:property.EduPlanCycle.ePPCycle}</th>
+                                    <th>${message:property.EduPlanCycle.IsRegulatory}</th>
+                                    <th>${message:property.EduPlanCycle.EPPCycleTotalCredits}</th> 
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <t:ajaxformloop t:id="eduPlanCycles">
+                                <tr>
+                                    <!--         <td><t:select t:id="ePPCycle" value="eduPlanCycle.ePPCycle"/></td> -->
+                                    <td><t:textfield t:id="number" value="eduPlanCycle.Number"/></td>
+                                <td><t:select t:id="ePPCycleNameSelect" model="ePPCycleNameSelectModel" value="ePPCycleName"/></td>
+                                <td><t:checkbox style="margin-left: auto; margin-right: auto" t:id="isRegulatory" value="eduPlanCycle.isRegulatory"/></td>
+                                <td><t:textfield t:id="cycleTotalCredits" value="cycleTotalCredits"/></td>
+                                <td><t:removerowlink class="crud-del-pic"/></td>
+                                </tr>
+                            </t:ajaxformloop>
+                            </tbody>
+                        </table></td></tr>
+            </table>
+        </div>
+    </t:block> 
+    <t:block id="addRowBlock">
+        <t:AddRowLink><input type="button" class="bbutton" value="${message:label.add}" id="eduPlanAddCycleLink"></input></t:AddRowLink>
+    </t:block>
+
+    <t:block id="DisplayEduPlanTrainingDirection">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="TRAINING_DIRECTION" licenseRecord="eduPlan.licenseRecord"/>
+    </t:block>
+
+    <t:block id="DisplayEduPlanSpeciality">
+        <t:licensing.DisplayTrainingDirectionOrSpeciality mode="SPECIALITY" licenseRecord="eduPlan.licenseRecord"/>
+    </t:block>
+</div>

@@ -1,0 +1,98 @@
+/*TODO add alt text same to http://dimox.name/alt_text_for_images_with_css/*/
+/*
+//Подсвечивающийся при наведении бордюр
+a:hover.crud-del-pic, a:hover.crud-edit-pic, a:hover.crud-view-pic, a:hover.crud-detail-pic  {
+    border: 1px solid black;
+}
+
+.crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
+    background: no-repeat center transparent;
+    display: block;
+    width: 100px;
+    height: 32px;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid silver;
+    float: left;
+}*/
+.crud-del-pic, .crud-edit-pic, .crud-view-pic, .crud-detail-pic  {
+    display: block;
+}
+
+TABLE.ui-grid-cell-action-tip TBODY TR TD {
+    border: 0px;
+}
+
+.ui-grid-cell-action-tip a {
+    display: block;
+}
+
+.ui-grid-cell-action-tip {
+    display:none;
+    font-size:12px;
+    color:#fff;	
+    margin-left: 30px;
+    margin-top: 10px;
+    z-index: 1;
+    padding: 2px 2px 2px 2px;
+}
+
+.crud-detail-pic:before{
+    content: url(../images/detail.png);
+}
+
+.crud-view-pic:before{
+    content: url(../images/view.png);
+}
+
+.crud-edit-pic:before{
+    content: url(../images/edit.png);
+}
+
+.crud-del-pic:before{
+    content: url(../images/delete.png);
+}
+
+.crud-edit, .crud-view, .crud-del, .crud-add, .crud-list {
+    display: inline;
+}
+
+:checked {
+    background-color: blue;
+}
+
+table.nb tbody tr td{
+    border: none;
+}
+
+#crud-grid-buttons{
+    display: inline-block;
+    margin-top: 3px;
+    padding-bottom: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+}
+
+#grid-container{
+    width: 100%; overflow-x: scroll; height: 500px; overflow-y: scroll;
+}
+
+.ori-icon-detail{
+    background-image: url(../images/detail.png);
+}
+
+.ori-icon-view{
+    background-image: url(../images/view.png);
+}
+
+.ori-icon-edit+.ui-icon{
+    background-image: url(../images/edit.png);
+}
+
+.ori-icon-del{
+    background-image: url(../images/delete.png);
+}
