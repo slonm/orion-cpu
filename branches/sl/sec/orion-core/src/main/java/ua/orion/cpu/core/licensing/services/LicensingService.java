@@ -17,4 +17,6 @@ public interface LicensingService {
     List<LicenseRecord> findLicenseRecordsByEducationalQualificationLevel(String codeLevel);
 
     List<LicenseRecord> findLicenseRecordsByTrainingDirection(String codeDirection);
+
+    boolean existsForcedLicense();
 }

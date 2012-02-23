@@ -204,6 +204,7 @@ public class Crud {
      * она редактировала свойство Object компонента Crud 
      */
     public Object onSuccessFromEditForm() {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + getId());
         try {
             es.merge(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
@@ -225,6 +226,7 @@ public class Crud {
      * она редактировала свойство Object компонента Crud 
      */
     public Object onSuccessFromAddForm() {
+        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
         try {
             es.persist(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,

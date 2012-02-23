@@ -199,6 +199,7 @@ public class LicensingSeedEntity {
 
             //---Серия, номер и дата выдачи лицензии----------
             License licenseCPU = es.findUniqueOrPersist(new License("АВ", "529699", createCalendar(5, 11, 2010)));
+            licenseCPU.setForced(true);
 
             //---Кафедры, выполняющие обучение по лицензиям----------
             //---Інститут управління----------
