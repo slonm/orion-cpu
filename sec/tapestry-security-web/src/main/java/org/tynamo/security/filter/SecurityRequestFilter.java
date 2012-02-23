@@ -26,28 +26,30 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.tynamo.security.core.SecurityCoreSymbols;
 
 @ServiceId("SecurityRequestFilter")
 public class SecurityRequestFilter extends IniShiroFilter implements HttpServletRequestFilter
 {
 
-	private IniShiroFilter shiroFilter;
 	@SuppressWarnings("unused")
 	private Logger logger;
 
 	private String loginUrl;
 	private String unauthorizedUrl;
 	private String successUrl;
+        final boolean dummyLogin;
 
 	public SecurityRequestFilter(List<FilterChainDefinition> filterChainDefinitions,
-	                             WebSecurityManager securityManager,
 	                             Logger logger,
 	                             @Inject @Symbol(SecuritySymbols.SUCCESS_URL) String successUrl,
 	                             @Inject @Symbol(SecuritySymbols.LOGIN_URL) String loginUrl,
 	                             @Inject @Symbol(SecuritySymbols.UNAUTHORIZED_URL) String unauthorizedUrl,
 	                             @Inject @Symbol(SecurityCoreSymbols.CONFIG_PATH) String configPath,
 	                             @Inject @Symbol(SecurityCoreSymbols.SHOULD_LOAD_INI_FROM_CONFIG_PATH) boolean shouldLoadIniFromPath,
+	                             @Inject @Symbol(SecurityCoreSymbols.ENABLED) final boolean enabled,
 	                             ApplicationGlobals globals) throws Exception
 	{
 		final ServletContext servletContext = globals.getServletContext();
@@ -56,12 +58,12 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 		this.loginUrl = loginUrl;
 		this.unauthorizedUrl = unauthorizedUrl;
 		this.successUrl = successUrl;
+                this.dummyLogin=!enabled;
 
-		shiroFilter = new IniShiroFilter();
 		if (shouldLoadIniFromPath)
 		{
-			shiroFilter.setConfigPath(configPath);
-			shiroFilter.init(new FilterConfig()
+			setConfigPath(configPath);
+			init(new FilterConfig()
 			{
 
 				@Override
@@ -106,9 +108,7 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 			);
 		}
 
-		shiroFilter.setSecurityManager(securityManager);
-
-		PathMatchingFilterChainResolver chainResolver = (PathMatchingFilterChainResolver) shiroFilter.getFilterChainResolver();
+		PathMatchingFilterChainResolver chainResolver = (PathMatchingFilterChainResolver) getFilterChainResolver();
 		if (chainResolver == null)
 		{
 			FilterChainManager manager = new DefaultFilterChainManager();
@@ -117,7 +117,7 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 			// do not know about FilterChainManagers - only resolvers:
 			chainResolver = new PathMatchingFilterChainResolver();
 			chainResolver.setFilterChainManager(manager);
-			shiroFilter.setFilterChainResolver(chainResolver);
+			setFilterChainResolver(chainResolver);
 		}
 
 		Map<String, Filter> defaultFilters = chainResolver.getFilterChainManager().getFilters();
@@ -162,14 +162,17 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 		final boolean[] res = new boolean[]{true};
 		try
 		{
-			shiroFilter.doFilter(httpServletRequest, httpServletResponse, new FilterChain()
+			doFilter(httpServletRequest, httpServletResponse, new FilterChain()
 			{
+                                @Override
 				public void doFilter(final ServletRequest request,
 				                     final ServletResponse response) throws IOException, ServletException
 				{
 					res[0] = handler.service((HttpServletRequest) request, (HttpServletResponse) response);
 				}
 			});
+                        if(dummyLogin)
+                            SecurityUtils.getSubject().login(new UsernamePasswordToken("Dummy", ""));
 		} catch (ServletException e)
 		{
 			IOException ex = new IOException(e.getMessage());

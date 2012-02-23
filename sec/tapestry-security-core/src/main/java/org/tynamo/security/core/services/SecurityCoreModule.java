@@ -28,6 +28,9 @@ import org.tynamo.shiro.extension.authz.aop.SecurityInterceptor;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import org.apache.shiro.realm.Realm;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.tynamo.security.core.DummyRealm;
 import org.tynamo.security.core.services.impl.RealmSourceImpl;
 
 /**
@@ -47,6 +50,7 @@ public class SecurityCoreModule
 		configuration.add(SecurityCoreSymbols.CONFIG_PATH, "classpath:shiro.ini");
 		configuration.add(SecurityCoreSymbols.SHOULD_LOAD_INI_FROM_CONFIG_PATH, "false");
 		configuration.add(SecurityCoreSymbols.ENABLED, "true");
+		configuration.add(SecurityCoreSymbols.CONJUCTION_AUTHORITY, "false");
 	}
 
 	/**
@@ -87,4 +91,12 @@ public class SecurityCoreModule
 
 		}
 	}
+        
+    public static void contributeRealmSource(Configuration<Realm> config,
+            @Symbol(SecurityCoreSymbols.ENABLED) final boolean enabled) {
+        if (!enabled) {
+            config.add(new DummyRealm());
+        }
+    }
+
 }
