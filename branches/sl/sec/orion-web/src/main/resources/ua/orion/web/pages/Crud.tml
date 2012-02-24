@@ -4,5 +4,5 @@
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
               xmlns:p="tapestry:parameter"
               xmlns:s="tapestry-library:security">
-    <t:ori.crud objectClass="objectClass"/>
+    <t:ori.crud entityClass="objectClass"/>
 </t:ori.layout>

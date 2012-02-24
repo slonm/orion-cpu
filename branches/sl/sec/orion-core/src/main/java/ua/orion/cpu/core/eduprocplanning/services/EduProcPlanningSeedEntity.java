@@ -13,6 +13,7 @@ import ua.orion.cpu.core.licensing.entities.*;
 import ua.orion.core.services.EntityService;
 import ua.orion.core.utils.DateTimeUtils;
 import ua.orion.cpu.core.licensing.LicensingSymbols;
+import ua.orion.cpu.core.licensing.services.LicensingService;
 
 /**
  *
@@ -24,7 +25,7 @@ public class EduProcPlanningSeedEntity {
 //    @Inject
 //    EduProcPlanningService epps;
     public EduProcPlanningSeedEntity(@Symbol(OrionCPUSymbols.TEST_DATA) boolean testData,
-            EntityService es, EduProcPlanningService epps) {
+            EntityService es, EduProcPlanningService epps, LicensingService ls) {
         SubSystem subSystem = es.findUniqueOrPersist(new SubSystem(EduProcPlanningSymbols.EDUPROC_PLANNING_LIB));
         //---------Заполнение справочников
         if (testData) {
@@ -74,7 +75,7 @@ public class EduProcPlanningSeedEntity {
 
             //---------Учебные планы----------
             //--demo
-            LicenseRecord menSpec = epps.findLicenseRecordBySpeciality("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+            LicenseRecord menSpec = ls.findLicenseRecordBySpeciality("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.SPECIALIST_UKEY, "Менеджмент організації",
                     DateTimeUtils.createCalendar(1, 7, 2015));
             EduPlan demo = es.findUniqueOrPersist(new EduPlan(menSpec, 4.0, SoftwareMaster, DateTimeUtils.createCalendar(1, 9, 2009),
@@ -89,10 +90,10 @@ public class EduProcPlanningSeedEntity {
 
             //Извлечение лицензионной записи (на интерфейсе - выбор из списка)
 
-            LicenseRecord pIBach = epps.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+            LicenseRecord pIBach = ls.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.BACHELOR_UKEY, "Програмна інженерія",
                     DateTimeUtils.createCalendar(1, 7, 2015));
-            LicenseRecord sABach = epps.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
+            LicenseRecord sABach = ls.findLicenseRecordByTrainingDirection("АВ", "529699", DateTimeUtils.createCalendar(5, 11, 2010),
                     EducationalQualificationLevel.BACHELOR_UKEY, "Системний аналіз",
                     DateTimeUtils.createCalendar(1, 7, 2015));
 
