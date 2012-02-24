@@ -19,6 +19,7 @@ import ua.orion.web.services.TapestryDataSource;
 
 /**
  * Компонент, который предоставляет CRUD для сущностей
+ *
  * @author slobodyanuk
  */
 @Import(library = "../WindowUtils.js", stylesheet = "../css/tapestry-crud.css")
@@ -29,7 +30,7 @@ public class Crud {
     /**
      * Имя типа сущности
      */
-    @Parameter(allowNull = false, defaultPrefix="literal")
+    @Parameter(allowNull = false, defaultPrefix = "literal")
     @Property
     private String entityType;
     /**
@@ -56,35 +57,33 @@ public class Crud {
     @Property
     private boolean showDelButton;
     /**
-     * Адрес detail страницы.
-     * Если страница задана, то в наборе кнопок CRUD строки появится 
-     * кнопка перехода на эту страницу
+     * Адрес detail страницы. Если страница задана, то в наборе кнопок CRUD
+     * строки появится кнопка перехода на эту страницу
      */
     @Parameter(defaultPrefix = "literal")
     @Property
     private String detailPage;
     /**
-     * Тип master сущности.
-     * Если задана, то появится 
-     * кнопка перехода на CRUD страницу этой сущности
+     * master сущность. Если задана, то появится кнопка перехода на CRUD
+     * страницу этой сущности
      */
-    @Parameter(defaultPrefix = "literal")
-    private String masterType;
+    @Parameter
+    private String master;
     /**
-     * Блок переопределяющий форму редактирования сущности,
-     * предоставляемый по умолчанию
+     * Блок переопределяющий форму редактирования сущности, предоставляемый по
+     * умолчанию
      */
     @Parameter(value = "block:defaultEditBlock")
     private Block editBlock;
     /**
-     * Блок переопределяющий форму добавления сущности,
-     * предоставляемый по умолчанию
+     * Блок переопределяющий форму добавления сущности, предоставляемый по
+     * умолчанию
      */
     @Parameter(value = "block:defaultAddBlock")
     private Block addBlock;
     /**
-     * Блок переопределяющий разметку представления сущности,
-     * предоставляемый по умолчанию
+     * Блок переопределяющий разметку представления сущности, предоставляемый по
+     * умолчанию
      */
     @Parameter(value = "block:defaultViewBlock")
     private Block viewBlock;
@@ -156,32 +155,36 @@ public class Crud {
     }
 
     /**
-     * Используется для обновления зоны списка из переопределенных 
-     * редакторов editForm и addForm
+     * Используется для обновления зоны списка из переопределенных редакторов
+     * editForm и addForm
      */
     public String getListZoneId() {
         return listZoneId;
     }
 
     /**
-     * Используется для добавления кнопки закрытия окна из переопределенных 
+     * Используется для добавления кнопки закрытия окна из переопределенных
      * блоков, располагающихся во всплывающем окне
      */
     public Block getHideWindowButtonBlock() {
         return hideWindowButtonBlock;
     }
 
-    public Class<?> getMasterClass() {
-        return es.getMetaEntity(masterType).getEntityClass();
-    }
-    
     /**
      * Адрес master страницы.
      */
     public String getMasterCrudPage() {
-        return dataSource.getCrudPage(getMasterClass());
+        return dataSource.getCrudPage(master.getClass());
     }
-    
+
+    public boolean getCanAdd() {
+        if (resources.isBound("master")
+                && !SecurityUtils.getSubject().isPermitted(master.getClass().getSimpleName() + ":update:" + es.getPrimaryKey(master))) {
+            return false;
+        }
+        return SecurityUtils.getSubject().isPermitted(entityType + ":insert");
+    }
+
     public GridDataSource getSource() {
         //Это хак.
         //Обновление grid. Нужно для применения классов CSS, некоторых функций JS.
@@ -195,9 +198,9 @@ public class Crud {
     }
 
     /**
-     * Обработчик сохранения после редактирования.
-     * Может использоваться переопределенной формой редактирования, если 
-     * она редактировала свойство Object компонента Crud 
+     * Обработчик сохранения после редактирования. Может использоваться
+     * переопределенной формой редактирования, если она редактировала свойство
+     * Object компонента Crud
      */
     public Object onSuccessFromEditForm() {
         SecurityUtils.getSubject().checkPermission(entityType + ":update:" + getId());
@@ -217,9 +220,9 @@ public class Crud {
     }
 
     /**
-     * Обработчик сохранения после создания нового объекта.
-     * Может использоваться переопределенной формой редактирования, если 
-     * она редактировала свойство Object компонента Crud 
+     * Обработчик сохранения после создания нового объекта. Может использоваться
+     * переопределенной формой редактирования, если она редактировала свойство
+     * Object компонента Crud
      */
     public Object onSuccessFromAddForm() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
@@ -338,7 +341,6 @@ public class Crud {
         });
         return listZone.getBody();
     }
-
 //    void onInplaceUpdateFromGrid(String zone) {
 //        javascriptSupport.addScript("Tapestry.Initializer.updateGrid()");
 //        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
