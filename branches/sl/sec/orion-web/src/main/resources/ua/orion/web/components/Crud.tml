@@ -10,9 +10,7 @@
     </div>
     <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
         <t:if test="canAdd">
-            <s:HasPermission permission="${entityType}:insert">
-                <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
-            </s:HasPermission>
+            <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
         </t:if>
         <t:if test="maserType">
             <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
