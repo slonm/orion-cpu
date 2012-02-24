@@ -18,10 +18,6 @@ public class Licenses {
     @Inject
     private Logger LOG;
 
-    public Class<?> getObjectClass() {
-        return ua.orion.cpu.core.licensing.entities.License.class;
-    }
-
     public Object onActivate(EventContext context) {
         if (!info.isComponentEventRequest()) {
             //Страница не должна получать контекста при запросе страницы

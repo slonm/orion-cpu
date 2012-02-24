@@ -27,10 +27,11 @@ public class Crud {
 
     //---Parameters---
     /**
-     * Класс сущности
+     * Имя типа сущности
      */
-    @Parameter(allowNull = false)
-    private Class<?> objectClass;
+    @Parameter(allowNull = false, defaultPrefix="literal")
+    @Property
+    private String entityType;
     /**
      * Источник данных для Grid
      */
@@ -63,13 +64,12 @@ public class Crud {
     @Property
     private String detailPage;
     /**
-     * Адрес master страницы.
-     * Если страница задана, то появится 
-     * кнопка перехода на эту страницу
+     * Тип master сущности.
+     * Если задана, то появится 
+     * кнопка перехода на CRUD страницу этой сущности
      */
     @Parameter(defaultPrefix = "literal")
-    @Property
-    private String listPage;
+    private String masterType;
     /**
      * Блок переопределяющий форму редактирования сущности,
      * предоставляемый по умолчанию
@@ -94,12 +94,6 @@ public class Crud {
     @Inject
     private Block hideWindowButtonBlock;
     @Inject
-    private Block defaultEditBlock;
-    @Inject
-    private Block defaultAddBlock;
-    @Inject
-    private Block defaultViewBlock;
-    @Inject
     private Block deleteBlock;
     @Inject
     @Property(write = false)
@@ -112,8 +106,6 @@ public class Crud {
     @Inject
     @Property(write = false)
     private TapestryDataSource dataSource;
-    @Inject
-    private Environment environment;
     @Inject
     private AlertManager alertManager;
     @Inject
@@ -130,7 +122,7 @@ public class Crud {
     private String listZoneId;
 
     void setupRender() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":read");
+        SecurityUtils.getSubject().checkPermission(entityType + ":read");
         popupWindowId = javascriptSupport.allocateClientId("popupWindow");
         listZoneId = javascriptSupport.allocateClientId("listZone");
     }
@@ -159,8 +151,8 @@ public class Crud {
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public Class<?> getObjectClass() {
-        return objectClass;
+    public Class<?> getEntityClass() {
+        return es.getMetaEntity(entityType).getEntityClass();
     }
 
     /**
@@ -179,13 +171,17 @@ public class Crud {
         return hideWindowButtonBlock;
     }
 
-    /**
-     * Задано явно для возможности вызова из других классов
-     */
-    public void setObjectClass(Class<?> objectClass) {
-        this.objectClass = objectClass;
+    public Class<?> getMasterClass() {
+        return es.getMetaEntity(masterType).getEntityClass();
     }
-
+    
+    /**
+     * Адрес master страницы.
+     */
+    public String getMasterCrudPage() {
+        return dataSource.getCrudPage(getMasterClass());
+    }
+    
     public GridDataSource getSource() {
         //Это хак.
         //Обновление grid. Нужно для применения классов CSS, некоторых функций JS.
@@ -194,7 +190,7 @@ public class Crud {
         if (resources.isBound("source")) {
             return source;
         } else {
-            return dataSource.getGridDataSource(objectClass);
+            return dataSource.getGridDataSource(getEntityClass());
         }
     }
 
@@ -204,17 +200,17 @@ public class Crud {
      * она редактировала свойство Object компонента Crud 
      */
     public Object onSuccessFromEditForm() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + getId());
+        SecurityUtils.getSubject().checkPermission(entityType + ":update:" + getId());
         try {
             es.merge(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.update.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         } catch (RuntimeException ex) {
             alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
                     messages.format("message.error.update.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         }
         return closeWindowAndGetListZone();
@@ -226,25 +222,25 @@ public class Crud {
      * она редактировала свойство Object компонента Crud 
      */
     public Object onSuccessFromAddForm() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
+        SecurityUtils.getSubject().checkPermission(entityType + ":insert");
         try {
             es.persist(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.insert.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         } catch (RuntimeException ex) {
             alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
                     messages.format("message.error.insert.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         }
         return closeWindowAndGetListZone();
     }
 
     Object onEdit(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":update:" + id);
-        object = es.find(objectClass, id);
+        SecurityUtils.getSubject().checkPermission(entityType + ":update:" + id);
+        object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeEditPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
@@ -260,12 +256,13 @@ public class Crud {
     }
 
     Object onAdd() {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":insert");
-        object = es.newInstance(objectClass);
+        SecurityUtils.getSubject().checkPermission(entityType + ":insert");
+        object = es.newInstance(getEntityClass());
         resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
+            @Override
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
@@ -277,7 +274,7 @@ public class Crud {
     }
 
     Object onView(Integer id) {
-        object = es.find(objectClass, id);
+        object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeViewPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
@@ -293,8 +290,8 @@ public class Crud {
     }
 
     Object onTryDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
-        object = es.find(objectClass, id);
+        SecurityUtils.getSubject().checkPermission(entityType + ":delete:" + id);
+        object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeTryDeletePopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
@@ -312,18 +309,18 @@ public class Crud {
     }
 
     Object onDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(objectClass.getSimpleName() + ":delete:" + id);
+        SecurityUtils.getSubject().checkPermission(entityType + ":delete:" + id);
         try {
-            object = es.find(objectClass, id);
+            object = es.find(getEntityClass(), id);
             es.remove(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.remove.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         } catch (RuntimeException ex) {
             alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
                     messages.format("message.error.remove.entity",
-                    messages.get("entity." + objectClass.getSimpleName()),
+                    messages.get("entity." + entityType),
                     es.getStringValue(object)));
         }
         return closeWindowAndGetListZone();

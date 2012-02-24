@@ -10,6 +10,33 @@ import ua.orion.cpu.core.orgunits.entities.*;
  */
 public interface LicensingService {
 
+    /**
+     * Поиск лицензии с указанными серией, номером и датой получения
+     * @param serial
+     * @param number
+     * @param issue
+     * @return экземпляр лицензии
+     */
+    License findLicense(String serial, String number, Calendar issue);
+    
+    /*
+     * @param educationalQualificationLevel UKey of educationalQualificationLevel
+     * @param trainingDirection name of trainingDirection
+     * 
+     */
+    LicenseRecord findLicenseRecordByTrainingDirection(String serial, String number, 
+    Calendar issue, String educationalQualificationLevel, 
+    String trainingDirection, Calendar termination);
+
+    /*
+     * @param educationalQualificationLevel UKey of educationalQualificationLevel
+     * @param speciality name of speciality
+     * 
+     */
+    LicenseRecord findLicenseRecordBySpeciality(String serial, String number, 
+    Calendar issue, String educationalQualificationLevel, 
+    String speciality, Calendar termination);
+
     List<LicenseRecord> findLicenseRecordsByOrgUnit(OrgUnit orgUnit);
 
     List<LicenseRecord> findLicenseRecordsByTerminationDate(Date terminationDate);

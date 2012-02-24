@@ -73,14 +73,14 @@ public class SecurityModule {
         binder.bind(PageService.class, PageServiceImpl.class);
     }
     
-    public static HttpServletRequestFilter buildSecurityRequestFilter(RealmSource realmSource,
+    public static SecurityRequestFilter buildSecurityRequestFilter(RealmSource realmSource,
             @Autobuild SecurityRequestFilter filter,
             @Symbol(SecurityCoreSymbols.CONJUCTION_AUTHORITY) final boolean isConjuction) {
-        if (filter.getSecurityManager() instanceof RealmSecurityManager) {
-            ((RealmSecurityManager) filter.getSecurityManager()).setRealms(realmSource.getRealms());
-        }
         if (isConjuction && filter.getSecurityManager() instanceof AuthorizingSecurityManager) {
             ((AuthorizingSecurityManager) filter.getSecurityManager()).setAuthorizer(new ConjunctionModularRealmAuthorizer());
+        }
+        if (filter.getSecurityManager() instanceof RealmSecurityManager) {
+            ((RealmSecurityManager) filter.getSecurityManager()).setRealms(realmSource.getRealms());
         }
         return filter;
     }
@@ -203,7 +203,7 @@ public class SecurityModule {
     }
     
     public static void contributeHttpServletRequestHandler(OrderedConfiguration<HttpServletRequestFilter> configuration,
-            @InjectService("SecurityRequestFilter") HttpServletRequestFilter securityRequestFilter) {
+            SecurityRequestFilter securityRequestFilter) {
         configuration.add("SecurityRequestFilter", securityRequestFilter, "after:StoreIntoGlobals");
     }
 }

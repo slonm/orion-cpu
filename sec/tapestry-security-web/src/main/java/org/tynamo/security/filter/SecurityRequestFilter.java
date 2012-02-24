@@ -7,7 +7,6 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.FilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
-import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.apache.shiro.web.servlet.IniShiroFilter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.ServiceId;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.tynamo.security.core.SecurityCoreSymbols;
 
 @ServiceId("SecurityRequestFilter")
@@ -59,7 +59,7 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 		this.unauthorizedUrl = unauthorizedUrl;
 		this.successUrl = successUrl;
                 this.dummyLogin=!enabled;
-
+                setSecurityManager(new DefaultWebSecurityManager());
 		if (shouldLoadIniFromPath)
 		{
 			setConfigPath(configPath);
@@ -168,11 +168,11 @@ public class SecurityRequestFilter extends IniShiroFilter implements HttpServlet
 				public void doFilter(final ServletRequest request,
 				                     final ServletResponse response) throws IOException, ServletException
 				{
+                                        if(dummyLogin)
+                                            SecurityUtils.getSubject().login(new UsernamePasswordToken("Dummy", ""));
 					res[0] = handler.service((HttpServletRequest) request, (HttpServletResponse) response);
 				}
 			});
-                        if(dummyLogin)
-                            SecurityUtils.getSubject().login(new UsernamePasswordToken("Dummy", ""));
 		} catch (ServletException e)
 		{
 			IOException ex = new IOException(e.getMessage());
