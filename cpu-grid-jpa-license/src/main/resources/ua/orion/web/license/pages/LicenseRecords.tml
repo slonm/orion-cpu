@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<t:ori.layout title="prop:title"
+              menupath="prop:menuBar"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter"
+              xmlns:s="tapestry-library:security">
+
+<s:HasPermission permission="${objectClass.simpleName}:insert">
+  <t:pagelink page="crud/CrudCreate" context="rowContext"  title="${message:action.add}" id="crud_page_link_add">${message:action.add}</t:pagelink>
+</s:HasPermission>
+
+<t:grid.Grid source="dataSource" row="currentRow" add="menu" reorder="menu" model="model" exclude="body">
+        <p:menuCell>
+            <span class="menu">
+                <span class="menuheader ui-state-default" style="border-style: none">
+                    <span class="menuarrow ui-state-default" style="font-size: 10pt; border-style: none">▼</span>
+                </span>
+
+                <span class="menuitems" style="display: none;">
+                    <div class="menuitem ui-state-default">
+                       <s:HasPermission permission="${objectClass.simpleName}:update:${currentRow.id}">
+                          <t:pagelink page="crud/CrudEdit" context="rowContext" class="crud-popup-edit" title="message:crud-edit">${message:crud-edit}</t:pagelink>
+                       </s:HasPermission>
+                    </div>
+                    <div class="menuitem ui-state-default">
+                       <s:HasPermission permission="${objectClass.simpleName}:delete:${currentRow.id}">
+                          <t:pagelink page="crud/CrudDelete" context="rowContext" class="crud-popup-edit" title="message:action.del">${message:action.del}</t:pagelink>
+                       </s:HasPermission>            
+                    </div>
+                    <div class="menuitem ui-state-default">
+                       <s:HasPermission permission="${objectClass.simpleName}:view:${currentRow.id}">
+                          <t:pagelink page="crud/CrudView" context="rowContext" class="crud-popup-view" title="message:crud-view">${message:crud-view}</t:pagelink>
+                       </s:HasPermission>
+                    </div>
+                </span>
+
+            </span>
+        </p:menuCell>
+        <p:empty>
+          <p>There are no rows to display;</p>
+        </p:empty>
+</t:grid.Grid>
+
+<div style="display:none;" id="edit_dialog_title">${message:crud-edit}</div>
+</t:ori.layout>
