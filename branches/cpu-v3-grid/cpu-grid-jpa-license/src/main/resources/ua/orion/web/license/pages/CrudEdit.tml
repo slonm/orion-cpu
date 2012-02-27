@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" 
+      xmlns:p="tapestry:parameter">
+<head>
+<title>${title}</title>
+</head>
+<body>
+<div>${feedbackMessage}</div>
+<t:if test="isEntityClassFound">
+    <t:if test="isCloseOnSubmit">
+    <script type="text/javascript">
+      window.top.onEditWindowClosed("${feedbackMessage}");
+    </script>
+    <t:parameter name="else">
+            <t:form t:id="editForm">
+                <t:errors/>
+                <t:beaneditor  object="entityObject" model="beanModel"/>
+                <p align="right">
+                     <t:submit t:id="ok" value="message:crud-ok"/>
+                     <t:submit t:id="apply" value="message:crud-apply"/>
+                     <input type="reset" value="${message:crud-cancel}" onclick="if(window.top.crudPopupWindow) {window.top.crudPopupWindow.hide();}"/>
+                </p>
+            </t:form>
+    </t:parameter>
+    </t:if>
+</t:if>
+</body>
+</html>

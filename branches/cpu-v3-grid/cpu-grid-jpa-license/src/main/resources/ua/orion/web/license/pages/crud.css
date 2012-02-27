@@ -1,0 +1,36 @@
+.crud-page-link-delete, .crud-page-link-edit, .crud-page-link-view{
+    display:inline-block;
+    width: 16px;
+    height:16px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin:3px;
+    vertical-align: top;
+}
+
+.crud-page-link-delete{
+    background-image:url(delete.png);
+}
+
+.crud-page-link-edit{
+    background-image:url(edit.png);
+}
+
+.crud-page-link-view{
+    background-image:url(view.png);
+}
+
+.crud-page-link-add{
+    background-image: url("gtk-add.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: #e0e0e0;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+    display: inline-block;
+    margin: 3px;
+    padding: 10px 10px 10px 32px;
+}
+a.crud-page-link-add:hover{
+    background-color: greenyellow;    
+}
