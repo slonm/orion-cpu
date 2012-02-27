@@ -22,6 +22,7 @@ import ua.orion.cpu.web.orgunits.services.OrgUnitsWebIOCModule;
 import ua.orion.cpu.web.persons.services.PersonsWebIOCModule;
 import ua.orion.cpu.web.students.services.StudentsWebIOCModule;
 import ua.orion.web.crud.services.CpuGridJPACrudModule;
+import ua.orion.web.license.services.CpuGridJPALicenseModule;
 import ua.orion.web.security.services.OrionSecurityWebIOCModule;
 
 /**
@@ -45,7 +46,8 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     EmployeesWebIOCModule.class,
     CpuGridModule.class,
     CpuGridJPA.class,
-    CpuGridJPACrudModule.class
+    CpuGridJPACrudModule.class,
+    CpuGridJPALicenseModule.class
 })
 public class AppModule {
 
