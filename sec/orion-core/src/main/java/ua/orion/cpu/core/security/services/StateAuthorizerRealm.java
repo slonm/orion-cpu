@@ -13,6 +13,10 @@ import ua.orion.core.LibraryOrientedBeansFactory;
 import ua.orion.core.services.ModelLibraryService;
 
 /**
+ * Realm - авторизатор на основе состояния сущности.
+ * Собирает цепочку из авторизаторов, реализующих StateAuthorizer и находящихся в 
+ * подпакете 'services' с именем имя_библиотеки+StateAuthorizer,
+ * 
  * @author sl
  */
 public class StateAuthorizerRealm extends ModularRealmAuthorizer implements Realm {
@@ -21,7 +25,7 @@ public class StateAuthorizerRealm extends ModularRealmAuthorizer implements Real
 
     public StateAuthorizerRealm(ModelLibraryService resolver, ObjectLocator locator, ChainBuilder cb) {
         LibraryOrientedBeansFactory factory = new LibraryOrientedBeansFactory(resolver, locator, "services", null, "StateAuthorizer");
-        authorizer=cb.build(StateAuthorizer.class, factory.create(StateAuthorizer.class));
+        authorizer = cb.build(StateAuthorizer.class, factory.create(StateAuthorizer.class));
     }
 
     @Override

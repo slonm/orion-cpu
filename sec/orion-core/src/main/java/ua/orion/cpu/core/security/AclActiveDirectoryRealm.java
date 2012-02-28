@@ -48,14 +48,14 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         query.setParameter("subject", subject);
         query.setParameter("subjectType", type);
         for (Acl acl : query.getResultList()) {
-            permissions.add(new MyWildcardPermission(acl.getPermission()));
+            permissions.add(new OrionWildcardPermission(acl.getPermission()));
         }
-        Set<MyWildcardPermission> list = new HashSet();
-        list.addAll((Set<MyWildcardPermission>) (Set) permissions);
-        for (MyWildcardPermission p : list) {
-            if (p.getObject().toLowerCase().startsWith("permg_")) {
+        Set<OrionWildcardPermission> list = new HashSet();
+        list.addAll((Set<OrionWildcardPermission>) (Set) permissions);
+        for (OrionWildcardPermission p : list) {
+            if (p.getDomain().startsWith("permg_")) {
                 permissions.addAll(resolvePermissionsForSubject(
-                        p.getObject().substring("permg_".length()),
+                        p.getDomain().substring("permg_".length()),
                         SubjectType.PERMISSION_GROUP));
             }
         }
@@ -89,22 +89,7 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
 
         @Override
         public Permission resolvePermission(String permissionString) {
-            return new MyWildcardPermission(permissionString);
-        }
-    }
-
-    static class MyWildcardPermission extends WildcardPermission {
-
-        public MyWildcardPermission(String wildcardString) {
-            super(wildcardString);
-        }
-
-        String getObject() {
-            Set<String> part0 = getParts().get(0);
-            for (String s : part0) {
-                return s;
-            }
-            return null;
+            return new OrionWildcardPermission(permissionString);
         }
     }
 }

@@ -45,5 +45,21 @@ public interface LicensingService {
 
     List<LicenseRecord> findLicenseRecordsByTrainingDirection(String codeDirection);
 
+    
     boolean existsNewStateLicense();
+    
+    /**
+     * Переводит лицензию в состоянии NEW в состояние FORCED с соответствующим 
+     * изменением состояния прежней FORCED лицензии {@link ua.orion.cpu.core.licensing.entities.License.getLicenseState()}
+     * @param license
+     * @return сохраненная лицензия
+     */
+    License forceAndMergeLicense(License license);
+    
+    /**
+     * Создает и сохраняет новую лицензию на основе текущей FORCED лицензии
+     * @return сохраненная лицензия
+     */
+    License newLicense();
+    
 }
