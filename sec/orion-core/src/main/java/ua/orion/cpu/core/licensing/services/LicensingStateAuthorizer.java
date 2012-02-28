@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.License;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
+import ua.orion.cpu.core.licensing.entities.LicenseState;
 import ua.orion.cpu.core.security.services.StateAuthorizer;
 
 /**
@@ -27,20 +28,20 @@ public class LicensingStateAuthorizer implements StateAuthorizer {
         String[] parts = permission.split(":");
         if (parts.length == 2) {
             if ("insert".equals(parts[1]) && "License".equals(parts[0])) {
-                return ls.existsForcedLicense();
+                return ls.existsNewStateLicense();
             }
         } else if (parts.length == 3) {
             if (Arrays.asList("update", "delete").contains(parts[1])) {
                 switch (parts[0]) {
                     case "License":
                         License license = es.find(License.class, parts[2]);
-                        if (license.isForced()) {
+                        if (LicenseState.NEW!=license.getLicenseState()) {
                             return true;
                         }
                         break;
                     case "LicenseRecord":
                         LicenseRecord licenseRecord = es.find(LicenseRecord.class, parts[2]);
-                        if (licenseRecord.getLicense().isForced()) {
+                        if (LicenseState.NEW!=licenseRecord.getLicense().getLicenseState()) {
                             return true;
                         }
                         break;

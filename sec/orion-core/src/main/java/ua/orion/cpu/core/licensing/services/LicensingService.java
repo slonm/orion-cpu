@@ -45,5 +45,5 @@ public interface LicensingService {
 
     List<LicenseRecord> findLicenseRecordsByTrainingDirection(String codeDirection);
 
-    boolean existsForcedLicense();
+    boolean existsNewStateLicense();
 }

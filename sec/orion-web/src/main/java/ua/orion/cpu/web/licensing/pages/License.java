@@ -59,13 +59,6 @@ public class License {
     @Property(write = false)
     private TrainingDirection knowledgeAreaContainer;
 
-    /**
-     * Задано явно для возможности вызова из других классов
-     */
-    public Class<?> getLicenseRecordClass() {
-        return LicenseRecord.class;
-    }
-
     public LicenseRecord getLicenseRecord() {
         return (LicenseRecord) crud.getObject();
     }
