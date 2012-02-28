@@ -25,13 +25,13 @@
         <div id="wrapper">
 
             <div id="header" class="ui-state-default">
-                <strong><a href="../index.html">Головна ▼</a>   <a href="EduPlans.html">Планування навчального процесу ▼</a>   <a href="EduPlans.html">Навчальні плани ▼</a>   <a href="CommonEduPlan.html">Загальний навчальний план ▼</a></strong>
+                <strong><a href="../index.html">Головна ▼</a>   <a href="EduPlan.html">Планування навчального процесу ▼</a>   <a href="EduPlan.html">Навчальні плани ▼</a>   <a href="CommonEduPlan.html">Загальний навчальний план ▼</a></strong>
             </div><!-- #header-->
 
             <div id="content">
                 <H2 class="title">Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009</H2> 
                 <div id="approve-buttons" style="width: 99%">
-                    <button type="submit" id="eduplan-approve-button" style="padding-bottom: 3px">Затвердити план</button>   Дата затвердження: <input type="text"/><img src="../img/datefield.gif"/>  Кто затвердив: <select>
+                    <button type="submit" id="eduplan-approve-button" style="padding-bottom: 3px">Затвердити план</button>   Дата затвердження: <input type="text" size="10"/><img src="../img/datefield.gif"/>  Кто затвердив: <select>
                         <option value="CPU">Керівництво КПУ</option>
                         <option value="MONcomis">Комісія МОН</option>
                         <option value="MON">МОН</option>
@@ -39,7 +39,7 @@
                     Змінює статус сплану на діючий
                 </div>
                 <div id="inactive-buttons" style="width: 99%;padding-bottom: 5px">
-                    <button type="submit" id="eduplan-inactive-button" >Вивести план з дії</button>   Дата виведення з дії: <input type="text"/><img src="../img/datefield.gif"/>  Кто вивів із дії: <select>
+                    <button type="submit" id="eduplan-inactive-button" >Вивести план з дії</button>   Дата виведення з дії: <input type="text" size="10"/><img src="../img/datefield.gif"/>  Кто вивів із дії: <select>
                         <option value="CPU">Керівництво КПУ</option>
                         <option value="MONcomis">Комісія МОН</option>
                         <option value="MON">МОН</option>
@@ -47,8 +47,8 @@
                     Змінює статус сплану на виведений з діх
                 </div>
                 <div id="grid-buttons" style="width: 99%">
-                    <button type="submit" id="addcycle-button">Додати цикл</button>   <a href="EduPlans.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>   <a href="Disciplines.html"><button type="submit" id="to-discipline-list" >До банку дисциплін</button></a>
-                    <a href="EPDisciplinesWeb.html"  style="padding-left: 35%"><button type="submit" id="to-stationary-eduplan-button">Денна форма</button></a>   <a href="EPDisciplinesWebCorresp.html"><button type="submit" id="to-correspondence-eduplan-button" >Заочна форма</button></a>   <a href="EPDisciplinesWeb.html"><button type="submit" id="to-distance-eduplan-button" >Дистанційна форма</button></a>
+                    <button type="submit" id="addcycle-button">Додати цикл</button>   <a href="EduPlan.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>
+                    <a href="EPDisciplinesWeb.html"  style="padding-left: 50%"><button type="submit" id="to-stationary-eduplan-button">Денна форма</button></a>   <a href="EPDisciplinesWebCorresp.html"><button type="submit" id="to-correspondence-eduplan-button" >Заочна форма</button></a>
                 </div>
                 <div id="grid">
                     <table>
@@ -78,7 +78,7 @@
                                 <td align="center"></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.01</td>
                                 <td>Українська мова (за професійним спрямуванням)</td>
                                 <td align="center">1</td>
@@ -90,7 +90,7 @@
                                 <td align="center">за стандартом (ОПП)</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.02</td>
                                 <td>Історія України</td>
                                 <td align="center">1</td>
@@ -102,7 +102,7 @@
                                 <td align="center">за стандартом (ОПП)</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.01в</td>
                                 <td>Вибіркова дисципліна ЦГСЕП-1</td>
                                 <td align="center"></td>
@@ -114,7 +114,7 @@
                                 <td align="center">за вибором студента</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.02в</td>
                                 <td>Вибіркова дисципліна ЦГСЕП-2</td>
                                 <td align="center"></td>
@@ -126,7 +126,7 @@
                                 <td align="center">за вибором студента</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.03в</td>
                                 <td>Вибіркова дисципліна ЦГСЕП-3</td>
                                 <td align="center"></td>
@@ -138,7 +138,7 @@
                                 <td align="center">за вибором студента</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">1.04в</td>
                                 <td>Вибіркова дисципліна ЦГСЕП-4</td>
                                 <td align="center"></td>
@@ -150,7 +150,7 @@
                                 <td align="center">за вибором студента</td>
                             </tr>
                             <tr style="font-weight: bold">
-                                <td></td>
+                                <td><input class="eduplancycle-edit" type="image" src="../img/edit.png" title="Редагувати цикл навчального плану"/>   <input class="eduplancycle-delete" type="image" src="../img/delete.png" title="Видалити цикл навчального плану"/>   <input class="eduplandiscipline-add" type="image" src="../img/add.png" title="Додати дисципліну циклу навчального плану"/></td>
                                 <td></td>
                                 <td colspan="4">2. Цикл математичної, природничо-наукової підготовки</td>
                                 <td align="center">38.0</td>
@@ -158,7 +158,7 @@
                                 <td align="center"></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">2.01</td>
                                 <td>Математичний аналіз</td>
                                 <td align="center">1</td>
@@ -170,7 +170,7 @@
                                 <td align="center">за стандартом (ОПП)</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">2.01в</td>
                                 <td>Чисельні методи в інформатиці</td>
                                 <td align="center"></td>
@@ -182,7 +182,7 @@
                                 <td align="center">за вибором ВНЗ</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">2.01в</td>
                                 <td>Вибіркова дисципліна ЦМПНП-1</td>
                                 <td align="center"></td>
@@ -194,7 +194,7 @@
                                 <td align="center">за вибором студента</td>
                             </tr>
                             <tr style="font-weight: bold">
-                                <td></td>
+                                <td><input class="eduplancycle-edit" type="image" src="../img/edit.png" title="Редагувати цикл навчального плану"/>   <input class="eduplancycle-delete" type="image" src="../img/delete.png" title="Видалити цикл навчального плану"/>   <input class="eduplandiscipline-add" type="image" src="../img/add.png" title="Додати дисципліну циклу навчального плану"/></td>
                                 <td></td>
                                 <td colspan="4">3. Цикл професійної та практичної підготовки</td>
                                 <td align="center">161.5</td>
@@ -202,7 +202,7 @@
                                 <td align="center"></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">3.01</td>
                                 <td>Комп’ютерна дискретна математика</td>
                                 <td align="center">1</td>
@@ -214,7 +214,7 @@
                                 <td align="center">за стандартом (ОПП)</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">3.01в</td>
                                 <td>Мова програмування Java</td>
                                 <td align="center">1</td>
@@ -225,8 +225,32 @@
                                 <td align="center">Вибіркова</td>
                                 <td align="center">за вибором ВНЗ</td>
                             </tr>
+                            <tr>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
+                                <td align="center">3.01п</td>
+                                <td>Технологічна практика</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">4,5</td>
+                                <td align="center">162</td>
+                                <td align="center">Обов'язкова</td>
+                                <td align="center">за стандартом (ОПП)</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
+                                <td align="center">3.01д</td>
+                                <td>Захист дипломних робіт</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">1,5</td>
+                                <td align="center">54</td>
+                                <td align="center">Обов'язкова</td>
+                                <td align="center">за стандартом (ОПП)</td>
+                            </tr>
                             <tr style="font-weight: bold">
-                                <td></td>
+                                <td><input class="eduplancycle-edit" type="image" src="../img/edit.png" title="Редагувати цикл навчального плану"/>   <input class="eduplancycle-delete" type="image" src="../img/delete.png" title="Видалити цикл навчального плану"/>   <input class="eduplandiscipline-add" type="image" src="../img/add.png" title="Додати дисципліну циклу навчального плану"/></td>
                                 <td></td>
                                 <td colspan="4">Цикл позакредитних дисциплін</td>
                                 <td align="center">20.5</td>
@@ -234,7 +258,7 @@
                                 <td align="center"></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">пк.01</td>
                                 <td>Фізичне виховання</td>
                                 <td align="center"></td>
@@ -246,7 +270,7 @@
                                 <td align="center">за наказом МОН</td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input class="eduplandiscipline-edit" type="image" src="../img/edit.png" title="Редагувати дисципліну циклу навчального плану"/>   <input class="eduplandiscipline-delete" type="image" src="../img/delete.png" title="Видалити дисципліну циклу навчального плану"/></td>
                                 <td align="center">пк.02</td>
                                 <td>Основи християнської традиції</td>
                                 <td align="center"></td>
@@ -259,17 +283,13 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div id="grid-buttons" style="width: 99%">
-                        <button type="submit" id="addcycle-button">Додати цикл</button>   <a href="EduPlans.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>   <a href="Disciplines.html"><button type="submit" id="to-discipline-list" >До банку дисциплін</button></a>
-                        <a href="EPDisciplinesWeb.html"  style="padding-left: 35%"><button type="submit" id="to-stationary-eduplan-button">Денна форма</button></a>   <a href="EPDisciplinesWebCorresp.html"><button type="submit" id="to-correspondence-eduplan-button" >Заочна форма</button></a>   <a href="EPDisciplinesWeb.html"><button type="submit" id="to-distance-eduplan-button" >Дистанційна форма</button></a>
-                    </div>
                 </div><!---#grid -->
             </div><!-- #content-->
 
         </div><!-- #wrapper -->
 
         <div id="footer">
-            <strong>© 2009-2012 Классический приватный университет</strong>
+            <strong>© 2009-2012 Класичний приватний університет</strong>
         </div><!-- #footer -->
         <!-- Диалоговое окно (Добавление/Редактирование цикла) -->
         <div id="add-eduplancycle-dialog" style="display: none">
@@ -299,6 +319,121 @@
                 </tr>
             </table>
         </div>
+        <!-- Диалоговое окно (Удаление цикла) -->
+        <div id="delete-eduplancycle-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити цикл навчального плану?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <!-- Диалоговое окно (Добавление/Редактирование дисциплины общего учебного плана) -->
+        <div id="add-commoneduplandiscipline-dialog" style="display: none">
+            <div class="ui-state-highlight" id="eduplandiscipline-help"></div>
+            <table>
+                <tr>
+                    <td>№ дисципліни за планом:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Назва дисципліни відповідно до навчального плану (метадисципліни):</td><td><input type="text" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>Загальна кількість ECTS-кредитів дисципліни:</td><td><input type="text"></input></td>
+                </tr>
+                <tr>
+                    <td>Тип дисципліни:<br/></td>
+                    <td>
+                        <select>
+                            <option>оберіть тип дисципліни</option>
+                            <option>обов'язкова</option>
+                            <option>вибіркова</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Кількість іспитів з дисципліни за планом:</td>
+                    <td>
+                        <select>
+                            <option value="noexam">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Кількість заліків з дисципліни за планом:</td>
+                    <td>
+                        <select>
+                            <option value="nocredit">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Кількість курсових робіт з дисципліни за планом:</td>
+                    <td>
+                        <select>
+                            <option value="nocredit">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Оберіть дисципліну(дисципліни) з банку навчальних дисциплін<br/>
+                        <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label></td>
+                    <td>
+                        <select>
+                            <option value="nodisc">оберіть дисципліну..</option>
+                            <option value="IU(Upr)(Pkt)">Історія України (управлен) (Пкт)</option>
+                            <option value="IU(Econ)(Pkt)">Історія України (економ) (Пкт)</option>
+                            <option value="IU(Krv)">Історія України (Крв)</option>
+                        </select>
+                        <a href="">Видалити дисципліну</a>
+                        <p><a href="">Додати дисципліну</a></p>
+                        <p><a href="Disciplines.html">До банку дисциплін</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Чи вивчається студентами відповідних форм навчання:</td>
+                    <td><input type="checkbox"/> Денна<br/>
+                        <input type="checkbox"/> Заочна<br/>
+                </tr>
+                <tr>
+                    <td>Дисципліна введена до навчального плану</td>
+                    <td>
+                        <select>
+                            <option>оберіть</option>
+                            <option>за стандартом (ОПП)</option>
+                            <option>за наказом МОН</option>
+                            <option>за вибором ВНЗ</option>
+                            <option>за вибором студента</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="commoneduplandiscipline-cancel"/> <input type="submit" value="Зберегти" id="commoneduplandiscipline-save"/></td>
+                </tr>
+            </table>
+        </div>
+         <!-- Диалоговое окно (Удаление дисциплины общего учебного плана) -->
+        <div id="delete-eduplandiscipline-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити дисципліну циклу навчального плану?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
         <script type="text/javascript">
             jQuery(document).ready(function(){
                 jQuery("#addcycle-button").click(function(){
@@ -308,6 +443,38 @@
                 })
                 jQuery("#eduplancycle-save").click(function(){jQuery("#add-eduplancycle-dialog").dialog("close")});
                 jQuery("#eduplancycle-cancel").click(function(){jQuery("#add-eduplancycle-dialog").dialog("close")});
+                
+                jQuery(".eduplancycle-edit").click(function(){
+                    jQuery("#eduplancycle-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009");
+                    jQuery("#eduplancycle-help").css({'display':'block'});
+                    jQuery("#add-eduplancycle-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Редагування циклу навчального плану"});
+                })
+                
+                jQuery(".eduplancycle-delete").click(function(){
+                    jQuery("#delete-eduplancycle-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення циклу навчального плану"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-eduplancycle-dialog").dialog("close")});
+                
+                jQuery(".eduplandiscipline-add").click(function(){
+                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>24</b> кредити");
+                    jQuery("#eduplandiscipline-help").css({'display':'block'});
+                    jQuery("#add-commoneduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Додавання циклу навчального плану"});
+                })
+                jQuery("#commoneduplandiscipline-save").click(function(){jQuery("#add-commoneduplandiscipline-dialog").dialog("close")});
+                jQuery("#commoneduplandiscipline-cancel").click(function(){jQuery("#add-commoneduplandiscipline-dialog").dialog("close")});
+                
+                jQuery(".eduplandiscipline-edit").click(function(){
+                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>24</b> кредити");
+                    jQuery("#eduplandiscipline-help").css({'display':'block'});
+                    jQuery("#add-commoneduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Редагування дисципліни циклу навчального плану"});
+                })
+                
+                jQuery(".eduplandiscipline-delete").click(function(){
+                    jQuery("#delete-eduplandiscipline-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення дисципліни циклу навчального плану"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-eduplandiscipline-dialog").dialog("close")});
             })
         
         </script>
