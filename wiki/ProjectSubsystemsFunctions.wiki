@@ -43,4 +43,4 @@
 [http://orion-cpu.googlecode.com/svn/wiki/Licensing-Class-Diagram.png]
 
 Диаграмма деятельностей подсистемы управления лицензиями:
-[http://orion-cpu.googlecode.com/svn/wiki/LicensingActivityDiagram.png]
+[http://orion-cpu.googlecode.com/svn/wiki/LicensingActivityDiagram-new.png]
