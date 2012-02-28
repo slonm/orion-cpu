@@ -4,6 +4,7 @@ import ua.orion.core.persistence.AbstractEntity;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  * Абстрактная реализация документа.
@@ -32,6 +33,7 @@ public abstract class Document<T extends Document<?>> extends AbstractEntity<T> 
     private String body;
 
     @Lob
+    @NonVisual
     public String getBody() {
         return body;
     }

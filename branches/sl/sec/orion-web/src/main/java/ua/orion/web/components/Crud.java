@@ -3,14 +3,15 @@ package ua.orion.web.components;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.alerts.*;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
-import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
@@ -68,7 +69,8 @@ public class Crud {
      * страницу этой сущности
      */
     @Parameter
-    private String master;
+    @Property
+    private Object master;
     /**
      * Блок переопределяющий форму редактирования сущности, предоставляемый по
      * умолчанию

@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.License;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
+import ua.orion.cpu.core.licensing.entities.LicenseState;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 
 /**
@@ -62,10 +63,11 @@ public class LicensingServiceImpl implements LicensingService {
     }
 
     @Override
-    public boolean existsForcedLicense() {
+    public boolean existsNewStateLicense() {
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<License> f = query.from(License.class);
         query.select(cb.count(f));
+        query.where(cb.equal(f.get("licenseState"), LicenseState.NEW));
         return em.createQuery(query).getSingleResult().intValue() != 0;
     }
     @Override

@@ -8,15 +8,15 @@
             <t:zone t:id="popupZone"/>
         </div>
     </div>
-    <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
-        <t:if test="canAdd">
-            <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
-        </t:if>
-        <t:if test="maserType">
-            <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
-        </t:if>    
-    </div>
     <t:zone t:id="listZone" id="${listZoneId}">
+        <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
+            <t:if test="canAdd">
+                <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
+            </t:if>
+            <t:if test="master">
+                <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
+            </t:if>    
+        </div>
         <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(entityClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>

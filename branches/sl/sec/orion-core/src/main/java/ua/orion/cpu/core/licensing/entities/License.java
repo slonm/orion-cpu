@@ -16,7 +16,7 @@ public class License extends Document<License> {
 
     private static final long serialVersionUID = 1L;
     private Set<LicenseRecord> licenseRecords = new HashSet<LicenseRecord>();
-    private boolean forced = false;
+    private LicenseState licenseState = LicenseState.NEW;
 
     public License() {
     }
@@ -27,12 +27,13 @@ public class License extends Document<License> {
         setNumber(number);
     }
 
-    public boolean isForced() {
-        return forced;
+    @Enumerated(EnumType.STRING)
+    public LicenseState getLicenseState() {
+        return licenseState;
     }
 
-    public void setForced(boolean forced) {
-        this.forced = forced;
+    public void setLicenseState(LicenseState forced) {
+        this.licenseState = forced;
     }
 
     /**
