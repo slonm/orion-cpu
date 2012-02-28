@@ -334,10 +334,10 @@
             <div class="ui-state-highlight" id="eduplandiscipline-help"></div>
             <table>
                 <tr>
-                    <td>№ дисципліни за планом:</td><td><input type="text"/></td>
+                    <td>№ дисципліни:</td><td><input type="text"/></td>
                 </tr>
                 <tr>
-                    <td>Назва дисципліни відповідно до навчального плану (метадисципліни):</td><td><input type="text" size="50"/></td>
+                    <td>Назва дисципліни (метадисципліни):</td><td><input type="text" size="50"/></td>
                 </tr>
                 <tr>
                     <td>Загальна кількість ECTS-кредитів дисципліни:</td><td><input type="text"></input></td>
@@ -353,7 +353,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Кількість іспитів з дисципліни за планом:</td>
+                    <td>Кількість іспитів:</td>
                     <td>
                         <select>
                             <option value="noexam">немає</option>
@@ -364,7 +364,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Кількість заліків з дисципліни за планом:</td>
+                    <td><label>Кількість заліків:</td>
                     <td>
                         <select>
                             <option value="nocredit">немає</option>
@@ -378,7 +378,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Кількість курсових робіт з дисципліни за планом:</td>
+                    <td><label>Кількість курсових робіт:</td>
                     <td>
                         <select>
                             <option value="nocredit">немає</option>
@@ -457,15 +457,15 @@
                 jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-eduplancycle-dialog").dialog("close")});
                 
                 jQuery(".eduplandiscipline-add").click(function(){
-                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>24</b> кредити");
+                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>16 кредитів з 24</b>");
                     jQuery("#eduplandiscipline-help").css({'display':'block'});
-                    jQuery("#add-commoneduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Додавання циклу навчального плану"});
+                    jQuery("#add-commoneduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Додавання дисципліни циклу навчального плану"});
                 })
                 jQuery("#commoneduplandiscipline-save").click(function(){jQuery("#add-commoneduplandiscipline-dialog").dialog("close")});
                 jQuery("#commoneduplandiscipline-cancel").click(function(){jQuery("#add-commoneduplandiscipline-dialog").dialog("close")});
                 
                 jQuery(".eduplandiscipline-edit").click(function(){
-                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>24</b> кредити");
+                    jQuery("#eduplandiscipline-help").html("Загальний навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів Дата введення: 01.09.2009<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>16 кредитів з 24</b>");
                     jQuery("#eduplandiscipline-help").css({'display':'block'});
                     jQuery("#add-commoneduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Редагування дисципліни циклу навчального плану"});
                 })
