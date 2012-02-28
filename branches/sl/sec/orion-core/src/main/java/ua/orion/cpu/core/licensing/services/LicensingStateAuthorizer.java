@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.cpu.core.licensing.services;
 
 import java.util.Arrays;
@@ -10,10 +6,12 @@ import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.License;
 import ua.orion.cpu.core.licensing.entities.LicenseRecord;
 import ua.orion.cpu.core.licensing.entities.LicenseState;
+import ua.orion.cpu.core.security.OrionWildcardPermission;
 import ua.orion.cpu.core.security.services.StateAuthorizer;
 
 /**
- *
+ * Логика проверки допустимости выполнения операций с объектами типа License и 
+ * LicenseRecord
  * @author slobodyanuk
  */
 public class LicensingStateAuthorizer implements StateAuthorizer {
@@ -25,28 +23,27 @@ public class LicensingStateAuthorizer implements StateAuthorizer {
 
     @Override
     public boolean isForbid(String permission) {
-        String[] parts = permission.split(":");
-        if (parts.length == 2) {
-            if ("insert".equals(parts[1]) && "License".equals(parts[0])) {
+        try {
+            OrionWildcardPermission owp = new OrionWildcardPermission(permission);
+            if ("insert".equals(owp.getAction()) && "License".equals(owp.getDomain())) {
                 return ls.existsNewStateLicense();
-            }
-        } else if (parts.length == 3) {
-            if (Arrays.asList("update", "delete").contains(parts[1])) {
-                switch (parts[0]) {
+            } else if (Arrays.asList("update", "delete").contains(owp.getAction())) {
+                switch (owp.getDomain()) {
                     case "License":
-                        License license = es.find(License.class, parts[2]);
-                        if (LicenseState.NEW!=license.getLicenseState()) {
+                        License license = es.find(License.class, owp.getInstance());
+                        if (LicenseState.NEW != license.getLicenseState()) {
                             return true;
                         }
                         break;
                     case "LicenseRecord":
-                        LicenseRecord licenseRecord = es.find(LicenseRecord.class, parts[2]);
-                        if (LicenseState.NEW!=licenseRecord.getLicense().getLicenseState()) {
+                        LicenseRecord licenseRecord = es.find(LicenseRecord.class, owp.getInstance());
+                        if (LicenseState.NEW != licenseRecord.getLicense().getLicenseState()) {
                             return true;
                         }
                         break;
                 }
             }
+        } catch (IllegalArgumentException ex) {
         }
         return false;
     }
