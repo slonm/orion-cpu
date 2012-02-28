@@ -34,7 +34,6 @@
                                 <th>Спеціальність</th>
                                 <th>Область дії ліцензії</th>
                                 <th>Освітньо-кваліфікаційний рівень</th>
-                                <th>Термін навчання</th>
                                 <th>Кваліфікація</th>
                                 <th>Дата введення в дію</th>
                                 <th>Дата затвердження</th>
@@ -49,7 +48,6 @@
                                 <td align="center">-</td>
                                 <td>Підготовка бакалаврів</td>
                                 <td>Бакалавр</td>
-                                <td class="eptn" align="center">4.0</td>
                                 <td>фахівець з розробки та тестування програмного забезпечення</td>
                                 <td class="epdvd" align="center">01.09.2011</td>
                                 <td align="center">23.04.2011</td>
@@ -64,7 +62,6 @@
                                 <td align="center">-</td>
                                 <td>Підготовка бакалаврів</td>
                                 <td>Бакалавр</td>
-                                <td class="eptn" align="center">4.0</td>
                                 <td>технічний фахівець в галузі прикладних наук та техніки</td>
                                 <td class="epdvd" align="center">01.09.2011</td>
                                 <td align="center">23.04.2011</td>
@@ -87,7 +84,6 @@
                                 <td align="center">-</td>
                                 <td>Підготовка бакалаврів</td>
                                 <td>Бакалавр</td>
-                                <td class="eptn" align="center">4.0</td>
                                 <td>Фахівець зі зв’язків з громадськістю</td>
                                 <td class="epdvd" align="center">01.09.2009</td>
                                 <td align="center">23.04.2011</td>
@@ -111,7 +107,6 @@
                                 </td>
                                 <td>Підготовка спеціалістів, магістрів</td>
                                 <td>Спеціаліст</td>
-                                <td class="eptn" align="center">4.0</td>
                                 <td>спеціаліст з менеджменту організацій і адміністрування</td>
                                 <td class="epdvd" align="center">01.09.2009</td>
                                 <td align="center">23.04.2011</td>
@@ -135,7 +130,6 @@
                                 </td>
                                 <td>Перепідготовка спеціалістів</td>
                                 <td>Спеціаліст</td>
-                                <td class="eptn" align="center">4.0</td>
                                 <td>спеціаліст з менеджменту організацій і адміністрування</td>
                                 <td class="epdvd" align="center">01.09.2009</td>
                                 <td align="center">23.04.2011</td>
@@ -168,9 +162,6 @@
                             <option value="RZG">6.030302-Реклама і зв'язки з громадкістю (за видами діяльності)-01.09.2009-Підготовка бакалаврів</option>
                         </select>
                     </td>
-                </tr>
-                <tr id="ttn">
-                    <td>Термін навчання(років):</td><td><input type="text" id="ep-tn"/></td>
                 </tr>
                 <tr id="tqua">
                     <td>Кваліфікація:</td>
@@ -208,7 +199,6 @@
 
             jQuery(document).ready(function(){
                 jQuery(".eduplan-edit").click(function(){
-                    jQuery("#ep-tn").val(jQuery(this).parent().parent().find('.eptn').html());
                     jQuery("#ep-dvd").val(jQuery(this).parent().parent().find('.epdvd').html());
                     jQuery("#add-eduplan-dialog").dialog({width: 800, show: "blind", hide:"blind", title: "Редагування навчального плану"});
                 })		
