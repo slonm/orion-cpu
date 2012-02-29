@@ -2,6 +2,7 @@ package ua.orion.web.components;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.ComponentEventCallback;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.alerts.Duration;
@@ -89,6 +90,12 @@ public class Crud {
      */
     @Parameter(value = "block:defaultViewBlock")
     private Block viewBlock;
+    /**
+     * Блок дополнительных кнопок панели инструментов
+     */
+    @Parameter
+    @Property(write = false)
+    private Block toolButtons;
     //---Components and component's resources---
     @Component
     private Zone listZone;
@@ -121,11 +128,15 @@ public class Crud {
     private String popupWindowId;
     @Persist
     private String listZoneId;
+    @Persist
+    @Property(write = false)
+    private String popupZoneId;
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(entityType + ":read");
         popupWindowId = javascriptSupport.allocateClientId("popupWindow");
         listZoneId = javascriptSupport.allocateClientId("listZone");
+        popupZoneId = javascriptSupport.allocateClientId("popupZone");
     }
 
     /**
@@ -250,6 +261,7 @@ public class Crud {
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
+            @Override
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
@@ -262,7 +274,18 @@ public class Crud {
 
     Object onAdd() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
-        object = es.newInstance(getEntityClass());
+        object = null;
+        resources.triggerEvent("newInstance", new Object[]{}, new ComponentEventCallback() {
+
+            @Override
+            public boolean handleResult(Object result) {
+                object = result;
+                return true;
+            }
+        });
+        if (object == null) {
+            object = es.newInstance(getEntityClass());
+        }
         resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
@@ -284,6 +307,7 @@ public class Crud {
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
+            @Override
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
@@ -301,6 +325,7 @@ public class Crud {
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
+            @Override
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("showCkWindow",
@@ -335,6 +360,7 @@ public class Crud {
         //Close window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
+            @Override
             public void run(JavaScriptSupport javascriptSupport) {
 
                 javascriptSupport.addInitializerCall("closeCkWindow",

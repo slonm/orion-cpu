@@ -1,6 +1,7 @@
 package ua.orion.cpu.core.licensing.services;
 
 import java.util.*;
+import org.apache.tapestry5.jpa.annotations.CommitAfter;
 import ua.orion.cpu.core.licensing.entities.*;
 import ua.orion.cpu.core.orgunits.entities.*;
 
@@ -45,7 +46,7 @@ public interface LicensingService {
 
     List<LicenseRecord> findLicenseRecordsByTrainingDirection(String codeDirection);
 
-    
+   
     boolean existsNewStateLicense();
     
     /**
@@ -54,12 +55,19 @@ public interface LicensingService {
      * @param license
      * @return сохраненная лицензия
      */
-    License forceAndMergeLicense(License license);
+    @CommitAfter
+    void forceAndMergeLicense(License license);
     
     /**
      * Создает и сохраняет новую лицензию на основе текущей FORCED лицензии
      * @return сохраненная лицензия
      */
+    @CommitAfter
     License newLicense();
     
+    /**
+     * Поиск последней действующей лицензии
+     * @return экземпляр лицензии
+     */
+    License findForcedLicense();
 }

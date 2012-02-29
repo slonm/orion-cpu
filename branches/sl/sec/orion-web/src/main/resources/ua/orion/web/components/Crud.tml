@@ -5,17 +5,18 @@
      xmlns:j="tapestry-library:jquery">
     <div id="${popupWindowId}" class="dialog" style="display:none;">
         <div class="window-content">
-            <t:zone t:id="popupZone"/>
+            <t:zone t:id="popupZone" id="${popupZoneId}"/>
         </div>
     </div>
     <t:zone t:id="listZone" id="${listZoneId}">
         <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
             <t:if test="canAdd">
-                <t:EventLink class="ui-button-add" t:event="add" zone="popupZone">${message:action.add}</t:EventLink>
+                <t:EventLink class="ui-button-add" t:event="add" zone="prop:popupZoneId">${message:action.add}</t:EventLink>
             </t:if>
             <t:if test="master">
                 <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
-            </t:if>    
+            </t:if>
+            <t:delegate to="prop:toolButtons"/>
         </div>
         <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(entityClass,messages)" pagerPosition="literal:bottom">
@@ -32,21 +33,21 @@
                         <s:HasPermission permission="${entityType}:update:${id}">
                             <tr><td>
                                     <t:EventLink class="ui-button-edit"
-                                                 t:event="edit" context="object" zone="popupZone">${message:action.edit}</t:EventLink>
+                                                 t:event="edit" context="object" zone="prop:popupZoneId">${message:action.edit}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showViewButton">
                         <s:HasPermission permission="${entityType}:read:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-view" t:event="view" context="object" zone="popupZone">${message:action.view}</t:EventLink>
+                                    <t:EventLink class="ui-button-view" t:event="view" context="object" zone="prop:popupZoneId">${message:action.view}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showDelButton">
                         <s:HasPermission permission="${entityType}:delete:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-del" t:event="trydelete" context="object" zone="popupZone">${message:action.del}</t:EventLink>
+                                    <t:EventLink class="ui-button-del" t:event="trydelete" context="object" zone="prop:popupZoneId">${message:action.del}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
