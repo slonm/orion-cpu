@@ -35,9 +35,8 @@ public class Licenses {
         }
         return null;
     }
-    
-    Object onNewInstanceFromCrud() {
-        return ls.newLicense();
-    }
 
+    void onAfterPersistFromCrud(ua.orion.cpu.core.licensing.entities.License license) {
+        ls.cloneLicenseRecordsFromForced(license);
+    }
 }

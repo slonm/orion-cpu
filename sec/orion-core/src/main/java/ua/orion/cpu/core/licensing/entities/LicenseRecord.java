@@ -286,4 +286,14 @@ public class LicenseRecord extends AbstractEntity<LicenseRecord> {
     public int compareTo(LicenseRecord o) {
         return o == null ? -1 : toString().compareToIgnoreCase(o.toString());
     }
+
+    @Override
+    public LicenseRecord clone() {
+        LicenseRecord lr = super.clone();
+        lr.licenseQuantityByEducationForm = new TreeMap();
+        for (Map.Entry<EducationForm, Integer> entry : licenseQuantityByEducationForm.entrySet()) {
+            lr.licenseQuantityByEducationForm.put(entry.getKey(), entry.getValue());
+        }
+        return lr;
+    }
 }

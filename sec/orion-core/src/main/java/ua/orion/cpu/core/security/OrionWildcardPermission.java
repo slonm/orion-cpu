@@ -9,9 +9,9 @@ import org.apache.shiro.authz.permission.WildcardPermission;
  */
 public class OrionWildcardPermission extends WildcardPermission {
 
-    private String domain = null;
-    private String action = null;
-    private String instance = null;
+    private String domain;
+    private String action;
+    private String instance;
 
     public OrionWildcardPermission(String wildcardString) {
         super(wildcardString, false);

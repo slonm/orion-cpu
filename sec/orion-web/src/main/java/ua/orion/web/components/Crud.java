@@ -217,8 +217,10 @@ public class Crud {
      */
     public Object onSuccessFromEditForm() {
         SecurityUtils.getSubject().checkPermission(entityType + ":update:" + getId());
+        resources.triggerEvent("beforeMerge", new Object[]{object}, null);
         try {
             es.merge(object);
+            resources.triggerEvent("afterMerge", new Object[]{object}, null);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.update.entity",
                     messages.get("entity." + entityType),
@@ -239,8 +241,10 @@ public class Crud {
      */
     public Object onSuccessFromAddForm() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
+        resources.triggerEvent("beforePersist", new Object[]{object}, null);
         try {
             es.persist(object);
+            resources.triggerEvent("afterPersist", new Object[]{object}, null);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.insert.entity",
                     messages.get("entity." + entityType),
@@ -274,18 +278,7 @@ public class Crud {
 
     Object onAdd() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
-        object = null;
-        resources.triggerEvent("newInstance", new Object[]{}, new ComponentEventCallback() {
-
-            @Override
-            public boolean handleResult(Object result) {
-                object = result;
-                return true;
-            }
-        });
-        if (object == null) {
-            object = es.newInstance(getEntityClass());
-        }
+        object = es.newInstance(getEntityClass());
         resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
         //Show window
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
