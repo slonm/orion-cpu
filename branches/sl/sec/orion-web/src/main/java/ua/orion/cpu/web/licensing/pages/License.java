@@ -69,7 +69,7 @@ public class License {
     @Component
     private Zone trainingDirectionZone;
     @Component
-    private Zone headerZone;
+    private Zone contentZone;
     @Property(write = false)
     private TrainingDirection knowledgeAreaContainer;
 
@@ -176,7 +176,7 @@ public class License {
                     messages.format("message.error.force.license",
                     es.getStringValue(license)));
         }
-        return headerZone.getBody();
+        return contentZone.getBody();
     }
 
     public boolean getIsEditSpeciality() {
@@ -214,5 +214,9 @@ public class License {
         TypedQuery<Speciality> query = es.getEntityManager().createQuery(source, Speciality.class);
         query.setParameter("knowledgeArea", knowledgeAreaContainer.getKnowledgeArea());
         return query.getResultList();
+    }
+
+    public boolean getIsNewState() {
+        return license.getLicenseState() == LicenseState.NEW;
     }
 }

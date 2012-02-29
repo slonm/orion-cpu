@@ -8,7 +8,6 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
-import org.apache.shiro.authz.permission.WildcardPermission;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import ua.orion.cpu.core.security.entities.*;
@@ -41,8 +40,8 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         return saf;
     }
 
-    protected Collection<Permission> resolvePermissionsForSubject(String subject, SubjectType type) {
-        Collection<Permission> permissions = new HashSet<Permission>();
+    protected Collection<OrionWildcardPermission> resolvePermissionsForSubject(String subject, SubjectType type) {
+        Collection<OrionWildcardPermission> permissions = new HashSet<>();
         String qStr = "FROM Acl WHERE lower(subject) = lower(:subject) and subjectType=:subjectType";
         TypedQuery<Acl> query = em.createQuery(qStr, Acl.class);
         query.setParameter("subject", subject);
@@ -51,7 +50,7 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
             permissions.add(new OrionWildcardPermission(acl.getPermission()));
         }
         Set<OrionWildcardPermission> list = new HashSet();
-        list.addAll((Set<OrionWildcardPermission>) (Set) permissions);
+        list.addAll(permissions);
         for (OrionWildcardPermission p : list) {
             if (p.getDomain().startsWith("permg_")) {
                 permissions.addAll(resolvePermissionsForSubject(

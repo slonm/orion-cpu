@@ -146,25 +146,16 @@ public class LicensingServiceImpl implements LicensingService {
     }
 
     @Override
-    public License newLicense() {
-        if (existsNewStateLicense()) {
-            throw new RuntimeException("NEW License already exists");
-        }
-        CriteriaQuery<License> query = cb.createQuery(License.class);
-        Root<License> f = query.from(License.class);
-        query.where(cb.equal(f.get("licenseState"), LicenseState.FORCED));
+    public void cloneLicenseRecordsFromForced(License license) {
         License forced = findForcedLicense();
-        License newLic;
-        if (forced == null) {
-            newLic = new License();
-        } else {
-            newLic = forced.clone();
-            em.persist(newLic);
-            for (LicenseRecord lr : newLic.getLicenseRecords()) {
-                em.persist(lr);
+        if (forced != null) {
+            for (LicenseRecord lr : forced.getLicenseRecords()) {
+                LicenseRecord newLr = lr.clone();
+                newLr.setLicense(license);
+                license.getLicenseRecords().add(newLr);
+                em.persist(newLr);
             }
         }
-        return newLic;
     }
 
     @Override

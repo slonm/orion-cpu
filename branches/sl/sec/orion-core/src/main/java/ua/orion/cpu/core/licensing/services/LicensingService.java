@@ -63,7 +63,7 @@ public interface LicensingService {
      * @return сохраненная лицензия
      */
     @CommitAfter
-    License newLicense();
+    void cloneLicenseRecordsFromForced(License license);
     
     /**
      * Поиск последней действующей лицензии
