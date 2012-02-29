@@ -7,18 +7,24 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.apache.shiro.SecurityUtils;
+import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.cpu.core.licensing.entities.*;
+import ua.orion.cpu.core.licensing.services.LicensingService;
 import ua.orion.web.AdditionalConstraintsApplier;
 import ua.orion.web.components.Crud;
 import ua.orion.web.services.RequestInfo;
@@ -34,6 +40,12 @@ import ua.orion.web.services.TapestryDataSource;
 public class License {
     //---Services---
 
+    @Inject
+    private AlertManager alertManager;
+    @Inject
+    private Messages messages;
+    @Inject
+    private LicensingService ls;
     @Inject
     private RequestInfo info;
     @Inject
@@ -56,6 +68,8 @@ public class License {
     private Zone specialityZone;
     @Component
     private Zone trainingDirectionZone;
+    @Component
+    private Zone headerZone;
     @Property(write = false)
     private TrainingDirection knowledgeAreaContainer;
 
@@ -149,6 +163,20 @@ public class License {
         knowledgeAreaContainer.setKnowledgeArea(ka);
         ajaxResponseRenderer.addRender("specialityZone", specialityZone);
         ajaxResponseRenderer.addRender("trainingDirectionZone", trainingDirectionZone);
+    }
+
+    public Block onForce() {
+        try {
+            ls.forceAndMergeLicense(license);
+            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
+                    messages.format("message.success.force.license",
+                    es.getStringValue(license)));
+        } catch (RuntimeException ex) {
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
+                    messages.format("message.error.force.license",
+                    es.getStringValue(license)));
+        }
+        return headerZone.getBody();
     }
 
     public boolean getIsEditSpeciality() {

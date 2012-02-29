@@ -49,7 +49,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     @Override
     public <E> GridDataSource createGridDataSource(Class<E> entityClass, final AdditionalConstraintsApplier<E> applier) {
-        return new FetchAllJpaGridDataSource(es.getEntityManager(), entityClass, propertyAccess){
+        return new FetchAllJpaGridDataSource(es.getEntityManager(), entityClass, propertyAccess) {
 
             @Override
             protected void applyAdditionalConstraints(CriteriaQuery criteria, Root root, CriteriaBuilder builder) {
@@ -126,7 +126,8 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
 
     @Override
     public <T> SelectModel createSelectModel(Class<T> entityClass, String property) {
-        CriteriaQuery<T> query = es.createQuery(propertyAccess.getAdapter(entityClass).getPropertyAdapter(property).getType());
+        CriteriaQuery<T> query = es.getEntityManager().getCriteriaBuilder().createQuery(propertyAccess.getAdapter(entityClass).getPropertyAdapter(property).getType());
+        query.from(entityClass);
         List<T> objects = es.getEntityManager().createQuery(query).getResultList();
         final List<OptionModel> options = new ArrayList<OptionModel>();
         for (final T object : objects) {

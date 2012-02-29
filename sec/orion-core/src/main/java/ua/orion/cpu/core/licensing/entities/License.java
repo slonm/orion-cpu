@@ -83,4 +83,21 @@ public class License extends Document<License> {
     public void setLicenseRecords(Set<LicenseRecord> licenseRecords) {
         this.licenseRecords = licenseRecords;
     }
+
+    /**
+     * Копирует лицензию и все ее записи в новый объект
+     * @return 
+     */
+    @Override
+    public License clone() {
+        License cloned=super.clone();
+        cloned.licenseRecords.clear();
+        for (LicenseRecord lr : licenseRecords) {
+            LicenseRecord newLr=lr.clone();
+            newLr.setLicense(cloned);
+            cloned.licenseRecords.add(newLr);
+        }
+        return cloned;
+    }
+    
 }

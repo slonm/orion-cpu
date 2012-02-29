@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -70,6 +71,7 @@ public class LicensingServiceImpl implements LicensingService {
         query.where(cb.equal(f.get("licenseState"), LicenseState.NEW));
         return em.createQuery(query).getSingleResult().intValue() != 0;
     }
+
     @Override
     public License findLicense(String serial, String number, Calendar issue) {
         CriteriaQuery<License> query = cb.createQuery(License.class);
@@ -104,7 +106,7 @@ public class LicensingServiceImpl implements LicensingService {
             return l.get(0);
         }
     }
-    
+
     @Override
     public LicenseRecord findLicenseRecordBySpeciality(String serial, String number,
             Calendar issue, String eql,
@@ -128,5 +130,52 @@ public class LicensingServiceImpl implements LicensingService {
             return l.get(0);
         }
     }
-    
+
+    @Override
+    public void forceAndMergeLicense(License license) {
+        if (LicenseState.NEW != license.getLicenseState()) {
+            throw new RuntimeException("License not in NEW state");
+        }
+        License forced = findForcedLicense();
+        if (forced != null) {
+            forced.setLicenseState(LicenseState.OBSOLETE);
+            em.merge(forced);
+        }
+        license.setLicenseState(LicenseState.FORCED);
+        em.merge(license);
+    }
+
+    @Override
+    public License newLicense() {
+        if (existsNewStateLicense()) {
+            throw new RuntimeException("NEW License already exists");
+        }
+        CriteriaQuery<License> query = cb.createQuery(License.class);
+        Root<License> f = query.from(License.class);
+        query.where(cb.equal(f.get("licenseState"), LicenseState.FORCED));
+        License forced = findForcedLicense();
+        License newLic;
+        if (forced == null) {
+            newLic = new License();
+        } else {
+            newLic = forced.clone();
+            em.persist(newLic);
+            for (LicenseRecord lr : newLic.getLicenseRecords()) {
+                em.persist(lr);
+            }
+        }
+        return newLic;
+    }
+
+    @Override
+    public License findForcedLicense() {
+        CriteriaQuery<License> query = cb.createQuery(License.class);
+        Root<License> f = query.from(License.class);
+        query.where(cb.equal(f.get("licenseState"), LicenseState.FORCED));
+        try {
+            return em.createQuery(query).getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }
