@@ -158,14 +158,4 @@ public interface EntityService {
      * Discards all stored MetaEntity.
      */
     void clearCache();
-
-    /**
-     * Create a <code>CriteriaQuery</code> object with the specified result
-     * type and root entity with same type.
-     *
-     * @param resultClass type of the query result
-     *
-     * @return criteria query object
-     */
-     <T> CriteriaQuery<T> createQuery(Class<T> resultClass);
 }

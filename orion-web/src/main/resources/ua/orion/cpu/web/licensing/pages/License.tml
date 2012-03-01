@@ -4,30 +4,39 @@
               menudata="Start>Licensing>License"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
               xmlns:p="tapestry:parameter">
-    <t:ori.crud t:id="crud" t:objectClass="LicenseRecordClass" t:source="source" t:listPage="licensing/licenses">
-        <p:editBlock>
-            <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="editForm" object="crud.object" model="beanModel"
-                                   zone="${crud.listZoneId}" submitLabel="message:action.edit" 
-                                   buttons="crud.hideWindowButtonBlock"
-                                   license="block:licenseBlock"
-                                   educationalQualificationLevel="block:educationalQualificationLevelBlock"
-                                   knowledgeArea="block:knowledgeAreaBlock"
-                                   trainingDirection="block:trainingDirectionBlock"
-                                   speciality="block:specialityBlock">
-            </t:ori.beaneditformext>
-        </p:editBlock>
-        <p:addBlock>
-            <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="addForm" object="crud.object" model="beanModel"
-                                   zone="${crud.listZoneId}" submitLabel="message:action.add" 
-                                   buttons="crud.hideWindowButtonBlock"
-                                   license="block:licenseBlock"
-                                   educationalQualificationLevel="block:educationalQualificationLevelBlock"
-                                   knowledgeArea="block:knowledgeAreaBlock"
-                                   trainingDirection="block:trainingDirectionBlock"
-                                   speciality="block:specialityBlock">
-            </t:ori.beaneditformext>
-        </p:addBlock>
-    </t:ori.crud>
+    <t:zone t:id="contentZone">
+        <span style="background-color: red;">${tostring:license.LicenseState}</span><br/>
+        <t:ori.crud t:id="crud" t:entityType="LicenseRecord" t:source="source" t:master="license">
+            <p:editBlock>
+                <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="editForm" object="crud.object" model="beanModel"
+                                       zone="${crud.listZoneId}" submitLabel="message:action.edit" 
+                                       buttons="crud.hideWindowButtonBlock"
+                                       license="block:licenseBlock"
+                                       educationalQualificationLevel="block:educationalQualificationLevelBlock"
+                                       knowledgeArea="block:knowledgeAreaBlock"
+                                       trainingDirection="block:trainingDirectionBlock"
+                                       speciality="block:specialityBlock">
+                </t:ori.beaneditformext>
+            </p:editBlock>
+            <p:addBlock>
+                <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="addForm" object="crud.object" model="beanModel"
+                                       zone="${crud.listZoneId}" submitLabel="message:action.add" 
+                                       buttons="crud.hideWindowButtonBlock"
+                                       license="block:licenseBlock"
+                                       educationalQualificationLevel="block:educationalQualificationLevelBlock"
+                                       knowledgeArea="block:knowledgeAreaBlock"
+                                       trainingDirection="block:trainingDirectionBlock"
+                                       speciality="block:specialityBlock">
+                </t:ori.beaneditformext>
+            </p:addBlock>
+            <p:toolButtons>
+                <t:if test="isNewState">
+                    <t:EventLink class="ui-button-check" t:event="force" zone="contentZone">${message:action.force}</t:EventLink>
+                </t:if>
+            </p:toolButtons>
+        </t:ori.crud>
+    </t:zone>
+
     <t:block id="licenseBlock">
         <label>${label:property.LicenseRecord.license}</label>
         <span>${tostring:licenseRecord.license}</span>

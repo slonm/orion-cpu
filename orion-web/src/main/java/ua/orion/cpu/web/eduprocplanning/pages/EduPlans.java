@@ -39,10 +39,6 @@ public class EduPlans {
     private static final EduPlanState[] states =
             new EduPlanState[]{EduPlanState.ACTUAL, EduPlanState.PROJECT, EduPlanState.OBSOLETE, null};
 
-    public Class<?> getObjectClass() {
-        return EduPlan.class;
-    }
-
     /**
      * Получение DataSource для Grid
      * @return GridDataSource

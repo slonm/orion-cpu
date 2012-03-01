@@ -3,6 +3,6 @@
 <t:ori.layout title="message:label.Licenses"
               menudata="Start>Licensing>License"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <t:ori.crud t:objectClass="objectClass" t:detailPage="licensing/license"
+    <t:ori.crud t:entityType="License" t:detailPage="licensing/license"
                 showViewButton="false"/>
 </t:ori.layout>

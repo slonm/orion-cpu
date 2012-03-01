@@ -1,15 +1,15 @@
 package ua.orion.web.security.services;
 
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.tapestry5.ioc.*;
-import org.apache.tapestry5.ioc.annotations.Autobuild;
-import org.apache.tapestry5.ioc.annotations.Match;
+import org.apache.shiro.mgt.CachingSecurityManager;
+import org.apache.tapestry5.ioc.OrderedConfiguration;
+import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.*;
+import org.apache.tapestry5.services.HttpServletRequestFilter;
 import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer;
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
+import org.tynamo.security.filter.SecurityRequestFilter;
 import ua.orion.cpu.core.security.OrionSecuritySymbols;
 
 /**
@@ -41,20 +41,12 @@ public class OrionSecurityWebIOCModule {
     }
 
     @Startup
-    public static void setShiroCacheManager(DefaultWebSecurityManager securityManager,
+    public static void setShiroCacheManager(SecurityRequestFilter filter,
             @Symbol(OrionSecuritySymbols.EHCACHE_CONFIG) String config) {
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManagerConfigFile(config);
-        securityManager.setCacheManager(new EhCacheManager());
-    }
-
-    /**
-     * Скрещиваем меню с системой безопасности
-     * @param receiver приемник событий OrionMenuService
-     */
-    @Match("OrionMenuService")
-    public static void adviseOrionMenuServiceForSecurity(MethodAdviceReceiver receiver,
-            @Autobuild OrionMenuServiceMethodAdvice advice) {
-        receiver.adviseAllMethods(advice);
+        if (filter.getSecurityManager() instanceof CachingSecurityManager) {
+            ((CachingSecurityManager) filter.getSecurityManager()).setCacheManager(new EhCacheManager());
+        }
     }
 }

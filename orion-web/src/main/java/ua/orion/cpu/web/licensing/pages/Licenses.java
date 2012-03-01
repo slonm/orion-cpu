@@ -3,6 +3,7 @@ package ua.orion.cpu.web.licensing.pages;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
+import ua.orion.cpu.core.licensing.services.LicensingService;
 import ua.orion.web.services.RequestInfo;
 
 /**
@@ -17,10 +18,8 @@ public class Licenses {
     private RequestInfo info;
     @Inject
     private Logger LOG;
-
-    public Class<?> getObjectClass() {
-        return ua.orion.cpu.core.licensing.entities.License.class;
-    }
+    @Inject
+    private LicensingService ls;
 
     public Object onActivate(EventContext context) {
         if (!info.isComponentEventRequest()) {
@@ -35,5 +34,9 @@ public class Licenses {
             }
         }
         return null;
+    }
+
+    void onAfterPersistFromCrud(ua.orion.cpu.core.licensing.entities.License license) {
+        ls.cloneLicenseRecordsFromForced(license);
     }
 }
