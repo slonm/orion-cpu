@@ -6,8 +6,8 @@ import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
- * Базовая абстрактная сущность.
- * Содержит только поле id и метку времени
+ * Базовая абстрактная сущность. Содержит только поле id и метку времени
+ *
  * @author sl
  */
 @MappedSuperclass
@@ -40,8 +40,7 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
     }
 
     /**
-     * Пример переопределения:
-     * z - примитивного типа
+     * Пример переопределения: z - примитивного типа
      * <pre>
      * public boolean aEquals(Sub obj){
      *      return super.aEquals(obj)&&
@@ -50,7 +49,8 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
      *             z==other.z;
      * }
      * </pre>
-     * @param obj 
+     *
+     * @param obj
      * @return
      */
     //1) Эквивалентность id
@@ -68,10 +68,12 @@ public abstract class AbstractEntity<T extends AbstractEntity<?>>
     @Override
     public T clone() {
         try {
-            return (T) super.clone();
+            T ret=(T) super.clone();
+            ret.setId(null);
+            return ret;
         } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException(ex);
         }
-        throw new RuntimeException();
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.apache.tapestry5.*;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.internal.services.DocumentLinker;
 import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -36,6 +37,7 @@ import ua.orion.web.JPAAnnotationsConstraintGenerator;
 import ua.orion.web.JSR303AnnotationsConstraintGenerator;
 import ua.orion.web.OrionWebSymbols;
 import ua.orion.web.data.FieldSetMode;
+import ua.orion.web.security.services.OrionMenuServiceMethodAdvice;
 
 /**
  *
@@ -385,5 +387,16 @@ public class OrionWebIOCModule {
 
     public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration) {
         configuration.addInstance("Orion", OrionCoreJavaScriptStack.class);
+    }
+
+    /**
+     * Скрещиваем меню с системой безопасности
+     *
+     * @param receiver приемник событий OrionMenuService
+     */
+    @Match("OrionMenuService")
+    public static void adviseOrionMenuServiceForSecurity(MethodAdviceReceiver receiver,
+            @Autobuild OrionMenuServiceMethodAdvice advice) {
+        receiver.adviseAllMethods(advice);
     }
 }

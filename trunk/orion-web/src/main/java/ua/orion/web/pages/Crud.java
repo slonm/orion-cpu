@@ -2,11 +2,11 @@ package ua.orion.web.pages;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
-import ua.orion.core.persistence.IEntity;
 import ua.orion.core.persistence.MetaEntity;
 import ua.orion.web.services.RequestInfo;
 
@@ -29,31 +29,31 @@ public class Crud {
     private Logger LOG;
     //---Locals---
     @Persist
-    private Class<? extends IEntity> objectClass;
+    private String entityType;
 
     public String getTitle() {
-        return messages.get("entity." + objectClass.getSimpleName());
+        return messages.get("entity." + entityType);
     }
 
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public Class<?> getObjectClass() {
-        return objectClass;
+    public String getEntityType() {
+        return entityType;
     }
 
     /**
      * Задано явно для возможности вызова из других классов
      */
-    public void setObjectClass(Class<? extends IEntity> objectClass) {
-        this.objectClass = objectClass;
+    public void setEntityType(String objectType) {
+        this.entityType = objectType;
     }
 
     public Object onActivate(EventContext context) {
         if (info.isComponentEventRequest()) {
             //Если это событие компонента, то Persistent objectClass
             //должен быть уже установлен
-            if (objectClass == null) {
+            if (entityType == null) {
                 LOG.debug("Component event on uninitialized page");
                 return "";
             }
@@ -64,15 +64,16 @@ public class Crud {
                 if (context.getCount() != 1) {
                     throw new RuntimeException();
                 }
-                Class<? extends IEntity> objClass = (Class<? extends IEntity>) context.get(MetaEntity.class, 0).getEntityClass();
+                context.get(MetaEntity.class, 0);//Проверка того, что это сущность
+                String objType = context.get(String.class, 0);
                 //Если страница вызвана для класса сущности, отличного от предыдущего
                 //вызова, то сбросим все Persistent поля и отправим редирект на эту же страницу,
                 //т.к. сброс произойдет только при следующем запросе страницы
-                if (!objClass.equals(objectClass) && objectClass != null) {
+                if (!objType.equals(entityType) && entityType != null) {
                     resources.discardPersistentFieldChanges();
                     return info.getLastPage();
                 }
-                objectClass = objClass;
+                entityType = objType;
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";

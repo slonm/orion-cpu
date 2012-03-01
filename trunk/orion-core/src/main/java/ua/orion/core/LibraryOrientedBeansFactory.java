@@ -6,7 +6,11 @@ import ua.orion.core.services.ModelLibraryService;
 import ua.orion.core.utils.Defense;
 
 /**
- *
+ * Фабрика бинов, обслуживающих библиотеки модели.
+ * Фабрика ищет в каждой библиотеке, возвращаемой ModelLibraryService
+ * класс в подпакете subPackage с именем prefix+имя_библиотеки+suffix,
+ * создает объекты этого типа с помощью ObjectLocator и возвращает список
+ * этих объектов
  * @author sl
  */
 public class LibraryOrientedBeansFactory {
@@ -30,10 +34,16 @@ public class LibraryOrientedBeansFactory {
         this.suffix = suffix;
     }
 
+    /**
+     * Возвращает список нетипизированных бинов
+     */
     public List<Object> create() {
         return create(Object.class);
     }
-    
+
+    /**
+     * Возвращает список бинов реализующих/расширяющих beanType
+     */
     public <T> List<T> create(Class<T> beanType) {
         List<Class<?>> classes = resolver.resolveLibraryOrientedBeanClasses(subPackage, prefix, suffix);
         List<T> result = new ArrayList();

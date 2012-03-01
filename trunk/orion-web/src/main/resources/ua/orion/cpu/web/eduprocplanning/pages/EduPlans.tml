@@ -10,7 +10,7 @@
                       '${message:action.all}']"/>
     <div class="ui-widget-content" id="tabcontrol-content">
         <t:zone t:id="crudZone">
-            <t:ori.crud t:objectClass="objectClass" t:source="source" 
+            <t:ori.crud t:entityType="EduPlan" t:source="source" 
                         t:detailPage="eduprocplanning/eduplan"
                         showViewButton="false"/>
         </t:zone>
