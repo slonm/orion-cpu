@@ -7,7 +7,7 @@
     * [ApplicationDefaultsInProperties	Конфигурационные символы в файле .propetries]
     * [PersistentSingleton	Хранимые в одном экземпляре объекты]
   * [OrionCpuSubsystems Модель данных и бизнес-логика]
-    * [ProjectSubsystemsFunctions	Подсистема лицензирования]
+    * [SubsystemLicensing	Подсистема лицензирования]
     * [EduProcPlanningFunctions	Подсистема планирования учебного процесса]
     * [SubsystemSecurity	Архитектура подсистемы безопасности]
     * [1C_Data	Формат данных для импорта из 1С]
