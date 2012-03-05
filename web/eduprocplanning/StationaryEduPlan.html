@@ -10,7 +10,8 @@
         <link href="main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
-<!--        <script type="text/javascript" src="main.js"></script> -->
+        <!--         <script type="text/javascript" src="up.js"></script>
+               <script type="text/javascript" src="main.js"></script> -->
     </head>
     <body>
         <div id="wrapper">
@@ -154,7 +155,16 @@
                                     <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
                                 </td>
                                 <td align="center">1.01в</td>
-                                <td>Вибіркова дисципліна ЦГСЕП-1</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-1
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Психологія</p>
+                                            <p>Етика та естетика</p>
+                                            <p>Соціальна психологія</p>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td align="center">1</td>
                                 <td align="center"></td>
                                 <td align="center">1</td>
@@ -172,7 +182,16 @@
                                     <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
                                 </td>
                                 <td align="center">1.02в</td>
-                                <td>Вибіркова дисципліна ЦГСЕП-2</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-2
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Політологія</p>
+                                            <p>Риторика</p>
+                                            <p>Конфліктологія</p>
+                                        </div>
+                                    </div>
+                                    </td>
                                 <td align="center">2</td>
                                 <td align="center"></td>
                                 <td align="center">2</td>
@@ -190,7 +209,16 @@
                                     <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
                                 </td>
                                 <td align="center">1.03в</td>
-                                <td>Вибіркова дисципліна ЦГСЕП-3</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-3
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Економічна теорія</p>
+                                            <p>Психологія управління</p>
+                                            <p>Культура наукової мови</p>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td align="center">3</td>
                                 <td align="center"></td>
                                 <td align="center">3</td>
@@ -208,7 +236,16 @@
                                     <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
                                 </td>
                                 <td align="center">1.04в</td>
-                                <td>Вибіркова дисципліна ЦГСЕП-4</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-4
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Правознавство</p>
+                                            <p>Соціологія</p>
+                                            <p>Логіка</p>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td align="center">4</td>
                                 <td align="center"></td>
                                 <td align="center">4</td>
@@ -677,6 +714,14 @@
                 })
                 jQuery("#eduformeduplandiscipline-save").click(function(){jQuery("#add-eduformeduplandiscipline-dialog").dialog("close")});
                 jQuery("#eduformeduplandiscipline-cancel").click(function(){jQuery("#add-eduformeduplandiscipline-dialog").dialog("close")});
+                
+                $(".kind-status").click(function(){
+                    if ($(this).hasClass("kind-closed")){
+                        $(this).attr("class","kind-opened kind-status").attr("src","../img/collapse.png").parent().find("div.kinds").show("slow");
+                    } else if ($(this).hasClass("kind-opened")){
+                        $(this).attr("class","kind-closed kind-status").attr("src","../img/expand.png").parent().find("div.kinds").hide("slow");
+                    }
+                })  
             })
         </script>
     </body>
