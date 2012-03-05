@@ -1,76 +1,198 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
-        <title>Навчальні дисципліни</title>
-        <link href="main.css" rel="stylesheet" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Банк навчальних дисциплін</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
     </head>
     <body>
-        <h2>Навчальні дисципліни</h2>
-        <table width="100%">
-            <tr>
-                <td class="btnrowright">
-                    <a href="CommonEduPlan.html"><input type="button"  value="До загального навчального плану" title="Перейти до загального навчального плану"/></a>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tbody>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>   <a href="EduPlan.html">Планування навчального процесу ▼</a>   <a href="">Довідники ▼</a>   <a href="Disciplines.html">Банк начальних дисциплін ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Банк навчальних дисциплін</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="adddiscipline-button">Додати навчальну дисципліну</button>   <a href="EduPlan.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th rowspan="2"></th>                                
+                                <th rowspan="2">Назва навчальної дисципліни</th>
+                                <th rowspan="2">Скорочена назва навчальної дисципліни</th>
+                                <th colspan="3">Кількість підсумкових контрольних заходів</th>
+                                <th rowspan="2">Кількість кредитів ECTS на вивчення дисципліни</th>
+                                <th rowspan="2">Кількість академічних годин на вивчення дисципліни</th>
+                                <th rowspan="2">Кількість модулів дисципліни</th>
+                                <th rowspan="2">Розробник дисципліни</th>
+                                <th rowspan="2">Посилання на дисципліну в virtuni</th>
+                                <th rowspan="2">Дата додавання дисципліни до банку</th>
+                                <th rowspan="2">Статус</th>
+                            </tr>
+                            <tr>
+                                <th>Іспитів</th>
+                                <th>Заліків</th>
+                                <th>Курс. робіт</th>
+                            </tr>
+                            <tr>
+                                <td><input class="discipline-edit" type="image" src="../img/edit.png" title="Редагувати дані навчальної дисципліни"/>   <input class="discipline-delete" type="image" src="../img/delete.png" title="Видалити навчальну дисципліну з банку"/></td>
+                                <td align="center">Історія України</td>
+                                <td align="center">ІУ</td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">3.0</td>
+                                <td align="center">108</td>
+                                <td align="center">4</td>
+                                <td align="center">Покатаєва Т.О., ст.викл. каф. ГД</td>
+                                <td align="center"><a href="http://virtuni.education.zp.ua/edu_cpu/course/view.php?id=11">ІУ(управлен)(Пкт)</a></td>
+                                <td align="center">01.09.2007</td>
+                                <td align="center">Використовується</td>
+                            </tr>
+                            <tr>
+                                <td><input class="discipline-edit" type="image" src="../img/edit.png" title="Редагувати дані навчальної дисципліни"/>   <input class="discipline-delete" type="image" src="../img/delete.png" title="Видалити навчальну дисципліну з банку"/></td>
+                                <td align="center">Організація комп'ютерних мереж</td>
+                                <td align="center">ОКМ</td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">3.5</td>
+                                <td align="center">126</td>
+                                <td align="center">5</td>
+                                <td align="center">Коломоєць Г.П., доц. каф. ПІТ, к.ф.-м.н., доц.</td>
+                                <td align="center"><a href="http://virtuni.education.zp.ua/edu_cpu/course/view.php?id=3134">ОКМ (Клм)</a></td>
+                                <td align="center">01.09.2007</td>
+                                <td align="center">Використовується</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование учебной дисциплины) -->
+        <div id="add-discipline-dialog" style="display: none">
+            <div class="ui-state-highlight" id="discipline-help"></div>
+            <table>
                 <tr>
-                    <th rowspan="2">Код дисципліни (з банку дисциплін virtuni)</th>
-                    <th rowspan="2">Назва дисципліни (з банку дисциплін virtuni)</th>
-                    <th colspan="3">Кількість підсумкових контрольних заходів</th>
-                    <th rowspan="2">Кількість кредитів ECTS на вивчення дисципліни</th>
-                    <th rowspan="2">Кількість академічних годин на вивчення дисципліни</th>
-                    <th rowspan="2">Кількість модулів дисципліни</th>
-                    <th rowspan="2">Розробник дисципліни</th>
-                    <th rowspan="2">Посилання на дисципліну в virtuni</th>
-                    <th rowspan="2">Дата додавання дисципліни до банку</th>
-                    <th rowspan="2">Статус</th>
-                    <th rowspan="2"></th>
+                    <td>Назва дисципліни:</td><td><input type="text"/></td>
                 </tr>
                 <tr>
-                    <th>Іспитів</th>
-                    <th>Заліків</th>
-                    <th>Курс. робіт</th>
+                    <td>Скорочена назва дисципліни:</td><td><input type="text"/></td>
                 </tr>
                 <tr>
-                    <td align="center">ІУ(управлен)(Пкт)</td>
-                    <td>Історія України (управлен) (Пкт)</td>
-                    <td align="center">1</td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center">3.0</td>
-                    <td align="center">108</td>
-                    <td align="center">4</td>
-                    <td align="center">Покатаєва Т.О., ст.викл. каф. ГД</td>
-                    <td align="center"><a href="http://virtuni.education.zp.ua/edu_cpu/course/view.php?id=11">ІУ(управлен)(Пкт)</a></td>
-                    <td align="center">01.09.2007</td>
-                    <td align="center">Використовується</td>
+                    <td>Кількість іспитів:</td>
                     <td>
-                        <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                        <input type="image" src="delete.png" title="Видалити дисципліну з банку"/>
+                        <select>
+                            <option value="noexam">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <td align="center">ОКМ (Клм)</td>
-                    <td>Організація комп'ютерних мереж (Клм)</td>
-                    <td align="center">1</td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center">3.5</td>
-                    <td align="center">126</td>
-                    <td align="center">5</td>
-                    <td align="center">Коломоєць Г.П., доц. каф. ПІТ, к.ф.-м.н., доц.</td>
-                    <td align="center"><a href="http://virtuni.education.zp.ua/edu_cpu/course/view.php?id=3134">ОКМ (Клм)</a></td>
-                    <td align="center">01.09.2007</td>
-                    <td align="center">Використовується</td>
+                    <td><label>Кількість заліків:</td>
                     <td>
-                        <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
-                        <input type="image" src="delete.png" title="Видалити дисципліну з банку"/>
+                        <select>
+                            <option value="nocredit">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <td><label>Кількість курсових робіт:</td>
+                    <td>
+                        <select>
+                            <option value="nocredit">немає</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>Кількість ECTS кредитів:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Розробник дисципліни:</td>
+                    <td><select>
+                            <option>оберіть розробника</option>
+                            <option>Покатаєва Т.О., ст.викл. каф. ГД</option>
+                            <option>Коломоєць Г.П., доц. каф. ПІТ, к.ф.-м.н., доц.</option>
+                            <option>Швець Ю.О., доц. каф. ПІТ, к.ф.-м.н., доц.</option>
+                        </select>
+                        <p><a href="">Перейти до списка викладачів та спіробітників</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Посилання на дисципліну в virtuni:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Статус дисципліни:</td>
+                    <td><select>
+                            <option>оберіть статус</option>
+                            <option>Використовується</option>
+                            <option>Планується</option>
+                            <option>Застаріла</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="discipline-cancel"/> <input type="submit" value="Зберегти" id="discipline-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление дисциплины) -->
+        <div id="delete-discipline-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити навчальну дисципліну з банку дисциплін?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#adddiscipline-button").click(function(){
+                    jQuery("#discipline-help").html("Банк навальних дисциплін");
+                    jQuery("#discipline-help").css({'display':'block'});
+                    jQuery("#add-discipline-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Додавання навчальної дисципліни"});
+                })
+                jQuery("#discipline-save").click(function(){jQuery("#add-discipline-dialog").dialog("close")});
+                jQuery("#discipline-cancel").click(function(){jQuery("#add-discipline-dialog").dialog("close")});
+                
+                jQuery(".discipline-edit").click(function(){
+                    jQuery("#discipline-help").html("Банк навальних дисциплінв");
+                    jQuery("#discipline-help").css({'display':'block'});
+                    jQuery("#add-discipline-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Редагування даних навчальної дисципліни"});
+                })
+                
+                jQuery(".discipline-delete").click(function(){
+                    jQuery("#delete-discipline-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення авчальної дисципліни"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-discipline-dialog").dialog("close")});
+            })
+        </script>
     </body>
 </html>

@@ -107,20 +107,20 @@ $(document).ready(function(){
             $(this).fadeOut("slow").parent().html("Сохранено!").fadeOut("slow");  
         })
     }) 
-    $(".kind-status").hover(function(){
-        jQuery(this).addClass("ui-state-highlight")
-        },function(){
-        jQuery(this).removeClass("ui-state-highlight")
-        })
+//    $(".kind-status").hover(function(){
+//        jQuery(this).addClass("ui-state-highlight")
+//        },function(){
+//        jQuery(this).removeClass("ui-state-highlight")
+//        })
 
 
-    $(".kind-status").click(function(){
-        if ($(this).hasClass("kind-closed")){
-            $(this).attr("class","kind-opened kind-status").find("div").show("slow");
-        } else if ($(this).hasClass("kind-opened")){
-            $(this).attr("class","kind-closed kind-status").find("div").hide("slow");
-        }
-    })    
+//    $(".kind-status").click(function(){
+//        if ($(this).hasClass("kind-closed")){
+//            $(this).attr("class","kind-opened kind-status").find("div").show("slow");
+//        } else if ($(this).hasClass("kind-opened")){
+//            $(this).attr("class","kind-closed kind-status").find("div").hide("slow");
+//        }
+//    })    
 //    initializeUIComponents();
 })
 

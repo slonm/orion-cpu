@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Цикли дисциплін навчальних планів</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>   <a href="EduPlan.html">Планування навчального процесу ▼</a>   <a href="">Довідники ▼</a>   <a href="EPPCycle.html">Цикли дисциплін навчальних планів ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Цикли дисциплін навчальних планів</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addeppcycle-button">Додати цикл</button>   <a href="EduPlan.html" style="padding-bottom: 3px"><button type="submit" id="to-eduplan-list-button">До списку навчальних планів</button></a>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Назва циклу дисциплін</th>
+                                <th>Скорочена назва циклу дисциплін</th>
+                                <th>Чи є діючою</th>
+                            </tr>
+                            <tr>
+                                <td><input class="eppcycle-edit" type="image" src="../img/edit.png" title="Редагувати назву циклу навчальних дисциплін запис"/>   <input class="eppcycle-delete" type="image" src="../img/delete.png" title="Видалити назву циклу навчальних дисциплін"/></td>
+                                <td>Цикл гуманітарної та соціально-економічної підготовки</td>
+                                <td>ЦГСЭП</td>
+                                <td>Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eppcycle-edit" type="image" src="../img/edit.png" title="Редагувати назву циклу навчальних дисциплін запис"/>   <input class="eppcycle-delete" type="image" src="../img/delete.png" title="Видалити назву циклу навчальних дисциплін"/></td>
+                                <td>Цикл математичної, природничо-наукової підготовки</td>
+                                <td>ЦМПНП</td>
+                                <td>Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eppcycle-edit" type="image" src="../img/edit.png" title="Редагувати назву циклу навчальних дисциплін запис"/>   <input class="eppcycle-delete" type="image" src="../img/delete.png" title="Видалити назву циклу навчальних дисциплін"/></td>
+                                <td>Цикл професійної та практичної підготовки</td>
+                                <td>ЦППП</td>
+                                <td>Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eppcycle-edit" type="image" src="../img/edit.png" title="Редагувати назву циклу навчальних дисциплін запис"/>   <input class="eppcycle-delete" type="image" src="../img/delete.png" title="Видалити назву циклу навчальних дисциплін"/></td>
+                                <td>Цикл позавредитних дисциплін</td>
+                                <td>ЦПКД</td>
+                                <td>Так</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование цикла) -->
+        <div id="add-eppcycle-dialog" style="display: none">
+            <div class="ui-state-highlight" id="eppcycle-help"></div>
+            <table>
+                <tr>
+                    <td>Назва циклу дисциплін:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Скорочена назва циклу дисциплін:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Чи задіяна назва циклу в начальних планах:</td><td><input type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="eppcycle-cancel"/> <input type="submit" value="Зберегти" id="eppcycle-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление цикла) -->
+        <div id="delete-eppcycle-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити цикл навчального плану?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addeppcycle-button").click(function(){
+                    jQuery("#eppcycle-help").html("Довідник циклів дисципллін навчальних планів");
+                    jQuery("#eppcycle-help").css({'display':'block'});
+                    jQuery("#add-eppcycle-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Додавання циклу навчальних планів"});
+                })
+                jQuery("#eppcycle-save").click(function(){jQuery("#add-eppcycle-dialog").dialog("close")});
+                jQuery("#eppcycle-cancel").click(function(){jQuery("#add-eppcycle-dialog").dialog("close")});
+                
+                jQuery(".eppcycle-edit").click(function(){
+                    jQuery("#eppcycle-help").html("Довідник циклів дисципллін навчальних планів");
+                    jQuery("#eppcycle-help").css({'display':'block'});
+                    jQuery("#add-eppcycle-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Редагування циклу навчальних планів"});
+                })
+                
+                jQuery(".eppcycle-delete").click(function(){
+                    jQuery("#delete-eppcycle-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення циклу навчальних планів"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-eppcycle-dialog").dialog("close")});
+            })
+        </script>
+    </body>
+</html>
