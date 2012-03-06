@@ -9,20 +9,20 @@
  
 ===Модель данных===
 Модель данных реализуется в соответствии со спецификацией JPA2. Для удобства создания сущностей рекомендуется использовать следующие абстрактные классы:
-  * ua.orion.core.persistence.AbstractEntity - базовая сущность c атрибутами "id" (идентификатор объекта) и "lastChange" (версия объекта);
-  * ua.orion.core.persistence.AbstractNamedEntity - отличается от AbstractNamedEntity наличием атрибута "name";
-  * ua.orion.core.persistence.AbstractEnumerationEntity - сущность - перечисление. Отличается от AbstractNamedEntity уникальностью атрибута "name";
-  * ua.orion.core.persistence.AbstractReferenceEntity - базовый справочник. Отличается от AbstractNamedEntity наличием атрибутов  "shortName", "isObsolete", "uKey" (уникальный ключ).
+  * ua.orion.core.persistence.!AbstractEntity - базовая сущность c атрибутами "id" (идентификатор объекта) и "lastChange" (версия объекта);
+  * ua.orion.core.persistence.!AbstractNamedEntity - отличается от AbstractNamedEntity наличием атрибута "name";
+  * ua.orion.core.persistence.!AbstractEnumerationEntity - сущность - перечисление. Отличается от !AbstractNamedEntity уникальностью атрибута "name";
+  * ua.orion.core.persistence.!AbstractReferenceEntity - базовый справочник. Отличается от !AbstractNamedEntity наличием атрибутов  "shortName", "isObsolete", "uKey" (уникальный ключ).
 
 и интерфейсы:
-  * ua.orion.core.persistence.IRangable - если сущность реализует этот интерфейс, то сортировка по умолчанию будет по полю rang (пока не реализовано)
-  * ua.orion.core.persistence.PersistentSingleton - если сущность реализует этот интерфейс, то такую сущность можно использовать как  [PersistentSingleton хранимую константу]
+  * ua.orion.core.persistence.!IRangable - если сущность реализует этот интерфейс, то сортировка по умолчанию будет по полю rang (пока не реализовано)
+  * ua.orion.core.persistence.!PersistentSingleton - если сущность реализует этот интерфейс, то такую сущность можно использовать как  [PersistentSingleton хранимую константу]
 
-TODO Библиотека модели, фабрики LibraryOrientedBeansFactory и EntityOrientedBeanFactory
+TODO Библиотека модели, фабрики !LibraryOrientedBeansFactory и !EntityOrientedBeanFactory
 
 ===Локализованные подписи сущностей и их свойств===
 
-При отображении таблиц, форм, полей сущности нужно где-то брать подписи полей со значениями. Компоненты интерфейса для получения этих подписей используют сервис ModelLabelSource. Этот сервис, в свою очередь, читает подписи из каталога сообщений в соответствии со следующими соглашениями:
+При отображении таблиц, форм, полей сущности нужно где-то брать подписи полей со значениями. Компоненты интерфейса для получения этих подписей используют сервис !ModelLabelSource. Этот сервис, в свою очередь, читает подписи из каталога сообщений в соответствии со следующими соглашениями:
 
   * *entity.!EntityName* - подпись сущности с именем !EntityName
   * *property.!EntityName.!PropertyName* - подпись свойства !PropertyName сущности !EntityName
@@ -34,18 +34,17 @@ TODO Библиотека модели, фабрики LibraryOrientedBeansFacto
 
 Сервис ModelLabelSource ищет подпись для полей с использованием иерархии наследования сущностей и подписей типов полей.
 
-Существует так же поддержка быстрого доступа к подписям из шаблонов компонентов с помощью биндинг-префикса *label:*. После префикса должен следовать такой ключ, в таком же виде, как и в каталоге сообщений. Префикс *label:*, в отличие от префикса *message:*, получает подписи с использованием ModelLabelSource.
+Существует так же поддержка быстрого доступа к подписям из шаблонов компонентов с помощью биндинг-префикса *label:*. После префикса должен следовать такой ключ, в таком же виде, как и в каталоге сообщений. Префикс *label:*, в отличие от префикса *message:*, получает подписи с использованием !ModelLabelSource.
 
 
 ===Представление сущности в строковом виде с учетом контекста===
 
 Стандартный метод toString() класса Object не позволяет учитывать контекст при преобразовании в строку. Например, когда нужно представить дату, то нужно знать для какой локали это делать. 
-Предположим, что мы хотим создать конвертер для сущности foo.bar.entities.Person. foo.bar, в данном случае корень библиотеки модели. Для этого нужно создать класс foo.bar.stringvalues.!PersonStringValueProvider, который должен реализовать интерфейс ua.orion.core.services.!StringValueProvider. Экземпляр этого класса будет включен будет использован экземпляром !StringValueProviderImpl, который построен на базе !EntityOrientedBeanFactory. Экземпляр !StringValueProviderImpl, в свою очередь является элементом сервиса-цепочки !StringValueProvider. В цепочку !StringValueProvider можно так-же включать и другие конвертеры, для типов не являющихся сущностями (стандартные типы, перечисления и т.д.). Теперь для объекта преобразования в строку достаточно вызвать метод !getStringValue сервиса !StringValueProvider.
+Предположим, что мы хотим создать конвертер для сущности foo.bar.entities.Person. foo.bar, в данном случае корень библиотеки модели. Для этого нужно создать класс foo.bar.stringvalues.!PersonStringValueProvider, который должен реализовать интерфейс ua.orion.core.services.!StringValueProvider. Экземпляр этого класса будет включен будет использован экземпляром !StringValueProviderImpl, который построен на базе !EntityOrientedBeanFactory. Экземпляр !StringValueProviderImpl, в свою очередь, является элементом сервиса-цепочки !StringValueProvider. В цепочку !StringValueProvider можно так-же включать и другие конвертеры, для типов не являющихся сущностями (стандартные типы, перечисления и т.д.). Теперь для объекта преобразования в строку достаточно вызвать метод getStringValue сервиса !StringValueProvider.
+
 В шаблоне можно использовать биндинг-префикс *tostring:*
 
 ===Авторизация по состоянию сущности===
-
-===Сервисы доступа к данным===
 
 ==Контроллеры доступа к данным==
 
