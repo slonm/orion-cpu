@@ -109,3 +109,12 @@ thead.fixedHeader{
 #cpu-grid-table-container{
     margin-top:80px;
 }
+
+
+div.celltext{
+    overflow:hidden;
+    white-space: nowrap;
+}
+th div.celltext  {
+    height: 30px;
+}

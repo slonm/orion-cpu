@@ -407,28 +407,48 @@ function gridTable(gridId){
     this.dragStartPosition=0;
     this.resizedColumnId=false;
     this.oldWidth=0;
+    this.table.setStyle({tableLayout:'fixed'});
 
-
+    //    // дорисовать внутри каждой ячейки
+    //    // элемент <div> для управления шириной
+    //    for(var columnid in currentTable.column){
+    //        for(var rowid in currentTable.column[columnid]){
+    //            var cell=$(currentTable.column[columnid][rowid]);
+    //            if(!cell) continue;
+    //            // cell.makeClipping();
+    //            if(cell.select('div.celltext').first()) continue;
+    //            var container=new Element('div',{'class':'celltext'});
+    //            container.setStyle({overflow:'hidden'});
+    //            
+    //            // container.update(cell.innerHTML);
+    //            cell.childElements().each(function(el){
+    //                container.insert($(el));
+    //            });
+    //            container.insert(cell.innerHTML);
+    //            cell.update(container);
+    //            
+    //        }
+    //    }
     this.setColumnWidth=function (columnid,newwidth){
         var col;
         for(var i in currentTable.column[columnid]){
             col=$(currentTable.column[columnid][i]);
             if(col){
                 col.setStyle({'width':newwidth+'px'});
-                col.select('div.ColumnHeaderText').each(function(element){
+                col.select('div.celltext').each(function(element){
                     $(element).setStyle({width:newwidth+'px'});
                     //console.log($(element));
                 });
             }
         }
     }
-    var observeColumnWith=function(){
+    this.observeColumnWith=function(){
         for(var i in gridViewProperties){
             currentTable.setColumnWidth(i,gridViewProperties[i].width);
         }
     }
-    document.observe("viewmodel:changed", observeColumnWith);
-    document.observe("viewmodel:setup", observeColumnWith);
+    document.observe("viewmodel:changed", this.observeColumnWith);
+    document.observe("viewmodel:setup", this.observeColumnWith);
 
     this.table.select('th').each(function(container){
         var id=container.identify().replace(/ColumnHeader$/,'');
