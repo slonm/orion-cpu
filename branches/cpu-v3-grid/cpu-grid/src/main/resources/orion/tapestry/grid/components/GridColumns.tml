@@ -1,9 +1,11 @@
 <thead class="fixedHeader" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd" xml:space="default">    
 <tr>
         <th t:type="Loop" source="columnList" id="${columnModel.id}ColumnHeader" value="columnModel" formstate="none" index="index" valign="top">
+          <div class="celltext">
             <t:delegate to="blockForColumn"/>
+          </div>
             <t:block id="standardHeader">
-                <div class="ColumnHeaderText">${columnModel.label}</div>
+                ${columnModel.label}
             </t:block>
         </th>
     </tr>

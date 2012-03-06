@@ -14,7 +14,7 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Delegate;
-import org.apache.tapestry5.corelib.components.GridRows;
+// import org.apache.tapestry5.corelib.components.GridRows;
 import org.apache.tapestry5.corelib.data.GridPagerPosition;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.GridModel;
