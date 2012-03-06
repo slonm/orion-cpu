@@ -10,12 +10,12 @@
 ===Модель данных===
 Модель данных реализуется в соответствии со спецификацией JPA2. Для удобства создания сущностей рекомендуется использовать следующие абстрактные классы:
   * ua.orion.core.persistence.!AbstractEntity - базовая сущность c атрибутами "id" (идентификатор объекта) и "lastChange" (версия объекта);
-  * ua.orion.core.persistence.!AbstractNamedEntity - отличается от AbstractNamedEntity наличием атрибута "name";
+  * ua.orion.core.persistence.!AbstractNamedEntity - отличается от !AbstractNamedEntity наличием атрибута "name";
   * ua.orion.core.persistence.!AbstractEnumerationEntity - сущность - перечисление. Отличается от !AbstractNamedEntity уникальностью атрибута "name";
   * ua.orion.core.persistence.!AbstractReferenceEntity - базовый справочник. Отличается от !AbstractNamedEntity наличием атрибутов  "shortName", "isObsolete", "uKey" (уникальный ключ).
 
 и интерфейсы:
-  * ua.orion.core.persistence.!IRangable - если сущность реализует этот интерфейс, то сортировка по умолчанию будет по полю rang (пока не реализовано)
+  * ua.orion.core.persistence.IRangable - если сущность реализует этот интерфейс, то сортировка по умолчанию будет по полю rang (пока не реализовано)
   * ua.orion.core.persistence.!PersistentSingleton - если сущность реализует этот интерфейс, то такую сущность можно использовать как  [PersistentSingleton хранимую константу]
 
 TODO Библиотека модели, фабрики !LibraryOrientedBeansFactory и !EntityOrientedBeanFactory
@@ -32,7 +32,7 @@ TODO Библиотека модели, фабрики !LibraryOrientedBeansFact
   * *!EnumName.!EnumValue.!AttributeName* - подпись атрибута !AttributeName значения !EnumValue перечисления !EnumName (пока не реализовано)
 (см. [T5ResourcesDispositionAndContent Подход к размещению ресурсов])
 
-Сервис ModelLabelSource ищет подпись для полей с использованием иерархии наследования сущностей и подписей типов полей.
+Сервис !ModelLabelSource ищет подпись для полей с использованием иерархии наследования сущностей и подписей типов полей.
 
 Существует так же поддержка быстрого доступа к подписям из шаблонов компонентов с помощью биндинг-префикса *label:*. После префикса должен следовать такой ключ, в таком же виде, как и в каталоге сообщений. Префикс *label:*, в отличие от префикса *message:*, получает подписи с использованием !ModelLabelSource.
 
