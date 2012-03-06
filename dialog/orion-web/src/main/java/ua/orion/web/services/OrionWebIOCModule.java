@@ -66,6 +66,8 @@ public class OrionWebIOCModule {
         configuration.add(OrionWebSymbols.MENU_NAVIGATOR, "ori/MenuNavigator");
         configuration.add(OrionWebSymbols.SHOW_HINTS, "true");
         configuration.add(OrionWebSymbols.UI_INTERFACE, "true");
+        configuration.add(OrionWebSymbols.UI_DIALOG_HIDE, "");
+        configuration.add(OrionWebSymbols.UI_DIALOG_SHOW, "");
     }
 
     public static void contributeMetaLinkCoercion(Configuration<Coercion> configuration,

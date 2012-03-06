@@ -3,45 +3,60 @@
      xmlns:p="tapestry:parameter"
      xmlns:s="tapestry-library:security"
      xmlns:j="tapestry-library:jquery">
-    <div id="${popupWindowId}" class="dialog" style="display:none;">
-        <div class="window-content">
-            <t:zone t:id="popupZone" id="${popupZoneId}"/>
-        </div>
-    </div>
+    <!--Зона диалогового окна-->
+    <t:zone t:id="popupZone" id="${popupZoneId}" class="window-content" update="show" 
+            t:mixins="ori/Dialog" modal="true" width="750"/>
+    <!--Зона грида-->
     <t:zone t:id="listZone" id="${listZoneId}">
+        <!--Панель инструментов-->
         <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
             <t:if test="canAdd">
-                <t:EventLink class="ui-button-add" t:event="add" zone="prop:popupZoneId">${message:action.add}</t:EventLink>
+                <t:ActionLink t:id="add" class="ui-button-add" zone="prop:popupZoneId"
+                              t:mixins="ori/Dialog" event="open" 
+                              title="message:label.mode.add">${message:action.add}
+                </t:ActionLink>
             </t:if>
             <t:if test="master">
                 <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
             </t:if>
             <t:delegate to="prop:toolButtons"/>
         </div>
+        <!--Грид-->
         <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(entityClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
                 <table class="ui-grid-cell-action-tip ui-widget-header">
                     <t:if test="detailPage">
                         <s:HasPermission permission="${entityType}:read:${id}">
-                            <tr><td>
+                            <tr>
+                                <td>
                                     <t:PageLink class="ui-button-detail" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
-                                </td></tr>
+                                </td>
+                            </tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showEditButton">
                         <s:HasPermission permission="${entityType}:update:${id}">
-                            <tr><td>
-                                    <t:EventLink class="ui-button-edit"
-                                                 t:event="edit" context="object" zone="prop:popupZoneId">${message:action.edit}</t:EventLink>
-                                </td></tr>
+                            <tr>
+                                <td>
+                                    <t:ActionLink t:id="edit" class="ui-button-edit" context="object" zone="prop:popupZoneId"
+                                                  t:mixins="ori/Dialog" event="open" 
+                                                  title="message:label.mode.edit">${message:action.edit}
+                                    </t:ActionLink>
+                                </td>
+                            </tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showViewButton">
                         <s:HasPermission permission="${entityType}:read:${id}">
-                            <tr><td>
-                                    <t:EventLink class="ui-button-view" t:event="view" context="object" zone="prop:popupZoneId">${message:action.view}</t:EventLink>
-                                </td></tr>
+                            <tr>
+                                <td>
+                                    <t:ActionLink t:id="view" class="ui-button-view" context="object" zone="prop:popupZoneId"
+                                                  t:mixins="ori/Dialog" event="open" 
+                                                  title="message:label.mode.view" modal="true">${message:action.view}
+                                    </t:ActionLink>
+                                </td>
+                            </tr>
                         </s:HasPermission>
                     </t:if>    
                     <t:if test="showDelButton">
@@ -65,7 +80,7 @@
                                zone="prop:listZoneId" submitLabel="message:action.add" buttons="hideWindowButtonBlock"/>
     </t:block>
     <t:block id="hideWindowButtonBlock">
-        <a href="cancel" onclick="javascript: jQuery('#${popupWindowId}').dialog('close'); return false;" class="ui-button-close" style="margin-top: 5px; display:inline-block">
+        <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-close" style="margin-top: 5px; display:inline-block">
             ${message:action.cancel}
         </a>        
     </t:block>
@@ -80,7 +95,7 @@
                     <t:EventLink t:event="delete" context="object" zone="prop:listZoneId" class="ui-button-del">${message:action.del}</t:EventLink>
                 </td>
                 <td>
-                    <a href="cancel" onclick="javascript: jQuery('#${popupWindowId}').dialog('close'); return false;" class="ui-button-cancel">${message:action.cancel}</a>
+                    <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-cancel">${message:action.cancel}</a>
                 </td>
             </tr>
         </table>

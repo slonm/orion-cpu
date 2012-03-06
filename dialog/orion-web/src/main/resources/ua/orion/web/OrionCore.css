@@ -17,6 +17,7 @@ div.t-beaneditor-row {
 div.window-content {
     font: 15px Arial, Helvetica, sans-serif;
     font-size: 15px;
+    display:none;
 }
 
 .btntable{

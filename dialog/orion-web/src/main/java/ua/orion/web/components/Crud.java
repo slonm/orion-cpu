@@ -258,56 +258,23 @@ public class Crud {
         return closeWindowAndGetListZone();
     }
 
-    Object onEdit(Integer id) {
+    Object onActionFromEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(entityType + ":update:" + id);
         object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeEditPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.edit")));
-            }
-        });
         return editBlock;
     }
 
-    Object onAdd() {
+    Object onActionFromAdd() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
         object = es.newInstance(getEntityClass());
         resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.add")));
-            }
-        });
         return addBlock;
     }
 
-    Object onView(Integer id) {
+    Object onActionFromView(Integer id) {
         object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeViewPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.view")));
-            }
-        });
         return viewBlock;
     }
 

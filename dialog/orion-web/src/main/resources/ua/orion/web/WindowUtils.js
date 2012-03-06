@@ -1,15 +1,5 @@
 
 Tapestry.Initializer.showCkWindow = function(opt){
-    var win=jQuery("#"+opt.window);
-    win.dialog({
-        modal: true,
-        height: 
-            opt.height==undefined?parseInt(win.css("height").substring(0,win.css("height").indexOf("px")))+50:opt.height,
-        width: opt.width==undefined?750:opt.width,
-        title: opt.title,
-        show: "fold",
-        hide: "slide"
-    });
     Tapestry.Initializer.hideGridAjax();
     if (jQuery("ui#interface").text()=="true"){
         //Кнопки в beaneditor справа
@@ -25,17 +15,6 @@ Tapestry.Initializer.showCkWindow = function(opt){
     if (Ori.SHOW_HINTS){
         createToolTips();
     }
-}
-
-Tapestry.Initializer.updateCkWindow = function(opt){
-   
-    }
-
-Tapestry.Initializer.closeCkWindow = function(opt){
-    jQuery("#"+opt.window).dialog('close');
-    jQuery("#"+opt.window).find('#window-content').css({
-        'display':'none'
-    });
 }
 
 Tapestry.Initializer.updateGrid = function(){
