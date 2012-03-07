@@ -41,4 +41,11 @@ public class Test {
         title="econtent";
         return econtent;
     }
+    
+    void onActionFromNoajax() {
+    }
+    
+    Object onActionFromAjax() {
+        return content;
+    }
 }

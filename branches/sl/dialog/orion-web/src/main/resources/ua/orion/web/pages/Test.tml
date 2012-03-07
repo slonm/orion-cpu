@@ -19,8 +19,8 @@
 
     </p:script> 
     <t:zone t:id="ewin" id="ewin" update="show" t:mixins="ori/Dialog" modal="true" width="750"/>
-    <t:ActionLink t:id="eshow" zone="ewin" t:mixins="ori/Dialog" event="open" title="${title}">eShow Dialog</t:ActionLink>
-    <t:ActionLink t:id="othereshow" zone="ewin" t:mixins="ori/Dialog" event="open" title="${title}">otherShow Dialog</t:ActionLink>
+    <t:ActionLink t:id="eshow" zone="ewin" t:mixins="ori/Dialog" event="open" dialogTitle="${title}">eShow Dialog</t:ActionLink>
+    <t:ActionLink t:id="othereshow" zone="ewin" t:mixins="ori/Dialog" event="open" dialogTitle="${title}">otherShow Dialog</t:ActionLink>
     <t:block id="econtent">
         eContent<br/>
         <t:ActionLink zone="ewin" t:mixins="ori/Dialog" event="close">close</t:ActionLink>
@@ -28,6 +28,10 @@
     <br/><br/><br/><br/><br/>
     <t:zone t:id="win" id="win"/>
     <t:eventlink event="show" zone="win">Show Dialog</t:eventlink><br/>
+    <br/><br/><br/><br/><br/>
+    <t:ActionLink t:id="noajax" t:mixins="ori/Confirmation">no AJAX</t:ActionLink>
+    <t:zone id="ajaxzone"/>
+    <t:ActionLink t:id="ajax" zone="ajaxzone" t:mixins="ori/Confirmation">AJAX</t:ActionLink>
     <t:block id="content">
         Content<br/>
         <a href="cancel" onclick="javascript: jQuery('#win').dialog('close'); return false;">close</a>

@@ -2,15 +2,17 @@
  * @class Window 
  * @author sl
  */
-Tapestry.Initializer.oriWindow = function(opt){
-    //Если окно небыло инициализировано ранее, то следующая строка 
-    //ничего не сделает, а иначе будет инициализация окна с параметрами
-    //по умолчанию. Только выключено автоматическое открытие
-    jQuery("#" + opt.id).dialog({
+Tapestry.Initializer.oriDialog = function(opt){
+    //Если окно не было инициализировано ранее, то следующая строка 
+    //ничего не сделает. Иначе будет инициализация окна с параметрами
+    //по умолчанию, только выключено автоматическое открытие.
+    jQuery("#" + opt.oriId).dialog({
         autoOpen: false
     });
-    jQuery("#" + opt.id).dialog('option', opt);
-    if(opt.event!=undefined){
-        jQuery("#" + opt.id).dialog(opt.event);
+    //Установка параметров окна
+    jQuery("#" + opt.oriId).dialog('option', opt);
+    //Показ/скрытие окна
+    if(opt.oriEvent!=undefined){
+        jQuery("#" + opt.oriId).dialog(opt.oriEvent);
     }
 };

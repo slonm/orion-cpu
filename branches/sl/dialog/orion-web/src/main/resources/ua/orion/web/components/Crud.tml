@@ -4,8 +4,8 @@
      xmlns:s="tapestry-library:security"
      xmlns:j="tapestry-library:jquery">
     <!--Зона диалогового окна-->
-    <t:zone t:id="popupZone" id="${popupZoneId}" class="window-content" update="show" 
-            t:mixins="ori/Dialog" modal="true" width="750"/>
+    <t:zone t:id="popupZone" id="${popupZoneId}" update="show" 
+            t:mixins="ori/Dialog" modal="true" width="750" zIndex="-1"/>
     <!--Зона грида-->
     <t:zone t:id="listZone" id="${listZoneId}">
         <!--Панель инструментов-->
@@ -13,7 +13,7 @@
             <t:if test="canAdd">
                 <t:ActionLink t:id="add" class="ui-button-add" zone="prop:popupZoneId"
                               t:mixins="ori/Dialog" event="open" 
-                              title="message:label.mode.add">${message:action.add}
+                              dialogTitle="message:label.mode.add">${message:action.add}
                 </t:ActionLink>
             </t:if>
             <t:if test="master">
@@ -41,7 +41,7 @@
                                 <td>
                                     <t:ActionLink t:id="edit" class="ui-button-edit" context="object" zone="prop:popupZoneId"
                                                   t:mixins="ori/Dialog" event="open" 
-                                                  title="message:label.mode.edit">${message:action.edit}
+                                                  dialogTitle="message:label.mode.edit">${message:action.edit}
                                     </t:ActionLink>
                                 </td>
                             </tr>
@@ -53,7 +53,7 @@
                                 <td>
                                     <t:ActionLink t:id="view" class="ui-button-view" context="object" zone="prop:popupZoneId"
                                                   t:mixins="ori/Dialog" event="open" 
-                                                  title="message:label.mode.view" modal="true">${message:action.view}
+                                                  dialogTitle="message:label.mode.view" modal="true">${message:action.view}
                                     </t:ActionLink>
                                 </td>
                             </tr>
