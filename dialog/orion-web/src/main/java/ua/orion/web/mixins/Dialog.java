@@ -34,7 +34,7 @@ public class Dialog {
     @Parameter(defaultPrefix = BindingConstants.LITERAL, allowNull = false)
     private String event;
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String title;
+    private String dialogTitle;
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private boolean modal;
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
@@ -73,7 +73,7 @@ public class Dialog {
                 throw new RuntimeException("'zone' parameter for ActionLink is required");
             }
         } else if (container instanceof Zone) {
-            javaScriptSupport.addInitializerCall(InitializationPriority.LATE, "oriWindow", initJSONObject());
+            javaScriptSupport.addInitializerCall(InitializationPriority.LATE, "oriDialog", initJSONObject());
         } else {
             throw new RuntimeException("'Dialog' mixin must be used on 'ActionLink' or 'Zone' component");
         }
@@ -85,17 +85,17 @@ public class Dialog {
             @Override
             public void run(JavaScriptSupport js) {
                 JSONObject init = initJSONObject();
-                init.put("event", event);
-                js.addInitializerCall(InitializationPriority.LATE, "oriWindow", init);
+                init.put("oriEvent", event);
+                js.addInitializerCall(InitializationPriority.LATE, "oriDialog", init);
             }
         });
     }
 
     private JSONObject initJSONObject() {
         JSONObject init = new JSONObject();
-        init.put("id", zone);
-        if (resources.isBound("title")) {
-            init.put("title", title);
+        init.put("oriId", zone);
+        if (resources.isBound("dialogTitle")) {
+            init.put("title", dialogTitle);
         }
         if (resources.isBound("modal")) {
             init.put("modal", modal);
@@ -125,5 +125,13 @@ public class Dialog {
             init.put("zIndex", zIndex);
         }
         return init;
+    }
+
+    /**
+     * Не отрисовываем тело зоны
+     * @return 
+     */
+    boolean beforeRenderBody() {
+        return !(container instanceof Zone);
     }
 }
