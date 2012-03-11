@@ -29,9 +29,9 @@
     <t:zone t:id="win" id="win"/>
     <t:eventlink event="show" zone="win">Show Dialog</t:eventlink><br/>
     <br/><br/><br/><br/><br/>
-    <t:ActionLink t:id="noajax" t:mixins="ori/Confirmation">no AJAX</t:ActionLink>
+    <t:ActionLink t:id="noajax" t:mixins="ori/Confirm">no AJAX</t:ActionLink>
     <t:zone id="ajaxzone"/>
-    <t:ActionLink t:id="ajax" zone="ajaxzone" t:mixins="ori/Confirmation">AJAX</t:ActionLink>
+    <t:ActionLink t:id="ajax" zone="ajaxzone" t:mixins="ori/Confirm">AJAX</t:ActionLink>
     <t:block id="content">
         Content<br/>
         <a href="cancel" onclick="javascript: jQuery('#win').dialog('close'); return false;">close</a>

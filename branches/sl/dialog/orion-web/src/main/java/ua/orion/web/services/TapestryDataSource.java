@@ -22,7 +22,7 @@ public interface TapestryDataSource {
     <T> BeanModel<T> getBeanModelForView(Class<T> entityClass, Messages messages);
     <T> BeanModel<T> getBeanModelForEdit(Class<T> entityClass);
     <T> BeanModel<T> getBeanModelForEdit(Class<T> entityClass, Messages messages);
-    <T> SelectModel getSelectModel(Class<T> entityClass, String property);
-    <T> SelectModel getSelectModel(T entity, String property);
+    SelectModel getSelectModel(Class<?> entityClass, String property);
+    SelectModel getSelectModel(Object entity, String property);
     String getCrudPage(Class<?> entityClass);
 }

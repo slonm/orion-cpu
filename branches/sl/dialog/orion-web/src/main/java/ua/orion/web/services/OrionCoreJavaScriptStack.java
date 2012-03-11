@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.web.services;
 
 import java.util.Arrays;
@@ -26,12 +22,13 @@ public class OrionCoreJavaScriptStack implements JavaScriptStack {
 
     @Override
     public List<String> getStacks() {
-        return Collections.emptyList();
+        return Arrays.asList("core");
     }
 
     @Override
     public List<Asset> getJavaScriptLibraries() {
-        return Arrays.asList(assets.getClasspathAsset("ua/orion/web/orion.js"));
+        return Arrays.asList(assets.getClasspathAsset("ua/orion/web/jquery.js"), 
+                assets.getClasspathAsset("ua/orion/web/orion.js"));
     }
 
     @Override
@@ -44,6 +41,12 @@ public class OrionCoreJavaScriptStack implements JavaScriptStack {
 
     @Override
     public String getInitialization() {
-        return showHints ? "Ori.SHOW_HINTS = true;" : null;
+        StringBuilder ret=new StringBuilder();
+        String path=assets.getClasspathAsset("ua/orion/web/orion.js").toClientURL();
+        int pos=path.lastIndexOf("/");
+        path=path.substring(0, pos+1);
+        ret.append(String.format("Ori.ORION_ASSET_PATH='%s';",path));
+        ret.append(showHints ? "Ori.SHOW_HINTS = true;" : "");
+        return ret.toString();
     }
 }

@@ -212,38 +212,6 @@ textarea{
     display: inline-block;
 }
 
-/* Индикатор загрузки всплывающего окна */
-div.ajax-state-grid{
-    width: 80px;
-    height: 12px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url(../images/ajax-state-80x12-windows.gif);
-}
-
-/* Окно загрузки Ajax */
-#ui-ajax-loading-window{
-    display: none;
-}
-/* Контейнер с картинкой в окне загрузки */
-#ui-ajax-loading-window span div{
-    float: right;
-}
-/* Картинка в окне загрузки Ajax */
-.ui-ajax-loading-window-icon{
-    background-image: url(../images/database_refresh.png);
-    height: 32px;
-    width: 32px;
-}
-/* Полоса загрузки в окне загрузки */
-.ui-ajax-loading-window-load{
-    margin-top:5px;
-    background-image: url(../images/ajax/ajax-state-78x7.gif);
-    background-repeat: no-repeat;
-    width: 80px;
-    height: 10px;
-}
-
 /* Переопределение стилей UI для универсальности тем */
 .ui-widget { font-size: 9pt; }
 .ui-button-icon-only { width: 1.8em; height: 1.8em; }

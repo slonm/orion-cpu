@@ -28,7 +28,6 @@ import ua.orion.web.OrionWebSymbols;
  * @author slobodyanuk
  */
 //TODO Добавить импорт ресурсов JQuery-UI
-@Import(library = "Dialog.js")
 public class Dialog {
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL, allowNull = false)

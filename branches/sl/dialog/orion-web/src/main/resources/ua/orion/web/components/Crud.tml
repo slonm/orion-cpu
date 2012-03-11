@@ -62,12 +62,13 @@
                     <t:if test="showDelButton">
                         <s:HasPermission permission="${entityType}:delete:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-del" t:event="trydelete" context="object" zone="prop:popupZoneId">${message:action.del}</t:EventLink>
+                                    <t:EventLink class="ui-button-del" t:event="delete" 
+                                                 context="object" zone="prop:listZoneId" 
+                                                 t:mixins="ori/Confirm" confirm="message:action.del">${message:action.del}</t:EventLink>
                                 </td></tr>
                         </s:HasPermission>
                     </t:if>    
                 </table>
-                <button class="ui-button-right-list-tfalse"/>
             </p:actionCell>
         </t:grid>
     </t:zone>
@@ -88,25 +89,4 @@
         <t:beandisplay t:mixins="ori/CurrentBeanInformer" t:id="display" object="object" model="dataSource.getBeanModelForView(entityClass,messages)"/>
         <t:delegate to="hideWindowButtonBlock"/>
     </t:block>
-    <t:block id="deleteBlock">
-        <table>
-            <tr>
-                <td>
-                    <t:EventLink t:event="delete" context="object" zone="prop:listZoneId" class="ui-button-del">${message:action.del}</t:EventLink>
-                </td>
-                <td>
-                    <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-cancel">${message:action.cancel}</a>
-                </td>
-            </tr>
-        </table>
-    </t:block>
-    <div id="ui-ajax-loading-window" title="${message:label.system-message}">
-        <span>
-            <div class="ui-ajax-loading-window-icon"></div>
-        </span>
-        <text id="ui-ajax-loading-window-load-text" style="display: none">${message:label.ajax-load-crud}</text>
-        <text id="ui-ajax-loading-window-save-text" style="display: none">${message:label.ajax-save-crud}</text>
-        <br/>
-        <div class="ui-ajax-loading-window-load"></div>
-    </div>
 </div>

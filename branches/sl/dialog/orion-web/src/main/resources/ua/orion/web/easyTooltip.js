@@ -17,11 +17,6 @@
  *     элементе, а не его атрибут title. 
  */
  
-/*
- * Функция обеспечивает совместимость с другими библиотеками, например - Prototype
- */
-jQuery.noConflict();
- 
 (function(jQuery) {
 
     jQuery.fn.easyTooltip = function(options){
@@ -62,7 +57,7 @@ jQuery.noConflict();
                     .css("left",(e.pageX + options.xOffset) + "px")						
                     .css("display","none")
                     //Устанавливаем слой для подсказки выше, чем у окна с формой
-                    .css("z-index",parseInt(jQuery("#popupWindow").css("z-index"))+1)
+                    .css("z-index",100)
                     .fadeIn("fast")
                 }
             },
