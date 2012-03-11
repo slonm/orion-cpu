@@ -9,6 +9,7 @@ import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.internal.services.DocumentLinker;
 import org.apache.tapestry5.ioc.*;
 import org.apache.tapestry5.ioc.annotations.Autobuild;
+import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -22,6 +23,7 @@ import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.*;
 import org.apache.tapestry5.services.javascript.JavaScriptStack;
 import org.apache.tapestry5.services.javascript.StylesheetLink;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 import org.apache.tapestry5.util.StringToEnumCoercion;
 import org.slf4j.Logger;
 import ua.orion.core.ModelLibraryInfo;
@@ -33,6 +35,7 @@ import static ua.orion.core.utils.IOCUtils.getMethod;
 import ua.orion.cpu.core.security.entities.Acl;
 import ua.orion.tapestry.menu.lib.IMenuLink;
 import ua.orion.web.BeanModelWrapper;
+import ua.orion.web.ImportDefaults;
 import ua.orion.web.JPAAnnotationsConstraintGenerator;
 import ua.orion.web.JSR303AnnotationsConstraintGenerator;
 import ua.orion.web.OrionWebSymbols;
@@ -400,5 +403,11 @@ public class OrionWebIOCModule {
     public static void adviseOrionMenuServiceForSecurity(MethodAdviceReceiver receiver,
             @Autobuild OrionMenuServiceMethodAdvice advice) {
         receiver.adviseAllMethods(advice);
+    }
+    
+    @Contribute(ComponentClassTransformWorker2.class)
+    public static void provideTransformWorkers(
+            OrderedConfiguration<ComponentClassTransformWorker2> configuration){
+        configuration.addInstance("DefaultJSAndCSS", ImportDefaults.class, "after:RenderPhase");
     }
 }

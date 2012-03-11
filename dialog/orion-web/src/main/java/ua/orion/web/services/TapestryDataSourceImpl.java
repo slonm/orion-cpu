@@ -94,7 +94,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
     }
 
     @Override
-    public <T> SelectModel getSelectModel(Class<T> entityClass, String property) {
+    public SelectModel getSelectModel(Class<?> entityClass, String property) {
         SelectModel ret = factory.createSelectModel(entityClass, property);
         for (TapestryDataTransformer trans : transformers) {
             ret = trans.transformSelectModel(ret, entityClass, property);
@@ -103,7 +103,7 @@ public class TapestryDataSourceImpl implements TapestryDataSource {
     }
 
     @Override
-    public <T> SelectModel getSelectModel(T entity, String property) {
+    public SelectModel getSelectModel(Object entity, String property) {
         SelectModel ret = factory.createSelectModel(entity, property);
         for (TapestryDataTransformer trans : transformers) {
             ret = trans.transformSelectModel(ret, entity, property);

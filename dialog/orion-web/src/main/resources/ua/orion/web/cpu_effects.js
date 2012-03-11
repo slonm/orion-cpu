@@ -20,17 +20,6 @@ jQuery(document).ready(function(){
         jQuery(".ui-menunavigator-link").parent().removeClass("ui-state-active");
         jQuery(this).find(".ui-menunavigator-link").removeClass("ui-state-focus").addClass("ui-state-active");
     })
-    //Инициализация подсказок
-    initializeGridToolTip();
-    //Инициализация окна для отображения загрузки Ajax
-    jQuery('#ui-ajax-loading-window').dialog({
-        modal:true, //модальность
-        autoOpen: false, //автоматическое открытие
-        open: function() { 
-        //            jQuery(".ui-dialog-titlebar-close").hide(); //убирается кнопка закрытия
-        },
-        resizable: false //возможность маштабирования отключена
-    });
     jQuery(".crud-add-record-button").click(function(){
         Tapestry.Initializer.showGridAjax(); //При добавлении записи появляется окно загрузки
     })
@@ -55,32 +44,12 @@ jQuery(document).ready(function(){
  * служит для идентификации типа элемента. 
  */
 function createToolTips(){
-    jQuery("input[type=text]").easyTooltip({
-        ctype:"input[type=text]"
-    });
-    jQuery("select").easyTooltip({
-        ctype:"select"
-    });
-}
-
-
-/**
- * Появление подсказки над строками Grid с кнопками actioncell. 
- */
-function initializeGridToolTip(){
-    //При наведении на строку появляется tooltip
-    jQuery(".ui-button-right-list-tfalse").each(function(){
-        jQuery(this).tooltip({
-            effect: 'slide', //Тип эффекта
-            delay: '150', //Время исчезновения при отведении мыши
-            tip: jQuery(this).parent().parent().find(".ui-grid-cell-action-tip"), //Элемент с подсказкой
-            position: 'center right' //Позиция
+    if (Ori.SHOW_HINTS){
+        jQuery("input[type=text]").easyTooltip({
+            ctype:"input[type=text]"
         });
-    })   
-    //Настройки изменения стилей при наведении и отведении мыши
-    jQuery(".ui-grid-cell-action-tip").css({
-        'width':jQuery("table.t-data-grid").css("width")-2,
-        'margin-left':jQuery("table.t-data-grid").css("margin-left")
-    });
-
+        jQuery("select").easyTooltip({
+            ctype:"select"
+        });
+    }
 }

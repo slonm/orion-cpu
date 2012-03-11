@@ -1,5 +1,5 @@
 /**
- * @class Window 
+ * Инициализация и выполнение показа/скрытия диалогового окна
  * @author sl
  */
 Tapestry.Initializer.oriDialog = function(opt){

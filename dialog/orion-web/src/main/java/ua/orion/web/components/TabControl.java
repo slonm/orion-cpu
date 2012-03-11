@@ -21,7 +21,6 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  *
  * 
  */
-@Import(library = {"TabControl.js"})
 public class TabControl {
 
     /**

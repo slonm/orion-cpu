@@ -5,11 +5,11 @@
 //tfalse в конце используется для того, чтобы сделать кнопку без текста. 
 //var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse");
 var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse",
-"ui-button-detail", "ui-button-edit","ui-button-view","ui-button-del", "ui-button-check");
+    "ui-button-detail", "ui-button-edit","ui-button-view","ui-button-del", "ui-button-check");
 //Инициализация классов иконок, для кнопок в массиве elements
 //var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e");
 var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e", 
-"ui-icon-zoomin", "ui-icon-pencil", "ui-icon-search", "ui-icon-circle-minus", "ui-icon-circle-check");
+    "ui-icon-zoomin", "ui-icon-pencil", "ui-icon-search", "ui-icon-circle-minus", "ui-icon-circle-check");
     
 //Инициализация иконок на кнопках
 //ec - класс элемента HTML, ic - класс иконик (из jquery-ui)
@@ -73,7 +73,8 @@ function initializeUIComponents(){
     initializeSubmits();
     initializeIcons();
     //Создание выпадающего списка из select
-    ///jQuery("select").selectmenu();
+    //FIXME в таком режиме не работает AJAX callback по изменению значения у select
+    //jQuery("select").selectmenu();
     initializeCheckboxes();
     jQuery(".ui-buttonset").buttonset();
     jQuery("button").parent('a').css({
@@ -146,11 +147,6 @@ function bindCheckBoxes(element){
     });		 
 }
 
-Tapestry.Initializer.initializeIcons = function(opt){
-    initializeIcons();
-    initializeUIClasses();
-}
-
 //Установка начального значения выбранной темы в select
 function putCookieThemeToSelect(){
     jQuery("#ui-select-theme option").each(function(){
@@ -181,7 +177,6 @@ function updateCSS(){
     jQuery("div.t-data-grid-pager a").addClass("ui-corner-all ui-state-default");
     jQuery("div.t-data-grid-pager span.current").addClass("ui-corner-all ui-state-active");
     jQuery(".ui-grid-cell-action-tip").addClass("ui-corner-all ui-state-default");
-    initializeUIComponents();
 }
 
 //При полностью загруженной структуре DOM

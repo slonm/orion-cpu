@@ -2,17 +2,14 @@ package ua.orion.web.mixins;
 
 import javax.inject.Inject;
 import org.apache.tapestry5.*;
+import org.apache.tapestry5.annotations.BindParameter;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.MixinAfter;
-import org.apache.tapestry5.annotations.MixinClasses;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.json.JSONObject;
-import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
-import org.slf4j.Logger;
-import ua.orion.web.OrionWebSymbols;
 
 /**
  * Подмешиватель для ActionLink и EventLink. Перед вызовом события показывает
@@ -23,8 +20,8 @@ import ua.orion.web.OrionWebSymbols;
  */
 //TODO Добавить импорт ресурсов JQuery-UI
 @MixinAfter
-@Import(library = {"Confirmation-messages.js", "Confirmation.js"})
-public class Confirmation {
+@Import(library = {"Confirm-messages.js"})
+public class Confirm {
 
     /**
      * Заголовок диалога
@@ -46,6 +43,8 @@ public class Confirmation {
      */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private String body;
+    @BindParameter
+    private String zone;
     @InjectContainer
     private ClientElement element;
     @Inject
@@ -69,9 +68,9 @@ public class Confirmation {
             init.put("body", body);
         }
         if(resources.getContainerResources().isBound("zone")){
-            init.put("ajax", true);
+            init.put("zone", zone);
         }
-        //javascriptSupport.addInitializerCall("oriConfirmation", init);
-        writer.getElement().forceAttributes(MarkupConstants.ONCLICK, "javascript:return Ori.confirm(event, " + init.toCompactString() + ");");
+        javascriptSupport.addInitializerCall(InitializationPriority.LATE, "oriConfirm", init);
+        writer.getElement().forceAttributes(MarkupConstants.ONCLICK, MarkupConstants.WAIT_FOR_PAGE);
     }
 }

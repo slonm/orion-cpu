@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.orion.web.services;
 
 import java.util.Collection;
@@ -92,7 +88,7 @@ public class EntityTapestryDataTransformer implements TapestryDataTransformer {
     }
 
     @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
+    public SelectModel transformSelectModel(SelectModel model, Class<?> entityClass, String property) {
         if (map.containsKey(entityClass)) {
             return map.get(entityClass).transformSelectModel(model, entityClass, property);
         } else {
@@ -101,7 +97,7 @@ public class EntityTapestryDataTransformer implements TapestryDataTransformer {
     }
 
     @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, T entity, String property) {
+    public SelectModel transformSelectModel(SelectModel model, Object entity, String property) {
         if (map.containsKey(entity.getClass())) {
             return map.get(entity.getClass()).transformSelectModel(model, entity, property);
         } else {
