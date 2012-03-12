@@ -179,6 +179,39 @@ function updateCSS(){
     jQuery(".ui-grid-cell-action-tip").addClass("ui-corner-all ui-state-default");
 }
 
+/*
+ * Создание подсказок для элементов. 
+ * Используется модифицированный плагин Easy Tooltip 1.0
+ * @param функция easyTooltip вызывается на элементах, на которые необходимо
+ * назначить подсказки и параметром в ней является текстовая строка, которая 
+ * служит для идентификации типа элемента. 
+ */
+function createToolTips(){
+    if (Ori.SHOW_HINTS){
+        jQuery("input[type=text]").easyTooltip({
+            ctype:"input[type=text]"
+        });
+        jQuery("select").easyTooltip({
+            ctype:"select"
+        });
+    }
+}
+//При полностью загруженной структуре DOM
+jQuery(document).ready(function(){
+    var initUI=function(e){
+        //Инициализация ui-интерфейса
+        if (jQuery("ui#interface").text()=="true"){
+            initializeUIComponents();   
+        }
+        updateCSS();
+        //Создание подсказок
+        createToolTips();
+    }
+    Ori.Event.bind('.t-zone', Tapestry.ZONE_UPDATED_EVENT, initUI);
+    initUI($J("body"));
+    
+});
+
 //При полностью загруженной структуре DOM
 jQuery(document).ready(function(){
     jQuery("#select-theme-button").click(function(){
