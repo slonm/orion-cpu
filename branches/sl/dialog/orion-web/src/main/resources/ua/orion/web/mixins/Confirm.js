@@ -9,7 +9,8 @@ Tapestry.Initializer.oriConfirm = function(o){
     if(o.zone != undefined){
         //Имя нового пользовательского события
         var evName="ori:zoneupdate";
-        //Remove handlers
+        //FIXME Как удалить только слушатель назначаемый updateZoneOnEvent?
+        //сейчас удаляются ВСЕ слушатели click
         Ori.Event.unbind('#'+o.id, 'click');
         Tapestry.Initializer.updateZoneOnEvent(evName, o.id, o.zone, href);
     //Теперь для обновления зоны нужно вызвать событие evName

@@ -27,13 +27,13 @@ div.t-data-grid-pager span.current {
 .ori-ajax-loading{
     margin-top:5px;
     background-repeat: no-repeat;
-    background-color: gray;
-    box-shadow: 0px 0px 5px 5px gray;
+    background-color: white;
+    box-shadow: 0px 0px 5px 5px white;
     position: fixed;
     right: 7px;
     top: 5px;
     border-radius:50px;
-    opacity:0.75
+    opacity:0.97
 }
 
 .btntable{
