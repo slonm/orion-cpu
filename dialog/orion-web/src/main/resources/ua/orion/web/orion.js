@@ -7,20 +7,20 @@ var Ori = {
         trigger : function(selector, eventName){
             $J(selector).trigger(eventName);
             try{
-                $$(selector).fire(eventName);
+                $$(selector).each(function(e){e.fire(eventName)});
             }catch(e){}
         },
         bind : function(selector, eventName, handler){
             $J(selector).bind(eventName, handler);
             try{
-                $$(selector).observe(eventName, handler);
+                $$(selector).each(function(e){e.observe(eventName, handler)});
             }catch(e){}
         },
         unbind : function(selector, eventName){
             $J(selector).unbind(eventName);
-            //try{
-                $$(selector).stopObserving('click');
-            //}catch(e){}
+            try{
+                $$(selector).each(function(e){e.stopObserving('click')});
+            }catch(e){}
         }
     },
     AjaxIndicator : {
