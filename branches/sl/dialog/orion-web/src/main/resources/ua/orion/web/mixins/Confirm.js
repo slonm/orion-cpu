@@ -4,19 +4,13 @@
  * @author sl
  */
 Tapestry.Initializer.oriConfirm = function(o){
-    var link=jQuery("#"+o.id);
+    var link=$J("#"+o.id);
     var href = link.attr("href");
     if(o.zone != undefined){
         //Имя нового пользовательского события
         var evName="ori:zoneupdate";
         //Remove handlers
-        //JQuery
-        link.unbind('click');
-        //Prototype (if supported) 
-        try{
-            $(o.id).stopObserving('click');
-        }catch(e){}
-        //TODO Протестировать для реализации tapestry.js на базе jQuery
+        Ori.Event.unbind('#'+o.id, 'click');
         Tapestry.Initializer.updateZoneOnEvent(evName, o.id, o.zone, href);
     //Теперь для обновления зоны нужно вызвать событие evName
     }
@@ -24,7 +18,7 @@ Tapestry.Initializer.oriConfirm = function(o){
         if(nested==true) return;
         event.preventDefault();
         //На базе этого блока построим диалог
-        var div=jQuery("<div/>").appendTo("body").text(o.body!=undefined ? o.body : Ori.Messages.messageConfirmationBody);
+        var div=$J("<div/>").appendTo("body").text(o.body!=undefined ? o.body : Ori.Messages.messageConfirmationBody);
         div.dialog({
             modal:true,
             title:o.title!=undefined ? o.title : Ori.Messages.labelConfirmationTitle,
@@ -38,11 +32,7 @@ Tapestry.Initializer.oriConfirm = function(o){
                         window.location.href = href;
                     }else{
                         //Обновляем зону
-                        link.trigger(evName);
-                        //Prototype (if supported) 
-                        try{
-                            $(o.id).fire(evName);
-                        }catch(e){}
+                        Ori.Event.trigger('#'+o.id, evName);
                     }
                     div.dialog("close");
                 }

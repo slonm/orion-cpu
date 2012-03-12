@@ -1,5 +1,28 @@
 var $J = jQuery;
 var Ori = {
+    /**
+    * Обертки для методов работы с событиями, позволяющие абстрагироваться от JQuery и Prototype
+    */       
+    Event : {
+        trigger : function(selector, eventName){
+            $J(selector).trigger(eventName);
+            try{
+                $$(selector).fire(eventName);
+            }catch(e){}
+        },
+        bind : function(selector, eventName, handler){
+            $J(selector).bind(eventName, handler);
+            try{
+                $$(selector).observe(eventName, handler);
+            }catch(e){}
+        },
+        unbind : function(selector, eventName){
+            $J(selector).unbind(eventName);
+            //try{
+                $$(selector).stopObserving('click');
+            //}catch(e){}
+        }
+    },
     AjaxIndicator : {
         oldAjaxRequest : Tapestry.ajaxRequest,
         indicator: undefined,
