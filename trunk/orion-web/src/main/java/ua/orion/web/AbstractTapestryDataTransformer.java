@@ -42,12 +42,12 @@ public abstract class AbstractTapestryDataTransformer implements TapestryDataTra
     }
 
     @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
+    public SelectModel transformSelectModel(SelectModel model, Class<?> entityClass, String property) {
         return model;
     }
 
     @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, T entity, String property) {
+    public SelectModel transformSelectModel(SelectModel model, Object entity, String property) {
         return model;
     }
 

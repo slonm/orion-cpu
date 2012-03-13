@@ -24,7 +24,7 @@ import ua.orion.web.services.TapestryDataSource;
  *
  * @author slobodyanuk
  */
-@Import(library = "../WindowUtils.js", stylesheet = "../css/tapestry-crud.css")
+@Import(stack = {"orion"})
 @SuppressWarnings("unused")
 public class Crud {
 
@@ -102,8 +102,6 @@ public class Crud {
     @Inject
     private Block hideWindowButtonBlock;
     @Inject
-    private Block deleteBlock;
-    @Inject
     @Property(write = false)
     private Messages messages;
     //---Services---
@@ -124,9 +122,6 @@ public class Crud {
     @Persist
     private Object object;
     @Persist
-    @Property(write = false)
-    private String popupWindowId;
-    @Persist
     private String listZoneId;
     @Persist
     @Property(write = false)
@@ -134,9 +129,9 @@ public class Crud {
 
     void setupRender() {
         SecurityUtils.getSubject().checkPermission(entityType + ":read");
-        popupWindowId = javascriptSupport.allocateClientId("popupWindow");
         listZoneId = javascriptSupport.allocateClientId("listZone");
         popupZoneId = javascriptSupport.allocateClientId("popupZone");
+        javascriptSupport.addInitializerCall("crudUIListeners", new JSONObject("popupZone", popupZoneId, "listZone", listZoneId));
     }
 
     /**
@@ -199,10 +194,6 @@ public class Crud {
     }
 
     public GridDataSource getSource() {
-        //Это хак.
-        //Обновление grid. Нужно для применения классов CSS, некоторых функций JS.
-        //TODO Продумать как привязаться к обновлению внутренней зоны Grid
-        javascriptSupport.addInitializerCall("updateGrid", "");
         if (resources.isBound("source")) {
             return source;
         } else {
@@ -258,83 +249,31 @@ public class Crud {
         return closeWindowAndGetListZone();
     }
 
-    Object onEdit(Integer id) {
+    Object onActionFromEdit(Integer id) {
         SecurityUtils.getSubject().checkPermission(entityType + ":update:" + id);
         object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeEditPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.edit")));
-            }
-        });
         return editBlock;
     }
 
-    Object onAdd() {
+    Object onActionFromAdd() {
         SecurityUtils.getSubject().checkPermission(entityType + ":insert");
         object = es.newInstance(getEntityClass());
         resources.triggerEvent("beforeAddPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.add")));
-            }
-        });
         return addBlock;
     }
 
-    Object onView(Integer id) {
+    Object onActionFromView(Integer id) {
         object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeViewPopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.view")));
-            }
-        });
         return viewBlock;
-    }
-
-    Object onTryDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(entityType + ":delete:" + id);
-        object = es.find(getEntityClass(), id);
-        resources.triggerEvent("beforeTryDeletePopup", new Object[]{object}, null);
-        //Show window
-        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-
-            @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("showCkWindow",
-                        new JSONObject("window", popupWindowId,
-                        "title", messages.get("label.mode.del"),
-                        //TODO Размер окна должен вычислятся автоматически
-                        "width", "235"));
-            }
-        });
-        return deleteBlock;
     }
 
     Object onDelete(Integer id) {
         SecurityUtils.getSubject().checkPermission(entityType + ":delete:" + id);
         try {
             object = es.find(getEntityClass(), id);
+            resources.triggerEvent("beforeDelete", new Object[]{object}, null);
             es.remove(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.remove.entity",
@@ -354,22 +293,10 @@ public class Crud {
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
 
             @Override
-            public void run(JavaScriptSupport javascriptSupport) {
-
-                javascriptSupport.addInitializerCall("closeCkWindow",
-                        new JSONObject("window", popupWindowId));
+            public void run(JavaScriptSupport js) {
+                js.addInitializerCall("oriDialog", new JSONObject("oriEvent", "close", "id", popupZoneId));
             }
         });
         return listZone.getBody();
     }
-//    void onInplaceUpdateFromGrid(String zone) {
-//        javascriptSupport.addScript("Tapestry.Initializer.updateGrid()");
-//        ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
-//
-//            public void run(JavaScriptSupport javascriptSupport) {
-//
-//                javascriptSupport.addInitializerCall("updateGrid", "");
-//            }
-//        });
-//    }
 }
