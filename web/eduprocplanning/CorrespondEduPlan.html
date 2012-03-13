@@ -1,0 +1,723 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Навчальний план заочної форми навчання</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+        <script type="text/javascript" src="up.js"></script>
+        <script type="text/javascript" src="correspondent.js"></script>
+        <style>
+            input[type=text]{
+                width: 70px;
+                min-width: 95%;
+            }
+        </style>
+        <!--        
+                 <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+                <script type="text/javascript" src="jQuery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+                <script type="text/javascript" src="correspondent.js"></script>
+                <link href="jQuery-ui/css/pepper-grinder/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"/>
+                <link href="main.css" rel="stylesheet" type="text/css"/>
+                <style>
+                    input[type=text]{
+                        width: 70px;
+                        min-width: 95%;
+                    }
+                </style>
+        -->
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>   <a href="EduPlan.html">Планування навчального процесу ▼</a>   <a href="EduPlan.html">Навчальні плани ▼</a>   <a href="CommonEduPlan.html">Загальний навчальний план ▼</a>   <a href="StationaryEduPlan.html">Навчальний план заочної форми навчання▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Навчальний план 6.0500103 - Програмна інженерія - Дата введення: 01.09.2009 - Заочна форма навчання</H2> 
+
+                <div id="master-data" style="display: none">
+                    <table id="master-table">
+                        <tr class="ui-widget-content" style="font-weight: bold">
+                            <td  colspan="5" style="width: 80%">І. ГРАФІК НАВЧАЛЬНОГО ПРОЦЕСУ</td><td colspan="8" style="width: 20%">II. Зведені дані про бюджет часу (в днях)</td>
+                        </tr>
+                        <tr>
+                            <td>Курси</td><td>Установка на 1 сессію</td><td>1 сессія</td><td>2 сессія</td><td>3 сессія</td><td>Кількість днів</td>
+                        </tr>
+                        <tr id="course-data-first">
+                        </tr>
+                        <tr id="course-data-second">
+                        </tr>
+                        <tr id="course-data-thirth">
+                        </tr>
+                        <tr id="course-data-fourth">
+                        </tr>
+                    </table>
+                    <!--<button class="button" id="getIds">Получить ID выбранных элементов</button>-->
+
+                    <div id="dialog-modal" title="System says...">
+                        <p></p>
+                    </div>
+
+                </div>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" class="button" id="toggleEduPlan" style="text-align: center">Показати/сховати графік навчального процесу</button>  
+                    <a href="CommonEduPlan.html" style="padding-left: 60%" ><button type="submit"  id="to-common-eduplan-button">До загального навчального плану</button></a>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th rowspan="2"></th>
+                                <th rowspan="2">№ з/п</th>
+                                <th rowspan="2">Назва дисципліни / навчального доручення</th>
+                                <th rowspan="2">Семестри дисципліни</th>
+                                <th colspan="3">Семестри підсумкових контрольних заходів</th>
+                                <th rowspan="2">Кредитів ECTS</th>
+                                <th rowspan="2">Загал. обсяг годин</th>
+                                <th rowspan="2">Всього годин з виклад</th>
+                                <th rowspan="2">Лекцій</th>
+                                <th rowspan="2">Лаб. робіт</th>
+                                <th rowspan="2">Практ. зан., семін</th>
+                                <th rowspan="2">Сам. робота</th>
+                            </tr>
+                            <tr>
+                                <th>Іспити</th>
+                                <th>Заліки</th>
+                                <th>Курс. роботи</th>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">1. Цикл гуманітарної та соціально-економічної підготовки</td>
+                                <td align="center">24.0</td>
+                                <td align="center">864</td>
+                                <td align="center">154</td>
+                                <td align="center">54</td>
+                                <td align="center">0</td>
+                                <td align="center">100</td>
+                                <td align="center">710</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Обов'язкові дисципліни</td>
+                                <td align="center">16.0</td>
+                                <td align="center">576</td>
+                                <td align="center">92</td>
+                                <td align="center">20</td>
+                                <td align="center">0</td>
+                                <td align="center">72</td>
+                                <td align="center">484</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">1.01</td>
+                                <td>Українська мова (за професійним спрямуванням)</td>
+                                <td align="center">3-6</td>
+                                <td align="center">6</td>
+                                <td align="center">4-5</td>
+                                <td align="center"></td>
+                                <td align="center">3,0</td>
+                                <td align="center">108</td>
+                                <td align="center">22</td>
+                                <td align="center">4</td>
+                                <td align="center">0</td>
+                                <td align="center">18</td>
+                                <td align="center">86</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
+                                </td>
+                                <td align="center">1.02</td>
+                                <td>Історія України</td>
+                                <td align="center">0-1</td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">3,0</td>
+                                <td align="center">108</td>
+                                <td align="center">40</td>
+                                <td align="center">24</td>
+                                <td align="center">0</td>
+                                <td align="center">16</td>
+                                <td align="center">68</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Вибіркові дисципліни</td>
+                                <td align="center">8.0</td>
+                                <td align="center">288</td>
+                                <td align="center">56</td>
+                                <td align="center">24</td>
+                                <td align="center">0</td>
+                                <td align="center">32</td>
+                                <td align="center">230</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
+                                </td>
+                                <td align="center">1.01в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-1
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Психологія</p>
+                                            <p>Етика та естетика</p>
+                                            <p>Соціальна психологія</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="center">0-1</td>
+                                <td align="center"></td>
+                                <td align="center">1</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">14</td>
+                                <td align="center">6</td>
+                                <td align="center">0</td>
+                                <td align="center">8</td>
+                                <td align="center">58</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
+                                </td>
+                                <td align="center">1.02в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-2
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Політологія</p>
+                                            <p>Риторика</p>
+                                            <p>Конфліктологія</p>
+                                        </div>
+                                    </div>
+                                    </td>
+                                <td align="center">1-2</td>
+                                <td align="center"></td>
+                                <td align="center">2</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">14</td>
+                                <td align="center">6</td>
+                                <td align="center">0</td>
+                                <td align="center">8</td>
+                                <td align="center">58</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
+                                </td>
+                                <td align="center">1.03в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-3
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Економічна теорія</p>
+                                            <p>Психологія управління</p>
+                                            <p>Культура наукової мови</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="center">2-3</td>
+                                <td align="center"></td>
+                                <td align="center">3</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">14</td>
+                                <td align="center">6</td>
+                                <td align="center">0</td>
+                                <td align="center">8</td>
+                                <td align="center">58</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/>
+                                </td>
+                                <td align="center">1.04в</td>
+                                <td>Вибіркова дисципліна ЦГСЕП-4
+                                    <div>
+                                        <img src="../img/expand.png"  class="kind-closed kind-status"/>
+                                        <div class="kinds">
+                                            <p>Правознавство</p>
+                                            <p>Соціологія</p>
+                                            <p>Логіка</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="center">3-4</td>
+                                <td align="center"></td>
+                                <td align="center">4</td>
+                                <td align="center"></td>
+                                <td align="center">2,0</td>
+                                <td align="center">72</td>
+                                <td align="center">14</td>
+                                <td align="center">6</td>
+                                <td align="center">0</td>
+                                <td align="center">8</td>
+                                <td align="center">58</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">2. Цикл математичної, природничо-наукової підготовки</td>
+                                <td align="center">38.0</td>
+                                <td align="center">1368</td>
+                                <td align="center">488</td>
+                                <td align="center">240</td>
+                                <td align="center">0</td>
+                                <td align="center">248</td>
+                                <td align="center">880</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Обов'язкові дисципліни</td>
+                                <td align="center">24.5</td>
+                                <td align="center">882</td>
+                                <td align="center">104</td>
+                                <td align="center">44</td>
+                                <td align="center">6</td>
+                                <td align="center">54</td>
+                                <td align="center">770</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">2.01</td>
+                                <td>Математичний аналіз</td>
+                                <td align="center">1-3</td>
+                                <td align="center">3</td>
+                                <td align="center">2</td>
+                                <td align="center"></td>
+                                <td align="center">10,0</td>
+                                <td align="center">360</td>
+                                <td align="center">40</td>
+                                <td align="center">16</td>
+                                <td align="center">0</td>
+                                <td align="center">24</td>
+                                <td align="center">320</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Вибіркові дисципліни</td>
+                                <td align="center">13.5</td>
+                                <td align="center">486</td>
+                                <td align="center">58</td>
+                                <td align="center">22</td>
+                                <td align="center">0</td>
+                                <td align="center">28</td>
+                                <td align="center">378</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">2.01в</td>
+                                <td>Чисельні методи в інформатиці</td>
+                                <td align="center">5-6</td>
+                                <td align="center"></td>
+                                <td align="center">6</td>
+                                <td align="center"></td>
+                                <td align="center">4.5</td>
+                                <td align="center">162</td>
+                                <td align="center">20</td>
+                                <td align="center">8</td>
+                                <td align="center">12</td>
+                                <td align="center">0</td>
+                                <td align="center">142</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">2.02в</td>
+                                <td>Вибіркова дисципліна ЦМПНП-1</td>
+                                <td align="center">3-4</td>
+                                <td align="center"></td>
+                                <td align="center">4</td>
+                                <td align="center"></td>
+                                <td align="center">4.0</td>
+                                <td align="center">144</td>
+                                <td align="center">24</td>
+                                <td align="center">8</td>
+                                <td align="center">0</td>
+                                <td align="center">16</td>
+                                <td align="center">120</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">3. Цикл професійної та практичної підготовки</td>
+                                <td align="center">161.5</td>
+                                <td align="center">5814</td>
+                                <td align="center">1376</td>
+                                <td align="center">688</td>
+                                <td align="center">0</td>
+                                <td align="center">642</td>
+                                <td align="center">4438</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Обов'язкові дисципліни</td>
+                                <td align="center">104.0</td>
+                                <td align="center">3744</td>
+                                <td align="center">1252</td>
+                                <td align="center">610</td>
+                                <td align="center">642</td>
+                                <td align="center">0</td>
+                                <td align="center">2492</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">3.01</td>
+                                <td>Комп’ютерна дискретна математика</td>
+                                <td align="center">1-2</td>
+                                <td align="center">2</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">5,0</td>
+                                <td align="center">180</td>
+                                <td align="center">64</td>
+                                <td align="center">32</td>
+                                <td align="center">32</td>
+                                <td align="center">0</td>
+                                <td align="center">116</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">3.01д</td>
+                                <td>Захист дипломних робіт</td>
+                                <td align="center">10</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">1,5</td>
+                                <td align="center">54</td>
+                                <td align="center">0</td>
+                                <td align="center">0</td>
+                                <td align="center">0</td>
+                                <td align="center">0</td>
+                                <td align="center">54</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Вибіркові дисципліни</td>
+                                <td align="center">57.5</td>
+                                <td align="center">2070</td>
+                                <td align="center">124</td>
+                                <td align="center">78</td>
+                                <td align="center">0</td>
+                                <td align="center">46</td>
+                                <td align="center">164</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">3.01в</td>
+                                <td>Мова програмування Java</td>
+                                <td align="center">3-4</td>
+                                <td align="center">4</td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">4,5</td>
+                                <td align="center">162</td>
+                                <td align="center">64</td>
+                                <td align="center">16</td>
+                                <td align="center">48</td>
+                                <td align="center">0</td>
+                                <td align="center">98</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">3.02в</td>
+                                <td>Вибіркова дисципліна ЦПП-1</td>
+                                <td align="center">1-2</td>
+                                <td align="center"></td>
+                                <td align="center">2</td>
+                                <td align="center"></td>
+                                <td align="center">4,5</td>
+                                <td align="center">162</td>
+                                <td align="center">64</td>
+                                <td align="center">16</td>
+                                <td align="center">48</td>
+                                <td align="center">0</td>
+                                <td align="center">98</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Цикл позакредитних дисциплін</td>
+                                <td align="center">20.5</td>
+                                <td align="center">738</td>
+                                <td align="center">386</td>
+                                <td align="center">98</td>
+                                <td align="center">0</td>
+                                <td align="center">288</td>
+                                <td align="center">0</td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td></td>
+                                <td></td>
+                                <td rowspan="1" colspan="5">Обов'язкові дисципліни</td>
+                                <td align="center">20.5</td>
+                                <td align="center">738</td>
+                                <td align="center">386</td>
+                                <td align="center">98</td>
+                                <td align="center">0</td>
+                                <td align="center">288</td>
+                                <td align="center">0</td>
+                            </tr>
+                            <tr>
+                                <td><input class="eduformeduplandiscipline-edit" type="image" src="../img/edit.png" title="Переглянути/редагувати дисципліну"/></td>
+                                <td align="center">пк.02</td>
+                                <td>Основи християнської традиції</td>
+                                <td align="center">1-2</td>
+                                <td align="center"></td>
+                                <td align="center">2</td>
+                                <td align="center"></td>
+                                <td align="center">0,75</td>
+                                <td align="center">72</td>
+                                <td align="center">32</td>
+                                <td align="center">0</td>
+                                <td align="center">0</td>
+                                <td align="center">32</td>
+                                <td align="center">22</td>
+                            </tr>
+                            <tr>
+                                <td class="btnrow" colspan="14"><a href="CommonEduPlan.html"><input type="button"  value="До загального навчального плану" title="Перейти до загального навчального плану"/></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div><!---#grid -->                    
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+                <!-- Диалоговое окно (Редактирование дисциплины плана определённой формы обучения) -->
+        <div id="add-eduformeduplandiscipline-dialog" style="display: none">
+            <div class="ui-state-highlight" id="eduformeduplandiscipline-help"></div>
+            <table>
+                <tr>
+                    <td>Навчальний план:</td><td colspan="14">6.050103-Підготовка бакалаврів - 01.09.2009</td>
+                </tr>
+                <tr>
+                    <td>Форма навчання:</td><td colspan="14">Заочна</td>
+                </tr>
+                <tr>
+                    <td><label>Цикл навчального плану:</td><td colspan="14">Цикл гуманітарної та соціально-економічної підготовки</td>
+                </tr>
+                <tr>
+                    <td>№ дисципліни:</td><td colspan="14">1.01</td>
+                </tr>
+                <tr>
+                    <td>Назва дисципліни:</td><td colspan="14">Українська мова (за професійним спрямуванням)</td>
+                </tr>
+                <tr>
+                    <td>Оберіть дисципліну(дисципліни) з банку навчальних дисциплін<br/>
+                        <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label></td>
+                    <td colspan="14">
+                        <select>
+                            <option value="nodisc">оберіть дисципліну..</option>
+                            <option value="IU(Upr)(Pkt)">Історія України-4 мод-іспит-Покатаєва Т.О.</option>
+                            <option value="IU(Econ)(Pkt)">Історія України-4 мод-іспит-Івнова Г.М.</option>
+                        </select>
+                        <a href="">Видалити дисципліну</a>
+                        <p><a href="">Додати дисципліну</a></p>
+                        <p><a href="Disciplines.html">Перейти до банку навчальних дисциплін</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Семестри дисципліни:</td>
+                    <td align="center"><label>0</label></td>
+                    <td align="center"><label>1</label></td>
+                    <td align="center"><label>2</label></td>
+                    <td align="center"><label>3</label></td>
+                    <td align="center"><label>4</label></td>
+                    <td align="center"><label>5</label></td>
+                    <td align="center"><label>6</label></td>
+                    <td align="center"><label>7</label></td>
+                    <td align="center"><label>8</label></td>
+                    <td align="center"><label>9</label></td>
+                    <td align="center"><label>10</label></td>
+                    <td align="center"><label>11</label></td>
+                    <td align="center"><label>12</label></td>
+                    <td align="center"><label>13</label></td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="checkbox" value="0"/></td>
+                    <td align="center"><input type="checkbox" value="1"/></td>
+                    <td align="center"><input type="checkbox" value="2"/></td>
+                    <td align="center"><input type="checkbox" value="3"/></td>
+                    <td align="center"><input type="checkbox" value="4"/></td>
+                    <td align="center"><input type="checkbox" value="5"/></td>
+                    <td align="center"><input type="checkbox" value="6"/></td>
+                    <td align="center"><input type="checkbox" value="7"/></td>
+                    <td align="center"><input type="checkbox" value="8"/></td>
+                    <td align="center"><input type="checkbox" value="9"/></td>
+                    <td align="center"><input type="checkbox" value="10"/></td>
+                    <td align="center"><input type="checkbox" value="11"/></td>
+                    <td align="center"><input type="checkbox" value="12"/></td>
+                    <td align="center"><input type="checkbox" value="13"/></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Семестри із формою контролю - екзамен:</td><td colspan="14">Повинно бути заплановано екзаменів: <b>1</b></td>
+                </tr>
+                <tr>
+                    <td align="center"><label>0</label></td>
+                    <td align="center"><label>1</label></td>
+                    <td align="center"><label>2</label></td>
+                    <td align="center"><label>3</label></td>
+                    <td align="center"><label>4</label></td>
+                    <td align="center"><label>5</label></td>
+                    <td align="center"><label>6</label></td>
+                    <td align="center"><label>7</label></td>
+                    <td align="center"><label>8</label></td>
+                    <td align="center"><label>9</label></td>
+                    <td align="center"><label>10</label></td>
+                    <td align="center"><label>11</label></td>
+                    <td align="center"><label>12</label></td>
+                    <td align="center"><label>13</label></td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="checkbox" value="0"/></td>
+                    <td align="center"><input type="checkbox" value="1"/></td>
+                    <td align="center"><input type="checkbox" value="2"/></td>
+                    <td align="center"><input type="checkbox" value="3"/></td>
+                    <td align="center"><input type="checkbox" value="4"/></td>
+                    <td align="center"><input type="checkbox" value="5"/></td>
+                    <td align="center"><input type="checkbox" value="6"/></td>
+                    <td align="center"><input type="checkbox" value="7"/></td>
+                    <td align="center"><input type="checkbox" value="8"/></td>
+                    <td align="center"><input type="checkbox" value="9"/></td>
+                    <td align="center"><input type="checkbox" value="10"/></td>
+                    <td align="center"><input type="checkbox" value="11"/></td>
+                    <td align="center"><input type="checkbox" value="12"/></td>
+                    <td align="center"><input type="checkbox" value="13"/></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Семестри із формою контролю - залік:</td><td colspan="14">Повинно бути заплановано заліків: <b>2</b></td>
+                </tr>
+                <tr>
+                    <td align="center"><label>0</label></td>
+                    <td align="center"><label>1</label></td>
+                    <td align="center"><label>2</label></td>
+                    <td align="center"><label>3</label></td>
+                    <td align="center"><label>4</label></td>
+                    <td align="center"><label>5</label></td>
+                    <td align="center"><label>6</label></td>
+                    <td align="center"><label>7</label></td>
+                    <td align="center"><label>8</label></td>
+                    <td align="center"><label>9</label></td>
+                    <td align="center"><label>10</label></td>
+                    <td align="center"><label>11</label></td>
+                    <td align="center"><label>12</label></td>
+                    <td align="center"><label>13</label></td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="checkbox" value="0"/></td>
+                    <td align="center"><input type="checkbox" value="1"/></td>
+                    <td align="center"><input type="checkbox" value="2"/></td>
+                    <td align="center"><input type="checkbox" value="3"/></td>
+                    <td align="center"><input type="checkbox" value="4"/></td>
+                    <td align="center"><input type="checkbox" value="5"/></td>
+                    <td align="center"><input type="checkbox" value="6"/></td>
+                    <td align="center"><input type="checkbox" value="7"/></td>
+                    <td align="center"><input type="checkbox" value="8"/></td>
+                    <td align="center"><input type="checkbox" value="9"/></td>
+                    <td align="center"><input type="checkbox" value="10"/></td>
+                    <td align="center"><input type="checkbox" value="11"/></td>
+                    <td align="center"><input type="checkbox" value="12"/></td>
+                    <td align="center"><input type="checkbox" value="13"/></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Семестри із формою контролю - Курсова робота:</td><td colspan="14">Повинно бути заплановано курс. робіт: <b>0</b></td>
+                </tr>
+                <tr>
+                    <td align="center"><label>0</label></td>
+                    <td align="center"><label>1</label></td>
+                    <td align="center"><label>2</label></td>
+                    <td align="center"><label>3</label></td>
+                    <td align="center"><label>4</label></td>
+                    <td align="center"><label>5</label></td>
+                    <td align="center"><label>6</label></td>
+                    <td align="center"><label>7</label></td>
+                    <td align="center"><label>8</label></td>
+                    <td align="center"><label>9</label></td>
+                    <td align="center"><label>10</label></td>
+                    <td align="center"><label>11</label></td>
+                    <td align="center"><label>12</label></td>
+                    <td align="center"><label>13</label></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="center"><input type="checkbox" value="0"/></td>
+                    <td align="center"><input type="checkbox" value="1"/></td>
+                    <td align="center"><input type="checkbox" value="2"/></td>
+                    <td align="center"><input type="checkbox" value="3"/></td>
+                    <td align="center"><input type="checkbox" value="4"/></td>
+                    <td align="center"><input type="checkbox" value="5"/></td>
+                    <td align="center"><input type="checkbox" value="6"/></td>
+                    <td align="center"><input type="checkbox" value="7"/></td>
+                    <td align="center"><input type="checkbox" value="8"/></td>
+                    <td align="center"><input type="checkbox" value="9"/></td>
+                    <td align="center"><input type="checkbox" value="10"/></td>
+                    <td align="center"><input type="checkbox" value="11"/></td>
+                    <td align="center"><input type="checkbox" value="12"/></td>
+                    <td align="center"><input type="checkbox" value="13"/></td>
+                </tr>
+                <tr>
+                    <td>Обсяг годин дисципліни:</td><td colspan="14">Загальна кількість годин: <b>108</b><br/>
+                        Обсяг аудиторних годин: <b>48</b> (вычисляется)<br/>
+                        Процент аудиторних годин від загального обсягу: <b>44%</b> (вычисляется)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Кількість годин лекцій:</td><td colspan="14"><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Кількість годин лабораторних робіт:</td><td colspan="14"><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Кількість годин практичних занять/семінарів:</td><td colspan="14"><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td></td><td colspan="15"><input type="submit" value="Відмінити" id="eduformeduplandiscipline-cancel"/> <input type="submit" value="Зберегти" id="eduformeduplandiscipline-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery(".eduformeduplandiscipline-edit").click(function(){
+                    jQuery("#eduformeduplandiscipline-help").html("Навчальний план 6.0500103-Програмна інженерія-Підготовка бакалаврів-Дата введення: 01.09.2009-Заочна форма навчання<br/>1. Цикл гуманітарної та соціально-економічної підготовки - <b>3 кредити з 24</b>");
+                    jQuery("#eduformeduplandiscipline-help").css({'display':'block'});
+                    jQuery("#add-eduformeduplandiscipline-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Редагування дисципліни циклу навчального плану заочної форми навчання"});
+                })
+                jQuery("#eduformeduplandiscipline-save").click(function(){jQuery("#add-eduformeduplandiscipline-dialog").dialog("close")});
+                jQuery("#eduformeduplandiscipline-cancel").click(function(){jQuery("#add-eduformeduplandiscipline-dialog").dialog("close")});
+                
+                $(".kind-status").click(function(){
+                    if ($(this).hasClass("kind-closed")){
+                        $(this).attr("class","kind-opened kind-status").attr("src","../img/collapse.png").parent().find("div.kinds").show("slow");
+                    } else if ($(this).hasClass("kind-opened")){
+                        $(this).attr("class","kind-closed kind-status").attr("src","../img/expand.png").parent().find("div.kinds").hide("slow");
+                    }
+                })  
+            })
+        </script>
+    </body>
+</html>
