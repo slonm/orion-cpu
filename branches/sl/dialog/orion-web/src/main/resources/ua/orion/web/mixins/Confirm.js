@@ -11,7 +11,7 @@ Tapestry.Initializer.oriConfirm = function(o){
         var evName="ori:zoneupdate";
         //FIXME Как удалить только слушатель назначаемый updateZoneOnEvent?
         //сейчас удаляются ВСЕ слушатели click
-        Ori.Event.unbind('#'+o.id, 'click');
+        Ori.Event.unbind('#'+o.id, Tapestry.TRIGGER_ZONE_UPDATE_EVENT);
         Tapestry.Initializer.updateZoneOnEvent(evName, o.id, o.zone, href);
     //Теперь для обновления зоны нужно вызвать событие evName
     }
