@@ -60,7 +60,7 @@ public class EduPlanTapestryDataTransformer extends AbstractTapestryDataTransfor
     }
 
     @Override
-    public <T> SelectModel transformSelectModel(SelectModel model, Class<T> entityClass, String property) {
+    public SelectModel transformSelectModel(SelectModel model, Class<?> entityClass, String property) {
         if ("LicenseRecord".equalsIgnoreCase(property)) {
             ListIterator<OptionModel> it = (ListIterator<OptionModel>) model.getOptions().listIterator();
             while (it.hasNext()) {

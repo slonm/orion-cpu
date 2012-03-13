@@ -18,7 +18,7 @@ public interface TapestryDataFactory {
     <T> BeanModel<T> createBeanModelForAdd(Class<T> entityClass, Messages messages);
     <T> BeanModel<T> createBeanModelForView(Class<T> entityClass, Messages messages);
     <T> BeanModel<T> createBeanModelForEdit(Class<T> entityClass, Messages messages);
-    <T> SelectModel createSelectModel(Class<T> entityClass, String property);
-    <T> SelectModel createSelectModel(T entity, String property);
+    SelectModel createSelectModel(Class<?> entityClass, String property);
+    SelectModel createSelectModel(Object entity, String property);
     String createCrudPage(Class<?> entityClass);
 }

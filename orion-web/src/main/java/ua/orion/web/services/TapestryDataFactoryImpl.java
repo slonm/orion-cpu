@@ -125,12 +125,13 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     }
 
     @Override
-    public <T> SelectModel createSelectModel(Class<T> entityClass, String property) {
-        CriteriaQuery<T> query = es.getEntityManager().getCriteriaBuilder().createQuery(propertyAccess.getAdapter(entityClass).getPropertyAdapter(property).getType());
-        query.from(entityClass);
-        List<T> objects = es.getEntityManager().createQuery(query).getResultList();
+    public SelectModel createSelectModel(Class<?> entityClass, String property) {
+        Class<?> cls=propertyAccess.getAdapter(entityClass).getPropertyAdapter(property).getType();
+        CriteriaQuery<?> query = es.getEntityManager().getCriteriaBuilder().createQuery(cls);
+        query.from(cls);
+        List<?> objects = es.getEntityManager().createQuery(query).getResultList();
         final List<OptionModel> options = new ArrayList<OptionModel>();
-        for (final T object : objects) {
+        for (final Object object : objects) {
             options.add(new AbstractOptionModel() {
 
                 @Override
@@ -159,7 +160,7 @@ public class TapestryDataFactoryImpl implements TapestryDataFactory {
     }
 
     @Override
-    public <T> SelectModel createSelectModel(T entity, String property) {
+    public SelectModel createSelectModel(Object entity, String property) {
         return createSelectModel(entity.getClass(), property);
     }
 

@@ -1,3 +1,5 @@
+/*===Раздел модификации стилей Tapestry===*/
+
 table.t-data-grid tbody tr td.isObsolete {
     text-align: center;
 }
@@ -5,7 +7,7 @@ table.t-data-grid tbody tr td.isObsolete {
 table.t-data-grid tbody tr td.rang {
     text-align: right;
 }
-
+/*Что-бы сообщения об ошибках появлялись поверх диалогового окна*/
 DIV.t-error-popup {
     z-index: 9999
 }
@@ -14,9 +16,24 @@ div.t-beaneditor-row {
     white-space: nowrap;
 }
 
-div.window-content {
-    font: 15px Arial, Helvetica, sans-serif;
-    font-size: 15px;
+/* Маркер текущей страница Grid*/
+div.t-data-grid-pager span.current {
+    color: black;
+}
+
+/*===Раздел других стилей===*/
+
+/* Индикатор AJAX загрузки*/
+.ori-ajax-loading{
+    margin-top:5px;
+    background-repeat: no-repeat;
+    background-color: white;
+    box-shadow: 0px 0px 5px 5px white;
+    position: fixed;
+    right: 7px;
+    top: 5px;
+    border-radius:50px;
+    opacity:0.97
 }
 
 .btntable{
