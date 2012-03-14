@@ -7,6 +7,12 @@
  *
  * http://docs.jquery.com/UI
  * https://github.com/fnagel/jquery-ui/wiki/Selectmenu
+ * 
+ * Patch:
+ * @autor Mihail Slobodyanuk 2012
+ * На основе http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+ * Расширена поддержка вызова события по изменению значения списка.
+ * Вызывается событие DOM вместо события jQuery.
  */
 
 (function($) {
@@ -575,7 +581,19 @@ $.widget("ui.selectmenu", {
 	},
 
 	change: function(event) {
-		this.element.trigger("change");
+		//this.element.trigger("change");
+                //Patch begin
+                var e;
+                if (document.createEvent) {
+                    e = document.createEvent("HTMLEvents");
+                    e.initEvent("change", true, true);
+                    this.element[0].dispatchEvent(e);
+                } else {
+                    e = document.createEventObject();
+                    e.eventType = "onchange";
+                    this.element[0].fireEvent(e.eventType, e);
+                }
+                //Patch end
 		this._trigger("change", event, this._uiHash());
 	},
 
