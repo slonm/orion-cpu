@@ -294,7 +294,7 @@ public class Crud {
 
             @Override
             public void run(JavaScriptSupport js) {
-                js.addInitializerCall("oriDialog", new JSONObject("oriEvent", "close", "id", popupZoneId));
+                js.addInitializerCall("oriDialog", new JSONObject("oriEvent", "close", "oriId", popupZoneId));
             }
         });
         return listZone.getBody();
