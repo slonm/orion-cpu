@@ -73,8 +73,7 @@ function initializeUIComponents(){
     initializeSubmits();
     initializeIcons();
     //Создание выпадающего списка из select
-    //FIXME в таком режиме не работает AJAX callback по изменению значения у select
-    //jQuery("select").selectmenu();
+    jQuery("select").selectmenu();
     initializeCheckboxes();
     jQuery(".ui-buttonset").buttonset();
     jQuery("button").parent('a').css({
