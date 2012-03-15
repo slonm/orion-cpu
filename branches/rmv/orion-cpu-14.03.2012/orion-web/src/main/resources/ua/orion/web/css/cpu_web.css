@@ -1,0 +1,283 @@
+/* ОБЩЕЕ */
+/* Картинка с изображением университета на главной странице */
+#sp_logo1{
+    background-image: url(../images/klas_pryvat_univer.jpg);
+    width: 500px;
+    height: 325px;
+    display: none;
+}
+/* Текст приветствия на главной странице */
+#wlctocpu{
+    text-align: center;
+    display: none;
+}
+/* Ссылки в MenuNavigator */
+.post > .entry > div > a{
+    color: black;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+.ui-menunavigator-link{
+    display: block;
+}
+/* Название страницы */
+div.title h2{
+    font-size: 26pt;
+}
+/* Стиль левой части(наименований свойств в beandisplay) */
+dt{
+    font-weight: bold;
+}
+
+/* ЧАСТЬ 1 Grid */
+/* ЧАСТЬ 1.1 Ячейки Grid */
+/* Форматирование ячеек заголовков для Grid, выбора страниц в Grid */
+table.t-data-grid,
+.t-data-grid-pager a,
+.t-palette-title{
+    text-decoration: none;
+    white-space: normal;
+}
+/* Форматирование текста заголовков для Grid */
+table.t-data-grid thead tr th a,
+.t-palette-title{
+    font-size: 10pt;
+    text-decoration: none; 
+}
+/* Форматирование ячеек Grid */
+table.t-data-grid tbody tr td{
+    font-size: 9pt;
+}
+
+/* Выравнивание кнопок в Grid */
+.t-data-grid .action{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;  
+}
+/* Форматирование ячеек для названий организационных едениц */
+.t-data-grid .orgUnit{
+    min-width: 160px;
+}
+/* Форматирование ячеек для названий области знаний или направления */
+.t-data-grid .knowledgeAreaOrTrainingDirectionName{
+    max-width: 180px;
+}
+
+/* ЧАСТЬ 2 BeanEditor */
+/* ЧАСТЬ 2.1 Кнопки в BeanEditor, BeanDisplay */
+/* ЧАСТЬ 2.2 Блоки в BeanEditor и BeanDisplay */
+/* После input контент не должен переносится на новую строку */
+.t-beaneditor-row input[type="text"]{
+    display: inline;
+}
+/* Ограничение на select в Bean Editor */
+.t-beaneditor-row select{
+    max-width: 400px;
+}
+/* ЧАСТЬ 2.3 Другое в BeanEditor, BeanDisplay */
+/* Размер шрифта в BeanEditor */
+DIV.t-beaneditor{
+    font-size: 9pt;
+}
+/* Размер шрифта и цвет для BeanDisplay */
+dl.t-beandisplay{
+    font-size: 9pt;
+}
+
+/* ЧАСТЬ 4 Меню */
+/* ЧАСТЬ 4.1 Формат меню */
+/* Формат пунктов меню */
+span.menutitle{
+    font: 12px Arial,Helvetica, sans-serif;
+}
+/* Формат ссылок в пунктах меню */
+/* ЧАСТЬ 5 Дополнительные модули */
+/* ЧАСТЬ 5.1 Стиль отображения дополнительных модулей */
+/* Стиль для отображения подсказки */
+#easyTooltip{
+    padding:5px;
+    font-style: italic;
+}
+
+/* ЧАСТЬ 6 Работа со слоями */
+/* ЧАСТЬ 6.1 Установка слоев */
+/* Кнопки в Grid */
+/*.crud-links{
+    z-index: 1;
+    background-color: transparent;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+/* Элементы меню */
+.menuitems{
+    z-index: 3;
+}
+/* Всплывающие подсказки валидации */
+.t-error-popup{
+    z-index: 100;
+}
+
+/* ЧАСТЬ 7 Работа с PropertyBlocks */
+/* ЧАСТЬ 7.1 Стили для PropertyBlocks */
+/* Формат левой части PB для вставки в BeanEditor */
+.t-loop .f-left{
+    width: 250px;
+    color: #000000;
+    text-align: right;
+}
+/* Формат отступа от левой части */
+.t-loop .text{
+    margin: 0 0 0 1.1em;
+}
+/* Контейнер, содержащий циклы в пл.уч.процесса */
+#eduPlanPBContainer{
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+    height: 200px;
+    overflow-x: scroll;
+    border-style: solid;
+    border-color: cornflowerblue;
+    background-color: #99ccff;
+}
+
+/* Таблица, содержащая циклы в пл.уч.процесса */
+#eduPlanPBContainerTable{
+    width: 100%;
+}
+
+/* Системные надписи на форме. Например, 'AddRow' */
+.t-forminjector{
+    font-weight: bold;
+}
+
+/* Ссылка на добавление цикла при редактировании учебного плана */
+#eduPlanAddCycleLink{
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+/* Оформление блока для beaneditor и beandisplay */
+DIV.t-beaneditor, dl.t-beandisplay
+{
+    border: 2px solid green;
+    padding: 2px;
+    border-style: ridge;
+    border-color: cornflowerblue;
+}
+
+/* Оформление submit в beaneditor */
+input.t-beaneditor-submit
+{
+    position: relative;
+    left: 150px;
+}
+
+/* Ширина поля выбора в beaneditor */
+.t-beaneditor-row select{
+    width: 400px;
+}
+
+/* Заголовки в grid */
+table.t-data-grid thead tr th{
+    border-style: ridge;
+    border-width: 1px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    background-position: 100% 100%;
+    white-space: normal;
+}
+
+/* Установка переднего плана для календаря */
+.datePicker{
+    z-index: 1;
+}
+
+#popupZone{
+    background-color: transparent;
+}
+
+.no-background{
+    background-image: none;
+}
+/* Текстовые поля */
+textarea{
+    width: 398px;
+    height: 50px;
+}
+
+.ui-button{
+    display: inline-block;
+}
+
+/* Переопределение стилей UI для универсальности тем */
+.ui-widget { font-size: 9pt; }
+.ui-button-icon-only { width: 1.8em; height: 1.8em; }
+button.ui-button-icon-only { width: 1.8em; height: 1.8em; } 
+.ui-widget .ui-widget{font-size: 9pt;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-size: 9pt;}
+/* Вкладки от CK */
+.ori-tab {
+    min-width: 100px;
+    text-align: center;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 3px;
+}
+
+div.t-beaneditor-row label{
+    /*    width: auto;*/
+}
+
+.e-icon-16x16{
+    height: 16px;
+    width: 16px;
+    max-height: 16px;
+    max-width: 16px;
+    display: inline-block;
+}
+
+.e-icon-64x64{
+    height: 64px;
+    width: 64px;
+    max-height: 64px;
+    max-width: 64px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-navigator-item{
+    margin-left: 3px;
+    margin-top: 3px;
+    display: inline-block;
+    width: 94px;
+    max-width: 94px; 
+    max-height: 115px;
+    height: 115px;
+    vertical-align: top;
+}
+
+.menu-navigator-item-block{
+    width: 90px;
+    max-width: 90px; 
+    max-height: 105px;
+    overflow-y: hidden;
+}
+
+.menu-navigator-item-block:hover{
+    font-size: 9pt;
+    font-style: normal;
+}
+
+.ui-menunavigator-link-text{
+    text-align: center;
+    width: 80px;
+    word-wrap: break-word;
+    font-size: 9pt;
+}
