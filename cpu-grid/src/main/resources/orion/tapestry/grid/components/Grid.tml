@@ -33,10 +33,14 @@
 <div t:id="pagerTop"/>
 
 <span id="cpu-grid-table-container">
-<table id="gridTable" class="cpuGrid" border="0px" cellspacing="0px">
+<table id="gridTableHeader" class="cpuGrid" border="0px" cellspacing="0px">
    <tr t:id="columns"/>
+</table>
+<span id="cpu-grid-table-body">
+<table id="gridTableBody" class="cpuGrid" border="0px" cellspacing="0px">
    <tr t:id="rows"/>
 </table>
+</span>
 </span>
 
 
