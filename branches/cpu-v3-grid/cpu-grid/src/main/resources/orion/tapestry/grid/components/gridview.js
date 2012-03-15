@@ -185,23 +185,27 @@ document.observe("viewmodel:setup", updateWidthTextFields);
 
 
 
-
+//==============================================================================
+//==============================================================================
+//==============================================================================
 // creating table object
 function gridTable(gridId){
 
     this.gridId=gridId;
+    this.gridIdHeader=gridId+'Header';
+    this.gridIdBody=gridId+'Body';
+    
     var currentTable=this;
-    this.table=$(gridId);
-
-
+    
+    this.tableHeader=$(this.gridIdHeader);
+    this.tableBody=$(this.gridIdBody);
 
     /**
      * добавляем в заголовок таблицы элементы управления
      */
     // ------------------- перетаскиватели колонок - начало --------------------
-    var npp=0;
     var ids={};
-    this.table.select('th').each(function(element){
+    this.tableHeader.select('th').each(function(element){
         var id=element.identify().replace(/ColumnHeader$/,'');
         ids[id]=id;
     });
@@ -213,40 +217,46 @@ function gridTable(gridId){
         cell.insert('&nbsp;');
         row.insert(cell);
     });
-    
-    // 
-    this.table.select('thead').first().insert({'top':row});
+    this.tableHeader.select('thead').first().insert({'top':row});
     // this.table.insert({'top':row});
     // ------------------- перетаскиватели колонок - конец ---------------------
+    var npp=0;
 
-
-
-
-    // var firstRow=$(this.gridId).select('tr').first();
 
     // table attribute contains cell identifiers grouped by row
-    var tmp;
 
-    // загружаем идентификаторы колонок
-    tmp=[];
-    $(gridId).select('th').each(function(cell, cellId){
+    // ---------- загружаем идентификаторы колонок - начало --------------------
+    var tmp=[];
+    this.tableHeader.select('th').each(function(cell, cellId){
         tmp[cell.identify().replace(/ColumnHeader$/,'')]=cellId;
     });
     this.colNames=tmp;
-    // console.log('colnames load OK');  console.log(this.colNames);
+    //console.log('colnames load OK');  console.log(this.colNames);
+    // ---------- загружаем идентификаторы колонок - конец ---------------------
 
-    // сохраняем таблицу по строкам
+    // ---------- сохраняем таблицу по строкам - начало ------------------------
     tmp={};
-    $(gridId).select('tr').each(function(rowElement){
+    
+    // парсер строки
+    var tableRowParser=function(rowElement){
         var rowCells=[];
         $(rowElement).childElements().each(function(cellElement,columnId){
             rowCells[columnId]=$(cellElement).identify(); //
         });
         tmp[rowElement.identify()]=rowCells;
-    });
+    };
+
+    // выбираем строки из заголовка
+    this.tableHeader.select('tr').each(tableRowParser);
+    
+    // выбираем строки из блока с данными
+    this.tableBody.select('tr').each(tableRowParser);
+    
+    // запоминаем
     this.row=tmp;
     this.rowNames=Object.keys(this.row);
     // console.log('table load OK'); console.log(this.row);console.log(this.rowNames);
+    // ---------- сохраняем таблицу по строкам - конец -------------------------
 
     var icol,irow;
 
@@ -407,7 +417,7 @@ function gridTable(gridId){
     this.dragStartPosition=0;
     this.resizedColumnId=false;
     this.oldWidth=0;
-    this.table.setStyle({tableLayout:'fixed'});
+    // this.table.setStyle({tableLayout:'fixed'});
 
     //    // дорисовать внутри каждой ячейки
     //    // элемент <div> для управления шириной
@@ -450,14 +460,15 @@ function gridTable(gridId){
     document.observe("viewmodel:changed", this.observeColumnWith);
     document.observe("viewmodel:setup", this.observeColumnWith);
 
-    this.table.select('th').each(function(container){
+
+
+    // --------- перетаскиватели для изменения ширины колонок - начало ---------
+    this.tableHeader.select('th').each(function(container){
         var id=container.identify().replace(/ColumnHeader$/,'');
-        // var h=container.getHeight();
-        var tmp;
+
         var sliderId='slider_'+id;
-        tmp=new Element('div',{'class':"grid-width-slider", "id":sliderId});
-        // tmp.setStyle({height: h+'px'});
-        //console.log(tmp);
+        var tmp=new Element('div',{'class':"grid-width-slider", "id":sliderId});
+
         container.insert({Top:tmp});
         new Draggable(sliderId, {
             constraint: 'horizontal',
@@ -477,6 +488,7 @@ function gridTable(gridId){
             }
         });
     });
+    // --------- перетаскиватели для изменения ширины колонок - конец ----------
 
 
 
