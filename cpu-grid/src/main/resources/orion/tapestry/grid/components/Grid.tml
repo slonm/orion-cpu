@@ -32,11 +32,11 @@
 
 <div t:id="pagerTop"/>
 
-<span id="cpu-grid-table-container">
+<span id="cpu_grid_table_container">
 <table id="gridTableHeader" class="cpuGrid" border="0px" cellspacing="0px">
    <tr t:id="columns"/>
 </table>
-<span id="cpu-grid-table-body">
+<span id="cpu_grid_table_body">
 <table id="gridTableBody" class="cpuGrid" border="0px" cellspacing="0px">
    <tr t:id="rows"/>
 </table>

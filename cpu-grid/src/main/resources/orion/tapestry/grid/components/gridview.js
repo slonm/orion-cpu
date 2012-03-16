@@ -547,7 +547,7 @@ function gridTable(gridId){
                         'id':menuId
                     });
                     mnu.hide();
-                    Element.insert(currentTable.table,{after:mnu});
+                    Element.insert(currentTable.tableBody,{after:mnu});
                     var str='';
                     for(var i=0;i<mg.length;i++){
                         str+=mg[i].getHtml();
@@ -656,3 +656,16 @@ function menuItemHide(id){
      fireViewUpdatedEvent();
 }
 
+
+
+//// реагируем на прокрутку контейнера со строками таблицы
+//// span id="cpu-grid-table-body"
+Event.observe(window, 'load',function(){
+    Event.observe($('cpu_grid_table_container'), 'scroll', function(event) {
+	var target=event.target;
+	//console.log(event);
+	var top=$(target).scrollTop;
+        // console.log('scrolltop='+$(target).scrollTop);
+        $('gridTableHeader').setStyle({top:top+'px'});
+   });
+});

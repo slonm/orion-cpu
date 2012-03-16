@@ -98,10 +98,44 @@ a.sortColumnHeaderLink{
 }
 
 
+
+/*
+thead.fixedHeader{
+    position:absolute;
+    margin-top:-80px;
+    background-color:#e8e8e8;
+}
+
+#cpu-grid-table-container{
+    margin-top:80px;
+}
+*/
+
 div.celltext{
     overflow:hidden;
     white-space: nowrap;
 }
 th div.celltext  {
     height: 30px;
+}
+
+#cpu_grid_table_container,
+#cpu_grid_table_body,
+#gridTableHeader{
+    position:relative;
+}
+#gridTableHeader{
+    z-index:5;
+    position:absolute;
+    background-color:white;
+}
+
+#cpu_grid_table_body{
+    z-index:4;
+}
+#cpu_grid_table_container{
+    border-top:1px solid white;
+}
+#cpu_grid_table_body{
+    top:85px;
 }
