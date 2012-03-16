@@ -16,6 +16,7 @@ import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.services.TapestryDataSource;
 
@@ -118,6 +119,8 @@ public class Crud {
     private AjaxResponseRenderer ajaxResponseRenderer;
     @Inject
     private JavaScriptSupport javascriptSupport;
+    @Inject
+    private Logger LOG;
     //---Locals---
     @Persist
     private Object object;
@@ -207,7 +210,6 @@ public class Crud {
      * Object компонента Crud
      */
     public Object onSuccessFromEditForm() {
-        SecurityUtils.getSubject().checkPermission(entityType + ":update:" + getId());
         resources.triggerEvent("beforeMerge", new Object[]{object}, null);
         try {
             es.merge(object);
@@ -231,7 +233,6 @@ public class Crud {
      * Object компонента Crud
      */
     public Object onSuccessFromAddForm() {
-        SecurityUtils.getSubject().checkPermission(entityType + ":insert");
         resources.triggerEvent("beforePersist", new Object[]{object}, null);
         try {
             es.persist(object);
@@ -270,20 +271,21 @@ public class Crud {
     }
 
     Object onDelete(Integer id) {
-        SecurityUtils.getSubject().checkPermission(entityType + ":delete:" + id);
+        LOG.debug("Delete entity id={}", id.toString());
+        object = es.find(getEntityClass(), id);
+        resources.triggerEvent("beforeDelete", new Object[]{object}, null);
+        String about = es.getStringValue(object);
         try {
-            object = es.find(getEntityClass(), id);
-            resources.triggerEvent("beforeDelete", new Object[]{object}, null);
             es.remove(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO,
                     messages.format("message.success.remove.entity",
                     messages.get("entity." + entityType),
-                    es.getStringValue(object)));
+                    about));
         } catch (RuntimeException ex) {
             alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
                     messages.format("message.error.remove.entity",
                     messages.get("entity." + entityType),
-                    es.getStringValue(object)));
+                    about));
         }
         return closeWindowAndGetListZone();
     }

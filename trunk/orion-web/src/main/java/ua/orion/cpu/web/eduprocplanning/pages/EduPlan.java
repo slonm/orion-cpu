@@ -76,19 +76,16 @@ public class EduPlan {
                     throw new RuntimeException();
                 }
                 object = context.get(ua.orion.cpu.core.eduprocplanning.entities.EduPlan.class, 0);
-                object.getId(); //throw exception if object is null
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";
             }
-            SecurityUtils.getSubject().checkPermission("EduPlan:read:" + object.getId());
         }
         return null;
     }
 
     public Object onSuccessFromApprove() {
         if (EduPlanState.ACTUAL != object.getEduPlanState()) {
-            SecurityUtils.getSubject().checkPermission("EduPlan:update:" + object.getId());
             object.setEduPlanState(EduPlanState.ACTUAL);
             object = es.merge(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO, "Учебный план " + es.getStringValue(object) + " утвержден");
@@ -99,7 +96,6 @@ public class EduPlan {
 
     public Object onDisable() {
         if (EduPlanState.OBSOLETE != object.getEduPlanState()) {
-            SecurityUtils.getSubject().checkPermission("EduPlan:update:" + object.getId());
             object.setEduPlanState(EduPlanState.OBSOLETE);
             object = es.merge(object);
             alertManager.alert(Duration.TRANSIENT, Severity.INFO, "Учебный план " + es.getStringValue(object) + " упразднен");
