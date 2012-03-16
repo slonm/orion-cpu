@@ -7,16 +7,9 @@ Tapestry.Initializer.oriConfirm = function(o){
     var link=$J("#"+o.id);
     var href = link.attr("href");
     if(o.zone != undefined){
-        //Имя нового пользовательского события
-        var evName="ori:zoneupdate";
-        //FIXME Как удалить только слушатель назначаемый updateZoneOnEvent?
-        //сейчас удаляются ВСЕ слушатели click
-        Ori.Event.unbind('#'+o.id, Tapestry.TRIGGER_ZONE_UPDATE_EVENT);
-        Tapestry.Initializer.updateZoneOnEvent(evName, o.id, o.zone, href);
-    //Теперь для обновления зоны нужно вызвать событие evName
+        Ori.Event.unbind('#'+o.id, Tapestry.ACTION_EVENT);
     }
-    link.click(function(event, nested){
-        if(nested==true) return;
+    link.click(function(){
         event.preventDefault();
         //На базе этого блока построим диалог
         var div=$J("<div/>").appendTo("body").text(o.body!=undefined ? o.body : Ori.Messages.messageConfirmationBody);
@@ -33,7 +26,8 @@ Tapestry.Initializer.oriConfirm = function(o){
                         window.location.href = href;
                     }else{
                         //Обновляем зону
-                        Ori.Event.trigger('#'+o.id, evName);
+                        var zoneObject = Tapestry.findZoneManagerForZone(o.zone);
+                        if (zoneObject) zoneObject.updateFromURL(href);
                     }
                     div.dialog("close");
                 }

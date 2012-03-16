@@ -95,12 +95,10 @@ public class License {
                     throw new RuntimeException();
                 }
                 license = es.find(ua.orion.cpu.core.licensing.entities.License.class, context.get(String.class, 0));
-                license.getId(); //throw exception if object is null
             } catch (Exception ex) {
                 LOG.debug("Invalid activation context. Redirect to start page");
                 return "";
             }
-            SecurityUtils.getSubject().checkPermission("License:read:" + license.getId());
         }
         knowledgeAreaContainer = new TrainingDirection();
         try {

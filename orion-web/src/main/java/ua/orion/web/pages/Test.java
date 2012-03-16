@@ -3,6 +3,7 @@ package ua.orion.web.pages;
 import javax.inject.Inject;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
@@ -45,6 +46,7 @@ public class Test {
     void onActionFromNoajax() {
     }
     
+    @Log
     Object onActionFromAjax() {
         return content;
     }

@@ -1,6 +1,10 @@
 package ua.orion.cpu.core.security;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -10,11 +14,15 @@ import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
-import ua.orion.cpu.core.security.entities.*;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import ua.orion.cpu.core.security.entities.Acl;
+import ua.orion.cpu.core.security.entities.SubjectType;
 import ua.orion.cpu.core.security.services.ThreadRole;
 
 /**
- * Realm извлекает авторизационную информацию из таблицы Acl и добавляет поддержку динамических ролей
+ * Realm извлекает авторизационную информацию из таблицы Acl и добавляет
+ * поддержку динамических ролей
+ *
  * @author sl
  */
 public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
@@ -29,6 +37,21 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
         this.threadRole = threadRole;
         this.setPermissionResolver(new AclPermissionResolver());
         this.setRolePermissionResolver(new AclRolePermissionResolver());
+    }
+
+    @Inject
+    public AclActiveDirectoryRealm(EntityManager em, ThreadRole threadRole,
+            @Symbol(OrionSecuritySymbols.LDAP_USER) String systemUsername,
+            @Symbol(OrionSecuritySymbols.LDAP_PASSWORD) String systemPassword,
+            @Symbol(OrionSecuritySymbols.LDAP_SEARCH_BASE) String searchBase,
+            @Symbol(OrionSecuritySymbols.LDAP_URL) String url,
+            @Symbol(OrionSecuritySymbols.LDAP_PRINCIPAL_SUFFIX) String principalSuffix) {
+        this(em, threadRole);
+        setSystemUsername(systemUsername);
+        setSystemPassword(systemPassword);
+        setSearchBase(searchBase);
+        setUrl(url);
+        setPrincipalSuffix(principalSuffix);
     }
 
     @Override
@@ -65,7 +88,7 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         final String user = principals.oneByType(String.class);
         if (user.startsWith("role_")) {
-            SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             info.setObjectPermissions(new HashSet(resolvePermissionsForSubject(user.substring(5), SubjectType.ROLE)));
             return info;
         } else {
@@ -80,7 +103,7 @@ public class AclActiveDirectoryRealm extends OrionActiveDirectoryRealm {
             if (!roleString.equalsIgnoreCase(threadRole.getRole())) {
                 return Collections.EMPTY_SET;
             }
-            return getAuthorizationInfo(new SimplePrincipalCollection("role_"+roleString, "role")).getObjectPermissions();
+            return getAuthorizationInfo(new SimplePrincipalCollection("role_" + roleString, "role")).getObjectPermissions();
         }
     }
 
