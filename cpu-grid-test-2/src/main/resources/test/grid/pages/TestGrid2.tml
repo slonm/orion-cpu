@@ -5,7 +5,13 @@
 </head>
 <body>
 
-
+<style type="text/css">
+span#cpu_grid_table_container{
+    display:block;
+    height:500px;
+    overflow:auto;
+}
+</style>
 <t:grid.Grid source="dataSource"
              gridSettingStore="settingStore"
              row="currentRow"
