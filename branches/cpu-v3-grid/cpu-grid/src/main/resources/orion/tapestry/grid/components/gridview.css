@@ -4,6 +4,7 @@ tr#gridColumnDragger td{
     font-size: 5pt;
     background-color: #e0e0e0;
     border-bottom: none;
+    padding: 0px;
 }
 tr#gridColumnDragger td:hover{
     background-color: chartreuse;
@@ -31,6 +32,8 @@ div.grid-context-menu{
     background-color: silver;
     padding: 3pt;
     position: absolute;
+    white-space: nowrap;
+    z-index:5;
 }
 div.grid-context-menu a{
     display: block;
