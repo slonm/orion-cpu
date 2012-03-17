@@ -26,6 +26,7 @@ Event.observe(window, 'load',function(){
                 }
             })
             crudPopupWindow.show();
+            crudPopupWindow.setZIndex(6);
             WindowCloseKey.init();
             
             // скрываются меню.
@@ -69,6 +70,7 @@ function crudLinkClicked(event){
         window.location.reload();
     });
     crudPopupWindow.show();
+    crudPopupWindow.setZIndex(6);
     WindowCloseKey.init();
     
     // скрываются меню.
