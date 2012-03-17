@@ -40,8 +40,8 @@ import ua.orion.tapestry.menu.services.OrionMenuService;
  * @author dobro
  */
 @SuppressWarnings("unused")
-@Import(stylesheet = {"window/css/default.css", "window/css/spread.css", "crud.css"},
-library = {"window/js/window.js", "window/js/window_ext.js", "window/js/debug.js", "LicenseList.js"})
+@Import(stylesheet = {"window/css/default.css", "window/css/spread.css","LicenseRecord.css"},
+library = {"window/js/window.js", "window/js/window_ext.js", "window/js/debug.js"/*, "LicenseList.js"*/})
 public class LicenseRecords {
 
     /**

@@ -1,3 +1,4 @@
+/*
 .crud-page-link-delete, .crud-page-link-edit, .crud-page-link-view{
     display:inline-block;
     width: 16px;
@@ -19,7 +20,7 @@
 .crud-page-link-view{
     background-image:url(view.png);
 }
-
+*/
 .crud-page-link-add{
     background-image: url("gtk-add.png");
     background-position: left center;
@@ -33,4 +34,10 @@
 }
 a.crud-page-link-add:hover{
     background-color: greenyellow;    
+}
+
+span#cpu_grid_table_container{
+    display:block;
+    height:500px;
+    overflow:auto;
 }
