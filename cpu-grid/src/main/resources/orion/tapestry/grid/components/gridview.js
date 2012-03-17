@@ -419,26 +419,6 @@ function gridTable(gridId){
     this.oldWidth=0;
     // this.table.setStyle({tableLayout:'fixed'});
 
-    //    // дорисовать внутри каждой ячейки
-    //    // элемент <div> для управления шириной
-    //    for(var columnid in currentTable.column){
-    //        for(var rowid in currentTable.column[columnid]){
-    //            var cell=$(currentTable.column[columnid][rowid]);
-    //            if(!cell) continue;
-    //            // cell.makeClipping();
-    //            if(cell.select('div.celltext').first()) continue;
-    //            var container=new Element('div',{'class':'celltext'});
-    //            container.setStyle({overflow:'hidden'});
-    //            
-    //            // container.update(cell.innerHTML);
-    //            cell.childElements().each(function(el){
-    //                container.insert($(el));
-    //            });
-    //            container.insert(cell.innerHTML);
-    //            cell.update(container);
-    //            
-    //        }
-    //    }
     this.setColumnWidth=function (columnid,newwidth){
         var col;
         for(var i in currentTable.column[columnid]){
@@ -533,21 +513,22 @@ function gridTable(gridId){
                 if(Event.isLeftClick(event)) return;
                 $$('div.grid-context-menu').each(Element.hide);
                 var pos=$(this).cumulativeOffset();
-
+                var pos0=$('cpu_grid_table_body').cumulativeOffset();
                 menuId='menu_'+$(this).identify();
 
                 var mg=currentTable.contextMenu[menuId];
                 if(!mg) return;
 
-                X=pos.left+10;
-                Y=pos.top+10;
+                X=pos.left+10;//-pos0.left;
+                Y=pos.top+10;//-pos0.top;
+                //if(Y<0) Y=0;
                 if(!$(menuId)){
                     var mnu=new Element('div',{
                         'class':'grid-context-menu',
                         'id':menuId
                     });
                     mnu.hide();
-                    Element.insert(currentTable.tableBody,{after:mnu});
+                    Element.insert($('cpu_grid_table_container'),{after:mnu});
                     var str='';
                     for(var i=0;i<mg.length;i++){
                         str+=mg[i].getHtml();
@@ -660,12 +641,14 @@ function menuItemHide(id){
 
 //// реагируем на прокрутку контейнера со строками таблицы
 //// span id="cpu-grid-table-body"
+var scrollTimeout;
 Event.observe(window, 'load',function(){
     Event.observe($('cpu_grid_table_container'), 'scroll', function(event) {
 	var target=event.target;
-	//console.log(event);
 	var top=$(target).scrollTop;
-        // console.log('scrolltop='+$(target).scrollTop);
-        $('gridTableHeader').setStyle({top:top+'px'});
+        if(scrollTimeout){
+            clearTimeout(scrollTimeout);
+        }
+        scrollTimeout=setTimeout("$('gridTableHeader').setStyle({top:'"+top+"px'})",300);
    });
 });

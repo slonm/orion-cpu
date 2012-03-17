@@ -1,5 +1,6 @@
 package orion.tapestry.grid.services;
 
+import java.lang.reflect.Modifier;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.ObjectLocator;
@@ -82,6 +83,14 @@ public class GridBeanModelSourceImpl implements GridBeanModelSource {
             // пропускаем атрибуты, которые нельзя читать
             if (!pa.isRead()) {
                 continue;
+            }
+
+            // пропускаем статические атрибуты
+            try {
+                if (Modifier.isStatic(pa.getField().getModifiers())) {
+                    continue;
+                }
+            } catch (java.lang.NullPointerException ex) {
             }
 
             // пропускаем атрибуты, которые помечены аннотацией @NonVisual

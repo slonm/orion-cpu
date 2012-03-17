@@ -91,6 +91,7 @@ table.cpuGrid th{
 
 table.cpuGrid td{
     border:1px solid gray;
+    padding:0px;
 }
 a.sortColumnHeaderLink{
     height:20px;
@@ -114,6 +115,7 @@ thead.fixedHeader{
 div.celltext{
     overflow:hidden;
     white-space: nowrap;
+    padding:2px;
 }
 th div.celltext  {
     height: 30px;
@@ -125,13 +127,13 @@ th div.celltext  {
     position:relative;
 }
 #gridTableHeader{
-    z-index:5;
+    z-index:2;
     position:absolute;
     background-color:white;
 }
 
 #cpu_grid_table_body{
-    z-index:4;
+    z-index:1;
 }
 #cpu_grid_table_container{
     border-top:1px solid white;
