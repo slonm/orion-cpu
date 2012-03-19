@@ -20,7 +20,7 @@ import ua.orion.web.OrionWebSymbols;
 /**
  * Layout component for pages.
  */
-@Import(stack = {"orion"}, stylesheet = {"layout/layout.css", "context:webcontent/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
+@Import(stack = {"orion"}, stylesheet = {"context:webcontent/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css", "../css/cpu_web.css", "context:webcontent/jquery-ui/css/jquery.ui.selectmenu.css"})
 @SuppressWarnings("unused")
 public class Layout {
 

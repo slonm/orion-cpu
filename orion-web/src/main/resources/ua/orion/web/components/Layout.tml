@@ -46,7 +46,8 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                         <div class="ui-state-highlight controls-bar">
                             <!--Диалог с выбором темы (Начало) -->
                             <button id="ui-show-select-theme-dialog-button" class="ui-button" >UI Theme</button>
-                            <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: <select id="ui-select-theme" style="width: 200px;">
+                            <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: 
+                                <select id="ui-select-theme" style="width: 200px;">
                                     <option>black-tie</option>
                                     <option>cupertino</option>
                                     <option>dot-luv</option>
@@ -61,7 +62,8 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                                     <option>swanky-purse</option>
                                     <option>ui-darkness</option>
                                     <option>ui-lightness</option>
-                                </select><button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
+                                </select>
+                                <button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
                             </div>
                             <!-- Диалог с выбором темы (Конец) -->
                             <!-- Выбор локали (Начало) -->
