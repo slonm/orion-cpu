@@ -10,9 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import ua.orion.core.services.EntityService;
-import ua.orion.cpu.core.licensing.entities.License;
-import ua.orion.cpu.core.licensing.entities.LicenseRecord;
-import ua.orion.cpu.core.licensing.entities.LicenseState;
+import ua.orion.cpu.core.licensing.entities.*;
 import ua.orion.cpu.core.orgunits.entities.OrgUnit;
 
 /**
@@ -168,5 +166,23 @@ public class LicensingServiceImpl implements LicensingService {
         } catch (NoResultException ex) {
             return null;
         }
+    }
+
+    @Override
+    public List<Speciality> findSpecialityByKnowledgeArea(KnowledgeArea knowledgeArea) {
+        String source = "select sp from Speciality sp"
+                + " join sp.trainingDirection td"
+                + " where td.knowledgeArea=:knowledgeArea";
+        TypedQuery<Speciality> query = es.getEntityManager().createQuery(source, Speciality.class);
+        query.setParameter("knowledgeArea", knowledgeArea);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TrainingDirection> findTrainingDirectionByKnowledgeArea(KnowledgeArea knowledgeArea) {
+        CriteriaQuery<TrainingDirection> query = cb.createQuery(TrainingDirection.class);
+        Root<?> root = query.from(TrainingDirection.class);
+        query.where(cb.equal(root.get("knowledgeArea"), knowledgeArea));
+        return es.getEntityManager().createQuery(query).getResultList();
     }
 }

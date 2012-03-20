@@ -2,23 +2,17 @@ package ua.orion.cpu.web.licensing.pages;
 
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.EventContext;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.alerts.Duration;
-import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
-import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.slf4j.Logger;
@@ -29,6 +23,7 @@ import ua.orion.web.AdditionalConstraintsApplier;
 import ua.orion.web.components.Crud;
 import ua.orion.web.services.RequestInfo;
 import ua.orion.web.services.TapestryDataSource;
+import ua.orion.web.services.TipService;
 
 /**
  * Страница, которая предоставляет CRUD для
@@ -40,10 +35,6 @@ import ua.orion.web.services.TapestryDataSource;
 public class License {
     //---Services---
 
-    @Inject
-    private AlertManager alertManager;
-    @Inject
-    private Messages messages;
     @Inject
     private LicensingService ls;
     @Inject
@@ -57,6 +48,8 @@ public class License {
     private TapestryDataSource dataSource;
     @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
+    @Inject
+    private TipService tip;
     //---Locals---
     @Component
     @Property(write = false)
@@ -164,16 +157,13 @@ public class License {
     }
 
     public Block onForce() {
-        try {
-            ls.forceAndMergeLicense(license);
-            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
-                    messages.format("message.success.force.license",
-                    es.getStringValue(license)));
-        } catch (RuntimeException ex) {
-            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
-                    messages.format("message.error.force.license",
-                    es.getStringValue(license)));
-        }
+        tip.doWork(new Runnable() {
+
+            @Override
+            public void run() {
+                ls.forceAndMergeLicense(license);
+            }
+        }, "force.license", es.getStringValue(license));
         return contentZone.getBody();
     }
 
@@ -198,20 +188,11 @@ public class License {
     }
 
     public Object getTrainingDirectionModel() {
-        CriteriaBuilder cb = es.getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<TrainingDirection> query = cb.createQuery(TrainingDirection.class);
-        Root<?> root = query.from(TrainingDirection.class);
-        query.where(cb.equal(root.get("knowledgeArea"), knowledgeAreaContainer.getKnowledgeArea()));
-        return es.getEntityManager().createQuery(query).getResultList();
+        return ls.findTrainingDirectionByKnowledgeArea(knowledgeAreaContainer.getKnowledgeArea());
     }
 
     public Object getSpecialityModel() {
-        String source = "select sp from Speciality sp"
-                + " join sp.trainingDirection td"
-                + " where td.knowledgeArea=:knowledgeArea";
-        TypedQuery<Speciality> query = es.getEntityManager().createQuery(source, Speciality.class);
-        query.setParameter("knowledgeArea", knowledgeAreaContainer.getKnowledgeArea());
-        return query.getResultList();
+        return ls.findSpecialityByKnowledgeArea(knowledgeAreaContainer.getKnowledgeArea());
     }
 
     public boolean getIsNewState() {
