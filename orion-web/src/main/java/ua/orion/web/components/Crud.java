@@ -2,11 +2,7 @@ package ua.orion.web.components;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.tapestry5.Block;
-import org.apache.tapestry5.ComponentEventCallback;
 import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.alerts.Duration;
-import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.grid.GridDataSource;
@@ -19,6 +15,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.slf4j.Logger;
 import ua.orion.core.services.EntityService;
 import ua.orion.web.services.TapestryDataSource;
+import ua.orion.web.services.TipService;
 
 /**
  * Компонент, который предоставляет CRUD для сущностей
@@ -114,7 +111,7 @@ public class Crud {
     @Property(write = false)
     private TapestryDataSource dataSource;
     @Inject
-    private AlertManager alertManager;
+    private TipService tip;
     @Inject
     private AjaxResponseRenderer ajaxResponseRenderer;
     @Inject
@@ -211,19 +208,13 @@ public class Crud {
      */
     public Object onSuccessFromEditForm() {
         resources.triggerEvent("beforeMerge", new Object[]{object}, null);
-        try {
-            es.merge(object);
-            resources.triggerEvent("afterMerge", new Object[]{object}, null);
-            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
-                    messages.format("message.success.update.entity",
-                    messages.get("entity." + entityType),
-                    es.getStringValue(object)));
-        } catch (RuntimeException ex) {
-            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
-                    messages.format("message.error.update.entity",
-                    messages.get("entity." + entityType),
-                    es.getStringValue(object)));
-        }
+        tip.doWork(new Runnable() {
+
+            @Override
+            public void run() {
+                es.merge(object);
+            }
+        }, "update.entity", messages.get("entity." + entityType), es.getStringValue(object));
         return closeWindowAndGetListZone();
     }
 
@@ -234,19 +225,14 @@ public class Crud {
      */
     public Object onSuccessFromAddForm() {
         resources.triggerEvent("beforePersist", new Object[]{object}, null);
-        try {
+        tip.doWork(new Runnable() {
+
+            @Override
+            public void run() {
             es.persist(object);
             resources.triggerEvent("afterPersist", new Object[]{object}, null);
-            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
-                    messages.format("message.success.insert.entity",
-                    messages.get("entity." + entityType),
-                    es.getStringValue(object)));
-        } catch (RuntimeException ex) {
-            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
-                    messages.format("message.error.insert.entity",
-                    messages.get("entity." + entityType),
-                    es.getStringValue(object)));
-        }
+            }
+        }, "insert.entity", messages.get("entity." + entityType), es.getStringValue(object));
         return closeWindowAndGetListZone();
     }
 
@@ -274,19 +260,13 @@ public class Crud {
         LOG.debug("Delete entity id={}", id.toString());
         object = es.find(getEntityClass(), id);
         resources.triggerEvent("beforeDelete", new Object[]{object}, null);
-        String about = es.getStringValue(object);
-        try {
+        tip.doWork(new Runnable() {
+
+            @Override
+            public void run() {
             es.remove(object);
-            alertManager.alert(Duration.TRANSIENT, Severity.INFO,
-                    messages.format("message.success.remove.entity",
-                    messages.get("entity." + entityType),
-                    about));
-        } catch (RuntimeException ex) {
-            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
-                    messages.format("message.error.remove.entity",
-                    messages.get("entity." + entityType),
-                    about));
-        }
+            }
+        }, "remove.entity", messages.get("entity." + entityType), es.getStringValue(object));
         return closeWindowAndGetListZone();
     }
 

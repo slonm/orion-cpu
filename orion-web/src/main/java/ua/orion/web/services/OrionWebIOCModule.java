@@ -54,6 +54,7 @@ public class OrionWebIOCModule {
         binder.bind(RequestInfo.class, RequestInfoImpl.class);
         binder.bind(MenuLinkBuilder.class);
         binder.bind(Coercion.class, ListToSelectModelCoercion.class).withId("ListToSelectModelCoercion");
+        binder.bind(TipService.class, TipServiceImpl.class);
     }
 
     public static void contributeTapestryDataSource(

@@ -87,6 +87,8 @@
     </t:block>
     <t:block id="defaultViewBlock">
         <t:beandisplay t:mixins="ori/CurrentBeanInformer" t:id="display" object="object" model="dataSource.getBeanModelForView(entityClass,messages)"/>
-        <t:delegate to="hideWindowButtonBlock"/>
+        <a href="close" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-close" style="margin-top: 5px; display:inline-block">
+            ${message:action.closewindow}
+        </a>        
     </t:block>
 </div>
