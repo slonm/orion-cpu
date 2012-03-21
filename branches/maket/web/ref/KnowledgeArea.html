@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Галузі знань</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>     <a href="../ref/Reference.html">Довідники ▼</a>   <a href="../ref/KnowledgeArea.html">Галузі знань ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Галузі знань</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addknowledgearea-button">Додати галузь знань</button>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Назва галузі знань</th>
+                                <th>Скорочена назва галузі знань</th>
+                                <th align="center">Код галузі знань</th>
+                                <th align="center">Чи є діючою</th>
+                            </tr>
+                            <tr>
+                                <td><input class="knowledgearea-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="knowledgearea-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Журналістика та інформація</td>
+                                <td></td>
+                                <td align="center">0303</td>
+                                <td align="center">Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="knowledgearea-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="knowledgearea-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Інформатика та обчислювальна техніка</td>
+                                <td></td>
+                                <td align="center">0501</td>
+                                <td align="center">Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="knowledgearea-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="knowledgearea-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Менеджмент і адміністрування</td>
+                                <td></td>
+                                <td align="center">0306</td>
+                                <td align="center">Так</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование галузі знань) -->
+        <div id="add-knowledgearea-dialog" style="display: none">
+            <div class="ui-state-highlight" id="knowledgearea-help"></div>
+            <table>
+                <tr>
+                    <td>Назва галузі знань:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Скорочена назва галузі знань:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Код галузі знань:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Чи задіяна галузь знань в КПУ:</td><td><input type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="knowledgearea-cancel"/> <input type="submit" value="Зберегти" id="knowledgearea-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление цикла) -->
+        <div id="delete-knowledgearea-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити галузь знань?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addknowledgearea-button").click(function(){
+                    jQuery("#knowledgearea-help").html("Довідник галузей знань");
+                    jQuery("#knowledgearea-help").css({'display':'block'});
+                    jQuery("#add-knowledgearea-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Додавання галузі знань"});
+                })
+                jQuery("#knowledgearea-save").click(function(){jQuery("#add-knowledgearea-dialog").dialog("close")});
+                jQuery("#knowledgearea-cancel").click(function(){jQuery("#add-knowledgearea-dialog").dialog("close")});
+                
+                jQuery(".knowledgearea-edit").click(function(){
+                    jQuery("#knowledgearea-help").html("Довідник циклів дисципллін навчальних планів");
+                    jQuery("#knowledgearea-help").css({'display':'block'});
+                    jQuery("#add-knowledgearea-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Редагування галузі знань"});
+                })
+                
+                jQuery(".knowledgearea-delete").click(function(){
+                    jQuery("#delete-knowledgearea-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення галузі знань"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-knowledgearea-dialog").dialog("close")});
+            })
+        </script>
+    </body>
+</html>

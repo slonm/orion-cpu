@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Напрями підготовки</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>     <a href="../ref/Reference.html">Довідники ▼</a>   <a href="../ref/TrainingDirection.html">Напрями підготовки ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Напрями підготовки</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addtrainingdirection-button">Додати напрям підготовки</button>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Галузь знань</th>
+                                <th>Назва напряму підготовки</th>
+                                <th>Скорочена назва напряму підготовки</th>
+                                <th align="center">Код напряму підготовки</th>
+                                <th align="center">Чи є діючим</th>
+                                <th>Відповідальний за підготовку за напрямом підрозділ</th>                                
+                                <th>Спеціалізації</th>
+                            </tr>
+                            <tr>
+                                <td><input class="trainingdirection-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="trainingdirection-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Менеджмент і адміністрування - 0306</td>
+                                <td>Менеджмент</td>
+                                <td></td>
+                                <td align="center">01</td>
+                                <td align="center">Так</td>
+                                <td>Інститут управління</td>
+                                <td>
+                                    <p>Менеджмент на ринку товарів та послуг</p>
+                                    <p>Менеджмент організації інвестиційної діяльності</p>
+                                    <p>Аграрний менеджмент</p>
+                                    <p>Менеджмент в сфері житлово-комунального господарства</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input class="trainingdirection-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="trainingdirection-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Інформатика та обчислювальна техніка - 0501</td>
+                                <td>Програмна інженерія</td>
+                                <td></td>
+                                <td align="center">03</td>
+                                <td align="center">Так</td>
+                                <td>Кафедра системного аналізу та програмної інженерії</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><input class="trainingdirection-edit" type="image" src="../img/edit.png" title="Редагувати галузь знань"/>   <input class="trainingdirection-delete" type="image" src="../img/delete.png" title="Видалити галузь знань"/></td>
+                                <td>Журналістика та інформація - 0303</td>
+                                <td>Реклама і зв'язки з громадкістю (за видами діяльності)</td>
+                                <td></td>
+                                <td align="center">02</td>
+                                <td align="center">Так</td>
+                                <td>Кафедра реклами та зв'язків із громадськістю</td>
+                                <td class="lnp">Реклама і зв'язки з громадкістю
+                                    <p>Реклама</p>
+                                    <p>Зв'язки з громадкістю</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование направления подготовки) -->
+        <div id="add-trainingdirection-dialog" style="display: none">
+            <div class="ui-state-highlight" id="trainingdirection-help"></div>
+            <table>
+                <tr>
+                    <td>Назва галузі знань:</td><td>
+                        <select>
+                            <option selected>Оберіть галузь знань...</option>
+                            <option>Інформатика та обчислювальна техніка - 0501</option>
+                            <option>Журналістика та інформація - 0303</option>
+                            <option>Менеджмент і адміністрування - 0306</option>
+                        </select>
+                        <p><a href="../ref/KnowledgeArea.html">Довідник галузей знань</a></p> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Назва напряму підготовки:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Скорочена назва напряму підготовки:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Код напряму підготовки:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Чи задіяний напрям підготовки в КПУ:</td><td><input type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td>Відповідальний за підготовку за напрямом підрозділ:</td>
+                    <td>
+                        <select>
+                            <option selected>Оберіть підрозділ, відповідальний за підготовку за напрямом...</option>
+                            <option>кафедра адміністративного менеджменту та бізнес-адміністрування</option>
+                            <option>Кафедра реклами та зв'язків із громадськістю</option>
+                            <option>Кафедра менеджменту організацій</option>
+                            <option>Інститут управління</option>
+                        </select>
+                        <p><a href="../ref/OrgUnit.html">Довідник структурних підрозділів</a></p> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl"><label>Перелік спеціалізацій напряму підготовки:</label><br/>
+                        <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label>
+                    </td>
+                    <td>
+                        <input type="text" ></input>
+                        <a href="">Видалити спеціалізацію</a>
+                        <p><a href="">Додати спеціалізацію</a></p>
+                        <p><a href="../ref/Specialization.html">Довідник спеціалізацій</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="trainingdirection-cancel"/> <input type="submit" value="Зберегти" id="trainingdirection-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление направления подготовки) -->
+        <div id="delete-trainingdirection-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити напрям підготовки?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addtrainingdirection-button").click(function(){
+                    jQuery("#trainingdirection-help").html("Довідник напрямів підготовки");
+                    jQuery("#trainingdirection-help").css({'display':'block'});
+                    jQuery("#add-trainingdirection-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Додавання напряму підготовки"});
+                })
+                jQuery("#trainingdirection-save").click(function(){jQuery("#add-trainingdirection-dialog").dialog("close")});
+                jQuery("#trainingdirection-cancel").click(function(){jQuery("#add-trainingdirection-dialog").dialog("close")});
+                
+                jQuery(".trainingdirection-edit").click(function(){
+                    jQuery("#trainingdirection-help").html("Довідник напрямів підготовки");
+                    jQuery("#trainingdirection-help").css({'display':'block'});
+                    jQuery("#add-trainingdirection-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Редагування напряму підготовки"});
+                })
+                
+                jQuery(".trainingdirection-delete").click(function(){
+                    jQuery("#delete-trainingdirection-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення напряму підготовки"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-trainingdirection-dialog").dialog("close")});
+            })
+        </script>
+    </body>
+</html>

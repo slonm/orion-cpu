@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Структурні підрозділи</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>     <a href="../ref/Reference.html">Довідники ▼</a>   <a href="OrgUnit.html">Структурні підрозділи ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Структурні підрозділи</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addorgunit-button">Додати структурний підрозділ</button>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Назва структуорного підрозділу</th>
+                                <th>Скорочена назва структуорного підрозділу</th>
+                                <th>Батьківський структуорний підрозділ</th>
+                                <th>Чи є діючим</th>
+                            </tr>
+                            <tr>
+                                <td><input class="orgunit-edit" type="image" src="../img/edit.png" title="Редагувати структурний підрозділ"/>   <input class="orgunit-delete" type="image" src="../img/delete.png" title="Видалити структурний підрозділ"/></td>
+                                <td>Кафедра адміністративного менеджменту та бізнес-адміністрування</td>
+                                <td>КАМБА</td>
+                                <td>Інститут управління</td>
+                                <td>Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="orgunit-edit" type="image" src="../img/edit.png" title="Редагувати структурний підрозділ"/>   <input class="orgunit-delete" type="image" src="../img/delete.png" title="Видалити структурний підрозділ"/></td>
+                                <td>Інститут управління</td>
+                                <td>ІУ</td>
+                                <td>КПУ</td>
+                                <td>Так</td>
+                            </tr>
+                            <tr>
+                                <td><input class="orgunit-edit" type="image" src="../img/edit.png" title="Редагувати структурний підрозділ"/>   <input class="orgunit-delete" type="image" src="../img/delete.png" title="Видалити структурний підрозділ"/></td>
+                                <td>Кафедра системного аналізу та програмної інженерії</td>
+                                <td>КСАПІ</td>
+                                <td>Інститут інформаційних та соціальних технологій</td>
+                                <td>Так</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование структурного подразделения) -->
+        <div id="add-orgunit-dialog" style="display: none">
+            <div class="ui-state-highlight" id="orgunit-help"></div>
+            <table>
+                <tr>
+                    <td>Назва структурного підрозділу:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Скорочена назва структурного підрозділу:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Батьківський структурний підрозділ:</td>
+                    <td>
+                        <select>
+                            <option>Оберіть батьківський структурний підрозділ...</option>
+                            <option>КПУ</option>
+                            <option>Інститут інформаційних та соціальних технологій</option>
+                            <option>Інститут управління</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Чи є діючим:</td><td><input type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="orgunit-cancel"/> <input type="submit" value="Зберегти" id="orgunit-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление цикла) -->
+        <div id="delete-orgunit-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити структурний підрозділ?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addorgunit-button").click(function(){
+                    jQuery("#orgunit-help").html("Довідник структурних підрозділів");
+                    jQuery("#orgunit-help").css({'display':'block'});
+                    jQuery("#add-orgunit-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Додавання структурного підрозділу"});
+                })
+                jQuery("#orgunit-save").click(function(){jQuery("#add-orgunit-dialog").dialog("close")});
+                jQuery("#orgunit-cancel").click(function(){jQuery("#add-orgunit-dialog").dialog("close")});
+                
+                jQuery(".orgunit-edit").click(function(){
+                    jQuery("#orgunit-help").html("Довідник структурних підрозділів");
+                    jQuery("#orgunit-help").css({'display':'block'});
+                    jQuery("#add-orgunit-dialog").dialog({width:700, show: "blind", hide:"blind", title: "Редагування структурного підрозділу"});
+                })
+                
+                jQuery(".orgunit-delete").click(function(){
+                    jQuery("#delete-orgunit-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення структурного підрозділу"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-orgunit-dialog").dialog("close")});
+            })
+        </script>
+    </body>
+</html>
