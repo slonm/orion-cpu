@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>        
+        <title>Спеціальності</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/ui+lightness/jquery-ui-1.8.17.custom.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <div id="header" class="ui-state-default">
+                <strong><a href="../index.html">Головна ▼</a>     <a href="../ref/Reference.html">Довідники ▼</a>   <a href="../ref/Speciality.html">Спеціальності ▼</a></strong>
+            </div><!-- #header-->
+
+            <div id="content">
+                <H2 class="title">Спеціальності</H2>
+                <div id="grid-buttons" style="width: 99%">
+                    <button type="submit" id="addspeciality-button">Додати спеціальність</button>
+                </div>
+                <div id="grid">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>Напрям підготовки</th>
+                                <th>Назва спеціальності</th>
+                                <th>Скорочена назва спеціальності</th>
+                                <th align="center">Код спеціальності</th>
+                                <th align="center">Чи є діючою</th>
+                                <th>Відповідальний за підготовку за спеціальністю підрозділ</th>
+                                <th>Спеціалізації</th>                                
+                            </tr>
+                            <tr>
+                                <td><input class="speciality-edit" type="image" src="../img/edit.png" title="Редагувати спеціальність"/>   <input class="speciality-delete" type="image" src="../img/delete.png" title="Видалити спеціальність"/></td>
+                                <td>Програмна інженерія - 050103</td>
+                                <td>Розробка програмного забезпечення</td>
+                                <td></td>
+                                <td align="center">01</td>
+                                <td align="center">Так</td>
+                                <td>Кафедра системного аналізу та програмної інженерії</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><input class="speciality-edit" type="image" src="../img/edit.png" title="Редагувати спеціальність"/>   <input class="speciality-delete" type="image" src="../img/delete.png" title="Видалити спеціальність"/></td>
+                                <td>Програмна інженерія - 050103</td>
+                                <td>Програмне забезпечення систем</td>
+                                <td></td>
+                                <td align="center">01</td>
+                                <td align="center">Так</td>
+                                <td>Кафедра системного аналізу та програмної інженерії</td>                                
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><input class="speciality-edit" type="image" src="../img/edit.png" title="Редагувати спеціальність"/>   <input class="speciality-delete" type="image" src="../img/delete.png" title="Видалити спеціальність"/></td>
+                                <td>Менеджмент - 030601</td>
+                                <td>Менеджмент організацій і адміністрування (за видами економічної діяльності)</td>
+                                <td></td>
+                                <td align="center">01</td>
+                                <td align="center">Так</td>
+                                <td>Інститут управління</td>
+                                <td>
+                                    <p>Менеджмент на ринку товарів та послуг</p>
+                                    <p>Менеджмент організації інвестиційної діяльності</p>
+                                    <p>Аграрний менеджмент</p>
+                                    <p>Менеджмент в сфері житлово-комунального господарства</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!---#grid -->
+
+            </div><!-- #content-->
+
+        </div><!-- #wrapper -->
+
+        <div id="footer">
+            <strong>© 2009-2012 Класичний приватний університет</strong>
+        </div><!-- #footer -->
+        <!-- Диалоговое окно (Добавление/Редактирование специальности) -->
+        <div id="add-speciality-dialog" style="display: none">
+            <div class="ui-state-highlight" id="speciality-help"></div>
+            <table>
+                <tr>
+                    <td>Напрям підготовки:</td><td>
+                        <select>
+                            <option selected>Оберіть напрям підготовки...</option>
+                            <option>Програмна інженерія - 050103</option>
+                            <option>Менеджмент - 030601</option>
+                        </select>
+                        <p><a href="../ref/TrainingDirection.html">Довідник напрямів підготовки</a></p> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Назва спеціальності:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Скорочена назва спеціальності:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Код спеціальності:</td><td><input type="text"/></td>
+                </tr>
+                <tr>
+                    <td>Чи задіяна спеціальність в КПУ:</td><td><input type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td>Відповідальний за підготовку за спеціальністю підрозділ:</td>
+                    <td>
+                        <select>
+                            <option selected>Оберіть підрозділ, відповідальний за підготовку за спеціальністю...</option>
+                            <option>кафедра адміністративного менеджменту та бізнес-адміністрування</option>
+                            <option>Кафедра реклами та зв'язків із громадськістю</option>
+                            <option>Кафедра менеджменту організацій</option>
+                            <option>Інститут управління</option>
+                        </select>
+                        <p><a href="../ref/OrgUnit.html">Довідник структурних підрозділів</a></p> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl"><label>Перелік спеціалізацій спеціальності:</label><br/>
+                        <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label>
+                    </td>
+                    <td>
+                        <input type="text" ></input>
+                        <a href="">Видалити спеціалізацію</a>
+                        <p><a href="">Додати спеціалізацію</a></p>
+                        <p><a href="../ref/Specialization.html">Довідник спеціалізацій</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Відмінити" id="speciality-cancel"/> <input type="submit" value="Зберегти" id="speciality-save"/></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Диалоговое окно (Удаление специальности) -->
+        <div id="delete-speciality-dialog" style="display: none">
+            <!--            <div class="ui-state-highlight" id="license-help"></div> -->
+            <table>
+                <tr>
+                    Ви дійсно бажаєти видалити спеціальність?
+                    <td><input type="submit" value="Ні" style="width: 50px" id="delete-cancel"/></td><td><input type="submit" value="Так" style="width: 50px" id="delete-save"/></td>
+                </tr> 
+            </table>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#addspeciality-button").click(function(){
+                    jQuery("#speciality-help").html("Довідник спеціальностей");
+                    jQuery("#speciality-help").css({'display':'block'});
+                    jQuery("#add-speciality-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Додавання спеціальності"});
+                })
+                jQuery("#speciality-save").click(function(){jQuery("#add-speciality-dialog").dialog("close")});
+                jQuery("#speciality-cancel").click(function(){jQuery("#add-speciality-dialog").dialog("close")});
+                
+                jQuery(".speciality-edit").click(function(){
+                    jQuery("#speciality-help").html("Довідник спеціальностей");
+                    jQuery("#speciality-help").css({'display':'block'});
+                    jQuery("#add-speciality-dialog").dialog({width:900, show: "blind", hide:"blind", title: "Редагування спеціальності"});
+                })
+                
+                jQuery(".speciality-delete").click(function(){
+                    jQuery("#delete-speciality-dialog").dialog({width: 500, show: "blind", hide:"blind", title: "Видалення спеціальності"});
+                    
+                })
+                jQuery("#delete-save, #delete-cancel").click(function(){jQuery("#delete-speciality-dialog").dialog("close")});
+            })
+        </script>
+    </body>
+</html>
