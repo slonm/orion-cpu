@@ -1,6 +1,8 @@
 package ua.orion.cpu.web.licensing.pages;
 
 import org.apache.tapestry5.EventContext;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import ua.orion.cpu.core.licensing.services.LicensingService;
@@ -20,6 +22,10 @@ public class Licenses {
     private Logger LOG;
     @Inject
     private LicensingService ls;
+    @Inject
+    private AlertManager alertManager;
+    @Inject
+    private Messages messages;
 
     public Object onActivate(EventContext context) {
         if (!info.isComponentEventRequest()) {
@@ -36,7 +42,8 @@ public class Licenses {
         return null;
     }
 
-    void onAfterPersistFromCrud(ua.orion.cpu.core.licensing.entities.License license) {
+    void onAfterAddFromCrud(ua.orion.cpu.core.licensing.entities.License license) {
         ls.cloneLicenseRecordsFromForced(license);
+        alertManager.info(messages.get("message.edit.license.record"));
     }
 }

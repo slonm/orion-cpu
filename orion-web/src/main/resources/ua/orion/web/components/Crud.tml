@@ -9,15 +9,15 @@
     <!--Зона грида-->
     <t:zone t:id="listZone" id="${listZoneId}">
         <!--Панель инструментов-->
-        <div id="crud-grid-buttons" class="ui-widget-header" style="width: 99%;">
+        <div id="crud-grid-buttons" class="ui-widget-header" style="display:block">
             <t:if test="canAdd">
-                <t:ActionLink t:id="add" class="ui-button-add" zone="prop:popupZoneId"
+                <t:ActionLink t:id="add" class="ori-button-add" zone="prop:popupZoneId"
                               t:mixins="ori/Dialog" event="open" 
                               dialogTitle="message:label.mode.add">${message:action.add}
                 </t:ActionLink>
             </t:if>
             <t:if test="master">
-                <t:PageLink class="ui-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
+                <t:PageLink class="ori-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
             </t:if>
             <t:delegate to="prop:toolButtons"/>
         </div>
@@ -25,12 +25,12 @@
         <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
                 model="dataSource.getBeanModelForList(entityClass,messages)" pagerPosition="literal:bottom">
             <p:actionCell>
-                <table class="ui-grid-cell-action-tip ui-widget-header">
+                <table class="ori-grid-cell-action-tip">
                     <t:if test="detailPage">
                         <s:HasPermission permission="${entityType}:read:${id}">
                             <tr>
                                 <td>
-                                    <t:PageLink class="ui-button-detail" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
+                                    <t:PageLink class="ori-button-detail" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
                                 </td>
                             </tr>
                         </s:HasPermission>
@@ -39,7 +39,7 @@
                         <s:HasPermission permission="${entityType}:update:${id}">
                             <tr>
                                 <td>
-                                    <t:ActionLink t:id="edit" class="ui-button-edit" context="object" zone="prop:popupZoneId"
+                                    <t:ActionLink t:id="edit" class="ori-button-edit" context="object" zone="prop:popupZoneId"
                                                   t:mixins="ori/Dialog" event="open" 
                                                   dialogTitle="message:label.mode.edit">${message:action.edit}
                                     </t:ActionLink>
@@ -51,7 +51,7 @@
                         <s:HasPermission permission="${entityType}:read:${id}">
                             <tr>
                                 <td>
-                                    <t:ActionLink t:id="view" class="ui-button-view" context="object" zone="prop:popupZoneId"
+                                    <t:ActionLink t:id="view" class="ori-button-view" context="object" zone="prop:popupZoneId"
                                                   t:mixins="ori/Dialog" event="open" 
                                                   dialogTitle="message:label.mode.view" modal="true">${message:action.view}
                                     </t:ActionLink>
@@ -62,7 +62,7 @@
                     <t:if test="showDelButton">
                         <s:HasPermission permission="${entityType}:delete:${id}">
                             <tr><td>
-                                    <t:EventLink class="ui-button-del" t:event="delete" 
+                                    <t:EventLink class="ori-button-del" t:event="delete" 
                                                  context="object" zone="prop:listZoneId" 
                                                  t:mixins="ori/Confirm" confirm="message:action.del">${message:action.del}</t:EventLink>
                                 </td></tr>
@@ -81,13 +81,13 @@
                                zone="prop:listZoneId" submitLabel="message:action.add" buttons="hideWindowButtonBlock"/>
     </t:block>
     <t:block id="hideWindowButtonBlock">
-        <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-close" style="margin-top: 5px; display:inline-block">
+        <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ori-button-close" style="margin-top: 5px; display:inline-block">
             ${message:action.cancel}
         </a>        
     </t:block>
     <t:block id="defaultViewBlock">
         <t:beandisplay t:mixins="ori/CurrentBeanInformer" t:id="display" object="object" model="dataSource.getBeanModelForView(entityClass,messages)"/>
-        <a href="close" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ui-button-close" style="margin-top: 5px; display:inline-block">
+        <a href="close" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ori-button-close" style="margin-top: 5px; display:inline-block">
             ${message:action.closewindow}
         </a>        
     </t:block>

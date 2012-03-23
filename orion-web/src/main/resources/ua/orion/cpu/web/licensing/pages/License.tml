@@ -31,8 +31,11 @@
             </p:addBlock>
             <p:toolButtons>
                 <t:if test="isNewState">
-                    <t:EventLink class="ui-button-check" t:event="force" zone="contentZone" 
-                                 t:mixins="ori/Confirm" confirm="message:action.force">${message:action.force}</t:EventLink>
+                    <t:EventLink class="ori-button-check" t:event="force" zone="contentZone" 
+                                 t:mixins="ori/Confirm" confirm="message:action.force"
+                                 body="message:message.force.confirm"
+                                 dialogTitle="message:message.force.title"
+                                 >${message:action.force}</t:EventLink>
                 </t:if>
             </p:toolButtons>
         </t:ori.crud>
