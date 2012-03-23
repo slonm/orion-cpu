@@ -122,18 +122,26 @@
                                 <td class="ls">Менеджмент організацій і адміністрування
                                     <div>
                                         <img src="../img/expand.png" class="kind-closed kind-status"/>(за видами економічної діяльності)
-                                        <div class="kinds">
-                                            <p>Менеджмент на ринку товарів та послуг</p>
-                                            <p>Менеджмент організації інвестиційної діяльності</p>
-                                            <p>Аграрний менеджмент</p>
-                                            <p>Менеджмент в сфері житлово-комунального господарства</p>
-                                        </div>
+                                        <ol style="margin-left: 15px" class="kinds">
+                                            <li>Менеджмент на ринку товарів та послуг</li>
+                                            <li>Менеджмент організації інвестиційної діяльності</li>
+                                            <li>Аграрний менеджмент</li>
+                                            <li>Менеджмент в сфері житлово-комунального господарства</li>
+                                        </ol>
                                     </div> 
                                 </td>
                                 <td class="lodl">Підготовка спеціалістів, магістрів</td>
                                 <td class="llo">Денна - 90<br/>Заочна - 150</td>
                                 <th class="ltdl">01.07.2015</th>
-                                <th class="lkf" align="left">Інститут управління</th>
+                                <td class="lkf">
+                                    <img src="../img/expand.png" class="kind-closed kind-status"/><b>Інститут управління</b>
+                                    <ol style="margin-left: 15px" class="kinds">
+                                        <li>Кафедра менеджменту організацій</li>
+                                        <li>кафедра адміністративного менеджменту та бізнес-адміністрування</li>
+                                        <li>Кафедра менеджменту організацій</li>
+                                        <li>Кафедра менеджменту організацій</li>
+                                    </ol>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -172,16 +180,21 @@
                 <tr id="tsp">
                     <td>Спеціальність:</td><td><input type="text" id="l-s"/></td>
                 </tr>
-<!--                <tr>
+                <tr>
                     <td class="lbl"><label>Перелік спеціалізацій:</label><br/>
                         <label style="color: #f0f">(реализация - компонент Tapestry AjaxFormLoop)-></label>
                     </td>
                     <td>
-                        <input type="text" ></input>
+                        <input type="text" ></input><select>
+                            <option value="111">Кафедра програмування та інформаційних технологій</option>
+                            <option value="112">Кафедра реклами і зв’язків з громадськістю</option>
+                            <option value="113">Кафедра менеджменту організацій</option>
+                            <option value="114">Інститут управління</option>
+                        </select>
                         <a href="">Видалити спеціалізацію</a>
                         <p><a href="">Додати спеціалізацію</a></p>
                     </td>
-                </tr>  -->
+                </tr> 
                 <tr>
                     <td>Область дії ліцензії:</td>
                     <td>
@@ -200,7 +213,7 @@
                 <tr>
                     <td>Термін дії ліцензії:</td><td><input type="text" id="l-tdl"/><img src="../img/datefield.gif"/></td>
                 </tr>
-<!--                <tr>
+                <tr>
                     <td>Кафедра:</td>
                     <td>
                         <select id="l-kf">
@@ -210,7 +223,7 @@
                             <option value="114">Інститут управління</option>
                         </select>
                     </td>
-                </tr> -->
+                </tr> 
                 <tr>
                     <td></td><td><input type="submit" value="Відмінити" id="license-cancel"/> <input type="submit" value="Зберегти" id="license-save"/></td>
                 </tr>
@@ -246,7 +259,7 @@
                     jQuery("#l-odl").val(jQuery(this).parent().parent().find('.lodl').html());
                     jQuery("#l-tdl").val(jQuery(this).parent().parent().find('.ltdl').html());
                     jQuery("#l-kf").val(jQuery(this).parent().parent().find('.lkf').html());
-                    jQuery("#add-license-dialog").dialog({width: 600, show: "blind", hide:"blind", title: "Редагування ліцензійного запису"});
+                    jQuery("#add-license-dialog").dialog({width: 1000, show: "blind", hide:"blind", title: "Редагування ліцензійного запису"});
                 })		
                 jQuery("#license-save, #license-cancel").click(function(){jQuery("#add-license-dialog").dialog("close")})
                 jQuery("#ku").change(function(){
@@ -260,7 +273,7 @@
                     jQuery("#l-lo").val("");
                     jQuery("#l-tdl").val("");
                     jQuery("#l-kf").val("");
-                    jQuery("#add-license-dialog").dialog({width: 600, show: "blind", hide:"blind", title: "Додавання ліценійного запису"});
+                    jQuery("#add-license-dialog").dialog({width: 1000, show: "blind", hide:"blind", title: "Додавання ліценійного запису"});
                 })
                 
                 jQuery(".license-record-delete").click(function(){
@@ -271,9 +284,9 @@
                 
                 $(".kind-status").click(function(){
                     if ($(this).hasClass("kind-closed")){
-                        $(this).attr("class","kind-opened kind-status").attr("src","../img/collapse.png").parent().find("div.kinds").show("slow");
+                        $(this).attr("class","kind-opened kind-status").attr("src","../img/collapse.png").parent().find(".kinds").show("slow");
                     } else if ($(this).hasClass("kind-opened")){
-                        $(this).attr("class","kind-closed kind-status").attr("src","../img/expand.png").parent().find("div.kinds").hide("slow");
+                        $(this).attr("class","kind-closed kind-status").attr("src","../img/expand.png").parent().find(".kinds").hide("slow");
                     }
                 })  
             })
