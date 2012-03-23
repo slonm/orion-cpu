@@ -9,6 +9,7 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.tapestry5.services.ajax.JavaScriptCallback;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
@@ -58,7 +59,8 @@ public class Crud {
     private boolean showDelButton;
     /**
      * Адрес detail страницы. Если страница задана, то в наборе кнопок CRUD
-     * строки появится кнопка перехода на эту страницу
+     * строки появится кнопка перехода на эту страницу. Страница в контексте
+     * должна принимать объект, с которым она будет работать
      */
     @Parameter(defaultPrefix = "literal")
     @Property
@@ -118,6 +120,8 @@ public class Crud {
     private JavaScriptSupport javascriptSupport;
     @Inject
     private Logger LOG;
+    @Inject
+    private PageRenderLinkSource pageRenderLinkSource;
     //---Locals---
     @Persist
     private Object object;
@@ -204,15 +208,16 @@ public class Crud {
     /**
      * Обработчик сохранения после редактирования. Может использоваться
      * переопределенной формой редактирования, если она редактировала свойство
-     * Object компонента Crud
+     * Object компонента Crud.
      */
     public Object onSuccessFromEditForm() {
-        resources.triggerEvent("beforeMerge", new Object[]{object}, null);
+        resources.triggerEvent("beforeEdit", new Object[]{object}, null);
         tip.doWork(new Runnable() {
 
             @Override
             public void run() {
                 es.merge(object);
+                resources.triggerEvent("afterEdit", new Object[]{object}, null);
             }
         }, "update.entity", messages.get("entity." + entityType), es.getStringValue(object));
         return closeWindowAndGetListZone();
@@ -221,19 +226,25 @@ public class Crud {
     /**
      * Обработчик сохранения после создания нового объекта. Может использоваться
      * переопределенной формой редактирования, если она редактировала свойство
-     * Object компонента Crud
+     * Object компонента Crud Если задан параметр detailPage, то метод
+     * возвращает перенаправление на эту страницу с контекстом - только-что
+     * сохраненным объектом.
      */
     public Object onSuccessFromAddForm() {
-        resources.triggerEvent("beforePersist", new Object[]{object}, null);
+        resources.triggerEvent("beforeAdd", new Object[]{object}, null);
         tip.doWork(new Runnable() {
 
             @Override
             public void run() {
-            es.persist(object);
-            resources.triggerEvent("afterPersist", new Object[]{object}, null);
+                es.persist(object);
+                resources.triggerEvent("afterAdd", new Object[]{object}, null);
             }
         }, "insert.entity", messages.get("entity." + entityType), es.getStringValue(object));
-        return closeWindowAndGetListZone();
+        if (resources.isBound("detailPage")) {
+            return pageRenderLinkSource.createPageRenderLinkWithContext(detailPage, object);
+        } else {
+            return closeWindowAndGetListZone();
+        }
     }
 
     Object onActionFromEdit(Integer id) {
@@ -264,7 +275,7 @@ public class Crud {
 
             @Override
             public void run() {
-            es.remove(object);
+                es.remove(object);
             }
         }, "remove.entity", messages.get("entity." + entityType), es.getStringValue(object));
         return closeWindowAndGetListZone();

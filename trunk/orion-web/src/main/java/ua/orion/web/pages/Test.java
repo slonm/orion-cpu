@@ -2,6 +2,7 @@ package ua.orion.web.pages;
 
 import javax.inject.Inject;
 import org.apache.tapestry5.Block;
+import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.Property;
@@ -20,6 +21,8 @@ public class Test {
     private AjaxResponseRenderer ajaxResponseRenderer;
     @Property
     private String title;
+    @org.apache.tapestry5.ioc.annotations.Inject
+    private AlertManager alertManager;
 
     Object onShow() {
         ajaxResponseRenderer.addCallback(new JavaScriptCallback() {
@@ -49,5 +52,11 @@ public class Test {
     @Log
     Object onActionFromAjax() {
         return content;
+    }
+    
+    void onActivate(){
+        alertManager.error("error");
+        alertManager.warn("warn");
+        alertManager.info("info");
     }
 }

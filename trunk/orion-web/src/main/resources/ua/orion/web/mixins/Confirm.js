@@ -12,7 +12,7 @@ Tapestry.Initializer.oriConfirm = function(o){
     link.click(function(){
         event.preventDefault();
         //На базе этого блока построим диалог
-        var div=$J("<div/>").appendTo("body").text(o.body!=undefined ? o.body : Ori.Messages.messageConfirmationBody);
+        var div=$J("<div/>").appendTo("body").html(o.body!=undefined ? o.body : Ori.Messages.messageConfirmationBody);
         div.dialog({
             modal:true,
             title:o.title!=undefined ? o.title : Ori.Messages.labelConfirmationTitle,

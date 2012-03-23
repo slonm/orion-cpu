@@ -72,13 +72,13 @@ Description: A Web 2.0 design with fluid width suitable for blogs and small webs
                             <span style="display: inline-block;" >
                                 <t:security.Authenticated>
                                     ${user}<t:if test="role">&nbsp;(${role})</t:if>
-                                    <t:pagelink page="ori/selectRole" class="ui-button-refresh">${message:action.selectRolePage}</t:pagelink>
+                                    <t:pagelink page="ori/selectRole" class="ori-button-refresh">${message:action.selectRolePage}</t:pagelink>
                                 </t:security.Authenticated>
                                 <t:security.NotAuthenticated>
-                                    <t:pagelink page="security/login" class="ui-button-login">${message:action.login}</t:pagelink>
+                                    <t:pagelink page="security/login" class="ori-button-login">${message:action.login}</t:pagelink>
                                 </t:security.NotAuthenticated>&nbsp;
                                 <t:security.Authenticated>
-                                    <t:ActionLink t:id="logout" class="ui-button-quit">${message:action.logout}</t:ActionLink>
+                                    <t:ActionLink t:id="logout" class="ori-button-quit">${message:action.logout}</t:ActionLink>
                                 </t:security.Authenticated>
                             </span>
                             <span class="controls-bar-after"/>

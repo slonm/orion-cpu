@@ -2,33 +2,32 @@
 //обновления зоны
 $J(document).ready(function(){
     //Инициализация классов кнопок, к которым присоеденяются иконки
-    //TODO Почему бы не сделать это в виде ассоциативного массива? Пример:
-    //var elements={"ui-button-close":"ui-icon-close",
-    //              "ui-button-add":"ui-icon-circle-plus"}
-    //tfalse в конце используется для того, чтобы сделать кнопку без текста. 
-    //var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse");
-    var elements = new Array("ui-button-close","ui-button-add","ui-button-refresh","ui-button-login","ui-button-quit","ui-button-del","ui-button-cancel","ui-button-edit-tfalse","ui-button-view-tfalse","ui-button-del-tfalse","ui-button-tolist","ui-button-right-list-tfalse",
-        "ui-button-detail", "ui-button-edit","ui-button-view","ui-button-del", "ui-button-check");
     //Инициализация классов иконок, для кнопок в массиве elements
-    //var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e");
-    var icons = new Array("ui-icon-close","ui-icon-circle-plus","ui-icon-refresh","ui-icon-key","ui-icon-power","ui-icon-trash", "ui-icon-cancel", "ui-icon-pencil","ui-icon-print","ui-icon-trash","ui-icon-arrowreturnthick-1-n","ui-icon-triangle-1-e", 
-        "ui-icon-zoomin", "ui-icon-pencil", "ui-icon-search", "ui-icon-circle-minus", "ui-icon-circle-check");
+    //notext в конце используется для того, чтобы сделать кнопку без текста. 
+    var elements={
+        "ori-button-close":"ui-icon-close",
+        "ori-button-add":"ui-icon-circle-plus",
+        "ori-button-refresh":"ui-icon-refresh",
+        "ori-button-login":"ui-icon-key",
+        "ori-button-quit":"ui-icon-power",
+        "ori-button-del":"ui-icon-trash",
+        "ori-button-cancel":"ui-icon-cancel",
+        "ori-button-edit-notext":"ui-icon-pencil",
+        "ori-button-view-notext":"ui-icon-print",
+        "ori-button-del-notext":"ui-icon-trash",
+        "ori-button-tolist":"ui-icon-arrowreturnthick-1-n",
+        "ori-button-right-list-notext":"ui-icon-triangle-1-e",
+        "ori-button-detail":"ui-icon-zoomin", 
+        "ori-button-edit":"ui-icon-pencil",
+        "ori-button-view":"ui-icon-search",
+        "ori-button-check":"ui-icon-circle-check"
+    }
     
     function initUI(event){
         //Если event не задан, то применим инициализацию ко всему телу документа,
         //иначе это инициализация зоны
         root=!event?$J("body")[0]:this;
         
-        //Инициализация иконок на кнопках
-        //ec - класс элемента HTML, ic - класс иконик (из $J-ui)
-        function createIcon(ec, ic){
-            $J("."+ec).button({
-                icons: {
-                    primary: ic
-                },
-                text: ec.indexOf("tfalse")>-1?false:true
-            })
-        }
         //Инициализация кнопок.
         function initializeButtons(){
             $J(".ui-button[role!=button]", root).button();
@@ -47,8 +46,13 @@ $J(document).ready(function(){
         }
         //Инициализация иконок для кнопок
         function initializeIcons(){
-            for (var i=0; i<elements.length; i++){
-                createIcon(elements[i], icons[i]);
+            for(cls in elements){
+                $J("."+cls).button({
+                    icons: {
+                        primary: elements[cls]
+                    },
+                    text: cls.indexOf("notext")>-1?false:true
+                })
             }
         }
         //Создание ui-checkbox-ов 
@@ -64,16 +68,47 @@ $J(document).ready(function(){
             })
         }
         /**
- * Добавление UI-классов к элементам beaneditor и beandisplay
- */
+         * Добавление UI-классов к элементам beaneditor и beandisplay
+         */
         function addUIClassesToBeanEditView(){
             $J("DIV.t-beaneditor", root).addClass("ui-widget-content").removeClass("t-beaneditor");
             $J("dl.t-beandisplay", root).addClass("ui-widget-content").removeClass("t-beandisplay");
         }
 
+        /**
+         * Декорирование компонента Alerts
+         */
+        function decorateAlerts(){
+            dismiss_i18n={
+                'ru':"Убрать",
+                'uk':"Убрати",
+                'en':"Dismiss"
+            }
+            $J(".t-dismiss", root).attr("title", dismiss_i18n[Ori.LOCALE]);
+            $J("div.t-alert-container div.t-error", root).css({
+                border: "1px solid red",
+                "background-color": "#FEF1EC",
+                color: "red"
+            });
+            $J("div.t-alert-container div.t-warn", root).css({
+                border: "1px solid #FFCC66",
+                "background-color": "#FBF9EE",
+                color: "#CC6600"
+            });
+            $J("div.t-alert-container div.t-info", root).css({
+                border: "1px solid blue",
+                "background-color": "#aaddFF",
+                color: "black"
+            });
+            $J("div.t-alert-controls", root).css({
+                border: "1px solid lightGrey"
+            });
+        }
+
         //Инициализация компонентов
         function initializeUIComponents(){
             addUIClassesToBeanEditView();
+            decorateAlerts();
             initializeTextFields();
             initializeCalendar();
             initializeButtons();
@@ -154,23 +189,23 @@ $J(document).ready(function(){
         }
 
         /**
- * Добавление UI-классов к элементам интерфейса
- */
+     * Добавление UI-классов к элементам интерфейса
+     */
         function updateCSS(){
             //$J("table.t-data-grid tbody tr td[class!='action']").addClass("ui-widget-content");
             $J("table.t-data-grid thead tr th[class!='action t-last']").addClass("ui-state-default");
             $J("div.t-data-grid-pager a").addClass("ui-corner-all ui-state-default");
             $J("div.t-data-grid-pager span.current").addClass("ui-corner-all ui-state-active");
-            $J(".ui-grid-cell-action-tip").addClass("ui-corner-all ui-state-default");
+            $J(".ori-grid-cell-action-tip").addClass("ui-corner-all ui-state-default ui-widget-header");
         }
 
         /*
- * Создание подсказок для элементов. 
- * Используется модифицированный плагин Easy Tooltip 1.0
- * функция easyTooltip вызывается на элементах, на которые необходимо
- * назначить подсказки и параметром в ней является текстовая строка, которая 
- * служит для идентификации типа элемента. 
- */
+     * Создание подсказок для элементов. 
+     * Используется модифицированный плагин Easy Tooltip 1.0
+     * функция easyTooltip вызывается на элементах, на которые необходимо
+     * назначить подсказки и параметром в ней является текстовая строка, которая 
+     * служит для идентификации типа элемента. 
+     */
         function createToolTips(){
             if (Ori.SHOW_HINTS){
                 $J("input[type=text]").easyTooltip({

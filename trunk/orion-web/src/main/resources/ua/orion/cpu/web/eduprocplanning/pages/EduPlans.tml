@@ -3,16 +3,12 @@
 <t:ori.layout title="message:label.EduPlans"
               menudata="Start>EduProcPlanning>EduPlan"
               xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <t:ori.tabcontrol t:contentZone="crudZone" 
-                      t:panelTitles="['${message:action.active}', 
+    <t:ori.tabcontrol t:tabTitles="['${message:action.active}', 
                       '${message:action.project}', 
                       '${message:action.obsolete}', 
-                      '${message:action.all}']"/>
-    <div class="ui-widget-content" id="tabcontrol-content">
-        <t:zone t:id="crudZone">
-            <t:ori.crud t:entityType="EduPlan" t:source="source" 
-                        t:detailPage="eduprocplanning/eduplan"
-                        showViewButton="false"/>
-        </t:zone>
-    </div>
+                      '${message:action.all}']">
+        <t:ori.crud t:entityType="EduPlan" t:source="source" 
+                    t:detailPage="eduprocplanning/eduplan"
+                    showViewButton="false"/>
+    </t:ori.tabcontrol>
 </t:ori.layout>

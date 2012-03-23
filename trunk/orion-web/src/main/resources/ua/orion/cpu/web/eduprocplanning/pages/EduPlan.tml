@@ -91,7 +91,7 @@
                         <!--Шапка цикла конец-->
                         <tr style="font-weight: bold">
                             <td>
-                                <button class="ui-button-right-list-tfalse"></button>
+                                <button class="ui-button-right-list-notext"></button>
                                 <div style="display:none; white-space: nowrap">
                                     <a href="AddEditCommonEduPlanCycle.html"><input type="image" src="editview.png" title="Переглянути/редагувати цикл дисциплін"/></a>
                                     <input type="image" src="delete.png" title="Видалити цикл дисциплін"/>
@@ -107,7 +107,7 @@
                         <!--Перебор дисциплин начало-->
                         <tr t:type="loop" source="disciplines" value="discipline">
                             <td>
-                                <button class="ui-button-right-list-tfalse"></button>
+                                <button class="ui-button-right-list-notext"></button>
                                 <!--                        <a href="AddEditCommonEduPlanDiscipline.html"><input type="image" src="editview.png" title="Переглянути/редагувати дисципліну"/></a>
                                                         <input type="image" src="delete.png" title="Видалити дисципліну"/>-->
                             </td>

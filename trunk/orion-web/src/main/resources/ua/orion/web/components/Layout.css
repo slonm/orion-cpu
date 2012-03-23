@@ -88,58 +88,10 @@ a:hover {
     font-size: 14px;
 }
 
-/*#logo a {
-    text-decoration: none;
-    color: #D0C7A6;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Page */
 
 #page {
-    padding: 40px 40px 0 40px;
+    padding: 10px 10px 0 10px;
 }
 
 /* Content */
@@ -157,7 +109,7 @@ a:hover {
 }
 
 .post .title h2 {
-    padding: 30px 30px 0 0px;
+    padding: 10px 0px 0 0px;
     font-weight: normal;
     font-size: 1.8em;
     text-align: center;

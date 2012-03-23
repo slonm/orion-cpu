@@ -23,8 +23,6 @@ import ua.orion.web.services.TapestryDataSource;
 @SuppressWarnings("unused")
 public class EduPlans {
 
-    @Component
-    private Zone crudZone;
     //---Services---
     @Inject
     private RequestInfo info;
@@ -75,8 +73,7 @@ public class EduPlans {
         return null;
     }
 
-    public Object onSelect(int tab) {
+    public void onTabSelect(int tab) {
         eduPlanState = states[tab];
-        return crudZone.getBody();
     }
 }

@@ -1,12 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<div id="${clientId}" class="ori_tabControl" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-
-    <div t:type="Loop" source="panelIds" value="panelId"
-          id="${clientId}_${panelId}"
-          class="ori-tab ui-state-default ui-corner-tl ui-corner-tr">
-        <t:eventLink context="${panelId}" 
-                     event="select" zone="${contentZone}">
-            ${panelTitle}
-        </t:eventLink>
-    </div>
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+     class="ori-tabs ui-tabs ui-widget ui-widget-content ui-corner-all ${css}" style="${style}">
+    <ul id="${clientId}" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        <li t:type="Loop" source="tabTitles" value="tabTitle"
+            class="ui-state-default ui-corner-top ${tabStyle}">
+            <t:eventLink id="${clientId}_${tabId}" context="${tabId}" 
+                         event="select" zone="${tabContentId}">
+                ${tabTitle}
+            </t:eventLink>
+        </li>
+    </ul>
+    <t:zone t:id="tabContent" id="${tabContentId}" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+        <t:body/>
+    </t:zone>
 </div>
