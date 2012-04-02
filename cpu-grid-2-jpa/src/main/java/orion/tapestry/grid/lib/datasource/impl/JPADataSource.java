@@ -13,6 +13,7 @@ import org.json.JSONException;
 import orion.tapestry.grid.lib.datasource.DataSourceAdapter;
 import orion.tapestry.grid.lib.model.bean.GridBeanModel;
 import orion.tapestry.grid.lib.model.filter.GridFilterModel;
+import orion.tapestry.grid.lib.model.sort.GridSortConstraint;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorException;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorInterface;
 import orion.tapestry.grid.lib.restrictioneditor.RestrictionEditorJPACriteria;
@@ -119,12 +120,13 @@ public class JPADataSource extends DataSourceAdapter {
             // ---------- используем условие сортировки - begin ----------------
             List ordering = new ArrayList();
             for (SortConstraint fs : sortConstraints) {
+                String propertyName= (fs instanceof GridSortConstraint) ? ((GridSortConstraint)fs).getPropertyName():fs.getPropertyModel().getPropertyName();
                 switch (fs.getColumnSort()) {
                     case ASCENDING:
-                        ordering.add(criteriaBuilder.asc(toExpression(fs.getPropertyModel().getPropertyName())));
+                        ordering.add(criteriaBuilder.asc(toExpression(propertyName)));
                         break;
                     case DESCENDING:
-                        ordering.add(criteriaBuilder.desc(toExpression(fs.getPropertyModel().getPropertyName())));
+                        ordering.add(criteriaBuilder.desc(toExpression(propertyName)));
                         break;
                 }
             }
