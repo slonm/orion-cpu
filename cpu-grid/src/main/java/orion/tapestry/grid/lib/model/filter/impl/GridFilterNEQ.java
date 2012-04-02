@@ -18,7 +18,8 @@ public class GridFilterNEQ extends GridFilterText {
 
     public GridFilterNEQ(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "LT");
+        this.setUid(_uid + "NEQ");
+        // this.setUid(this.fieldName + "LT");
         this.setLabel(" < ");
     }
 

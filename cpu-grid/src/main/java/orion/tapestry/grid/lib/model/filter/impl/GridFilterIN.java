@@ -21,7 +21,8 @@ public class GridFilterIN extends GridFilterText {
 
     public GridFilterIN(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "GT");
+        this.setUid(_uid + "IN");
+        // this.setUid(this.fieldName + "GT");
         this.setLabel(" > ");
     }
 

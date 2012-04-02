@@ -18,7 +18,8 @@ public class GridFilterEQ extends GridFilterText {
 
     public GridFilterEQ(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "EQ");
+        this.setUid(_uid + "EQ");
+        // this.setUid(this.fieldName + "EQ");
         this.setLabel(" = ");
     }
 

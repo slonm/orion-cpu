@@ -18,7 +18,8 @@ public class GridFilterLE extends GridFilterText {
 
     public GridFilterLE(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "LE");
+        this.setUid(_uid + "LE");
+        // this.setUid(this.fieldName + "LE");
         this.setLabel(" <= ");
     }
 

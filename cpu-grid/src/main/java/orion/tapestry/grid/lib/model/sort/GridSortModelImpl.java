@@ -137,8 +137,17 @@ public class GridSortModelImpl implements GridSortModel {
                 // get property model
                 GridPropertyModelInterface propertyModel = (GridPropertyModelInterface) model.get(m.toString());
 
+                // check if gridSortConstraint is already set
+                GridSortConstraint gridSortConstraint = propertyModel.getSortConstraint();
+                
                 // create new default GridSortConstraint
-                GridSortConstraint gridSortConstraint = new GridSortConstraint(propertyModel, ColumnSort.UNSORTED, 0);
+                if (gridSortConstraint == null) {
+                    // create new default GridSortConstraint
+                    gridSortConstraint = new GridSortConstraint(propertyModel, ColumnSort.UNSORTED, 0);
+
+                    // update property model
+                    propertyModel.setSortConstraint(gridSortConstraint);
+                }
 
                 // identifier of the property model
                 String id = propertyModel.getId();
@@ -147,9 +156,6 @@ public class GridSortModelImpl implements GridSortModel {
                 if (sortJSON.has(id)) {
                     gridSortConstraint.importJSON(sortJSON.getJSONObject(id));
                 }
-
-                // update property model
-                propertyModel.setSortConstraint(gridSortConstraint);
 
                 // update list of the sortConstraints
                 gridSortModel.sortConstraints.add(gridSortConstraint);

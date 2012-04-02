@@ -1,5 +1,7 @@
 package orion.tapestry.grid.services;
 
+import java.util.Calendar;
+import java.util.Date;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
@@ -51,7 +53,8 @@ public class CpuGridModule {
         configuration.add("double", GridPropertyModelDouble.class);
         configuration.add("java.lang.Double", GridPropertyModelDouble.class);
 
-        configuration.add("java.util.Date", GridPropertyModelDate.class);
+        configuration.add(Date.class.getName(), GridPropertyModelDate.class);
+        configuration.add(Calendar.class.getName(), GridPropertyModelDate.class);
 
         configuration.add("boolean", GridPropertyModelBoolean.class);
         configuration.add("java.lang.Boolean", GridPropertyModelBoolean.class);

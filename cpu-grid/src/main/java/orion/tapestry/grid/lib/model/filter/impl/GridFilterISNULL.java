@@ -19,7 +19,8 @@ public class GridFilterISNULL extends GridFilterCheckbox {
 
     public GridFilterISNULL(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "ISNOTNULL");
+        this.setUid(_uid + "ISNULL");
+        // this.setUid(this.fieldName + "ISNULL");
         this.setLabel(" != null ");
     }
 
