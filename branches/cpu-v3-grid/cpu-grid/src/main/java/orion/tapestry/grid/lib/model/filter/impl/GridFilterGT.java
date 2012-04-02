@@ -18,7 +18,8 @@ public class GridFilterGT extends GridFilterText {
 
     public GridFilterGT(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "GT");
+        this.setUid(_uid + "GT");
+        // this.setUid(this.fieldName + "GT");
         this.setLabel(" > ");
     }
 

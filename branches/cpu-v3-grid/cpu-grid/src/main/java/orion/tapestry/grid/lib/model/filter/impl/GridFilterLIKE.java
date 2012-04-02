@@ -18,7 +18,8 @@ public class GridFilterLIKE extends GridFilterText {
 
     public GridFilterLIKE(GridPropertyModelInterface _model, String _uid, String _fieldName) {
         super(_model, _uid, _fieldName);
-        this.setUid(this.fieldName + "LIKE");
+        this.setUid(_uid + "LIKE");
+        // this.setUid(this.fieldName + "LIKE");
         this.setLabel(" like ");
     }
 

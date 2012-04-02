@@ -37,6 +37,13 @@ public class GridSortConstraint extends SortConstraint {
         this.columnSort = _columnSort;
     }
 
+    
+    /**
+     * Возвращает название свойства - выражение, которое используется при сортировке
+     */
+    public String getPropertyName() {
+        return propertyModel.getPropertyName();
+    }
     /**
      * Возвращает модель свойства, для которого составлено это правило сортировки
      */
