@@ -6,6 +6,7 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.SubModule;
 import orion.tapestry.grid.services.CpuGridJPA;
+import orion.tapestry.grid.services.CpuGridModelsModule;
 import orion.tapestry.grid.services.CpuGridModule;
 import ua.orion.cpu.core.eduprocplanning.services.EduProcPlanningIOCModule;
 import ua.orion.cpu.core.employees.services.EmployeesIOCModule;
@@ -47,7 +48,8 @@ import ua.orion.web.security.services.OrionSecurityWebIOCModule;
     CpuGridModule.class,
     CpuGridJPA.class,
     CpuGridJPACrudModule.class,
-    CpuGridJPALicenseModule.class
+    CpuGridJPALicenseModule.class,
+    CpuGridModelsModule.class
 })
 public class AppModule {
 
