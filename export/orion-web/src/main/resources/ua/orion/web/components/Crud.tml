@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+     xmlns:p="tapestry:parameter"
+     xmlns:s="tapestry-library:security"
+     xmlns:j="tapestry-library:jquery">
+    <!--Зона диалогового окна-->
+    <t:zone t:id="popupZone" id="${popupZoneId}" update="show" 
+            t:mixins="ori/Dialog" modal="true" width="750" zIndex="-1"/>
+    <!--Зона грида-->
+    <t:zone t:id="listZone" id="${listZoneId}">
+        <!--Панель инструментов-->
+        <div id="crud-grid-buttons" class="ui-widget-header" style="display:block">
+            <t:if test="canAdd">
+                <t:ActionLink t:id="add" class="ori-button-add" zone="prop:popupZoneId"
+                              t:mixins="ori/Dialog" event="open" 
+                              dialogTitle="message:label.mode.add">${message:action.add}
+                </t:ActionLink>
+            </t:if>
+            <t:if test="master">
+                <t:PageLink class="ori-button-tolist" t:page="prop:masterCrudPage">${message:action.list}</t:PageLink>
+            </t:if>
+            <t:delegate to="prop:toolButtons"/>
+        </div>
+        <!--Грид-->
+        <t:grid t:mixins="ori/CurrentBeanInformer" source="source" row="object" inplace="true" add="action" reorder="action" lean="true"
+                model="dataSource.getBeanModelForList(entityClass,messages)" pagerPosition="literal:bottom">
+            <p:actionCell>
+                <table class="ori-grid-cell-action-tip">
+                    <t:if test="detailPage">
+                        <s:HasPermission permission="${entityType}:read:${id}">
+                            <tr>
+                                <td>
+                                    <t:PageLink class="ori-button-detail" t:page="prop:detailPage" context="object">${message:action.detail}</t:PageLink>
+                                </td>
+                            </tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showEditButton">
+                        <s:HasPermission permission="${entityType}:update:${id}">
+                            <tr>
+                                <td>
+                                    <t:ActionLink t:id="edit" class="ori-button-edit" context="object" zone="prop:popupZoneId"
+                                                  t:mixins="ori/Dialog" event="open" 
+                                                  dialogTitle="message:label.mode.edit">${message:action.edit}
+                                    </t:ActionLink>
+                                </td>
+                            </tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showViewButton">
+                        <s:HasPermission permission="${entityType}:read:${id}">
+                            <tr>
+                                <td>
+                                    <t:ActionLink t:id="view" class="ori-button-view" context="object" zone="prop:popupZoneId"
+                                                  t:mixins="ori/Dialog" event="open" 
+                                                  dialogTitle="message:label.mode.view" modal="true">${message:action.view}
+                                    </t:ActionLink>
+                                </td>
+                            </tr>
+                        </s:HasPermission>
+                    </t:if>    
+                    <t:if test="showDelButton">
+                        <s:HasPermission permission="${entityType}:delete:${id}">
+                            <tr><td>
+                                    <t:EventLink class="ori-button-del" t:event="delete" 
+                                                 context="object" zone="prop:listZoneId" 
+                                                 t:mixins="ori/Confirm" confirm="message:action.del">${message:action.del}</t:EventLink>
+                                </td></tr>
+                        </s:HasPermission>
+                    </t:if>    
+                </table>
+            </p:actionCell>
+        </t:grid>
+    </t:zone>
+    <t:block id="defaultEditBlock">
+        <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="editForm" object="object" model="dataSource.getBeanModelForEdit(entityClass,messages)"
+                               zone="prop:listZoneId" submitLabel="message:action.edit" buttons="hideWindowButtonBlock"/>
+    </t:block>
+    <t:block id="defaultAddBlock">
+        <t:ori.beaneditformext t:mixins="ori/CurrentBeanInformer" t:id="addForm" object="object" model="dataSource.getBeanModelForAdd(entityClass,messages)"
+                               zone="prop:listZoneId" submitLabel="message:action.add" buttons="hideWindowButtonBlock"/>
+    </t:block>
+    <t:block id="hideWindowButtonBlock">
+        <a href="cancel" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ori-button-close" style="margin-top: 5px; display:inline-block">
+            ${message:action.cancel}
+        </a>        
+    </t:block>
+    <t:block id="defaultViewBlock">
+        <t:beandisplay t:mixins="ori/CurrentBeanInformer" t:id="display" object="object" model="dataSource.getBeanModelForView(entityClass,messages)"/>
+        <a href="close" onclick="javascript: jQuery('#${popupZoneId}').dialog('close'); return false;" class="ori-button-close" style="margin-top: 5px; display:inline-block">
+            ${message:action.closewindow}
+        </a>        
+    </t:block>
+</div>
