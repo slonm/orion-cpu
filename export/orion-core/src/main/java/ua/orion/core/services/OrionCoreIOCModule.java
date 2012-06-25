@@ -14,6 +14,7 @@ import ua.orion.core.entities.SerializableSingleton;
 import ua.orion.core.entities.StringSingleton;
 import ua.orion.core.ModelLibraryInfo;
 import ua.orion.core.OrionSymbols;
+import ua.orion.core.foreigndata.XMLExport;
 import ua.orion.core.utils.IOCUtils;
 import ua.orion.core.validation.UniqueConstraintValidator;
 import ua.orion.core.persistence.MetaEntity;
@@ -126,6 +127,7 @@ public class OrionCoreIOCModule {
         });
 
         conf.addInstance("SeedEntity", SeedEntity.class, "after:InitObjectLocatorSource");
+        conf.addInstance("XMLExport", XMLExport.class, "after:SeedEntity");
     }
 
     /**
