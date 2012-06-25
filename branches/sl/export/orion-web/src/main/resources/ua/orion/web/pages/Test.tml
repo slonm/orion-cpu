@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<t:ori.layout title="message:label.project.name"
+              xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+              xmlns:p="tapestry:parameter">
+    <p:script>
+        <script type="text/javascript">
+            jQuery(function(){
+                jQuery("#win").dialog({
+                    "autoOpen": false
+                });
+                jQuery("#openD").click(function(){
+                    $("#dialog").dialog("open");
+                });
+                jQuery("#closeD").click(function(){
+                    $("#dialog").dialog("close");
+                });
+            });
+        </script>
+
+    </p:script> 
+    <t:zone t:id="ewin" id="ewin" update="show" t:mixins="ori/Dialog" modal="true" width="750"/>
+    <t:ActionLink t:id="eshow" zone="ewin" t:mixins="ori/Dialog" event="open" dialogTitle="${title}">eShow Dialog</t:ActionLink>
+    <t:ActionLink t:id="othereshow" zone="ewin" t:mixins="ori/Dialog" event="open" dialogTitle="${title}">otherShow Dialog</t:ActionLink>
+    <t:block id="econtent">
+        eContent<br/>
+        <t:ActionLink zone="ewin" t:mixins="ori/Dialog" event="close">close</t:ActionLink>
+    </t:block>
+    <br/><br/><br/><br/><br/>
+    <t:zone t:id="win" id="win"/>
+    <t:eventlink event="show" zone="win">Show Dialog</t:eventlink><br/>
+    <br/><br/><br/><br/><br/>
+    <t:ActionLink t:id="noajax" t:mixins="ori/Confirm">no AJAX</t:ActionLink>
+    <t:zone id="ajaxzone"/>
+    <t:ActionLink t:id="ajax" zone="ajaxzone" t:mixins="ori/Confirm">AJAX</t:ActionLink>
+    <t:block id="content">
+        Content<br/>
+        <a href="cancel" onclick="javascript: jQuery('#win').dialog('close'); return false;">close</a>
+    </t:block>
+</t:ori.layout>

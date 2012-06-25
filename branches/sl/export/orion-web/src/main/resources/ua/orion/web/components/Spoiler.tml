@@ -1,0 +1,12 @@
+<div class="ori_spoiler" xml:space="default" 
+     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <a href="JavaScript:void(0);" class="ori_spoiler-link" id="${ClientId}-link" >
+        <t:if test="showToggle">
+            <span class="ori_spoiler-toggle"/>
+        </t:if>
+        ${link}
+    </a>
+    <div class="ori_spoiler-body">
+        <t:body/>
+    </div> 
+</div>

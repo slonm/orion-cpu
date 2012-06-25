@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Title      : Concrete
+Version    : 1.0
+Released   : 20080825
+Description: A Web 2.0 design with fluid width suitable for blogs and small websites.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>${title}</title>
+        <t:delegate to="meta"/>
+        <t:delegate to="style"/>
+        <t:delegate to="script"/>
+    </head>
+    <body>
+        <!-- start header -->
+        <div class="ui-widget-content">
+            <div style="min-height:100%;height:auto !important;height:100%;">
+                <div id="header" class="ui-state-default">
+                    <span id="menu"><t:menu.menubar menudata="menudata" /></span>
+                </div>
+                <!-- end header -->
+                <!-- start page -->
+                <div id="page"  >
+                    <ui id="interface" style="display: none">${uiInterface}</ui>
+                    <!-- start content -->
+                    <div id="content">
+                        <div class="post">
+                            <t:alerts dismissText="message:dismiss-label"/>
+                            <div class="title ui-widget-content ui-corner-all">
+                                <div class="ui-widget-header ui-corner-tl ui-corner-tr"> <h2>${title}</h2></div>
+                                <div class="entry">
+                                    <t:body/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="ui-state-highlight controls-bar">
+                            <!--Диалог с выбором темы (Начало) -->
+                            <button id="ui-show-select-theme-dialog-button" class="ui-button" >UI Theme</button>
+                            <div id="ui-select-theme-dialog" style="display: none" title="UI Theme">UI Theme: 
+                                <select id="ui-select-theme" style="width: 200px;">
+                                    <option>black-tie</option>
+                                    <option>cupertino</option>
+                                    <option>dot-luv</option>
+                                    <option>eggplant</option>
+                                    <option>maven-quickstart</option>
+                                    <option>hot-sneaks</option>
+                                    <option>humanity</option>
+                                    <option>pepper-grinder</option>
+                                    <option>smoothness</option>
+                                    <option>sunny</option>
+                                    <option>start</option>
+                                    <option>swanky-purse</option>
+                                    <option>ui-darkness</option>
+                                    <option>ui-lightness</option>
+                                </select>
+                                <button class="ui-button" id="select-theme-button" style="width: 75px">OK</button>
+                            </div>
+                            <!-- Диалог с выбором темы (Конец) -->
+                            <!-- Выбор локали (Начало) -->
+                            <t:ori.LocaleSwitcher/>
+                            <!-- Выбор локали (Конец) -->
+                            <span style="display: inline-block;" >
+                                <t:security.Authenticated>
+                                    ${user}<t:if test="role">&nbsp;(${role})</t:if>
+                                    <t:pagelink page="ori/selectRole" class="ori-button-refresh">${message:action.selectRolePage}</t:pagelink>
+                                </t:security.Authenticated>
+                                <t:security.NotAuthenticated>
+                                    <t:pagelink page="security/login" class="ori-button-login">${message:action.login}</t:pagelink>
+                                </t:security.NotAuthenticated>&nbsp;
+                                <t:security.Authenticated>
+                                    <t:ActionLink t:id="logout" class="ori-button-quit">${message:action.logout}</t:ActionLink>
+                                </t:security.Authenticated>
+                            </span>
+                            <span class="controls-bar-after"/>
+                        </div>
+                        <!-- end content -->
+                        <br style="clear: both;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page -->
+        <!-- start footer -->
+        <div id="footer" class="ui-widget-content" style="text-align: center;">
+            <div class="ui-widget-header">${message:message.cpu}</div>
+            <span class="ui-icon ui-icon-mail-closed" style="display:inline-block"/>
+            <a href="mailto:ido@zhu.edu.ua">${message:message.contact}</a>
+        </div>
+    </body>
+</html>
