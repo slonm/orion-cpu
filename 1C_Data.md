@@ -1,0 +1,1 @@
+[Формат данных для импорта из 1С](https://docs.google.com/document/d/1UU-OvBiU3tVb4jzlOnEeLmUW894_lkBJfOGm0tuY020/edit?hl=ru&authkey=CLv904wE)
